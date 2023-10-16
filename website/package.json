@@ -9,6 +9,7 @@
     "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
