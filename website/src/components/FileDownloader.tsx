@@ -11,5 +11,5 @@ const downloadFile = (name: string, content: string) => {
 };
 
 export const FileDownloader = ({ name, content }: Props) => {
-    return <button onClick={() => downloadFile(name, content)}>DownloadFile</button>;
+    return <button onClick={() => downloadFile(name, content)}>Download File</button>;
 };
