@@ -8,14 +8,14 @@ export function App() {
     return (
         <Container fluid className={'m-0'}>
             <h1>Rally GPX Merger</h1>
-            <Row className="flex-xl-nowrap" style={{ height: '75vh', overflow: 'auto', width: '100%' }}>
-                <Col xl={4}>
+            <Row className="flex-xl-nowrap" style={{ height: '85vh', overflow: 'auto', width: '100%' }}>
+                <Col className={'m-3 shadow'} xl={4}>
                     <FileUploadSection />
                 </Col>
-                <Col xl={6}>
+                <Col className={'m-3 shadow'} xl={6}>
                     <TrackMergeSection />
                 </Col>
-                <Col xl={2}>
+                <Col className={'m-3 shadow'} xl={1}>
                     <TrackDownloadSection />
                 </Col>
             </Row>
