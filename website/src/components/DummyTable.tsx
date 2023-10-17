@@ -50,6 +50,9 @@ export const DummyTable = () => {
                         <Form.Control type="text" placeholder="Track name" value={'B_11 + B_12 + 30min'} />
                     </td>
                 </tr>
+                <tr>
+                    <td colSpan={2}>+</td>
+                </tr>
             </tbody>
         </Table>
     );
