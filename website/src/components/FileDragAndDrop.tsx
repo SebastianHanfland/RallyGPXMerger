@@ -1,39 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
-import { Form, Table } from 'react-bootstrap';
-import GpxParser from 'gpxparser';
+import { Table } from 'react-bootstrap';
+import { FileDisplay } from './FileDisplay.tsx';
 
 const fileTypes = ['GPX'];
-
-function FileDisplay(props: { file: File }) {
-    const [fileContent, setFileContent] = useState<string | null>(null);
-    useEffect(() => {
-        props.file.arrayBuffer().then((content) => {
-            const textContent = new TextDecoder().decode(content);
-            setFileContent(textContent);
-            const gpx = new GpxParser();
-            gpx.parse(textContent);
-            console.log('Tracks', gpx.tracks);
-            console.log('All', gpx);
-        });
-    }, [props.file]);
-
-    console.log(fileContent);
-
-    return (
-        <tr>
-            <td>
-                <div>{props.file.name}</div>
-            </td>
-            <td>
-                <Form.Control type="text" placeholder="Track name" value={500} />
-            </td>
-            <td>
-                <Form.Control type="text" placeholder="Track name" value={700} />
-            </td>
-        </tr>
-    );
-}
 
 export function FileDragAndDrop() {
     const [files, setFiles] = useState<File[]>([]);
