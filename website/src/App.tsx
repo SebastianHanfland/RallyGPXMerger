@@ -9,13 +9,13 @@ export function App() {
         <Container fluid className={'m-0'}>
             <h1>Rally GPX Merger</h1>
             <Row className="flex-xl-nowrap" style={{ height: '75vh', overflow: 'auto', width: '100%' }}>
-                <Col className={'md-3'} style={{ width: '30%' }}>
+                <Col xl={4}>
                     <FileUploadSection />
                 </Col>
-                <Col className={'md-3'} style={{ width: '30%' }}>
+                <Col xl={6}>
                     <TrackMergeSection />
                 </Col>
-                <Col className={'md-3'} style={{ width: '30%' }}>
+                <Col xl={2}>
                     <TrackDownloadSection />
                 </Col>
             </Row>

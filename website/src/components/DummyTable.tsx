@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Form } from 'react-bootstrap';
 
 export const DummyTable = () => {
     return (
@@ -12,11 +12,33 @@ export const DummyTable = () => {
             </thead>
             <tbody>
                 <tr>
-                    <td>A1</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'A1'} />
+                    </td>
                     <td>A_11 + A_12 + 30min</td>
                 </tr>
                 <tr>
-                    <td>B1</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'B1'} />
+                    </td>
+                    <td>B_11 + B_12 + 30min</td>
+                </tr>
+                <tr>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'B2'} />
+                    </td>
+                    <td>B_21 + B_12 + 30min</td>
+                </tr>
+                <tr>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'C1'} />
+                    </td>
+                    <td>C_11 + B_12 + 30min</td>
+                </tr>
+                <tr>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'C2'} />
+                    </td>
                     <td>B_11 + B_12 + 30min</td>
                 </tr>
             </tbody>
