@@ -1,4 +1,5 @@
 import FileSaver from 'file-saver';
+import { Button } from 'react-bootstrap';
 
 interface Props {
     content: string;
@@ -11,5 +12,9 @@ const downloadFile = (name: string, content: string) => {
 };
 
 export const FileDownloader = ({ name, content }: Props) => {
-    return <button onClick={() => downloadFile(name, content)}>Download File</button>;
+    return (
+        <Button className={'m2'} onClick={() => downloadFile(name, content)}>
+            Download File
+        </Button>
+    );
 };

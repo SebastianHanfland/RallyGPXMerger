@@ -12,11 +12,8 @@ export function App() {
                 <Col className={'m-3 shadow'} xl={4}>
                     <FileUploadSection />
                 </Col>
-                <Col className={'m-3 shadow'} xl={6}>
+                <Col className={'m-3 shadow'} xl={7}>
                     <TrackMergeSection />
-                </Col>
-                <Col className={'m-3 shadow'} xl={1}>
-                    <TrackDownloadSection />
                 </Col>
             </Row>
         </Container>
