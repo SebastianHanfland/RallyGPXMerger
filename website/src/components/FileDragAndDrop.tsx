@@ -6,7 +6,7 @@ import GpxParser from 'gpxparser';
 const fileTypes = ['JPG', 'PNG', 'GIF', 'GPX'];
 
 function FileDisplay(props: { file: File }) {
-    const [fileContent, setFileContent] = useState<string>(null);
+    const [fileContent, setFileContent] = useState<string | null>(null);
     const [showContent, setShowContent] = useState(false);
     useEffect(() => {
         props.file.arrayBuffer().then((content) => {
