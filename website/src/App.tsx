@@ -6,7 +6,11 @@ import { Col, Container, Row } from 'react-bootstrap';
 export function App() {
     return (
         <Container fluid className={'m-0'}>
-            <h1>Rally GPX Merger</h1>
+            <h1 title={'Jump to the code'}>
+                <a href={'https://github.com/SebastianHanfland/RallyGPXMerger'} target={'_blank'}>
+                    Rally GPX Merger
+                </a>
+            </h1>
             <Row className="flex-xl-nowrap" style={{ height: '85vh', overflow: 'auto', width: '100%' }}>
                 <Col xl={4}>
                     <FileUploadSection />
