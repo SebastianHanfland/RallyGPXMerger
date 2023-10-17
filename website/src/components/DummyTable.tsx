@@ -6,8 +6,8 @@ export const DummyTable = () => {
         <Table striped bordered hover style={{ width: '100%' }}>
             <thead>
                 <tr>
-                    <th>Track name</th>
-                    <th>Track components</th>
+                    <th style={{ width: '25%' }}>Track name</th>
+                    <th style={{ width: '75%' }}>Track components</th>
                 </tr>
             </thead>
             <tbody>
@@ -15,31 +15,41 @@ export const DummyTable = () => {
                     <td>
                         <Form.Control type="text" placeholder="Track name" value={'A1'} />
                     </td>
-                    <td>A_11 + A_12 + 30min</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'A_11 + A_12 + 30min'} />
+                    </td>
                 </tr>
                 <tr>
                     <td>
                         <Form.Control type="text" placeholder="Track name" value={'B1'} />
                     </td>
-                    <td>B_11 + B_12 + 30min</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'B_11 + B_12 + 30min'} />
+                    </td>
                 </tr>
                 <tr>
                     <td>
                         <Form.Control type="text" placeholder="Track name" value={'B2'} />
                     </td>
-                    <td>B_21 + B_12 + 30min</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'B_21 + B_12 + 30min'} />
+                    </td>
                 </tr>
                 <tr>
                     <td>
                         <Form.Control type="text" placeholder="Track name" value={'C1'} />
                     </td>
-                    <td>C_11 + B_12 + 30min</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'C_11 + B_12 + 30min'} />
+                    </td>
                 </tr>
                 <tr>
                     <td>
                         <Form.Control type="text" placeholder="Track name" value={'C2'} />
                     </td>
-                    <td>B_11 + B_12 + 30min</td>
+                    <td>
+                        <Form.Control type="text" placeholder="Track name" value={'B_11 + B_12 + 30min'} />
+                    </td>
                 </tr>
             </tbody>
         </Table>
