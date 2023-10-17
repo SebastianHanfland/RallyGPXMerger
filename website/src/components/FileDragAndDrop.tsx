@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { FileDownloader } from './FileDownloader.tsx';
 import GpxParser from 'gpxparser';
@@ -33,7 +33,7 @@ function FileDisplay(props: { file: File }) {
 
 export function FileDragAndDrop() {
     const [files, setFiles] = useState<File[]>([]);
-    const handleChange = (newFiles) => {
+    const handleChange = (newFiles: File[]) => {
         setFiles([...files, ...newFiles]);
     };
     return (
