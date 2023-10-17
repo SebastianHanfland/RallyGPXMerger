@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "file-saver": "^2.0.5",
+    "gpxparser": "^3.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-drag-drop-files": "^2.3.10"
