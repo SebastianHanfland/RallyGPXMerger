@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
+import { FileDownloader } from './FileDownloader.tsx';
 
 const fileTypes = ['JPG', 'PNG', 'GIF', 'GPX'];
 
 function FileDisplay(props: { file: File }) {
     const [fileContent, setFileContent] = useState<string>(null);
+    const [showContent, setShowContent] = useState(false);
     useEffect(() => {
         props.file.arrayBuffer().then((content) => {
             const textContent = new TextDecoder().decode(content);
@@ -14,7 +16,11 @@ function FileDisplay(props: { file: File }) {
     return (
         <div>
             <div>{props.file.name}</div>
-            {fileContent && <div>{fileContent}</div>}
+            {fileContent && <FileDownloader content={fileContent} name={'newGpx'} />}
+            <button onClick={() => setShowContent(!showContent)}>
+                {showContent ? 'Hide content' : 'Show content'}
+            </button>
+            {showContent && fileContent && <div>{fileContent}</div>}
         </div>
     );
 }
