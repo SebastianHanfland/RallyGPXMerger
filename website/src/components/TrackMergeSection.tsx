@@ -1,7 +1,10 @@
+import { DummyTable } from './DummyTable.tsx';
+
 export function TrackMergeSection() {
     return (
-        <div className={'col-md-6 m-3'}>
+        <div>
             <h4>Restructure files</h4>
+            <DummyTable />
         </div>
     );
 }

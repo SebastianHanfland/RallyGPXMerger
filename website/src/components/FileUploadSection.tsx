@@ -1,7 +1,10 @@
+import { FileDragAndDrop } from './FileDragAndDrop.tsx';
+
 export function FileUploadSection() {
     return (
-        <div className={'col-md-6 m-3'}>
+        <div>
             <h4>Input of Files</h4>
+            <FileDragAndDrop />
         </div>
     );
 }
