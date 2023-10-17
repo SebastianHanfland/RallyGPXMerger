@@ -3,7 +3,7 @@ import { FileUploader } from 'react-drag-drop-files';
 import { Form, Table } from 'react-bootstrap';
 import GpxParser from 'gpxparser';
 
-const fileTypes = ['JPG', 'PNG', 'GIF', 'GPX'];
+const fileTypes = ['GPX'];
 
 function FileDisplay(props: { file: File }) {
     const [fileContent, setFileContent] = useState<string | null>(null);
@@ -43,7 +43,13 @@ export function FileDragAndDrop() {
     return (
         <div>
             <div style={{ height: '70px' }}>
-                <FileUploader handleChange={handleChange} name="file" types={fileTypes} multiple={true} />
+                <FileUploader
+                    handleChange={handleChange}
+                    name="file"
+                    types={fileTypes}
+                    multiple={true}
+                    label={'Please upload the GPX segments here'}
+                />
             </div>
             {files.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
