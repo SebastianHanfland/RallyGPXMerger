@@ -5,7 +5,7 @@ export function AddNewTrack() {
     const dispatch = useDispatch();
     return (
         <tr onClick={() => dispatch(trackMergeActions.addTrackComposition())}>
-            <td colSpan={2}>+</td>
+            <td colSpan={3}>+</td>
         </tr>
     );
 }
