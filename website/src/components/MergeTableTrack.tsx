@@ -21,7 +21,7 @@ function isDefined<T>(arg: T | undefined): arg is T {
 }
 
 export function MergeTableTrack({ track }: Props) {
-    const { name, id, segments } = track;
+    const { name, id, segmentIds } = track;
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
     const options = gpxSegments.map(toOption);
@@ -34,7 +34,7 @@ export function MergeTableTrack({ track }: Props) {
             <td>
                 <Select
                     isMulti
-                    value={segments
+                    value={segmentIds
                         .map((segmentId) => options.find((option) => option.value === segmentId))
                         .filter(isDefined)}
                     name="colors"

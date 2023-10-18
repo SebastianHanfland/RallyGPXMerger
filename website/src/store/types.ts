@@ -12,7 +12,7 @@ export interface GpxSegmentsState {
 export interface TrackComposition {
     id: string;
     name?: string;
-    segments: string[];
+    segmentIds: string[];
 }
 
 export interface TrackMergeState {
