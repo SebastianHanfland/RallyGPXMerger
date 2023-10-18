@@ -39,9 +39,10 @@ export function FileDragAndDrop() {
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
-                            <th style={{ width: '33%' }}>File name</th>
-                            <th style={{ width: '33%' }}>People at Start</th>
-                            <th style={{ width: '33%' }}>People at End</th>
+                            <th style={{ width: '30%' }}>File name</th>
+                            <th style={{ width: '30%' }}>People at Start</th>
+                            <th style={{ width: '30%' }}>People at End</th>
+                            <th style={{ width: '10%', minWidth: '40px' }} />
                         </tr>
                     </thead>
                     <tbody>
