@@ -9,12 +9,13 @@ export interface GpxSegmentsState {
     segments: GpxSegment[];
 }
 
-interface SegmentIdentifier {
+export interface SegmentIdentifier {
     name: string;
     breakInMinutes?: number;
 }
 
-interface TrackComposition {
+export interface TrackComposition {
+    id: string;
     name?: string;
     segments: SegmentIdentifier[];
 }
