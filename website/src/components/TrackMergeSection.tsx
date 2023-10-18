@@ -14,7 +14,7 @@ export function TrackMergeSection() {
                 <Button className={'m-2'} onClick={() => dispatch(calculateMerge)}>
                     Merge Tracks
                 </Button>
-                <CalculatedFilesDownloader name={'test'} content={'1234'} />
+                <CalculatedFilesDownloader />
                 <Button className={'m-2'}>Show Map</Button>
             </div>
             <MergeTable />
