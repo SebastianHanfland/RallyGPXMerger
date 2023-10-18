@@ -33,6 +33,9 @@ const trackMergeSlice = createSlice({
                 segmentIds: track.segmentIds.filter((segmentId) => segmentId !== action.payload),
             }));
         },
+        clear: (state: TrackMergeState) => {
+            state.trackCompositions = [];
+        },
     },
 });
 
