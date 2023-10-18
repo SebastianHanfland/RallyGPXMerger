@@ -1,10 +1,11 @@
 import { combineReducers, Reducer } from '@reduxjs/toolkit';
-import { State } from './store.ts';
 import { storage } from './storage.ts';
+import { gpxSegmentsReducer } from './gpxSegments.reducer.ts';
+import { State } from './types.ts';
 
 export const rootReducer: Reducer = combineReducers({
-    // Dummy
-    files: (state: State) => state,
+    gpxSegments: gpxSegmentsReducer,
+    files: (state: any) => state,
 });
 
 export const storingReducer: Reducer = (state: State) => {
