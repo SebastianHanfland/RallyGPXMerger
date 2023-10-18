@@ -1,6 +1,10 @@
-import { Table, Form } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import { MergeTableTrack } from './MergeTableTrack.tsx';
+import { useSelector } from 'react-redux';
+import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 
 export const MergeTable = () => {
+    const trackCompositions = useSelector(getTrackCompositions);
     return (
         <Table striped bordered hover style={{ width: '100%' }}>
             <thead>
@@ -10,46 +14,10 @@ export const MergeTable = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'A1'} />
-                    </td>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'A_11 + A_12 + 30min'} />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'B1'} />
-                    </td>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'B_11 + B_12 + 30min'} />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'B2'} />
-                    </td>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'B_21 + B_12 + 30min'} />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'C1'} />
-                    </td>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'C_11 + B_12 + 30min'} />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'C2'} />
-                    </td>
-                    <td>
-                        <Form.Control type="text" placeholder="Track name" value={'B_11 + B_12 + 30min'} />
-                    </td>
-                </tr>
+                {trackCompositions.map((track) => (
+                    <MergeTableTrack key={track.id} track={track} />
+                ))}
+
                 <tr>
                     <td colSpan={2}>+</td>
                 </tr>
