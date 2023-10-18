@@ -1,4 +1,4 @@
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { TrackComposition } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
@@ -20,7 +20,9 @@ export function MergeTableTrack({ track }: Props) {
                 <Form.Control type="text" placeholder="Track name" value={'A_11 + A_12 + 30min'} />
             </td>
             <td>
-                <button onClick={() => dispatch(trackMergeActions.removeTrackComposition(id))}>x</button>
+                <Button variant="danger" onClick={() => dispatch(trackMergeActions.removeTrackComposition(id))}>
+                    x
+                </Button>
             </td>
         </tr>
     );

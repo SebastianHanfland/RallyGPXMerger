@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import GpxParser from 'gpxparser';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { GpxSegment } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
@@ -51,7 +51,9 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
                 />
             </td>
             <td>
-                <button onClick={() => dispatch(gpxSegmentsActions.removeGpxSegment(id))}>x</button>
+                <Button variant="danger" onClick={() => dispatch(gpxSegmentsActions.removeGpxSegment(id))}>
+                    x
+                </Button>
             </td>
         </tr>
     );
