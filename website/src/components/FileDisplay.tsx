@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { GpxSegment } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 
 function getCount(value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const number = Number(value.target.value);
@@ -51,7 +52,13 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
                 />
             </td>
             <td>
-                <Button variant="danger" onClick={() => dispatch(gpxSegmentsActions.removeGpxSegment(id))}>
+                <Button
+                    variant="danger"
+                    onClick={() => {
+                        dispatch(gpxSegmentsActions.removeGpxSegment(id));
+                        dispatch(trackMergeActions.removeGpxSegment(id));
+                    }}
+                >
                     x
                 </Button>
             </td>
