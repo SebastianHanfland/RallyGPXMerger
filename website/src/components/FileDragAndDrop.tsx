@@ -1,14 +1,25 @@
-import { useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGpxSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import { GpxSegment } from '../store/types.ts';
 
 const fileTypes = ['GPX'];
 
+async function toGpxSegment(file: File): Promise<GpxSegment> {
+    return file.arrayBuffer().then((buffer) => {
+        return { id: '1', filename: file.name, content: new TextDecoder().decode(buffer) };
+    });
+}
+
 export function FileDragAndDrop() {
-    const [files, setFiles] = useState<File[]>([]);
-    const handleChange = (newFiles: File[]) => {
-        setFiles([...files, ...newFiles]);
+    const dispatch = useDispatch();
+    const gpxSegments = useSelector(getGpxSegments);
+    const handleChange = (newFiles: FileList) => {
+        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
+            dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments))
+        );
     };
     return (
         <div>
@@ -21,18 +32,18 @@ export function FileDragAndDrop() {
                     label={'Please upload the GPX segments here'}
                 />
             </div>
-            {files.length > 0 ? (
+            {gpxSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
                             <th style={{ width: '33%' }}>File name</th>
-                            <th style={{ width: '33%' }}>People</th>
-                            <th style={{ width: '33%' }}>...</th>
+                            <th style={{ width: '33%' }}>People at Start</th>
+                            <th style={{ width: '33%' }}>People at End</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {files.map((file) => (
-                            <FileDisplay file={file} />
+                        {gpxSegments.map((gpxSegment) => (
+                            <FileDisplay gpxSegment={gpxSegment} />
                         ))}
                     </tbody>
                 </Table>

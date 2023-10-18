@@ -5,7 +5,6 @@ import { State } from './types.ts';
 
 export const rootReducer: Reducer = combineReducers({
     gpxSegments: gpxSegmentsReducer,
-    files: (state: any) => state,
 });
 
 export const storingReducer: Reducer = (state: State) => {
