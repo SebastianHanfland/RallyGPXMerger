@@ -19,6 +19,16 @@ const gpxSegmentsSlice = createSlice({
         clearGpxSegments: (state: GpxSegmentsState) => {
             state.segments = [];
         },
+        setPeopleCountStart: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload.id ? { ...segment, peopleCountStart: action.payload.count } : segment
+            );
+        },
+        setPeopleCountEnd: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload.id ? { ...segment, peopleCountEnd: action.payload.count } : segment
+            );
+        },
     },
 });
 

@@ -47,7 +47,7 @@ export function FileDragAndDrop() {
                     </thead>
                     <tbody>
                         {gpxSegments.map((gpxSegment) => (
-                            <FileDisplay gpxSegment={gpxSegment} />
+                            <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                     </tbody>
                 </Table>
