@@ -1,6 +1,6 @@
 import { Table, Form } from 'react-bootstrap';
 
-export const DummyTable = () => {
+export const MergeTable = () => {
     return (
         <Table striped bordered hover style={{ width: '100%' }}>
             <thead>

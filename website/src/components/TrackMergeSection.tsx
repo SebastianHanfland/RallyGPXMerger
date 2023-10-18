@@ -1,4 +1,4 @@
-import { DummyTable } from './DummyTable.tsx';
+import { MergeTable } from './MergeTable.tsx';
 import { Button } from 'react-bootstrap';
 import { FileDownloader } from './FileDownloader.tsx';
 import { calculateMerge } from '../logic/MergeCalculation.ts';
@@ -14,7 +14,7 @@ export function TrackMergeSection() {
                 <FileDownloader name={'test'} content={'1234'} />
                 <Button className={'m-2'}>Show Map</Button>
             </div>
-            <DummyTable />
+            <MergeTable />
         </div>
     );
 }
