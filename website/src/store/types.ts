@@ -9,6 +9,16 @@ export interface GpxSegmentsState {
     segments: GpxSegment[];
 }
 
+export interface CalculatedTrack {
+    id: string;
+    filename: string;
+    content: string;
+}
+
+export interface CalculatedTracksState {
+    tracks: CalculatedTrack[];
+}
+
 export interface TrackComposition {
     id: string;
     name?: string;
@@ -22,5 +32,5 @@ export interface TrackMergeState {
 export interface State {
     gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
-    tracks?: GpxSegmentsState;
+    calculatedTracks: CalculatedTracksState;
 }
