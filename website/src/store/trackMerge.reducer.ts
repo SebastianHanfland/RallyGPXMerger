@@ -22,6 +22,11 @@ const trackMergeSlice = createSlice({
                 track.id === action.payload.id ? { ...track, segmentIds: action.payload.segments } : track
             );
         },
+        setTrackName: (state: TrackMergeState, action: PayloadAction<{ id: string; trackName: string }>) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, name: action.payload.trackName } : track
+            );
+        },
         removeGpxSegment: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.map((track) => ({
                 ...track,

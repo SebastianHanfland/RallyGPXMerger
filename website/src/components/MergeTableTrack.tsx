@@ -29,7 +29,14 @@ export function MergeTableTrack({ track }: Props) {
     return (
         <tr>
             <td>
-                <Form.Control type="text" placeholder="Track name" value={name} />
+                <Form.Control
+                    type="text"
+                    placeholder="Track name"
+                    value={name}
+                    onChange={(value) =>
+                        dispatch(trackMergeActions.setTrackName({ id, trackName: value.target.value }))
+                    }
+                />
             </td>
             <td>
                 <Select
