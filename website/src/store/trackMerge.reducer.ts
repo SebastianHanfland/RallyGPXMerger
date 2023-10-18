@@ -15,7 +15,12 @@ const trackMergeSlice = createSlice({
             state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segments: [] }];
         },
         removeTrackComposition: (state: TrackMergeState, action: PayloadAction<string>) => {
-            state.trackCompositions = state.trackCompositions.filter((segment) => segment.id !== action.payload);
+            state.trackCompositions = state.trackCompositions.filter((track) => track.id !== action.payload);
+        },
+        setSegments: (state: TrackMergeState, action: PayloadAction<{ id: string; segments: string[] }>) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, segments: action.payload.segments } : track
+            );
         },
     },
 });
