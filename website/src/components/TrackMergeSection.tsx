@@ -1,9 +1,9 @@
 import { MergeTable } from './MergeTable.tsx';
 import { Button } from 'react-bootstrap';
-import { FileDownloader } from './FileDownloader.tsx';
 import { calculateMerge } from '../logic/MergeCalculation.ts';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/store.ts';
+import { CalculatedFilesDownloader } from './CalculatedFilesDownloader.tsx';
 
 export function TrackMergeSection() {
     const dispatch: AppDispatch = useDispatch();
@@ -14,7 +14,7 @@ export function TrackMergeSection() {
                 <Button className={'m-2'} onClick={() => dispatch(calculateMerge)}>
                     Merge Tracks
                 </Button>
-                <FileDownloader name={'test'} content={'1234'} />
+                <CalculatedFilesDownloader name={'test'} content={'1234'} />
                 <Button className={'m-2'}>Show Map</Button>
             </div>
             <MergeTable />
