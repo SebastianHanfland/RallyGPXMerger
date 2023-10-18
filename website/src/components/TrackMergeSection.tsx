@@ -2,6 +2,7 @@ import { MergeTable } from './MergeTable.tsx';
 import { Button } from 'react-bootstrap';
 import { CalculatedFilesDownloader } from './CalculatedFilesDownloader.tsx';
 import { MergeTracksButton } from './MergeTracksButton.tsx';
+import { RemoveDataButton } from './RemoveDataButton.tsx';
 
 export function TrackMergeSection() {
     return (
@@ -11,6 +12,7 @@ export function TrackMergeSection() {
                 <MergeTracksButton />
                 <CalculatedFilesDownloader />
                 <Button className={'m-2'}>Show Map</Button>
+                <RemoveDataButton />
             </div>
             <MergeTable />
         </div>
