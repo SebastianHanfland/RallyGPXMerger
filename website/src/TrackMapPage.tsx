@@ -1,5 +1,5 @@
 import { Button, Col, Row } from 'react-bootstrap';
-import { FileUploadSection } from './components/FileUploadSection.tsx';
+import { PlainMap } from './components/PlainMap.tsx';
 
 interface Props {
     setHideMap: () => void;
@@ -8,10 +8,10 @@ interface Props {
 export function TrackMapPage(props: Props) {
     return (
         <Row className="flex-xl-nowrap" style={{ height: '85vh', overflow: 'auto', width: '100%' }}>
-            <Col xl={9}>
-                <FileUploadSection />
+            <Col xl={10}>
+                <PlainMap />
             </Col>
-            <Col xl={3}>
+            <Col xl={2}>
                 <Button className={'m-2'} onClick={props.setHideMap}>
                     Hide Map
                 </Button>
