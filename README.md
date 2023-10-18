@@ -14,3 +14,10 @@ For organizing a rally, it is helpful to automate the time calculation for the d
 * Setting the target time for the final point
 * Then starting the calculation of the times
 * Downloading/Saving the resulting routes
+
+## Project structure
+
+* ```.github```: Files for deployment via GitHubPages
+* ```docs```: Code Docs based on arc42
+* ```testdata```: Example Gpx files
+* ```website```: Code (React + vite project)
