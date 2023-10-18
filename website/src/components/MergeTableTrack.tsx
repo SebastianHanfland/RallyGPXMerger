@@ -20,11 +20,26 @@ function isDefined<T>(arg: T | undefined): arg is T {
     return arg !== undefined;
 }
 
+const breaks = [
+    { value: '05min1', label: '+ 05 min' },
+    { value: '05min2', label: '+ 05 min' },
+    { value: '10min1', label: '+ 10 min' },
+    { value: '10min2', label: '+ 10 min' },
+    { value: '15min1', label: '+ 15 min' },
+    { value: '15min2', label: '+ 15 min' },
+    { value: '20min1', label: '+ 20 min' },
+    { value: '20min2', label: '+ 20 min' },
+    { value: '25min1', label: '+ 25 min' },
+    { value: '25min2', label: '+ 25 min' },
+    { value: '30min1', label: '+ 30 min' },
+    { value: '30min2', label: '+ 30 min' },
+];
+
 export function MergeTableTrack({ track }: Props) {
     const { name, id, segmentIds } = track;
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
-    const options = gpxSegments.map(toOption);
+    const options = [...gpxSegments.map(toOption), ...breaks];
 
     return (
         <tr>
