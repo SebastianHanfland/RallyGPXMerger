@@ -3,10 +3,12 @@ import { storage } from './storage.ts';
 import { gpxSegmentsReducer } from './gpxSegments.reducer.ts';
 import { State } from './types.ts';
 import { trackMergeReducer } from './trackMerge.reducer.ts';
+import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 
 export const rootReducer: Reducer = combineReducers({
     gpxSegments: gpxSegmentsReducer,
     trackMerge: trackMergeReducer,
+    calculatedTracks: calculatedTracksReducer,
 });
 
 export const storingReducer: Reducer = (state: State) => {
