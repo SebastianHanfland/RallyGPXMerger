@@ -19,8 +19,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    /* vite */
+    "types": ["vitest/globals"]
   },
   "include": ["src"],
+  "files": ["node_modules/vitest/globals.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
