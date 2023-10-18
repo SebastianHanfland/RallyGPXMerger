@@ -1,4 +1,4 @@
-import { State } from './store';
+import { State } from './types.ts';
 
 const localStorage = window.localStorage;
 
