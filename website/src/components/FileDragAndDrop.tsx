@@ -4,13 +4,16 @@ import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGpxSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../store/types.ts';
+import { v4 as uuidv4 } from 'uuid';
 
 const fileTypes = ['GPX'];
 
 async function toGpxSegment(file: File): Promise<GpxSegment> {
-    return file.arrayBuffer().then((buffer) => {
-        return { id: '1', filename: file.name, content: new TextDecoder().decode(buffer) };
-    });
+    return file.arrayBuffer().then((buffer) => ({
+        id: uuidv4(),
+        filename: file.name,
+        content: new TextDecoder().decode(buffer),
+    }));
 }
 
 export function FileDragAndDrop() {
