@@ -1,14 +1,15 @@
 # Runtime View
 
-## \<Runtime Scenario 1>
+The tool is a vite based React application. It uses redux for state handling.
+At the start the localstorage of the browser is checked for a previous session.
+The current status is mirrored into the localstorage.
 
--   *\<insert runtime diagram or textual description of the scenario>*
+## Workflow
 
--   *\<insert description of the notable aspects of the interactions
-    between the building block instances depicted in this diagram.>*
+- gpx segment files are uploaded
+- extra information for amount of people is added
+- resulting tracks are entered
+- with a button click the calculation starts
+- the result can be seen on a map
+- the result can be saved
 
-## \<Runtime Scenario 2>
-
-## …
-
-## \<Runtime Scenario n>

@@ -1,6 +1,6 @@
 # Glossary
 
-| Term        | Definition        |
-|-------------|-------------------|
-| *\<Term-1>* | *\<definition-1>* |
-| *\<Term-2>* | *\<definition-2>* |
+| Term        | Definition                                                       |
+|-------------|------------------------------------------------------------------|
+| Gpx Segment | Gpx file, with timestamps, uploaded in the left side of the tool |
+| *\<Term-2>* | *\<definition-2>*                                                |

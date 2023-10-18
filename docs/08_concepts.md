@@ -1,15 +1,15 @@
 # Cross-cutting Concepts
 
-## *\<Concept 1>*
+## Persistence
 
-*\<explanation>*
+At start of the application, the localstorage is checked for stored information.
+If they exist, they are loaded into the redux store.
+With each update the redux store is mirrored into the localstorage.
 
-## *\<Concept 2>*
+Necessary information and actions can either be accessed:
 
-*\<explanation>*
+#### in a React component
+with ```useSelector``` and ```useDispatch``` hooks
 
-…
-
-## *\<Concept n>*
-
-*\<explanation>*
+#### in a function/thunk
+https://redux.js.org/usage/writing-logic-thunks

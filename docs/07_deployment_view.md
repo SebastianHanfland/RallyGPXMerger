@@ -1,30 +1,5 @@
 # Deployment View
 
-## Infrastructure Level 1
-
-***\<Overview Diagram>***
-
-Motivation  
-*\<explanation in text form>*
-
-Quality and/or Performance Features  
-*\<explanation in text form>*
-
-Mapping of Building Blocks to Infrastructure  
-*\<description of the mapping>*
-
-## Infrastructure Level 2
-
-### *\<Infrastructure Element 1>*
-
-*\<diagram + explanation>*
-
-### *\<Infrastructure Element 2>*
-
-*\<diagram + explanation>*
-
-…
-
-### *\<Infrastructure Element n>*
-
-*\<diagram + explanation>*
+This tool is either used locally or on a deployed version.
+After a push, a GitHubPages Pipeline based on Jekyll is triggered and deploys an update.
+A deployment takes ~ 2 minutes.
