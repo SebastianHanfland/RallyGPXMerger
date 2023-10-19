@@ -1,6 +1,4 @@
-import GpxParser from 'gpxparser';
-
-export function mergeGpxs(first: GpxParser, second: GpxParser): GpxParser {
+export function mergeGpxs(first: string, second: string): string {
     console.log(first, second);
     return first;
 }

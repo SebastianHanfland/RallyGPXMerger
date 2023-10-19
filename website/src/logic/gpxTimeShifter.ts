@@ -1,6 +1,4 @@
-import GpxParser from 'gpxparser';
-
-export function letTimeInGpxEndAt(parsedGpx: GpxParser, endTime: Date): GpxParser {
+export function letTimeInGpxEndAt(parsedGpx: string, endTime: Date): string {
     console.log(parsedGpx, endTime);
     return parsedGpx;
 }
