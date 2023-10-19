@@ -3,10 +3,8 @@ import { letTimeInGpxEndAt } from '../gpxTimeShifter.ts';
 import { getStartTimeOfGpxTrack } from '../startTimeExtractor.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
-
-const DELAY_PER_PERSON_IN_SECONDS = 0.2;
-
-console.log(DELAY_PER_PERSON_IN_SECONDS);
+import { listAllNodesOfTracks } from './nodeFinder.ts';
+import { getAdjustedArrivalDateTime } from './peopleDelayCounter.ts';
 
 /*
 We have to find nodes where the branches join
@@ -17,11 +15,13 @@ A longer branch goes first and the smaller ones add at the end of it
  */
 
 export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
+    const trackNodes = listAllNodesOfTracks(trackCompositions, gpxSegments);
+
     return trackCompositions.map((track) => {
         const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
 
         let shiftedGpxContents: string[] = [];
-        let endDate = arrivalDateTime;
+        let endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes);
 
         gpxSegmentContents.reverse().forEach((content) => {
             if (typeof content === 'string') {

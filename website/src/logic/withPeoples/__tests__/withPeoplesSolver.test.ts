@@ -14,8 +14,8 @@ describe('with Peoples Solver', () => {
     it('merge A1 and AB to A and B1 and AB to B - Ignoring People and Time shift', () => {
         // given
         const gpxSegments: GpxSegment[] = [
-            { id: '1', filename: 'A1', content: 'cA1', peopleCountEnd: 200 },
-            { id: '2', filename: 'B1', content: 'cB1', peopleCountEnd: 300 },
+            { id: '1', filename: 'A1', content: 'cA1', peopleCountEnd: 2000 },
+            { id: '2', filename: 'B1', content: 'cB1', peopleCountEnd: 3000 },
             { id: '3', filename: 'AB', content: 'cAB' },
         ];
         const trackCompositions: TrackComposition[] = [

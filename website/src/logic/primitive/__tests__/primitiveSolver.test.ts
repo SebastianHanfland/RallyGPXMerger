@@ -18,6 +18,17 @@ const solvers = [mergeAndAdjustTimes, mergeAndDelayAndAdjustTimes];
 describe('primitiveSolver', () => {
     solvers.forEach((solver) =>
         describe(solver.name, () => {
+            const arrivalDateTime = '2023-10-17T22:00:00.000Z';
+
+            beforeEach(() => {
+                (shiftEndDate as Mock).mockImplementation((date: string, breakInMinutes: number) => {
+                    if (breakInMinutes === 0) {
+                        return arrivalDateTime;
+                    }
+                    expect({ date, breakInMinutes }).toBeUndefined();
+                });
+            });
+
             it('merge A1 and AB to A and B1 and AB to B - Ignoring People and Time shift', () => {
                 // given
                 const gpxSegments: GpxSegment[] = [
@@ -29,7 +40,6 @@ describe('primitiveSolver', () => {
                     { id: '1', name: 'A', segmentIds: ['1', '3'] },
                     { id: '2', name: 'B', segmentIds: ['2', '3'] },
                 ];
-                const arrivalDateTime = '2023-10-17T22:00:00.000Z';
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [
                     { id: '1', filename: 'A', content: 'cA' },
@@ -59,7 +69,6 @@ describe('primitiveSolver', () => {
                 // given
                 const gpxSegments: GpxSegment[] = [{ id: '1', filename: 'A1', content: 'cA' }];
                 const trackCompositions: TrackComposition[] = [{ id: '1', name: 'A', segmentIds: ['1'] }];
-                const arrivalDateTime = '2023-10-17T22:00:00.000Z';
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [{ id: '1', filename: 'A', content: 'cA-shifted' }];
 
@@ -84,7 +93,6 @@ describe('primitiveSolver', () => {
                     { id: '2', filename: 'A2', content: 'cA2' },
                 ];
                 const trackCompositions: TrackComposition[] = [{ id: '1', name: 'A', segmentIds: ['1', '2'] }];
-                const arrivalDateTime = '2023-10-17T22:00:00.000Z';
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [
                     { id: '1', filename: 'A', content: 'cA-shifted-and-merged' },
@@ -129,7 +137,6 @@ describe('primitiveSolver', () => {
                 const trackCompositions: TrackComposition[] = [
                     { id: '1', name: 'A', segmentIds: ['1', `30${BREAK_IDENTIFIER}1`] },
                 ];
-                const arrivalDateTime = '2023-10-17T22:00:00.000Z';
                 const arrivalDateTime30min = 'arrivalDateTime - 30min';
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [{ id: '1', filename: 'A', content: 'cA-shifted' }];
@@ -140,9 +147,12 @@ describe('primitiveSolver', () => {
                     }
                     expect({ content, date }).toBeUndefined();
                 });
-                (shiftEndDate as Mock).mockImplementation((date: string, breakInMinutes: 30) => {
+                (shiftEndDate as Mock).mockImplementation((date: string, breakInMinutes: number) => {
                     if (date === arrivalDateTime && breakInMinutes === 30) {
                         return arrivalDateTime30min;
+                    }
+                    if (breakInMinutes === 0) {
+                        return arrivalDateTime;
                     }
                     expect({ date, breakInMinutes }).toBeUndefined();
                 });

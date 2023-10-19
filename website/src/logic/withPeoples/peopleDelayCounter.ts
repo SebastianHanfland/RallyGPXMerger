@@ -1,3 +1,7 @@
+import { TrackComposition } from '../../store/types.ts';
+import { TrackNode } from './nodeFinder.ts';
+import { shiftEndDate } from '../shiftEndDate.ts';
+
 export const DELAY_PER_PERSON_IN_SECONDS = 0.2;
 
 export function sumUpAllPeopleWithHigherPriority(
@@ -17,4 +21,17 @@ export function sumUpAllPeopleWithHigherPriority(
     });
 
     return numberOfPeopleWithHigherPriority;
+}
+
+export function getAdjustedArrivalDateTime(arrivalDateTime: string, track: TrackComposition, trackNodes: TrackNode[]) {
+    let delayForTrackInMinutes = 0;
+    trackNodes.forEach((trackNode) => {
+        const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);
+        if (nodeInfluencesTrack) {
+            const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(trackNode.segmentsBeforeNode, track.id);
+            delayForTrackInMinutes += (peopleWithHigherPriority * DELAY_PER_PERSON_IN_SECONDS) / 60;
+        }
+    });
+    // console.log(delayForTrackInMinutes);
+    return shiftEndDate(arrivalDateTime, delayForTrackInMinutes);
 }
