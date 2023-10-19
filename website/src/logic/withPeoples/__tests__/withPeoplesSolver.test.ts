@@ -4,6 +4,7 @@ import { mergeGpxs } from '../../gpxMerger.ts';
 import { Mock } from 'vitest';
 import { letTimeInGpxEndAt } from '../../gpxTimeShifter.ts';
 import { getStartTimeOfGpxTrack } from '../../startTimeExtractor.ts';
+import { shiftEndDate } from '../../shiftEndDate.ts';
 
 vi.mock('../../gpxMerger.ts');
 vi.mock('../../gpxTimeShifter.ts');
@@ -23,23 +24,59 @@ describe('with Peoples Solver', () => {
             { id: '2', name: 'B', segmentIds: ['2', '3'] },
         ];
         const arrivalDateTime = '2023-10-17T22:00:00.000Z';
+        const arrivalDatePlus10 = 'arrivalDatePlus10';
 
         const expectedCalculatedTracks: CalculatedTrack[] = [
             { id: '1', filename: 'A', content: 'cA' },
             { id: '2', filename: 'B', content: 'cB' },
         ];
         (mergeGpxs as Mock).mockImplementation((a: string, b: string) => {
-            if (a === 'cA1' && b === 'cAB') {
+            if (a === 'cA1-shifted' && b === 'cAB-shifted-extra') {
                 return 'cA';
             }
-            if (a === 'cB1' && b === 'cAB') {
+            if (a === 'cB1-shifted' && b === 'cAB-shifted') {
                 return 'cB';
             }
             expect({ a, b }).toBeUndefined();
         });
-        // Ignore time shifting within this test
-        (letTimeInGpxEndAt as Mock).mockImplementation((content: string, _: string) => content);
-        (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => arrivalDateTime);
+        (letTimeInGpxEndAt as Mock).mockImplementation((content: string, date: string) => {
+            if (content === 'cA1' && date === 'start-cAB-shifted-extra') {
+                return 'cA1-shifted';
+            }
+            if (content === 'cB1' && date === 'start-cAB-shifted') {
+                return 'cB1-shifted';
+            }
+            if (content === 'cAB' && date === arrivalDatePlus10) {
+                return 'cAB-shifted-extra';
+            }
+            if (content === 'cAB' && date === arrivalDateTime) {
+                return 'cAB-shifted';
+            }
+            expect({ content, date }).toBeUndefined();
+        });
+        (getStartTimeOfGpxTrack as Mock).mockImplementation((content: string) => {
+            switch (content) {
+                case 'cAB-shifted-extra':
+                    return 'start-cAB-shifted-extra';
+                case 'cAB-shifted':
+                    return 'start-cAB-shifted';
+                case 'cB1-shifted':
+                    return 'start-cB1-shifted';
+                case 'cA1-shifted':
+                    return 'irrelevant';
+                default:
+                    expect({ content }).toBeUndefined();
+            }
+        });
+        (shiftEndDate as Mock).mockImplementation((date: string, breakInMinutes: number) => {
+            if (breakInMinutes === 0) {
+                return arrivalDateTime;
+            }
+            if (breakInMinutes === 10 && date === arrivalDateTime) {
+                return arrivalDatePlus10;
+            }
+            expect({ date, breakInMinutes }).toBeUndefined();
+        });
 
         // when
         const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
