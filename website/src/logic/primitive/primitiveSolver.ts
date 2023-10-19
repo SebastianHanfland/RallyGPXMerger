@@ -39,11 +39,16 @@ export const mergeTracks: GpxMergeLogic = (gpxSegments, trackCompositions, arriv
     return trackCompositions.map((track) => {
         const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
 
-        const shiftedSecondElement = letTimeInGpxEndAt(gpxSegmentContents[1], arrivalDateTime);
-        const startOfSecond = getStartTimeOfGpxTrack(shiftedSecondElement);
-        const shiftedFirstElement = letTimeInGpxEndAt(gpxSegmentContents[0], startOfSecond);
+        let shiftedGpxContents: string[] = [];
+        let endDate = arrivalDateTime;
 
-        const trackContent = mergeGpxSegmentContents([shiftedFirstElement, shiftedSecondElement]);
+        gpxSegmentContents.reverse().forEach((content) => {
+            const shiftedContent = letTimeInGpxEndAt(content, endDate);
+            endDate = getStartTimeOfGpxTrack(shiftedContent);
+            shiftedGpxContents = [shiftedContent, ...shiftedGpxContents];
+        });
+
+        const trackContent = mergeGpxSegmentContents(shiftedGpxContents);
 
         return { id: track.id, content: trackContent, filename: track.name! };
     });

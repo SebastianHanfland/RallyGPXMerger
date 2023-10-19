@@ -93,12 +93,10 @@ describe('primitiveSolver', () => {
         });
         (getStartTimeOfGpxTrack as Mock).mockImplementation((content: string) => {
             switch (content) {
-                case 'cA1':
-                    return 'start-cA1';
-                case 'cA2':
-                    return 'start-cA2';
                 case 'cA2-shifted':
                     return 'start-cA2-shifted';
+                case 'cA1-shifted':
+                    return 'irrelevant';
                 default:
                     expect({ content }).toBeUndefined();
             }
