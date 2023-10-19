@@ -2,6 +2,20 @@ import { GpxMergeLogic } from '../types.ts';
 import { mergeGpxs } from '../gpxMerger.ts';
 import { letTimeInGpxEndAt } from '../gpxTimeShifter.ts';
 
+function mergeGpxSegmentContents(gpxSegmentContents: string[]): string {
+    let trackContent: string | undefined = undefined;
+
+    gpxSegmentContents.forEach((segmentContent) => {
+        if (!trackContent) {
+            trackContent = segmentContent;
+        } else {
+            trackContent = mergeGpxs(trackContent, segmentContent);
+        }
+    });
+
+    return trackContent!;
+}
+
 export const mergeTracks: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
     if (trackCompositions.length === 1 && trackCompositions[0].segmentIds.length === 1) {
         const track = trackCompositions[0];
@@ -14,16 +28,12 @@ export const mergeTracks: GpxMergeLogic = (gpxSegments, trackCompositions, arriv
     }
 
     return trackCompositions.map((track) => {
-        let trackContent: string;
-
-        track.segmentIds.forEach((segmentId) => {
+        const gpxSegmentContents = track.segmentIds.map((segmentId) => {
             const gpxSegment = gpxSegments.find((segment) => segment.id === segmentId);
-            if (!trackContent) {
-                trackContent = gpxSegment!.content;
-            } else {
-                trackContent = mergeGpxs(trackContent, gpxSegment!.content);
-            }
+            return gpxSegment!.content;
         });
+
+        let trackContent = mergeGpxSegmentContents(gpxSegmentContents);
 
         return { id: track.id, content: trackContent!, filename: track.name! };
     });

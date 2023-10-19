@@ -97,7 +97,7 @@ describe('primitiveSolver', () => {
                 case 'cA2-shifted':
                     return 'start-cA2-shifted';
                 default:
-                    expect({ content, date }).toBeUndefined();
+                    expect({ content }).toBeUndefined();
             }
         });
         (mergeGpxs as Mock).mockImplementation((a: string, b: string) => {
