@@ -21,18 +21,18 @@ function isDefined<T>(arg: T | undefined): arg is T {
 }
 
 const breaks = [
-    { value: '05min1', label: '+ 05 min' },
-    { value: '05min2', label: '+ 05 min' },
-    { value: '10min1', label: '+ 10 min' },
-    { value: '10min2', label: '+ 10 min' },
-    { value: '15min1', label: '+ 15 min' },
-    { value: '15min2', label: '+ 15 min' },
-    { value: '20min1', label: '+ 20 min' },
-    { value: '20min2', label: '+ 20 min' },
-    { value: '25min1', label: '+ 25 min' },
-    { value: '25min2', label: '+ 25 min' },
-    { value: '30min1', label: '+ 30 min' },
-    { value: '30min2', label: '+ 30 min' },
+    { value: '05min-1', label: '+ 05 min' },
+    { value: '05min-2', label: '+ 05 min' },
+    { value: '10min-1', label: '+ 10 min' },
+    { value: '10min-2', label: '+ 10 min' },
+    { value: '15min-1', label: '+ 15 min' },
+    { value: '15min-2', label: '+ 15 min' },
+    { value: '20min-1', label: '+ 20 min' },
+    { value: '20min-2', label: '+ 20 min' },
+    { value: '25min-1', label: '+ 25 min' },
+    { value: '25min-2', label: '+ 25 min' },
+    { value: '30min-1', label: '+ 30 min' },
+    { value: '30min-2', label: '+ 30 min' },
 ];
 
 export function MergeTableTrack({ track }: Props) {
