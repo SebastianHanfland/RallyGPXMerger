@@ -23,10 +23,12 @@ interface Break {
     minutes: number;
 }
 
+export const BREAK_IDENTIFIER = '%%min-%%';
+
 function resolveGpxSegments(track: TrackComposition, gpxSegments: GpxSegment[]): (string | Break)[] {
     return track.segmentIds.map((segmentId) => {
-        if (segmentId.includes('min-')) {
-            const minutes = Number(segmentId.split('min-')[0]);
+        if (segmentId.includes(BREAK_IDENTIFIER)) {
+            const minutes = Number(segmentId.split(BREAK_IDENTIFIER)[0]);
             return { minutes };
         }
         const gpxSegment = gpxSegments.find((segment) => segment.id === segmentId);

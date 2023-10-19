@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select from 'react-select';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { BREAK_IDENTIFIER } from '../logic/primitive/primitiveSolver.ts';
 
 interface Props {
     track: TrackComposition;
@@ -21,18 +22,18 @@ function isDefined<T>(arg: T | undefined): arg is T {
 }
 
 const breaks = [
-    { value: '05min-1', label: '+ 05 min' },
-    { value: '05min-2', label: '+ 05 min' },
-    { value: '10min-1', label: '+ 10 min' },
-    { value: '10min-2', label: '+ 10 min' },
-    { value: '15min-1', label: '+ 15 min' },
-    { value: '15min-2', label: '+ 15 min' },
-    { value: '20min-1', label: '+ 20 min' },
-    { value: '20min-2', label: '+ 20 min' },
-    { value: '25min-1', label: '+ 25 min' },
-    { value: '25min-2', label: '+ 25 min' },
-    { value: '30min-1', label: '+ 30 min' },
-    { value: '30min-2', label: '+ 30 min' },
+    { value: `05${BREAK_IDENTIFIER}1`, label: '+ 05 min' },
+    { value: `05${BREAK_IDENTIFIER}2`, label: '+ 05 min' },
+    { value: `10${BREAK_IDENTIFIER}1`, label: '+ 10 min' },
+    { value: `10${BREAK_IDENTIFIER}2`, label: '+ 10 min' },
+    { value: `15${BREAK_IDENTIFIER}1`, label: '+ 15 min' },
+    { value: `15${BREAK_IDENTIFIER}2`, label: '+ 15 min' },
+    { value: `20${BREAK_IDENTIFIER}1`, label: '+ 20 min' },
+    { value: `20${BREAK_IDENTIFIER}2`, label: '+ 20 min' },
+    { value: `25${BREAK_IDENTIFIER}1`, label: '+ 25 min' },
+    { value: `25${BREAK_IDENTIFIER}2`, label: '+ 25 min' },
+    { value: `30${BREAK_IDENTIFIER}1`, label: '+ 30 min' },
+    { value: `30${BREAK_IDENTIFIER}2`, label: '+ 30 min' },
 ];
 
 export function MergeTableTrack({ track }: Props) {

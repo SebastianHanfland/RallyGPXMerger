@@ -1,4 +1,4 @@
-import { mergeTracks } from '../primitiveSolver.ts';
+import { BREAK_IDENTIFIER, mergeTracks } from '../primitiveSolver.ts';
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { mergeGpxs } from '../../gpxMerger.ts';
 import { Mock } from 'vitest';
@@ -120,7 +120,9 @@ describe('primitiveSolver', () => {
     it('should set arrival date for one segment and one break - one track', () => {
         // given
         const gpxSegments: GpxSegment[] = [{ id: '1', filename: 'A1', content: 'cA' }];
-        const trackCompositions: TrackComposition[] = [{ id: '1', name: 'A', segmentIds: ['1', '30min-1'] }];
+        const trackCompositions: TrackComposition[] = [
+            { id: '1', name: 'A', segmentIds: ['1', `30${BREAK_IDENTIFIER}1`] },
+        ];
         const arrivalDateTime = '2023-10-17T22:00:00.000Z';
         const arrivalDateTime30min = 'arrivalDateTime - 30min';
 
