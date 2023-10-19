@@ -3,7 +3,7 @@ import { AppDispatch } from '../store/store.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { getArrivalDateTime, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
-import { mergeTracks } from './primitive/primitiveSolver.ts';
+import { mergeAndAdjustTimes } from './primitive/primitiveSolver.ts';
 import { GpxMergeLogic } from './types.ts';
 
 const dummy: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
@@ -15,7 +15,7 @@ const dummy: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) =
     }));
 };
 
-const solveFunction: GpxMergeLogic[] = [dummy, mergeTracks];
+const solveFunction: GpxMergeLogic[] = [dummy, mergeAndAdjustTimes];
 
 export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     const gpxSegments = getGpxSegments(getState());

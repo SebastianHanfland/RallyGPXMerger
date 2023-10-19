@@ -4,7 +4,7 @@ import { getStartTimeOfGpxTrack } from '../startTimeExtractor.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
 
-export const mergeTracks: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
+export const mergeAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
     return trackCompositions.map((track) => {
         const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
 

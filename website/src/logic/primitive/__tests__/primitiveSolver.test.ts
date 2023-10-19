@@ -1,4 +1,4 @@
-import { mergeTracks } from '../primitiveSolver.ts';
+import { mergeAndAdjustTimes } from '../primitiveSolver.ts';
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { mergeGpxs } from '../../gpxMerger.ts';
 import { Mock } from 'vitest';
@@ -44,7 +44,7 @@ describe('primitiveSolver', () => {
         (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => arrivalDateTime);
 
         // when
-        const calculatedTracks = mergeTracks(gpxSegments, trackCompositions, arrivalDateTime);
+        const calculatedTracks = mergeAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
         // then
         expect(calculatedTracks).toEqual(expectedCalculatedTracks);
@@ -66,7 +66,7 @@ describe('primitiveSolver', () => {
         });
 
         // when
-        const calculatedTracks = mergeTracks(gpxSegments, trackCompositions, arrivalDateTime);
+        const calculatedTracks = mergeAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
         // then
         expect(calculatedTracks).toEqual(expectedCalculatedTracks);
@@ -112,7 +112,7 @@ describe('primitiveSolver', () => {
         });
 
         // when
-        const calculatedTracks = mergeTracks(gpxSegments, trackCompositions, arrivalDateTime);
+        const calculatedTracks = mergeAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
         // then
         expect(calculatedTracks).toEqual(expectedCalculatedTracks);
@@ -144,7 +144,7 @@ describe('primitiveSolver', () => {
         (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => 'irrelevant');
 
         // when
-        const calculatedTracks = mergeTracks(gpxSegments, trackCompositions, arrivalDateTime);
+        const calculatedTracks = mergeAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
         // then
         expect(calculatedTracks).toEqual(expectedCalculatedTracks);
