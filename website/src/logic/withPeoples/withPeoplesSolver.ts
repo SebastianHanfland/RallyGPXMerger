@@ -12,6 +12,8 @@ console.log(DELAY_PER_PERSON_IN_SECONDS);
 We have to find nodes where the branches join
 * Seeing that some segments are used by multiple tracks
 We have to pick one of the track which arrives delayed/earlier at this node to prevent a jam
+
+A longer branch goes first and the smaller ones add at the end of it
  */
 
 export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
