@@ -4,7 +4,17 @@ import { getStartTimeOfGpxTrack } from '../startTimeExtractor.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
 
-export const mergeAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
+const DELAY_PER_PERSON_IN_SECONDS = 0.2;
+
+console.log(DELAY_PER_PERSON_IN_SECONDS);
+
+/*
+We have to find nodes where the branches join
+* Seeing that some segments are used by multiple tracks
+We have to pick one of the track which arrives delayed/earlier at this node to prevent a jam
+ */
+
+export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
     return trackCompositions.map((track) => {
         const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
 
