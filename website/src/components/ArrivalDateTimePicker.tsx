@@ -7,8 +7,8 @@ export function ArrivalDateTimePicker() {
     const dispatch = useDispatch();
     const arrivalDateTime = useSelector(getArrivalDateTime);
     return (
-        <div className={'m-3'}>
-            <label className="form-label">Arrival of tracks</label>
+        <div className={'d-inline-block'}>
+            <label className="form-label m-3">Arrival of tracks:</label>
             <DatePicker
                 className={'form-control'}
                 dateFormat={'dd.MM.yyyy HH:mm'}
