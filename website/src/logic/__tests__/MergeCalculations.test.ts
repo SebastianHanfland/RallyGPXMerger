@@ -1,7 +1,7 @@
 import { expect } from 'vitest';
 
 describe('Suite', () => {
-    test('simple test', () => {
+    it('simple test', () => {
         // given
 
         // when
