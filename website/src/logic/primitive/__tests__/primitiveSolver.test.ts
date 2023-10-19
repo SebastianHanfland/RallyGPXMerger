@@ -140,6 +140,7 @@ describe('primitiveSolver', () => {
             }
             expect({ date, breakInMinutes }).toBeUndefined();
         });
+        (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => 'irrelevant');
 
         // when
         const calculatedTracks = mergeTracks(gpxSegments, trackCompositions, arrivalDateTime);
