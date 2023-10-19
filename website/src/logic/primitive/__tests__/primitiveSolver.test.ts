@@ -44,9 +44,7 @@ describe('primitiveSolver', () => {
 
     it('should set arrival date for one segment - one track', () => {
         // given
-        const gpxSegments: GpxSegment[] = [
-            { id: '1', filename: 'A1', content: 'cA', peopleCountStart: 1, peopleCountEnd: 1 },
-        ];
+        const gpxSegments: GpxSegment[] = [{ id: '1', filename: 'A1', content: 'cA' }];
         const trackCompositions: TrackComposition[] = [{ id: '1', name: 'A', segmentIds: ['1'] }];
         const arrivalDateTime = '2023-10-17T22:00:00.000Z';
 
