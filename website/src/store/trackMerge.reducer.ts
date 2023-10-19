@@ -47,3 +47,4 @@ export const trackMergeActions = trackMergeSlice.actions;
 export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reducer;
 const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
+export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
