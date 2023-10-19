@@ -2,6 +2,7 @@ import { GpxMergeLogic } from '../types.ts';
 import { mergeGpxs } from '../gpxMerger.ts';
 import { letTimeInGpxEndAt } from '../gpxTimeShifter.ts';
 import { GpxSegment, TrackComposition } from '../../store/types.ts';
+import { getStartTimeOfGpxTrack } from '../startTimeExtractor.ts';
 
 function mergeGpxSegmentContents(gpxSegmentContents: string[]): string {
     let trackContent: string | undefined = undefined;
@@ -38,7 +39,11 @@ export const mergeTracks: GpxMergeLogic = (gpxSegments, trackCompositions, arriv
     return trackCompositions.map((track) => {
         const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
 
-        const trackContent = mergeGpxSegmentContents(gpxSegmentContents);
+        const shiftedSecondElement = letTimeInGpxEndAt(gpxSegmentContents[1], arrivalDateTime);
+        const startOfSecond = getStartTimeOfGpxTrack(shiftedSecondElement);
+        const shiftedFirstElement = letTimeInGpxEndAt(gpxSegmentContents[0], startOfSecond);
+
+        const trackContent = mergeGpxSegmentContents([shiftedFirstElement, shiftedSecondElement]);
 
         return { id: track.id, content: trackContent, filename: track.name! };
     });

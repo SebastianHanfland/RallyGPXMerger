@@ -36,6 +36,9 @@ describe('primitiveSolver', () => {
             }
             expect({ a, b }).toBeUndefined();
         });
+        // Ignore time shifting within this test
+        (letTimeInGpxEndAt as Mock).mockImplementation((content: string, _: string) => content);
+        (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => arrivalDateTime);
 
         // when
         const calculatedTracks = mergeTracks(gpxSegments, trackCompositions, arrivalDateTime);
