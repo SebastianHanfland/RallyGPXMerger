@@ -6,12 +6,12 @@ export interface TrackNode {
 }
 
 export function findMultipleOccurrencesOfSegments(trackCompositions: TrackComposition[]): string[] {
-    let occurredSegmentIds: string[] = [];
-    let multipleSegmentIds: string[] = [];
+    const occurredSegmentIds: string[] = [];
+    const multipleSegmentIds: string[] = [];
 
     trackCompositions.forEach((track) => {
         track.segmentIds.forEach((segmentId) => {
-            if (occurredSegmentIds.includes(segmentId)) {
+            if (occurredSegmentIds.includes(segmentId) && !multipleSegmentIds.includes(segmentId)) {
                 multipleSegmentIds.push(segmentId);
             } else {
                 occurredSegmentIds.push(segmentId);

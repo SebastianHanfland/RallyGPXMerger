@@ -32,19 +32,39 @@ describe('Node finder', () => {
         expect(nodesOfTracks).toEqual(expectedTrackNodes);
     });
 
-    it('should find segments occurring in multiple tracks', () => {
-        // given
-        const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['0', '1', '3'] },
-            { id: '2', name: 'B', segmentIds: ['2', '3'] },
-        ];
+    describe('findMultipleOccurrencesOfSegments', () => {
+        it('should find segments occurring in multiple tracks', () => {
+            // given
+            const trackCompositions: TrackComposition[] = [
+                { id: '1', name: 'A', segmentIds: ['0', '1', '3'] },
+                { id: '2', name: 'B', segmentIds: ['2', '3'] },
+            ];
 
-        const expectedTrackNodes: string[] = ['3'];
+            const expectedTrackNodes: string[] = ['3'];
 
-        // when
-        const segmentIds = findMultipleOccurrencesOfSegments(trackCompositions);
+            // when
+            const segmentIds = findMultipleOccurrencesOfSegments(trackCompositions);
 
-        // then
-        expect(segmentIds).toEqual(expectedTrackNodes);
+            // then
+            expect(segmentIds).toEqual(expectedTrackNodes);
+        });
+
+        it('should find a node of more than 2 tracks', () => {
+            // given
+            const trackCompositions: TrackComposition[] = [
+                { id: '1', name: 'A', segmentIds: ['0', '1', '3'] },
+                { id: '2', name: 'B', segmentIds: ['2', '3'] },
+                { id: '3', name: 'C', segmentIds: ['4', '3'] },
+                { id: '4', name: 'D', segmentIds: ['5', '3'] },
+            ];
+
+            const expectedTrackNodes: string[] = ['3'];
+
+            // when
+            const segmentIds = findMultipleOccurrencesOfSegments(trackCompositions);
+
+            // then
+            expect(segmentIds).toEqual(expectedTrackNodes);
+        });
     });
 });
