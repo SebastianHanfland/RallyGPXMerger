@@ -27,6 +27,7 @@ export interface TrackComposition {
 
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
+    arrivalDateTime?: string;
 }
 
 export interface State {

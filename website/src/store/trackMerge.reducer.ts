@@ -33,8 +33,12 @@ const trackMergeSlice = createSlice({
                 segmentIds: track.segmentIds.filter((segmentId) => segmentId !== action.payload),
             }));
         },
+        setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.arrivalDateTime = action.payload;
+        },
         clear: (state: TrackMergeState) => {
             state.trackCompositions = [];
+            state.arrivalDateTime = undefined;
         },
     },
 });
