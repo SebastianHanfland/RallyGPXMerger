@@ -18,8 +18,8 @@ describe('Node finder', () => {
         const expectedTrackNodes: TrackNode[] = [
             {
                 segmentsBeforeNode: [
-                    { segmentId: 'A1', trackIds: ['1'], amount: 200 },
-                    { segmentId: 'B1', trackIds: ['2'], amount: 300 },
+                    { segmentId: '1', trackId: '1', amount: 200 },
+                    { segmentId: '2', trackId: '2', amount: 300 },
                 ],
                 segmentIdAfterNode: '3',
             },
