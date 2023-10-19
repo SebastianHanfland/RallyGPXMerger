@@ -1,4 +1,4 @@
-import { GpxMergeLogic } from '../types.ts';
+import { Break, BREAK_IDENTIFIER, GpxMergeLogic } from '../types.ts';
 import { mergeGpxs } from '../gpxMerger.ts';
 import { letTimeInGpxEndAt } from '../gpxTimeShifter.ts';
 import { GpxSegment, TrackComposition } from '../../store/types.ts';
@@ -18,12 +18,6 @@ function mergeGpxSegmentContents(gpxSegmentContents: string[]): string {
 
     return trackContent!;
 }
-
-interface Break {
-    minutes: number;
-}
-
-export const BREAK_IDENTIFIER = '%%min-%%';
 
 function resolveGpxSegments(track: TrackComposition, gpxSegments: GpxSegment[]): (string | Break)[] {
     return track.segmentIds.map((segmentId) => {

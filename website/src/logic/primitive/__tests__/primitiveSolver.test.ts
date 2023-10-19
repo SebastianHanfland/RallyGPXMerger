@@ -1,10 +1,11 @@
-import { BREAK_IDENTIFIER, mergeTracks } from '../primitiveSolver.ts';
+import { mergeTracks } from '../primitiveSolver.ts';
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { mergeGpxs } from '../../gpxMerger.ts';
 import { Mock } from 'vitest';
 import { letTimeInGpxEndAt } from '../../gpxTimeShifter.ts';
 import { getStartTimeOfGpxTrack } from '../../startTimeExtractor.ts';
 import { shiftEndDate } from '../../shiftEndDate.ts';
+import { BREAK_IDENTIFIER } from '../../types.ts';
 
 vi.mock('../../gpxMerger.ts');
 vi.mock('../../gpxTimeShifter.ts');

@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select from 'react-select';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { BREAK_IDENTIFIER } from '../logic/primitive/primitiveSolver.ts';
+
+import { BREAK_IDENTIFIER } from '../logic/types.ts';
 
 interface Props {
     track: TrackComposition;
