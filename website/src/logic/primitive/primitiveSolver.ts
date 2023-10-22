@@ -1,22 +1,23 @@
-import { GpxMergeLogic } from '../types.ts';
-import { letTimeInGpxEndAt } from '../gpxTimeShifter.ts';
-import { getStartTimeOfGpxTrack } from '../startTimeExtractor.ts';
+import { GpxMergeLogic, Break, instanceOfBreak } from '../types.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
+import { SimpleGPX } from '../gpxutils.ts';
 
 export const mergeAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
     return trackCompositions.map((track) => {
-        const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
+        const gpxSegmentContents: (SimpleGPX | Break)[] = resolveGpxSegments(track, gpxSegments);
 
-        let shiftedGpxContents: string[] = [];
-        let endDate = arrivalDateTime;
+        let shiftedGpxContents: SimpleGPX[] = [];
+        let endDate = new Date(arrivalDateTime);
 
         gpxSegmentContents.reverse().forEach((content) => {
-            if (typeof content === 'string') {
-                const shiftedContent = letTimeInGpxEndAt(content, endDate);
-                endDate = getStartTimeOfGpxTrack(shiftedContent);
-                shiftedGpxContents = [shiftedContent, ...shiftedGpxContents];
+            if (!instanceOfBreak(content)) {
+                // adjust this GPX to its intended arrival time
+                content.shiftToArrivalTime(endDate);
+                endDate = content.start;
+                shiftedGpxContents = [content, ...shiftedGpxContents];
             } else {
+                // make the next group arrive a bit early
                 endDate = shiftEndDate(endDate, content.minutes);
             }
         });

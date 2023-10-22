@@ -1,6 +1,5 @@
-import * as gpxparser from 'gpxparser';
 import * as gpxbuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import { default as GpxParser, MetaData, Route, Track, Waypoint } from 'gpxparser';
+import { default as GpxParser, MetaData, Route, Track, Point, Link, Waypoint } from 'gpxparser';
 import * as date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 
@@ -11,7 +10,16 @@ export class SimpleGPX extends GpxParser {
     routes: Route[];
     start: Date = new Date();
     end: Date = new Date();
-    timeshift: number = 0;
+
+    public static fromString(raw: string) {
+        const parser = new GpxParser();
+        parser.parse(raw);
+        return new SimpleGPX([parser]);
+    }
+
+    public duplicate() {
+        return SimpleGPX.fromString(this.toString());
+    }
 
     public constructor(parsers: (GpxParser | SimpleGPX)[]) {
         super();
@@ -42,6 +50,47 @@ export class SimpleGPX extends GpxParser {
     public shift(interval: number) {
         this.start = date.addSeconds(this.start, interval);
         this.end = date.addSeconds(this.end, interval);
+        // immediately propagate to all the time points
+        [...this.routes, ...this.tracks].forEach((thing) => {
+            thing.points.forEach((_point) => {
+                _point.time = date.addSeconds(_point.time, interval);
+            });
+        });
+        if (this.waypoints.length) {
+            this.waypoints.forEach((wp) => {
+                wp.time = date.addSeconds(wp.time, interval);
+            });
+        }
+    }
+
+    public appendBreak(interval: number) {
+        // find the iterable with the last (in time) point
+        let found: boolean = false;
+        let points: Point[] = [];
+        for (let thing of [...this.routes, ...this.tracks]) {
+            points = thing.points;
+            for (let _point of thing.points) {
+                if (_point.time >= this.end) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+        if (!found) {
+            points = this.waypoints;
+        }
+        // duplicate the last point, but later
+        let last_point = points[points.length - 1];
+        points.push({
+            lat: last_point.lat,
+            lon: last_point.lon,
+            ele: last_point.ele,
+            time: date.addSeconds(new Date(last_point.time), interval),
+        });
+        this.end = date.addSeconds(this.end, interval);
     }
 
     public shiftToArrivalTime(arrival: Date) {
@@ -54,6 +103,7 @@ export class SimpleGPX extends GpxParser {
 
     public toString() {
         // this is an expensive operation
+        // TODO sort the stuff or check if it's sorted anyway
         const builder = new BaseBuilder();
         const m = this.metadata;
         builder.setMetadata(
@@ -65,19 +115,19 @@ export class SimpleGPX extends GpxParser {
             })
         );
         if (this.routes.length) {
-            builder.setRoutes(this.routes.map((_route) => route2route(_route, this.timeshift)));
+            builder.setRoutes(this.routes.map((_route) => route2route(_route)));
         }
         if (this.tracks.length) {
-            builder.setTracks(this.tracks.map((_track) => track2track(_track, this.timeshift)));
+            builder.setTracks(this.tracks.map((_track) => track2track(_track)));
         }
         if (this.waypoints.length) {
-            builder.setWayPoints(this.waypoints.map((_waypoint) => waypoint2waypoint(_waypoint, this.timeshift)));
+            builder.setWayPoints(this.waypoints.map((_waypoint) => waypoint2waypoint(_waypoint)));
         }
         return buildGPX(builder.toObject());
     }
 }
 
-export function toLink(link: string | gpxparser.Link): gpxbuilder.Link | undefined {
+function toLink(link: string | Link): gpxbuilder.Link | undefined {
     // @ts-ignore
     if (typeof link === 'string') {
         return new gpxbuilder.Link(link, {});
@@ -93,14 +143,14 @@ export function toLink(link: string | gpxparser.Link): gpxbuilder.Link | undefin
     }
 }
 
-export function point2point(_point: gpxparser.Point, timeshift: number = 0): gpxbuilder.Point {
+function point2point(_point: Point, timeshift: number = 0): gpxbuilder.Point {
     return new gpxbuilder.Point(_point.lat, _point.lon, {
         ele: _point.ele,
         time: date.addSeconds(new Date(_point.time), timeshift),
     });
 }
 
-export function track2track(_track: gpxparser.Track, timeshift: number = 0): gpxbuilder.Track {
+function track2track(_track: Track, timeshift: number = 0): gpxbuilder.Track {
     // gpx-builder tracks can have segments, but gpx-parser ones do not
     return new gpxbuilder.Track(
         [new gpxbuilder.Segment(_track.points.map((_point) => point2point(_point, timeshift)))],
@@ -116,7 +166,7 @@ export function track2track(_track: gpxparser.Track, timeshift: number = 0): gpx
     );
 }
 
-export function route2route(_route: gpxparser.Route, timeshift: number = 0): gpxbuilder.Route {
+function route2route(_route: Route, timeshift: number = 0): gpxbuilder.Route {
     // you cannot get the properties of a type because at compile time or runtime it just might be a whole different fuck-up.
     // this is like an Exclude or Omit<T, K> but as an object rather than a type
     const { link, number, points, distance, elevation, slopes, ...without } = _route;
@@ -130,8 +180,8 @@ export function route2route(_route: gpxparser.Route, timeshift: number = 0): gpx
     });
 }
 
-export function waypoint2waypoint(
-    _waypoints: gpxparser.Waypoint,
+function waypoint2waypoint(
+    _waypoints: Waypoint,
     // @ts-ignore
     timeshift: number = 0
 ): gpxbuilder.Point {
