@@ -1,29 +1,80 @@
 import * as gpxparser from 'gpxparser';
 import * as gpxbuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import { default as GpxParser } from 'gpxparser';
+import { default as GpxParser, MetaData, Route, Track, Waypoint } from 'gpxparser';
 import * as date from 'date-and-time';
+import { BaseBuilder, buildGPX } from 'gpx-builder';
 
-export function findGPXStartEnd(gpx: GpxParser): { start: Date; end: Date } {
-    const times = <number[]>[];
-    [...gpx.routes, ...gpx.tracks].forEach((thing) => {
-        times.push(
-            ...thing.points.map((_point) => {
-                return new Date(_point.time).getTime();
-            })
-        );
-    });
-    if (gpx.waypoints.length) {
-        times.push(
-            ...gpx.waypoints.map((wp) => {
-                return new Date(wp.time).getTime();
-            })
-        );
+export class SimpleGPX extends GpxParser {
+    metadata: MetaData;
+    waypoints: Waypoint[];
+    tracks: Track[];
+    routes: Route[];
+    start: Date = new Date();
+    end: Date = new Date();
+    timeshift: number = 0;
+
+    public constructor(parsers: (GpxParser | SimpleGPX)[]) {
+        super();
+        this.metadata = parsers[0].metadata;
+        this.waypoints = parsers.flatMap((p) => p.waypoints);
+        this.tracks = parsers.flatMap((p) => p.tracks);
+        this.routes = parsers.flatMap((p) => p.routes);
+
+        const times = <number[]>[];
+        [...this.routes, ...this.tracks].forEach((thing) => {
+            times.push(
+                ...thing.points.map((_point) => {
+                    return new Date(_point.time).getTime();
+                })
+            );
+        });
+        if (this.waypoints.length) {
+            times.push(
+                ...this.waypoints.map((wp) => {
+                    return new Date(wp.time).getTime();
+                })
+            );
+        }
+        this.start = new Date(Math.min(...times));
+        this.end = new Date(Math.max(...times));
     }
-    return { start: new Date(Math.min(...times)), end: new Date(Math.max(...times)) };
-}
 
-export function timeShiftInSeconds(now: Date, later: Date): number {
-    return date.subtract(now, later).toSeconds();
+    public shift(interval: number) {
+        this.start = date.addSeconds(this.start, interval);
+        this.end = date.addSeconds(this.end, interval);
+    }
+
+    public shiftToArrivalTime(arrival: Date) {
+        this.shift(date.subtract(this.end, arrival).toSeconds());
+    }
+
+    public shiftToDepartureTime(departure: Date) {
+        this.shift(date.subtract(this.start, departure).toSeconds());
+    }
+
+    public toString() {
+        // this is an expensive operation
+        const builder = new BaseBuilder();
+        const m = this.metadata;
+        builder.setMetadata(
+            new gpxbuilder.Metadata({
+                name: m.name,
+                desc: m.desc,
+                time: m.time,
+                link: toLink(m.link),
+            })
+        );
+        if (this.routes.length) {
+            builder.setRoutes(this.routes.map((_route) => route2route(_route, this.timeshift)));
+        }
+        if (this.tracks.length) {
+            builder.setTracks(this.tracks.map((_track) => track2track(_track, this.timeshift)));
+        }
+        if (this.waypoints.length) {
+            builder.setWayPoints(this.waypoints.map((_waypoint) => waypoint2waypoint(_waypoint, this.timeshift)));
+        }
+        return buildGPX(builder.toObject());
+    }
 }
 
 export function toLink(link: string | gpxparser.Link): gpxbuilder.Link | undefined {
