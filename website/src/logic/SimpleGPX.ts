@@ -18,8 +18,8 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     waypoints: Waypoint[];
     tracks: Track[];
     routes: Route[];
-    start: Date = new Date();
-    end: Date = new Date();
+    start: Date;
+    end: Date;
 
     public static fromString(raw: string) {
         const parser = new GpxParser();
@@ -47,13 +47,6 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
                 })
             );
         });
-        if (waypoints.length) {
-            times.push(
-                ...waypoints.map((wp) => {
-                    return new Date(wp.time).getTime();
-                })
-            );
-        }
         this.start = new Date(Math.min(...times));
         this.end = new Date(Math.max(...times));
     }
