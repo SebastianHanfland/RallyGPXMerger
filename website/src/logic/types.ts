@@ -1,5 +1,8 @@
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../store/types.ts';
 
+/**
+ * ksdjhfbhkjlhdfg
+ */
 export interface GpxMergeLogic {
     (gpxSegments: GpxSegment[], trackCompositions: TrackComposition[], arrivalDateTime: string): CalculatedTrack[];
 }
