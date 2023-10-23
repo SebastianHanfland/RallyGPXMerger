@@ -13,6 +13,10 @@ export function mergeSimpleGPXs(parsers: (GpxParser | SimpleGPX)[]): SimpleGPX {
     return new SimpleGPX(metadata, waypoints, tracks, routes);
 }
 
+function haveTimeStamp(waypoints: Waypoint[]) {
+    return waypoints.filter((wayPoint) => !!wayPoint.time).length === waypoints.length;
+}
+
 export class SimpleGPX extends GpxParser implements GpxFileAccess {
     metadata: MetaData;
     waypoints: Waypoint[];
@@ -51,7 +55,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         this.end = new Date(Math.max(...times));
     }
 
-    public shift(interval: number) {
+    public shiftSeconds(interval: number) {
         this.start = date.addSeconds(this.start, interval);
         this.end = date.addSeconds(this.end, interval);
         // immediately propagate to all the time points
@@ -60,7 +64,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
                 _point.time = date.addSeconds(_point.time, interval);
             });
         });
-        if (this.waypoints.length) {
+        if (this.waypoints.length && haveTimeStamp(this.waypoints)) {
             this.waypoints.forEach((wp) => {
                 wp.time = date.addSeconds(wp.time, interval);
             });
@@ -98,11 +102,11 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     public shiftToArrivalTime(arrival: string) {
-        this.shift(date.subtract(this.end, new Date(arrival)).toSeconds());
+        this.shiftSeconds(date.subtract(new Date(arrival), this.end).toSeconds());
     }
 
     public shiftToDepartureTime(departure: string) {
-        this.shift(date.subtract(this.start, new Date(departure)).toSeconds());
+        this.shiftSeconds(date.subtract(this.start, new Date(departure)).toSeconds());
     }
 
     public toString() {
