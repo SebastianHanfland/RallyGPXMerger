@@ -29,6 +29,8 @@ describe('SimpleGPX', () => {
         expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
         const arrivalDateTime = '2017-11-12T10:14:57.000Z';
 
+        // TODO: find the reason for the timeshift error of one hour. It might be due to the time zone information
+
         // when
         simpleGPX.shiftToArrivalTime(arrivalDateTime);
         expect(simpleGPX.tracks[0].points.map((point) => ({ ...point, time: point.time?.toISOString() }))).toEqual([
