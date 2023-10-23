@@ -1,4 +1,3 @@
-
 import { SimpleGPX } from './gpxutils.ts';
 
 /**
@@ -6,6 +5,7 @@ import { SimpleGPX } from './gpxutils.ts';
  */
 export function mergeGpxs(first: SimpleGPX, second: SimpleGPX): SimpleGPX {
     return new SimpleGPX([first, second]);
+}
 
 /**
  * Assumptions:
