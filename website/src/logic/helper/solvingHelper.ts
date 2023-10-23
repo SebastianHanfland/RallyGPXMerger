@@ -2,11 +2,8 @@ import { GpxSegment, TrackComposition } from '../../store/types.ts';
 import { Break, BREAK_IDENTIFIER } from '../types.ts';
 import { SimpleGPX } from '../gpxutils.ts';
 
-/**
- * @deprecated use new SimpleGPX((SimpleGPX)[]) instead
- */
-export function mergeGpxSegmentContents(gpxSegmentContents: SimpleGPX[]): SimpleGPX {
-    return new SimpleGPX(gpxSegmentContents);
+export function mergeGpxSegmentContents(gpxSegmentContents: SimpleGPX[]): string {
+    return new SimpleGPX(gpxSegmentContents).toString();
 }
 
 export function resolveGpxSegments(track: TrackComposition, gpxSegments: GpxSegment[]): (SimpleGPX | Break)[] {

@@ -14,7 +14,7 @@ export interface GpxSegmentsState {
 export interface CalculatedTrack {
     id: string;
     filename: string;
-    content: SimpleGPX;
+    content: string;
 }
 
 export interface CalculatedTracksState {
