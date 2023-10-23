@@ -5,10 +5,7 @@ export interface GpxMergeLogic {
 }
 
 export interface GpxFileAccess {
-    shift: (interval: number) => void;
-    appendBreak: (interval: number) => void;
     shiftToArrivalTime: (arrival: string) => void;
-    shiftToDepartureTime: (departure: string) => void;
     getStart: () => string;
     toString: () => string;
 }

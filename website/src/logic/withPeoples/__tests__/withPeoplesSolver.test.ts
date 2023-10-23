@@ -2,19 +2,33 @@ import { mergeAndDelayAndAdjustTimes } from '../withPeoplesSolver.ts';
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Mock } from 'vitest';
 import { shiftEndDate } from '../../shiftEndDate.ts';
-
-import { mergeGpxs } from '../../gpxMerger.ts';
-import { letTimeInGpxEndAt } from '../../gpxTimeShifter.ts';
-import { getStartTimeOfGpxTrack } from '../../startTimeExtractor.ts';
+import { mergeSimpleGPXs, SimpleGPX } from '../../SimpleGPX.ts';
+import { GpxFileAccess } from '../../types.ts';
 
 vi.mock('../../gpxMerger.ts');
 vi.mock('../../gpxTimeShifter.ts');
 vi.mock('../../startTimeExtractor.ts');
 vi.mock('../../shiftEndDate.ts');
+vi.mock('../../SimpleGPX.ts');
 
 describe('with Peoples Solver', () => {
     it('merge A1 and AB to A and B1 and AB to B - Ignoring People and Time shift', () => {
+        function createMock(content: string): GpxFileAccess & { content: string } {
+            return {
+                getStart: () => `start-${content}`,
+                toString: () => content,
+                shiftToArrivalTime: vi.fn(),
+                content,
+            };
+        }
+
         // given
+        const a1Mock = createMock('a1');
+        const b1Mock = createMock('b1');
+        const abMock = createMock('ab');
+        const aMock = createMock('cA');
+        const bMock = createMock('cB');
+
         const gpxSegments: GpxSegment[] = [
             { id: '1', filename: 'A1', content: 'cA1', peopleCountEnd: 2000 },
             { id: '2', filename: 'B1', content: 'cB1', peopleCountEnd: 3000 },
@@ -31,43 +45,31 @@ describe('with Peoples Solver', () => {
             { id: '1', filename: 'A', content: 'cA' },
             { id: '2', filename: 'B', content: 'cB' },
         ];
-        (mergeGpxs as Mock).mockImplementation((a: string, b: string) => {
-            if (a === 'cA1-shifted' && b === 'cAB-shifted-extra') {
-                return 'cA';
-            }
-            if (a === 'cB1-shifted' && b === 'cAB-shifted') {
-                return 'cB';
-            }
-            expect({ a, b }).toBeUndefined();
-        });
-        (letTimeInGpxEndAt as Mock).mockImplementation((content: string, date: string) => {
-            if (content === 'cA1' && date === 'start-cAB-shifted-extra') {
-                return 'cA1-shifted';
-            }
-            if (content === 'cB1' && date === 'start-cAB-shifted') {
-                return 'cB1-shifted';
-            }
-            if (content === 'cAB' && date === arrivalDatePlus10) {
-                return 'cAB-shifted-extra';
-            }
-            if (content === 'cAB' && date === arrivalDateTime) {
-                return 'cAB-shifted';
-            }
-            expect({ content, date }).toBeUndefined();
-        });
-        (getStartTimeOfGpxTrack as Mock).mockImplementation((content: string) => {
+        (SimpleGPX.fromString as Mock).mockImplementation((content: string): GpxFileAccess => {
             switch (content) {
-                case 'cAB-shifted-extra':
-                    return 'start-cAB-shifted-extra';
-                case 'cAB-shifted':
-                    return 'start-cAB-shifted';
-                case 'cB1-shifted':
-                    return 'start-cB1-shifted';
-                case 'cA1-shifted':
-                    return 'irrelevant';
+                case 'cA1':
+                    return a1Mock;
+
+                case 'cB1':
+                    return b1Mock;
+
+                case 'cAB':
+                    return abMock;
                 default:
                     expect({ content }).toBeUndefined();
             }
+            return a1Mock;
+        });
+        (mergeSimpleGPXs as Mock).mockImplementation((list: GpxFileAccess[]) => {
+            const a = list[0];
+            const b = list[1];
+            if (a === a1Mock && b === abMock) {
+                return aMock;
+            }
+            if (a === b1Mock && b === abMock) {
+                return bMock;
+            }
+            expect({ a: a, b: b }).toBeUndefined();
         });
         (shiftEndDate as Mock).mockImplementation((date: string, breakInMinutes: number) => {
             if (breakInMinutes === 0) {
@@ -83,6 +85,13 @@ describe('with Peoples Solver', () => {
         const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
         // then
+        // expect(mockedSimpleGpx).toBeCalledWith();
+        expect(abMock.shiftToArrivalTime).toHaveBeenNthCalledWith(1, arrivalDatePlus10);
+        expect(a1Mock.shiftToArrivalTime).toHaveBeenCalledWith(abMock.getStart());
+        expect(abMock.shiftToArrivalTime).toHaveBeenNthCalledWith(2, arrivalDateTime);
+        expect(b1Mock.shiftToArrivalTime).toHaveBeenCalledWith(abMock.getStart());
+        expect(shiftEndDate).toHaveBeenNthCalledWith(1, arrivalDateTime, 10);
+        expect(shiftEndDate).toHaveBeenNthCalledWith(2, arrivalDateTime, 0);
         expect(calculatedTracks).toEqual(expectedCalculatedTracks);
     });
 });

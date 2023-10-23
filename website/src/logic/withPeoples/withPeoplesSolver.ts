@@ -1,9 +1,9 @@
-import { GpxMergeLogic, Break, instanceOfBreak } from '../types.ts';
+import { Break, GpxMergeLogic, instanceOfBreak } from '../types.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
-import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
+import { resolveGpxSegments } from '../helper/solvingHelper.ts';
 import { listAllNodesOfTracks } from './nodeFinder.ts';
 import { getAdjustedArrivalDateTime } from './peopleDelayCounter.ts';
-import { SimpleGPX } from '../SimpleGPX.ts';
+import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
 
 /*
 We have to find nodes where the branches join
@@ -36,7 +36,7 @@ export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCom
             }
         });
 
-        const trackContent = mergeGpxSegmentContents(shiftedGpxContents);
+        const trackContent = mergeSimpleGPXs(shiftedGpxContents).toString();
 
         return { id: track.id, content: trackContent, filename: track.name! };
     });

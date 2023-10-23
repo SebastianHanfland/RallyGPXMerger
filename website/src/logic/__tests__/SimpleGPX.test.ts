@@ -1,4 +1,4 @@
-import { SimpleGPX } from '../SimpleGPX.ts';
+import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
 describe('SimpleGPX', () => {
     it('merging two GPX files', () => {
         // given
@@ -67,7 +67,7 @@ describe('SimpleGPX', () => {
             '</gpx>';
 
         // when
-        const mergedGpxs = new SimpleGPX([SimpleGPX.fromString(first), SimpleGPX.fromString(second)]).toString();
+        const mergedGpxs = mergeSimpleGPXs([SimpleGPX.fromString(first), SimpleGPX.fromString(second)]).toString();
 
         // then
         expect(mergedGpxs.replaceAll('  ', '')).toEqual(manualMerged.replaceAll('  ', ''));

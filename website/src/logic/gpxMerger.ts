@@ -1,10 +1,10 @@
-import { SimpleGPX } from './SimpleGPX.ts';
+import { mergeSimpleGPXs, SimpleGPX } from './SimpleGPX.ts';
 
 /**
  * @deprecated use new SimpleGPX((SimpleGPX)[]) instead
  */
 export function mergeGpxs(first: SimpleGPX, second: SimpleGPX): SimpleGPX {
-    return new SimpleGPX([first, second]);
+    return mergeSimpleGPXs([first, second]);
 }
 
 /**

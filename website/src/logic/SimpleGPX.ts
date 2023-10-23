@@ -4,6 +4,15 @@ import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from './types.ts';
 
+export function mergeSimpleGPXs(parsers: (GpxParser | SimpleGPX)[]): SimpleGPX {
+    const metadata = parsers[0].metadata;
+    const waypoints = parsers.flatMap((p) => p.waypoints);
+    const tracks = parsers.flatMap((p) => p.tracks);
+    const routes = parsers.flatMap((p) => p.routes);
+
+    return new SimpleGPX(metadata, waypoints, tracks, routes);
+}
+
 export class SimpleGPX extends GpxParser implements GpxFileAccess {
     metadata: MetaData;
     waypoints: Waypoint[];
@@ -15,31 +24,32 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     public static fromString(raw: string) {
         const parser = new GpxParser();
         parser.parse(raw);
-        return new SimpleGPX([parser]);
+        const { metadata, waypoints, tracks, routes } = parser;
+        return new SimpleGPX(metadata, waypoints, tracks, routes);
     }
 
     public duplicate() {
         return SimpleGPX.fromString(this.toString());
     }
 
-    public constructor(parsers: (GpxParser | SimpleGPX)[]) {
+    public constructor(metadata: MetaData, waypoints: Waypoint[], tracks: Track[], routes: Route[]) {
         super();
-        this.metadata = parsers[0].metadata;
-        this.waypoints = parsers.flatMap((p) => p.waypoints);
-        this.tracks = parsers.flatMap((p) => p.tracks);
-        this.routes = parsers.flatMap((p) => p.routes);
+        this.metadata = metadata;
+        this.waypoints = waypoints;
+        this.tracks = tracks;
+        this.routes = routes;
 
         const times = <number[]>[];
-        [...this.routes, ...this.tracks].forEach((thing) => {
+        [...routes, ...tracks].forEach((thing) => {
             times.push(
                 ...thing.points.map((_point) => {
                     return new Date(_point.time).getTime();
                 })
             );
         });
-        if (this.waypoints.length) {
+        if (waypoints.length) {
             times.push(
-                ...this.waypoints.map((wp) => {
+                ...waypoints.map((wp) => {
                     return new Date(wp.time).getTime();
                 })
             );
