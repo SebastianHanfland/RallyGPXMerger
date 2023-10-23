@@ -3,7 +3,7 @@ import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
 import { listAllNodesOfTracks } from './nodeFinder.ts';
 import { getAdjustedArrivalDateTime } from './peopleDelayCounter.ts';
-import { SimpleGPX } from '../gpxutils.ts';
+import { SimpleGPX } from '../SimpleGPX.ts';
 
 /*
 We have to find nodes where the branches join

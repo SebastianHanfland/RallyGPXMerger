@@ -1,4 +1,4 @@
-import { SimpleGPX } from './gpxutils.ts';
+import { SimpleGPX } from './SimpleGPX.ts';
 
 /**
  * @deprecated use new SimpleGPX((SimpleGPX)[]) instead
@@ -30,10 +30,9 @@ export function mergeGpxsStrings(first: string, second: string): string {
     let lastSegEndInFirst = first.lastIndexOf('</trkseg>') + 9;
     let firstSegStartInSecond = second.indexOf('<trkseg>');
     let lastSegEndInSecond = second.lastIndexOf('</trkseg>') + 9;
-    let merged =
+    return (
         first.slice(0, lastSegEndInFirst) +
         second.slice(firstSegStartInSecond, lastSegEndInSecond) +
-        first.slice(lastSegEndInFirst);
-
-    return merged;
+        first.slice(lastSegEndInFirst)
+    );
 }

@@ -1,10 +1,9 @@
-
-import { SimpleGPX } from './gpxutils.ts';
+import { SimpleGPX } from './SimpleGPX.ts';
 import GpxParser from 'gpxparser';
 
 /**
  * @deprecated use SimpleGPX.shift instead
-*/
+ */
 
 /**
  * Assumptions:

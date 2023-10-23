@@ -1,4 +1,4 @@
-import { SimpleGPX } from '../logic/gpxutils.ts';
+import { SimpleGPX } from '../logic/SimpleGPX.ts';
 
 export interface GpxSegment {
     id: string;

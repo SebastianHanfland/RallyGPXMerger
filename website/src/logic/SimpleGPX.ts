@@ -184,7 +184,7 @@ function route2route(_route: Route, timeshift: number = 0): gpxBuilder.Route {
 function waypoint2waypoint(
     _waypoints: Waypoint,
     // @ts-ignore
-    timeshift: number = 0
+    _timeshift: number = 0
 ): gpxBuilder.Point {
     throw new Error("whoops, haven't seen one of those before!?");
 }

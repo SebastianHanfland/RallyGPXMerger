@@ -1,7 +1,7 @@
 import { GpxMergeLogic, Break, instanceOfBreak } from '../types.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
-import { SimpleGPX } from '../gpxutils.ts';
+import { SimpleGPX } from '../SimpleGPX.ts';
 
 export const mergeAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
     return trackCompositions.map((track) => {
