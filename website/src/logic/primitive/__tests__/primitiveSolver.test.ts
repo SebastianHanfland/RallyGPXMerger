@@ -5,19 +5,19 @@ import { shiftEndDate } from '../../shiftEndDate.ts';
 import { BREAK_IDENTIFIER, GpxFileAccess } from '../../types.ts';
 import { mergeAndDelayAndAdjustTimes } from '../../withPeoples/withPeoplesSolver.ts';
 
-import { letTimeInGpxEndAt } from '../../gpxTimeShifter.ts';
-import { getStartTimeOfGpxTrack } from '../../startTimeExtractor.ts';
 import { mergeSimpleGPXs, SimpleGPX } from '../../SimpleGPX.ts';
 
-vi.mock('../../gpxMerger.ts');
-vi.mock('../../gpxTimeShifter.ts');
-vi.mock('../../startTimeExtractor.ts');
 vi.mock('../../shiftEndDate.ts');
 vi.mock('../../SimpleGPX.ts');
 
 const solvers = [mergeAndAdjustTimes, mergeAndDelayAndAdjustTimes];
 
 describe('primitiveSolver', () => {
+    afterEach(() => {
+        vi.clearAllMocks();
+        vi.resetAllMocks();
+    });
+
     solvers.forEach((solver) =>
         describe(solver.name, () => {
             const arrivalDateTime = '2023-10-17T22:00:00.000Z';
@@ -33,7 +33,6 @@ describe('primitiveSolver', () => {
 
             // given
             const a1Mock = createMock('cA1');
-            const a2Mock = createMock('cA2');
             const b1Mock = createMock('cB1');
             const abMock = createMock('cAB');
             const aMock = createMock('cA');
@@ -66,12 +65,8 @@ describe('primitiveSolver', () => {
                     switch (content) {
                         case 'cA1':
                             return a1Mock;
-                        case 'cA2':
-                            return a2Mock;
-
                         case 'cB1':
                             return b1Mock;
-
                         case 'cAB':
                             return abMock;
                         default:
@@ -98,10 +93,6 @@ describe('primitiveSolver', () => {
                     { id: '2', filename: 'B', content: 'cB' },
                 ];
 
-                // Ignore time shifting within this test
-                (letTimeInGpxEndAt as Mock).mockImplementation((content: string, _: string) => content);
-                (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => arrivalDateTime);
-
                 // when
                 const calculatedTracks = solver(gpxSegments, trackCompositions, arrivalDateTime);
 
@@ -115,13 +106,6 @@ describe('primitiveSolver', () => {
                 const trackCompositions: TrackComposition[] = [{ id: '1', name: 'A', segmentIds: ['1'] }];
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [{ id: '1', filename: 'A', content: 'cA1' }];
-
-                (letTimeInGpxEndAt as Mock).mockImplementation((content: string, date: string) => {
-                    if (content === 'cA' && date === arrivalDateTime) {
-                        return 'cA-shifted';
-                    }
-                    expect({ content, date }).toBeUndefined();
-                });
 
                 // when
                 const calculatedTracks = solver(gpxSegments, trackCompositions, arrivalDateTime);
@@ -141,41 +125,12 @@ describe('primitiveSolver', () => {
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [{ id: '1', filename: 'A', content: 'cA' }];
 
-                (letTimeInGpxEndAt as Mock).mockImplementation((content: string, date: string) => {
-                    if (content === 'cA1' && date === 'start-cA2-shifted') {
-                        return 'cA1-shifted';
-                    }
-                    if (content === 'cA2' && date === arrivalDateTime) {
-                        return 'cA2-shifted';
-                    }
-                    expect({ content, date }).toBeUndefined();
-                });
-                (getStartTimeOfGpxTrack as Mock).mockImplementation((content: string) => {
-                    switch (content) {
-                        case 'cA2-shifted':
-                            return 'start-cA2-shifted';
-                        case 'cA1-shifted':
-                            return 'irrelevant';
-                        default:
-                            expect({ content }).toBeUndefined();
-                    }
-                });
-                (mergeSimpleGPXs as Mock).mockImplementation((list: GpxFileAccess[]) => {
-                    const a = list[0];
-                    const b = list[1];
-                    if (a === a1Mock && b === abMock) {
-                        return aMock;
-                    }
-                    if (a === b1Mock && b === abMock) {
-                        return bMock;
-                    }
-                    expect({ a: a, b: b }).toBeUndefined();
-                });
-
                 // when
                 const calculatedTracks = solver(gpxSegments, trackCompositions, arrivalDateTime);
 
                 // then
+                expect(a1Mock.shiftToArrivalTime).toHaveBeenCalledWith(abMock.getStart());
+                expect(abMock.shiftToArrivalTime).toHaveBeenCalledWith(arrivalDateTime);
                 expect(calculatedTracks).toEqual(expectedCalculatedTracks);
             });
 
@@ -189,12 +144,6 @@ describe('primitiveSolver', () => {
 
                 const expectedCalculatedTracks: CalculatedTrack[] = [{ id: '1', filename: 'A', content: 'cA1' }];
 
-                (letTimeInGpxEndAt as Mock).mockImplementation((content: string, date: string) => {
-                    if (content === 'cA' && date === arrivalDateTime30min) {
-                        return 'cA-shifted';
-                    }
-                    expect({ content, date }).toBeUndefined();
-                });
                 (shiftEndDate as Mock).mockImplementation((date: string, breakInMinutes: number) => {
                     if (date === arrivalDateTime && breakInMinutes === 30) {
                         return arrivalDateTime30min;
@@ -204,12 +153,12 @@ describe('primitiveSolver', () => {
                     }
                     expect({ date, breakInMinutes }).toBeUndefined();
                 });
-                (getStartTimeOfGpxTrack as Mock).mockImplementation((_: string) => 'irrelevant');
 
                 // when
                 const calculatedTracks = solver(gpxSegments, trackCompositions, arrivalDateTime);
 
                 // then
+                expect(a1Mock.shiftToArrivalTime).toHaveBeenCalledWith(arrivalDateTime30min);
                 expect(calculatedTracks).toEqual(expectedCalculatedTracks);
             });
         })
