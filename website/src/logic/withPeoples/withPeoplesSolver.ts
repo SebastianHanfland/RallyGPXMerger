@@ -1,9 +1,7 @@
-import { Break, GpxMergeLogic, instanceOfBreak } from '../types.ts';
-import { shiftEndDate } from '../shiftEndDate.ts';
-import { resolveGpxSegments } from '../helper/solvingHelper.ts';
+import { GpxMergeLogic } from '../types.ts';
 import { listAllNodesOfTracks } from './nodeFinder.ts';
 import { getAdjustedArrivalDateTime } from './peopleDelayCounter.ts';
-import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
+import { assembleTrackFromSegments } from '../primitive/primitiveSolver.ts';
 
 /*
 We have to find nodes where the branches join
@@ -19,25 +17,7 @@ export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCom
     const trackNodes = listAllNodesOfTracks(trackCompositions, gpxSegments);
 
     return trackCompositions.map((track) => {
-        const gpxSegmentContents: (SimpleGPX | Break)[] = resolveGpxSegments(track, gpxSegments);
-
-        let shiftedGpxContents: SimpleGPX[] = [];
-        let endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes);
-
-        gpxSegmentContents.reverse().forEach((gpxOrBreak) => {
-            if (!instanceOfBreak(gpxOrBreak)) {
-                // adjust this GPX to its intended arrival time
-                gpxOrBreak.shiftToArrivalTime(endDate);
-                endDate = gpxOrBreak.getStart();
-                shiftedGpxContents = [gpxOrBreak, ...shiftedGpxContents];
-            } else {
-                // make the next group arrive a bit early
-                endDate = shiftEndDate(endDate, gpxOrBreak.minutes);
-            }
-        });
-
-        const trackContent = mergeSimpleGPXs(shiftedGpxContents).toString();
-
-        return { id: track.id, content: trackContent, filename: track.name! };
+        const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes);
+        return assembleTrackFromSegments(track, gpxSegments, endDate);
     });
 };
