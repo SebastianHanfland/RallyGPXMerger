@@ -5,7 +5,7 @@ import { Mock } from 'vitest';
 import { assembleTrackFromSegments } from '../../primitive/assembleTrackFromSegments.ts';
 
 vi.mock('../../SimpleGPX.ts');
-vi.mock('../../primitive/primitiveSolver.ts');
+vi.mock('../../primitive/assembleTrackFromSegments.ts');
 
 describe('with Peoples Solver', () => {
     it('merge A1 and AB to A and B1 and AB to B - Shifting time based on people on track', () => {
