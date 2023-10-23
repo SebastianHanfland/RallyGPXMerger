@@ -1,6 +1,6 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import { default as GpxParser, MetaData, Route, Track, Point, Link, Waypoint } from 'gpxparser';
-import * as date from 'date-and-time';
+import { default as GpxParser, Link, MetaData, Point, Route, Track, Waypoint } from 'gpxparser';
+import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from './types.ts';
 
@@ -128,7 +128,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 }
 
-function toLink(link: string | Link): gpxBuilder.Link | undefined {
+function toLink(link: string | Link | undefined): gpxBuilder.Link | undefined {
+    if (link === undefined) {
+        return undefined;
+    }
     // @ts-ignore
     if (typeof link === 'string') {
         return new gpxBuilder.Link(link, {});
@@ -186,5 +189,5 @@ function waypoint2waypoint(
     // @ts-ignore
     _timeshift: number = 0
 ): gpxBuilder.Point {
-    throw new Error("whoops, haven't seen one of those before!?");
+    return new gpxBuilder.Point(_waypoints.lat, _waypoints.lon);
 }
