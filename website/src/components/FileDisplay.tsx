@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import GpxParser from 'gpxparser';
 import { Button, Form } from 'react-bootstrap';
 import { GpxSegment } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { FileDownloader } from './FileDownloader.tsx';
 
 function getCount(value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const number = Number(value.target.value);
@@ -13,25 +12,15 @@ function getCount(value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
 
 export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
     const { id, filename, content, peopleCountStart, peopleCountEnd } = gpxSegment;
-    const [fileContent, setFileContent] = useState<string | null>(null);
     const dispatch = useDispatch();
-
-    // TODO: This is just example code. It should not be in here anymore...
-    useEffect(() => {
-        const textContent = content;
-        setFileContent(textContent);
-        const gpx = new GpxParser();
-        gpx.parse(textContent);
-        console.log('Tracks', gpx.tracks);
-        console.log('All', gpx);
-    }, [gpxSegment.content]);
-
-    console.log(fileContent);
 
     return (
         <tr>
             <td>
-                <div>{filename}</div>
+                <div>
+                    <FileDownloader content={content} name={filename} />
+                    <Button>Change</Button>
+                </div>
             </td>
             <td>
                 <Form.Control

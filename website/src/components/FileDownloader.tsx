@@ -8,13 +8,13 @@ interface Props {
 
 const downloadFile = (name: string, content: string) => {
     const blob = new Blob([content], { type: 'gpx' });
-    FileSaver.saveAs(blob, `${name}.gpx`);
+    FileSaver.saveAs(blob, `${name}`);
 };
 
 export const FileDownloader = ({ name, content }: Props) => {
     return (
         <Button className={'m-2'} onClick={() => downloadFile(name, content)}>
-            Download File
+            {name}
         </Button>
     );
 };
