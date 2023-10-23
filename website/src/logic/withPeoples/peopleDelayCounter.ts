@@ -32,6 +32,5 @@ export function getAdjustedArrivalDateTime(arrivalDateTime: string, track: Track
             delayForTrackInMinutes += (peopleWithHigherPriority * DELAY_PER_PERSON_IN_SECONDS) / 60;
         }
     });
-    // console.log(delayForTrackInMinutes);
-    return shiftEndDate(arrivalDateTime, delayForTrackInMinutes);
+    return shiftEndDate(arrivalDateTime, -delayForTrackInMinutes);
 }
