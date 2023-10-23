@@ -189,5 +189,5 @@ function waypoint2waypoint(
     // @ts-ignore
     _timeshift: number = 0
 ): gpxBuilder.Point {
-    return new gpxBuilder.Point(_waypoints.lat, _waypoints.lon);
+    return new gpxBuilder.Point(_waypoints.lat, _waypoints.lon, { ele: _waypoints.ele, name: _waypoints.name });
 }
