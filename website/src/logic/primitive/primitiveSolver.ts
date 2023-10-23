@@ -15,19 +15,17 @@ export function assembleTrackFromSegments(
     gpxSegments: GpxSegment[],
     initialEndDate: string
 ): CalculatedTrack {
-    let endDate = initialEndDate;
+    let arrivalTimeForPreviousSegment = initialEndDate;
     let shiftedGpxContents: SimpleGPX[] = [];
 
     const gpxSegmentContents: (SimpleGPX | Break)[] = resolveGpxSegments(track, gpxSegments);
     gpxSegmentContents.reverse().forEach((gpxOrBreak) => {
         if (!instanceOfBreak(gpxOrBreak)) {
-            // adjust this GPX to its intended arrival time
-            gpxOrBreak.shiftToArrivalTime(endDate);
-            endDate = gpxOrBreak.getStart();
+            gpxOrBreak.shiftToArrivalTime(arrivalTimeForPreviousSegment);
+            arrivalTimeForPreviousSegment = gpxOrBreak.getStart();
             shiftedGpxContents = [gpxOrBreak, ...shiftedGpxContents];
         } else {
-            // make the next group arrive a bit early
-            endDate = shiftEndDate(endDate, gpxOrBreak.minutes);
+            arrivalTimeForPreviousSegment = shiftEndDate(arrivalTimeForPreviousSegment, gpxOrBreak.minutes);
         }
     });
 
