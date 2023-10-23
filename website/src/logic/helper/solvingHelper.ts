@@ -14,6 +14,6 @@ export function resolveGpxSegments(track: TrackComposition, gpxSegments: GpxSegm
             return { minutes };
         }
         const gpxSegment = gpxSegments.find((segment) => segment.id === segmentId);
-        return gpxSegment!.content;
+        return SimpleGPX.fromString(gpxSegment!.content);
     });
 }
