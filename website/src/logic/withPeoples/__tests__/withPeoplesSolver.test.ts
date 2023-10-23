@@ -1,7 +1,8 @@
 import { mergeAndDelayAndAdjustTimes } from '../withPeoplesSolver.ts';
 import { GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Mock } from 'vitest';
-import { assembleTrackFromSegments } from '../../primitive/primitiveSolver.ts';
+
+import { assembleTrackFromSegments } from '../../primitive/assembleTrackFromSegments.ts';
 
 vi.mock('../../SimpleGPX.ts');
 vi.mock('../../primitive/primitiveSolver.ts');
