@@ -2,8 +2,9 @@ import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
 import { default as GpxParser, MetaData, Route, Track, Point, Link, Waypoint } from 'gpxparser';
 import * as date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
+import { GpxFileAccess } from './types.ts';
 
-export class SimpleGPX extends GpxParser {
+export class SimpleGPX extends GpxParser implements GpxFileAccess {
     metadata: MetaData;
     waypoints: Waypoint[];
     tracks: Track[];
