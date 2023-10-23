@@ -20,6 +20,6 @@ export function letTimeInGpxEndAt(parsedGpx: string, endTime: string): string {
     const gpx = new GpxParser();
     gpx.parse(parsedGpx);
     const simple_gpx = new SimpleGPX([gpx]);
-    simple_gpx.shiftToArrivalTime(new Date(endTime));
+    simple_gpx.shiftToArrivalTime(endTime);
     return simple_gpx.toString();
 }

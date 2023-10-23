@@ -8,13 +8,13 @@ export const mergeAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackComposition
         const gpxSegmentContents: (SimpleGPX | Break)[] = resolveGpxSegments(track, gpxSegments);
 
         let shiftedGpxContents: SimpleGPX[] = [];
-        let endDate = new Date(arrivalDateTime);
+        let endDate: string = arrivalDateTime;
 
         gpxSegmentContents.reverse().forEach((content) => {
             if (!instanceOfBreak(content)) {
                 // adjust this GPX to its intended arrival time
                 content.shiftToArrivalTime(endDate);
-                endDate = content.start;
+                endDate = content.getStart();
                 shiftedGpxContents = [content, ...shiftedGpxContents];
             } else {
                 // make the next group arrive a bit early

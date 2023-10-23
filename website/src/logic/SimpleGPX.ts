@@ -1,5 +1,5 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import { default as GpxParser, Link, MetaData, Point, Route, Track, Waypoint } from 'gpxparser';
+import GpxParser, { Link, MetaData, Point, Route, Track, Waypoint } from 'gpxparser';
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from './types.ts';
@@ -94,12 +94,12 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         this.end = date.addSeconds(this.end, interval);
     }
 
-    public shiftToArrivalTime(arrival: Date) {
-        this.shift(date.subtract(this.end, arrival).toSeconds());
+    public shiftToArrivalTime(arrival: string) {
+        this.shift(date.subtract(this.end, new Date(arrival)).toSeconds());
     }
 
-    public shiftToDepartureTime(departure: Date) {
-        this.shift(date.subtract(this.start, departure).toSeconds());
+    public shiftToDepartureTime(departure: string) {
+        this.shift(date.subtract(this.start, new Date(departure)).toSeconds());
     }
 
     public toString() {
@@ -125,6 +125,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
             builder.setWayPoints(this.waypoints.map((_waypoint) => waypoint2waypoint(_waypoint)));
         }
         return buildGPX(builder.toObject());
+    }
+
+    getStart(): string {
+        return this.start.toISOString();
     }
 }
 

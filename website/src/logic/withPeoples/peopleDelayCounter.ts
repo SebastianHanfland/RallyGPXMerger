@@ -23,7 +23,7 @@ export function sumUpAllPeopleWithHigherPriority(
     return numberOfPeopleWithHigherPriority;
 }
 
-export function getAdjustedArrivalDateTime(arrivalDateTime: Date, track: TrackComposition, trackNodes: TrackNode[]) {
+export function getAdjustedArrivalDateTime(arrivalDateTime: string, track: TrackComposition, trackNodes: TrackNode[]) {
     let delayForTrackInMinutes = 0;
     trackNodes.forEach((trackNode) => {
         const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);

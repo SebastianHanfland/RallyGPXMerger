@@ -15,24 +15,20 @@ A longer branch goes first and the smaller ones add at the end of it
 Also don't forget that duplicating a SimpleGPX is probably more complicated than duplicating a string
  */
 
-export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (
-    gpxSegments,
-    trackCompositions,
-    arrivalDateTime: String | Date
-) => {
+export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime: string) => {
     const trackNodes = listAllNodesOfTracks(trackCompositions, gpxSegments);
 
     return trackCompositions.map((track) => {
         const gpxSegmentContents: (SimpleGPX | Break)[] = resolveGpxSegments(track, gpxSegments);
 
         let shiftedGpxContents: SimpleGPX[] = [];
-        let endDate = getAdjustedArrivalDateTime(new Date(arrivalDateTime.toString()), track, trackNodes);
+        let endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes);
 
         gpxSegmentContents.reverse().forEach((content) => {
             if (!instanceOfBreak(content)) {
                 // adjust this GPX to its intended arrival time
                 content.shiftToArrivalTime(endDate);
-                endDate = content.start;
+                endDate = content.getStart();
                 shiftedGpxContents = [content, ...shiftedGpxContents];
             } else {
                 // make the next group arrive a bit early
