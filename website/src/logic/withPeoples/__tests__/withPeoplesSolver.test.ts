@@ -1,10 +1,11 @@
 import { mergeAndDelayAndAdjustTimes } from '../withPeoplesSolver.ts';
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/types.ts';
-import { mergeGpxs } from '../../gpxMerger.ts';
 import { Mock } from 'vitest';
+import { shiftEndDate } from '../../shiftEndDate.ts';
+
+import { mergeGpxs } from '../../gpxMerger.ts';
 import { letTimeInGpxEndAt } from '../../gpxTimeShifter.ts';
 import { getStartTimeOfGpxTrack } from '../../startTimeExtractor.ts';
-import { shiftEndDate } from '../../shiftEndDate.ts';
 
 vi.mock('../../gpxMerger.ts');
 vi.mock('../../gpxTimeShifter.ts');

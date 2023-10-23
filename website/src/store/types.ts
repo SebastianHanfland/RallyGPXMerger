@@ -1,7 +1,9 @@
+import { SimpleGPX } from '../logic/gpxutils.ts';
+
 export interface GpxSegment {
     id: string;
     filename: string;
-    content: string;
+    content: SimpleGPX;
     peopleCountStart?: number;
     peopleCountEnd?: number;
 }
@@ -12,7 +14,7 @@ export interface GpxSegmentsState {
 export interface CalculatedTrack {
     id: string;
     filename: string;
-    content: string;
+    content: SimpleGPX;
 }
 
 export interface CalculatedTracksState {

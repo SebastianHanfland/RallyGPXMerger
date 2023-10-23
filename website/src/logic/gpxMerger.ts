@@ -1,3 +1,12 @@
+
+import { SimpleGPX } from './gpxutils.ts';
+
+/**
+ * @deprecated use new SimpleGPX((SimpleGPX)[]) instead
+ */
+export function mergeGpxs(first: SimpleGPX, second: SimpleGPX): SimpleGPX {
+    return new SimpleGPX([first, second]);
+
 /**
  * Assumptions:
  * - a gpx file contains n track segments "trkseg"
@@ -14,7 +23,7 @@
  * @param second this gets joined at the end of the first
  *
  */
-export function mergeGpxs(first: string, second: string): string {
+export function mergeGpxsStrings(first: string, second: string): string {
     console.log(first, second);
     // find last occurrence of </trkseg> in first
     // and join first (and consecutive) trksegs from second

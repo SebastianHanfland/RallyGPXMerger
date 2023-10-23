@@ -1,6 +1,5 @@
 # RallyGPXMerger
-A web tool to merge GPX tracks for bigger rallies
-It is written in React and TypeScript. Once the code is pushed to main, it is deployed.
+A web tool to merge GPX tracks for big bike rallies written in React and TypeScript. Once the code is pushed to main, it is deployed.
 
 ## Current deployment
 https://sebastianhanfland.github.io/RallyGPXMerger/

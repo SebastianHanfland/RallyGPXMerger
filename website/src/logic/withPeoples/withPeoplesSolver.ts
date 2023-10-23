@@ -1,10 +1,9 @@
-import { GpxMergeLogic } from '../types.ts';
-import { letTimeInGpxEndAt } from '../gpxTimeShifter.ts';
-import { getStartTimeOfGpxTrack } from '../startTimeExtractor.ts';
+import { GpxMergeLogic, Break, instanceOfBreak } from '../types.ts';
 import { shiftEndDate } from '../shiftEndDate.ts';
 import { mergeGpxSegmentContents, resolveGpxSegments } from '../helper/solvingHelper.ts';
 import { listAllNodesOfTracks } from './nodeFinder.ts';
 import { getAdjustedArrivalDateTime } from './peopleDelayCounter.ts';
+import { SimpleGPX } from '../gpxutils.ts';
 
 /*
 We have to find nodes where the branches join
@@ -12,23 +11,31 @@ We have to find nodes where the branches join
 We have to pick one of the track which arrives delayed/earlier at this node to prevent a jam
 
 A longer branch goes first and the smaller ones add at the end of it
+
+Also don't forget that duplicating a SimpleGPX is probably more complicated than duplicating a string
  */
 
-export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime) => {
+export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (
+    gpxSegments,
+    trackCompositions,
+    arrivalDateTime: String | Date
+) => {
     const trackNodes = listAllNodesOfTracks(trackCompositions, gpxSegments);
 
     return trackCompositions.map((track) => {
-        const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
+        const gpxSegmentContents: (SimpleGPX | Break)[] = resolveGpxSegments(track, gpxSegments);
 
-        let shiftedGpxContents: string[] = [];
-        let endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes);
+        let shiftedGpxContents: SimpleGPX[] = [];
+        let endDate = getAdjustedArrivalDateTime(new Date(arrivalDateTime.toString()), track, trackNodes);
 
         gpxSegmentContents.reverse().forEach((content) => {
-            if (typeof content === 'string') {
-                const shiftedContent = letTimeInGpxEndAt(content, endDate);
-                endDate = getStartTimeOfGpxTrack(shiftedContent);
-                shiftedGpxContents = [shiftedContent, ...shiftedGpxContents];
+            if (!instanceOfBreak(content)) {
+                // adjust this GPX to its intended arrival time
+                content.shiftToArrivalTime(endDate);
+                endDate = content.start;
+                shiftedGpxContents = [content, ...shiftedGpxContents];
             } else {
+                // make the next group arrive a bit early
                 endDate = shiftEndDate(endDate, content.minutes);
             }
         });
