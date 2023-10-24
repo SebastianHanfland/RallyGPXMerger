@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
-import { routeHook } from './routeDisplayHook.ts';
+import { gpxSegmentDisplayHook } from './gpxSegmentsDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -52,13 +52,13 @@ export const PlainMap = () => {
         }
     }, []);
 
-    const routeLayer = useRef<LayerGroup>(null);
+    const gpxSegmentsLayer = useRef<LayerGroup>(null);
     useEffect(() => {
         // @ts-ignore
-        routeLayer.current = L.layerGroup().addTo(myMap);
+        gpxSegmentsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    routeHook(routeLayer);
+    gpxSegmentDisplayHook(gpxSegmentsLayer);
 
     return (
         <div className={'m-1'}>

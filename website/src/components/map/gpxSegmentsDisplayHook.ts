@@ -31,13 +31,13 @@ function addGpxToMap(gpxSegment: GpxSegment, routeLayer: LayerGroup) {
     });
 }
 
-export function routeHook(routeLayer: MutableRefObject<LayerGroup | null>) {
+export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const gpxSegments = useSelector(getGpxSegments);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const current = routeLayer.current;
-        if (!routeLayer || !current) {
+        const current = gpxSegmentsLayer.current;
+        if (!gpxSegmentsLayer || !current) {
             return;
         }
         current.clearLayers();
