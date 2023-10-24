@@ -5,19 +5,26 @@ import date from 'date-and-time';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../logic/SimpleGPX.ts';
 
+let readableTracks: SimpleGPX[] | undefined = undefined;
+
 function getStartAndEndOfSimulation(state: State): { start: string; end: string } {
     const calculatedTracks = getCalculatedTracks(state);
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 
-    calculatedTracks.forEach((track) => {
-        const trackGpx = SimpleGPX.fromString(track.content);
-        if (trackGpx.getStart() < startDate) {
-            startDate = trackGpx.getStart();
+    console.log('Triggered');
+
+    if (!readableTracks) {
+        readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));
+    }
+
+    readableTracks.forEach((track) => {
+        if (track.getStart() < startDate) {
+            startDate = track.getStart();
         }
 
-        if (trackGpx.getEnd() > endDate) {
-            endDate = trackGpx.getEnd();
+        if (track.getEnd() > endDate) {
+            endDate = track.getEnd();
         }
     });
 
@@ -26,6 +33,30 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
         end: endDate,
     };
 }
+
+const extractLocation =
+    (timeStamp: string) =>
+    (calculatedTrack: SimpleGPX): { lat: number; lng: number } => {
+        let returnPoint = { lat: 0, lng: 0 };
+        calculatedTrack.tracks.forEach((track) => {
+            track.points.forEach((point, index, points) => {
+                if (index === 0) {
+                    return;
+                }
+                const next = point.time.toISOString();
+                const previous = points[index - 1].time.toISOString();
+                if (timeStamp > previous && timeStamp < next) {
+                    returnPoint = { lat: point.lat, lng: point.lon };
+                }
+            });
+        });
+        return returnPoint;
+    };
+
+export const getCurrentMarkerPositionsForTracks = (state: State) => {
+    const timeStamp = getCurrentTimeStamp(state);
+    return readableTracks?.map(extractLocation(timeStamp)) ?? [];
+};
 
 export const getCurrentTimeStamp = (state: State): string => {
     const mapTime = getCurrenMapTime(state) ?? 0;

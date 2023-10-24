@@ -18,7 +18,7 @@ export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
         return;
     }
 
-    const calculatedTracks = solveFunctions[0](gpxSegments, trackCompositions, arrivalDateTime);
+    const calculatedTracks = solveFunctions[1](gpxSegments, trackCompositions, arrivalDateTime);
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
 }
