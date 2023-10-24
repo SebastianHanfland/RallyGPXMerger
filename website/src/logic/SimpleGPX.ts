@@ -3,7 +3,7 @@ import GpxParser, { Link, MetaData, Point, Route, Track, Waypoint } from 'gpxpar
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from './types.ts';
-import { getTimeDifferenceInSeconds } from './shiftEndDate.ts';
+import { getTimeDifferenceInSeconds } from './dateUtil.ts';
 
 export function mergeSimpleGPXs(parsers: (GpxParser | SimpleGPX)[]): SimpleGPX {
     const metadata = parsers[0].metadata;

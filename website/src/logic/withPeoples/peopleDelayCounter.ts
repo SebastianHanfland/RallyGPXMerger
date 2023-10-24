@@ -1,6 +1,6 @@
 import { TrackComposition } from '../../store/types.ts';
 import { TrackNode } from './nodeFinder.ts';
-import { shiftEndDate } from '../shiftEndDate.ts';
+import { shiftEndDate } from '../dateUtil.ts';
 
 export const DELAY_PER_PERSON_IN_SECONDS = 0.2;
 

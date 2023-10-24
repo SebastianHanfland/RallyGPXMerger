@@ -2,7 +2,7 @@ import { CalculatedTrack, GpxSegment, TrackComposition } from '../../store/types
 import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
 import { Break, instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from '../helper/solvingHelper.ts';
-import { shiftEndDate } from '../shiftEndDate.ts';
+import { shiftEndDate } from '../dateUtil.ts';
 
 export function assembleTrackFromSegments(
     track: TrackComposition,
