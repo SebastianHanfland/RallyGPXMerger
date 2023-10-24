@@ -39,7 +39,12 @@ export function FileChangeButton({ id, name }: Props) {
     };
 
     return (
-        <Button variant={'light'} onClick={buttonClicked} title={`Change file for the segment "${name}"`}>
+        <Button
+            variant={'light'}
+            onClick={buttonClicked}
+            title={`Change file for the segment "${name}"`}
+            className={'m-1'}
+        >
             <input type="file" name="file" onChange={changeHandler} ref={uploadInput} hidden={true} />
             {isLoading ? (
                 <img src={check} className="App-logo" alt="logo" />

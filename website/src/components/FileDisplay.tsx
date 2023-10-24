@@ -1,11 +1,11 @@
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { GpxSegment } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';
 import { ALLOWS_TO_ENTER_PEOPLE_AT_START } from './FileDragAndDrop.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
+import { RemoveFileButton } from './RemoveFileButton.tsx';
 
 function getCount(value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const number = Number(value.target.value);
@@ -21,8 +21,11 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
             <td>
                 <div>
                     <FileDownloader content={content} name={filename} />
-                    <FileChangeButton id={id} name={filename} />
                 </div>
+            </td>
+            <td>
+                <FileChangeButton id={id} name={filename} />
+                <RemoveFileButton id={id} name={filename} />
             </td>
             {ALLOWS_TO_ENTER_PEOPLE_AT_START && (
                 <td>
@@ -43,18 +46,6 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
                     value={peopleCountEnd}
                     onChange={(value) => dispatch(gpxSegmentsActions.setPeopleCountEnd({ id, count: getCount(value) }))}
                 />
-            </td>
-            <td>
-                <Button
-                    variant="danger"
-                    title="Remove file and all references"
-                    onClick={() => {
-                        dispatch(gpxSegmentsActions.removeGpxSegment(id));
-                        dispatch(trackMergeActions.removeGpxSegment(id));
-                    }}
-                >
-                    x
-                </Button>
             </td>
         </tr>
     );
