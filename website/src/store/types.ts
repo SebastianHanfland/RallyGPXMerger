@@ -30,6 +30,8 @@ export interface TrackMergeState {
     arrivalDateTime?: string;
 }
 
+export const MAX_SLIDER_TIME = 100000;
+
 export interface MapState {
     currentTime: number;
     currentSource: 'segments' | 'tracks';

@@ -11,3 +11,8 @@ export function getTimeDifferenceInSeconds(firstDateString: string, secondDateSt
     const dayLightSavingDifference = firstDate.getTimezoneOffset() - secondDate.getTimezoneOffset();
     return date.subtract(secondDate, firstDate).toSeconds() + dayLightSavingDifference * 60;
 }
+
+export function formatDate(dateString: string): string {
+    const DATE_FORMAT = 'DD.MM.YYYY HH:mm:ss';
+    return date.format(new Date(dateString), DATE_FORMAT);
+}
