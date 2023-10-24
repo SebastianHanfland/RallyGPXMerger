@@ -29,7 +29,34 @@ describe('SimpleGPX', () => {
         expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
         const arrivalDateTime = '2017-11-12T10:14:57.000Z';
 
-        // TODO: find the reason for the timeshift error of one hour. It might be due to the time zone information
+        // when
+        simpleGPX.shiftToArrivalTime(arrivalDateTime);
+        expect(simpleGPX.tracks[0].points.map((point) => ({ ...point, time: point.time?.toISOString() }))).toEqual([
+            {
+                ele: 2376,
+                lat: 46.57608333,
+                lon: 8.89241667,
+                time: '2017-11-12T10:10:46.000Z',
+            },
+            {
+                ele: 2376,
+                lat: 46.57661111,
+                lon: 8.89344444,
+                time: '2017-11-12T10:14:57.000Z',
+            },
+        ]);
+
+        // then
+        expect(simpleGPX.getStart()).toEqual('2017-11-12T10:10:46.000Z');
+        expect(simpleGPX.getEnd()).toEqual('2017-11-12T10:14:57.000Z');
+    });
+
+    it('should be able to shift the times within a gpx track 3', () => {
+        // given
+        const simpleGPX = SimpleGPX.fromString(first);
+        const startTimeStamp = simpleGPX.getStart();
+        expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
+        const arrivalDateTime = '2007-11-14T10:15:57.000Z';
 
         // when
         simpleGPX.shiftToArrivalTime(arrivalDateTime);
@@ -38,18 +65,19 @@ describe('SimpleGPX', () => {
                 ele: 2376,
                 lat: 46.57608333,
                 lon: 8.89241667,
-                time: '2017-11-12T11:10:46.000Z',
+                time: '2007-11-14T10:11:46.000Z',
             },
             {
                 ele: 2376,
                 lat: 46.57661111,
                 lon: 8.89344444,
-                time: '2017-11-12T11:14:57.000Z',
+                time: '2007-11-14T10:15:57.000Z',
             },
         ]);
 
         // then
-        expect(simpleGPX.getStart()).toEqual('2017-11-12T11:10:46.000Z');
+        expect(simpleGPX.getStart()).toEqual('2007-11-14T10:11:46.000Z');
+        expect(simpleGPX.getEnd()).toEqual('2007-11-14T10:15:57.000Z');
     });
 
     it('merging two GPX files', () => {

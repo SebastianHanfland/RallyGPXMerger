@@ -3,6 +3,7 @@ import GpxParser, { Link, MetaData, Point, Route, Track, Waypoint } from 'gpxpar
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from './types.ts';
+import { getTimeDifferenceInSeconds } from './shiftEndDate.ts';
 
 export function mergeSimpleGPXs(parsers: (GpxParser | SimpleGPX)[]): SimpleGPX {
     const metadata = parsers[0].metadata;
@@ -102,11 +103,11 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     public shiftToArrivalTime(arrival: string) {
-        this.shiftSeconds(date.subtract(new Date(arrival), this.end).toSeconds());
+        this.shiftSeconds(getTimeDifferenceInSeconds(arrival, this.getEnd()));
     }
 
     public shiftToDepartureTime(departure: string) {
-        this.shiftSeconds(date.subtract(this.start, new Date(departure)).toSeconds());
+        this.shiftSeconds(getTimeDifferenceInSeconds(this.getStart(), departure));
     }
 
     public toString() {
@@ -136,6 +137,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
 
     getStart(): string {
         return this.start.toISOString();
+    }
+
+    getEnd(): string {
+        return this.end.toISOString();
     }
 }
 
