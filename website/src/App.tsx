@@ -2,7 +2,7 @@ import './App.css';
 import { TrackMergeSection } from './components/TrackMergeSection.tsx';
 import { FileUploadSection } from './components/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
-import { TrackMapPage } from './TrackMapPage.tsx';
+import { TrackMapPage } from './components/map/TrackMapPage.tsx';
 
 export function App() {
     return (
