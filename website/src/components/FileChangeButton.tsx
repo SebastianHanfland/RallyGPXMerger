@@ -1,15 +1,24 @@
 import { Button } from 'react-bootstrap';
 import exchange from '../assets/exchange.svg';
+import check from '../assets/check.svg';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { useDispatch } from 'react-redux';
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
     id: string;
+    name: string;
 }
-export function FileChangeButton({ id }: Props) {
+export function FileChangeButton({ id, name }: Props) {
     const dispatch = useDispatch();
     const uploadInput = useRef<HTMLInputElement>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (isLoading) {
+            setTimeout(() => setIsLoading(false), 2000);
+        }
+    }, [isLoading]);
 
     const buttonClicked = () => {
         const current = uploadInput.current;
@@ -24,15 +33,19 @@ export function FileChangeButton({ id }: Props) {
             files[0]
                 ?.text()
                 .then((newContent) => dispatch(gpxSegmentsActions.changeGpxSegmentContent({ id, newContent })))
+                .then(() => setIsLoading(true))
                 .catch(console.error);
         }
     };
 
     return (
-        <Button variant={'light'} onClick={buttonClicked}>
+        <Button variant={'light'} onClick={buttonClicked} title={`Change file for the segment "${name}"`}>
             <input type="file" name="file" onChange={changeHandler} ref={uploadInput} hidden={true} />
-            <img src={exchange} className="App-logo" alt="logo" />
-            Change file
+            {isLoading ? (
+                <img src={check} className="App-logo" alt="logo" />
+            ) : (
+                <img src={exchange} className="App-logo" alt="logo" />
+            )}
         </Button>
     );
 }

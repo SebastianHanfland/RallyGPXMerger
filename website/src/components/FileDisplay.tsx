@@ -21,7 +21,7 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
             <td>
                 <div>
                     <FileDownloader content={content} name={filename} />
-                    <FileChangeButton id={id} />
+                    <FileChangeButton id={id} name={filename} />
                 </div>
             </td>
             {ALLOWS_TO_ENTER_PEOPLE_AT_START && (
