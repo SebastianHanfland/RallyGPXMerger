@@ -5,6 +5,7 @@ import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';
 import { ALLOWS_TO_ENTER_PEOPLE_AT_START } from './FileDragAndDrop.tsx';
+import { FileChangeButton } from './FileChangeButton.tsx';
 
 function getCount(value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const number = Number(value.target.value);
@@ -20,7 +21,7 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
             <td>
                 <div>
                     <FileDownloader content={content} name={filename} />
-                    <Button>Change</Button>
+                    <FileChangeButton id={id} />
                 </div>
             </td>
             {ALLOWS_TO_ENTER_PEOPLE_AT_START && (

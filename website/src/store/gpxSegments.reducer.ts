@@ -16,6 +16,14 @@ const gpxSegmentsSlice = createSlice({
         removeGpxSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
         },
+        changeGpxSegmentContent: (
+            state: GpxSegmentsState,
+            action: PayloadAction<{ id: string; newContent: string }>
+        ) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
+            );
+        },
         clearGpxSegments: (state: GpxSegmentsState) => {
             state.segments = [];
         },
