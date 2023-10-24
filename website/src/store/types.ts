@@ -31,7 +31,7 @@ export interface TrackMergeState {
 }
 
 export interface MapState {
-    currentTime?: string;
+    currentTime: number;
     currentSource: 'segments' | 'tracks';
 }
 

@@ -1,19 +1,20 @@
-import { useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrenMapTime, mapActions } from '../../store/map.reducer.ts';
 
 export function TimeSlider() {
-    const [range, setRange] = useState<number>(0);
-    console.log(range);
+    const mapTime = useSelector(getCurrenMapTime);
+    const dispatch = useDispatch();
     return (
         <Form.Group className={'m-2'}>
             <h5>Time slider</h5>
-            <div>{range}</div>
+            <div>{mapTime}</div>
             <Form.Control
                 type={'range'}
                 min={0}
-                max={10000}
-                value={range}
-                onChange={(event) => setRange(Number(event.target.value))}
+                max={100000}
+                value={mapTime}
+                onChange={(event) => dispatch(mapActions.setCurrentTime(Number(event.target.value)))}
             ></Form.Control>
         </Form.Group>
     );

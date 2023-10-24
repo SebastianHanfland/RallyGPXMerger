@@ -4,6 +4,7 @@ import { storage } from './storage.ts';
 
 const initialState: MapState = {
     currentSource: 'segments',
+    currentTime: 0,
 };
 
 const mapSlice = createSlice({
@@ -13,7 +14,7 @@ const mapSlice = createSlice({
         setSource: (state: MapState, action: PayloadAction<'segments' | 'tracks'>) => {
             state.currentSource = action.payload;
         },
-        setCurrentTime: (state: MapState, action: PayloadAction<string | undefined>) => {
+        setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
     },
