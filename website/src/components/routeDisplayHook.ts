@@ -5,6 +5,7 @@ import L, { LayerGroup } from 'leaflet';
 import { GpxSegment } from '../store/types.ts';
 import { SimpleGPX } from '../logic/SimpleGPX.ts';
 import { Point } from 'gpxparser';
+import { endIcon, startIcon } from './map/MapIcons.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };
@@ -16,6 +17,16 @@ function addGpxToMap(gpxSegment: GpxSegment, routeLayer: LayerGroup) {
         const trackPoints = track.points.map(toLatLng);
         const connection = L.polyline(trackPoints, {});
         connection.addTo(routeLayer);
+        const startMarker = L.marker(trackPoints[0], {
+            icon: startIcon,
+            title: gpxSegment.filename,
+        });
+        startMarker.addTo(routeLayer);
+        const endMarker = L.marker(trackPoints.reverse()[0], {
+            icon: endIcon,
+            title: gpxSegment.filename,
+        });
+        endMarker.addTo(routeLayer);
     });
 }
 
