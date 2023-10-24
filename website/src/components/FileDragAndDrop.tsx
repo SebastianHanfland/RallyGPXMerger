@@ -16,6 +16,8 @@ async function toGpxSegment(file: File): Promise<GpxSegment> {
     }));
 }
 
+export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
+
 export function FileDragAndDrop() {
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
@@ -40,7 +42,7 @@ export function FileDragAndDrop() {
                     <thead>
                         <tr>
                             <th style={{ width: '30%' }}>File</th>
-                            <th style={{ width: '30%' }}>People at Start</th>
+                            {ALLOWS_TO_ENTER_PEOPLE_AT_START && <th style={{ width: '30%' }}>People at Start</th>}
                             <th style={{ width: '30%' }}>People at End</th>
                             <th style={{ width: '10%', minWidth: '40px' }} />
                         </tr>

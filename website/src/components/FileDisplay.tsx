@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';
+import { ALLOWS_TO_ENTER_PEOPLE_AT_START } from './FileDragAndDrop.tsx';
 
 function getCount(value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const number = Number(value.target.value);
@@ -22,16 +23,18 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
                     <Button>Change</Button>
                 </div>
             </td>
-            <td>
-                <Form.Control
-                    type="text"
-                    placeholder="People at start"
-                    value={peopleCountStart}
-                    onChange={(value) =>
-                        dispatch(gpxSegmentsActions.setPeopleCountStart({ id, count: getCount(value) }))
-                    }
-                />
-            </td>
+            {ALLOWS_TO_ENTER_PEOPLE_AT_START && (
+                <td>
+                    <Form.Control
+                        type="text"
+                        placeholder="People at start"
+                        value={peopleCountStart}
+                        onChange={(value) =>
+                            dispatch(gpxSegmentsActions.setPeopleCountStart({ id, count: getCount(value) }))
+                        }
+                    />
+                </td>
+            )}
             <td>
                 <Form.Control
                     type="text"
