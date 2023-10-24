@@ -52,7 +52,7 @@ export const PlainMap = () => {
     }, []);
 
     return (
-        <div>
+        <div className={'m-1'}>
             <div id="mapid" style={{ height: '75vh', zIndex: 0 }} />
         </div>
     );
