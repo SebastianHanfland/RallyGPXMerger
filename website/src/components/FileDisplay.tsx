@@ -20,7 +20,7 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
         <tr>
             <td>
                 <div>
-                    <FileDownloader content={content} name={filename} />
+                    <FileDownloader content={content} name={filename} id={id} />
                 </div>
             </td>
             <td>
