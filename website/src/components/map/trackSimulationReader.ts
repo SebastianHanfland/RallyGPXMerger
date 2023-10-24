@@ -2,12 +2,28 @@ import { MAX_SLIDER_TIME, State } from '../../store/types.ts';
 import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../logic/dateUtil.ts';
 import date from 'date-and-time';
+import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { SimpleGPX } from '../../logic/SimpleGPX.ts';
 
 function getStartAndEndOfSimulation(state: State): { start: string; end: string } {
-    console.log(state.map.currentTime);
+    const calculatedTracks = getCalculatedTracks(state);
+    let endDate = '1990-10-14T10:09:57.000Z';
+    let startDate = '9999-10-14T10:09:57.000Z';
+
+    calculatedTracks.forEach((track) => {
+        const trackGpx = SimpleGPX.fromString(track.content);
+        if (trackGpx.getStart() < startDate) {
+            startDate = trackGpx.getStart();
+        }
+
+        if (trackGpx.getEnd() > endDate) {
+            endDate = trackGpx.getEnd();
+        }
+    });
+
     return {
-        start: '2007-10-14T10:09:57.000Z',
-        end: '2007-10-14T14:09:57.000Z',
+        start: startDate,
+        end: endDate,
     };
 }
 
