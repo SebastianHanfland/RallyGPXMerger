@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
-import L from 'leaflet';
+import L, { LayerGroup } from 'leaflet';
+import { routeHook } from './routeDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -50,6 +51,14 @@ export const PlainMap = () => {
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
     }, []);
+
+    const routeLayer = useRef<LayerGroup>(null);
+    useEffect(() => {
+        // @ts-ignore
+        routeLayer.current = L.layerGroup().addTo(myMap);
+    }, []);
+
+    routeHook(routeLayer);
 
     return (
         <div className={'m-1'}>
