@@ -9,6 +9,7 @@ export function RemoveDataButton() {
     return (
         <Button
             variant="danger"
+            title="Delete all GPX segments, track compositions and tracks"
             onClick={() => {
                 dispatch(gpxSegmentsActions.clearGpxSegments());
                 dispatch(trackMergeActions.clear());

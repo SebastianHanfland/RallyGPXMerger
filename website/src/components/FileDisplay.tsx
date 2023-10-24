@@ -47,6 +47,7 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
             <td>
                 <Button
                     variant="danger"
+                    title="Remove file and all references"
                     onClick={() => {
                         dispatch(gpxSegmentsActions.removeGpxSegment(id));
                         dispatch(trackMergeActions.removeGpxSegment(id));
