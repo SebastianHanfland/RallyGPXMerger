@@ -30,8 +30,14 @@ export interface TrackMergeState {
     arrivalDateTime?: string;
 }
 
+export interface MapState {
+    currentTime?: string;
+    currentSource: 'segments' | 'tracks';
+}
+
 export interface State {
     gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
+    map: MapState;
 }

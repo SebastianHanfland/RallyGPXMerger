@@ -1,0 +1,26 @@
+import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { MapState, State } from './types';
+import { storage } from './storage.ts';
+
+const initialState: MapState = {
+    currentSource: 'segments',
+};
+
+const mapSlice = createSlice({
+    name: 'map',
+    initialState: storage.load()?.map ?? initialState,
+    reducers: {
+        setSource: (state: MapState, action: PayloadAction<'segments' | 'tracks'>) => {
+            state.currentSource = action.payload;
+        },
+        setCurrentTime: (state: MapState, action: PayloadAction<string | undefined>) => {
+            state.currentTime = action.payload;
+        },
+    },
+});
+
+export const mapActions = mapSlice.actions;
+export const mapReducer: Reducer<MapState> = mapSlice.reducer;
+const getBase = (state: State) => state.map;
+export const getCurrenMapSource = (state: State) => getBase(state).currentSource;
+export const getCurrenMapTime = (state: State) => getBase(state).currentTime;
