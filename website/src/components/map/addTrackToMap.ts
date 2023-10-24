@@ -30,14 +30,17 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
 
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
-    calculatedTracks: CalculatedTrack[] | GpxSegment[]
+    calculatedTracks: CalculatedTrack[] | GpxSegment[],
+    show: boolean
 ) {
     const current = calculatedTracksLayer.current;
     if (!calculatedTracksLayer || !current) {
         return;
     }
     current.clearLayers();
-    calculatedTracks.forEach((track) => {
-        addTrackToMap(track, current);
-    });
+    if (show) {
+        calculatedTracks.forEach((track) => {
+            addTrackToMap(track, current);
+        });
+    }
 }
