@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { GpxSegment } from '../store/types.ts';
-import { SimpleGPX } from '../logic/SimpleGPX.ts';
+import { GpxSegment } from '../../store/types.ts';
+import { SimpleGPX } from '../../logic/SimpleGPX.ts';
 import { Point } from 'gpxparser';
-import { endIcon, startIcon } from './map/MapIcons.ts';
-import { getColorFromUuid } from '../utils/colorUtil.ts';
+import { endIcon, startIcon } from './MapIcons.ts';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };

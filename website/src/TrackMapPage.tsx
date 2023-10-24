@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { PlainMap } from './components/PlainMap.tsx';
+import { PlainMap } from './components/map/PlainMap.tsx';
 
 export function TrackMapPage() {
     return (
