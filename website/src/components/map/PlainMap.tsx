@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
 import { gpxSegmentDisplayHook } from './gpxSegmentsDisplayHook.ts';
 import { calculatedTracksDisplayHook } from './calculatedTracksDisplayHook.ts';
+import { trackMarkerDisplayHook } from './trackMarkerDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -55,15 +56,19 @@ export const PlainMap = () => {
 
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
     const calculatedTracksLayer = useRef<LayerGroup>(null);
+    const trackMarkerLayer = useRef<LayerGroup>(null);
     useEffect(() => {
         // @ts-ignore
         gpxSegmentsLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         calculatedTracksLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        trackMarkerLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     gpxSegmentDisplayHook(gpxSegmentsLayer);
     calculatedTracksDisplayHook(calculatedTracksLayer);
+    trackMarkerDisplayHook(trackMarkerLayer);
 
     return (
         <div className={'m-1'}>
