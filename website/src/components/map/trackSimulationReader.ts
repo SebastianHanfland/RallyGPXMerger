@@ -7,6 +7,9 @@ import { SimpleGPX } from '../../logic/SimpleGPX.ts';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;
 
+export const clearReadableTracks = () => {
+    readableTracks = undefined;
+};
 function getStartAndEndOfSimulation(state: State): { start: string; end: string } {
     const calculatedTracks = getCalculatedTracks(state);
     let endDate = '1990-10-14T10:09:57.000Z';
