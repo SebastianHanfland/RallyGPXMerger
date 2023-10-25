@@ -18,17 +18,22 @@ export function trackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<L
     }, [calculatedTracks, mapSource, currentMapTime]);
 }
 
-export function addTrackToMap(point: { lat: number; lng: number }, routeLayer: LayerGroup) {
-    const trackMarker = L.marker(point, {
+export function addTrackToMap(points: { lat: number; lng: number }[], routeLayer: LayerGroup) {
+    if (points.length === 0) {
+        return;
+    }
+    const trackMarker = L.marker(points.reverse()[0], {
         icon: trackIcon,
         title: 'None',
     });
+    const trackSnake = L.polyline(points, { weight: 10 });
     trackMarker.addTo(routeLayer);
+    trackSnake.addTo(routeLayer);
 }
 
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
-    calculatedTracks: { lat: number; lng: number }[],
+    calculatedTracks: { lat: number; lng: number }[][],
     show: boolean
 ) {
     const current = calculatedTracksLayer.current;

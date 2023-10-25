@@ -2,9 +2,10 @@ import { MAX_SLIDER_TIME, State } from '../../store/types.ts';
 import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../logic/dateUtil.ts';
 import date from 'date-and-time';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks, getTrackParticipants } from '../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../logic/SimpleGPX.ts';
 import { Point } from 'gpxparser';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/withPeoples/peopleDelayCounter.ts';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;
 
@@ -38,7 +39,7 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
     };
 }
 
-function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
+export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
     const previousTime = previous.time.toISOString();
     const timeRange = getTimeDifferenceInSeconds(previousTime, nextTime);
@@ -52,9 +53,16 @@ function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
 }
 
 const extractLocation =
-    (timeStamp: string) =>
-    (calculatedTrack: SimpleGPX): { lat: number; lng: number } => {
-        let returnPoint = { lat: 0, lng: 0 };
+    (timeStampFront: string, trackParticipants: number[]) =>
+    (calculatedTrack: SimpleGPX, index: number): { lat: number; lng: number }[] => {
+        const participants = trackParticipants[index];
+        let returnPoints: { lat: number; lng: number }[] = [];
+        const timeStampEnd = date
+            .addSeconds(new Date(timeStampFront), -participants * DELAY_PER_PERSON_IN_SECONDS)
+            .toISOString();
+
+        console.log({ participants, timeStampEnd });
+
         calculatedTrack.tracks.forEach((track) => {
             track.points.forEach((point, index, points) => {
                 if (index === 0) {
@@ -62,17 +70,25 @@ const extractLocation =
                 }
                 const next = point.time.toISOString();
                 const previous = points[index - 1].time.toISOString();
-                if (timeStamp > previous && timeStamp < next) {
-                    returnPoint = interpolatePosition(points[index - 1], point, timeStamp);
+
+                if (previous < timeStampFront && timeStampFront < next) {
+                    returnPoints.push(interpolatePosition(points[index - 1], point, timeStampFront));
+                }
+                if (previous < timeStampEnd && timeStampEnd < next) {
+                    returnPoints.push(interpolatePosition(points[index - 1], point, timeStampEnd));
+                }
+                if (timeStampEnd < next && next < timeStampFront) {
+                    returnPoints.push({ lat: point.lat, lng: point.lon });
                 }
             });
         });
-        return returnPoint;
+        return returnPoints;
     };
 
 export const getCurrentMarkerPositionsForTracks = (state: State) => {
     const timeStamp = getCurrentTimeStamp(state);
-    return readableTracks?.map(extractLocation(timeStamp)) ?? [];
+    const trackParticipants = getTrackParticipants(state);
+    return readableTracks?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
 };
 
 export const getCurrentTimeStamp = (state: State): string => {
@@ -81,6 +97,5 @@ export const getCurrentTimeStamp = (state: State): string => {
 
     const percentage = mapTime / MAX_SLIDER_TIME;
     const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
-    console.log(start);
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };

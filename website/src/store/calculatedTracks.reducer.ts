@@ -4,6 +4,7 @@ import { storage } from './storage.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
+    trackParticipants: [1000, 2000],
 };
 
 const calculatedTracksSlice = createSlice({
@@ -23,3 +24,4 @@ export const calculatedTracksActions = calculatedTracksSlice.actions;
 export const calculatedTracksReducer: Reducer<CalculatedTracksState> = calculatedTracksSlice.reducer;
 const getBase = (state: State) => state.calculatedTracks;
 export const getCalculatedTracks = (state: State) => getBase(state).tracks;
+export const getTrackParticipants = (state: State) => getBase(state).trackParticipants ?? [1000, 2000];

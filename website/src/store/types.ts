@@ -17,6 +17,7 @@ export interface CalculatedTrack {
 
 export interface CalculatedTracksState {
     tracks: CalculatedTrack[];
+    trackParticipants: number[];
 }
 
 export interface TrackComposition {
