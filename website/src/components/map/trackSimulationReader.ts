@@ -4,6 +4,7 @@ import { getTimeDifferenceInSeconds } from '../../logic/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../logic/SimpleGPX.ts';
+import { Point } from 'gpxparser';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;
 
@@ -37,6 +38,19 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
     };
 }
 
+function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
+    const nextTime = next.time.toISOString();
+    const previousTime = previous.time.toISOString();
+    const timeRange = getTimeDifferenceInSeconds(previousTime, nextTime);
+    const timePart = getTimeDifferenceInSeconds(previousTime, timeStamp);
+    const percentage = timePart / timeRange;
+
+    const interpolatedLat = previous.lat + percentage * (next.lat - previous.lat);
+    const interpolatedLng = previous.lon + percentage * (next.lon - previous.lon);
+
+    return { lat: interpolatedLat, lng: interpolatedLng };
+}
+
 const extractLocation =
     (timeStamp: string) =>
     (calculatedTrack: SimpleGPX): { lat: number; lng: number } => {
@@ -49,7 +63,7 @@ const extractLocation =
                 const next = point.time.toISOString();
                 const previous = points[index - 1].time.toISOString();
                 if (timeStamp > previous && timeStamp < next) {
-                    returnPoint = { lat: point.lat, lng: point.lon };
+                    returnPoint = interpolatePosition(points[index - 1], point, timeStamp);
                 }
             });
         });
