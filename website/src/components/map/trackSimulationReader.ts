@@ -14,6 +14,9 @@ export const clearReadableTracks = () => {
 };
 function getStartAndEndOfSimulation(state: State): { start: string; end: string } {
     const calculatedTracks = getCalculatedTracks(state);
+    const trackParticipants = getTrackParticipants(state);
+    const maxDelay = Math.min(...trackParticipants);
+
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 
@@ -35,7 +38,7 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
 
     return {
         start: startDate,
-        end: endDate,
+        end: date.addSeconds(new Date(endDate), maxDelay * DELAY_PER_PERSON_IN_SECONDS).toISOString(),
     };
 }
 
