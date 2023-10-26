@@ -6,6 +6,8 @@ import Select from 'react-select';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
 import { BREAK_IDENTIFIER } from '../logic/types.ts';
+import { useState } from 'react';
+import { ConfirmationModal } from './ConfirmationModal.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -42,6 +44,7 @@ export function MergeTableTrack({ track }: Props) {
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption), ...breaks];
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <tr>
@@ -72,9 +75,23 @@ export function MergeTableTrack({ track }: Props) {
                 />
             </td>
             <td>
-                <Button variant="danger" onClick={() => dispatch(trackMergeActions.removeTrackComposition(id))}>
-                    x
-                </Button>
+                <>
+                    <Button
+                        variant="danger"
+                        onClick={() => setShowModal(true)}
+                        title={`Remove track ${track.name ?? ''}`}
+                    >
+                        x
+                    </Button>
+                    {showModal && (
+                        <ConfirmationModal
+                            onConfirm={() => dispatch(trackMergeActions.removeTrackComposition(id))}
+                            closeModal={() => setShowModal(false)}
+                            title={`Removing track ${track.name ?? ''}`}
+                            body={`Do you really want to remove the track ${track.name ?? ''}?`}
+                        />
+                    )}
+                </>
             </td>
         </tr>
     );
