@@ -4,7 +4,7 @@ import L, { LayerGroup } from 'leaflet';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getCurrenMapSource, getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
-import { trackIcon } from './MapIcons.ts';
+import { bikeIcon } from './MapIcons.ts';
 
 export function trackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getCalculatedTracks);
@@ -23,7 +23,7 @@ export function addTrackToMap(points: { lat: number; lng: number }[], routeLayer
         return;
     }
     const trackMarker = L.marker(points.reverse()[0], {
-        icon: trackIcon,
+        icon: bikeIcon,
         title: 'None',
     });
     const trackSnake = L.polyline(points, { weight: 10 });
