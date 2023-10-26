@@ -20,8 +20,6 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 
-    console.log('Triggered');
-
     if (!readableTracks) {
         readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));
     }
