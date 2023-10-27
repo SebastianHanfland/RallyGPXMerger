@@ -5,7 +5,7 @@ import date from 'date-and-time';
 import { getCalculatedTracks, getTrackParticipants } from '../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../logic/SimpleGPX.ts';
 import { Point } from 'gpxparser';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/withPeoples/peopleDelayCounter.ts';
+import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../store/trackMerge.reducer.ts';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;
 
@@ -36,7 +36,7 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
 
     return {
         start: startDate,
-        end: date.addSeconds(new Date(endDate), maxDelay * DELAY_PER_PERSON_IN_SECONDS).toISOString(),
+        end: date.addSeconds(new Date(endDate), maxDelay * PARTICIPANTS_DELAY_IN_SECONDS).toISOString(),
     };
 }
 
@@ -59,7 +59,7 @@ const extractLocation =
         const participants = trackParticipants[index];
         let returnPoints: { lat: number; lng: number }[] = [];
         const timeStampEnd = date
-            .addSeconds(new Date(timeStampFront), -participants * DELAY_PER_PERSON_IN_SECONDS)
+            .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
             .toISOString();
 
         console.log({ participants, timeStampEnd });

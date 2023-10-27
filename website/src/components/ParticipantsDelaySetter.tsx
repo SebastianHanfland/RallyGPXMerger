@@ -15,7 +15,7 @@ export function ParticipantsDelaySetter() {
                 type={'range'}
                 min={0}
                 max={1.0}
-                step={0.05}
+                step={0.01}
                 value={participantsDelay}
                 onChange={(event) => dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)))}
             />
