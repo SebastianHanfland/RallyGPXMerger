@@ -1,4 +1,3 @@
-import { MergeTable } from './MergeTable.tsx';
 import { CalculatedFilesDownloader } from './CalculatedFilesDownloader.tsx';
 import { MergeTracksButton } from './MergeTracksButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
@@ -14,7 +13,6 @@ export function TrackMergeSection() {
                 <CalculatedFilesDownloader />
                 <RemoveDataButton />
             </div>
-            <MergeTable />
         </div>
     );
 }

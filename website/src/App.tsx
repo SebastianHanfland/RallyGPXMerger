@@ -1,9 +1,10 @@
 import './App.css';
-import { TrackMergeSection } from './components/TrackMergeSection.tsx';
+import { TrackCompositionSection } from './components/TrackCompositionSection.tsx';
 import { FileUploadSection } from './components/FileUploadSection.tsx';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './components/map/TrackMapPage.tsx';
 import { HelpButton } from './components/tutorial/HelpButton.tsx';
+import { TrackMergeSection } from './components/TrackMergeSection.tsx';
 
 export function App() {
     return (
@@ -22,7 +23,10 @@ export function App() {
                             <Col xl={4}>
                                 <FileUploadSection />
                             </Col>
-                            <Col xl={8}>
+                            <Col xl={5}>
+                                <TrackCompositionSection />
+                            </Col>
+                            <Col xl={3}>
                                 <TrackMergeSection />
                             </Col>
                         </Row>
