@@ -3,6 +3,7 @@ import { TrackMergeSection } from './components/TrackMergeSection.tsx';
 import { FileUploadSection } from './components/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './components/map/TrackMapPage.tsx';
+import { HelpButton } from './components/tutorial/HelpButton.tsx';
 
 export function App() {
     return (
@@ -12,6 +13,7 @@ export function App() {
                     Rally GPX Merger
                 </a>
             </h1>
+            <HelpButton />
             <Row className="flex-xl-nowrap" style={{ height: '60vh', width: '100%' }}>
                 <Col xl={4}>
                     <FileUploadSection />
