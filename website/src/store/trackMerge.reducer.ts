@@ -2,9 +2,11 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { State, TrackMergeState } from './types';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/withPeoples/peopleDelayCounter.ts';
 
 const initialState: TrackMergeState = {
     trackCompositions: [],
+    participantDelay: DELAY_PER_PERSON_IN_SECONDS,
 };
 
 const trackMergeSlice = createSlice({
@@ -36,6 +38,9 @@ const trackMergeSlice = createSlice({
         setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.arrivalDateTime = action.payload;
         },
+        setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
+            state.participantDelay = action.payload;
+        },
         clear: (state: TrackMergeState) => {
             state.trackCompositions = [];
             state.arrivalDateTime = undefined;
@@ -48,3 +53,4 @@ export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reduc
 const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
+export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
