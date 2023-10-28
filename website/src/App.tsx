@@ -3,14 +3,11 @@ import { TrackCompositionSection } from './components/TrackCompositionSection.ts
 import { FileUploadSection } from './components/FileUploadSection.tsx';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './components/map/TrackMapPage.tsx';
-import { HelpButton } from './components/tutorial/HelpButton.tsx';
 import { TrackMergeSection } from './components/TrackMergeSection.tsx';
 
 export function App() {
     return (
         <Container fluid className={'m-0'}>
-            <h1 title={'Jump to the code'}>Rally GPX Merger</h1>
-            <HelpButton />
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Merging GPX Segments to Tracks</Accordion.Header>

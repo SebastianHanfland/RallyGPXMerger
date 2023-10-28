@@ -1,6 +1,3 @@
-import { CalculatedFilesDownloader } from './CalculatedFilesDownloader.tsx';
-import { MergeTracksButton } from './MergeTracksButton.tsx';
-import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { ArrivalDateTimePicker } from './ArrivalDateTimePicker.tsx';
 import { ParticipantsDelaySetter } from './ParticipantsDelaySetter.tsx';
 
@@ -11,9 +8,6 @@ export function TrackMergeSection() {
             <div style={{ height: '70px' }}>
                 <ArrivalDateTimePicker />
                 <ParticipantsDelaySetter />
-                <MergeTracksButton />
-                <CalculatedFilesDownloader />
-                <RemoveDataButton />
             </div>
         </div>
     );

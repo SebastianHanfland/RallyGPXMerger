@@ -18,7 +18,6 @@ export function MergeTracksButton() {
 
     return (
         <Button
-            className={'m-2'}
             onClick={() => {
                 setIsLoading(true);
                 dispatch(calculateMerge);

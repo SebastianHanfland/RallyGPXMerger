@@ -18,11 +18,7 @@ const downloadFile = (calculatedTracks: CalculatedTrack[]) => {
 export const CalculatedFilesDownloader = () => {
     const calculatedTracks = useSelector(getCalculatedTracks);
     return (
-        <Button
-            className={'m-2'}
-            onClick={() => downloadFile(calculatedTracks)}
-            disabled={calculatedTracks.length === 0}
-        >
+        <Button onClick={() => downloadFile(calculatedTracks)} disabled={calculatedTracks.length === 0}>
             Download File
         </Button>
     );
