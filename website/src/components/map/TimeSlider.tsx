@@ -34,8 +34,7 @@ export function TimeSlider() {
         <Form.Group className={'m-2'}>
             <h5>Time slider</h5>
             <div>{formatDate(dateValue)}</div>
-            <Form.Control
-                type={'range'}
+            <Form.Range
                 min={0}
                 max={MAX_SLIDER_TIME}
                 value={mapTime}

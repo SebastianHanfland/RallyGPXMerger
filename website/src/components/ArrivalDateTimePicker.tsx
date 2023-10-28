@@ -8,7 +8,7 @@ export function ArrivalDateTimePicker() {
     const arrivalDateTime = useSelector(getArrivalDateTime);
     return (
         <div className={'d-inline-block'}>
-            <label className="form-label m-3">Arrival of tracks:</label>
+            <h6 className="form-label m-3">Arrival of tracks:</h6>
             <DatePicker
                 className={'form-control'}
                 dateFormat={'dd.MM.yyyy HH:mm'}
