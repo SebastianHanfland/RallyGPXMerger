@@ -9,11 +9,7 @@ import { TrackMergeSection } from './components/TrackMergeSection.tsx';
 export function App() {
     return (
         <Container fluid className={'m-0'}>
-            <h1 title={'Jump to the code'}>
-                <a href={'https://github.com/SebastianHanfland/RallyGPXMerger'} target={'_blank'}>
-                    Rally GPX Merger
-                </a>
-            </h1>
+            <h1 title={'Jump to the code'}>Rally GPX Merger</h1>
             <HelpButton />
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
