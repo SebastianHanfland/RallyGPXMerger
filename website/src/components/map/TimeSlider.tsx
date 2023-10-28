@@ -36,7 +36,7 @@ export function TimeSlider() {
     return (
         <Form.Group className={'m-2'}>
             <h5>Time slider</h5>
-            <div>{formatDate(dateValue)}</div>
+            <div>{dateValue ? formatDate(dateValue) : 'No tracks yet calculated'}</div>
             <Form.Range
                 min={0}
                 max={MAX_SLIDER_TIME}

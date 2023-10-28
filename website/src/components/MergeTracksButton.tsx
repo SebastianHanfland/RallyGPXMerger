@@ -13,7 +13,7 @@ export function MergeTracksButton() {
 
     useEffect(() => {
         if (isLoading) {
-            setTimeout(() => setIsLoading(false), 2000);
+            setTimeout(() => setIsLoading(false), 500);
         }
     }, [isLoading]);
 

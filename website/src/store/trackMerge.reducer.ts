@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { State, TrackMergeState } from './types';
+import { State, TrackComposition, TrackMergeState } from './types';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/withPeoples/peopleDelayCounter.ts';
@@ -19,8 +19,12 @@ const trackMergeSlice = createSlice({
     name: 'trackMerge',
     initialState: storage.load()?.trackMerge ?? initialState,
     reducers: {
-        addTrackComposition: (state: TrackMergeState) => {
-            state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segmentIds: [] }];
+        addTrackComposition: (state: TrackMergeState, action: PayloadAction<TrackComposition | undefined>) => {
+            if (action.payload) {
+                state.trackCompositions = [...state.trackCompositions, action.payload];
+            } else {
+                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segmentIds: [] }];
+            }
         },
         removeTrackComposition: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.filter((track) => track.id !== action.payload);

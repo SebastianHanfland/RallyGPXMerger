@@ -14,6 +14,7 @@ export function SourceSelection() {
                     className={'m-3'}
                     label={'GPX Segments'}
                     checked={mapSource === 'segments'}
+                    readOnly
                     onClick={() => dispatch(mapActions.setSource('segments'))}
                 ></Form.Check>
                 <Form.Check
@@ -22,6 +23,7 @@ export function SourceSelection() {
                     className={'m-3'}
                     label={'Calculated Tracks'}
                     checked={mapSource === 'tracks'}
+                    readOnly
                     onClick={() => dispatch(mapActions.setSource('tracks'))}
                 ></Form.Check>
             </Form>

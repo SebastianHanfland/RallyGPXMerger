@@ -88,11 +88,18 @@ const extractLocation =
 
 export const getCurrentMarkerPositionsForTracks = (state: State) => {
     const timeStamp = getCurrentTimeStamp(state);
+    if (!timeStamp) {
+        return [];
+    }
     const trackParticipants = getTrackParticipants(state);
     return readableTracks?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
 };
 
-export const getCurrentTimeStamp = (state: State): string => {
+export const getCurrentTimeStamp = (state: State): string | undefined => {
+    const calculatedTracks = getCalculatedTracks(state);
+    if (calculatedTracks.length === 0) {
+        return;
+    }
     const mapTime = getCurrenMapTime(state) ?? 0;
     const { start, end } = getStartAndEndOfSimulation(state);
 

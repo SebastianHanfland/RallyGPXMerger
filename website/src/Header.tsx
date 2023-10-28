@@ -1,9 +1,9 @@
-import { Button, ButtonGroup, ButtonToolbar, Container, Row } from 'react-bootstrap';
+import { ButtonGroup, ButtonToolbar, Container, Row } from 'react-bootstrap';
 import { HelpButton } from './components/tutorial/HelpButton.tsx';
 import { MergeTracksButton } from './components/MergeTracksButton.tsx';
 import { CalculatedFilesDownloader } from './components/CalculatedFilesDownloader.tsx';
 import { RemoveDataButton } from './components/RemoveDataButton.tsx';
-import fileUpload from './assets/file-up.svg';
+import { LoadExampleDataButton } from './components/LoadExampleDataButton.tsx';
 
 export const AppHeader = () => {
     return (
@@ -24,11 +24,7 @@ export const AppHeader = () => {
                         <ButtonToolbar aria-label="Toolbar with Button groups">
                             <ButtonGroup aria-label="help-buttons">
                                 <HelpButton />
-
-                                <Button>
-                                    <img src={fileUpload} className="m-1" alt="open file" />
-                                    Load sample data
-                                </Button>
+                                <LoadExampleDataButton />
                                 <RemoveDataButton />
                             </ButtonGroup>
                         </ButtonToolbar>
