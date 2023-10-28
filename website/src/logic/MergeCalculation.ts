@@ -1,7 +1,12 @@
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { getArrivalDateTime, getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import {
+    getArrivalDateTime,
+    getParticipantsDelay,
+    getTrackCompositions,
+    setParticipantsDelay,
+} from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 import { mergeAndAdjustTimes } from './primitive/primitiveSolver.ts';
 import { GpxMergeLogic } from './types.ts';
@@ -22,6 +27,8 @@ export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
 
     // Clear caching of parsed gpx tracks for the calculated tracks
     clearReadableTracks();
+
+    setParticipantsDelay(getParticipantsDelay(getState()));
     const calculatedTracks = solveFunctions[1](gpxSegments, trackCompositions, arrivalDateTime);
     const participants = calculateParticipants(gpxSegments, trackCompositions);
 

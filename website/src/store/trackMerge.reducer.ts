@@ -6,6 +6,10 @@ import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/withPeoples/peopleDelayCou
 
 export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
 
+export const setParticipantsDelay = (delay: number) => {
+    PARTICIPANTS_DELAY_IN_SECONDS = delay;
+};
+
 const initialState: TrackMergeState = {
     trackCompositions: [],
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,
@@ -42,7 +46,6 @@ const trackMergeSlice = createSlice({
         },
         setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
-            PARTICIPANTS_DELAY_IN_SECONDS = action.payload;
         },
         clear: (state: TrackMergeState) => {
             state.trackCompositions = [];
