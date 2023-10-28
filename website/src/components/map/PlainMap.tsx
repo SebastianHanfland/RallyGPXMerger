@@ -71,7 +71,7 @@ export const PlainMap = () => {
     trackMarkerDisplayHook(trackMarkerLayer);
 
     return (
-        <div className={'m-1'}>
+        <div className={'m-1 shadow'}>
             <div id="mapid" style={{ height: '75vh', zIndex: 0 }} />
         </div>
     );
