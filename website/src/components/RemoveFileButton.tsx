@@ -22,7 +22,6 @@ export function RemoveFileButton({ id, name }: Props) {
             <Button
                 variant="danger"
                 title={`Remove file "${name}" and all references`}
-                className={'m-1'}
                 onClick={() => setShowModal(true)}
             >
                 x

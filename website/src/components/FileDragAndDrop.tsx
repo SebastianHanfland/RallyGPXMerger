@@ -28,15 +28,6 @@ export function FileDragAndDrop() {
     };
     return (
         <div>
-            <div style={{ height: '70px' }}>
-                <FileUploader
-                    handleChange={handleChange}
-                    name="file"
-                    types={fileTypes}
-                    multiple={true}
-                    label={'Please upload the GPX segments here'}
-                />
-            </div>
             {gpxSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
@@ -51,10 +42,32 @@ export function FileDragAndDrop() {
                         {gpxSegments.map((gpxSegment) => (
                             <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
+                        <tr>
+                            <td colSpan={3}>
+                                <FileUploader
+                                    handleChange={handleChange}
+                                    name="file"
+                                    types={fileTypes}
+                                    multiple={true}
+                                    label={'Please upload the GPX segments here'}
+                                />
+                            </td>
+                        </tr>
                     </tbody>
                 </Table>
             ) : (
-                <div>No file selected</div>
+                <div>
+                    <div>No file selected</div>
+                    <div style={{ height: '70px' }}>
+                        <FileUploader
+                            handleChange={handleChange}
+                            name="file"
+                            types={fileTypes}
+                            multiple={true}
+                            label={'Please upload the GPX segments here'}
+                        />
+                    </div>
+                </div>
             )}
         </div>
     );

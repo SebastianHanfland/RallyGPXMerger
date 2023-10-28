@@ -16,7 +16,6 @@ const downloadFile = (name: string, content: string) => {
 export const FileDownloader = ({ id, name, content }: Props) => {
     return (
         <Button
-            className={'m-2'}
             onClick={() => downloadFile(name, content)}
             style={{ backgroundColor: getColorFromUuid(id) }}
             title={`Download file "${name}"`}
