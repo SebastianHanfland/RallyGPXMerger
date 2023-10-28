@@ -46,11 +46,7 @@ export function FileChangeButton({ id, name }: Props) {
             className={'m-1'}
         >
             <input type="file" name="file" onChange={changeHandler} ref={uploadInput} hidden={true} />
-            {isLoading ? (
-                <img src={check} className="App-logo" alt="logo" />
-            ) : (
-                <img src={exchange} className="App-logo" alt="logo" />
-            )}
+            {isLoading ? <img src={check} alt="check-mark" /> : <img src={exchange} alt="exchange" />}
         </Button>
     );
 }

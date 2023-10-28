@@ -4,6 +4,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import { calculateMerge } from '../logic/MergeCalculation.ts';
 import { useEffect, useState } from 'react';
 import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
+import magic from '../assets/magic.svg';
 
 export function MergeTracksButton() {
     const dispatch: AppDispatch = useDispatch();
@@ -23,14 +24,16 @@ export function MergeTracksButton() {
                 dispatch(calculateMerge);
             }}
             disabled={isLoading || !arrivalDate}
+            variant={'success'}
         >
             {isLoading ? (
-                <Spinner animation="border" role="status">
+                <Spinner animation="border" role="status" size={'sm'}>
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>
             ) : (
-                <div>Merge Tracks</div>
+                <img src={magic} className="m-1" alt="magic wand" />
             )}
+            <span>Merge Tracks</span>)
         </Button>
     );
 }

@@ -3,6 +3,7 @@ import { HelpButton } from './components/tutorial/HelpButton.tsx';
 import { MergeTracksButton } from './components/MergeTracksButton.tsx';
 import { CalculatedFilesDownloader } from './components/CalculatedFilesDownloader.tsx';
 import { RemoveDataButton } from './components/RemoveDataButton.tsx';
+import fileUpload from './assets/file-up.svg';
 
 export const AppHeader = () => {
     return (
@@ -23,7 +24,11 @@ export const AppHeader = () => {
                         <ButtonToolbar aria-label="Toolbar with Button groups">
                             <ButtonGroup aria-label="help-buttons">
                                 <HelpButton />
-                                <Button>Load sample data</Button>
+
+                                <Button>
+                                    <img src={fileUpload} className="m-1" alt="open file" />
+                                    Load sample data
+                                </Button>
                                 <RemoveDataButton />
                             </ButtonGroup>
                         </ButtonToolbar>

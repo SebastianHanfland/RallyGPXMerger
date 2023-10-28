@@ -5,6 +5,7 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 import { ConfirmationModal } from './ConfirmationModal.tsx';
 import { useState } from 'react';
+import trash from '../assets/trash.svg';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export function RemoveDataButton() {
                 title="Delete all GPX segments, track compositions and tracks"
                 onClick={() => setShowModal(true)}
             >
+                <img src={trash} className="m-1" alt="trash" />
                 Remove all data
             </Button>
             {showModal && (
