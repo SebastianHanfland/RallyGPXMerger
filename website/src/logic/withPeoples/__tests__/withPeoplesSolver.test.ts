@@ -3,6 +3,7 @@ import { GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Mock } from 'vitest';
 
 import { assembleTrackFromSegments } from '../../primitive/assembleTrackFromSegments.ts';
+import { setParticipantsDelay } from '../../../store/trackMerge.reducer.ts';
 
 vi.mock('../../SimpleGPX.ts');
 vi.mock('../../primitive/assembleTrackFromSegments.ts');
@@ -10,6 +11,7 @@ vi.mock('../../primitive/assembleTrackFromSegments.ts');
 describe('with Peoples Solver', () => {
     it('merge A1 and AB to A and B1 and AB to B - Shifting time based on people on track', () => {
         // given
+        setParticipantsDelay(0.2);
         const gpxSegments: GpxSegment[] = [
             { id: '1', filename: 'A1', content: 'cA1', peopleCountEnd: 2000 },
             { id: '2', filename: 'B1', content: 'cB1', peopleCountEnd: 3000 },
