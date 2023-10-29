@@ -26,7 +26,7 @@ export function App() {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
-            <Accordion defaultActiveKey="1">
+            <Accordion defaultActiveKey="1" className={'mt-3'}>
                 <Accordion.Item eventKey="1">
                     <Accordion.Header>Display on Map</Accordion.Header>
                     <Accordion.Body>
