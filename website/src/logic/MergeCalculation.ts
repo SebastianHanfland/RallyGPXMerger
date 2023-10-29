@@ -13,6 +13,7 @@ import { GpxMergeLogic } from './types.ts';
 import { mergeAndDelayAndAdjustTimes } from './withPeoples/withPeoplesSolver.ts';
 import { clearReadableTracks } from '../components/map/trackSimulationReader.ts';
 import { calculateParticipants } from './helper/calculateParticipants.ts';
+import { mapActions } from '../store/map.reducer.ts';
 
 const solveFunctions: GpxMergeLogic[] = [mergeAndAdjustTimes, mergeAndDelayAndAdjustTimes];
 
@@ -34,4 +35,5 @@ export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(calculatedTracksActions.setParticipants(participants));
+    dispatch(mapActions.setSource('tracks'));
 }

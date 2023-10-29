@@ -7,6 +7,7 @@ import { ConfirmationModal } from './ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../assets/trash.svg';
 import { clearReadableTracks } from './map/trackSimulationReader.ts';
+import { mapActions } from '../store/map.reducer.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export function RemoveDataButton() {
         dispatch(gpxSegmentsActions.clearGpxSegments());
         dispatch(trackMergeActions.clear());
         dispatch(calculatedTracksActions.removeCalculatedTracks());
+        dispatch(mapActions.setSource('segments'));
         localStorage.clear();
     };
     return (
