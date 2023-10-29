@@ -8,13 +8,16 @@ import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 import { AppFooter } from './Footer.tsx';
 import { AppHeader } from './Header.tsx';
+import { ErrorBoundary } from './ErrorBoundary.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <Provider store={store}>
-            <AppHeader />
-            <App />
-            <AppFooter />
-        </Provider>
+        <ErrorBoundary>
+            <Provider store={store}>
+                <AppHeader />
+                <App />
+                <AppFooter />
+            </Provider>
+        </ErrorBoundary>
     </React.StrictMode>
 );
