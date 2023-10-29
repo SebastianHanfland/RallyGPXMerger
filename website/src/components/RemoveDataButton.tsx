@@ -19,6 +19,7 @@ export function RemoveDataButton() {
         dispatch(calculatedTracksActions.removeCalculatedTracks());
         dispatch(mapActions.setSource('segments'));
         localStorage.clear();
+        setShowModal(false);
     };
     return (
         <>
