@@ -27,7 +27,7 @@ export function LoadExampleDataButton() {
     };
 
     return (
-        <Button onClick={loadSampleData}>
+        <Button onClick={loadSampleData} title={'Load some example gpx segments and tracks. This removes other files'}>
             <img src={fileUpload} className="m-1" alt="open file" />
             Load sample data
         </Button>

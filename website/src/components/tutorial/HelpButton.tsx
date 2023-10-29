@@ -7,7 +7,11 @@ export const HelpButton = () => {
     const [showHelp, setShowHelp] = useState(false);
     return (
         <>
-            <Button variant={'info'} onClick={() => setShowHelp(true)}>
+            <Button
+                variant={'info'}
+                onClick={() => setShowHelp(true)}
+                title={'A short explanation how to use this tool'}
+            >
                 <img src={info} className={'m-1'} alt="help" />
                 Help/Tutorial
             </Button>

@@ -25,6 +25,7 @@ export function MergeTracksButton() {
             }}
             disabled={isLoading || !arrivalDate}
             variant={'success'}
+            title={'Merge GPX segments to tracks and adjust the times'}
         >
             {isLoading ? (
                 <Spinner animation="border" role="status" size={'sm'}>

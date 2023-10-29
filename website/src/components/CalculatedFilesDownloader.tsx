@@ -12,14 +12,18 @@ const downloadFile = (calculatedTracks: CalculatedTrack[]) => {
         zip.file(`${track.filename}.gpx`, new Blob([track.content], { type: 'gpx' }));
     });
     zip.generateAsync({ type: 'blob' }).then(function (content) {
-        FileSaver.saveAs(content, 'download.zip');
+        FileSaver.saveAs(content, `RallySimulation-${new Date().toISOString()}.zip`);
     });
 };
 
 export const CalculatedFilesDownloader = () => {
     const calculatedTracks = useSelector(getCalculatedTracks);
     return (
-        <Button onClick={() => downloadFile(calculatedTracks)} disabled={calculatedTracks.length === 0}>
+        <Button
+            onClick={() => downloadFile(calculatedTracks)}
+            disabled={calculatedTracks.length === 0}
+            title={'Download all GPX files for the tracks'}
+        >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
             Download File
         </Button>
