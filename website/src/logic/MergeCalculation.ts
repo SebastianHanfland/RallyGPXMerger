@@ -8,7 +8,7 @@ import {
     setParticipantsDelay,
 } from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
-import { mergeAndDelayAndAdjustTimes } from './solver/solver.ts';
+import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { clearReadableTracks } from '../components/map/trackSimulationReader.ts';
 import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../store/map.reducer.ts';

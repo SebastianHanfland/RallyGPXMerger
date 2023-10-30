@@ -1,8 +1,8 @@
-import { GpxMergeLogic } from '../types.ts';
-import { listAllNodesOfTracks } from './nodeFinder.ts';
-import { getAdjustedArrivalDateTime } from './peopleDelayCounter.ts';
+import { GpxMergeLogic } from './types.ts';
+import { listAllNodesOfTracks } from './solver/nodeFinder.ts';
+import { getAdjustedArrivalDateTime } from './solver/peopleDelayCounter.ts';
 
-import { assembleTrackFromSegments } from './assembleTrackFromSegments.ts';
+import { assembleTrackFromSegments } from './solver/assembleTrackFromSegments.ts';
 
 /*
 We have to find nodes where the branches join

@@ -1,9 +1,9 @@
 import { mergeAndDelayAndAdjustTimes } from '../solver.ts';
-import { GpxSegment, TrackComposition } from '../../../store/types.ts';
+import { GpxSegment, TrackComposition } from '../../store/types.ts';
 import { Mock } from 'vitest';
 
-import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
-import { setParticipantsDelay } from '../../../store/trackMerge.reducer.ts';
+import { assembleTrackFromSegments } from '../solver/assembleTrackFromSegments.ts';
+import { setParticipantsDelay } from '../../store/trackMerge.reducer.ts';
 
 vi.mock('../../SimpleGPX.ts');
 vi.mock('../../primitive/assembleTrackFromSegments.ts');
