@@ -24,6 +24,7 @@ export function generateTimeData(start: string, avg: number, points: Omit<Point,
     const alpha = 0.15;
     let last_speed = avg;
     let previousPoint: Point | undefined = undefined;
+
     return points.map((point, index, points) => {
         if (index === 0) {
             previousPoint = { ...point, time: new Date(start) };
