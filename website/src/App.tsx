@@ -3,7 +3,7 @@ import { TrackCompositionSection } from './components/tracks/TrackCompositionSec
 import { FileUploadSection } from './components/segments/FileUploadSection.tsx';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './components/map/TrackMapPage.tsx';
-import { TrackMergeSection } from './components/TrackMergeSection.tsx';
+import { TrackMergeSection } from './components/parameters/TrackMergeSection.tsx';
 
 export function App() {
     return (

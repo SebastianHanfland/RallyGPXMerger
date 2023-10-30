@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getParticipantsDelay, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getParticipantsDelay, trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 
 export function ParticipantsDelaySetter() {
