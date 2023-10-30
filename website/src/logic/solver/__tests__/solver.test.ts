@@ -1,4 +1,4 @@
-import { mergeAndDelayAndAdjustTimes } from '../withPeoplesSolver.ts';
+import { mergeAndDelayAndAdjustTimes } from '../solver.ts';
 import { GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Mock } from 'vitest';
 
