@@ -1,6 +1,6 @@
 import { GpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Mock } from 'vitest';
-import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
+import { assembleTrackFromSegments } from '../../solver/assembleTrackFromSegments.ts';
 import { mergeAndAdjustTimes } from '../primitiveSolver.ts';
 
 vi.mock('../../SimpleGPX.ts');
