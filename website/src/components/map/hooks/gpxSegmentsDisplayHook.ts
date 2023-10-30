@@ -12,5 +12,5 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         addTracksToLayer(gpxSegmentsLayer, gpxSegments, mapSource === 'segments');
-    }, [gpxSegments, mapSource]);
+    }, [gpxSegments, gpxSegments.length, mapSource]);
 }

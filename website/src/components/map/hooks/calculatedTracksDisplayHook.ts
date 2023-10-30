@@ -12,5 +12,5 @@ export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObj
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         addTracksToLayer(calculatedTracksLayer, calculatedTracks, mapSource === 'tracks');
-    }, [calculatedTracks, mapSource]);
+    }, [calculatedTracks, calculatedTracks.length, mapSource]);
 }
