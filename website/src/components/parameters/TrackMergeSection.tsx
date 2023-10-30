@@ -1,6 +1,9 @@
 import { ArrivalDateTimePicker } from './ArrivalDateTimePicker.tsx';
 import { ParticipantsDelaySetter } from './ParticipantsDelaySetter.tsx';
 import { AverageSpeedSetter } from './AverageSpeedSetter.tsx';
+import { ButtonGroup, ButtonToolbar } from 'react-bootstrap';
+import { MergeTracksButton } from '../MergeTracksButton.tsx';
+import { CalculatedFilesDownloader } from '../CalculatedFilesDownloader.tsx';
 
 export function TrackMergeSection() {
     return (
@@ -14,6 +17,12 @@ export function TrackMergeSection() {
                 <hr />
                 <AverageSpeedSetter />
                 <hr />
+                <ButtonToolbar aria-label="Toolbar with Button groups" className={'justify-content-center'}>
+                    <ButtonGroup aria-label="help-buttons">
+                        <MergeTracksButton />
+                        <CalculatedFilesDownloader />
+                    </ButtonGroup>
+                </ButtonToolbar>
             </div>
         </div>
     );
