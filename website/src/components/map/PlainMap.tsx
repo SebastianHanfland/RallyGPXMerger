@@ -3,9 +3,9 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
-import { gpxSegmentDisplayHook } from './gpxSegmentsDisplayHook.ts';
-import { calculatedTracksDisplayHook } from './calculatedTracksDisplayHook.ts';
-import { trackMarkerDisplayHook } from './trackMarkerDisplayHook.ts';
+import { gpxSegmentDisplayHook } from './hooks/gpxSegmentsDisplayHook.ts';
+import { calculatedTracksDisplayHook } from './hooks/calculatedTracksDisplayHook.ts';
+import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 

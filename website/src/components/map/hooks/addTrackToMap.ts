@@ -1,9 +1,9 @@
 import { Point } from 'gpxparser';
-import { CalculatedTrack, GpxSegment } from '../../store/types.ts';
+import { CalculatedTrack, GpxSegment } from '../../../store/types.ts';
 import L, { LayerGroup } from 'leaflet';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
-import { endIcon, startIcon } from './MapIcons.ts';
+import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
+import { getColorFromUuid } from '../../../utils/colorUtil.ts';
+import { endIcon, startIcon } from '../MapIcons.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };

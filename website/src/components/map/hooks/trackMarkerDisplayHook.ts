@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
-import { getCurrenMapSource, getCurrenMapTime } from '../../store/map.reducer.ts';
+import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
+import { getCurrenMapSource, getCurrenMapTime } from '../../../store/map.reducer.ts';
 import { getCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
-import { bikeIcon } from './MapIcons.ts';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { bikeIcon } from '../MapIcons.ts';
+import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 
 export function trackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getCalculatedTracks);

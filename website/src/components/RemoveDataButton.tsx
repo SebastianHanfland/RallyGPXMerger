@@ -6,7 +6,7 @@ import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 import { ConfirmationModal } from './ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../assets/trash.svg';
-import { clearReadableTracks } from './map/trackSimulationReader.ts';
+import { clearReadableTracks } from './map/hooks/trackSimulationReader.ts';
 import { mapActions } from '../store/map.reducer.ts';
 
 export function RemoveDataButton() {

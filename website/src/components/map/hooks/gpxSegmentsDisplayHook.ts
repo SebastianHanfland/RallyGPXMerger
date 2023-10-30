@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
+import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from './addTrackToMap.ts';
-import { getCurrenMapSource } from '../../store/map.reducer.ts';
+import { getCurrenMapSource } from '../../../store/map.reducer.ts';
 
 export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const gpxSegments = useSelector(getGpxSegments);

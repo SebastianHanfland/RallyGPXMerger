@@ -2,7 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrenMapTime, mapActions } from '../../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../store/types.ts';
-import { getCurrentTimeStamp } from './trackSimulationReader.ts';
+import { getCurrentTimeStamp } from './hooks/trackSimulationReader.ts';
 import { formatDate } from '../../utils/dateUtil.ts';
 import { useEffect, useState } from 'react';
 import play from '../../assets/play.svg';
