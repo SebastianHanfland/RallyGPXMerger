@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
-import exchange from '../assets/exchange.svg';
-import check from '../assets/check.svg';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import exchange from '../../assets/exchange.svg';
+import check from '../../assets/check.svg';
+import { gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { useDispatch } from 'react-redux';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 

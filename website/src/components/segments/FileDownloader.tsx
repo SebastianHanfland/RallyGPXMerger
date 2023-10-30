@@ -1,6 +1,6 @@
 import FileSaver from 'file-saver';
 import { Button } from 'react-bootstrap';
-import { getColorFromUuid } from '../utils/colorUtil.ts';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
 interface Props {
     id: string;
