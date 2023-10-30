@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { State, TrackComposition, TrackMergeState } from './types';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/withPeoples/peopleDelayCounter.ts';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/solver/peopleDelayCounter.ts';
 
 export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
 
