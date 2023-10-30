@@ -8,14 +8,10 @@ import {
     setParticipantsDelay,
 } from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
-import { mergeAndAdjustTimes } from './primitive/primitiveSolver.ts';
-import { GpxMergeLogic } from './types.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver/solver.ts';
 import { clearReadableTracks } from '../components/map/trackSimulationReader.ts';
 import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../store/map.reducer.ts';
-
-const solveFunctions: GpxMergeLogic[] = [mergeAndAdjustTimes, mergeAndDelayAndAdjustTimes];
 
 export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     const gpxSegments = getGpxSegments(getState());
@@ -30,7 +26,7 @@ export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     clearReadableTracks();
 
     setParticipantsDelay(getParticipantsDelay(getState()));
-    const calculatedTracks = solveFunctions[1](gpxSegments, trackCompositions, arrivalDateTime);
+    const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
     const participants = calculateParticipants(gpxSegments, trackCompositions);
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
