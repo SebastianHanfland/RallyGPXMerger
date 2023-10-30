@@ -1,6 +1,6 @@
 import { GpxSegment, TrackComposition } from '../../store/types.ts';
 import { Break, BREAK_IDENTIFIER } from '../types.ts';
-import { SimpleGPX } from '../SimpleGPX.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 
 export function resolveGpxSegments(track: TrackComposition, gpxSegments: GpxSegment[]): (SimpleGPX | Break)[] {
     return track.segmentIds.map((segmentId) => {

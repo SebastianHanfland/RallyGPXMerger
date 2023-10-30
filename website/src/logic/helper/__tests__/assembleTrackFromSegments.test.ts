@@ -2,7 +2,7 @@ import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/ty
 import { Mock } from 'vitest';
 import { BREAK_IDENTIFIER, GpxFileAccess } from '../../types.ts';
 
-import { mergeSimpleGPXs, SimpleGPX } from '../../SimpleGPX.ts';
+import { mergeSimpleGPXs, SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
 
 vi.mock('../../SimpleGPX.ts');

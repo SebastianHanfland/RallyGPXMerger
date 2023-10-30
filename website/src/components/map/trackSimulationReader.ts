@@ -3,7 +3,7 @@ import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks, getTrackParticipants } from '../../store/calculatedTracks.reducer.ts';
-import { SimpleGPX } from '../../logic/SimpleGPX.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../store/trackMerge.reducer.ts';
 
