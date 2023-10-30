@@ -30,37 +30,37 @@ export function TutorialModal({ closeModal }: Props) {
             <Modal.Body>
                 <Carousel data-bs-theme="dark">
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>1). Upload segments (including some timestamps) of the rally</h2>
+                        <h2>1.) Upload segments (including some timestamps) of the rally</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={UploadGpxSegments} style={{ height: height }} alt="Upload GPX segments" />
                         </div>
                     </Carousel.Item>
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>2). Compose tracks from segments and add breaks</h2>
+                        <h2>2.) Compose tracks from segments and add breaks</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={TrackCompositions} style={{ height: height }} alt="Track Compositions" />
                         </div>
                     </Carousel.Item>
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>3). Adjust parameters for the calculation</h2>
+                        <h2>3.) Adjust parameters for the calculation</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={RallyParameters} style={{ height: height }} alt="Set rally parameters" />
                         </div>
                     </Carousel.Item>
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>4). Merge the segments and download the resulting tracks</h2>
+                        <h2>4.) Merge the segments and download the resulting tracks</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={MergeAndDownload} style={{ height: '100px' }} alt="Merge and download" />
                         </div>
                     </Carousel.Item>
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>5). Start the simulation</h2>
+                        <h2>5.) Start the simulation</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={MapSettings} style={{ height: height }} alt="Settings for map" />
                         </div>
                     </Carousel.Item>
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>6). See the simulation on the map</h2>
+                        <h2>6.) See the simulation on the map</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={Simulation} style={{ height: height }} alt="Simulation" />
                         </div>
