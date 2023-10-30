@@ -18,7 +18,7 @@ async function toGpxSegment(file: File): Promise<GpxSegment> {
 
 export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
 
-export function FileDragAndDrop() {
+export function GpxSegments() {
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
     const handleChange = (newFiles: FileList) => {

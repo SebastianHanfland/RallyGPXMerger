@@ -3,7 +3,7 @@ import { GpxSegment } from '../../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';
-import { ALLOWS_TO_ENTER_PEOPLE_AT_START } from './FileDragAndDrop.tsx';
+import { ALLOWS_TO_ENTER_PEOPLE_AT_START } from './GpxSegments.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 
