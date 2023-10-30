@@ -8,13 +8,17 @@ export function ParticipantsDelaySetter() {
     return (
         <div>
             <h5 className="form-label m-3">Expansion of participants</h5>
-            <Form.Range
-                min={0}
-                max={1.0}
-                step={0.01}
-                value={participantsDelay}
-                onChange={(event) => dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)))}
-            />
+            <div className={'d-flex'}>
+                <span className={'mx-4'}>None</span>
+                <Form.Range
+                    min={0}
+                    max={1.0}
+                    step={0.01}
+                    value={participantsDelay}
+                    onChange={(event) => dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)))}
+                />
+                <span className={'mx-4'}>A&nbsp;lot</span>
+            </div>
             <h6 className="form-label m-3">
                 {'Delay of one participant: '}
                 <span className={'bg-info p-1'}>{participantsDelay.toFixed(2) + ' s'}</span>

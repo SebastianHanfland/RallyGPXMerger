@@ -37,12 +37,16 @@ export function TimeSlider() {
         <Form.Group className={'m-2'}>
             <h5>Time slider</h5>
             <div>{dateValue ? formatDate(dateValue) : 'No tracks yet calculated'}</div>
-            <Form.Range
-                min={0}
-                max={MAX_SLIDER_TIME}
-                value={mapTime}
-                onChange={(event) => dispatch(mapActions.setCurrentTime(Number(event.target.value)))}
-            />
+            <div className={'d-flex'}>
+                <span className={'mx-4'}>Start</span>
+                <Form.Range
+                    min={0}
+                    max={MAX_SLIDER_TIME}
+                    value={mapTime}
+                    onChange={(event) => dispatch(mapActions.setCurrentTime(Number(event.target.value)))}
+                />
+                <span className={'mx-4'}>End</span>
+            </div>
             <Button
                 variant={'success'}
                 className={'m-1'}
