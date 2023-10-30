@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 
 export function AddNewTrack() {
     const dispatch = useDispatch();

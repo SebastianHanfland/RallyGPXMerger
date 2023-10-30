@@ -1,5 +1,5 @@
 import './App.css';
-import { TrackCompositionSection } from './components/TrackCompositionSection.tsx';
+import { TrackCompositionSection } from './components/tracks/TrackCompositionSection.tsx';
 import { FileUploadSection } from './components/FileUploadSection.tsx';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './components/map/TrackMapPage.tsx';

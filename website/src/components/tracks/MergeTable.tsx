@@ -1,7 +1,7 @@
 import { Table } from 'react-bootstrap';
 import { MergeTableTrack } from './MergeTableTrack.tsx';
 import { useSelector } from 'react-redux';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { AddNewTrack } from './AddNewTrack.tsx';
 
 export const MergeTable = () => {

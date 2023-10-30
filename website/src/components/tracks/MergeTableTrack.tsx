@@ -1,13 +1,13 @@
 import { Button, Form } from 'react-bootstrap';
-import { GpxSegment, TrackComposition } from '../store/types.ts';
+import { GpxSegment, TrackComposition } from '../../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import Select from 'react-select';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 
-import { BREAK_IDENTIFIER } from '../logic/types.ts';
+import { BREAK_IDENTIFIER } from '../../logic/types.ts';
 import { useState } from 'react';
-import { ConfirmationModal } from './ConfirmationModal.tsx';
+import { ConfirmationModal } from '../ConfirmationModal.tsx';
 
 interface Props {
     track: TrackComposition;
