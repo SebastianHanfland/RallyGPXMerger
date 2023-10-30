@@ -1,7 +1,7 @@
 import { CalculatedTrack, GpxSegment, TrackComposition } from '../../store/types.ts';
 import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
 import { Break, instanceOfBreak } from '../types.ts';
-import { resolveGpxSegments } from '../helper/solvingHelper.ts';
+import { resolveGpxSegments } from './solvingHelper.ts';
 import { shiftEndDate } from '../../utils/dateUtil.ts';
 
 export function assembleTrackFromSegments(
