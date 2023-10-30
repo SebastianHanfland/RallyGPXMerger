@@ -1,7 +1,7 @@
 import React, { ErrorInfo, ReactNode } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Container } from 'react-bootstrap';
-import { storage } from './store/storage.ts';
+import { storage } from '../store/storage.ts';
 
 interface Props {
     children?: ReactNode;

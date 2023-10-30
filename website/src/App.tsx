@@ -1,39 +1,21 @@
-import './App.css';
-import { TrackCompositionSection } from './components/tracks/TrackCompositionSection.tsx';
-import { FileUploadSection } from './components/segments/FileUploadSection.tsx';
-import { Accordion, Col, Container, Row } from 'react-bootstrap';
-import { TrackMapPage } from './components/map/TrackMapPage.tsx';
-import { TrackMergeSection } from './components/parameters/TrackMergeSection.tsx';
+import { MergeAndMap } from './components/MergeAndMap.tsx';
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { Provider } from 'react-redux';
+import { store } from './store/store.ts';
+import { AppFooter } from './components/Footer.tsx';
+import { AppHeader } from './components/Header.tsx';
+import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 
 export function App() {
     return (
-        <Container fluid className={'m-0'}>
-            <Accordion defaultActiveKey="0">
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>Merging GPX Segments to Tracks</Accordion.Header>
-                    <Accordion.Body>
-                        <Row className="flex-xl-nowrap" style={{ height: '60vh', width: '100%' }}>
-                            <Col xl={4}>
-                                <FileUploadSection />
-                            </Col>
-                            <Col xl={5}>
-                                <TrackCompositionSection />
-                            </Col>
-                            <Col xl={3}>
-                                <TrackMergeSection />
-                            </Col>
-                        </Row>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-            <Accordion defaultActiveKey="1" className={'mt-3'}>
-                <Accordion.Item eventKey="1">
-                    <Accordion.Header>Display on Map</Accordion.Header>
-                    <Accordion.Body>
-                        <TrackMapPage />
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-        </Container>
+        <ErrorBoundary>
+            <Provider store={store}>
+                <AppHeader />
+                <MergeAndMap />
+                <AppFooter />
+            </Provider>
+        </ErrorBoundary>
     );
 }
