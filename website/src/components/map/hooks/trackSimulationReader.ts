@@ -62,8 +62,6 @@ const extractLocation =
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
             .toISOString();
 
-        console.log({ participants, timeStampEnd });
-
         calculatedTrack.tracks.forEach((track) => {
             track.points.forEach((point, index, points) => {
                 if (index === 0) {

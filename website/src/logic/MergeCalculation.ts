@@ -3,6 +3,7 @@ import { AppDispatch } from '../store/store.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import {
     getArrivalDateTime,
+    getAverageSpeedInKmH,
     getParticipantsDelay,
     getTrackCompositions,
     setParticipantsDelay,
@@ -12,11 +13,13 @@ import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { clearReadableTracks } from '../components/map/hooks/trackSimulationReader.ts';
 import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../store/map.reducer.ts';
+import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 
 export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     const gpxSegments = getGpxSegments(getState());
     const trackCompositions = getTrackCompositions(getState());
     const arrivalDateTime = getArrivalDateTime(getState());
+    const averageSpeed = getAverageSpeedInKmH(getState());
 
     if (!arrivalDateTime) {
         return;
@@ -26,8 +29,11 @@ export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     clearReadableTracks();
 
     setParticipantsDelay(getParticipantsDelay(getState()));
-    const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
-    const participants = calculateParticipants(gpxSegments, trackCompositions);
+
+    const gpxSegmentsWithTimeStamp = enrichGpxSegmentsWithTimeStamps(gpxSegments, averageSpeed);
+
+    const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegmentsWithTimeStamp, trackCompositions, arrivalDateTime);
+    const participants = calculateParticipants(gpxSegmentsWithTimeStamp, trackCompositions);
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(calculatedTracksActions.setParticipants(participants));

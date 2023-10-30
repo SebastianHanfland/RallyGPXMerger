@@ -5,9 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getGpxSegments, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { generateTimeData } from '../../logic/speedSimulator.ts';
-import { getAverageSpeedInKmH } from '../../store/trackMerge.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -24,25 +21,10 @@ export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
 export function GpxSegments() {
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
-    const averageSpeed = useSelector(getAverageSpeedInKmH);
+
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
-            dispatch(
-                gpxSegmentsActions.addGpxSegments(
-                    newGpxSegments.map((segment) => {
-                        const gpxContent = SimpleGPX.fromString(segment.content);
-                        gpxContent.tracks[0].points = generateTimeData(
-                            '2020-10-10T10:00:00.000Z',
-                            averageSpeed,
-                            gpxContent.tracks[0].points
-                        );
-                        return {
-                            ...segment,
-                            content: gpxContent.toString(),
-                        };
-                    })
-                )
-            )
+            dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments))
         );
     };
     return (
