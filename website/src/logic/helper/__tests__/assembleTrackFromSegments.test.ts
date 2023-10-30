@@ -5,7 +5,7 @@ import { BREAK_IDENTIFIER, GpxFileAccess } from '../../types.ts';
 import { mergeSimpleGPXs, SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
 
-vi.mock('../../SimpleGPX.ts');
+vi.mock('../../../utils/SimpleGPX.ts');
 
 describe('assembleTrackFromSegments', () => {
     afterEach(() => {
