@@ -1,5 +1,6 @@
 import { ArrivalDateTimePicker } from './ArrivalDateTimePicker.tsx';
 import { ParticipantsDelaySetter } from './ParticipantsDelaySetter.tsx';
+import { AverageSpeedSetter } from './AverageSpeedSetter.tsx';
 
 export function TrackMergeSection() {
     return (
@@ -10,6 +11,8 @@ export function TrackMergeSection() {
                 <ArrivalDateTimePicker />
                 <hr />
                 <ParticipantsDelaySetter />
+                <hr />
+                <AverageSpeedSetter />
                 <hr />
             </div>
         </div>
