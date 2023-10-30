@@ -51,10 +51,7 @@ const trackMergeSlice = createSlice({
         setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
         },
-        clear: (state: TrackMergeState) => {
-            state.trackCompositions = [];
-            state.arrivalDateTime = undefined;
-        },
+        clear: () => initialState,
     },
 });
 
