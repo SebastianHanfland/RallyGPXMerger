@@ -7,6 +7,7 @@ export function ParticipantsDelaySetter() {
     const participantsDelay = useSelector(getParticipantsDelay);
     return (
         <div>
+            <h5 className="form-label m-3">Expansion of participants</h5>
             <Form.Range
                 min={0}
                 max={1.0}
