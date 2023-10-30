@@ -30,7 +30,7 @@ export function TutorialModal({ closeModal }: Props) {
             <Modal.Body>
                 <Carousel data-bs-theme="dark">
                     <Carousel.Item className={carouselItemClass}>
-                        <h2>1.) Upload segments (including some timestamps) of the rally</h2>
+                        <h2>1.) Upload segments (without timestamps) of the rally</h2>
                         <div className={divClass} style={{ height: height }}>
                             <img src={UploadGpxSegments} style={{ height: height }} alt="Upload GPX segments" />
                         </div>

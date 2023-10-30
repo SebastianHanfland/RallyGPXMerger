@@ -1,6 +1,6 @@
 # Introduction and Goals
 
-This tool aims to merge gpx segments (with time stamp) into track.
+This tool aims to merge gpx segments (without timestamps) into track.
 Each track consists of one or multiple segments.
 The user can specify extra metadata like number of people or expected finish time. 
 
