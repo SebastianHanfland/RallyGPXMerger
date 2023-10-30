@@ -44,7 +44,7 @@ export function TutorialModal({ closeModal }: Props) {
                     <Carousel.Item className={carouselItemClass}>
                         <h2>3.) Adjust parameters for the calculation</h2>
                         <div className={divClass} style={{ height: height }}>
-                            <img src={RallyParameters} style={{ height: height }} alt="Set rally parameters" />
+                            <img src={RallyParameters} style={{ height: '50vh' }} alt="Set rally parameters" />
                         </div>
                     </Carousel.Item>
                     <Carousel.Item className={carouselItemClass}>
