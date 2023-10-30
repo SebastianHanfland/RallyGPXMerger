@@ -13,7 +13,7 @@ The problem this tool solves, is to calculate the times for a rally, when each b
 ## Quality Goals
 
 A person without a lot of technical knowledge should be able to easily use the tool.
-No code needs to be installed to use the functionality
+No code needs to be installed to use the functionality.
 
 ## Stakeholders
 
