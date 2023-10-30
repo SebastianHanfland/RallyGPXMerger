@@ -2,26 +2,23 @@ import { AppDispatch } from '../store/store.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
 import { calculateMerge } from '../logic/MergeCalculation.ts';
-import { useEffect, useState } from 'react';
-import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
+import { getArrivalDateTime, getIsCalculating, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import magic from '../assets/magic.svg';
 
 export function MergeTracksButton() {
     const dispatch: AppDispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(false);
     const arrivalDate = useSelector(getArrivalDateTime);
-
-    useEffect(() => {
-        if (isLoading) {
-            setTimeout(() => setIsLoading(false), 500);
-        }
-    }, [isLoading]);
+    const isLoading = useSelector(getIsCalculating);
 
     return (
         <Button
             onClick={() => {
-                setIsLoading(true);
-                dispatch(calculateMerge);
+                dispatch(trackMergeActions.setIsCalculating(true));
+                setTimeout(() => {
+                    dispatch(calculateMerge).then(() => {
+                        dispatch(trackMergeActions.setIsCalculating(false));
+                    });
+                }, 50);
             }}
             disabled={isLoading || !arrivalDate}
             variant={'success'}

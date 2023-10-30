@@ -15,7 +15,7 @@ import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 
-export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
+export async function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     const gpxSegments = getGpxSegments(getState());
     const trackCompositions = getTrackCompositions(getState());
     const arrivalDateTime = getArrivalDateTime(getState());
@@ -38,4 +38,5 @@ export function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(calculatedTracksActions.setParticipants(participants));
     dispatch(mapActions.setSource('tracks'));
+    return Promise.resolve();
 }

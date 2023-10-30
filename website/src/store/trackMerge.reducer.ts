@@ -56,6 +56,9 @@ const trackMergeSlice = createSlice({
         setAverageSpeed: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.averageSpeedInKmH = action.payload;
         },
+        setIsCalculating: (state: TrackMergeState, action: PayloadAction<boolean>) => {
+            state.isCalculating = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -67,3 +70,4 @@ export const getTrackCompositions = (state: State) => getBase(state).trackCompos
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
+export const getIsCalculating = (state: State) => getBase(state).isCalculating ?? false;
