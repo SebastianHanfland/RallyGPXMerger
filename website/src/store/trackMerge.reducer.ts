@@ -10,6 +10,8 @@ export const setParticipantsDelay = (delay: number) => {
     PARTICIPANTS_DELAY_IN_SECONDS = delay;
 };
 
+export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
+
 const initialState: TrackMergeState = {
     trackCompositions: [],
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,
@@ -51,6 +53,9 @@ const trackMergeSlice = createSlice({
         setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
         },
+        setAverageSpeed: (state: TrackMergeState, action: PayloadAction<number>) => {
+            state.averageSpeedInKmH = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -61,3 +66,4 @@ const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
+export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;

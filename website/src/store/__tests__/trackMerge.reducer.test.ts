@@ -1,6 +1,8 @@
 import { createStore } from '../store.ts';
 import {
+    DEFAULT_AVERAGE_SPEED_IN_KM_H,
     getArrivalDateTime,
+    getAverageSpeedInKmH,
     getParticipantsDelay,
     getTrackCompositions,
     trackMergeActions,
@@ -79,5 +81,19 @@ describe('TrackMerge reducer', () => {
         // when & then
         store.dispatch(trackMergeActions.clear());
         expect(getParticipantsDelay(store.getState())).toEqual(DELAY_PER_PERSON_IN_SECONDS);
+    });
+
+    it('should set and reset average speed', () => {
+        // given
+        const store = createStore();
+        expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
+
+        // when & then
+        store.dispatch(trackMergeActions.setAverageSpeed(15));
+        expect(getAverageSpeedInKmH(store.getState())).toEqual(15);
+
+        // when & then
+        store.dispatch(trackMergeActions.clear());
+        expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
     });
 });

@@ -30,6 +30,7 @@ export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     arrivalDateTime?: string;
     participantDelay: number;
+    averageSpeedInKmH?: number;
 }
 
 export const MAX_SLIDER_TIME = 100000;
