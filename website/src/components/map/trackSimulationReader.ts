@@ -1,6 +1,6 @@
 import { MAX_SLIDER_TIME, State } from '../../store/types.ts';
 import { getCurrenMapTime } from '../../store/map.reducer.ts';
-import { getTimeDifferenceInSeconds } from '../../logic/dateUtil.ts';
+import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks, getTrackParticipants } from '../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../logic/SimpleGPX.ts';

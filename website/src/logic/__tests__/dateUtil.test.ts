@@ -1,4 +1,4 @@
-import { getTimeDifferenceInSeconds } from '../dateUtil.ts';
+import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 
 describe('dateUtil', () => {
     it('should calculate difference in seconds and shift date accordingly', () => {
