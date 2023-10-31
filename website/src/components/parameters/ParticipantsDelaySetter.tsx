@@ -21,11 +21,11 @@ export function ParticipantsDelaySetter() {
             </div>
             <h6 className="form-label m-3">
                 {'Delay of one participant: '}
-                <span className={'bg-info p-1'}>{participantsDelay.toFixed(2) + ' s'}</span>
+                <span className={'bg-info p-1'}>{participantsDelay.toFixed(2) + '\xa0s'}</span>
             </h6>
             <h6 className="form-label m-3">
                 {'Length of 100 people (based on 12 km/h): '}
-                <span className={'bg-info p-1'}>{Math.round((12 / 3.6) * 100 * participantsDelay) + ' m'}</span>
+                <span className={'bg-info p-1'}>{Math.round((12 / 3.6) * 100 * participantsDelay) + '\xa0m'}</span>
             </h6>
         </div>
     );
