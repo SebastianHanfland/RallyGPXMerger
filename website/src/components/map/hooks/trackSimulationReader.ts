@@ -93,6 +93,16 @@ export const getCurrentMarkerPositionsForTracks = (state: State) => {
     return readableTracks?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
 };
 
+export const getNumberOfPositionsInTracks = () => {
+    let positionCount = 0;
+    readableTracks?.forEach((gpx) => {
+        gpx.tracks.forEach((track) => {
+            positionCount += track.points.length;
+        });
+    });
+    return positionCount;
+};
+
 export const getCurrentTimeStamp = (state: State): string | undefined => {
     const calculatedTracks = getCalculatedTracks(state);
     if (calculatedTracks.length === 0) {
