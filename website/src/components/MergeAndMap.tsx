@@ -4,6 +4,7 @@ import { FileUploadSection } from './segments/FileUploadSection.tsx';
 import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './map/TrackMapPage.tsx';
 import { TrackMergeSection } from './parameters/TrackMergeSection.tsx';
+import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
 
 export function MergeAndMap() {
     return (
@@ -31,6 +32,14 @@ export function MergeAndMap() {
                     <Accordion.Header>Display on Map</Accordion.Header>
                     <Accordion.Body>
                         <TrackMapPage />
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
+            <Accordion defaultActiveKey="1" className={'mt-3'}>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Resolve the streets</Accordion.Header>
+                    <Accordion.Body>
+                        <StreetResolvingSection />
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
