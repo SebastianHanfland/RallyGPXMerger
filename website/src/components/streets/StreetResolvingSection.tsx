@@ -1,16 +1,11 @@
 import { Col, Row } from 'react-bootstrap';
+import { TrackDataOverview } from './TrackDataOverview.tsx';
 
 export const StreetResolvingSection = () => {
     return (
         <Row className="flex-xl-nowrap" style={{ height: '60vh', width: '100%' }}>
             <Col xl={4}>
-                <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-                    <h4>Overview of calculated Data</h4>
-                    <ul>
-                        <li>5000 Positions</li>
-                        <li>2000 unresolved Positions</li>
-                    </ul>
-                </div>
+                <TrackDataOverview />
             </Col>
             <Col xl={4}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
