@@ -1,5 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { TrackDataOverview } from './TrackDataOverview.tsx';
+import { ApiKeyInput } from './ApiKeyInput.tsx';
 
 export const StreetResolvingSection = () => {
     return (
@@ -10,10 +11,7 @@ export const StreetResolvingSection = () => {
             <Col xl={4}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <h4>Information of Address resolving service</h4>
-                    <ul>
-                        <li>Enter API Key</li>
-                        <li>Start calculation with a progress bar</li>
-                    </ul>
+                    <ApiKeyInput />
                 </div>
             </Col>
             <Col xl={4}>
