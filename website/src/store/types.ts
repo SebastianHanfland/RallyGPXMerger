@@ -30,7 +30,6 @@ export interface GeoCodingState {
     geoApifyKey?: string;
     locationIqKey?: string;
     positionStackKey?: string;
-    resolvedPositions: Record<string, string>;
 }
 
 export interface TrackMergeState {

@@ -1,21 +1,38 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
+import { Button } from 'react-bootstrap';
+import { resolvePositions } from '../../reverseGeoCoding/streetResolver.ts';
+import { AppDispatch } from '../../store/store.ts';
+import { useState } from 'react';
+import { getResolvedPositions } from '../../reverseGeoCoding/initializeResolvedPositions.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
+    const dispatch: AppDispatch = useDispatch();
+    const [positions, setPositions] = useState<any>();
 
-    const numberOfPositionsInTracks = getNumberOfPositionsInTracks();
+    const { positionCount, uniquePositionCount, unresolvedUniquePositionCount } = getNumberOfPositionsInTracks();
 
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
             <h4>Overview of calculated Data</h4>
             <ul>
                 <li>{`${calculatedTracks.length} Tracks`}</li>
-                <li>{`${numberOfPositionsInTracks} Positions`}</li>
-                <li>{`${numberOfPositionsInTracks} unique Positions`}</li>
-                <li>{`${numberOfPositionsInTracks} unresolved Positions`}</li>
+                <li>{`${positionCount} Positions`}</li>
+                <li>{`${uniquePositionCount} unique Positions`}</li>
+                <li>{`${unresolvedUniquePositionCount} unresolved unique Positions`}</li>
             </ul>
+
+            <Button onClick={() => dispatch(resolvePositions)}>Trigger the calculation</Button>
+            <div>{JSON.stringify(positions)}</div>
+            <Button
+                onClick={() => {
+                    setPositions(getResolvedPositions());
+                }}
+            >
+                Look at the stuff
+            </Button>
         </div>
     );
 }

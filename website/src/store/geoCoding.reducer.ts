@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { State, GeoCodingState } from './types';
+import { GeoCodingState, State } from './types';
 import { storage } from './storage.ts';
 
-const initialState: GeoCodingState = {
-    resolvedPositions: {},
-};
+const initialState: GeoCodingState = {};
 
 const geoCodingSlice = createSlice({
     name: 'geoCoding',
@@ -19,9 +17,6 @@ const geoCodingSlice = createSlice({
         setPositionStackKey: (state: GeoCodingState, action: PayloadAction<string>) => {
             state.positionStackKey = action.payload;
         },
-        addResolvedPosition: (state: GeoCodingState, action: PayloadAction<{ identifier: string; street: string }>) => {
-            state.resolvedPositions[action.payload.identifier] = action.payload.street;
-        },
     },
 });
 
@@ -31,4 +26,3 @@ const getBase = (state: State) => state.geoCoding;
 export const getLocationIqKey = (state: State) => getBase(state).locationIqKey;
 export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
 export const getPositionStackKey = (state: State) => getBase(state).positionStackKey;
-export const getResolvedPositions = (state: State) => getBase(state).resolvedPositions;

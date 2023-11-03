@@ -6,12 +6,17 @@ import { getCalculatedTracks, getTrackParticipants } from '../../../store/calcul
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
+import {
+    getResolvedPositions,
+    initializeResolvedPositions,
+} from '../../../reverseGeoCoding/initializeResolvedPositions.ts';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;
 
 export const clearReadableTracks = () => {
     readableTracks = undefined;
 };
+
 function getStartAndEndOfSimulation(state: State): { start: string; end: string } {
     const calculatedTracks = getCalculatedTracks(state);
     const trackParticipants = getTrackParticipants(state);
@@ -22,6 +27,7 @@ function getStartAndEndOfSimulation(state: State): { start: string; end: string 
 
     if (!readableTracks) {
         readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));
+        initializeResolvedPositions(readableTracks);
     }
 
     readableTracks.forEach((track) => {
@@ -95,12 +101,17 @@ export const getCurrentMarkerPositionsForTracks = (state: State) => {
 
 export const getNumberOfPositionsInTracks = () => {
     let positionCount = 0;
+    const positionMap = getResolvedPositions();
     readableTracks?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             positionCount += track.points.length;
         });
     });
-    return positionCount;
+    return {
+        uniquePositionCount: Object.keys(positionMap).length,
+        positionCount,
+        unresolvedUniquePositionCount: Object.values(positionMap).filter((value) => !value).length,
+    };
 };
 
 export const getCurrentTimeStamp = (state: State): string | undefined => {
