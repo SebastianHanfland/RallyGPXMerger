@@ -5,12 +5,14 @@ import { State } from './types.ts';
 import { trackMergeReducer } from './trackMerge.reducer.ts';
 import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
+import { geoCodingReducer } from './geoCoding.reducer.ts';
 
 export const rootReducer: Reducer = combineReducers({
     gpxSegments: gpxSegmentsReducer,
     trackMerge: trackMergeReducer,
     calculatedTracks: calculatedTracksReducer,
     map: mapReducer,
+    geoCoding: geoCodingReducer,
 });
 
 export const storingReducer: Reducer = (state: State) => {

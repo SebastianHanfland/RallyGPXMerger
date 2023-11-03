@@ -26,6 +26,13 @@ export interface TrackComposition {
     segmentIds: string[];
 }
 
+export interface GeoCodingState {
+    geoApifyKey?: string;
+    locationIqKey?: string;
+    positionStackKey?: string;
+    resolvedPositions: Record<string, string>;
+}
+
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     arrivalDateTime?: string;
@@ -45,4 +52,5 @@ export interface State {
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
     map: MapState;
+    geoCoding: GeoCodingState;
 }
