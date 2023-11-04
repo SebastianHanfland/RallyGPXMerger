@@ -14,7 +14,7 @@ export const resolvePositions = (_: Dispatch, getState: () => State) => {
     const resolvedPositions = storage.getResolvedPositions();
     Object.entries(resolvedPositions).forEach((entry) => {
         const [positionKey, streetValue] = entry;
-        if (streetValue === undefined) {
+        if (streetValue === null) {
             setTimeout(() => {
                 const { lat, lon } = fromKey(positionKey);
                 console.log({ lat, lon }, 'Retrieiving the Position');

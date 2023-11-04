@@ -10,7 +10,7 @@ export const addResolvedPosition = (key: string, street: string) => {
 };
 
 export const isPositionResolved = (key: string): boolean => {
-    return storage.getResolvedPositions()[key] !== undefined;
+    return storage.getResolvedPositions()[key] !== null;
 };
 
 export function toKey({ lat, lon }: { lat: number; lon: number }): string {
@@ -30,7 +30,7 @@ export const initializeResolvedPositions = (readableTracks: SimpleGPX[]) => {
         gpx.tracks.forEach((track) => {
             track.points.forEach((point) => {
                 if (Object.keys(positionMap).length < 10) {
-                    positionMap[toKey(point)] = undefined;
+                    positionMap[toKey(point)] = null;
                 }
             });
         });

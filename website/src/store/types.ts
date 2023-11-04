@@ -54,4 +54,4 @@ export interface State {
     geoCoding: GeoCodingState;
 }
 
-export type ResolvePositions = Record<string, string | undefined>;
+export type ResolvePositions = Record<string, string | null>;

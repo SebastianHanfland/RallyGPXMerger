@@ -34,9 +34,17 @@ const clear = () => {
 };
 
 const saveResolvedPositions = (positions: ResolvePositions) => {
-    const combinedPositions = { ...getResolvedPositions(), ...positions };
+    const resolvedPositions = getResolvedPositions();
+    Object.entries(positions).forEach(([key, value]) => {
+        if (resolvedPositions[key] === null) {
+            resolvedPositions[key] = value;
+        }
+        if (resolvedPositions[key] === undefined) {
+            resolvedPositions[key] = null;
+        }
+    });
     try {
-        localStorage.setItem(positionKey, JSON.stringify(combinedPositions));
+        localStorage.setItem(positionKey, JSON.stringify(resolvedPositions));
     } catch (error) {
         console.log(error);
     }
