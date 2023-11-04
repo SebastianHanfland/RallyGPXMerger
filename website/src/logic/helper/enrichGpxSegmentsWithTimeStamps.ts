@@ -8,7 +8,6 @@ export function enrichGpxSegmentsWithTimeStamps(gpxSegments: GpxSegment[], avera
         gpxContent.tracks.forEach((track) => {
             track.points = generateTimeData('2020-10-10T10:00:00.000Z', averageSpeed, track.points);
         });
-        console.log(gpxContent.toString());
         return {
             ...segment,
             content: gpxContent.toString(),
