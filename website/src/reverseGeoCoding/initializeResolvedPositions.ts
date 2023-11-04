@@ -14,7 +14,7 @@ export const isPositionResolved = (key: string): boolean => {
 };
 
 export function toKey({ lat, lon }: { lat: number; lon: number }): string {
-    return `lat:${lat}-lng:${lon}`;
+    return `lat:${lat.toFixed(10)}-lng:${lon.toFixed(10)}`;
 }
 
 export function fromKey(key: string): { lat: number; lon: number } {

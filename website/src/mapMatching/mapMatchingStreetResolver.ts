@@ -28,13 +28,14 @@ export const resolvePositions = (_: Dispatch, getState: () => State) => {
         const gpx = SimpleGPX.fromString(segment.content);
         gpx.tracks.forEach((track) => {
             setTimeout(() => {
+                // Splitting into 1000-er batches to make the API happy
                 const body = toGeoApifyMapMatchingBody(track.points);
                 console.log(body);
                 geoApifyfetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
                     console.log({ resolvedPositions });
                     storage.saveResolvedPositions(resolvedPositions);
                 });
-            }, 1000 * counter);
+            }, 5000 * counter);
             counter += 1;
         });
     });

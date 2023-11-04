@@ -1,6 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { TrackDataOverview } from './TrackDataOverview.tsx';
 import { ApiKeyInput } from './ApiKeyInput.tsx';
+import { ProofOfConcept } from './ProofOfConcept.tsx';
 
 export const StreetResolvingSection = () => {
     return (
@@ -17,10 +18,7 @@ export const StreetResolvingSection = () => {
             <Col xl={4}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <h4>Download different data sets</h4>
-                    <ul>
-                        <li>When are which streets blocked</li>
-                        <li>Detailed information of each track</li>
-                    </ul>
+                    <ProofOfConcept />
                 </div>
             </Col>
         </Row>
