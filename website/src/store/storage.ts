@@ -40,7 +40,7 @@ const saveResolvedPositions = (positions: ResolvePositions) => {
             resolvedPositions[key] = value;
         }
         if (resolvedPositions[key] === undefined) {
-            resolvedPositions[key] = null;
+            resolvedPositions[key] = value;
         }
     });
     try {

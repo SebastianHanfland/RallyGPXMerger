@@ -29,9 +29,7 @@ export const initializeResolvedPositions = (readableTracks: SimpleGPX[]) => {
     readableTracks?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             track.points.forEach((point) => {
-                if (Object.keys(positionMap).length < 10) {
-                    positionMap[toKey(point)] = null;
-                }
+                positionMap[toKey(point)] = null;
             });
         });
     });

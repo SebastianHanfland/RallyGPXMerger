@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
 import { Button } from 'react-bootstrap';
-import { resolvePositions } from '../../reverseGeoCoding/streetResolver.ts';
 import { AppDispatch } from '../../store/store.ts';
 import { useState } from 'react';
 import { storage } from '../../store/storage.ts';
+import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
