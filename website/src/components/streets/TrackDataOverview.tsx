@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { resolvePositions } from '../../reverseGeoCoding/streetResolver.ts';
 import { AppDispatch } from '../../store/store.ts';
 import { useState } from 'react';
-import { getResolvedPositions } from '../../reverseGeoCoding/initializeResolvedPositions.ts';
+import { storage } from '../../store/storage.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
@@ -28,7 +28,7 @@ export function TrackDataOverview() {
             <div>{JSON.stringify(positions)}</div>
             <Button
                 onClick={() => {
-                    setPositions(getResolvedPositions());
+                    setPositions(storage.getResolvedPositions());
                 }}
             >
                 Look at the stuff

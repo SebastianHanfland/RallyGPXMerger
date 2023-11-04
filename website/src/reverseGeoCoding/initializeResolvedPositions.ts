@@ -1,20 +1,16 @@
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
-
-let resolvedPositions: Record<string, string | undefined> = {};
-
-export const getResolvedPositions = () => resolvedPositions;
+import { storage } from '../store/storage.ts';
+import { ResolvePositions } from '../store/types.ts';
 
 export const addResolvedPosition = (key: string, street: string) => {
     console.log('Resolving', key, !isPositionResolved(key));
     if (!isPositionResolved(key)) {
-        resolvedPositions[key] = street;
-        console.log('Having stored', resolvedPositions[key], street);
-        console.log(resolvedPositions);
+        storage.saveResolvedPositions({ [key]: street });
     }
 };
 
 export const isPositionResolved = (key: string): boolean => {
-    return resolvedPositions[key] !== undefined;
+    return storage.getResolvedPositions()[key] !== undefined;
 };
 
 export function toKey({ lat, lon }: { lat: number; lon: number }): string {
@@ -29,7 +25,7 @@ export function fromKey(key: string): { lat: number; lon: number } {
 }
 
 export const initializeResolvedPositions = (readableTracks: SimpleGPX[]) => {
-    const positionMap: Record<string, string | undefined> = {};
+    const positionMap: ResolvePositions = {};
     readableTracks?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             track.points.forEach((point) => {
@@ -40,5 +36,5 @@ export const initializeResolvedPositions = (readableTracks: SimpleGPX[]) => {
         });
     });
 
-    resolvedPositions = positionMap;
+    storage.saveResolvedPositions(positionMap);
 };

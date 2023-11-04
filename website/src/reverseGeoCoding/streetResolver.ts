@@ -1,8 +1,9 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { getGeoApifyKey } from '../store/geoCoding.reducer.ts';
-import { addResolvedPosition, fromKey, getResolvedPositions } from './initializeResolvedPositions.ts';
+import { addResolvedPosition, fromKey } from './initializeResolvedPositions.ts';
 import { geoapifyFetchAddress } from './geoapifyApi.ts';
+import { storage } from '../store/storage.ts';
 
 export const resolvePositions = (_: Dispatch, getState: () => State) => {
     const geoApifyKey = getGeoApifyKey(getState());
@@ -10,7 +11,7 @@ export const resolvePositions = (_: Dispatch, getState: () => State) => {
         return;
     }
     let counter = 0;
-    const resolvedPositions = getResolvedPositions();
+    const resolvedPositions = storage.getResolvedPositions();
     Object.entries(resolvedPositions).forEach((entry) => {
         const [positionKey, streetValue] = entry;
         if (streetValue === undefined) {

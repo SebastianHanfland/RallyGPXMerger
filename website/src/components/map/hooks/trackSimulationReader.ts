@@ -6,10 +6,8 @@ import { getCalculatedTracks, getTrackParticipants } from '../../../store/calcul
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
-import {
-    getResolvedPositions,
-    initializeResolvedPositions,
-} from '../../../reverseGeoCoding/initializeResolvedPositions.ts';
+import { initializeResolvedPositions } from '../../../reverseGeoCoding/initializeResolvedPositions.ts';
+import { storage } from '../../../store/storage.ts';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;
 
@@ -101,7 +99,7 @@ export const getCurrentMarkerPositionsForTracks = (state: State) => {
 
 export const getNumberOfPositionsInTracks = () => {
     let positionCount = 0;
-    const positionMap = getResolvedPositions();
+    const positionMap = storage.getResolvedPositions();
     readableTracks?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             positionCount += track.points.length;
