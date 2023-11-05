@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { TrackDataOverview } from './TrackDataOverview.tsx';
 import { ApiKeyInput } from './ApiKeyInput.tsx';
-import { ProofOfConcept } from './ProofOfConcept.tsx';
+import { StreetResolvedTracks } from './StreetResolvedTracks.tsx';
 
 export const StreetResolvingSection = () => {
     return (
@@ -15,7 +15,7 @@ export const StreetResolvingSection = () => {
             </Col>
             <Col xl={8}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%' }}>
-                    <ProofOfConcept />
+                    <StreetResolvedTracks />
                 </div>
             </Col>
         </Row>

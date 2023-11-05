@@ -5,7 +5,7 @@ import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
 
-export function ProofOfConcept() {
+export function StreetResolvedTracks() {
     const trackStreetInfos = useSelector(getTrackStreetInfo);
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
 
