@@ -1,45 +1,30 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    geoCodingActions,
-    getGeoApifyKey,
-    getLocationIqKey,
-    getPositionStackKey,
-} from '../../store/geoCoding.reducer.ts';
+import { geoCodingActions, getGeoApifyKey, getBigDataCloudKey } from '../../store/geoCoding.reducer.ts';
 
 export const ApiKeyInput = () => {
     const geoApifyKey = useSelector(getGeoApifyKey);
-    const locationIqKey = useSelector(getLocationIqKey);
-    const positionStackKey = useSelector(getPositionStackKey);
+    const positionStackKey = useSelector(getBigDataCloudKey);
     const dispatch = useDispatch();
 
     return (
         <div>
             <Form.Group>
-                <Form.Label>geoApifyKey</Form.Label>
+                <Form.Label>geoapify API Key</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="geoApifyKey"
+                    placeholder="geoapify API Key"
                     value={geoApifyKey}
                     onChange={(value) => dispatch(geoCodingActions.setGeoApifyKey(value.target.value))}
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Label>locationIqKey</Form.Label>
+                <Form.Label>BigDataCloud API Key</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="locationIqKey"
-                    value={locationIqKey}
-                    onChange={(value) => dispatch(geoCodingActions.setLocationIqKey(value.target.value))}
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>positionStackKey</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="positionStackKey"
+                    placeholder="BigDataCloud API Key"
                     value={positionStackKey}
-                    onChange={(value) => dispatch(geoCodingActions.setPositionStackKey(value.target.value))}
+                    onChange={(value) => dispatch(geoCodingActions.setBigDataCloudKeyKey(value.target.value))}
                 />
             </Form.Group>
         </div>

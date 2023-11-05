@@ -8,14 +8,11 @@ const geoCodingSlice = createSlice({
     name: 'geoCoding',
     initialState: storage.load()?.geoCoding ?? initialState,
     reducers: {
-        setLocationIqKey: (state: GeoCodingState, action: PayloadAction<string>) => {
-            state.locationIqKey = action.payload;
-        },
         setGeoApifyKey: (state: GeoCodingState, action: PayloadAction<string>) => {
             state.geoApifyKey = action.payload;
         },
-        setPositionStackKey: (state: GeoCodingState, action: PayloadAction<string>) => {
-            state.positionStackKey = action.payload;
+        setBigDataCloudKeyKey: (state: GeoCodingState, action: PayloadAction<string>) => {
+            state.bigDataCloudKey = action.payload;
         },
     },
 });
@@ -23,6 +20,5 @@ const geoCodingSlice = createSlice({
 export const geoCodingActions = geoCodingSlice.actions;
 export const geoCodingReducer: Reducer<GeoCodingState> = geoCodingSlice.reducer;
 const getBase = (state: State) => state.geoCoding;
-export const getLocationIqKey = (state: State) => getBase(state).locationIqKey;
 export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
-export const getPositionStackKey = (state: State) => getBase(state).positionStackKey;
+export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudKey;
