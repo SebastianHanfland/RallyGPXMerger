@@ -14,8 +14,7 @@ export const StreetResolvingSection = () => {
                 </div>
             </Col>
             <Col xl={8}>
-                <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-                    <h4>Download different data sets</h4>
+                <div className={'m-2 p-2 shadow'} style={{ height: '95%' }}>
                     <ProofOfConcept />
                 </div>
             </Col>
