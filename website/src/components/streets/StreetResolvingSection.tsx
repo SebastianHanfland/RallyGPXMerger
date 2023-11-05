@@ -9,13 +9,13 @@ export const StreetResolvingSection = () => {
             <Col xl={4}>
                 <TrackDataOverview />
             </Col>
-            <Col xl={4}>
+            <Col xl={2}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <h4>Information of Address resolving service</h4>
                     <ApiKeyInput />
                 </div>
             </Col>
-            <Col xl={4}>
+            <Col xl={6}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <h4>Download different data sets</h4>
                     <ProofOfConcept />

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { getTrackStreetInfo } from '../../mapMatching/getTrackStreetInfo.ts';
-import { SingleTrackStreetInfo } from './TrackStreetInfo.tsx';
+import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
 import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 

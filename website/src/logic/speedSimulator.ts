@@ -18,7 +18,7 @@ function slopeFactor(slope: number): number {
     }
 }
 
-const toLatLng = ({ lat, lon }: Omit<Point, 'time'>): GeoPoint => ({ lat, lng: lon });
+export const toLatLng = ({ lat, lon }: Omit<Point, 'time'>): GeoPoint => ({ lat, lng: lon });
 
 export function generateTimeData(start: string, avg: number, points: Omit<Point, 'time'>[]): Point[] {
     const alpha = 0.15;
