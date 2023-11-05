@@ -25,7 +25,7 @@ export const CalculatedFilesDownloader = () => {
             title={'Download all GPX files for the tracks'}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
-            Download File
+            Download GPX Files
         </Button>
     );
 };

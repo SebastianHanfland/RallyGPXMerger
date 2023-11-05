@@ -3,6 +3,7 @@ import { getTrackStreetInfo } from '../../mapMatching/getTrackStreetInfo.ts';
 import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
 import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
+import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
 
 export function ProofOfConcept() {
     const trackStreetInfos = useSelector(getTrackStreetInfo);
@@ -19,6 +20,7 @@ export function ProofOfConcept() {
     return (
         <div>
             <h3>Track Street Info</h3>
+            <StreetFilesDownloader />
             <Pagination>
                 {trackStreetInfos.map(({ id, name }) => (
                     <Pagination.Item key={id} active={id === selectedTrackId} onClick={() => setSelectedTrackId(id)}>
