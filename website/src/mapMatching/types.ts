@@ -47,6 +47,11 @@ export interface GeoApifyMapMatchingResult {
         geometry: { type: string; coordinates: [[number, number][]] };
     }[];
 }
+
+export interface TrackStreetInfo {
+    name: string;
+    wayPoints: { streetName: string; from: string; to: string }[];
+}
 export const dummyResponse: GeoApifyMapMatchingResult = {
     type: 'FeatureCollection',
     features: [
