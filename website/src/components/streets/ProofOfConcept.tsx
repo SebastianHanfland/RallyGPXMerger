@@ -18,10 +18,10 @@ export function ProofOfConcept() {
                     return (
                         <div>
                             {'Something here' + segment.filename}
-                            {gpx.tracks[0].points.map((point) => {
+                            {gpx.tracks[0].points.map((point, index) => {
                                 const positionKey = toKey(point);
                                 const street = resolvedPositions[positionKey];
-                                return <div>{`${street}`}</div>;
+                                return <div key={index}>{`${street}`}</div>;
                             })}
                         </div>
                     );

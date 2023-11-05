@@ -9,7 +9,7 @@ import { Point } from 'gpxparser';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
-        mode: 'bicycle',
+        mode: 'drive',
         waypoints: points.map((point) => ({
             timestamp: point.time?.toISOString(),
             location: [point.lon, point.lat],
