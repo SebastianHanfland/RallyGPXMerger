@@ -1,5 +1,10 @@
-export interface EnrichedPoints {
+import { Point } from 'gpxparser';
+
+export interface EnrichedPoints extends PointS {
     street: string;
+}
+
+export interface PointS extends Omit<Point, 'time'> {
     time: string;
 }
 
@@ -7,6 +12,8 @@ interface AggregatedPoints {
     streetName: string;
     from: string;
     to: string;
+    pointFrom: { lat: number; lon: number };
+    pointTo: { lat: number; lon: number };
 }
 
 export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
@@ -23,11 +30,19 @@ export function takeMostDetailedStreetName(streetName: string, lastStreetName: s
     return [...new Set([...lastStreetNameElements, ...streetNameElements])].join(', ');
 }
 
+const extractLatLon = ({ lat, lon }: EnrichedPoints) => ({ lat, lon });
+
 export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[]): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point) => {
         if (aggregatedPoints.length === 0) {
-            aggregatedPoints.push({ streetName: point.street, to: point.time, from: point.time });
+            aggregatedPoints.push({
+                streetName: point.street,
+                to: point.time,
+                from: point.time,
+                pointFrom: extractLatLon(point),
+                pointTo: extractLatLon(point),
+            });
             return;
         }
 
@@ -38,9 +53,20 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[]): Aggre
         const streetName = point.street;
         if (anyStreetNameMatch(streetName, lastStreetName)) {
             const detailedStreetName = takeMostDetailedStreetName(streetName, lastStreetName);
-            aggregatedPoints[lastIndex] = { ...lastElement, streetName: detailedStreetName, to: point.time };
+            aggregatedPoints[lastIndex] = {
+                ...lastElement,
+                streetName: detailedStreetName,
+                to: point.time,
+                pointTo: extractLatLon(point),
+            };
         } else {
-            aggregatedPoints.push({ streetName: point.street, to: point.time, from: point.time });
+            aggregatedPoints.push({
+                streetName: point.street,
+                to: point.time,
+                from: point.time,
+                pointFrom: extractLatLon(point),
+                pointTo: extractLatLon(point),
+            });
         }
     });
     return aggregatedPoints;
