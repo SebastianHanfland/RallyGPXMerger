@@ -12,7 +12,7 @@ export const MergeTable = () => {
                 <tr>
                     <th style={{ width: '25%' }}>Track name</th>
                     <th style={{ width: '75%' }}>Track components</th>
-                    <th style={{ width: '10%', minWidth: '40px' }} />
+                    <th style={{ width: '20%', minWidth: '110px' }} />
                 </tr>
             </thead>
             <tbody>

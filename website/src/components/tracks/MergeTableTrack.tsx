@@ -8,6 +8,8 @@ import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { BREAK_IDENTIFIER } from '../../logic/types.ts';
 import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
+import { FileDownloader } from '../segments/FileDownloader.tsx';
+import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 
 interface Props {
     track: TrackComposition;
@@ -45,6 +47,7 @@ export function MergeTableTrack({ track }: Props) {
     const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption), ...breaks];
     const [showModal, setShowModal] = useState(false);
+    const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
 
     return (
         <tr>
@@ -89,6 +92,14 @@ export function MergeTableTrack({ track }: Props) {
                             closeModal={() => setShowModal(false)}
                             title={`Removing track ${track.name ?? ''}`}
                             body={`Do you really want to remove the track ${track.name ?? ''}?`}
+                        />
+                    )}
+                    {calculatedTrack && (
+                        <FileDownloader
+                            id={calculatedTrack.id}
+                            content={calculatedTrack.content}
+                            name={calculatedTrack.filename}
+                            onlyIcon={true}
                         />
                     )}
                 </>
