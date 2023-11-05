@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
-import { Button } from 'react-bootstrap';
+import { Button, ProgressBar } from 'react-bootstrap';
 import { AppDispatch } from '../../store/store.ts';
 import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts';
 
@@ -22,6 +22,9 @@ export function TrackDataOverview() {
             </ul>
 
             <Button onClick={() => dispatch(resolvePositions)}>Trigger the calculation</Button>
+            <div className={'m-2'}>
+                <ProgressBar now={10} label={`${10}%`}></ProgressBar>
+            </div>
         </div>
     );
 }
