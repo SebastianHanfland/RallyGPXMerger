@@ -23,7 +23,7 @@ type GeoApifyWayPoint = {
     original_index: number;
     location: [number, number];
     original_location: [number, number];
-    match_type: string;
+    match_type: 'matched' | 'unmatched' | 'interpolated';
     match_distance: number;
     leg_index: number;
     step_index: number;

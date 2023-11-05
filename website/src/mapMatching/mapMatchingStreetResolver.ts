@@ -2,7 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { getGeoApifyKey } from '../store/geoCoding.reducer.ts';
 import { storage } from '../store/storage.ts';
-import { geoApifyfetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
+import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
@@ -32,7 +32,7 @@ export const resolvePositions = (_: Dispatch, getState: () => State) => {
             listOfPoints.forEach((points) => {
                 setTimeout(() => {
                     const body = toGeoApifyMapMatchingBody(points);
-                    geoApifyfetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
+                    geoApifyFetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
                         storage.saveResolvedPositions(resolvedPositions);
                     });
                 }, 5000 * counter);
