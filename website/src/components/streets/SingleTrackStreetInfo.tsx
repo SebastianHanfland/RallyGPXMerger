@@ -12,10 +12,12 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
     return (
         <div>
             <h5>{name}</h5>
-            <div>{`Distance: ${distanceInKm.toFixed(2)} km`}</div>
-            <div>{`Start: ${formatTimeOnly(start)}`}</div>
-            <div>{`End: ${formatTimeOnly(end)}`}</div>
-            <div>{`Average speed: ${average.toFixed(1)} km/h`}</div>
+            <div className={'d-flex justify-content-between'}>
+                <div className={'m-3'}>{`Distance: ${distanceInKm.toFixed(2)} km`}</div>
+                <div className={'m-3'}>{`Start: ${formatTimeOnly(start)}`}</div>
+                <div className={'m-3'}>{`End: ${formatTimeOnly(end)}`}</div>
+                <div className={'m-3'}>{`Average speed: ${average.toFixed(1)} km/h`}</div>
+            </div>
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>

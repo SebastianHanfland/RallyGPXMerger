@@ -19,12 +19,12 @@ export function ProofOfConcept() {
 
     return (
         <>
-            <div className={'m-2 p-2'} style={{ height: '15%', overflow: 'hidden' }}>
+            <div className={'m-2 p-2'} style={{ height: '100px', overflow: 'hidden' }}>
+                <h3>Track Street Info</h3>
                 <div className={'d-flex justify-content-between'}>
                     <div className={'mx-2'}>
                         <StreetFilesDownloader />
                     </div>
-                    <h3>Track Street Info</h3>
                     <Pagination>
                         {trackStreetInfos.map(({ id, name }) => (
                             <Pagination.Item
