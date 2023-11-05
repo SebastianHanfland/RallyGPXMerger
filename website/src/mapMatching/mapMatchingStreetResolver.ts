@@ -6,6 +6,7 @@ import { geoApifyfetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatc
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
+import { splitListIntoSections } from './splitPointsService.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -27,16 +28,16 @@ export const resolvePositions = (_: Dispatch, getState: () => State) => {
     gpxSegments.forEach((segment) => {
         const gpx = SimpleGPX.fromString(segment.content);
         gpx.tracks.forEach((track) => {
-            setTimeout(() => {
-                // Splitting into 1000-er batches to make the API happy
-                const body = toGeoApifyMapMatchingBody(track.points);
-                console.log(body);
-                geoApifyfetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
-                    console.log({ resolvedPositions });
-                    storage.saveResolvedPositions(resolvedPositions);
-                });
-            }, 5000 * counter);
-            counter += 1;
+            const listOfPoints = splitListIntoSections(track.points, 1000);
+            listOfPoints.forEach((points) => {
+                setTimeout(() => {
+                    const body = toGeoApifyMapMatchingBody(points);
+                    geoApifyfetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
+                        storage.saveResolvedPositions(resolvedPositions);
+                    });
+                }, 5000 * counter);
+                counter += 1;
+            });
         });
     });
 };
