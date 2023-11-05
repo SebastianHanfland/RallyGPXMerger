@@ -9,6 +9,24 @@ interface AggregatedPoints {
     to: string;
 }
 
+export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
+    const streetNameElements = streetName.split(', ');
+    const lastStreetNameElements = lastStreetName.split(', ');
+    const foundMatch = streetNameElements.find((streetNameElement) =>
+        lastStreetNameElements.includes(streetNameElement)
+    );
+    return !!foundMatch;
+}
+
+export function takeMostDetailedStreetName(streetName: string, lastStreetName: string): string {
+    if (!anyStreetNameMatch(streetName, lastStreetName)) {
+        return streetName;
+    }
+    const streetNameElements = streetName.split(', ');
+    const lastStreetNameElements = lastStreetName.split(', ');
+    return [...new Set([...lastStreetNameElements, ...streetNameElements])].join(', ');
+}
+
 export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[]): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point) => {
@@ -20,8 +38,11 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[]): Aggre
         const lastIndex = aggregatedPoints.length - 1;
         const lastElement = aggregatedPoints[lastIndex];
 
-        if (lastElement.streetName === point.street) {
-            aggregatedPoints[lastIndex] = { ...lastElement, to: point.time };
+        const lastStreetName = lastElement.streetName;
+        const streetName = point.street;
+        if (anyStreetNameMatch(streetName, lastStreetName)) {
+            const detailedStreetName = takeMostDetailedStreetName(streetName, lastStreetName);
+            aggregatedPoints[lastIndex] = { ...lastElement, streetName: detailedStreetName, to: point.time };
         } else {
             aggregatedPoints.push({ streetName: point.street, to: point.time, from: point.time });
         }
