@@ -23,6 +23,7 @@ function enrichWithStreetsAndAggregate(track: CalculatedTrack): TrackStreetInfo 
     const wayPoints = aggregateEnrichedPoints(enrichedPoints);
 
     return {
+        id: track.id,
         name: track.filename,
         wayPoints,
     };

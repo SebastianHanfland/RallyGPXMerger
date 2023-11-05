@@ -49,6 +49,7 @@ export interface GeoApifyMapMatchingResult {
 }
 
 export interface TrackStreetInfo {
+    id: string;
     name: string;
     wayPoints: { streetName: string; from: string; to: string }[];
 }
