@@ -7,15 +7,13 @@ export const StreetResolvingSection = () => {
     return (
         <Row className="flex-xl-nowrap" style={{ height: '60vh', width: '100%' }}>
             <Col xl={4}>
-                <TrackDataOverview />
-            </Col>
-            <Col xl={2}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-                    <h4>Information of Address resolving service</h4>
+                    <TrackDataOverview />
+                    <hr />
                     <ApiKeyInput />
                 </div>
             </Col>
-            <Col xl={6}>
+            <Col xl={8}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <h4>Download different data sets</h4>
                     <ProofOfConcept />

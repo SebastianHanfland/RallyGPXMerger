@@ -8,7 +8,8 @@ export const ApiKeyInput = () => {
     const dispatch = useDispatch();
 
     return (
-        <div>
+        <div className={'m-2 p-2'} style={{ height: '300px' }}>
+            <h4>API Keys</h4>
             <Form.Group>
                 <Form.Label>
                     <a
