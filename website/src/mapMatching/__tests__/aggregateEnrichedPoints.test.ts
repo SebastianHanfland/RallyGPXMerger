@@ -46,6 +46,8 @@ describe('aggregateEnrichedPoints', () => {
                 { street: 'Friedberger Straße', time: '2023-10-22T06:56:46Z' },
                 { street: 'Friedberger Straße, B 300', time: '2023-10-22T07:26:46Z' },
                 { street: 'Friedberger Straße, B 2, B 300', time: '2023-10-22T08:30:46Z' },
+                { street: 'Meringer Straße, B 2', time: '2023-10-22T08:35:46Z' },
+                { street: 'Meringer Straße', time: '2023-10-22T08:40:46Z' },
                 { street: 'Street B', time: '2023-10-22T08:46:46Z' },
                 { street: 'Street B', time: '2023-10-22T09:00:46Z' },
             ];
@@ -62,6 +64,11 @@ describe('aggregateEnrichedPoints', () => {
                     to: '2023-10-22T08:30:46Z',
                 },
                 {
+                    from: '2023-10-22T08:35:46Z',
+                    streetName: 'Meringer Straße, B 2',
+                    to: '2023-10-22T08:40:46Z',
+                },
+                {
                     from: '2023-10-22T08:46:46Z',
                     streetName: 'Street B',
                     to: '2023-10-22T09:00:46Z',
@@ -72,7 +79,7 @@ describe('aggregateEnrichedPoints', () => {
     describe('anyStreetNameMatch', () => {
         it('should find a match', () => {
             // when
-            const hasMatch = anyStreetNameMatch('A, B', 'B');
+            const hasMatch = anyStreetNameMatch('A, B', 'A');
 
             // then
             expect(hasMatch).toBeTruthy();
@@ -89,10 +96,10 @@ describe('aggregateEnrichedPoints', () => {
     describe('takeMostDetailedStreetName', () => {
         it('should find a match', () => {
             // when
-            const detailedStreetName = takeMostDetailedStreetName('B, C', 'A, B');
+            const detailedStreetName = takeMostDetailedStreetName('B, C', 'B, A');
 
             // then
-            expect(detailedStreetName).toEqual('A, B, C');
+            expect(detailedStreetName).toEqual('B, A, C');
         });
 
         it('should find no match', () => {

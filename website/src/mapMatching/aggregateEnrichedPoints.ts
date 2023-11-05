@@ -11,11 +11,7 @@ interface AggregatedPoints {
 
 export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
     const streetNameElements = streetName.split(', ');
-    const lastStreetNameElements = lastStreetName.split(', ');
-    const foundMatch = streetNameElements.find((streetNameElement) =>
-        lastStreetNameElements.includes(streetNameElement)
-    );
-    return !!foundMatch;
+    return lastStreetName.startsWith(streetNameElements[0]);
 }
 
 export function takeMostDetailedStreetName(streetName: string, lastStreetName: string): string {
