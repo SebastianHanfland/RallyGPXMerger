@@ -13,7 +13,7 @@ function enrichWithStreetsAndAggregate(track: CalculatedTrack): TrackStreetInfo 
     const resolvedPositions = storage.getResolvedPositions();
 
     const gpx = SimpleGPX.fromString(track.content);
-    const points = gpx.tracks[0].points;
+    const points = gpx.tracks.flatMap((track) => track.points);
     let lastPoint: Point | null = null;
     let distance = 0;
     const enrichedPoints = points.map((point) => {
