@@ -10,7 +10,15 @@ export const ApiKeyInput = () => {
     return (
         <div>
             <Form.Group>
-                <Form.Label>geoapify API Key</Form.Label>
+                <Form.Label>
+                    <a
+                        href={'https://myprojects.geoapify.com/register'}
+                        target={'_blank'}
+                        referrerPolicy={'no-referrer'}
+                    >
+                        geoapify API Key
+                    </a>
+                </Form.Label>
                 <Form.Control
                     type="text"
                     placeholder="geoapify API Key"
@@ -19,7 +27,15 @@ export const ApiKeyInput = () => {
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Label>BigDataCloud API Key</Form.Label>
+                <Form.Label>
+                    <a
+                        href={'https://www.bigdatacloud.com/reverse-geocoding'}
+                        target={'_blank'}
+                        referrerPolicy={'no-referrer'}
+                    >
+                        BigDataCloud API Key
+                    </a>
+                </Form.Label>
                 <Form.Control
                     type="text"
                     placeholder="BigDataCloud API Key"
