@@ -1,31 +1,17 @@
 import { useSelector } from 'react-redux';
-import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
-import { storage } from '../../store/storage.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { toKey } from '../../reverseGeoCoding/initializeResolvedPositions.ts';
+import { getTrackStreetInfo } from '../../mapMatching/getTrackStreetInfo.ts';
+import { SingleTrackStreetInfo } from './TrackStreetInfo.tsx';
 
 export function ProofOfConcept() {
-    const gpxSegments = useSelector(getGpxSegments);
+    const trackStreetInfos = useSelector(getTrackStreetInfo);
 
-    const resolvedPositions = storage.getResolvedPositions();
-    console.log(resolvedPositions);
     return (
         <div>
-            POC
+            <h3>Track Street Info</h3>
             <div>
-                {gpxSegments.map((segment) => {
-                    const gpx = SimpleGPX.fromString(segment.content);
-                    return (
-                        <div>
-                            {'Something here' + segment.filename}
-                            {gpx.tracks[0].points.map((point, index) => {
-                                const positionKey = toKey(point);
-                                const street = resolvedPositions[positionKey];
-                                return <div key={index}>{`${street}`}</div>;
-                            })}
-                        </div>
-                    );
-                })}
+                {trackStreetInfos.map((trackStreetInfo) => (
+                    <SingleTrackStreetInfo trackStreetInfo={trackStreetInfo} />
+                ))}
             </div>
         </div>
     );
