@@ -2,7 +2,10 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { GeoCodingState, ResolvePositions, State } from './types';
 import { storage } from './storage.ts';
 
-const initialState: GeoCodingState = {};
+const initialState: GeoCodingState = {
+    requestCounter: 0,
+    requestDoneCounter: 0,
+};
 
 const geoCodingSlice = createSlice({
     name: 'geoCoding',
@@ -28,6 +31,21 @@ const geoCodingSlice = createSlice({
                 }
             });
             state.resolvedPositions = resolvedPositions;
+        },
+        increaseActiveRequestCounter: (state: GeoCodingState) => {
+            state.requestCounter += 1;
+        },
+        decreaseActiveRequestCounter: (state: GeoCodingState) => {
+            state.requestCounter -= 1;
+        },
+        increaseRequestDoneCounter: (state: GeoCodingState) => {
+            state.requestDoneCounter += 1;
+        },
+        resetRequestDoneCounter: (state: GeoCodingState) => {
+            state.requestDoneCounter = 0;
+        },
+        setNumberOfRequiredRequests: (state: GeoCodingState, action: PayloadAction<number>) => {
+            state.numberOfRequiredRequests = action.payload;
         },
     },
 });

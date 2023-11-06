@@ -30,6 +30,9 @@ export interface GeoCodingState {
     geoApifyKey?: string;
     bigDataCloudKey?: string;
     resolvedPositions?: ResolvePositions;
+    requestCounter: number;
+    requestDoneCounter: number;
+    numberOfRequiredRequests?: number;
 }
 
 export interface TrackMergeState {
