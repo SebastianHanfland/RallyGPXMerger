@@ -4,10 +4,21 @@ import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader
 import { Button, ProgressBar, Table } from 'react-bootstrap';
 import { AppDispatch } from '../../store/store.ts';
 import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts';
+import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
+import { useEffect } from 'react';
+import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
+import { getNumberOfRequiredRequests } from '../../store/geoCoding.reducer.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
+    const gpxSegments = useSelector(getGpxSegments);
+    const numberOfRequiredRequests = useSelector(getNumberOfRequiredRequests);
+    const requestProgress = useSelector(getRequestProgress);
     const dispatch: AppDispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(estimateRequestsForStreetResolving);
+    }, [gpxSegments.length]);
 
     const { positionCount, uniquePositionCount, unresolvedUniquePositionCount } =
         useSelector(getNumberOfPositionsInTracks);
@@ -39,13 +50,23 @@ export function TrackDataOverview() {
                         <td># Unresolved unique Positions</td>
                         <td>{unresolvedUniquePositionCount}</td>
                     </tr>
+                    {numberOfRequiredRequests && (
+                        <tr>
+                            <td># required Requests</td>
+                            <td>
+                                {numberOfRequiredRequests} = {numberOfRequiredRequests * 5} s
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
 
             <Button onClick={() => dispatch(resolvePositions)}>Trigger the calculation</Button>
-            <div className={'m-2'}>
-                <ProgressBar now={10} label={`${10}%`}></ProgressBar>
-            </div>
+            {requestProgress !== undefined && (
+                <div className={'m-2'}>
+                    <ProgressBar now={requestProgress} label={`${requestProgress?.toFixed(0)}%`}></ProgressBar>
+                </div>
+            )}
         </div>
     );
 }

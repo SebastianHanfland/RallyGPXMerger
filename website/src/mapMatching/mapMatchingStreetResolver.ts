@@ -23,16 +23,21 @@ export const resolvePositions = (dispatch: Dispatch, getState: () => State) => {
         return;
     }
     let counter = 0;
+    dispatch(geoCodingActions.resetRequestDoneCounter());
+
     const gpxSegments = getGpxSegments(getState());
     gpxSegments.forEach((segment) => {
         const gpx = SimpleGPX.fromString(segment.content);
         gpx.tracks.forEach((track) => {
             const listOfPoints = splitListIntoSections(track.points, 1000);
             listOfPoints.forEach((points) => {
+                dispatch(geoCodingActions.increaseActiveRequestCounter());
                 setTimeout(() => {
                     const body = toGeoApifyMapMatchingBody(points);
                     geoApifyFetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
                         dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                        dispatch(geoCodingActions.decreaseActiveRequestCounter());
+                        dispatch(geoCodingActions.increaseRequestDoneCounter());
                     });
                 }, 5000 * counter);
                 counter += 1;
