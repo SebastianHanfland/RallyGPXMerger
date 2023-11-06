@@ -1,6 +1,6 @@
 import { GeoApifyMapMatchingResult } from './types.ts';
 import { ResolvePositions } from '../store/types.ts';
-import { toKey } from '../reverseGeoCoding/initializeResolvedPositions.ts';
+import { toKey } from './initializeResolvedPositions.ts';
 
 export function mapToPositionMap(result: GeoApifyMapMatchingResult): ResolvePositions {
     const resolvedPositions: ResolvePositions = {};

@@ -15,7 +15,7 @@ import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { initializeResolvedPositions } from '../reverseGeoCoding/initializeResolvedPositions.ts';
+import { initializeResolvedPositions } from '../mapMatching/initializeResolvedPositions.ts';
 import date from 'date-and-time';
 
 let readableTracks: SimpleGPX[] | undefined = undefined;

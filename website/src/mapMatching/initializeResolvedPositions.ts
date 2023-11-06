@@ -7,13 +7,6 @@ export function toKey({ lat, lon }: { lat: number; lon: number }): string {
     return `lat:${lat.toFixed(10)}-lng:${lon.toFixed(10)}`;
 }
 
-export function fromKey(key: string): { lat: number; lon: number } {
-    const [preAndLat, lng] = key.split('-lng:');
-    const lat = Number(preAndLat.replace('lat:', ''));
-    const lon = Number(lng);
-    return { lat, lon };
-}
-
 export const initializeResolvedPositions = (dispatch: AppDispatch) => {
     const positionMap: ResolvePositions = {};
     getReadableTracks()?.forEach((gpx) => {
