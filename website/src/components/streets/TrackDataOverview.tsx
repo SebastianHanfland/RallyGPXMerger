@@ -9,7 +9,8 @@ export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
     const dispatch: AppDispatch = useDispatch();
 
-    const { positionCount, uniquePositionCount, unresolvedUniquePositionCount } = getNumberOfPositionsInTracks();
+    const { positionCount, uniquePositionCount, unresolvedUniquePositionCount } =
+        useSelector(getNumberOfPositionsInTracks);
 
     return (
         <div className={'m-2 p-2'}>

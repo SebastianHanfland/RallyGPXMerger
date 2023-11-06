@@ -37,3 +37,4 @@ export const geoCodingReducer: Reducer<GeoCodingState> = geoCodingSlice.reducer;
 const getBase = (state: State) => state.geoCoding;
 export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
 export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudKey;
+export const getResolvedPositions = (state: State) => getBase(state).resolvedPositions ?? {};

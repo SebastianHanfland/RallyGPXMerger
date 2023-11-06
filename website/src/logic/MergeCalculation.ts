@@ -76,7 +76,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     if (!readableTracks) {
         readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));
-        initializeResolvedPositions(readableTracks);
+        initializeResolvedPositions(dispatch);
     }
     calculateAndStoreStartAndEndOfSimulation(dispatch, getState());
     return Promise.resolve();

@@ -1,17 +1,7 @@
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { storage } from '../store/storage.ts';
 import { ResolvePositions } from '../store/types.ts';
-
-export const addResolvedPosition = (key: string, street: string) => {
-    console.log('Resolving', key, !isPositionResolved(key));
-    if (!isPositionResolved(key)) {
-        storage.saveResolvedPositions({ [key]: street });
-    }
-};
-
-export const isPositionResolved = (key: string): boolean => {
-    return storage.getResolvedPositions()[key] !== null;
-};
+import { getReadableTracks } from '../logic/MergeCalculation.ts';
+import { AppDispatch } from '../store/store.ts';
+import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 
 export function toKey({ lat, lon }: { lat: number; lon: number }): string {
     return `lat:${lat.toFixed(10)}-lng:${lon.toFixed(10)}`;
@@ -24,9 +14,9 @@ export function fromKey(key: string): { lat: number; lon: number } {
     return { lat, lon };
 }
 
-export const initializeResolvedPositions = (readableTracks: SimpleGPX[]) => {
+export const initializeResolvedPositions = (dispatch: AppDispatch) => {
     const positionMap: ResolvePositions = {};
-    readableTracks?.forEach((gpx) => {
+    getReadableTracks()?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             track.points.forEach((point) => {
                 positionMap[toKey(point)] = null;
@@ -34,5 +24,5 @@ export const initializeResolvedPositions = (readableTracks: SimpleGPX[]) => {
         });
     });
 
-    storage.saveResolvedPositions(positionMap);
+    dispatch(geoCodingActions.saveResolvedPositions(positionMap));
 };

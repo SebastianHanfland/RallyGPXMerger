@@ -1,9 +1,8 @@
-import { ResolvePositions, State } from './types.ts';
+import { State } from './types.ts';
 
 const localStorage = window.localStorage;
 
 const stateKey = `gpxMerger.state`;
-const positionKey = `gpxMerger.positions`;
 
 const save = (value: State) => {
     try {
@@ -33,34 +32,4 @@ const clear = () => {
     }
 };
 
-const saveResolvedPositions = (positions: ResolvePositions) => {
-    const resolvedPositions = getResolvedPositions();
-    Object.entries(positions).forEach(([key, value]) => {
-        if (resolvedPositions[key] === null) {
-            resolvedPositions[key] = value;
-        }
-        if (resolvedPositions[key] === undefined) {
-            resolvedPositions[key] = value;
-        }
-    });
-    try {
-        localStorage.setItem(positionKey, JSON.stringify(resolvedPositions));
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getResolvedPositions = (): ResolvePositions => {
-    try {
-        const item = localStorage.getItem(positionKey);
-        if (item) {
-            return JSON.parse(item);
-        }
-        return {};
-    } catch (error) {
-        console.log(error);
-        return {};
-    }
-};
-
-export const storage = { save, load, clear, saveResolvedPositions, getResolvedPositions };
+export const storage = { save, load, clear };

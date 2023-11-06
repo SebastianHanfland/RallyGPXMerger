@@ -6,8 +6,8 @@ import { getCalculatedTracks, getTrackParticipants } from '../../../store/calcul
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
-import { storage } from '../../../store/storage.ts';
 import { getReadableTracks } from '../../../logic/MergeCalculation.ts';
+import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
@@ -62,9 +62,9 @@ export const getCurrentMarkerPositionsForTracks = (state: State) => {
     return getReadableTracks()?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
 };
 
-export const getNumberOfPositionsInTracks = () => {
+export const getNumberOfPositionsInTracks = (state: State) => {
     let positionCount = 0;
-    const positionMap = storage.getResolvedPositions();
+    const positionMap = getResolvedPositions(state);
     getReadableTracks()?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             positionCount += track.points.length;
