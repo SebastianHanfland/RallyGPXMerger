@@ -28,8 +28,8 @@ export interface TrackComposition {
 
 export interface GeoCodingState {
     geoApifyKey?: string;
-    locationIqKey?: string;
     bigDataCloudKey?: string;
+    resolvedPositions?: ResolvePositions;
 }
 
 export interface TrackMergeState {
