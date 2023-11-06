@@ -17,6 +17,10 @@ const mapSlice = createSlice({
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
+        setStartAndEndTime: (state: MapState, action: PayloadAction<{ start: string; end: string }>) => {
+            state.start = action.payload.start;
+            state.end = action.payload.end;
+        },
     },
 });
 
@@ -25,3 +29,5 @@ export const mapReducer: Reducer<MapState> = mapSlice.reducer;
 const getBase = (state: State) => state.map;
 export const getCurrenMapSource = (state: State) => getBase(state).currentSource;
 export const getCurrenMapTime = (state: State) => getBase(state).currentTime;
+export const getStartMapTime = (state: State) => getBase(state).start;
+export const getEndMapTime = (state: State) => getBase(state).end;

@@ -44,6 +44,8 @@ export const MAX_SLIDER_TIME = 100000;
 export interface MapState {
     currentTime: number;
     currentSource: 'segments' | 'tracks';
+    start?: string;
+    end?: string;
 }
 
 export interface State {

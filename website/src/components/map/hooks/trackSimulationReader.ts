@@ -1,48 +1,13 @@
 import { MAX_SLIDER_TIME, State } from '../../../store/types.ts';
-import { getCurrenMapTime } from '../../../store/map.reducer.ts';
+import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks, getTrackParticipants } from '../../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
-import { initializeResolvedPositions } from '../../../reverseGeoCoding/initializeResolvedPositions.ts';
 import { storage } from '../../../store/storage.ts';
-
-let readableTracks: SimpleGPX[] | undefined = undefined;
-
-export const clearReadableTracks = () => {
-    readableTracks = undefined;
-};
-
-function getStartAndEndOfSimulation(state: State): { start: string; end: string } {
-    const calculatedTracks = getCalculatedTracks(state);
-    const trackParticipants = getTrackParticipants(state);
-    const maxDelay = Math.min(...trackParticipants);
-
-    let endDate = '1990-10-14T10:09:57.000Z';
-    let startDate = '9999-10-14T10:09:57.000Z';
-
-    if (!readableTracks) {
-        readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));
-        initializeResolvedPositions(readableTracks);
-    }
-
-    readableTracks.forEach((track) => {
-        if (track.getStart() < startDate) {
-            startDate = track.getStart();
-        }
-
-        if (track.getEnd() > endDate) {
-            endDate = track.getEnd();
-        }
-    });
-
-    return {
-        start: startDate,
-        end: date.addSeconds(new Date(endDate), maxDelay * PARTICIPANTS_DELAY_IN_SECONDS).toISOString(),
-    };
-}
+import { getReadableTracks } from '../../../logic/MergeCalculation.ts';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
@@ -94,13 +59,13 @@ export const getCurrentMarkerPositionsForTracks = (state: State) => {
         return [];
     }
     const trackParticipants = getTrackParticipants(state);
-    return readableTracks?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
+    return getReadableTracks()?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
 };
 
 export const getNumberOfPositionsInTracks = () => {
     let positionCount = 0;
     const positionMap = storage.getResolvedPositions();
-    readableTracks?.forEach((gpx) => {
+    getReadableTracks()?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             positionCount += track.points.length;
         });
@@ -118,7 +83,11 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
         return;
     }
     const mapTime = getCurrenMapTime(state) ?? 0;
-    const { start, end } = getStartAndEndOfSimulation(state);
+    const start = getStartMapTime(state);
+    const end = getEndMapTime(state);
+    if (!start || !end) {
+        return undefined;
+    }
 
     const percentage = mapTime / MAX_SLIDER_TIME;
     const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
