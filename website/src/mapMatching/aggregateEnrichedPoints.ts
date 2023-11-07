@@ -35,7 +35,7 @@ export function takeMostDetailedStreetName(streetName: string, lastStreetName: s
 const extractLatLon = ({ lat, lon }: EnrichedPoints) => ({ lat, lon });
 
 function shiftEndTimeByParticipants(endDateTime: string, participants: number): string {
-    return date.addSeconds(new Date(endDateTime), -participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
+    return date.addSeconds(new Date(endDateTime), participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
 }
 
 export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], participants: number): AggregatedPoints[] {
