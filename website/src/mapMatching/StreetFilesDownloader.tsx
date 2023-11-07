@@ -3,10 +3,10 @@ import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import download from '../assets/file-down.svg';
-import { getTrackStreetInfo } from './getTrackStreetInfo.ts';
 import { BlockedStreetInfo, TrackStreetInfo } from './types.ts';
 import { getTimeDifferenceInSeconds } from '../utils/dateUtil.ts';
 import { getBlockedStreetInfo } from './getBlockedStreetInfo.ts';
+import { getTrackStreetInfos } from '../store/geoCoding.reducer.ts';
 
 const header = (trackInfo: TrackStreetInfo): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.end, trackInfo.start) / 60;
@@ -45,7 +45,7 @@ const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: 
 };
 
 export const StreetFilesDownloader = () => {
-    const trackStreetInfos = useSelector(getTrackStreetInfo);
+    const trackStreetInfos = useSelector(getTrackStreetInfos);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Button

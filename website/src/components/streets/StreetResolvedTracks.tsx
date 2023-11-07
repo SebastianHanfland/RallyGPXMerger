@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
-import { getTrackStreetInfo } from '../../mapMatching/getTrackStreetInfo.ts';
 import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
 import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
+import { getTrackStreetInfos } from '../../store/geoCoding.reducer.ts';
 
 export function StreetResolvedTracks() {
-    const trackStreetInfos = useSelector(getTrackStreetInfo);
+    const trackStreetInfos = useSelector(getTrackStreetInfos);
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
 
     const selectedInfo = trackStreetInfos.find(({ id }) => id === selectedTrackId);

@@ -1,3 +1,5 @@
+import { TrackStreetInfo } from '../mapMatching/types.ts';
+
 export interface GpxSegment {
     id: string;
     filename: string;
@@ -33,6 +35,7 @@ export interface GeoCodingState {
     requestCounter: number;
     requestDoneCounter: number;
     numberOfRequiredRequests?: number;
+    trackStreetInfos?: TrackStreetInfo[];
 }
 
 export interface TrackMergeState {

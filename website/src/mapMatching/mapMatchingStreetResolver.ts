@@ -1,4 +1,3 @@
-import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { geoCodingActions, getGeoApifyKey } from '../store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
@@ -6,6 +5,8 @@ import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from './splitPointsService.ts';
+import { calculateTrackStreetInfo } from './getTrackStreetInfo.ts';
+import { AppDispatch } from '../store/store.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -17,7 +18,7 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     };
 }
 
-export const resolvePositions = (dispatch: Dispatch, getState: () => State) => {
+export const resolvePositions = (dispatch: AppDispatch, getState: () => State) => {
     const geoApifyKey = getGeoApifyKey(getState());
     if (!geoApifyKey) {
         return;
@@ -44,4 +45,5 @@ export const resolvePositions = (dispatch: Dispatch, getState: () => State) => {
             });
         });
     });
+    dispatch(calculateTrackStreetInfo);
 };

@@ -1,6 +1,6 @@
 import { State } from '../store/types.ts';
 import { BlockedStreetInfo } from './types.ts';
-import { getTrackStreetInfo } from './getTrackStreetInfo.ts';
+import { getTrackStreetInfos } from '../store/geoCoding.reducer.ts';
 
 function takeLaterOne(end: string, to: string): string {
     return end >= to ? end : to;
@@ -12,7 +12,7 @@ function takeEarlierOne(start: string, from: string): string {
 
 export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
     let blockedStreetsInfo: BlockedStreetInfo[] = [];
-    const trackStreetInfo = getTrackStreetInfo(state);
+    const trackStreetInfo = getTrackStreetInfos(state);
     trackStreetInfo.forEach((trackStreetInfo) => {
         trackStreetInfo.wayPoints.forEach((waypoint) => {
             if (!blockedStreetsInfo.find((info) => info.streetName === waypoint.streetName)) {

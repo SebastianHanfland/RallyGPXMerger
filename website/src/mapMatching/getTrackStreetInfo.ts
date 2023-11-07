@@ -7,7 +7,8 @@ import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/speedSimulator.ts';
-import { getResolvedPositions } from '../store/geoCoding.reducer.ts';
+import { geoCodingActions, getResolvedPositions } from '../store/geoCoding.reducer.ts';
+import { Dispatch } from '@reduxjs/toolkit';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
@@ -48,7 +49,8 @@ const enrichWithStreetsAndAggregate =
         };
     };
 
-export function getTrackStreetInfo(state: State): TrackStreetInfo[] {
-    const calculatedTracks = getCalculatedTracks(state);
-    return calculatedTracks.map(enrichWithStreetsAndAggregate(state));
+export async function calculateTrackStreetInfo(dispatch: Dispatch, getState: () => State) {
+    const calculatedTracks = getCalculatedTracks(getState());
+    const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
+    dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
 }

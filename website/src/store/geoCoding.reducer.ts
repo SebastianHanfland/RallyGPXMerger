@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { GeoCodingState, ResolvePositions, State } from './types';
 import { storage } from './storage.ts';
+import { TrackStreetInfo } from '../mapMatching/types.ts';
 
 const initialState: GeoCodingState = {
     requestCounter: 0,
@@ -32,6 +33,9 @@ const geoCodingSlice = createSlice({
             });
             state.resolvedPositions = resolvedPositions;
         },
+        setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
+            state.trackStreetInfos = action.payload;
+        },
         increaseActiveRequestCounter: (state: GeoCodingState) => {
             state.requestCounter += 1;
         },
@@ -56,6 +60,7 @@ const getBase = (state: State) => state.geoCoding;
 export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
 export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudKey;
 export const getResolvedPositions = (state: State) => getBase(state).resolvedPositions ?? {};
+export const getTrackStreetInfos = (state: State) => getBase(state).trackStreetInfos ?? [];
 export const getNumberOfRequiredRequests = (state: State) => getBase(state).numberOfRequiredRequests;
 export const getNumberOfRequestsDone = (state: State) => getBase(state).requestDoneCounter;
 export const getNumberOfRequestsRunning = (state: State) => getBase(state).requestCounter;

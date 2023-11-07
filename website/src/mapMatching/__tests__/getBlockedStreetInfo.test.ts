@@ -1,16 +1,16 @@
 import { getBlockedStreetInfo } from '../getBlockedStreetInfo.ts';
-import { getTrackStreetInfo } from '../getTrackStreetInfo.ts';
 import { Mock } from 'vitest';
 import { BlockedStreetInfo, TrackStreetInfo } from '../types.ts';
 import { State } from '../../store/types.ts';
+import { getTrackStreetInfos } from '../../store/geoCoding.reducer.ts';
 
-vi.mock('../getTrackStreetInfo.ts');
+vi.mock('../../store/geoCoding.reducer.ts');
 
 describe('getBlockedStreetInfo', () => {
     it('should work with empty lists', () => {
         // given
         const trackStreetInfos: TrackStreetInfo[] = [];
-        (getTrackStreetInfo as Mock).mockReturnValue(trackStreetInfos);
+        (getTrackStreetInfos as Mock).mockReturnValue(trackStreetInfos);
 
         // when
         const blockedStreetInfo = getBlockedStreetInfo({} as State);
@@ -31,7 +31,7 @@ describe('getBlockedStreetInfo', () => {
                 wayPoints: [{ streetName: 'A', from: earliestStart, to: '2022-02-02T02:10:00.000Z' }],
             },
         ] as TrackStreetInfo[];
-        (getTrackStreetInfo as Mock).mockReturnValue(trackStreetInfos);
+        (getTrackStreetInfos as Mock).mockReturnValue(trackStreetInfos);
         const expectedBlockedStreets: BlockedStreetInfo[] = [{ streetName: 'A', start: earliestStart, end: latestEnd }];
 
         // when
