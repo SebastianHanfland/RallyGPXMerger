@@ -2,6 +2,14 @@ import { State } from '../store/types.ts';
 import { BlockedStreetInfo } from './types.ts';
 import { getTrackStreetInfo } from './getTrackStreetInfo.ts';
 
+function takeLaterOne(end: string, to: string): string {
+    return end >= to ? end : to;
+}
+
+function takeEarlierOne(start: string, from: string): string {
+    return start <= from ? start : from;
+}
+
 export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
     let blockedStreetsInfo: BlockedStreetInfo[] = [];
     const trackStreetInfo = getTrackStreetInfo(state);
@@ -12,7 +20,13 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
                 return;
             }
             blockedStreetsInfo = blockedStreetsInfo.map((info) =>
-                info.streetName === waypoint.streetName ? { ...info, end: waypoint.to } : info
+                info.streetName === waypoint.streetName
+                    ? {
+                          ...info,
+                          end: takeLaterOne(info.end, waypoint.to),
+                          start: takeEarlierOne(info.start, waypoint.from),
+                      }
+                    : info
             );
         });
     });
