@@ -14,7 +14,7 @@ const geoCodingSlice = createSlice({
         setGeoApifyKey: (state: GeoCodingState, action: PayloadAction<string>) => {
             state.geoApifyKey = action.payload;
         },
-        setBigDataCloudKeyKey: (state: GeoCodingState, action: PayloadAction<string>) => {
+        setBigDataCloudKey: (state: GeoCodingState, action: PayloadAction<string>) => {
             state.bigDataCloudKey = action.payload;
         },
         saveResolvedPositions: (state: GeoCodingState, action: PayloadAction<ResolvePositions>) => {

@@ -41,7 +41,7 @@ export const ApiKeyInput = () => {
                     type="text"
                     placeholder="BigDataCloud API Key"
                     value={positionStackKey}
-                    onChange={(value) => dispatch(geoCodingActions.setBigDataCloudKeyKey(value.target.value))}
+                    onChange={(value) => dispatch(geoCodingActions.setBigDataCloudKey(value.target.value))}
                 />
             </Form.Group>
         </div>
