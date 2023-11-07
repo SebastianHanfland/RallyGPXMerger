@@ -59,7 +59,7 @@ export interface TrackStreetInfo {
 
 export interface BlockedStreetInfo {
     streetName: string;
-    postCode: number;
+    postCode?: number;
     start: string;
     end: string;
     // Maybe also which tracks pass through here?
