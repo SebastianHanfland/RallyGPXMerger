@@ -1,6 +1,6 @@
 import { CalculatedTrack, State } from '../store/types.ts';
 import { TrackStreetInfo } from './types.ts';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks, getTrackParticipants } from '../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
@@ -11,8 +11,9 @@ import { getResolvedPositions } from '../store/geoCoding.reducer.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
-    (track: CalculatedTrack): TrackStreetInfo => {
+    (track: CalculatedTrack, index: number): TrackStreetInfo => {
         const resolvedPositions = getResolvedPositions(state);
+        const participants = getTrackParticipants(state);
 
         const gpx = SimpleGPX.fromString(track.content);
         const points = gpx.tracks.flatMap((track) => track.points);
@@ -35,7 +36,7 @@ const enrichWithStreetsAndAggregate =
             };
         });
 
-        const wayPoints = aggregateEnrichedPoints(enrichedPoints);
+        const wayPoints = aggregateEnrichedPoints(enrichedPoints, participants[index]);
 
         return {
             id: track.id,

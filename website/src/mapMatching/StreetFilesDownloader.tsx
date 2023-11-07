@@ -36,11 +36,11 @@ const downloadFile = (trackStreetInfos: TrackStreetInfo[]) => {
 };
 
 export const StreetFilesDownloader = () => {
-    const calculatedTracks = useSelector(getTrackStreetInfo);
+    const trackStreetInfos = useSelector(getTrackStreetInfo);
     return (
         <Button
-            onClick={() => downloadFile(calculatedTracks)}
-            disabled={calculatedTracks.length === 0}
+            onClick={() => downloadFile(trackStreetInfos)}
+            disabled={trackStreetInfos.length === 0}
             title={'Download all GPX files for the tracks'}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />

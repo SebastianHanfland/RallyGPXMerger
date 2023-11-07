@@ -1,4 +1,6 @@
 import { Point } from 'gpxparser';
+import date from 'date-and-time';
+import { PARTICIPANTS_DELAY_IN_SECONDS } from '../store/trackMerge.reducer.ts';
 
 export interface EnrichedPoints extends PointS {
     street: string;
@@ -32,13 +34,17 @@ export function takeMostDetailedStreetName(streetName: string, lastStreetName: s
 
 const extractLatLon = ({ lat, lon }: EnrichedPoints) => ({ lat, lon });
 
-export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[]): AggregatedPoints[] {
+function shiftEndTimeByParticipants(endDateTime: string, participants: number): string {
+    return date.addSeconds(new Date(endDateTime), -participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
+}
+
+export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], participants: number): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point) => {
         if (aggregatedPoints.length === 0) {
             aggregatedPoints.push({
                 streetName: point.street,
-                to: point.time,
+                to: shiftEndTimeByParticipants(point.time, participants),
                 from: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
@@ -56,13 +62,13 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[]): Aggre
             aggregatedPoints[lastIndex] = {
                 ...lastElement,
                 streetName: detailedStreetName,
-                to: point.time,
+                to: shiftEndTimeByParticipants(point.time, participants),
                 pointTo: extractLatLon(point),
             };
         } else {
             aggregatedPoints.push({
                 streetName: point.street,
-                to: point.time,
+                to: shiftEndTimeByParticipants(point.time, participants),
                 from: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
