@@ -3,10 +3,10 @@ import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
 import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
-import { getTrackStreetInfos } from '../../store/geoCoding.reducer.ts';
+import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 
 export function StreetResolvedTracks() {
-    const trackStreetInfos = useSelector(getTrackStreetInfos);
+    const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
 
     const selectedInfo = trackStreetInfos.find(({ id }) => id === selectedTrackId);

@@ -22,15 +22,17 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 <thead>
                     <tr>
                         <th>Street</th>
+                        <th>Post code</th>
                         <th>Duration</th>
                         <th>From</th>
                         <th>To</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {wayPoints.map(({ streetName, to, from }) => (
+                    {wayPoints.map(({ streetName, to, from, postCode }) => (
                         <tr key={to}>
                             <td>{streetName}</td>
+                            <td>{postCode ?? 'Unknown'}</td>
                             <td>{getTimeDifferenceInSeconds(to, from).toFixed(0)} s</td>
                             <td>{formatTimeOnly(from)}</td>
                             <td>{formatTimeOnly(to)}</td>
