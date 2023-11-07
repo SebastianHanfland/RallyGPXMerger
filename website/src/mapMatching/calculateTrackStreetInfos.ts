@@ -49,7 +49,7 @@ const enrichWithStreetsAndAggregate =
         };
     };
 
-export async function calculateTrackStreetInfo(dispatch: Dispatch, getState: () => State) {
+export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
     const calculatedTracks = getCalculatedTracks(getState());
     const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
     dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));

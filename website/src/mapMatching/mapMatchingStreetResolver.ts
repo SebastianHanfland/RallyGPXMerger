@@ -5,7 +5,7 @@ import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from './splitPointsService.ts';
-import { calculateTrackStreetInfo } from './getTrackStreetInfo.ts';
+import { calculateTrackStreetInfos } from './calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../store/store.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
@@ -45,5 +45,5 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
             });
         });
     });
-    dispatch(calculateTrackStreetInfo);
+    dispatch(calculateTrackStreetInfos);
 };
