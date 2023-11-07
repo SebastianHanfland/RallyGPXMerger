@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GeoCodingState, ResolvePositions, State } from './types';
+import { GeoCodingState, ResolvedPositions, ResolvedPostCodes, State } from './types';
 import { storage } from './storage.ts';
 import { TrackStreetInfo } from '../mapMatching/types.ts';
 
@@ -18,7 +18,7 @@ const geoCodingSlice = createSlice({
         setBigDataCloudKey: (state: GeoCodingState, action: PayloadAction<string>) => {
             state.bigDataCloudKey = action.payload;
         },
-        saveResolvedPositions: (state: GeoCodingState, action: PayloadAction<ResolvePositions>) => {
+        saveResolvedPositions: (state: GeoCodingState, action: PayloadAction<ResolvedPositions>) => {
             if (!state.resolvedPositions) {
                 state.resolvedPositions = {};
             }
@@ -32,6 +32,18 @@ const geoCodingSlice = createSlice({
                 }
             });
             state.resolvedPositions = resolvedPositions;
+        },
+        saveResolvedPostCodes: (state: GeoCodingState, action: PayloadAction<ResolvedPostCodes>) => {
+            if (!state.resolvedPostCodes) {
+                state.resolvedPostCodes = {};
+            }
+            const resolvedPostCodes = state.resolvedPostCodes;
+            Object.entries(action.payload).forEach(([key, value]) => {
+                if (resolvedPostCodes[key] === undefined) {
+                    resolvedPostCodes[key] = value;
+                }
+            });
+            state.resolvedPostCodes = resolvedPostCodes;
         },
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;

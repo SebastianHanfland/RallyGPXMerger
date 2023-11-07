@@ -1,5 +1,5 @@
 import { mapToPositionMap } from './mapToPositionMap.ts';
-import { ResolvePositions } from '../store/types.ts';
+import { ResolvedPositions } from '../store/types.ts';
 
 export type GeoApifyMapMatching = { mode: string; waypoints: { timestamp: string; location: [number, number] }[] };
 
@@ -58,7 +58,7 @@ function postRequest(body: GeoApifyMapMatching = getBody()) {
 
 export const geoApifyFetchMapMatching =
     (apiKey: string) =>
-    (body: GeoApifyMapMatching = getBody()): Promise<ResolvePositions> => {
+    (body: GeoApifyMapMatching = getBody()): Promise<ResolvedPositions> => {
         return fetch(`https://api.geoapify.com/v1/mapmatching?apiKey=${apiKey}`, postRequest(body))
             .then((response) => response.json())
             .then((result) => {

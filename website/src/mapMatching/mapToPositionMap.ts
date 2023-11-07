@@ -1,9 +1,9 @@
 import { GeoApifyMapMatchingResult } from './types.ts';
-import { ResolvePositions } from '../store/types.ts';
+import { ResolvedPositions } from '../store/types.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 
-export function mapToPositionMap(result: GeoApifyMapMatchingResult): ResolvePositions {
-    const resolvedPositions: ResolvePositions = {};
+export function mapToPositionMap(result: GeoApifyMapMatchingResult): ResolvedPositions {
+    const resolvedPositions: ResolvedPositions = {};
     result.features.forEach((feature) => {
         const legInfo = feature.properties.legs;
         feature.properties.waypoints

@@ -31,7 +31,8 @@ export interface TrackComposition {
 export interface GeoCodingState {
     geoApifyKey?: string;
     bigDataCloudKey?: string;
-    resolvedPositions?: ResolvePositions;
+    resolvedPositions?: ResolvedPositions;
+    resolvedPostCodes?: ResolvedPostCodes;
     requestCounter: number;
     requestDoneCounter: number;
     numberOfRequiredRequests?: number;
@@ -62,4 +63,5 @@ export interface State {
     geoCoding: GeoCodingState;
 }
 
-export type ResolvePositions = Record<string, string | null>;
+export type ResolvedPositions = Record<string, string | null>;
+export type ResolvedPostCodes = Record<string, number>;

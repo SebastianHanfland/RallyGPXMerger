@@ -1,4 +1,4 @@
-import { ResolvePositions } from '../store/types.ts';
+import { ResolvedPositions } from '../store/types.ts';
 import { getReadableTracks } from '../logic/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { geoCodingActions } from '../store/geoCoding.reducer.ts';
@@ -8,7 +8,7 @@ export function toKey({ lat, lon }: { lat: number; lon: number }): string {
 }
 
 export const initializeResolvedPositions = (dispatch: AppDispatch) => {
-    const positionMap: ResolvePositions = {};
+    const positionMap: ResolvedPositions = {};
     getReadableTracks()?.forEach((gpx) => {
         gpx.tracks.forEach((track) => {
             track.points.forEach((point) => {
