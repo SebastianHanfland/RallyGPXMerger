@@ -54,7 +54,14 @@ export interface TrackStreetInfo {
     start: string;
     end: string;
     distanceInKm: number;
-    wayPoints: { streetName: string; from: string; to: string }[];
+    wayPoints: {
+        streetName: string;
+        from: string;
+        to: string;
+        pointFrom: { lat: number; lon: number };
+        pointTo: { lat: number; lon: number };
+        postCode?: number;
+    }[];
 }
 
 export interface BlockedStreetInfo {

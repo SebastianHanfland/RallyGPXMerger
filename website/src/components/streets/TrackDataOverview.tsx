@@ -8,6 +8,7 @@ import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
 import { getNumberOfRequestsRunning, getNumberOfRequiredRequests } from '../../store/geoCoding.reducer.ts';
+import { addPostCodeToStreetInfos } from '../../mapMatching/postCodeResolver.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
@@ -77,6 +78,9 @@ export function TrackDataOverview() {
                     <ProgressBar now={requestProgress} label={`${requestProgress?.toFixed(0)}%`}></ProgressBar>
                 </div>
             )}
+            <Button onClick={() => dispatch(addPostCodeToStreetInfos)}>
+                <span>Fetch the post code info</span>
+            </Button>
         </div>
     );
 }

@@ -72,6 +72,7 @@ const getBase = (state: State) => state.geoCoding;
 export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
 export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudKey;
 export const getResolvedPositions = (state: State) => getBase(state).resolvedPositions ?? {};
+export const getResolvedPostCodes = (state: State) => getBase(state).resolvedPostCodes ?? {};
 export const getTrackStreetInfos = (state: State) => getBase(state).trackStreetInfos ?? [];
 export const getNumberOfRequiredRequests = (state: State) => getBase(state).numberOfRequiredRequests;
 export const getNumberOfRequestsDone = (state: State) => getBase(state).requestDoneCounter;
