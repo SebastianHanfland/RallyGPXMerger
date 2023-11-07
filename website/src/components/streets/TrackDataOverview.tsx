@@ -1,19 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
-import { Button, ProgressBar, Table } from 'react-bootstrap';
+import { Button, ProgressBar, Spinner, Table } from 'react-bootstrap';
 import { AppDispatch } from '../../store/store.ts';
 import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
-import { getNumberOfRequiredRequests } from '../../store/geoCoding.reducer.ts';
+import { getNumberOfRequestsRunning, getNumberOfRequiredRequests } from '../../store/geoCoding.reducer.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
     const gpxSegments = useSelector(getGpxSegments);
     const numberOfRequiredRequests = useSelector(getNumberOfRequiredRequests);
     const requestProgress = useSelector(getRequestProgress);
+    const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
@@ -61,7 +62,16 @@ export function TrackDataOverview() {
                 </tbody>
             </Table>
 
-            <Button onClick={() => dispatch(resolvePositions)}>Trigger the calculation</Button>
+            <Button onClick={() => dispatch(resolvePositions)} disabled={runningRequests}>
+                {runningRequests ? (
+                    <span>
+                        <Spinner size={'sm'} />
+                        Fetching
+                    </span>
+                ) : (
+                    <span>Fetch the street information</span>
+                )}
+            </Button>
             {requestProgress !== undefined && (
                 <div className={'m-2'}>
                     <ProgressBar now={requestProgress} label={`${requestProgress?.toFixed(0)}%`}></ProgressBar>
