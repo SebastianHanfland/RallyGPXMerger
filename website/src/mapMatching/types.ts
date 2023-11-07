@@ -56,6 +56,15 @@ export interface TrackStreetInfo {
     distanceInKm: number;
     wayPoints: { streetName: string; from: string; to: string }[];
 }
+
+export interface BlockedStreetInfo {
+    streetName: string;
+    postCode: number;
+    start: string;
+    end: string;
+    // Maybe also which tracks pass through here?
+}
+
 export const dummyResponse: GeoApifyMapMatchingResult = {
     type: 'FeatureCollection',
     features: [
