@@ -7,7 +7,11 @@ import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
-import { getNumberOfRequestsRunning, getNumberOfRequiredRequests } from '../../store/geoCoding.reducer.ts';
+import {
+    getNumberOfPostCodeRequestsRunning,
+    getNumberOfRequestsRunning,
+    getNumberOfRequiredRequests,
+} from '../../store/geoCoding.reducer.ts';
 import { addPostCodeToStreetInfos } from '../../mapMatching/postCodeResolver.ts';
 
 export function TrackDataOverview() {
@@ -16,6 +20,7 @@ export function TrackDataOverview() {
     const numberOfRequiredRequests = useSelector(getNumberOfRequiredRequests);
     const requestProgress = useSelector(getRequestProgress);
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
+    const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
     const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
@@ -78,8 +83,15 @@ export function TrackDataOverview() {
                     <ProgressBar now={requestProgress} label={`${requestProgress?.toFixed(0)}%`}></ProgressBar>
                 </div>
             )}
-            <Button onClick={() => dispatch(addPostCodeToStreetInfos)}>
-                <span>Fetch the post code info</span>
+            <Button onClick={() => dispatch(addPostCodeToStreetInfos)} disabled={runningPostCodeRequests}>
+                {runningPostCodeRequests ? (
+                    <span>
+                        <Spinner size={'sm'} />
+                        Fetching
+                    </span>
+                ) : (
+                    <span>Fetch the post code info</span>
+                )}
             </Button>
         </div>
     );

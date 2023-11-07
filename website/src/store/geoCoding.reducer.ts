@@ -5,6 +5,7 @@ import { TrackStreetInfo } from '../mapMatching/types.ts';
 
 const initialState: GeoCodingState = {
     requestCounter: 0,
+    postCodeRequestCounter: 0,
     requestDoneCounter: 0,
 };
 
@@ -63,6 +64,12 @@ const geoCodingSlice = createSlice({
         setNumberOfRequiredRequests: (state: GeoCodingState, action: PayloadAction<number>) => {
             state.numberOfRequiredRequests = action.payload;
         },
+        increaseActivePostCodeRequestCounter: (state: GeoCodingState) => {
+            state.postCodeRequestCounter += 1;
+        },
+        decreaseActivePostCodeRequestCounter: (state: GeoCodingState) => {
+            state.postCodeRequestCounter -= 1;
+        },
     },
 });
 
@@ -77,3 +84,4 @@ export const getTrackStreetInfos = (state: State) => getBase(state).trackStreetI
 export const getNumberOfRequiredRequests = (state: State) => getBase(state).numberOfRequiredRequests;
 export const getNumberOfRequestsDone = (state: State) => getBase(state).requestDoneCounter;
 export const getNumberOfRequestsRunning = (state: State) => getBase(state).requestCounter;
+export const getNumberOfPostCodeRequestsRunning = (state: State) => getBase(state).postCodeRequestCounter;

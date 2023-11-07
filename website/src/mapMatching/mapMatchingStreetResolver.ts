@@ -45,5 +45,7 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
             });
         });
     });
-    dispatch(calculateTrackStreetInfos);
+    setTimeout(() => {
+        dispatch(calculateTrackStreetInfos);
+    }, 5000 * counter);
 };

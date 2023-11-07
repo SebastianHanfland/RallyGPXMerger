@@ -24,6 +24,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     let counter = 0;
     trackStreetInfos.forEach((trackStreetInfo) => {
         trackStreetInfo.wayPoints.forEach(async (wayPoint) => {
+            dispatch(geoCodingActions.increaseActivePostCodeRequestCounter());
             setTimeout(() => {
                 const { lat, lon, postCodeKey } = getWayPointKey(wayPoint);
                 if (!getResolvedPostCodes(getState())[postCodeKey]) {
@@ -31,6 +32,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
                     });
                 }
+                dispatch(geoCodingActions.decreaseActivePostCodeRequestCounter());
             }, 200 * counter);
             counter += 1;
         });

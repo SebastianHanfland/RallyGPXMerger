@@ -34,6 +34,7 @@ export interface GeoCodingState {
     resolvedPositions?: ResolvedPositions;
     resolvedPostCodes?: ResolvedPostCodes;
     requestCounter: number;
+    postCodeRequestCounter: number;
     requestDoneCounter: number;
     numberOfRequiredRequests?: number;
     trackStreetInfos?: TrackStreetInfo[];
