@@ -5,6 +5,7 @@ import { StreetMapLink } from './StreetMapLink.tsx';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
+import info from '../../assets/info.svg';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -29,7 +30,16 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         <th>Street</th>
                         <th>Post code</th>
                         <th>Length</th>
-                        <th>Duration (Blockage)</th>
+                        <th>
+                            <span title={'Time required for a cyclist to pass this street'}>
+                                Duration
+                                <img src={info} className={'m-1'} alt="help" />
+                            </span>{' '}
+                            <span title={'Time between the first and last cyclist on this street'}>
+                                ( Blockage
+                                <img src={info} className={'m-1'} alt="help" />)
+                            </span>
+                        </th>
                         <th>Arrival of front</th>
                         <th>Passage of front</th>
                         <th>Arrival of back</th>
