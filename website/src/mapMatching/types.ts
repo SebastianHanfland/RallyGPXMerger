@@ -50,6 +50,16 @@ export interface GeoApifyMapMatchingResult {
     }[];
 }
 
+export interface TrackWayPoint {
+    streetName: string;
+    frontArrival: string;
+    frontPassage: string;
+    backArrival: string;
+    pointFrom: { lat: number; lon: number };
+    pointTo: { lat: number; lon: number };
+    postCode?: number;
+}
+
 export interface TrackStreetInfo {
     id: string;
     name: string;
@@ -57,15 +67,7 @@ export interface TrackStreetInfo {
     arrivalBack: string;
     arrivalFront: string;
     distanceInKm: number;
-    wayPoints: {
-        streetName: string;
-        frontArrival: string;
-        frontPassage: string;
-        backArrival: string;
-        pointFrom: { lat: number; lon: number };
-        pointTo: { lat: number; lon: number };
-        postCode?: number;
-    }[];
+    wayPoints: TrackWayPoint[];
 }
 
 export interface BlockedStreetInfo {

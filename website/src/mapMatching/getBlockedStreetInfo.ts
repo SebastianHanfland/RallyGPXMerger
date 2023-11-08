@@ -1,5 +1,5 @@
 import { State } from '../store/types.ts';
-import { BlockedStreetInfo } from './types.ts';
+import { BlockedStreetInfo, TrackWayPoint } from './types.ts';
 import { getEnrichedTrackStreetInfos } from './getEnrichedTrackStreetInfos.ts';
 
 function takeLaterOne(end: string, to: string): string {
@@ -10,12 +10,16 @@ function takeEarlierOne(start: string, from: string): string {
     return start <= from ? start : from;
 }
 
+function streetAndPostCodeMatch(waypoint: TrackWayPoint, info: BlockedStreetInfo) {
+    return info.streetName === waypoint.streetName && info.postCode === waypoint.postCode;
+}
+
 export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
     let blockedStreetsInfo: BlockedStreetInfo[] = [];
     const trackStreetInfo = getEnrichedTrackStreetInfos(state);
     trackStreetInfo.forEach((trackStreetInfo) => {
         trackStreetInfo.wayPoints.forEach((waypoint) => {
-            if (!blockedStreetsInfo.find((info) => info.streetName === waypoint.streetName)) {
+            if (!blockedStreetsInfo.find((info) => streetAndPostCodeMatch(waypoint, info))) {
                 blockedStreetsInfo.push({
                     streetName: waypoint.streetName,
                     start: waypoint.frontArrival,
@@ -27,7 +31,7 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
                 return;
             }
             blockedStreetsInfo = blockedStreetsInfo.map((info) =>
-                info.streetName === waypoint.streetName
+                streetAndPostCodeMatch(waypoint, info)
                     ? {
                           ...info,
                           end: takeLaterOne(info.end, waypoint.backArrival),
