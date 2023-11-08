@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
-    const { name, wayPoints, distanceInKm, start, end, arrival, startThrough } = trackStreetInfo;
+    const { name, wayPoints, distanceInKm, start, end, arrival } = trackStreetInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrival, start)) * 60 * 60;
     return (
         <div>
@@ -19,7 +19,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
             <div className={'d-flex justify-content-between'}>
                 <div className={'m-3'}>{`Distance: ${distanceInKm.toFixed(2)} km`}</div>
                 <div className={'m-3'}>{`Start: ${formatTimeOnly(start)}`}</div>
-                <div className={'m-3'}>{`Arrival: ${formatTimeOnly(startThrough)}`}</div>
+                <div className={'m-3'}>{`Arrival: ${formatTimeOnly(arrival)}`}</div>
                 <div className={'m-3'}>{`End: ${formatTimeOnly(end)}`}</div>
                 <div className={'m-3'}>{`Average speed: ${average.toFixed(1)} km/h`}</div>
             </div>

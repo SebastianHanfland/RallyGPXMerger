@@ -12,9 +12,9 @@ export interface PointS extends Omit<Point, 'time'> {
 
 interface AggregatedPoints {
     streetName: string;
-    from: string;
-    fromThrough: string;
-    to: string;
+    frontArrival: string;
+    frontPassage: string;
+    backArrival: string;
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
 }
@@ -47,9 +47,9 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
         if (aggregatedPoints.length === 0) {
             aggregatedPoints.push({
                 streetName: point.street,
-                to: shiftEndTimeByParticipants(point.time, participants),
-                fromThrough: point.time,
-                from: point.time,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
+                frontArrival: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
             });
@@ -66,16 +66,16 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
             aggregatedPoints[lastIndex] = {
                 ...lastElement,
                 streetName: detailedStreetName,
-                to: shiftEndTimeByParticipants(point.time, participants),
-                fromThrough: point.time,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
                 pointTo: extractLatLon(point),
             };
         } else {
             aggregatedPoints.push({
                 streetName: point.street,
-                to: shiftEndTimeByParticipants(point.time, participants),
-                fromThrough: point.time,
-                from: point.time,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
+                frontArrival: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
             });

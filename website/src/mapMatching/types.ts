@@ -54,7 +54,6 @@ export interface TrackStreetInfo {
     id: string;
     name: string;
     start: string;
-    startThrough: string;
     end: string;
     arrival: string;
     distanceInKm: number;
