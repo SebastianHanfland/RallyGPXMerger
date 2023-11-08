@@ -61,7 +61,7 @@ export function TrackDataOverview() {
                         <td># Unresolved unique Positions</td>
                         <td>{unresolvedUniquePositionCount}</td>
                     </tr>
-                    {numberOfRequiredRequests && (
+                    {!!numberOfRequiredRequests && (
                         <tr>
                             <td># required street Requests</td>
                             <td>
