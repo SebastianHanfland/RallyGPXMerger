@@ -84,6 +84,7 @@ export function TrackDataOverview() {
                 variant={'success'}
                 onClick={() => dispatch(resolvePositions)}
                 disabled={runningRequests || runningPostCodeRequests || isLoading}
+                title={'Fetching the street information from geoapify and BigDataCloud'}
             >
                 {runningRequests || runningPostCodeRequests || isLoading ? (
                     <span>
@@ -93,9 +94,19 @@ export function TrackDataOverview() {
                         {isLoading && !runningRequests && !runningPostCodeRequests && <span>Grouping Streets</span>}
                     </span>
                 ) : (
-                    <span>Fetch the street information and post codes</span>
+                    <span>Fetch the street information and post codes*</span>
                 )}
             </Button>
+            <p className={'m-1'} style={{ fontSize: '12px' }}>
+                * with clicking, I agree to send data to{' '}
+                <a href={'https://www.geoapify.com/'} target={'_blank'} referrerPolicy={'no-referrer'}>
+                    geoapify
+                </a>{' '}
+                and{' '}
+                <a href={'https://www.bigdatacloud.com/'} target={'_blank'} referrerPolicy={'no-referrer'}>
+                    BigDataCloud
+                </a>
+            </p>
             <hr />
             <h5>Street information</h5>
             {requestProgress !== undefined && (
