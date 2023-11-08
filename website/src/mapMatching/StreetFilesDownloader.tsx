@@ -9,11 +9,11 @@ import { getBlockedStreetInfo } from './getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from './getEnrichedTrackStreetInfos.ts';
 
 const header = (trackInfo: TrackStreetInfo): string => {
-    const duration = getTimeDifferenceInSeconds(trackInfo.end, trackInfo.start) / 60;
+    const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
     const durationString = `Duration in min;${duration.toFixed(2)}\n`;
     const distance = `Distance in km;${trackInfo.distanceInKm.toFixed(2)}\n`;
     const averageSpeed = `Average speed in km/h;${((trackInfo.distanceInKm / duration) * 60).toFixed(2)}\n`;
-    const times = `Start;${trackInfo.start}\nArrival;${trackInfo.arrival}\nEnd;${trackInfo.end}\n`;
+    const times = `Start;${trackInfo.startFront}\nArrival;${trackInfo.arrivalFront}\nEnd;${trackInfo.arrivalBack}\n`;
     const tableHeaders = `Street;Post code;From;To\n`;
     return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };

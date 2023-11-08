@@ -53,9 +53,9 @@ export interface GeoApifyMapMatchingResult {
 export interface TrackStreetInfo {
     id: string;
     name: string;
-    start: string;
-    end: string;
-    arrival: string;
+    startFront: string;
+    arrivalBack: string;
+    arrivalFront: string;
     distanceInKm: number;
     wayPoints: {
         streetName: string;

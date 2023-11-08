@@ -20,8 +20,8 @@ export const BlockedStreetInfo = () => {
                         <th>Street</th>
                         <th>Length</th>
                         <th>Duration</th>
-                        <th>From</th>
-                        <th>To</th>
+                        <th>Arrival of front</th>
+                        <th>Passage of back</th>
                         <th>Map</th>
                     </tr>
                 </thead>

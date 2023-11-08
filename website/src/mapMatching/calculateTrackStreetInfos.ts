@@ -42,9 +42,9 @@ const enrichWithStreetsAndAggregate =
         return {
             id: track.id,
             name: track.filename,
-            start: wayPoints[0].frontArrival,
-            end: wayPoints[wayPoints.length - 1].backArrival,
-            arrival: wayPoints[wayPoints.length - 1].frontPassage,
+            startFront: wayPoints[0].frontArrival,
+            arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
+            arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
             distanceInKm: distance,
             wayPoints,
         };
