@@ -22,8 +22,8 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
             if (!blockedStreetsInfo.find((info) => streetAndPostCodeMatch(waypoint, info))) {
                 blockedStreetsInfo.push({
                     streetName: waypoint.streetName,
-                    start: waypoint.frontArrival,
-                    end: waypoint.backArrival,
+                    frontArrival: waypoint.frontArrival,
+                    backPassage: waypoint.backArrival,
                     postCode: waypoint.postCode,
                     pointFrom: waypoint.pointFrom,
                     pointTo: waypoint.pointTo,
@@ -34,8 +34,8 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
                 streetAndPostCodeMatch(waypoint, info)
                     ? {
                           ...info,
-                          end: takeLaterOne(info.end, waypoint.backArrival),
-                          start: takeEarlierOne(info.start, waypoint.frontArrival),
+                          backPassage: takeLaterOne(info.backPassage, waypoint.backArrival),
+                          frontArrival: takeEarlierOne(info.frontArrival, waypoint.frontArrival),
                       }
                     : info
             );

@@ -33,7 +33,7 @@ describe('getBlockedStreetInfo', () => {
         ] as TrackStreetInfo[];
         (getEnrichedTrackStreetInfos as Mock).mockReturnValue(trackStreetInfos);
         const expectedBlockedStreets: BlockedStreetInfo[] = [
-            { streetName: 'A', start: earliestStart, end: latestEnd } as BlockedStreetInfo,
+            { streetName: 'A', frontArrival: earliestStart, backPassage: latestEnd } as BlockedStreetInfo,
         ];
 
         // when

@@ -26,23 +26,25 @@ export const BlockedStreetInfo = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {blockedStreetInfos.map(({ streetName, start, end, postCode, pointFrom, pointTo }) => (
-                        <tr key={end}>
-                            <td>
-                                <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
-                            </td>
-                            <td>
-                                <HighlightUnknown value={streetName} />
-                            </td>
-                            <td>{(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km</td>
-                            <td>{(getTimeDifferenceInSeconds(end, start) / 60).toFixed(1)} min</td>
-                            <td>{formatTimeOnly(start)}</td>
-                            <td>{formatTimeOnly(end)}</td>
-                            <td>
-                                <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
-                            </td>
-                        </tr>
-                    ))}
+                    {blockedStreetInfos.map(
+                        ({ streetName, frontArrival, backPassage, postCode, pointFrom, pointTo }) => (
+                            <tr key={backPassage}>
+                                <td>
+                                    <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                </td>
+                                <td>
+                                    <HighlightUnknown value={streetName} />
+                                </td>
+                                <td>{(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km</td>
+                                <td>{(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60).toFixed(1)} min</td>
+                                <td>{formatTimeOnly(frontArrival)}</td>
+                                <td>{formatTimeOnly(backPassage)}</td>
+                                <td>
+                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
+                                </td>
+                            </tr>
+                        )
+                    )}
                 </tbody>
             </Table>
         </div>

@@ -13,8 +13,8 @@ const header = (trackInfo: TrackStreetInfo): string => {
     const durationString = `Duration in min;${duration.toFixed(2)}\n`;
     const distance = `Distance in km;${trackInfo.distanceInKm.toFixed(2)}\n`;
     const averageSpeed = `Average speed in km/h;${((trackInfo.distanceInKm / duration) * 60).toFixed(2)}\n`;
-    const times = `Start;${trackInfo.startFront}\nArrival;${trackInfo.arrivalFront}\nEnd;${trackInfo.arrivalBack}\n`;
-    const tableHeaders = `Street;Post code;From;To\n`;
+    const times = `Start;${trackInfo.startFront}\nArrival of front;${trackInfo.arrivalFront}\nArrival of back;${trackInfo.arrivalBack}\n`;
+    const tableHeaders = `Street;Post code;Arrival of front;Passage of front;Arrival of back\n`;
     return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };
 
@@ -23,8 +23,8 @@ function convertTrackInfoToCsv(track: TrackStreetInfo): string {
         header(track) +
         track.wayPoints
             .map(
-                ({ streetName, frontArrival, backArrival, postCode }) =>
-                    `${streetName};${postCode};${frontArrival};${backArrival}`
+                ({ streetName, postCode, frontArrival, frontPassage, backArrival }) =>
+                    `${streetName};${postCode};${frontArrival};${frontPassage};${backArrival}`
             )
             .join('\n')
     );
@@ -34,7 +34,10 @@ function convertStreetInfoToCsv(blockedStreets: BlockedStreetInfo[]): string {
     return (
         'Post code;Street;Blocked from;Blocked until;\n' +
         blockedStreets
-            .map(({ streetName, end, start, postCode }) => `${postCode};${streetName};${start};${end}`)
+            .map(
+                ({ postCode, streetName, frontArrival, backPassage }) =>
+                    `${postCode};${streetName};${frontArrival};${backPassage}`
+            )
             .join('\n')
     );
 }
