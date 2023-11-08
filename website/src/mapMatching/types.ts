@@ -62,7 +62,7 @@ export interface TrackStreetInfo {
         streetName: string;
         from: string;
         fromThrough: string;
-        to: string;
+        backArrival: string;
         pointFrom: { lat: number; lon: number };
         pointTo: { lat: number; lon: number };
         postCode?: number;
