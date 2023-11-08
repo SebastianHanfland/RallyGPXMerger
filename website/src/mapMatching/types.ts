@@ -19,7 +19,7 @@ type GeoApifyLegStep = {
     end_bearing: number;
 };
 
-type GeoApifyWayPoint = {
+export interface GeoApifyWayPoint {
     original_index: number;
     location: [number, number];
     original_location: [number, number];
@@ -27,7 +27,13 @@ type GeoApifyWayPoint = {
     match_distance: number;
     leg_index: number;
     step_index: number;
-};
+}
+
+export interface GeoApifyLeg {
+    time: number;
+    distance: number;
+    steps: GeoApifyLegStep[];
+}
 
 export interface GeoApifyMapMatchingResult {
     type: string;
@@ -36,11 +42,7 @@ export interface GeoApifyMapMatchingResult {
         properties: {
             distance: number;
             time: number;
-            legs: {
-                time: number;
-                distance: number;
-                steps: GeoApifyLegStep[];
-            }[];
+            legs: GeoApifyLeg[];
             mode: string;
             waypoints: GeoApifyWayPoint[];
         };
