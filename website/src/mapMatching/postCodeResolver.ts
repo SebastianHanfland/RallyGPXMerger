@@ -67,7 +67,6 @@ export const getPostCodeRequestProgress = (state: State): undefined | number => 
     const numberOfRequiredRequests = getNumberOfPostCodeRequests(state);
     const numberOfRequestsDone = getNumberOfPostCodeRequestsDone(state);
 
-    console.log({ numberOfRequestsDone, numberOfRequiredRequests });
     if (numberOfRequestsDone === 0 && numberOfRequiredRequests === 0) {
         return 0;
     }

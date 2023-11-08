@@ -29,8 +29,6 @@ export function TrackDataOverview() {
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
     const dispatch: AppDispatch = useDispatch();
 
-    console.log(postCodeProgress);
-
     useEffect(() => {
         dispatch(estimateRequestsForStreetResolving);
     }, [gpxSegments.length]);

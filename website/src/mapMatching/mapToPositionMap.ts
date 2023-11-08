@@ -2,11 +2,22 @@ import { GeoApifyLeg, GeoApifyMapMatchingResult, GeoApifyWayPoint } from './type
 import { ResolvedPositions } from '../store/types.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 
+const alternatives = [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5];
+
 function resolveWayPoint(legInfo: GeoApifyLeg[], resolvedPositions: ResolvedPositions) {
     return ({ leg_index, step_index, original_location }: GeoApifyWayPoint) => {
-        const geoApifyLegStep = legInfo[leg_index].steps[step_index];
         const positionKey = toKey({ lat: original_location[1], lon: original_location[0] });
-        resolvedPositions[positionKey] = geoApifyLegStep.name ?? 'Unknown';
+
+        let streetName = legInfo[leg_index].steps[step_index].name;
+        let alternativeCounter = 0;
+        while (streetName === undefined && alternativeCounter < alternatives.length) {
+            const alternativeStep = step_index + alternatives[alternativeCounter];
+            if (alternativeStep >= 0 && alternativeStep < legInfo[leg_index].steps.length) {
+                streetName = legInfo[leg_index].steps[alternativeStep].name;
+            }
+            alternativeCounter++;
+        }
+        resolvedPositions[positionKey] = streetName ?? 'Unknown';
     };
 }
 
