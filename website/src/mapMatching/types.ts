@@ -61,7 +61,7 @@ export interface TrackStreetInfo {
     wayPoints: {
         streetName: string;
         frontArrival: string;
-        fromThrough: string;
+        frontPassage: string;
         backArrival: string;
         pointFrom: { lat: number; lon: number };
         pointTo: { lat: number; lon: number };

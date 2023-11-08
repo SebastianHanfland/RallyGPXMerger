@@ -38,7 +38,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 </thead>
                 <tbody>
                     {wayPoints.map(
-                        ({ streetName, backArrival, frontArrival, fromThrough, postCode, pointTo, pointFrom }) => (
+                        ({ streetName, backArrival, frontArrival, frontPassage, postCode, pointTo, pointFrom }) => (
                             <tr key={backArrival}>
                                 <td>
                                     <HighlightUnknown value={streetName} />
@@ -49,7 +49,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 <td>{(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km</td>
                                 <td>{(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min</td>
                                 <td>{formatTimeOnly(frontArrival)}</td>
-                                <td>{formatTimeOnly(fromThrough)}</td>
+                                <td>{formatTimeOnly(frontPassage)}</td>
                                 <td>{formatTimeOnly(backArrival)}</td>
                                 <td>
                                     <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
