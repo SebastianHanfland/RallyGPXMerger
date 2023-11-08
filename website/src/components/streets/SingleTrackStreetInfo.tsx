@@ -29,7 +29,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         <th>Street</th>
                         <th>Post code</th>
                         <th>Length</th>
-                        <th>Duration</th>
+                        <th>Duration (Blockage)</th>
                         <th>Arrival of front</th>
                         <th>Passage of front</th>
                         <th>Arrival of back</th>
@@ -47,7 +47,10 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
                                 </td>
                                 <td>{(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km</td>
-                                <td>{(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min</td>
+                                <td>
+                                    {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
+                                    {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min )
+                                </td>
                                 <td>{formatTimeOnly(frontArrival)}</td>
                                 <td>{formatTimeOnly(frontPassage)}</td>
                                 <td>{formatTimeOnly(backArrival)}</td>
