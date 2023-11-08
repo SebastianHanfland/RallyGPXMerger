@@ -22,7 +22,10 @@ function convertTrackInfoToCsv(track: TrackStreetInfo): string {
     return (
         header(track) +
         track.wayPoints
-            .map(({ streetName, from, backArrival, postCode }) => `${streetName};${postCode};${from};${backArrival}`)
+            .map(
+                ({ streetName, frontArrival, backArrival, postCode }) =>
+                    `${streetName};${postCode};${frontArrival};${backArrival}`
+            )
             .join('\n')
     );
 }

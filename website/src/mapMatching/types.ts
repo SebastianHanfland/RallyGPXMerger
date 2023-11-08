@@ -60,7 +60,7 @@ export interface TrackStreetInfo {
     distanceInKm: number;
     wayPoints: {
         streetName: string;
-        from: string;
+        frontArrival: string;
         fromThrough: string;
         backArrival: string;
         pointFrom: { lat: number; lon: number };

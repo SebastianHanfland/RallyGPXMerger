@@ -25,10 +25,10 @@ describe('getBlockedStreetInfo', () => {
         const latestEnd = '2022-02-02T02:20:00.000Z';
         const trackStreetInfos: TrackStreetInfo[] = [
             {
-                wayPoints: [{ streetName: 'A', from: '2022-02-02T02:10:00.000Z', backArrival: latestEnd }],
+                wayPoints: [{ streetName: 'A', frontArrival: '2022-02-02T02:10:00.000Z', backArrival: latestEnd }],
             },
             {
-                wayPoints: [{ streetName: 'A', from: earliestStart, backArrival: '2022-02-02T02:10:00.000Z' }],
+                wayPoints: [{ streetName: 'A', frontArrival: earliestStart, backArrival: '2022-02-02T02:10:00.000Z' }],
             },
         ] as TrackStreetInfo[];
         (getEnrichedTrackStreetInfos as Mock).mockReturnValue(trackStreetInfos);

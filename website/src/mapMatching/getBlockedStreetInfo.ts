@@ -18,7 +18,7 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
             if (!blockedStreetsInfo.find((info) => info.streetName === waypoint.streetName)) {
                 blockedStreetsInfo.push({
                     streetName: waypoint.streetName,
-                    start: waypoint.from,
+                    start: waypoint.frontArrival,
                     end: waypoint.backArrival,
                     postCode: waypoint.postCode,
                     pointFrom: waypoint.pointFrom,
@@ -31,7 +31,7 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
                     ? {
                           ...info,
                           end: takeLaterOne(info.end, waypoint.backArrival),
-                          start: takeEarlierOne(info.start, waypoint.from),
+                          start: takeEarlierOne(info.start, waypoint.frontArrival),
                       }
                     : info
             );
