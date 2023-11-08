@@ -54,12 +54,14 @@ export interface TrackStreetInfo {
     id: string;
     name: string;
     start: string;
+    startThrough: string;
     end: string;
     arrival: string;
     distanceInKm: number;
     wayPoints: {
         streetName: string;
         from: string;
+        fromThrough: string;
         to: string;
         pointFrom: { lat: number; lon: number };
         pointTo: { lat: number; lon: number };

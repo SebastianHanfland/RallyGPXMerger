@@ -13,6 +13,7 @@ export interface PointS extends Omit<Point, 'time'> {
 interface AggregatedPoints {
     streetName: string;
     from: string;
+    fromThrough: string;
     to: string;
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
@@ -39,12 +40,15 @@ function shiftEndTimeByParticipants(endDateTime: string, participants: number): 
 }
 
 export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], participants: number): AggregatedPoints[] {
+    // TODO #44 filter points with unknown which have the same from and to points
+    // Maybe also putting the end time into the table and download and explain it
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point) => {
         if (aggregatedPoints.length === 0) {
             aggregatedPoints.push({
                 streetName: point.street,
                 to: shiftEndTimeByParticipants(point.time, participants),
+                fromThrough: point.time,
                 from: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
@@ -63,12 +67,14 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
                 ...lastElement,
                 streetName: detailedStreetName,
                 to: shiftEndTimeByParticipants(point.time, participants),
+                fromThrough: point.time,
                 pointTo: extractLatLon(point),
             };
         } else {
             aggregatedPoints.push({
                 streetName: point.street,
                 to: shiftEndTimeByParticipants(point.time, participants),
+                fromThrough: point.time,
                 from: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
