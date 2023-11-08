@@ -40,10 +40,11 @@ function shiftEndTimeByParticipants(endDateTime: string, participants: number): 
 }
 
 export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], participants: number): AggregatedPoints[] {
-    // TODO #44 filter points with unknown which have the same from and to points
-    // Maybe also putting the end time into the table and download and explain it
     const aggregatedPoints: AggregatedPoints[] = [];
-    enrichedPoints.forEach((point) => {
+    enrichedPoints.forEach((point, index) => {
+        if (point.street === 'Unknown' && index === 0) {
+            return;
+        }
         if (aggregatedPoints.length === 0) {
             aggregatedPoints.push({
                 streetName: point.street,
@@ -58,6 +59,16 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
 
         const lastIndex = aggregatedPoints.length - 1;
         const lastElement = aggregatedPoints[lastIndex];
+
+        if (point.street === 'Unknown' && index > 0 && enrichedPoints[index - 1].street !== 'Unknown') {
+            aggregatedPoints[lastIndex] = {
+                ...lastElement,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
+                pointTo: extractLatLon(point),
+            };
+            return;
+        }
 
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
