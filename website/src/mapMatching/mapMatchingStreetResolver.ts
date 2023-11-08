@@ -50,8 +50,8 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
     });
     setTimeout(() => {
         dispatch(calculateTrackStreetInfos);
-    }, 5000 * (counter - 1));
+    }, 5000 * counter + 1000);
     setTimeout(() => {
         dispatch(addPostCodeToStreetInfos);
-    }, 5000 * counter + 500);
+    }, 5000 * counter + 2000);
 };
