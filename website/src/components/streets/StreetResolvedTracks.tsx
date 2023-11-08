@@ -4,6 +4,7 @@ import { Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
+import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
 
 export function StreetResolvedTracks() {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
@@ -25,7 +26,15 @@ export function StreetResolvedTracks() {
                     <div className={'mx-2'}>
                         <StreetFilesDownloader />
                     </div>
+                    <Pagination></Pagination>
                     <Pagination>
+                        <Pagination.Item
+                            key={'streets'}
+                            active={'streets' === selectedTrackId}
+                            onClick={() => setSelectedTrackId('streets')}
+                        >
+                            Streets
+                        </Pagination.Item>
                         {trackStreetInfos.map(({ id, name }) => (
                             <Pagination.Item
                                 key={id}
@@ -41,11 +50,9 @@ export function StreetResolvedTracks() {
             <div style={{ height: '80%', overflow: 'auto' }}>
                 <div>
                     <div>
-                        {selectedInfo ? (
-                            <SingleTrackStreetInfo trackStreetInfo={selectedInfo} />
-                        ) : (
-                            <div>No Track selected</div>
-                        )}
+                        {selectedInfo && <SingleTrackStreetInfo trackStreetInfo={selectedInfo} />}
+                        {selectedTrackId === 'streets' && <BlockedStreetInfo />}
+                        {!selectedInfo && selectedTrackId !== 'streets' && <div>No Track selected</div>}
                     </div>
                 </div>
             </div>
