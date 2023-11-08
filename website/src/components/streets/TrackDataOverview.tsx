@@ -8,15 +8,12 @@ import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
 import {
+    getIsLoadingGeoData,
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
     getNumberOfRequiredRequests,
 } from '../../store/geoCoding.reducer.ts';
-import {
-    addPostCodeToStreetInfos,
-    getNumberOfPostCodeRequests,
-    getPostCodeRequestProgress,
-} from '../../mapMatching/postCodeResolver.ts';
+import { getNumberOfPostCodeRequests, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
@@ -25,6 +22,7 @@ export function TrackDataOverview() {
     const requestProgress = useSelector(getRequestProgress);
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
+    const isLoading = useSelector(getIsLoadingGeoData);
     const numberOfPostCodeRequests = useSelector(getNumberOfPostCodeRequests);
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
     const dispatch: AppDispatch = useDispatch();
@@ -82,34 +80,30 @@ export function TrackDataOverview() {
                 </tbody>
             </Table>
 
-            <Button onClick={() => dispatch(resolvePositions)} disabled={runningRequests || runningPostCodeRequests}>
-                {runningRequests ? (
+            <Button
+                variant={'success'}
+                onClick={() => dispatch(resolvePositions)}
+                disabled={runningRequests || runningPostCodeRequests || isLoading}
+            >
+                {runningRequests || runningPostCodeRequests || isLoading ? (
                     <span>
                         <Spinner size={'sm'} />
-                        Fetching
+                        {runningRequests && <span>Fetching street information</span>}
+                        {runningPostCodeRequests && <span>Fetching post codes</span>}
+                        {isLoading && !runningRequests && !runningPostCodeRequests && <span>Grouping Streets</span>}
                     </span>
                 ) : (
-                    <span>Fetch the street information</span>
+                    <span>Fetch the street information and post codes</span>
                 )}
             </Button>
+            <hr />
+            <h5>Street information</h5>
             {requestProgress !== undefined && (
                 <div className={'m-2'}>
                     <ProgressBar now={requestProgress} label={`${requestProgress?.toFixed(0)}%`}></ProgressBar>
                 </div>
             )}
-            <Button
-                onClick={() => dispatch(addPostCodeToStreetInfos)}
-                disabled={runningPostCodeRequests || runningRequests}
-            >
-                {runningPostCodeRequests ? (
-                    <span>
-                        <Spinner size={'sm'} />
-                        Fetching
-                    </span>
-                ) : (
-                    <span>Fetch the post code info</span>
-                )}
-            </Button>
+            <h5>Post codes</h5>
             {postCodeProgress !== undefined && (
                 <div className={'m-2'}>
                     <ProgressBar now={postCodeProgress} label={`${postCodeProgress?.toFixed(0)}%`}></ProgressBar>

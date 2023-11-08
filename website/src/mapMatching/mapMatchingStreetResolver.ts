@@ -7,6 +7,7 @@ import { Point } from 'gpxparser';
 import { splitListIntoSections } from './splitPointsService.ts';
 import { calculateTrackStreetInfos } from './calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../store/store.ts';
+import { addPostCodeToStreetInfos } from './postCodeResolver.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -24,6 +25,7 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
         return;
     }
     let counter = 0;
+    dispatch(geoCodingActions.setIsLoadingData(true));
     dispatch(geoCodingActions.resetRequestDoneCounter());
 
     const gpxSegments = getGpxSegments(getState());
@@ -47,5 +49,8 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
     });
     setTimeout(() => {
         dispatch(calculateTrackStreetInfos);
-    }, 5000 * counter);
+    }, 5000 * (counter - 1));
+    setTimeout(() => {
+        dispatch(addPostCodeToStreetInfos);
+    }, 5000 * counter + 500);
 };
