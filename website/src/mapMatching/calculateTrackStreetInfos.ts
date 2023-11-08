@@ -39,6 +39,7 @@ const enrichWithStreetsAndAggregate =
 
         const wayPoints = aggregateEnrichedPoints(enrichedPoints, participants[index]);
 
+        //
         return {
             id: track.id,
             name: track.filename,
