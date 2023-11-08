@@ -30,11 +30,14 @@ export const getRequestProgress = (state: State): undefined | number => {
     const numberOfRequestsDone = getNumberOfRequestsDone(state);
     const numberOfRequestsRunning = getNumberOfRequestsRunning(state);
 
+    if (numberOfRequestsRunning === 0 && numberOfRequiredRequests === 0) {
+        return 0;
+    }
     if (!!numberOfRequiredRequests && numberOfRequestsDone === numberOfRequiredRequests) {
         return 100;
     }
     if (numberOfRequestsRunning === 0 || !numberOfRequiredRequests) {
-        return undefined;
+        return 0;
     }
 
     return (numberOfRequestsDone / numberOfRequiredRequests) * 100;

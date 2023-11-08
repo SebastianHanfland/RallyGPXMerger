@@ -12,7 +12,11 @@ import {
     getNumberOfRequestsRunning,
     getNumberOfRequiredRequests,
 } from '../../store/geoCoding.reducer.ts';
-import { addPostCodeToStreetInfos } from '../../mapMatching/postCodeResolver.ts';
+import {
+    addPostCodeToStreetInfos,
+    getNumberOfPostCodeRequests,
+    getPostCodeRequestProgress,
+} from '../../mapMatching/postCodeResolver.ts';
 
 export function TrackDataOverview() {
     const calculatedTracks = useSelector(getCalculatedTracks);
@@ -21,7 +25,11 @@ export function TrackDataOverview() {
     const requestProgress = useSelector(getRequestProgress);
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
+    const numberOfPostCodeRequests = useSelector(getNumberOfPostCodeRequests);
+    const postCodeProgress = useSelector(getPostCodeRequestProgress);
     const dispatch: AppDispatch = useDispatch();
+
+    console.log(postCodeProgress);
 
     useEffect(() => {
         dispatch(estimateRequestsForStreetResolving);
@@ -59,16 +67,24 @@ export function TrackDataOverview() {
                     </tr>
                     {numberOfRequiredRequests && (
                         <tr>
-                            <td># required Requests</td>
+                            <td># required street Requests</td>
                             <td>
                                 {numberOfRequiredRequests} = {numberOfRequiredRequests * 5} s
+                            </td>
+                        </tr>
+                    )}
+                    {numberOfPostCodeRequests > 0 && (
+                        <tr>
+                            <td># required Post code Requests</td>
+                            <td>
+                                {numberOfPostCodeRequests} = {(numberOfPostCodeRequests * 0.2).toFixed(1)} s
                             </td>
                         </tr>
                     )}
                 </tbody>
             </Table>
 
-            <Button onClick={() => dispatch(resolvePositions)} disabled={runningRequests}>
+            <Button onClick={() => dispatch(resolvePositions)} disabled={runningRequests || runningPostCodeRequests}>
                 {runningRequests ? (
                     <span>
                         <Spinner size={'sm'} />
@@ -83,7 +99,10 @@ export function TrackDataOverview() {
                     <ProgressBar now={requestProgress} label={`${requestProgress?.toFixed(0)}%`}></ProgressBar>
                 </div>
             )}
-            <Button onClick={() => dispatch(addPostCodeToStreetInfos)} disabled={runningPostCodeRequests}>
+            <Button
+                onClick={() => dispatch(addPostCodeToStreetInfos)}
+                disabled={runningPostCodeRequests || runningRequests}
+            >
                 {runningPostCodeRequests ? (
                     <span>
                         <Spinner size={'sm'} />
@@ -93,6 +112,11 @@ export function TrackDataOverview() {
                     <span>Fetch the post code info</span>
                 )}
             </Button>
+            {postCodeProgress !== undefined && (
+                <div className={'m-2'}>
+                    <ProgressBar now={postCodeProgress} label={`${postCodeProgress?.toFixed(0)}%`}></ProgressBar>
+                </div>
+            )}
         </div>
     );
 }

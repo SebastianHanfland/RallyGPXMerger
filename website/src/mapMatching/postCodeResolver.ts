@@ -2,6 +2,7 @@ import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
 import {
     geoCodingActions,
     getBigDataCloudKey,
+    getNumberOfPostCodeRequestsDone,
     getResolvedPostCodes,
     getTrackStreetInfos,
 } from '../store/geoCoding.reducer.ts';
@@ -29,6 +30,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     if (!bigDataCloudKey) {
         return;
     }
+    dispatch(geoCodingActions.resetPostCodeRequestDoneCounter());
 
     let counter = 0;
     trackStreetInfos.forEach((trackStreetInfo) => {
@@ -41,9 +43,38 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
                     });
                 }
+                dispatch(geoCodingActions.increasePostCodeRequestDoneCounter());
                 dispatch(geoCodingActions.decreaseActivePostCodeRequestCounter());
             }, 200 * counter);
             counter += 1;
         });
     });
+};
+
+export const getNumberOfPostCodeRequests = (state: State): number => {
+    const trackStreetInfos = getTrackStreetInfos(state);
+
+    let counter = 0;
+    trackStreetInfos.forEach((trackStreetInfo) => {
+        trackStreetInfo.wayPoints.forEach(() => {
+            counter += 1;
+        });
+    });
+    return counter;
+};
+
+export const getPostCodeRequestProgress = (state: State): undefined | number => {
+    const numberOfRequiredRequests = getNumberOfPostCodeRequests(state);
+    const numberOfRequestsDone = getNumberOfPostCodeRequestsDone(state);
+
+    console.log({ numberOfRequestsDone, numberOfRequiredRequests });
+    if (numberOfRequestsDone === 0 && numberOfRequiredRequests === 0) {
+        return 0;
+    }
+
+    if (!!numberOfRequiredRequests && numberOfRequestsDone === numberOfRequiredRequests) {
+        return 100;
+    }
+
+    return (numberOfRequestsDone / numberOfRequiredRequests) * 100;
 };
