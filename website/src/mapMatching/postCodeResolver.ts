@@ -2,7 +2,6 @@ import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
 import {
     geoCodingActions,
     getBigDataCloudKey,
-    getNumberOfPostCodeRequestsDone,
     getResolvedPostCodes,
     getTrackStreetInfos,
 } from '../store/geoCoding.reducer.ts';
@@ -10,6 +9,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 import { TrackWayPoint } from './types.ts';
+import { geoCodingRequestsActions, getNumberOfPostCodeRequestsDone } from '../store/geoCodingRequests.reducer.ts';
 
 export function getWayPointKey(wayPoint: TrackWayPoint) {
     const lat = (wayPoint.pointTo.lat + wayPoint.pointFrom.lat) / 2;
@@ -24,12 +24,12 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     if (!bigDataCloudKey) {
         return;
     }
-    dispatch(geoCodingActions.resetPostCodeRequestDoneCounter());
+    dispatch(geoCodingRequestsActions.resetPostCodeRequestDoneCounter());
 
     let counter = 0;
     trackStreetInfos.forEach((trackStreetInfo, trackInfoIndex) => {
         trackStreetInfo.wayPoints.forEach(async (wayPoint, index) => {
-            dispatch(geoCodingActions.increaseActivePostCodeRequestCounter());
+            dispatch(geoCodingRequestsActions.increaseActivePostCodeRequestCounter());
             setTimeout(() => {
                 const { lat, lon, postCodeKey } = getWayPointKey(wayPoint);
                 if (!getResolvedPostCodes(getState())[postCodeKey]) {
@@ -37,10 +37,10 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
                     });
                 }
-                dispatch(geoCodingActions.increasePostCodeRequestDoneCounter());
-                dispatch(geoCodingActions.decreaseActivePostCodeRequestCounter());
+                dispatch(geoCodingRequestsActions.increasePostCodeRequestDoneCounter());
+                dispatch(geoCodingRequestsActions.decreaseActivePostCodeRequestCounter());
                 if (trackInfoIndex === trackStreetInfos.length - 1 && index === trackStreetInfo.wayPoints.length - 1) {
-                    dispatch(geoCodingActions.setIsLoadingData(false));
+                    dispatch(geoCodingRequestsActions.setIsLoadingData(false));
                 }
             }, 200 * counter);
             counter += 1;

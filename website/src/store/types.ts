@@ -33,13 +33,16 @@ export interface GeoCodingState {
     bigDataCloudKey?: string;
     resolvedPositions?: ResolvedPositions;
     resolvedPostCodes?: ResolvedPostCodes;
+    trackStreetInfos?: TrackStreetInfo[];
+}
+
+export interface GeoCodingRequestsState {
     requestCounter: number;
     postCodeRequestCounter: number;
     requestDoneCounter: number;
     postCodeRequestDoneCounter: number;
     numberOfRequiredRequests?: number;
     isLoadingData: boolean;
-    trackStreetInfos?: TrackStreetInfo[];
 }
 
 export interface TrackMergeState {
@@ -64,6 +67,7 @@ export interface State {
     calculatedTracks: CalculatedTracksState;
     map: MapState;
     geoCoding: GeoCodingState;
+    geoCodingRequests: GeoCodingRequestsState;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

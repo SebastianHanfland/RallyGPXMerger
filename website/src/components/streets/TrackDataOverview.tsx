@@ -12,7 +12,7 @@ import {
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
     getNumberOfRequiredRequests,
-} from '../../store/geoCoding.reducer.ts';
+} from '../../store/geoCodingRequests.reducer.ts';
 import { getNumberOfPostCodeRequests, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 
 export function TrackDataOverview() {

@@ -8,6 +8,7 @@ import { splitListIntoSections } from './splitPointsService.ts';
 import { calculateTrackStreetInfos } from './calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../store/store.ts';
 import { addPostCodeToStreetInfos } from './postCodeResolver.ts';
+import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -25,8 +26,8 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
         return;
     }
     let counter = 0;
-    dispatch(geoCodingActions.setIsLoadingData(true));
-    dispatch(geoCodingActions.resetRequestDoneCounter());
+    dispatch(geoCodingRequestsActions.setIsLoadingData(true));
+    dispatch(geoCodingRequestsActions.resetRequestDoneCounter());
 
     const gpxSegments = getGpxSegments(getState());
     gpxSegments.forEach((segment) => {
@@ -34,13 +35,13 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
         gpx.tracks.forEach((track) => {
             const listOfPoints = splitListIntoSections(track.points, 1000);
             listOfPoints.forEach((points) => {
-                dispatch(geoCodingActions.increaseActiveRequestCounter());
+                dispatch(geoCodingRequestsActions.increaseActiveRequestCounter());
                 setTimeout(() => {
                     const body = toGeoApifyMapMatchingBody(points);
                     geoApifyFetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
                         dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
-                        dispatch(geoCodingActions.decreaseActiveRequestCounter());
-                        dispatch(geoCodingActions.increaseRequestDoneCounter());
+                        dispatch(geoCodingRequestsActions.decreaseActiveRequestCounter());
+                        dispatch(geoCodingRequestsActions.increaseRequestDoneCounter());
                     });
                 }, 5000 * counter);
                 counter += 1;

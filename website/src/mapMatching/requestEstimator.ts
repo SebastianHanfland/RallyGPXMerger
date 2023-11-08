@@ -1,14 +1,14 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
-import {
-    geoCodingActions,
-    getNumberOfRequestsDone,
-    getNumberOfRequestsRunning,
-    getNumberOfRequiredRequests,
-} from '../store/geoCoding.reducer.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { splitListIntoSections } from './splitPointsService.ts';
+import {
+    geoCodingRequestsActions,
+    getNumberOfRequestsDone,
+    getNumberOfRequestsRunning,
+    getNumberOfRequiredRequests,
+} from '../store/geoCodingRequests.reducer.ts';
 
 export const estimateRequestsForStreetResolving = (dispatch: Dispatch, getState: () => State) => {
     let counter = 0;
@@ -22,7 +22,7 @@ export const estimateRequestsForStreetResolving = (dispatch: Dispatch, getState:
             });
         });
     });
-    dispatch(geoCodingActions.setNumberOfRequiredRequests(counter));
+    dispatch(geoCodingRequestsActions.setNumberOfRequiredRequests(counter));
 };
 
 export const getRequestProgress = (state: State): undefined | number => {

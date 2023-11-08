@@ -6,6 +6,7 @@ import { trackMergeReducer } from './trackMerge.reducer.ts';
 import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
 import { geoCodingReducer } from './geoCoding.reducer.ts';
+import { geoCodingRequestsReducer } from './geoCodingRequests.reducer.ts';
 
 export const rootReducer: Reducer = combineReducers({
     gpxSegments: gpxSegmentsReducer,
@@ -13,6 +14,7 @@ export const rootReducer: Reducer = combineReducers({
     calculatedTracks: calculatedTracksReducer,
     map: mapReducer,
     geoCoding: geoCodingReducer,
+    geoCodingRequests: geoCodingRequestsReducer,
 });
 
 export const storingReducer: Reducer = (state: State) => {
