@@ -1,6 +1,7 @@
 import { TrackStreetInfo } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
+import { StreetMapLink } from './StreetMapLink.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -26,16 +27,20 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         <th>Duration</th>
                         <th>From</th>
                         <th>To</th>
+                        <th>Map</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {wayPoints.map(({ streetName, to, from, postCode }) => (
+                    {wayPoints.map(({ streetName, to, from, postCode, pointTo, pointFrom }) => (
                         <tr key={to}>
                             <td>{streetName}</td>
                             <td>{postCode ?? 'Unknown'}</td>
                             <td>{getTimeDifferenceInSeconds(to, from).toFixed(0)} s</td>
                             <td>{formatTimeOnly(from)}</td>
                             <td>{formatTimeOnly(to)}</td>
+                            <td>
+                                <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>
