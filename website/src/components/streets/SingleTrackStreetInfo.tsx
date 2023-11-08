@@ -2,6 +2,7 @@ import { TrackStreetInfo } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
+import { HighlightUnknown } from './HighlightUnknown.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -33,8 +34,12 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 <tbody>
                     {wayPoints.map(({ streetName, to, from, postCode, pointTo, pointFrom }) => (
                         <tr key={to}>
-                            <td>{streetName}</td>
-                            <td>{postCode ?? 'Unknown'}</td>
+                            <td>
+                                <HighlightUnknown value={streetName} />
+                            </td>
+                            <td>
+                                <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                            </td>
                             <td>{getTimeDifferenceInSeconds(to, from).toFixed(0)} s</td>
                             <td>{formatTimeOnly(from)}</td>
                             <td>{formatTimeOnly(to)}</td>

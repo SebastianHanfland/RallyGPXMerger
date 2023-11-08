@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
 import { useSelector } from 'react-redux';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
+import { HighlightUnknown } from './HighlightUnknown.tsx';
 
 export const BlockedStreetInfo = () => {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
@@ -24,8 +25,12 @@ export const BlockedStreetInfo = () => {
                 <tbody>
                     {blockedStreetInfos.map(({ streetName, start, end, postCode, pointFrom, pointTo }) => (
                         <tr key={end}>
-                            <td>{postCode ?? 'Unknown'}</td>
-                            <td>{streetName}</td>
+                            <td>
+                                <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                            </td>
+                            <td>
+                                <HighlightUnknown value={streetName} />
+                            </td>
                             <td>{getTimeDifferenceInSeconds(end, start).toFixed(0)} s</td>
                             <td>{formatTimeOnly(start)}</td>
                             <td>{formatTimeOnly(end)}</td>
