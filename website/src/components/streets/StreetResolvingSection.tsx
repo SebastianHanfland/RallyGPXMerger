@@ -1,4 +1,4 @@
-import { Col, Row } from 'react-bootstrap';
+import { Accordion, Col, Row } from 'react-bootstrap';
 import { TrackDataOverview } from './TrackDataOverview.tsx';
 import { ApiKeyInput } from './ApiKeyInput.tsx';
 import { StreetResolvedTracks } from './StreetResolvedTracks.tsx';
@@ -10,7 +10,14 @@ export const StreetResolvingSection = () => {
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <TrackDataOverview />
                     <hr />
-                    <ApiKeyInput />
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Use own API keys</Accordion.Header>
+                            <Accordion.Body>
+                                <ApiKeyInput />
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
                 </div>
             </Col>
             <Col xl={8}>

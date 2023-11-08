@@ -1,5 +1,10 @@
 import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
-import { geoCodingActions, getResolvedPostCodes, getTrackStreetInfos } from '../store/geoCoding.reducer.ts';
+import {
+    geoCodingActions,
+    getBigDataCloudKey,
+    getResolvedPostCodes,
+    getTrackStreetInfos,
+} from '../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { toKey } from './initializeResolvedPositions.ts';
@@ -20,6 +25,10 @@ export function getWayPointKey(wayPoint: {
 
 export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());
+    const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
+    if (!bigDataCloudKey) {
+        return;
+    }
 
     let counter = 0;
     trackStreetInfos.forEach((trackStreetInfo) => {
@@ -28,7 +37,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
             setTimeout(() => {
                 const { lat, lon, postCodeKey } = getWayPointKey(wayPoint);
                 if (!getResolvedPostCodes(getState())[postCodeKey]) {
-                    fetchPostCodeForCoordinate('bdc_649ce9cdfba14851ab77c6410ace035e')(lat, lon).then((postCode) => {
+                    fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then((postCode) => {
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
                     });
                 }

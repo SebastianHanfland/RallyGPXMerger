@@ -19,7 +19,7 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
 }
 
 export const resolvePositions = (dispatch: AppDispatch, getState: () => State) => {
-    const geoApifyKey = getGeoApifyKey(getState());
+    const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
     if (!geoApifyKey) {
         return;
     }
