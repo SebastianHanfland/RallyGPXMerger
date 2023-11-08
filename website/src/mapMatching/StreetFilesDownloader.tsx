@@ -13,7 +13,9 @@ const header = (trackInfo: TrackStreetInfo): string => {
     const durationString = `Duration in min;${duration.toFixed(2)}\n`;
     const distance = `Distance in km;${trackInfo.distanceInKm.toFixed(2)}\n`;
     const averageSpeed = `Average speed in km/h;${((trackInfo.distanceInKm / duration) * 60).toFixed(2)}\n`;
-    return `Start;${trackInfo.start}\nEnd;${trackInfo.end}\n${durationString}${distance}${averageSpeed}Street;Post code;From;To\n`;
+    const times = `Start;${trackInfo.start}\nArrival;${trackInfo.arrival}\nEnd;${trackInfo.end}\n`;
+    const tableHeaders = `Street;Post code;From;To\n`;
+    return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };
 
 function convertTrackInfoToCsv(track: TrackStreetInfo): string {

@@ -53,6 +53,7 @@ export interface TrackStreetInfo {
     name: string;
     start: string;
     end: string;
+    arrival: string;
     distanceInKm: number;
     wayPoints: {
         streetName: string;
