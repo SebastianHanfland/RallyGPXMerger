@@ -9,6 +9,7 @@ import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
 import { useSelector } from 'react-redux';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -68,11 +69,14 @@ export const PlainMap = () => {
     }, [gpxSegments.length > 0]);
 
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
+    const blockedStreetLayer = useRef<LayerGroup>(null);
     const calculatedTracksLayer = useRef<LayerGroup>(null);
     const trackMarkerLayer = useRef<LayerGroup>(null);
     useEffect(() => {
         // @ts-ignore
         gpxSegmentsLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        blockedStreetLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         calculatedTracksLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
@@ -80,6 +84,7 @@ export const PlainMap = () => {
     }, []);
 
     gpxSegmentDisplayHook(gpxSegmentsLayer);
+    blockedStreetsDisplayHook(blockedStreetLayer);
     calculatedTracksDisplayHook(calculatedTracksLayer);
     trackMarkerDisplayHook(trackMarkerLayer);
 
