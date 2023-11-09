@@ -14,6 +14,16 @@ function createTooltip({ streetName, postCode, frontArrival, backPassage }: Bloc
     )})`;
 }
 
+const colorStore: Record<string, string> = {};
+
+function getColorForStreetName(streetName: string): string {
+    const storedColor = colorStore[streetName];
+    if (!storedColor) {
+        colorStore[streetName] = getColorFromUuid(uuidv4());
+    }
+    return storedColor;
+}
+
 export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<LayerGroup | null>) {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const mapSource = useSelector(getCurrenMapSource);
@@ -25,31 +35,20 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<
             return;
         }
         current.clearLayers();
-        console.log('Here it is');
         if (mapSource === 'blocked streets') {
-            console.log('Here it is');
             blockedStreetInfos.forEach((blockedStreet) => {
                 const streetPoints = [
                     { lat: blockedStreet.pointFrom.lat, lng: blockedStreet.pointFrom.lon },
                     { lat: blockedStreet.pointTo.lat, lng: blockedStreet.pointTo.lon },
                 ];
                 const connection = L.polyline(streetPoints, {
-                    color: getColorFromUuid(uuidv4()),
+                    color: getColorForStreetName(blockedStreet.streetName),
                     weight: 4,
+                    dashArray: '5',
                 }).bindTooltip(createTooltip(blockedStreet), {
                     sticky: true,
                 });
                 connection.addTo(current);
-                // const startMarker = L.marker(trackPoints[0], {
-                //     icon: startIcon,
-                //     title: gpxSegment.filename,
-                // });
-                // startMarker.addTo(routeLayer);
-                // const endMarker = L.marker(trackPoints.reverse()[0], {
-                //     icon: endIcon,
-                //     title: gpxSegment.filename,
-                // });
-                // endMarker.addTo(routeLayer);
             });
         }
     }, [blockedStreetInfos, blockedStreetInfos.length, mapSource]);
