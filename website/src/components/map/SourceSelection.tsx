@@ -2,10 +2,12 @@ import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrenMapSource, mapActions } from '../../store/map.reducer.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
 export function SourceSelection() {
     const mapSource = useSelector(getCurrenMapSource);
     const dispatch = useDispatch();
     const calculatedTracks = useSelector(getCalculatedTracks);
+    const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Form.Group>
             <h5>Source selection</h5>
@@ -28,6 +30,16 @@ export function SourceSelection() {
                     disabled={calculatedTracks.length === 0}
                     readOnly
                     onClick={() => dispatch(mapActions.setSource('tracks'))}
+                ></Form.Check>
+                <Form.Check
+                    type={'radio'}
+                    id={'blocked streets'}
+                    className={'m-3'}
+                    label={'Block streets'}
+                    checked={mapSource === 'blocked streets'}
+                    disabled={blockedStreetInfos.length === 0}
+                    readOnly
+                    onClick={() => dispatch(mapActions.setSource('blocked streets'))}
                 ></Form.Check>
             </Form>
         </Form.Group>

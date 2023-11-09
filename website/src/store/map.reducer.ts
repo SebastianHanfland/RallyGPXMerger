@@ -11,7 +11,7 @@ const mapSlice = createSlice({
     name: 'map',
     initialState: storage.load()?.map ?? initialState,
     reducers: {
-        setSource: (state: MapState, action: PayloadAction<'segments' | 'tracks'>) => {
+        setSource: (state: MapState, action: PayloadAction<'segments' | 'tracks' | 'blocked streets'>) => {
             state.currentSource = action.payload;
         },
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
