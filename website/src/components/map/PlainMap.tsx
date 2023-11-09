@@ -6,11 +6,8 @@ import L, { LayerGroup } from 'leaflet';
 import { gpxSegmentDisplayHook } from './hooks/gpxSegmentsDisplayHook.ts';
 import { calculatedTracksDisplayHook } from './hooks/calculatedTracksDisplayHook.ts';
 import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
-import { useSelector } from 'react-redux';
-import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
-import { getCenterPoint } from '../../store/map.reducer.ts';
+import { centerPointHook } from './hooks/centerPointHook.tsx';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -51,8 +48,6 @@ let myMap: L.Map;
 
 export const PlainMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
-    const gpxSegments = useSelector(getGpxSegments);
-    const centerPoint = useSelector(getCenterPoint);
 
     useEffect(() => {
         if (!myMap) {
@@ -61,21 +56,7 @@ export const PlainMap = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if (myMap && gpxSegments.length > 0) {
-            const firstSegment = SimpleGPX.fromString(gpxSegments[0].content);
-            const { lat, lon } = firstSegment.tracks[0].points[0];
-            myMap.setView({ lat, lng: lon }, startZoom);
-            L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
-        }
-    }, [gpxSegments.length > 0]);
-
-    useEffect(() => {
-        if (myMap && centerPoint) {
-            myMap.setView(centerPoint, centerPoint.zoom);
-            L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
-        }
-    }, [centerPoint]);
+    centerPointHook(myMap, startZoom);
 
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
     const blockedStreetLayer = useRef<LayerGroup>(null);
