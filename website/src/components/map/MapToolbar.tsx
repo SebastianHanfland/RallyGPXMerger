@@ -3,7 +3,7 @@ import { SourceSelection } from './SourceSelection.tsx';
 
 export function MapToolbar() {
     return (
-        <div className={'m-2 p-2 shadow'} style={{ height: '50vh', overflow: 'auto' }}>
+        <div className={'m-2 p-2 shadow'} style={{ height: '60vh', overflow: 'auto' }}>
             <h4>Map settings</h4>
             <hr />
             <TimeSlider />
