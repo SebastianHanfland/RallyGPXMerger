@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
 import { Button, Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
+import { StreetFilesDownloader } from './StreetFilesDownloader.tsx';
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
 import { geoCodingActions, getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';

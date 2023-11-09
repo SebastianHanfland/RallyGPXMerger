@@ -2,11 +2,11 @@ import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import download from '../assets/file-down.svg';
-import { BlockedStreetInfo, TrackStreetInfo } from './types.ts';
-import { getTimeDifferenceInSeconds } from '../utils/dateUtil.ts';
-import { getBlockedStreetInfo } from './getBlockedStreetInfo.ts';
-import { getEnrichedTrackStreetInfos } from './getEnrichedTrackStreetInfos.ts';
+import download from '../../assets/file-down.svg';
+import { BlockedStreetInfo, TrackStreetInfo } from '../../mapMatching/types.ts';
+import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
+import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 
 const header = (trackInfo: TrackStreetInfo): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
