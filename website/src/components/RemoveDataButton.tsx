@@ -8,6 +8,7 @@ import { useState } from 'react';
 import trash from '../assets/trash.svg';
 import { mapActions } from '../store/map.reducer.ts';
 import { clearReadableTracks } from '../logic/MergeCalculation.ts';
+import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export function RemoveDataButton() {
         dispatch(trackMergeActions.clear());
         dispatch(calculatedTracksActions.removeCalculatedTracks());
         dispatch(mapActions.setSource('segments'));
+        dispatch(geoCodingActions.clear());
         localStorage.clear();
         setShowModal(false);
     };

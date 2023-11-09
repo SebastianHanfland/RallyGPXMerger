@@ -45,6 +45,7 @@ const geoCodingSlice = createSlice({
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;
         },
+        clear: () => initialState,
     },
 });
 
