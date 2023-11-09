@@ -6,9 +6,11 @@ import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts'
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
+import { getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';
 
 export const BlockedStreetInfo = () => {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
+    const onlyShowUnknown = useSelector(getOnlyShowUnknown);
 
     return (
         <div>
@@ -26,8 +28,11 @@ export const BlockedStreetInfo = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {blockedStreetInfos.map(
-                        ({ streetName, frontArrival, backPassage, postCode, pointFrom, pointTo }) => (
+                    {blockedStreetInfos
+                        .filter((blockedStreetInfos) =>
+                            onlyShowUnknown ? blockedStreetInfos.streetName === 'Unknown' : true
+                        )
+                        .map(({ streetName, frontArrival, backPassage, postCode, pointFrom, pointTo }) => (
                             <tr key={backPassage}>
                                 <td>
                                     <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
@@ -43,8 +48,7 @@ export const BlockedStreetInfo = () => {
                                     <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
                                 </td>
                             </tr>
-                        )
-                    )}
+                        ))}
                 </tbody>
             </Table>
         </div>

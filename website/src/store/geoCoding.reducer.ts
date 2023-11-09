@@ -45,6 +45,9 @@ const geoCodingSlice = createSlice({
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;
         },
+        toggleOnlyShowUnknown: (state: GeoCodingState) => {
+            state.onlyShowUnknown = !state.onlyShowUnknown;
+        },
         clear: () => initialState,
     },
 });
@@ -57,3 +60,4 @@ export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudK
 export const getResolvedPositions = (state: State) => getBase(state).resolvedPositions ?? {};
 export const getResolvedPostCodes = (state: State) => getBase(state).resolvedPostCodes ?? {};
 export const getTrackStreetInfos = (state: State) => getBase(state).trackStreetInfos ?? [];
+export const getOnlyShowUnknown = (state: State) => getBase(state).onlyShowUnknown ?? false;

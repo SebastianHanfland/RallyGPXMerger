@@ -6,12 +6,15 @@ import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
 import info from '../../assets/info.svg';
+import { useSelector } from 'react-redux';
+import { getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
 }
 
 export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
+    const onlyShowUnknown = useSelector(getOnlyShowUnknown);
     const { name, wayPoints, distanceInKm, startFront, arrivalBack, arrivalFront } = trackStreetInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
     return (
@@ -47,29 +50,33 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {wayPoints.map(
-                        ({ streetName, backArrival, frontArrival, frontPassage, postCode, pointTo, pointFrom }) => (
-                            <tr key={backArrival}>
-                                <td>
-                                    <HighlightUnknown value={streetName} />
-                                </td>
-                                <td>
-                                    <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
-                                </td>
-                                <td>{(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km</td>
-                                <td>
-                                    {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
-                                    {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min )
-                                </td>
-                                <td>{formatTimeOnly(frontArrival)}</td>
-                                <td>{formatTimeOnly(frontPassage)}</td>
-                                <td>{formatTimeOnly(backArrival)}</td>
-                                <td>
-                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
-                                </td>
-                            </tr>
-                        )
-                    )}
+                    {wayPoints
+                        .filter((wayPoint) => (onlyShowUnknown ? wayPoint.streetName === 'Unknown' : true))
+                        .map(
+                            ({ streetName, backArrival, frontArrival, frontPassage, postCode, pointTo, pointFrom }) => (
+                                <tr key={backArrival}>
+                                    <td>
+                                        <HighlightUnknown value={streetName} />
+                                    </td>
+                                    <td>
+                                        <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                    </td>
+                                    <td>
+                                        {(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km
+                                    </td>
+                                    <td>
+                                        {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
+                                        {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min )
+                                    </td>
+                                    <td>{formatTimeOnly(frontArrival)}</td>
+                                    <td>{formatTimeOnly(frontPassage)}</td>
+                                    <td>{formatTimeOnly(backArrival)}</td>
+                                    <td>
+                                        <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
+                                    </td>
+                                </tr>
+                            )
+                        )}
                 </tbody>
             </Table>
         </div>

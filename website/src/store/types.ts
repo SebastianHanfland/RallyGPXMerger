@@ -34,6 +34,7 @@ export interface GeoCodingState {
     resolvedPositions?: ResolvedPositions;
     resolvedPostCodes?: ResolvedPostCodes;
     trackStreetInfos?: TrackStreetInfo[];
+    onlyShowUnknown?: boolean;
 }
 
 export interface GeoCodingRequestsState {

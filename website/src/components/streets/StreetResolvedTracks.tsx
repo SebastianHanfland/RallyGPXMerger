@@ -1,14 +1,17 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
-import { Pagination } from 'react-bootstrap';
+import { Button, Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from '../../mapMatching/StreetFilesDownloader.tsx';
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
+import { geoCodingActions, getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';
 
 export function StreetResolvedTracks() {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
+    const onlyShowUnknown = useSelector(getOnlyShowUnknown);
+    const dispatch = useDispatch();
 
     const selectedInfo = trackStreetInfos.find(({ id }) => id === selectedTrackId);
 
@@ -25,6 +28,14 @@ export function StreetResolvedTracks() {
                 <div className={'d-flex justify-content-between'}>
                     <div className={'mx-2'}>
                         <StreetFilesDownloader />
+                    </div>
+                    <div className={'mx-2'}>
+                        <Button
+                            variant={'secondary'}
+                            onClick={() => dispatch(geoCodingActions.toggleOnlyShowUnknown())}
+                        >
+                            {onlyShowUnknown ? 'Show all segments' : 'Only show "Unknown"'}
+                        </Button>
                     </div>
                     <Pagination></Pagination>
                     <Pagination>
