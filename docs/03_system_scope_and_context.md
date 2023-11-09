@@ -9,4 +9,5 @@ To prevent jams in nodes where branches are joined a clever timing is required.
 
 ## Technical Context
 
-This is a standalone tool. 
+This is in most parts a standalone tool. When one also wants to resolve street names and post code external API are used.
+Nothing has to be installed.

@@ -30,3 +30,10 @@ Start and end of tracks are calculated and then scaled with the numbers of the s
 Thus, the value stored is only a number which results in a percentage.
 The length of a track/group is calculated via the same parameter as in the merge calculation.
 An interpolation between the GPX points happen, to make a smoother experience.
+
+## Street resolving
+
+The gpx segments are used to resolve the street names and their post codes.
+Then the waypoints are grouped by street name and post code.
+The redux store and a mirror in the local storage are used for persistence.
+As long as the data is not cleared, the results for the post codes are cached.
