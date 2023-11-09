@@ -9,19 +9,17 @@ interface Props {
 
 export function StreetMapLink({ pointFrom, pointTo, streetName }: Props) {
     const dispatch = useDispatch();
+    const centerPoint = {
+        lat: (pointFrom.lat + pointTo.lat) / 2,
+        lng: (pointFrom.lon + pointTo.lon) / 2,
+        zoom: 16,
+    };
+
     return (
         <span
             title={`Open street segment for "${streetName}" on map`}
             style={{ cursor: 'pointer' }}
-            onClick={() => {
-                dispatch(
-                    mapActions.setCenterPoint({
-                        lat: (pointFrom.lat + pointTo.lat) / 2,
-                        lng: (pointFrom.lon + pointTo.lon) / 2,
-                        zoom: 16,
-                    })
-                );
-            }}
+            onClick={() => dispatch(mapActions.setCenterPoint(centerPoint))}
         >
             <img src={'geo-alt-blue.svg'} className="m-1" alt="open on map" color={'blue'} style={{ color: 'blue' }} />
         </span>

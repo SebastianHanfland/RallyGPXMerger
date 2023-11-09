@@ -62,6 +62,7 @@ export const PlainMap = () => {
     const blockedStreetLayer = useRef<LayerGroup>(null);
     const calculatedTracksLayer = useRef<LayerGroup>(null);
     const trackMarkerLayer = useRef<LayerGroup>(null);
+
     useEffect(() => {
         // @ts-ignore
         gpxSegmentsLayer.current = L.layerGroup().addTo(myMap);
