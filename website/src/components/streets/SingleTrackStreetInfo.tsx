@@ -46,7 +46,6 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         <th>Arrival of front</th>
                         <th>Passage of front</th>
                         <th>Arrival of back</th>
-                        <th>Map</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +56,11 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 <tr key={backArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName} />
+                                        <StreetMapLink
+                                            pointTo={pointTo}
+                                            pointFrom={pointFrom}
+                                            streetName={streetName}
+                                        />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
@@ -71,9 +75,6 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     <td>{formatTimeOnly(frontArrival)}</td>
                                     <td>{formatTimeOnly(frontPassage)}</td>
                                     <td>{formatTimeOnly(backArrival)}</td>
-                                    <td>
-                                        <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
-                                    </td>
                                 </tr>
                             )
                         )}

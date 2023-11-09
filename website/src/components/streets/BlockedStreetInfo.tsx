@@ -24,7 +24,6 @@ export const BlockedStreetInfo = () => {
                         <th>Duration</th>
                         <th>Arrival of front</th>
                         <th>Passage of back</th>
-                        <th>Map</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +35,7 @@ export const BlockedStreetInfo = () => {
                             <tr key={backPassage}>
                                 <td>
                                     <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} streetName={streetName} />
                                 </td>
                                 <td>
                                     <HighlightUnknown value={streetName} />
@@ -44,9 +44,6 @@ export const BlockedStreetInfo = () => {
                                 <td>{(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60).toFixed(1)} min</td>
                                 <td>{formatTimeOnly(frontArrival)}</td>
                                 <td>{formatTimeOnly(backPassage)}</td>
-                                <td>
-                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
-                                </td>
                             </tr>
                         ))}
                 </tbody>

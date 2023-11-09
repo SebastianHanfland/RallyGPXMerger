@@ -4,13 +4,14 @@ import { mapActions } from '../../store/map.reducer.ts';
 interface Props {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
+    streetName: string;
 }
 
-export function StreetMapLink({ pointFrom, pointTo }: Props) {
+export function StreetMapLink({ pointFrom, pointTo, streetName }: Props) {
     const dispatch = useDispatch();
     return (
         <span
-            title={'Open street segment on map'}
+            title={`Open street segment for "${streetName}" on map`}
             style={{ cursor: 'pointer' }}
             onClick={() => {
                 dispatch(
