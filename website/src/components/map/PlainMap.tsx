@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
+import { getCenterPoint } from '../../store/map.reducer.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -51,6 +52,7 @@ let myMap: L.Map;
 export const PlainMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
     const gpxSegments = useSelector(getGpxSegments);
+    const centerPoint = useSelector(getCenterPoint);
 
     useEffect(() => {
         if (!myMap) {
@@ -67,6 +69,13 @@ export const PlainMap = () => {
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
     }, [gpxSegments.length > 0]);
+
+    useEffect(() => {
+        if (myMap && centerPoint) {
+            myMap.setView(centerPoint, centerPoint.zoom);
+            L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
+        }
+    }, [centerPoint]);
 
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
     const blockedStreetLayer = useRef<LayerGroup>(null);
@@ -90,7 +99,7 @@ export const PlainMap = () => {
 
     return (
         <div className={'m-1 shadow'}>
-            <div id="mapid" style={{ height: '75vh', zIndex: 0 }} />
+            <div id="mapid" style={{ height: '50vh', zIndex: 0 }} />
         </div>
     );
 };

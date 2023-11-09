@@ -60,6 +60,7 @@ export interface MapState {
     currentSource: 'segments' | 'tracks' | 'blocked streets';
     start?: string;
     end?: string;
+    centerPoint?: { lat: number; lng: number; zoom: number };
 }
 
 export interface State {
