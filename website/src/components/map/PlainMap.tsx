@@ -6,6 +6,9 @@ import L, { LayerGroup } from 'leaflet';
 import { gpxSegmentDisplayHook } from './hooks/gpxSegmentsDisplayHook.ts';
 import { calculatedTracksDisplayHook } from './hooks/calculatedTracksDisplayHook.ts';
 import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
+import { useSelector } from 'react-redux';
+import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -46,6 +49,7 @@ let myMap: L.Map;
 
 export const PlainMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
+    const gpxSegments = useSelector(getGpxSegments);
 
     useEffect(() => {
         if (!myMap) {
@@ -53,6 +57,15 @@ export const PlainMap = () => {
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
     }, []);
+
+    useEffect(() => {
+        if (myMap && gpxSegments.length > 0) {
+            const firstSegment = SimpleGPX.fromString(gpxSegments[0].content);
+            const { lat, lon } = firstSegment.tracks[0].points[0];
+            myMap.setView({ lat, lng: lon }, startZoom);
+            L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
+        }
+    }, [gpxSegments.length > 0]);
 
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
     const calculatedTracksLayer = useRef<LayerGroup>(null);
