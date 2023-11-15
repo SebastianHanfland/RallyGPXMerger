@@ -11,7 +11,7 @@ export function MergeAndMap() {
     return (
         <Container fluid className={'m-0'}>
             <ImportExport />
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="0" className={'mt-3'}>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Merging GPX Segments to Tracks</Accordion.Header>
                     <Accordion.Body>
