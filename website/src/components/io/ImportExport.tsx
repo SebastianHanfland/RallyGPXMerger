@@ -2,9 +2,12 @@ import { Accordion, Button, Col, Row } from 'react-bootstrap';
 import upload from '../../assets/file-up.svg';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { ConfirmationModal } from '../ConfirmationModal.tsx';
 
 export function ImportExport() {
     const state = useSelector((a) => a);
+    const [showDialog, setShowDialog] = useState(false);
     return (
         <Accordion>
             <Accordion.Item eventKey="0">
@@ -21,10 +24,20 @@ export function ImportExport() {
                             />
                         </Col>
                         <Col xl={6}>
-                            <Button variant={'success'}>
+                            <Button variant={'success'} onClick={() => setShowDialog(true)}>
                                 <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
                                 Import file
                             </Button>
+                            {showDialog && (
+                                <ConfirmationModal
+                                    onConfirm={() => {
+                                        setShowDialog(false);
+                                    }}
+                                    closeModal={() => setShowDialog(false)}
+                                    title={'Importing data'}
+                                    body={'Do you really want to load data from a file and OVERWRITE EVERYTHING?'}
+                                />
+                            )}
                         </Col>
                     </Row>
                 </Accordion.Body>
