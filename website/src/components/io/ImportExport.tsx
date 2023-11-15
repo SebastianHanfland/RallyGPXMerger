@@ -4,10 +4,29 @@ import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
+import { FileUploader } from 'react-drag-drop-files';
+import { storage } from '../../store/storage.ts';
+
+const fileTypes = ['JSON'];
 
 export function ImportExport() {
     const state = useSelector((a) => a);
     const [showDialog, setShowDialog] = useState(false);
+    const [loadedState, setLoadedState] = useState<string>();
+
+    const handleChange = (uploadedFile: File) => {
+        uploadedFile.arrayBuffer().then((buffer) => setLoadedState(new TextDecoder().decode(buffer)));
+    };
+
+    const onLoadState = () => {
+        if (!loadedState) {
+            alert('You have to upload a state file first');
+            return;
+        }
+        storage.save(JSON.parse(loadedState));
+        window.location.reload();
+    };
+
     return (
         <Accordion>
             <Accordion.Item eventKey="0">
@@ -24,6 +43,13 @@ export function ImportExport() {
                             />
                         </Col>
                         <Col xl={6}>
+                            <FileUploader
+                                handleChange={handleChange}
+                                name="file"
+                                types={fileTypes}
+                                multiple={false}
+                                label={'Please upload a state file here'}
+                            />
                             <Button variant={'success'} onClick={() => setShowDialog(true)}>
                                 <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
                                 Import file
@@ -32,6 +58,7 @@ export function ImportExport() {
                                 <ConfirmationModal
                                     onConfirm={() => {
                                         setShowDialog(false);
+                                        onLoadState();
                                     }}
                                     closeModal={() => setShowDialog(false)}
                                     title={'Importing data'}
