@@ -5,10 +5,12 @@ import { Accordion, Col, Container, Row } from 'react-bootstrap';
 import { TrackMapPage } from './map/TrackMapPage.tsx';
 import { TrackMergeSection } from './parameters/TrackMergeSection.tsx';
 import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
+import { ImportExport } from './io/ImportExport.tsx';
 
 export function MergeAndMap() {
     return (
         <Container fluid className={'m-0'}>
+            <ImportExport />
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Merging GPX Segments to Tracks</Accordion.Header>
