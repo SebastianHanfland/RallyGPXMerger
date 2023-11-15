@@ -8,6 +8,7 @@ interface Props {
     content: string;
     name: string;
     onlyIcon?: boolean;
+    label?: string;
 }
 
 const downloadFile = (name: string, content: string) => {
@@ -15,7 +16,7 @@ const downloadFile = (name: string, content: string) => {
     FileSaver.saveAs(blob, `${name}`);
 };
 
-export const FileDownloader = ({ id, name, content, onlyIcon }: Props) => {
+export const FileDownloader = ({ id, name, content, onlyIcon, label }: Props) => {
     return (
         <Button
             onClick={() => downloadFile(name, content)}
@@ -24,6 +25,7 @@ export const FileDownloader = ({ id, name, content, onlyIcon }: Props) => {
             className={onlyIcon ? 'm-1' : undefined}
         >
             {onlyIcon ? <img src={download} alt="download file" color={'#ffffff'} /> : name}
+            {!!label && label}
         </Button>
     );
 };

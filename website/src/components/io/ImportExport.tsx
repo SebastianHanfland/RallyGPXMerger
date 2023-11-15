@@ -1,8 +1,10 @@
 import { Accordion, Button, Col, Row } from 'react-bootstrap';
-import download from '../../assets/file-down.svg';
 import upload from '../../assets/file-up.svg';
+import { FileDownloader } from '../segments/FileDownloader.tsx';
+import { useSelector } from 'react-redux';
 
 export function ImportExport() {
+    const state = useSelector((a) => a);
     return (
         <Accordion>
             <Accordion.Item eventKey="0">
@@ -10,13 +12,16 @@ export function ImportExport() {
                 <Accordion.Body>
                     <Row className="flex-xl-nowrap" style={{ height: '40px', width: '100%' }}>
                         <Col xl={6}>
-                            <Button variant={'success'}>
-                                <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
-                                Export to file
-                            </Button>
+                            <FileDownloader
+                                onlyIcon={true}
+                                name={`RallyGPXMergeState-${new Date().toISOString()}.json`}
+                                label={' Export current state to file'}
+                                content={JSON.stringify(state)}
+                                id={'state-down'}
+                            />
                         </Col>
                         <Col xl={6}>
-                            <Button variant={'primary'}>
+                            <Button variant={'success'}>
                                 <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
                                 Import file
                             </Button>
