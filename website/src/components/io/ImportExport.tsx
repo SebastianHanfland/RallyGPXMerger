@@ -43,17 +43,20 @@ export function ImportExport() {
                             />
                         </Col>
                         <Col xl={6}>
-                            <FileUploader
-                                handleChange={handleChange}
-                                name="file"
-                                types={fileTypes}
-                                multiple={false}
-                                label={'Please upload a state file here'}
-                            />
-                            <Button variant={'success'} onClick={() => setShowDialog(true)}>
-                                <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
-                                Import file
-                            </Button>
+                            <div className={'d-flex justify-content-between'} style={{ width: '500px' }}>
+                                <Button variant={'success'} onClick={() => setShowDialog(true)}>
+                                    <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
+                                    Import file
+                                </Button>
+                                <FileUploader
+                                    style={{ width: '100px' }}
+                                    handleChange={handleChange}
+                                    name="file"
+                                    types={fileTypes}
+                                    multiple={false}
+                                    label={'Please upload a state file here'}
+                                />
+                            </div>
                             {showDialog && (
                                 <ConfirmationModal
                                     onConfirm={() => {
