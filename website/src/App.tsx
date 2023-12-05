@@ -8,7 +8,8 @@ import { AppFooter } from './components/Footer.tsx';
 import { AppHeader } from './components/Header.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import { BrowserRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router';
+import { Route, Switch } from 'react-router';
+import { RallyVersionControl } from './versions/RallyVersionControl.tsx';
 
 function RallyPlaner() {
     return (
@@ -18,10 +19,6 @@ function RallyPlaner() {
             <AppFooter />
         </Provider>
     );
-}
-
-function RallyVersionControl() {
-    return <div>Version Control</div>;
 }
 
 export function App() {
