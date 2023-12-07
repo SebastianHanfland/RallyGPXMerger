@@ -1,12 +1,12 @@
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { iframeStore } from '../store/store.ts';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { loadZipFileHook } from './loadZipFileHook.ts';
+import { DisplayMap } from './DisplayMap.tsx';
 
 function RallyDisplay() {
-    const calculatedTracks = useSelector(getCalculatedTracks);
     loadZipFileHook();
-    return calculatedTracks.map((track) => <div>{track.id}</div>);
+
+    return <DisplayMap />;
 }
 
 export function RallyVersionControl() {

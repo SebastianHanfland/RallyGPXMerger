@@ -4,10 +4,15 @@ import { getCenterPoint } from '../../../store/map.reducer.ts';
 import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
+import { CalculatedTrack, GpxSegment, State } from '../../../store/types.ts';
 
-export function centerPointHook(map: L.Map, startZoom: number) {
+export function centerPointHook(
+    map: L.Map,
+    startZoom: number,
+    selector: (state: State) => GpxSegment[] | CalculatedTrack[] = getGpxSegments
+) {
     const centerPoint = useSelector(getCenterPoint);
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(selector);
 
     useEffect(() => {
         if (map && centerPoint) {
