@@ -23,3 +23,8 @@ export const storingReducer: Reducer = (state: State) => {
     }
     return state;
 };
+
+export const iFrameReducer: Reducer = combineReducers({
+    calculatedTracks: calculatedTracksReducer,
+    map: mapReducer,
+});

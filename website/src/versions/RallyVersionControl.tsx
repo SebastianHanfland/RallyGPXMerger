@@ -1,21 +1,18 @@
-import rally1 from '/rally1.zip?url';
-import { useEffect } from 'react';
-import JSZip from 'jszip';
+import { Provider, useSelector } from 'react-redux';
+import { iframeStore } from '../store/store.ts';
+import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import { loadZipFileHook } from './loadZipFileHook.ts';
+
+function RallyDisplay() {
+    const calculatedTracks = useSelector(getCalculatedTracks);
+    loadZipFileHook();
+    return calculatedTracks.map((track) => <div>{track.id}</div>);
+}
 
 export function RallyVersionControl() {
-    useEffect(() => {
-        const zip = new JSZip();
-        const file = zip.file(rally1);
-        console.log(file, rally1);
-        fetch(rally1)
-            .then((res) => res.blob())
-            .then((blob) => {
-                zip.loadAsync(blob).then((zipContent) => {
-                    Object.entries(zipContent.files).map(([filename, content]) => {
-                        content.async('text').then((text) => console.log(filename, text));
-                    });
-                });
-            });
-    }, []);
-    return null;
+    return (
+        <Provider store={iframeStore}>
+            <RallyDisplay />
+        </Provider>
+    );
 }
