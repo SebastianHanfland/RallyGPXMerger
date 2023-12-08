@@ -12,6 +12,7 @@ import {
 } from '../../store/geoCodingRequests.reducer.ts';
 import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
+import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);
@@ -68,6 +69,9 @@ export function TrackDataOverview() {
             <h5>Post codes</h5>
             <Button variant={'success'} onClick={() => dispatch(addPostCodeToStreetInfos)}>
                 Fetch Postcodes
+            </Button>
+            <Button variant={'danger'} onClick={() => dispatch(geoCodingActions.clearPostCodesAndDistricts())}>
+                Clear Postcodes
             </Button>
             {postCodeProgress !== undefined && (
                 <div className={'m-2'}>

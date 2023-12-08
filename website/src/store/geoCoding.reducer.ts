@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GeoCodingState, ResolvedPositions, ResolvedPostCodes, State } from './types';
+import { GeoCodingState, ResolvedDistricts, ResolvedPositions, ResolvedPostCodes, State } from './types';
 import { storage } from './storage.ts';
 import { TrackStreetInfo } from '../mapMatching/types.ts';
 
@@ -41,6 +41,22 @@ const geoCodingSlice = createSlice({
                 }
             });
             state.resolvedPostCodes = resolvedPostCodes;
+        },
+        saveResolvedDistricts: (state: GeoCodingState, action: PayloadAction<ResolvedDistricts>) => {
+            if (!state.resolvedDistricts) {
+                state.resolvedDistricts = {};
+            }
+            const resolvedDistricts = state.resolvedDistricts;
+            Object.entries(action.payload).forEach(([key, value]) => {
+                if (resolvedDistricts[key] === undefined) {
+                    resolvedDistricts[key] = value;
+                }
+            });
+            state.resolvedDistricts = resolvedDistricts;
+        },
+        clearPostCodesAndDistricts: (state: GeoCodingState) => {
+            state.resolvedPostCodes = undefined;
+            state.resolvedDistricts = undefined;
         },
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;

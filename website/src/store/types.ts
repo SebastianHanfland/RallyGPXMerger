@@ -33,6 +33,7 @@ export interface GeoCodingState {
     bigDataCloudKey?: string;
     resolvedPositions?: ResolvedPositions;
     resolvedPostCodes?: ResolvedPostCodes;
+    resolvedDistricts?: ResolvedDistricts;
     trackStreetInfos?: TrackStreetInfo[];
     onlyShowUnknown?: boolean;
 }
@@ -74,3 +75,4 @@ export interface State {
 
 export type ResolvedPositions = Record<string, string | null>;
 export type ResolvedPostCodes = Record<string, number>;
+export type ResolvedDistricts = Record<string, string>;

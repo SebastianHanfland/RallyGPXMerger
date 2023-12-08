@@ -36,8 +36,11 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                     !getResolvedPostCodes(getState())[postCodeKey] ||
                     getResolvedPostCodes(getState())[postCodeKey] === -1
                 ) {
-                    fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then((postCode) => {
+                    fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
+                        if (district) {
+                            dispatch(geoCodingActions.saveResolvedDistricts({ [postCodeKey]: district }));
+                        }
                     });
                 }
                 dispatch(geoCodingRequestsActions.increasePostCodeRequestDoneCounter());
