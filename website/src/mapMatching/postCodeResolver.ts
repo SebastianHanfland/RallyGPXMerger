@@ -32,7 +32,10 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
             dispatch(geoCodingRequestsActions.increaseActivePostCodeRequestCounter());
             setTimeout(() => {
                 const { lat, lon, postCodeKey } = getWayPointKey(wayPoint);
-                if (!getResolvedPostCodes(getState())[postCodeKey]) {
+                if (
+                    !getResolvedPostCodes(getState())[postCodeKey] ||
+                    getResolvedPostCodes(getState())[postCodeKey] === -1
+                ) {
                     fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then((postCode) => {
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
                     });
