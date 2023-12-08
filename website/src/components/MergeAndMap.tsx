@@ -6,8 +6,11 @@ import { TrackMapPage } from './map/TrackMapPage.tsx';
 import { TrackMergeSection } from './parameters/TrackMergeSection.tsx';
 import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
 import { ImportExport } from './io/ImportExport.tsx';
+import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook.ts';
 
 export function MergeAndMap() {
+    parseCalculatedTracksHook();
+
     return (
         <Container fluid className={'m-0'}>
             <ImportExport />
