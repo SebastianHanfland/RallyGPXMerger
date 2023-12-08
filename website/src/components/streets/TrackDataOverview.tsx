@@ -10,7 +10,7 @@ import {
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
 } from '../../store/geoCodingRequests.reducer.ts';
-import { getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
+import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 
 export function TrackDataOverview() {
@@ -66,6 +66,9 @@ export function TrackDataOverview() {
                 </div>
             )}
             <h5>Post codes</h5>
+            <Button variant={'success'} onClick={() => dispatch(addPostCodeToStreetInfos)}>
+                Fetch Postcodes
+            </Button>
             {postCodeProgress !== undefined && (
                 <div className={'m-2'}>
                     <ProgressBar now={postCodeProgress} label={`${postCodeProgress?.toFixed(0)}%`}></ProgressBar>
