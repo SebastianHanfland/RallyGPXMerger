@@ -73,6 +73,7 @@ export function TrackDataOverview() {
                 Fetch Postcodes
             </Button>
             <Button
+                className={'mx-1'}
                 variant={'danger'}
                 onClick={() => dispatch(geoCodingActions.clearPostCodesAndDistricts())}
                 disabled={hasNoPostCodes || ongoingRequests}
