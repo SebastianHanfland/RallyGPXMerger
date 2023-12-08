@@ -12,7 +12,7 @@ import {
 } from '../../store/geoCodingRequests.reducer.ts';
 import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
-import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
+import { geoCodingActions, getResolvedPostCodes } from '../../store/geoCoding.reducer.ts';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);
@@ -21,12 +21,14 @@ export function TrackDataOverview() {
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
     const isLoading = useSelector(getIsLoadingGeoData);
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
+    const hasNoPostCodes = Object.keys(useSelector(getResolvedPostCodes)).length === 0;
     const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
         dispatch(estimateRequestsForStreetResolving);
     }, [gpxSegments.length]);
 
+    const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading;
     return (
         <div className={'m-2 p-2'}>
             <h4>Overview of calculated Data</h4>
@@ -35,10 +37,10 @@ export function TrackDataOverview() {
             <Button
                 variant={'success'}
                 onClick={() => dispatch(resolvePositions)}
-                disabled={runningRequests || runningPostCodeRequests || isLoading}
+                disabled={ongoingRequests}
                 title={'Fetching the street information from geoapify and BigDataCloud'}
             >
-                {runningRequests || runningPostCodeRequests || isLoading ? (
+                {ongoingRequests ? (
                     <span>
                         <Spinner size={'sm'} />
                         {runningRequests && <span>Fetching street information</span>}
@@ -67,10 +69,14 @@ export function TrackDataOverview() {
                 </div>
             )}
             <h5>Post codes</h5>
-            <Button variant={'success'} onClick={() => dispatch(addPostCodeToStreetInfos)}>
+            <Button variant={'success'} onClick={() => dispatch(addPostCodeToStreetInfos)} disabled={ongoingRequests}>
                 Fetch Postcodes
             </Button>
-            <Button variant={'danger'} onClick={() => dispatch(geoCodingActions.clearPostCodesAndDistricts())}>
+            <Button
+                variant={'danger'}
+                onClick={() => dispatch(geoCodingActions.clearPostCodesAndDistricts())}
+                disabled={hasNoPostCodes || ongoingRequests}
+            >
                 Clear Postcodes
             </Button>
             {postCodeProgress !== undefined && (
