@@ -29,11 +29,13 @@ export function loadZipFileHook() {
                             }));
                         }
                     );
+                    dispatch(calculatedTracksActions.removeCalculatedTracks());
                     Promise.all(readTracks).then((tracks) => {
                         setReadableTracks(tracks.map((track) => SimpleGPX.fromString(track.content)));
                         dispatch(calculatedTracksActions.setCalculatedTracks(tracks));
                     });
                 });
-            });
+            })
+            .catch(console.error);
     }, []);
 }
