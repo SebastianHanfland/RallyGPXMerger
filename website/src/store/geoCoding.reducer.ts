@@ -36,7 +36,7 @@ const geoCodingSlice = createSlice({
             }
             const resolvedPostCodes = state.resolvedPostCodes;
             Object.entries(action.payload).forEach(([key, value]) => {
-                if (resolvedPostCodes[key] === undefined) {
+                if (resolvedPostCodes[key] === undefined || resolvedPostCodes[key] === -1) {
                     resolvedPostCodes[key] = value;
                 }
             });
