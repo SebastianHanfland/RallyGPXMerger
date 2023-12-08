@@ -19,6 +19,7 @@ export const BlockedStreetInfo = () => {
                 <thead>
                     <tr>
                         <th>Post code</th>
+                        <th>District</th>
                         <th>Street</th>
                         <th>Length</th>
                         <th>Duration</th>
@@ -31,11 +32,14 @@ export const BlockedStreetInfo = () => {
                         .filter((blockedStreetInfos) =>
                             onlyShowUnknown ? blockedStreetInfos.streetName === 'Unknown' : true
                         )
-                        .map(({ streetName, frontArrival, backPassage, postCode, pointFrom, pointTo }) => (
+                        .map(({ streetName, frontArrival, backPassage, postCode, district, pointFrom, pointTo }) => (
                             <tr key={backPassage}>
                                 <td>
                                     <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
                                     <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} streetName={streetName} />
+                                </td>
+                                <td>
+                                    <HighlightUnknown value={district ?? 'Unknown'} />
                                 </td>
                                 <td>
                                     <HighlightUnknown value={streetName} />
