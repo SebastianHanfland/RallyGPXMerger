@@ -29,7 +29,7 @@ export const setReadableTracks = (newReadableTracks: SimpleGPX[]) => {
     readableTracks = newReadableTracks;
 };
 
-function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, state: State) {
+export function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, state: State) {
     const trackParticipants = getTrackParticipants(state);
     const maxDelay = Math.min(...trackParticipants);
 

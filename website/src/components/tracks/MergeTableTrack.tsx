@@ -98,7 +98,7 @@ export function MergeTableTrack({ track }: Props) {
                         <FileDownloader
                             id={calculatedTrack.id}
                             content={calculatedTrack.content}
-                            name={calculatedTrack.filename}
+                            name={calculatedTrack.filename + '.gpx'}
                             onlyIcon={true}
                         />
                     )}
