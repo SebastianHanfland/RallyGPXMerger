@@ -39,7 +39,11 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                     fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
                         dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
                         if (district) {
-                            dispatch(geoCodingActions.saveResolvedDistricts({ [postCodeKey]: district }));
+                            dispatch(
+                                geoCodingActions.saveResolvedDistricts({
+                                    [postCodeKey]: district.replace('constituency for the Bundestag election ', ''),
+                                })
+                            );
                         }
                     });
                 }

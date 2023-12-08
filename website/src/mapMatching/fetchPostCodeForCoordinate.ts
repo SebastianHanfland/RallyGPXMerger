@@ -18,7 +18,10 @@ export const fetchPostCodeForCoordinate =
             .then((result: BigDataCloudResponse) => {
                 return {
                     postCode: result.postcode,
-                    district: result.localityInfo.informative.find((entry) => entry.order === 7)?.name,
+                    district:
+                        result.localityInfo.informative.find((entry) => entry.order === 6)?.name ??
+                        result.localityInfo.informative.find((entry) => entry.order === 7)?.name ??
+                        result.localityInfo.informative.find((entry) => entry.order === 8)?.name,
                 };
             })
             .catch((error) => {

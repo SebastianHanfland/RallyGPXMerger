@@ -25,6 +25,7 @@ export function getBlockedStreetInfo(state: State): BlockedStreetInfo[] {
                     frontArrival: waypoint.frontArrival,
                     backPassage: waypoint.backArrival,
                     postCode: waypoint.postCode,
+                    district: waypoint.district,
                     pointFrom: waypoint.pointFrom,
                     pointTo: waypoint.pointTo,
                 });

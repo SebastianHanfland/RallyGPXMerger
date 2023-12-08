@@ -32,6 +32,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                     <tr>
                         <th>Street</th>
                         <th>Post code</th>
+                        <th>District</th>
                         <th>Length</th>
                         <th>
                             <span title={'Time required for a cyclist to pass this street'}>
@@ -52,7 +53,16 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                     {wayPoints
                         .filter((wayPoint) => (onlyShowUnknown ? wayPoint.streetName === 'Unknown' : true))
                         .map(
-                            ({ streetName, backArrival, frontArrival, frontPassage, postCode, pointTo, pointFrom }) => (
+                            ({
+                                streetName,
+                                backArrival,
+                                frontArrival,
+                                frontPassage,
+                                postCode,
+                                district,
+                                pointTo,
+                                pointFrom,
+                            }) => (
                                 <tr key={backArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName} />
@@ -64,6 +74,9 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                    </td>
+                                    <td>
+                                        <HighlightUnknown value={district?.toString() ?? 'Unknown'} />
                                     </td>
                                     <td>
                                         {(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km

@@ -58,6 +58,7 @@ export interface TrackWayPoint {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
     postCode?: number;
+    district?: string;
 }
 
 export interface TrackStreetInfo {
@@ -73,6 +74,7 @@ export interface TrackStreetInfo {
 export interface BlockedStreetInfo {
     streetName: string;
     postCode?: number;
+    district?: string;
     frontArrival: string;
     backPassage: string;
     pointFrom: { lat: number; lon: number };
