@@ -12,9 +12,9 @@ export const MergeTable = ({ trackCompositions }: Props) => {
         <Table striped bordered hover style={{ width: '100%' }}>
             <thead>
                 <tr>
-                    <th style={{ width: '25%' }}>Track name</th>
-                    <th style={{ width: '75%' }}>Track components</th>
-                    <th style={{ width: '40%', minWidth: '210px' }} />
+                    <th style={{ width: '30%' }}>Track name</th>
+                    <th style={{ width: '40%' }}>Track components</th>
+                    <th style={{ width: '30%', minWidth: '210px' }} />
                 </tr>
             </thead>
             <tbody>

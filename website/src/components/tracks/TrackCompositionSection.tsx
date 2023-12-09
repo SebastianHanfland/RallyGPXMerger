@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { useEffect, useState } from 'react';
 import { TrackComposition } from '../../store/types.ts';
+import { TrackCalculationSettings } from './TrackCalculationSettings.tsx';
 
 export function TrackCompositionSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -42,6 +43,7 @@ export function TrackCompositionSection() {
                 <ButtonGroup aria-label="help-buttons">
                     <MergeTracksButton />
                     <CalculatedFilesDownloader />
+                    <TrackCalculationSettings />
                 </ButtonGroup>
             </ButtonToolbar>
             <div className={'my-2'}>
