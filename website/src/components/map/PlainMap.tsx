@@ -44,7 +44,7 @@ export function getMapConfiguration() {
     return { tileUrlTemplate, startZoom, getOptions };
 }
 
-let myMap: L.Map;
+let myMap: L.Map | undefined;
 
 export const PlainMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
@@ -54,6 +54,10 @@ export const PlainMap = () => {
             myMap = L.map('mapid').setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
+        return () => {
+            myMap?.remove();
+            myMap = undefined;
+        };
     }, []);
 
     centerPointHook(myMap, startZoom);
@@ -64,6 +68,9 @@ export const PlainMap = () => {
     const trackMarkerLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
+        if (!myMap) {
+            return;
+        }
         // @ts-ignore
         gpxSegmentsLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore

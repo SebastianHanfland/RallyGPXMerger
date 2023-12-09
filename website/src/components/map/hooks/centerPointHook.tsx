@@ -7,7 +7,7 @@ import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { CalculatedTrack, GpxSegment, State } from '../../../store/types.ts';
 
 export function centerPointHook(
-    map: L.Map,
+    map: L.Map | undefined,
     startZoom: number,
     selector: (state: State) => GpxSegment[] | CalculatedTrack[] = getGpxSegments
 ) {
