@@ -32,8 +32,8 @@ export const AppHeader = ({ selectedSection, setSelectedSection }: Props) => {
                             </Pagination.Item>
                         </Pagination>
                         <h1>Rally GPX Merger</h1>
-                        <ButtonToolbar aria-label="Toolbar with Button groups">
-                            <ButtonGroup aria-label="help-buttons">
+                        <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>
+                            <ButtonGroup aria-label="help-buttons" className={'m-0'}>
                                 <HelpButton />
                                 <LoadExampleDataButton />
                                 <RemoveDataButton />

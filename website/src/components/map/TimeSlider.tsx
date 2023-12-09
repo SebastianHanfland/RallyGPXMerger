@@ -37,39 +37,42 @@ export function TimeSlider() {
         <Form.Group className={'m-2'}>
             <div>{dateValue ? formatDate(dateValue) : 'No tracks yet calculated'}</div>
             <div className={'d-flex'}>
-                <span className={'mx-4'}>Start</span>
                 <Form.Range
                     min={0}
                     max={MAX_SLIDER_TIME}
                     value={mapTime}
                     onChange={(event) => dispatch(mapActions.setCurrentTime(Number(event.target.value)))}
                 />
-                <span className={'mx-4'}>End</span>
+                <div className={'mx-4 d-flex'}>
+                    <Button
+                        size={'sm'}
+                        variant={'success'}
+                        className={'m-1'}
+                        onClick={() => setPlaySpeed(1)}
+                        title={'Play the rally simulation'}
+                    >
+                        <img src={play} className="m-1" alt="open file" />
+                    </Button>
+                    <Button
+                        size={'sm'}
+                        variant={'warning'}
+                        className={'m-1'}
+                        onClick={() => setPlaySpeed(5)}
+                        title={'Play the rally simulation fast'}
+                    >
+                        <img src={fast} className="m-1" alt="open file" />
+                    </Button>
+                    <Button
+                        size={'sm'}
+                        variant={'danger'}
+                        className={'m-1'}
+                        onClick={() => setPlaySpeed(undefined)}
+                        title={'Stop the rally simulation'}
+                    >
+                        <img src={stop} className="m-1" alt="open file" />
+                    </Button>
+                </div>
             </div>
-            <Button
-                variant={'success'}
-                className={'m-1'}
-                onClick={() => setPlaySpeed(1)}
-                title={'Play the rally simulation'}
-            >
-                <img src={play} className="m-1" alt="open file" />
-            </Button>
-            <Button
-                variant={'warning'}
-                className={'m-1'}
-                onClick={() => setPlaySpeed(5)}
-                title={'Play the rally simulation fast'}
-            >
-                <img src={fast} className="m-1" alt="open file" />
-            </Button>
-            <Button
-                variant={'danger'}
-                className={'m-1'}
-                onClick={() => setPlaySpeed(undefined)}
-                title={'Stop the rally simulation'}
-            >
-                <img src={stop} className="m-1" alt="open file" />
-            </Button>
         </Form.Group>
     );
 }

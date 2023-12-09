@@ -10,9 +10,9 @@ export function SourceSelection() {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Form.Group>
-            <Form>
+            <Form className={'d-flex'}>
                 <Form.Check
-                    type={'radio'}
+                    type={'checkbox'}
                     id={'segments'}
                     className={'m-3'}
                     label={'GPX Segments'}
@@ -21,7 +21,7 @@ export function SourceSelection() {
                     onClick={() => dispatch(mapActions.setSource('segments'))}
                 ></Form.Check>
                 <Form.Check
-                    type={'radio'}
+                    type={'checkbox'}
                     id={'tracks'}
                     className={'m-3'}
                     label={'Calculated Tracks'}
@@ -31,7 +31,7 @@ export function SourceSelection() {
                     onClick={() => dispatch(mapActions.setSource('tracks'))}
                 ></Form.Check>
                 <Form.Check
-                    type={'radio'}
+                    type={'checkbox'}
                     id={'blocked streets'}
                     className={'m-3'}
                     label={'Blocked Streets'}
