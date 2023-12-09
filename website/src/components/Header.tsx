@@ -30,6 +30,13 @@ export const AppHeader = ({ selectedSection, setSelectedSection }: Props) => {
                             >
                                 Street Resolver
                             </Pagination.Item>
+                            <Pagination.Item
+                                key={'importExport'}
+                                active={'importExport' === selectedSection}
+                                onClick={() => setSelectedSection('importExport')}
+                            >
+                                Import Export
+                            </Pagination.Item>
                         </Pagination>
                         <h1>Rally GPX Merger</h1>
                         <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>

@@ -7,6 +7,7 @@ import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook
 import { PlainMap } from './map/PlainMap.tsx';
 import { MapToolbar } from './map/MapToolbar.tsx';
 import { Sections } from './types.ts';
+import { ImportExport } from './io/ImportExport.tsx';
 
 interface Props {
     selectedSection: Sections;
@@ -42,6 +43,14 @@ export function MergeAndMap({ selectedSection }: Props) {
         return (
             <Container fluid className={'m-0'}>
                 <StreetResolvingSection />
+            </Container>
+        );
+    }
+
+    if (selectedSection === 'importExport') {
+        return (
+            <Container fluid className={'m-0'}>
+                <ImportExport />
             </Container>
         );
     }
