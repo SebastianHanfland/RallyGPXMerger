@@ -19,16 +19,12 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
     return (
         <tr>
             <td>
-                <td>
-                    <Form.Control
-                        type="text"
-                        placeholder="People at start"
-                        value={filename}
-                        onChange={(value) =>
-                            dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }))
-                        }
-                    />
-                </td>
+                <Form.Control
+                    type="text"
+                    placeholder="People at start"
+                    value={filename}
+                    onChange={(value) => dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }))}
+                />
             </td>
             <td>
                 <FileDownloader content={content} name={filename} id={id} onlyIcon={true} />

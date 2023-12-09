@@ -1,50 +1,48 @@
 import '../App.css';
 import { TrackCompositionSection } from './tracks/TrackCompositionSection.tsx';
 import { FileUploadSection } from './segments/FileUploadSection.tsx';
-import { Accordion, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
-import { ImportExport } from './io/ImportExport.tsx';
 import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook.ts';
 import { PlainMap } from './map/PlainMap.tsx';
 import { MapToolbar } from './map/MapToolbar.tsx';
+import { Sections } from './types.ts';
 
-export function MergeAndMap() {
+interface Props {
+    selectedSection: Sections;
+}
+
+export function MergeAndMap({ selectedSection }: Props) {
     parseCalculatedTracksHook();
 
-    return (
-        <Container fluid className={'m-0'}>
-            <ImportExport />
-            <Accordion defaultActiveKey="0" className={'mt-3'}>
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>Merging GPX Segments to Tracks</Accordion.Header>
-                    <Accordion.Body>
-                        <Row className="flex-xl-nowrap" style={{ height: '60vh', width: '100%' }}>
-                            <Col xl={4}>
-                                <FileUploadSection />
-                            </Col>
-                            <Col xl={4}>
-                                <TrackCompositionSection />
-                            </Col>
-                            <Col xl={4}>
-                                <div style={{ height: '45vh' }}>
-                                    <PlainMap />
-                                </div>
-                                <div style={{ height: '20%' }}>
-                                    <MapToolbar />
-                                </div>
-                            </Col>
-                        </Row>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-            <Accordion defaultActiveKey="1" className={'mt-3'}>
-                <Accordion.Item eventKey="1">
-                    <Accordion.Header>Resolve the streets</Accordion.Header>
-                    <Accordion.Body>
-                        <StreetResolvingSection />
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-        </Container>
-    );
+    if (selectedSection === 'gps') {
+        return (
+            <Container fluid className={'m-0'}>
+                <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
+                    <Col xl={4}>
+                        <FileUploadSection />
+                    </Col>
+                    <Col xl={4}>
+                        <TrackCompositionSection />
+                    </Col>
+                    <Col xl={4}>
+                        <div style={{ height: '90%' }}>
+                            <PlainMap />
+                        </div>
+                        <div style={{ height: '5%' }}>
+                            <MapToolbar />
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        );
+    }
+
+    if (selectedSection === 'streets') {
+        return (
+            <Container fluid className={'m-0'}>
+                <StreetResolvingSection />
+            </Container>
+        );
+    }
 }

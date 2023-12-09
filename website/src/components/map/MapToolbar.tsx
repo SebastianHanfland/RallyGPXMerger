@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 
 export function MapToolbar() {
     return (
-        <Row className={'m-2 p-2 shadow'}>
+        <Row className={'mx-2 shadow'}>
             <Col xl={6}>
                 <TimeSlider />
             </Col>

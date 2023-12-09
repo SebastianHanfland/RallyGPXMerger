@@ -2,10 +2,14 @@ import { ButtonGroup, ButtonToolbar, Container, Pagination, Row } from 'react-bo
 import { HelpButton } from './tutorial/HelpButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { LoadExampleDataButton } from './LoadExampleDataButton.tsx';
-import { useState } from 'react';
+import { Sections } from './types.ts';
 
-export const AppHeader = () => {
-    const [selectedTrackId, setSelectedTrackId] = useState('gps');
+interface Props {
+    selectedSection: Sections;
+    setSelectedSection: (section: Sections) => void;
+}
+
+export const AppHeader = ({ selectedSection, setSelectedSection }: Props) => {
     return (
         <div className="footer-copyright text-center py-3">
             <Container fluid>
@@ -14,15 +18,15 @@ export const AppHeader = () => {
                         <Pagination>
                             <Pagination.Item
                                 key={'gps'}
-                                active={'gps' === selectedTrackId}
-                                onClick={() => setSelectedTrackId('gps')}
+                                active={'gps' === selectedSection}
+                                onClick={() => setSelectedSection('gps')}
                             >
                                 GPS Planner
                             </Pagination.Item>
                             <Pagination.Item
                                 key={'streets'}
-                                active={'streets' === selectedTrackId}
-                                onClick={() => setSelectedTrackId('streets')}
+                                active={'streets' === selectedSection}
+                                onClick={() => setSelectedSection('streets')}
                             >
                                 Street Resolver
                             </Pagination.Item>
