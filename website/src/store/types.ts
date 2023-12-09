@@ -52,6 +52,7 @@ export interface TrackMergeState {
     arrivalDateTime?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;
+    segmentIdClipboard?: string[];
 }
 
 export const MAX_SLIDER_TIME = 100000;

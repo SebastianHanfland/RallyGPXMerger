@@ -1,24 +1,17 @@
 import { Button, Form } from 'react-bootstrap';
 import { TrackComposition } from '../../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { getSegmentIdClipboard, trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { TrackSelectionCell } from './TrackSelectionCell.tsx';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
+import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 
 interface Props {
     track: TrackComposition;
-}
-
-export async function copyTextToClipboard(text: string) {
-    if ('clipboard' in navigator) {
-        return await navigator.clipboard.writeText(text);
-    } else {
-        return document.execCommand('copy', true, text);
-    }
 }
 
 export function MergeTableTrack({ track }: Props) {
@@ -26,6 +19,7 @@ export function MergeTableTrack({ track }: Props) {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
+    const segmentIdClipboard = useSelector(getSegmentIdClipboard);
 
     return (
         <tr>
@@ -51,10 +45,21 @@ export function MergeTableTrack({ track }: Props) {
                     </Button>
                     <Button
                         variant="info"
-                        onClick={() => copyTextToClipboard(track.segmentIds.join(','))}
+                        onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}
                         title={'Copy segmentIds to clipboard'}
                     >
                         <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} />
+                    </Button>
+                    <Button
+                        variant="success"
+                        onClick={() => {
+                            dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
+                            dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
+                        }}
+                        title={'Copy segmentIds to clipboard'}
+                        disabled={!segmentIdClipboard}
+                    >
+                        <img src={inputFromClipboard} alt="input from clipboard" color={'#ffffff'} />
                     </Button>
                     {showModal && (
                         <ConfirmationModal
