@@ -19,11 +19,10 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
     return (
         <tr>
             <td>
-                <div>
-                    <FileDownloader content={content} name={filename} id={id} />
-                </div>
+                <div>{filename}</div>
             </td>
             <td>
+                <FileDownloader content={content} name={filename} id={id} onlyIcon={true} />
                 <FileChangeButton id={id} name={filename} />
                 <RemoveFileButton id={id} name={filename} />
             </td>

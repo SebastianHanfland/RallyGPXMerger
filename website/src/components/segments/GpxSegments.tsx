@@ -34,7 +34,7 @@ export function GpxSegments() {
                     <thead>
                         <tr>
                             <th style={{ width: '30%' }}>File</th>
-                            <th style={{ width: '10%', minWidth: '100px' }}>Actions</th>
+                            <th style={{ width: '10%', minWidth: '150px' }}>Actions</th>
                             {ALLOWS_TO_ENTER_PEOPLE_AT_START && <th style={{ width: '30%' }}>People at Start</th>}
                             <th style={{ width: '30%' }}>People at End</th>
                         </tr>
