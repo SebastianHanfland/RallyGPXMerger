@@ -37,7 +37,7 @@ export function TrackCompositionSection() {
 
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-            <h4>Create tracks from GPX segments</h4>
+            <h4>Create Tracks from GPX Segments</h4>
             <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-2 justify-content-center'}>
                 <ButtonGroup aria-label="help-buttons">
                     <MergeTracksButton />

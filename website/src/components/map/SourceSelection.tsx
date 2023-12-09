@@ -34,7 +34,7 @@ export function SourceSelection() {
                     type={'radio'}
                     id={'blocked streets'}
                     className={'m-3'}
-                    label={'Block streets'}
+                    label={'Blocked Streets'}
                     checked={mapSource === 'blocked streets'}
                     disabled={blockedStreetInfos.length === 0}
                     readOnly
