@@ -38,6 +38,7 @@ export function MergeTableTrack({ track }: Props) {
                 <>
                     <Button
                         variant="danger"
+                        className={'m-1'}
                         onClick={() => setShowModal(true)}
                         title={`Remove track ${track.name ?? ''}`}
                     >
@@ -45,6 +46,7 @@ export function MergeTableTrack({ track }: Props) {
                     </Button>
                     <Button
                         variant="info"
+                        className={'m-1'}
                         onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}
                         title={'Copy segmentIds to clipboard'}
                     >
@@ -52,6 +54,7 @@ export function MergeTableTrack({ track }: Props) {
                     </Button>
                     <Button
                         variant="success"
+                        className={'m-1'}
                         onClick={() => {
                             dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
                             dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
