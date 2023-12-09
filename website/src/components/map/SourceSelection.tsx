@@ -10,7 +10,6 @@ export function SourceSelection() {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Form.Group>
-            <h5>Source selection</h5>
             <Form>
                 <Form.Check
                     type={'radio'}

@@ -35,7 +35,6 @@ export function TimeSlider() {
 
     return (
         <Form.Group className={'m-2'}>
-            <h5>Time slider</h5>
             <div>{dateValue ? formatDate(dateValue) : 'No tracks yet calculated'}</div>
             <div className={'d-flex'}>
                 <span className={'mx-4'}>Start</span>

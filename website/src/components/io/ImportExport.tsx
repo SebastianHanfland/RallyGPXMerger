@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
 import { storage } from '../../store/storage.ts';
+import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
 
 const fileTypes = ['JSON'];
 
@@ -32,8 +33,8 @@ export function ImportExport() {
             <Accordion.Item eventKey="0">
                 <Accordion.Header>Import and export the data</Accordion.Header>
                 <Accordion.Body>
-                    <Row className="flex-xl-nowrap" style={{ height: '40px', width: '100%' }}>
-                        <Col xl={6}>
+                    <Row className="flex-xl-nowrap" style={{ height: '50vh', width: '100%' }}>
+                        <Col xl={4}>
                             <FileDownloader
                                 onlyIcon={true}
                                 name={`RallyGPXMergeState-${new Date().toISOString()}.json`}
@@ -42,7 +43,7 @@ export function ImportExport() {
                                 id={'state-down'}
                             />
                         </Col>
-                        <Col xl={6}>
+                        <Col xl={4}>
                             <div className={'d-flex justify-content-between'} style={{ width: '500px' }}>
                                 <Button variant={'success'} onClick={() => setShowDialog(true)}>
                                     <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
@@ -68,6 +69,9 @@ export function ImportExport() {
                                     body={'Do you really want to load data from a file and OVERWRITE EVERYTHING?'}
                                 />
                             )}
+                        </Col>
+                        <Col xl={4}>
+                            <TrackMergeSection />
                         </Col>
                     </Row>
                 </Accordion.Body>
