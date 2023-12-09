@@ -1,11 +1,13 @@
 import { Table } from 'react-bootstrap';
 import { MergeTableTrack } from './MergeTableTrack.tsx';
-import { useSelector } from 'react-redux';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { AddNewTrack } from './AddNewTrack.tsx';
+import { TrackComposition } from '../../store/types.ts';
 
-export const MergeTable = () => {
-    const trackCompositions = useSelector(getTrackCompositions);
+interface Props {
+    trackCompositions: TrackComposition[];
+}
+
+export const MergeTable = ({ trackCompositions }: Props) => {
     return (
         <Table striped bordered hover style={{ width: '100%' }}>
             <thead>
