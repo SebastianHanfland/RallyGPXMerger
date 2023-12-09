@@ -5,7 +5,7 @@ import { StreetResolvedTracks } from './StreetResolvedTracks.tsx';
 
 export const StreetResolvingSection = () => {
     return (
-        <Row className="flex-xl-nowrap" style={{ height: '60vh', width: '100%' }}>
+        <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
             <Col xl={4}>
                 <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <TrackDataOverview />
