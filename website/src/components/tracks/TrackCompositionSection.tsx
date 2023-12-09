@@ -33,7 +33,7 @@ export function TrackCompositionSection() {
                 })
             );
         }
-    }, [filterTerm]);
+    }, [filterTerm, trackCompositions]);
 
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
