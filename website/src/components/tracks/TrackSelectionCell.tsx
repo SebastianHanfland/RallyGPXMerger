@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 
 import { BREAK_IDENTIFIER } from '../../logic/types.ts';
+import { ReactSortable } from 'react-sortablejs';
 
 interface Props {
     track: TrackComposition;
@@ -44,6 +45,34 @@ export function TrackSelectionCell({ track }: Props) {
 
     return (
         <td>
+            <ReactSortable
+                dropBubble={true}
+                animation={2}
+                list={track.segmentIds.map((id) => ({ id }))}
+                setList={(items) =>
+                    trackMergeActions.setSegments({ id: track.id, segments: items.map(({ id }) => id) })
+                }
+            >
+                {track.segmentIds.map((segmentId) => {
+                    const segmentName = options.find((option) => option.value === segmentId);
+                    if (!segmentName) {
+                        return null;
+                    }
+                    return (
+                        <div
+                            style={{
+                                border: '1px solid transparent',
+                                borderColor: 'black',
+                                cursor: 'pointer',
+                                margin: '1px',
+                            }}
+                            key={segmentId}
+                        >
+                            {segmentName?.label}
+                        </div>
+                    );
+                })}
+            </ReactSortable>
             <Select
                 isMulti
                 value={segmentIds
