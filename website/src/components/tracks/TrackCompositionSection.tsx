@@ -4,11 +4,36 @@ import { MergeTracksButton } from '../MergeTracksButton.tsx';
 import { CalculatedFilesDownloader } from '../CalculatedFilesDownloader.tsx';
 import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { TrackComposition } from '../../store/types.ts';
 
 export function TrackCompositionSection() {
     const trackCompositions = useSelector(getTrackCompositions);
     const [filterTerm, setFilterTerm] = useState('');
+    const [filteredTracks, setFilteredTracks] = useState<TrackComposition[]>([]);
+
+    useEffect(() => {
+        const allFilterTerms = filterTerm.split(',');
+        if (filterTerm === '') {
+            setFilteredTracks(trackCompositions);
+        } else {
+            setFilteredTracks(
+                trackCompositions.filter((track) => {
+                    let match = false;
+                    allFilterTerms.forEach((term) => {
+                        if (term === '') {
+                            return;
+                        }
+                        const matches = track.name?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
+                        if (matches) {
+                            match = true;
+                        }
+                    });
+                    return match;
+                })
+            );
+        }
+    }, [filterTerm]);
 
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
@@ -27,7 +52,7 @@ export function TrackCompositionSection() {
                     onChange={(value) => setFilterTerm(value.target.value)}
                 />
             </div>
-            <MergeTable trackCompositions={trackCompositions} />
+            <MergeTable trackCompositions={filteredTracks} />
         </div>
     );
 }
