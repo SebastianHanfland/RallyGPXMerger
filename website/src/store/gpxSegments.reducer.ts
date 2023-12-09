@@ -37,6 +37,11 @@ const gpxSegmentsSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, peopleCountEnd: action.payload.count } : segment
             );
         },
+        setFilename: (state: GpxSegmentsState, action: PayloadAction<{ id: string; filename: string }>) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
+            );
+        },
     },
 });
 
