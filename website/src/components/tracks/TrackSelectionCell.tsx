@@ -7,6 +7,7 @@ import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { BREAK_IDENTIFIER } from '../../logic/types.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { Accordion, Button } from 'react-bootstrap';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
 interface Props {
     track: TrackComposition;
@@ -83,8 +84,10 @@ export function TrackSelectionCell({ track }: Props) {
                                             borderColor: 'black',
                                             cursor: 'pointer',
                                             margin: '1px',
+                                            backgroundColor: getColorFromUuid(segmentId),
                                         }}
                                         key={segmentId}
+                                        title={segmentName?.label}
                                     >
                                         <div className={'m-1'}>{segmentName?.label}</div>
                                         <Button
