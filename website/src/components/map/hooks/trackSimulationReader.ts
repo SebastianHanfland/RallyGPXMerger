@@ -8,6 +8,7 @@ import { Point } from 'gpxparser';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 import { getReadableTracks } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
+import { createSelector } from '@reduxjs/toolkit';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
@@ -53,29 +54,23 @@ const extractLocation =
         return returnPoints;
     };
 
-export const getCurrentMarkerPositionsForTracks = (state: State) => {
-    const timeStamp = getCurrentTimeStamp(state);
-    if (!timeStamp) {
-        return [];
-    }
-    const trackParticipants = getTrackParticipants(state);
-    return getReadableTracks()?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
-};
-
-export const getNumberOfPositionsInTracks = (state: State) => {
-    let positionCount = 0;
-    const positionMap = getResolvedPositions(state);
-    getReadableTracks()?.forEach((gpx) => {
-        gpx.tracks.forEach((track) => {
-            positionCount += track.points.length;
+export const getNumberOfPositionsInTracks = createSelector(
+    getResolvedPositions,
+    getReadableTracks,
+    (positionMap, readableTracks) => {
+        let positionCount = 0;
+        readableTracks?.forEach((gpx) => {
+            gpx.tracks.forEach((track) => {
+                positionCount += track.points.length;
+            });
         });
-    });
-    return {
-        uniquePositionCount: Object.keys(positionMap).length,
-        positionCount,
-        unresolvedUniquePositionCount: Object.values(positionMap).filter((value) => !value).length,
-    };
-};
+        return {
+            uniquePositionCount: Object.keys(positionMap).length,
+            positionCount,
+            unresolvedUniquePositionCount: Object.values(positionMap).filter((value) => !value).length,
+        };
+    }
+);
 
 export const getCurrentTimeStamp = (state: State): string | undefined => {
     const calculatedTracks = getCalculatedTracks(state);
@@ -93,3 +88,15 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
     const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
+
+export const getCurrentMarkerPositionsForTracks = createSelector(
+    getCurrentTimeStamp,
+    getTrackParticipants,
+    getReadableTracks,
+    (timeStamp, trackParticipants, readableTracks) => {
+        if (!timeStamp) {
+            return [];
+        }
+        return readableTracks?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
+    }
+);
