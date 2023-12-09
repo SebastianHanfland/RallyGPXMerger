@@ -9,6 +9,10 @@ export function FileUploadSection() {
                 <a href={'http://brouter.de/brouter-web'} target={'_blank'} referrerPolicy={'no-referrer'}>
                     brouter
                 </a>
+                <span> or </span>
+                <a href={'https://gpx.studio/'} target={'_blank'} referrerPolicy={'no-referrer'}>
+                    Gpx Studio
+                </a>
             </p>
             <GpxSegments />
         </div>
