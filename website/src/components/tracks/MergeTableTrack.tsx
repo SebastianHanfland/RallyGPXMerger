@@ -7,9 +7,18 @@ import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { TrackSelectionCell } from './TrackSelectionCell.tsx';
+import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 
 interface Props {
     track: TrackComposition;
+}
+
+export async function copyTextToClipboard(text: string) {
+    if ('clipboard' in navigator) {
+        return await navigator.clipboard.writeText(text);
+    } else {
+        return document.execCommand('copy', true, text);
+    }
 }
 
 export function MergeTableTrack({ track }: Props) {
@@ -39,6 +48,13 @@ export function MergeTableTrack({ track }: Props) {
                         title={`Remove track ${track.name ?? ''}`}
                     >
                         x
+                    </Button>
+                    <Button
+                        variant="info"
+                        onClick={() => copyTextToClipboard(track.segmentIds.join(','))}
+                        title={'Copy segmentIds to clipboard'}
+                    >
+                        <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} />
                     </Button>
                     {showModal && (
                         <ConfirmationModal
