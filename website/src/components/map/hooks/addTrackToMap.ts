@@ -13,7 +13,13 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
     const gpx = SimpleGPX.fromString(gpxSegment.content);
     gpx.tracks.forEach((track) => {
         const trackPoints = track.points.map(toLatLng);
-        const connection = L.polyline(trackPoints, { weight: 8, color: getColorFromUuid(gpxSegment.id) });
+        const connection = L.polyline(trackPoints, {
+            weight: 8,
+            color: getColorFromUuid(gpxSegment.id),
+            opacity: 0.4,
+        }).bindTooltip(gpxSegment.filename, {
+            sticky: true,
+        });
         connection.addTo(routeLayer);
         if (showMarker) {
             const startMarker = L.marker(trackPoints[0], {
