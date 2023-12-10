@@ -2,10 +2,9 @@ import { FileUploader } from 'react-drag-drop-files';
 import { Form, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGpxSegments, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { useEffect, useState } from 'react';
 
 const fileTypes = ['GPX'];
 
@@ -21,34 +20,9 @@ export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
 
 export function GpxSegments() {
     const dispatch = useDispatch();
-    const gpxSegments = useSelector(getGpxSegments);
-
-    // TODO: This code also exists in TrackCompositionSection.tsx, consolidate
-    const [filterTerm, setFilterTerm] = useState('');
-    const [filteredTracks, setFilteredTracks] = useState<GpxSegment[]>([]);
-
-    useEffect(() => {
-        const allFilterTerms = filterTerm.split(',');
-        if (filterTerm === '') {
-            setFilteredTracks(gpxSegments);
-        } else {
-            setFilteredTracks(
-                gpxSegments.filter((track) => {
-                    let match = false;
-                    allFilterTerms.forEach((term) => {
-                        if (term === '') {
-                            return;
-                        }
-                        const matches = track.filename?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
-                        if (matches) {
-                            match = true;
-                        }
-                    });
-                    return match;
-                })
-            );
-        }
-    }, [filterTerm, gpxSegments]);
+    const filterTerm = useSelector(getSegmentFilterTerm);
+    const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
+    const filteredSegments = useSelector(getFilteredGpxSegments);
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
@@ -65,7 +39,7 @@ export function GpxSegments() {
                     onChange={(value) => setFilterTerm(value.target.value)}
                 />
             </div>
-            {filteredTracks.length > 0 ? (
+            {filteredSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
@@ -76,7 +50,7 @@ export function GpxSegments() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredTracks.map((gpxSegment) => (
+                        {filteredSegments.map((gpxSegment) => (
                             <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                         <tr>

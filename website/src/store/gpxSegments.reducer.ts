@@ -45,7 +45,7 @@ const gpxSegmentsSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
             );
         },
-        setFilteredGpxSegmentIds: (state: GpxSegmentsState, action: PayloadAction<string>) => {
+        setFilterTerm: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.segmentFilterTerm = action.payload;
         },
     },
@@ -57,6 +57,23 @@ const getBase = (state: State) => state.gpxSegments;
 export const getGpxSegments = (state: State) => getBase(state).segments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 
-export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, ids) => {
-    return segments.filter((segment) => ids?.includes(segment.id));
+export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
+    const allFilterTerms = filterTerm?.split(',');
+    if (!filterTerm || !allFilterTerms) {
+        return segments;
+    } else {
+        return segments.filter((segment) => {
+            let match = false;
+            allFilterTerms.forEach((term) => {
+                if (term === '') {
+                    return;
+                }
+                const matches = segment.filename?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
+                if (matches) {
+                    match = true;
+                }
+            });
+            return match;
+        });
+    }
 });

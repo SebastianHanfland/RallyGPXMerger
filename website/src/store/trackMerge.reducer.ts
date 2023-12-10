@@ -59,7 +59,7 @@ const trackMergeSlice = createSlice({
         setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | string[]>) => {
             state.segmentIdClipboard = action.payload;
         },
-        setFilteredTrackCompositionsIds: (state: TrackMergeState, action: PayloadAction<string>) => {
+        setTrackCompositionFilterTerm: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.filterTerm = action.payload;
         },
         clear: () => initialState,
@@ -79,7 +79,24 @@ export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdC
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,
     getTrackCompositionFilterTerm,
-    (tracks, ids) => {
-        return tracks.filter((track) => ids?.includes(track.id));
+    (tracks, filterTerm) => {
+        const allFilterTerms = filterTerm?.split(',');
+        if (!filterTerm || !allFilterTerms) {
+            return tracks;
+        } else {
+            return tracks.filter((track) => {
+                let match = false;
+                allFilterTerms.forEach((term) => {
+                    if (term === '') {
+                        return;
+                    }
+                    const matches = track.name?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
+                    if (matches) {
+                        match = true;
+                    }
+                });
+                return match;
+            });
+        }
     }
 );
