@@ -16,7 +16,8 @@ export function SourceSelection() {
                     type={'checkbox'}
                     id={'segments'}
                     className={'m-3'}
-                    label={'GPX Segments'}
+                    label={'GPX'}
+                    title={'GPX Segments'}
                     checked={mapSource === 'segments'}
                     readOnly
                     onClick={() => dispatch(mapActions.setSource('segments'))}
@@ -25,7 +26,8 @@ export function SourceSelection() {
                     type={'checkbox'}
                     id={'tracks'}
                     className={'m-3'}
-                    label={'Calculated Tracks'}
+                    label={'Tracks'}
+                    title={'Calculated Tracks'}
                     checked={mapSource === 'tracks'}
                     disabled={calculatedTracks.length === 0}
                     readOnly
@@ -35,7 +37,8 @@ export function SourceSelection() {
                     type={'checkbox'}
                     id={'blocked streets'}
                     className={'m-3'}
-                    label={'Blocked Streets'}
+                    label={'Streets'}
+                    title={'Blocked Streets'}
                     checked={mapSource === 'blocked streets'}
                     disabled={blockedStreetInfos.length === 0}
                     readOnly
@@ -45,7 +48,8 @@ export function SourceSelection() {
                     type={'checkbox'}
                     id={'marker'}
                     className={'m-3'}
-                    label={'Show marker'}
+                    label={'Marker'}
+                    title={showMapMarker ? 'Hide marker' : 'Show marker'}
                     checked={showMapMarker}
                     readOnly
                     onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
