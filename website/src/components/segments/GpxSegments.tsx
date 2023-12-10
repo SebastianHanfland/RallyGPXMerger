@@ -1,10 +1,11 @@
 import { FileUploader } from 'react-drag-drop-files';
-import { Table } from 'react-bootstrap';
+import { Form, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGpxSegments, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from 'react';
 
 const fileTypes = ['GPX'];
 
@@ -22,6 +23,33 @@ export function GpxSegments() {
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
 
+    // TODO: This code also exists in TrackCompositionSection.tsx, consolidate
+    const [filterTerm, setFilterTerm] = useState('');
+    const [filteredTracks, setFilteredTracks] = useState<GpxSegment[]>([]);
+
+    useEffect(() => {
+        const allFilterTerms = filterTerm.split(',');
+        if (filterTerm === '') {
+            setFilteredTracks(gpxSegments);
+        } else {
+            setFilteredTracks(
+                gpxSegments.filter((track) => {
+                    let match = false;
+                    allFilterTerms.forEach((term) => {
+                        if (term === '') {
+                            return;
+                        }
+                        const matches = track.filename?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
+                        if (matches) {
+                            match = true;
+                        }
+                    });
+                    return match;
+                })
+            );
+        }
+    }, [filterTerm, gpxSegments]);
+
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
             dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments))
@@ -29,7 +57,15 @@ export function GpxSegments() {
     };
     return (
         <div>
-            {gpxSegments.length > 0 ? (
+            <div className={'my-2'}>
+                <Form.Control
+                    type="text"
+                    placeholder="Filter tracks, separate term by ','"
+                    value={filterTerm}
+                    onChange={(value) => setFilterTerm(value.target.value)}
+                />
+            </div>
+            {filteredTracks.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
@@ -40,7 +76,7 @@ export function GpxSegments() {
                         </tr>
                     </thead>
                     <tbody>
-                        {gpxSegments.map((gpxSegment) => (
+                        {filteredTracks.map((gpxSegment) => (
                             <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                         <tr>
