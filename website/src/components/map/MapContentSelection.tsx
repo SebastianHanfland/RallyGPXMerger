@@ -9,7 +9,7 @@ import {
 } from '../../store/map.reducer.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
-export function SourceSelection() {
+export function MapContentSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
     const showBlockStreets = useSelector(getShowBlockStreets);
     const showCalculatedTracks = useSelector(getShowCalculatedTracks);

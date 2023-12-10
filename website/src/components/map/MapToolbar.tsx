@@ -1,5 +1,5 @@
 import { TimeSlider } from './TimeSlider.tsx';
-import { SourceSelection } from './SourceSelection.tsx';
+import { MapContentSelection } from './MapContentSelection.tsx';
 import { Col, Row } from 'react-bootstrap';
 
 export function MapToolbar() {
@@ -9,7 +9,7 @@ export function MapToolbar() {
                 <TimeSlider />
             </Col>
             <Col xl={6}>
-                <SourceSelection />
+                <MapContentSelection />
             </Col>
         </Row>
     );
