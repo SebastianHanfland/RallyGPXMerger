@@ -10,7 +10,7 @@ describe('getBlockedStreetInfo', () => {
     it('should work with empty lists', () => {
         // given
         const trackStreetInfos: TrackStreetInfo[] = [];
-        (getEnrichedTrackStreetInfos as Mock).mockReturnValue(trackStreetInfos);
+        (getEnrichedTrackStreetInfos as unknown as Mock).mockReturnValue(trackStreetInfos);
 
         // when
         const blockedStreetInfo = getBlockedStreetInfo({} as State);
@@ -31,7 +31,7 @@ describe('getBlockedStreetInfo', () => {
                 wayPoints: [{ streetName: 'A', frontArrival: earliestStart, backArrival: '2022-02-02T02:10:00.000Z' }],
             },
         ] as TrackStreetInfo[];
-        (getEnrichedTrackStreetInfos as Mock).mockReturnValue(trackStreetInfos);
+        (getEnrichedTrackStreetInfos as unknown as Mock).mockReturnValue(trackStreetInfos);
         const expectedBlockedStreets: BlockedStreetInfo[] = [
             { streetName: 'A', frontArrival: earliestStart, backPassage: latestEnd } as BlockedStreetInfo,
         ];
