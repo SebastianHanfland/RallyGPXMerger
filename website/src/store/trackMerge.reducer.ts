@@ -3,6 +3,7 @@ import { State, TrackComposition, TrackMergeState } from './types';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/helper/peopleDelayCounter.ts';
+import { filterItems } from '../utils/filterUtil.ts';
 
 export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
 
@@ -80,23 +81,6 @@ export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,
     getTrackCompositionFilterTerm,
     (tracks, filterTerm) => {
-        const allFilterTerms = filterTerm?.split(',');
-        if (!filterTerm || !allFilterTerms) {
-            return tracks;
-        } else {
-            return tracks.filter((track) => {
-                let match = false;
-                allFilterTerms.forEach((term) => {
-                    if (term === '') {
-                        return;
-                    }
-                    const matches = track.name?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
-                    if (matches) {
-                        match = true;
-                    }
-                });
-                return match;
-            });
-        }
+        return filterItems(filterTerm, tracks, (track: TrackComposition) => track.name);
     }
 );

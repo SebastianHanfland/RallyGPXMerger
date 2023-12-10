@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/to
 import { CalculatedTrack, CalculatedTracksState, State } from './types';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
+import { filterItems } from '../utils/filterUtil.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
@@ -35,23 +36,6 @@ export const getFilteredCalculatedTracks = createSelector(
     getCalculatedTracks,
     getTrackCompositionFilterTerm,
     (tracks, filterTerm) => {
-        const allFilterTerms = filterTerm?.split(',');
-        if (!filterTerm || !allFilterTerms) {
-            return tracks;
-        } else {
-            return tracks.filter((track) => {
-                let match = false;
-                allFilterTerms.forEach((term) => {
-                    if (term === '') {
-                        return;
-                    }
-                    const matches = track.filename?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
-                    if (matches) {
-                        match = true;
-                    }
-                });
-                return match;
-            });
-        }
+        return filterItems(filterTerm, tracks, (track: CalculatedTrack) => track.filename);
     }
 );

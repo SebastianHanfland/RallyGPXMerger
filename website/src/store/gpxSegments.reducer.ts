@@ -1,6 +1,7 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { GpxSegment, GpxSegmentsState, State } from './types';
 import { storage } from './storage.ts';
+import { filterItems } from '../utils/filterUtil.ts';
 
 const initialState: GpxSegmentsState = {
     segments: [],
@@ -58,22 +59,5 @@ export const getGpxSegments = (state: State) => getBase(state).segments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
-    const allFilterTerms = filterTerm?.split(',');
-    if (!filterTerm || !allFilterTerms) {
-        return segments;
-    } else {
-        return segments.filter((segment) => {
-            let match = false;
-            allFilterTerms.forEach((term) => {
-                if (term === '') {
-                    return;
-                }
-                const matches = segment.filename?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
-                if (matches) {
-                    match = true;
-                }
-            });
-            return match;
-        });
-    }
+    return filterItems(filterTerm, segments, (track: GpxSegment) => track.filename);
 });
