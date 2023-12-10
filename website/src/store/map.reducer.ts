@@ -27,6 +27,15 @@ const mapSlice = createSlice({
         setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
             state.showMapMarker = action.payload;
         },
+        setShowBlockStreets: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showBlockStreets = action.payload;
+        },
+        setShowCalculatedTracks: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showCalculatedTracks = action.payload;
+        },
+        setShowGpxSegments: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showGpxSegments = action.payload;
+        },
     },
 });
 
@@ -39,3 +48,6 @@ export const getStartMapTime = (state: State) => getBase(state).start;
 export const getEndMapTime = (state: State) => getBase(state).end;
 export const getCenterPoint = (state: State) => getBase(state).centerPoint;
 export const getShowMapMarker = (state: State) => getBase(state).showMapMarker ?? false;
+export const getShowBlockStreets = (state: State) => getBase(state).showBlockStreets ?? false;
+export const getShowCalculatedTracks = (state: State) => getBase(state).showCalculatedTracks ?? false;
+export const getShowGpxSegments = (state: State) => getBase(state).showGpxSegments ?? false;

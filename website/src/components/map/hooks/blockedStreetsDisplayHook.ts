@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getCurrenMapSource } from '../../../store/map.reducer.ts';
+import { getShowBlockStreets } from '../../../store/map.reducer.ts';
 import { getBlockedStreetInfo } from '../../../mapMatching/getBlockedStreetInfo.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,7 +26,7 @@ function getColorForStreetName(streetName: string): string {
 
 export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<LayerGroup | null>) {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
-    const mapSource = useSelector(getCurrenMapSource);
+    const showStreets = useSelector(getShowBlockStreets);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -35,7 +35,7 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<
             return;
         }
         current.clearLayers();
-        if (mapSource === 'blocked streets') {
+        if (showStreets) {
             blockedStreetInfos.forEach((blockedStreet) => {
                 const streetPoints = [
                     { lat: blockedStreet.pointFrom.lat, lng: blockedStreet.pointFrom.lon },
@@ -51,5 +51,5 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<
                 connection.addTo(current);
             });
         }
-    }, [blockedStreetInfos, blockedStreetInfos.length, mapSource]);
+    }, [blockedStreetInfos, blockedStreetInfos.length, showStreets]);
 }

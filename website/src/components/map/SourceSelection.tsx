@@ -1,11 +1,19 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapSource, getShowMapMarker, mapActions } from '../../store/map.reducer.ts';
+import {
+    getShowBlockStreets,
+    getShowCalculatedTracks,
+    getShowGpxSegments,
+    getShowMapMarker,
+    mapActions,
+} from '../../store/map.reducer.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
 export function SourceSelection() {
-    const mapSource = useSelector(getCurrenMapSource);
     const showMapMarker = useSelector(getShowMapMarker);
+    const showBlockStreets = useSelector(getShowBlockStreets);
+    const showCalculatedTracks = useSelector(getShowCalculatedTracks);
+    const showGpxSegments = useSelector(getShowGpxSegments);
     const dispatch = useDispatch();
     const calculatedTracks = useSelector(getCalculatedTracks);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
@@ -18,9 +26,9 @@ export function SourceSelection() {
                     className={'m-3'}
                     label={'GPX'}
                     title={'GPX Segments'}
-                    checked={mapSource === 'segments'}
+                    checked={showGpxSegments}
                     readOnly
-                    onClick={() => dispatch(mapActions.setSource('segments'))}
+                    onClick={() => dispatch(mapActions.setShowGpxSegments(!showGpxSegments))}
                 ></Form.Check>
                 <Form.Check
                     type={'checkbox'}
@@ -28,10 +36,10 @@ export function SourceSelection() {
                     className={'m-3'}
                     label={'Tracks'}
                     title={'Calculated Tracks'}
-                    checked={mapSource === 'tracks'}
+                    checked={showCalculatedTracks}
                     disabled={calculatedTracks.length === 0}
                     readOnly
-                    onClick={() => dispatch(mapActions.setSource('tracks'))}
+                    onClick={() => dispatch(mapActions.setShowCalculatedTracks(!showCalculatedTracks))}
                 ></Form.Check>
                 <Form.Check
                     type={'checkbox'}
@@ -39,10 +47,10 @@ export function SourceSelection() {
                     className={'m-3'}
                     label={'Streets'}
                     title={'Blocked Streets'}
-                    checked={mapSource === 'blocked streets'}
+                    checked={showBlockStreets}
                     disabled={blockedStreetInfos.length === 0}
                     readOnly
-                    onClick={() => dispatch(mapActions.setSource('blocked streets'))}
+                    onClick={() => dispatch(mapActions.setShowBlockStreets(!showBlockStreets))}
                 ></Form.Check>
                 <Form.Check
                     type={'checkbox'}

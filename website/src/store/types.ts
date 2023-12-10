@@ -64,6 +64,9 @@ export interface MapState {
     end?: string;
     centerPoint?: { lat: number; lng: number; zoom: number };
     showMapMarker?: boolean;
+    showBlockStreets?: boolean;
+    showCalculatedTracks?: boolean;
+    showGpxSegments?: boolean;
 }
 
 export interface State {

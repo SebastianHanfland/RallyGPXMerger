@@ -3,15 +3,15 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
 import { addTracksToLayer } from './addTrackToMap.ts';
-import { getCurrenMapSource, getShowMapMarker } from '../../../store/map.reducer.ts';
+import { getShowCalculatedTracks, getShowMapMarker } from '../../../store/map.reducer.ts';
 
 export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getCalculatedTracks);
-    const mapSource = useSelector(getCurrenMapSource);
+    const showTracks = useSelector(getShowCalculatedTracks);
     const showMapMarker = useSelector(getShowMapMarker);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(calculatedTracksLayer, calculatedTracks, mapSource === 'tracks', showMapMarker);
-    }, [calculatedTracks, calculatedTracks.length, mapSource, showMapMarker]);
+        addTracksToLayer(calculatedTracksLayer, calculatedTracks, showTracks, showMapMarker);
+    }, [calculatedTracks, calculatedTracks.length, showTracks, showMapMarker]);
 }
