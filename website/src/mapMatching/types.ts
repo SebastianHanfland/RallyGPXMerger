@@ -1,4 +1,4 @@
-type GeoApifyLegStep = {
+export interface GeoApifyLegStep {
     osm_way_id: number;
     speed: number;
     speed_limit: number;
@@ -17,7 +17,7 @@ type GeoApifyLegStep = {
     distance: number;
     begin_bearing: number;
     end_bearing: number;
-};
+}
 
 export interface GeoApifyWayPoint {
     original_index: number;

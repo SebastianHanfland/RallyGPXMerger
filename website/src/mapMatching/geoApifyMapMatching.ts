@@ -15,7 +15,7 @@ function postRequest(body: Object) {
 
 export const geoApifyFetchMapMatching =
     (apiKey: string) =>
-    (body: GeoApifyMapMatching): Promise<ResolvedPositions> => {
+    async (body: GeoApifyMapMatching): Promise<ResolvedPositions> => {
         return fetch(`https://api.geoapify.com/v1/mapmatching?apiKey=${apiKey}`, postRequest(body))
             .then((response) => response.json())
             .then((result) => {
