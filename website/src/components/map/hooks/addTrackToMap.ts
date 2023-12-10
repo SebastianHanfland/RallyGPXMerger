@@ -16,7 +16,7 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
         const connection = L.polyline(trackPoints, {
             weight: 8,
             color: getColorFromUuid(gpxSegment.id),
-            opacity: 0.4,
+            opacity: 0.6,
         }).bindTooltip(gpxSegment.filename, {
             sticky: true,
         });
