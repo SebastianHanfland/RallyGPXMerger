@@ -9,6 +9,7 @@ export interface GpxSegment {
 }
 export interface GpxSegmentsState {
     segments: GpxSegment[];
+    segmentFilterTerm?: string;
 }
 
 export interface CalculatedTrack {
@@ -49,6 +50,7 @@ export interface GeoCodingRequestsState {
 
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
+    filterTerm?: string;
     arrivalDateTime?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;

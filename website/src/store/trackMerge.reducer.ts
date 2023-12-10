@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { State, TrackComposition, TrackMergeState } from './types';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
@@ -59,6 +59,9 @@ const trackMergeSlice = createSlice({
         setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | string[]>) => {
             state.segmentIdClipboard = action.payload;
         },
+        setFilteredTrackCompositionsIds: (state: TrackMergeState, action: PayloadAction<string>) => {
+            state.filterTerm = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -67,7 +70,16 @@ export const trackMergeActions = trackMergeSlice.actions;
 export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reducer;
 const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
+export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
+
+export const getFilteredTrackCompositions = createSelector(
+    getTrackCompositions,
+    getTrackCompositionFilterTerm,
+    (tracks, ids) => {
+        return tracks.filter((track) => ids?.includes(track.id));
+    }
+);

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { GpxSegment, GpxSegmentsState, State } from './types';
 import { storage } from './storage.ts';
 
@@ -12,6 +12,9 @@ const gpxSegmentsSlice = createSlice({
     reducers: {
         addGpxSegments: (state: GpxSegmentsState, action: PayloadAction<GpxSegment[]>) => {
             state.segments = [...state.segments, ...action.payload];
+        },
+        orderGpxSegments: (state: GpxSegmentsState, action: PayloadAction<string[]>) => {
+            console.log(action.payload, state.segments);
         },
         removeGpxSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
@@ -42,6 +45,9 @@ const gpxSegmentsSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
             );
         },
+        setFilteredGpxSegmentIds: (state: GpxSegmentsState, action: PayloadAction<string>) => {
+            state.segmentFilterTerm = action.payload;
+        },
     },
 });
 
@@ -49,3 +55,8 @@ export const gpxSegmentsActions = gpxSegmentsSlice.actions;
 export const gpxSegmentsReducer: Reducer<GpxSegmentsState> = gpxSegmentsSlice.reducer;
 const getBase = (state: State) => state.gpxSegments;
 export const getGpxSegments = (state: State) => getBase(state).segments;
+export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
+
+export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, ids) => {
+    return segments.filter((segment) => ids?.includes(segment.id));
+});
