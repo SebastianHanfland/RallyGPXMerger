@@ -18,7 +18,9 @@ export function RemoveDataButton() {
         dispatch(gpxSegmentsActions.clearGpxSegments());
         dispatch(trackMergeActions.clear());
         dispatch(calculatedTracksActions.removeCalculatedTracks());
-        dispatch(mapActions.setSource('segments'));
+        dispatch(mapActions.setShowGpxSegments(true));
+        dispatch(mapActions.setShowBlockStreets(false));
+        dispatch(mapActions.setShowCalculatedTracks(false));
         dispatch(geoCodingActions.clear());
         localStorage.clear();
         setShowModal(false);

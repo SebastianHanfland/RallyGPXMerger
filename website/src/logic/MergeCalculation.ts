@@ -75,7 +75,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(calculatedTracksActions.setParticipants(participants));
-    dispatch(mapActions.setSource('tracks'));
+    dispatch(mapActions.setShowCalculatedTracks(true));
 
     if (!readableTracks) {
         readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));

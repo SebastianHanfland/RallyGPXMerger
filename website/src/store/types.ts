@@ -59,7 +59,6 @@ export const MAX_SLIDER_TIME = 100000;
 
 export interface MapState {
     currentTime: number;
-    currentSource: 'segments' | 'tracks' | 'blocked streets';
     start?: string;
     end?: string;
     centerPoint?: { lat: number; lng: number; zoom: number };

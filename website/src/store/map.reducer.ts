@@ -3,7 +3,6 @@ import { MapState, State } from './types';
 import { storage } from './storage.ts';
 
 const initialState: MapState = {
-    currentSource: 'segments',
     currentTime: 0,
 };
 
@@ -11,9 +10,6 @@ const mapSlice = createSlice({
     name: 'map',
     initialState: storage.load()?.map ?? initialState,
     reducers: {
-        setSource: (state: MapState, action: PayloadAction<'segments' | 'tracks' | 'blocked streets'>) => {
-            state.currentSource = action.payload;
-        },
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
@@ -42,7 +38,6 @@ const mapSlice = createSlice({
 export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
 const getBase = (state: State) => state.map;
-export const getCurrenMapSource = (state: State) => getBase(state).currentSource;
 export const getCurrenMapTime = (state: State) => getBase(state).currentTime;
 export const getStartMapTime = (state: State) => getBase(state).start;
 export const getEndMapTime = (state: State) => getBase(state).end;

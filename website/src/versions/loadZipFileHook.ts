@@ -14,7 +14,7 @@ export function loadZipFileHook() {
     const url = decodeURI(urlParams.replace('?url=', ''));
 
     useEffect(() => {
-        dispatch(mapActions.setSource('tracks'));
+        dispatch(mapActions.setShowCalculatedTracks(true));
         const zip = new JSZip();
         fetch(url)
             .then((res) => res.blob())
