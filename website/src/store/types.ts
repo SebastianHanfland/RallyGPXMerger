@@ -63,6 +63,7 @@ export interface MapState {
     start?: string;
     end?: string;
     centerPoint?: { lat: number; lng: number; zoom: number };
+    showMapMarker?: boolean;
 }
 
 export interface State {

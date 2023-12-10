@@ -24,6 +24,9 @@ const mapSlice = createSlice({
         setCenterPoint: (state: MapState, action: PayloadAction<{ lat: number; lng: number; zoom: number }>) => {
             state.centerPoint = action.payload;
         },
+        setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showMapMarker = action.payload;
+        },
     },
 });
 
@@ -35,3 +38,4 @@ export const getCurrenMapTime = (state: State) => getBase(state).currentTime;
 export const getStartMapTime = (state: State) => getBase(state).start;
 export const getEndMapTime = (state: State) => getBase(state).end;
 export const getCenterPoint = (state: State) => getBase(state).centerPoint;
+export const getShowMapMarker = (state: State) => getBase(state).showMapMarker ?? false;

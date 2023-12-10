@@ -1,10 +1,11 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapSource, mapActions } from '../../store/map.reducer.ts';
+import { getCurrenMapSource, getShowMapMarker, mapActions } from '../../store/map.reducer.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
 export function SourceSelection() {
     const mapSource = useSelector(getCurrenMapSource);
+    const showMapMarker = useSelector(getShowMapMarker);
     const dispatch = useDispatch();
     const calculatedTracks = useSelector(getCalculatedTracks);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
@@ -39,6 +40,15 @@ export function SourceSelection() {
                     disabled={blockedStreetInfos.length === 0}
                     readOnly
                     onClick={() => dispatch(mapActions.setSource('blocked streets'))}
+                ></Form.Check>
+                <Form.Check
+                    type={'checkbox'}
+                    id={'marker'}
+                    className={'m-3'}
+                    label={'Show marker'}
+                    checked={showMapMarker}
+                    readOnly
+                    onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                 ></Form.Check>
             </Form>
         </Form.Group>
