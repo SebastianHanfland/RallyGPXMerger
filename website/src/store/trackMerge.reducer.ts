@@ -37,6 +37,15 @@ const trackMergeSlice = createSlice({
                 track.id === action.payload.id ? { ...track, segmentIds: action.payload.segments } : track
             );
         },
+        removeSegmentFromTrack: (state: TrackMergeState, action: PayloadAction<{ id: string; segmentId: string }>) => {
+            const segmentId = action.payload.segmentId;
+
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id
+                    ? { ...track, segmentIds: track.segmentIds.filter((sId) => sId !== segmentId) }
+                    : track
+            );
+        },
         setTrackName: (state: TrackMergeState, action: PayloadAction<{ id: string; trackName: string }>) => {
             state.trackCompositions = state.trackCompositions.map((track) =>
                 track.id === action.payload.id ? { ...track, name: action.payload.trackName } : track

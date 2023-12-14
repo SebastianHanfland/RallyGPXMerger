@@ -6,8 +6,8 @@ import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 
 import { BREAK_IDENTIFIER } from '../../logic/types.ts';
 import { ReactSortable } from 'react-sortablejs';
-import { Accordion, Button } from 'react-bootstrap';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { Accordion } from 'react-bootstrap';
+import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -72,39 +72,16 @@ export function TrackSelectionCell({ track }: Props) {
                             }
                         >
                             {segmentIds.map((segmentId) => {
-                                const segmentName = options.find((option) => option.value === segmentId);
+                                const segmentName = options.find((option) => option.value === segmentId)?.label;
                                 if (!segmentName) {
                                     return null;
                                 }
                                 return (
-                                    <div
-                                        className={'d-flex justify-content-between'}
-                                        style={{
-                                            border: '1px solid transparent',
-                                            borderColor: 'black',
-                                            cursor: 'pointer',
-                                            margin: '1px',
-                                            backgroundColor: getColorFromUuid(segmentId),
-                                        }}
-                                        key={segmentId}
-                                        title={segmentName?.label}
-                                    >
-                                        <div className={'m-1'}>{segmentName?.label}</div>
-                                        <Button
-                                            variant="danger"
-                                            size={'sm'}
-                                            onClick={() =>
-                                                dispatch(
-                                                    trackMergeActions.setSegments({
-                                                        id,
-                                                        segments: segmentIds.filter((sId) => sId !== segmentId),
-                                                    })
-                                                )
-                                            }
-                                        >
-                                            X
-                                        </Button>
-                                    </div>
+                                    <TrackSelectionOption
+                                        segmentId={segmentId}
+                                        trackId={id}
+                                        segmentName={segmentName}
+                                    />
                                 );
                             })}
                         </ReactSortable>
