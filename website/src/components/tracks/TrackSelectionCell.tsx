@@ -1,7 +1,7 @@
 import { GpxSegment, TrackComposition } from '../../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 
 import { BREAK_IDENTIFIER } from '../../logic/types.ts';
@@ -53,6 +53,18 @@ export function TrackSelectionCell({ track }: Props) {
     const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption), ...breaks];
 
+    const setSegmentIds = (items: { id: string }[]) => {
+        const newSegments = items.map((segmentOption) => segmentOption.id);
+        return dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
+    };
+
+    const addSegmentToTrack = (newValue: SingleValue<{ value: string }>) => {
+        if (newValue) {
+            const segments = [...segmentIds, newValue.value];
+            dispatch(trackMergeActions.setSegments({ id, segments: segments }));
+        }
+    };
+
     return (
         <td>
             <Accordion className={'mt'}>
@@ -62,14 +74,7 @@ export function TrackSelectionCell({ track }: Props) {
                         <ReactSortable
                             delayOnTouchOnly={true}
                             list={segmentIds.map((segmentId) => ({ id: segmentId }))}
-                            setList={(items) =>
-                                dispatch(
-                                    trackMergeActions.setSegments({
-                                        id,
-                                        segments: items.map((segmentOption) => segmentOption.id),
-                                    })
-                                )
-                            }
+                            setList={setSegmentIds}
                         >
                             {segmentIds.map((segmentId) => {
                                 const segmentName = options.find((option) => option.value === segmentId)?.label;
@@ -92,13 +97,7 @@ export function TrackSelectionCell({ track }: Props) {
                             options={options.filter((option) => !segmentIds.includes(option.value))}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            onChange={(newValue) => {
-                                console.log('Here it is', newValue);
-                                if (newValue) {
-                                    const segments = [...segmentIds, newValue.value];
-                                    dispatch(trackMergeActions.setSegments({ id, segments: segments }));
-                                }
-                            }}
+                            onChange={addSegmentToTrack}
                         />
                     </Accordion.Body>
                 </Accordion.Item>
