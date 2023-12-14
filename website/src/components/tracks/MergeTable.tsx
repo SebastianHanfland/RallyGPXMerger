@@ -13,6 +13,7 @@ export const MergeTable = ({ trackCompositions }: Props) => {
             <thead>
                 <tr>
                     <th style={{ width: '30%' }}>Track name</th>
+                    <th style={{ width: '20%' }}>People count</th>
                     <th style={{ width: '40%' }}>Track components</th>
                     <th style={{ width: '30%', minWidth: '210px' }} />
                 </tr>

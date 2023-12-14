@@ -20,13 +20,13 @@ export function MergeAndMap({ selectedSection }: Props) {
         return (
             <Container fluid className={'m-0'}>
                 <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
-                    <Col xl={4}>
+                    <Col xl={2}>
                         <FileUploadSection />
                     </Col>
                     <Col xl={4}>
                         <TrackCompositionSection />
                     </Col>
-                    <Col xl={4}>
+                    <Col xl={6}>
                         <div style={{ height: '90%' }}>
                             <PlainMap />
                         </div>
