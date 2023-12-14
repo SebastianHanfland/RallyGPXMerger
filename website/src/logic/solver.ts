@@ -18,7 +18,7 @@ export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCom
     const trackNodes = listAllNodesOfTracks(trackCompositions, gpxSegments);
 
     return trackCompositions.map((track) => {
-        const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes);
+        const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes, trackCompositions);
         return assembleTrackFromSegments(track, gpxSegments, endDate);
     });
 };

@@ -24,12 +24,33 @@ export function sumUpAllPeopleWithHigherPriority(
     return numberOfPeopleWithHigherPriority;
 }
 
-export function getAdjustedArrivalDateTime(arrivalDateTime: string, track: TrackComposition, trackNodes: TrackNode[]) {
+export function sumUpAllPeopleWithHigherPriority2(trackCompositions: TrackComposition[], trackId: string): number {
+    const trackCompositionsCopy = [...trackCompositions];
+    trackCompositionsCopy.sort((tA, tB) => ((tA.peopleCount ?? 0) > (tB.peopleCount ?? 0) ? -1 : 1));
+    const indexOfTrack = trackCompositionsCopy.findIndex((track) => track.id === trackId);
+
+    let numberOfPeopleWithHigherPriority = 0;
+
+    trackCompositionsCopy.forEach((segment, index) => {
+        if (index < indexOfTrack) {
+            numberOfPeopleWithHigherPriority += segment.peopleCount ?? 0;
+        }
+    });
+
+    return numberOfPeopleWithHigherPriority;
+}
+
+export function getAdjustedArrivalDateTime(
+    arrivalDateTime: string,
+    track: TrackComposition,
+    trackNodes: TrackNode[],
+    trackCompositions: TrackComposition[]
+) {
     let delayForTrackInMinutes = 0;
     trackNodes.forEach((trackNode) => {
         const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);
         if (nodeInfluencesTrack) {
-            const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(trackNode.segmentsBeforeNode, track.id);
+            const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority2(trackCompositions, track.id);
             delayForTrackInMinutes += (peopleWithHigherPriority * PARTICIPANTS_DELAY_IN_SECONDS) / 60;
         }
     });

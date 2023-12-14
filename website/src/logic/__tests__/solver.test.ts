@@ -13,13 +13,13 @@ describe('with Peoples Solver', () => {
         // given
         setParticipantsDelay(0.2);
         const gpxSegments: GpxSegment[] = [
-            { id: '1', filename: 'A1', content: 'cA1', peopleCountEnd: 2000 },
-            { id: '2', filename: 'B1', content: 'cB1', peopleCountEnd: 3000 },
+            { id: '1', filename: 'A1', content: 'cA1' },
+            { id: '2', filename: 'B1', content: 'cB1' },
             { id: '3', filename: 'AB', content: 'cAB' },
         ];
         const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['1', '3'] },
-            { id: '2', name: 'B', segmentIds: ['2', '3'] },
+            { id: '1', name: 'A', segmentIds: ['1', '3'], peopleCount: 2000 },
+            { id: '2', name: 'B', segmentIds: ['2', '3'], peopleCount: 3000 },
         ];
         const arrivalDateTime = '2023-10-17T22:00:00.000Z';
         const arrivalDatePlus10 = '2023-10-17T22:10:00.000Z';
