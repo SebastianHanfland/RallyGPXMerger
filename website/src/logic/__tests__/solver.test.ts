@@ -45,4 +45,56 @@ describe('with Peoples Solver', () => {
         );
         expect(calculatedTracks).toEqual([dummyCalculatedTrack, dummyCalculatedTrack]);
     });
+
+    it('should merge A + B -> AB and AB + C -> ABC', () => {
+        // given
+        setParticipantsDelay(0.2);
+        const gpxSegments: GpxSegment[] = [
+            { id: '1', filename: 'A1', content: 'cA1' },
+            { id: '2', filename: 'B1', content: 'cB1' },
+            { id: '3', filename: 'AB', content: 'cAB' },
+            { id: '4', filename: 'ABC', content: 'cABA' },
+            { id: '5', filename: 'C1', content: 'cC1' },
+        ];
+        const trackCompositions: TrackComposition[] = [
+            { id: '1', name: 'A', segmentIds: ['1', '3', '4'], peopleCount: 3000 },
+            { id: '2', name: 'B', segmentIds: ['2', '3', '4'], peopleCount: 3000 },
+            { id: '3', name: 'C', segmentIds: ['5', '4'], peopleCount: 3000 },
+        ];
+        const arrivalDateTime = '2023-10-17T22:00:00.000Z';
+        const arrivalDatePlus10 = '2023-10-17T22:10:00.000Z';
+        const arrivalDatePlus20 = '2023-10-17T22:20:00.000Z';
+
+        const dummyCalculatedTrack = { id: 'id', filename: 'file', content: 'content' };
+        (assembleTrackFromSegments as Mock).mockImplementation(() => dummyCalculatedTrack);
+
+        // when
+        const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
+
+        // then
+        expect((assembleTrackFromSegments as Mock).mock.calls.map((call) => call[2])).toEqual([
+            arrivalDatePlus10,
+            arrivalDatePlus20,
+            arrivalDateTime,
+        ]);
+        expect(assembleTrackFromSegments).toHaveBeenNthCalledWith(
+            1,
+            trackCompositions[0],
+            gpxSegments,
+            arrivalDatePlus10
+        );
+        expect(assembleTrackFromSegments).toHaveBeenNthCalledWith(
+            2,
+            trackCompositions[1],
+            gpxSegments,
+            arrivalDatePlus20
+        );
+        expect(assembleTrackFromSegments).toHaveBeenNthCalledWith(
+            3,
+            trackCompositions[2],
+            gpxSegments,
+            arrivalDateTime
+        );
+        expect(calculatedTracks).toEqual([dummyCalculatedTrack, dummyCalculatedTrack, dummyCalculatedTrack]);
+    });
 });
