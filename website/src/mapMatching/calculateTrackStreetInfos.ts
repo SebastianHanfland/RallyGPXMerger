@@ -1,6 +1,6 @@
 import { CalculatedTrack, State } from '../store/types.ts';
 import { TrackStreetInfo } from './types.ts';
-import { getCalculatedTracks, getTrackParticipants } from '../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
@@ -12,9 +12,8 @@ import { Dispatch } from '@reduxjs/toolkit';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
-    (track: CalculatedTrack, index: number): TrackStreetInfo => {
+    (track: CalculatedTrack): TrackStreetInfo => {
         const resolvedPositions = getResolvedPositions(state);
-        const participants = getTrackParticipants(state);
 
         const gpx = SimpleGPX.fromString(track.content);
         const points = gpx.tracks.flatMap((track) => track.points);
@@ -37,7 +36,7 @@ const enrichWithStreetsAndAggregate =
             };
         });
 
-        const wayPoints = aggregateEnrichedPoints(enrichedPoints, participants[index]);
+        const wayPoints = aggregateEnrichedPoints(enrichedPoints, track.peopleCount ?? 0);
 
         return {
             id: track.id,

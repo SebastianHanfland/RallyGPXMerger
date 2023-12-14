@@ -16,6 +16,7 @@ export interface CalculatedTrack {
     id: string;
     filename: string;
     content: string;
+    peopleCount?: number;
 }
 
 export interface CalculatedTracksState {

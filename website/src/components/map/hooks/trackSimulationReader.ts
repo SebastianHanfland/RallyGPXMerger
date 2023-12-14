@@ -1,11 +1,11 @@
-import { MAX_SLIDER_TIME, State } from '../../../store/types.ts';
+import { MAX_SLIDER_TIME, State, TrackComposition } from '../../../store/types.ts';
 import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
-import { getCalculatedTracks, getTrackParticipants } from '../../../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
+import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 import { getReadableTracks } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
@@ -24,9 +24,9 @@ export function interpolatePosition(previous: Point, next: Point, timeStamp: str
 }
 
 const extractLocation =
-    (timeStampFront: string, trackParticipants: number[]) =>
+    (timeStampFront: string, trackParticipants: TrackComposition[]) =>
     (calculatedTrack: SimpleGPX, index: number): { lat: number; lng: number }[] => {
-        const participants = trackParticipants[index];
+        const participants = trackParticipants[index].peopleCount ?? 0;
         let returnPoints: { lat: number; lng: number }[] = [];
         const timeStampEnd = date
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
@@ -91,7 +91,7 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
 
 export const getCurrentMarkerPositionsForTracks = createSelector(
     getCurrentTimeStamp,
-    getTrackParticipants,
+    getTrackCompositions,
     getReadableTracks,
     (timeStamp, trackParticipants, readableTracks) => {
         if (!timeStamp) {

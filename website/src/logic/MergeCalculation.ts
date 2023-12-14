@@ -9,7 +9,7 @@ import {
     PARTICIPANTS_DELAY_IN_SECONDS,
     setParticipantsDelay,
 } from '../store/trackMerge.reducer.ts';
-import { calculatedTracksActions, getTrackParticipants } from '../store/calculatedTracks.reducer.ts';
+import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../store/map.reducer.ts';
@@ -30,7 +30,7 @@ export const setReadableTracks = (newReadableTracks: SimpleGPX[]) => {
 };
 
 export function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, state: State) {
-    const trackParticipants = getTrackParticipants(state);
+    const trackParticipants = getTrackCompositions(state).map((track) => track.peopleCount ?? 0);
     const maxDelay = Math.min(...trackParticipants);
 
     let endDate = '1990-10-14T10:09:57.000Z';

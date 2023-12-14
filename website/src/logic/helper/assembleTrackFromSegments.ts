@@ -25,5 +25,5 @@ export function assembleTrackFromSegments(
 
     const trackContent = mergeSimpleGPXs(shiftedGpxContents).toString();
 
-    return { id: track.id, content: trackContent, filename: track.name! };
+    return { id: track.id, content: trackContent, filename: track.name!, peopleCount: track.peopleCount ?? 0 };
 }
