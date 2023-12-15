@@ -1,6 +1,6 @@
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { getGpxSegments, getSegmentVelocities } from '../store/gpxSegments.reducer.ts';
 import {
     getArrivalDateTime,
     getAverageSpeedInKmH,
@@ -58,6 +58,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     const trackCompositions = getTrackCompositions(getState());
     const arrivalDateTime = getArrivalDateTime(getState());
     const averageSpeed = getAverageSpeedInKmH(getState());
+    const segmentVelocities = getSegmentVelocities(getState());
 
     if (!arrivalDateTime) {
         return;
@@ -68,7 +69,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     setParticipantsDelay(getParticipantsDelay(getState()));
 
-    const gpxSegmentsWithTimeStamp = enrichGpxSegmentsWithTimeStamps(gpxSegments, averageSpeed);
+    const gpxSegmentsWithTimeStamp = enrichGpxSegmentsWithTimeStamps(gpxSegments, averageSpeed, segmentVelocities);
 
     const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegmentsWithTimeStamp, trackCompositions, arrivalDateTime);
     const participants = calculateParticipants(gpxSegmentsWithTimeStamp, trackCompositions);
