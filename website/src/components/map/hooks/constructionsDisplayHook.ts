@@ -11,6 +11,11 @@ export function constructionsDisplayHook(gpxSegmentsLayer: MutableRefObject<Laye
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(gpxSegmentsLayer, gpxSegments, showConstructions, { showMarker: false });
+        addTracksToLayer(gpxSegmentsLayer, gpxSegments, showConstructions, {
+            showMarker: false,
+            color: 'red',
+            opacity: 1,
+            weight: 12,
+        });
     }, [gpxSegments, gpxSegments.length, showConstructions]);
 }

@@ -11,6 +11,9 @@ function toLatLng(point: Point): { lat: number; lng: number } {
 
 export interface MapOptions {
     showMarker: boolean;
+    color?: string;
+    opacity?: number;
+    weight?: number;
 }
 
 export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
@@ -18,9 +21,9 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
     gpx.tracks.forEach((track) => {
         const trackPoints = track.points.map(toLatLng);
         const connection = L.polyline(trackPoints, {
-            weight: 8,
-            color: getColorFromUuid(gpxSegment.id),
-            opacity: 0.6,
+            weight: options.weight ?? 8,
+            color: options.color ?? getColorFromUuid(gpxSegment.id),
+            opacity: options.opacity ?? 0.6,
         }).bindTooltip(gpxSegment.filename, {
             sticky: true,
         });
