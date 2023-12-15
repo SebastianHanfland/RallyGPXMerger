@@ -1,10 +1,10 @@
 import { Form, Table } from 'react-bootstrap';
-import { FileDisplay } from '../segments/FileDisplay.tsx';
 import { useSelector } from 'react-redux';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../../store/types.ts';
 import { useEffect, useState } from 'react';
 import { filterItems } from '../../utils/filterUtil.ts';
+import { SegmentSpeedRow } from './SegmentSpeedRow.tsx';
 
 export function SegmentSpeedSettings() {
     const [filterTerm, setFilterTerm] = useState('');
@@ -28,13 +28,13 @@ export function SegmentSpeedSettings() {
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
-                            <th style={{ width: '30%' }}>File</th>
-                            <th style={{ width: '10%', minWidth: '150px' }}>Actions</th>
+                            <th style={{ width: '50%' }}>Segment</th>
+                            <th style={{ width: '50%', minWidth: '150px' }}>Average velocity in km/h</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredSegments.map((gpxSegment) => (
-                            <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
+                            <SegmentSpeedRow key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                     </tbody>
                 </Table>

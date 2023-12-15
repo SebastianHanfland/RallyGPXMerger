@@ -15,7 +15,7 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
             <td>
                 <Form.Control
                     type="text"
-                    placeholder="People at start"
+                    placeholder="File name"
                     value={filename}
                     onChange={(value) => dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }))}
                 />
