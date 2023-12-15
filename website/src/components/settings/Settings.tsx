@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
-import { GpxSegments } from '../segments/GpxSegments.tsx';
 import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
 import { SegmentSpeedSettings } from './SegmentSpeedSettings.tsx';
+import { ConstructionSites } from './ConstructionSites.tsx';
 
 export function Settings() {
     return (
@@ -15,8 +15,7 @@ export function Settings() {
                     <SegmentSpeedSettings />
                 </Col>
                 <Col xl={4}>
-                    <h3>Blocked roads to display</h3>
-                    <GpxSegments />
+                    <ConstructionSites />
                 </Col>
             </Row>
         </div>
