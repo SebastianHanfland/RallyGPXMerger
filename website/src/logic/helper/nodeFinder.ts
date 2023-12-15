@@ -1,4 +1,4 @@
-import { GpxSegment, TrackComposition } from '../../store/types.ts';
+import { TrackComposition } from '../../store/types.ts';
 
 export interface TrackNode {
     segmentsBeforeNode: { segmentId: string; trackId: string; amount?: number }[];
@@ -21,7 +21,7 @@ export function findMultipleOccurrencesOfSegments(trackCompositions: TrackCompos
     return multipleSegmentIds;
 }
 
-export function listAllNodesOfTracks(trackCompositions: TrackComposition[], gpxSegments: GpxSegment[]): TrackNode[] {
+export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): TrackNode[] {
     const segmentIdsUsedMultipleTimes = findMultipleOccurrencesOfSegments(trackCompositions);
     return segmentIdsUsedMultipleTimes.map((segmentId) => {
         const segmentsBeforeNode: { segmentId: string; trackId: string; amount?: number }[] = [];
@@ -29,11 +29,10 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[], gpxS
             const indexOfSegment = track.segmentIds.indexOf(segmentId);
             if (indexOfSegment > 0) {
                 const segmentIdBeforeNode = track.segmentIds[indexOfSegment - 1];
-                const gpxSegment = gpxSegments.find((segment) => segment.id === segmentIdBeforeNode);
                 segmentsBeforeNode.push({
                     segmentId: segmentIdBeforeNode,
                     trackId: track.id,
-                    amount: gpxSegment?.peopleCountEnd,
+                    amount: track?.peopleCount,
                 });
             }
         });

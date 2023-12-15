@@ -1,18 +1,12 @@
-import { GpxSegment, TrackComposition } from '../../../store/types.ts';
+import { TrackComposition } from '../../../store/types.ts';
 import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
 
 describe('Node finder', () => {
     it('should find a node', () => {
         // given
-        const gpxSegments: GpxSegment[] = [
-            { id: '0', filename: 'A0', content: 'cA0', peopleCountEnd: 100 },
-            { id: '1', filename: 'A1', content: 'cA1', peopleCountEnd: 200 },
-            { id: '2', filename: 'B1', content: 'cB1', peopleCountEnd: 300 },
-            { id: '3', filename: 'AB', content: 'cAB' },
-        ];
         const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['0', '1', '3'] },
-            { id: '2', name: 'B', segmentIds: ['2', '3'] },
+            { id: '1', name: 'A', segmentIds: ['0', '1', '3'], peopleCount: 200 },
+            { id: '2', name: 'B', segmentIds: ['2', '3'], peopleCount: 300 },
         ];
 
         const expectedTrackNodes: TrackNode[] = [
@@ -26,7 +20,7 @@ describe('Node finder', () => {
         ];
 
         // when
-        const nodesOfTracks = listAllNodesOfTracks(trackCompositions, gpxSegments);
+        const nodesOfTracks = listAllNodesOfTracks(trackCompositions);
 
         // then
         expect(nodesOfTracks).toEqual(expectedTrackNodes);

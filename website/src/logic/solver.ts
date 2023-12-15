@@ -19,7 +19,7 @@ export interface GpxMergeLogic {
 }
 
 export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime: string) => {
-    const trackNodes = listAllNodesOfTracks(trackCompositions, gpxSegments);
+    const trackNodes = listAllNodesOfTracks(trackCompositions);
 
     return trackCompositions.map((track) => {
         const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes, trackCompositions);

@@ -28,6 +28,9 @@ export function sumUpAllPeopleWithHigherPriority2(trackCompositions: TrackCompos
     const trackCompositionsCopy = [...trackCompositions];
     trackCompositionsCopy.sort((tA, tB) => ((tA.peopleCount ?? 0) > (tB.peopleCount ?? 0) ? -1 : 1));
     const indexOfTrack = trackCompositionsCopy.findIndex((track) => track.id === trackId);
+    // We have all the different tracks
+    // Situations are interesting where the same segment ids appear
+    // nodes have to be found any ways
 
     let numberOfPeopleWithHigherPriority = 0;
 
