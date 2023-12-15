@@ -1,9 +1,3 @@
-import { CalculatedTrack, GpxSegment, TrackComposition } from '../store/types.ts';
-
-export interface GpxMergeLogic {
-    (gpxSegments: GpxSegment[], trackCompositions: TrackComposition[], arrivalDateTime: string): CalculatedTrack[];
-}
-
 export interface GpxFileAccess {
     shiftToArrivalTime: (arrival: string) => void;
     getStart: () => string;
