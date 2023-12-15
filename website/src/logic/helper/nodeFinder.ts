@@ -1,4 +1,5 @@
 import { TrackComposition } from '../../store/types.ts';
+import { BREAK_IDENTIFIER } from '../types.ts';
 
 export interface TrackNode {
     segmentsBeforeNode: { segmentId: string; trackId: string; amount: number }[];
@@ -10,13 +11,15 @@ export function findMultipleOccurrencesOfSegments(trackCompositions: TrackCompos
     const multipleSegmentIds: string[] = [];
 
     trackCompositions.forEach((track) => {
-        track.segmentIds.forEach((segmentId) => {
-            if (occurredSegmentIds.includes(segmentId) && !multipleSegmentIds.includes(segmentId)) {
-                multipleSegmentIds.push(segmentId);
-            } else {
-                occurredSegmentIds.push(segmentId);
-            }
-        });
+        track.segmentIds
+            .filter((segmentId) => !segmentId.includes(BREAK_IDENTIFIER))
+            .forEach((segmentId) => {
+                if (occurredSegmentIds.includes(segmentId) && !multipleSegmentIds.includes(segmentId)) {
+                    multipleSegmentIds.push(segmentId);
+                } else {
+                    occurredSegmentIds.push(segmentId);
+                }
+            });
     });
     return multipleSegmentIds;
 }

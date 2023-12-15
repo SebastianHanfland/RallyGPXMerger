@@ -1,5 +1,6 @@
 import { TrackComposition } from '../../../store/types.ts';
 import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
+import { BREAK_IDENTIFIER } from '../../types.ts';
 
 describe('Node finder', () => {
     it('should find a node', () => {
@@ -18,6 +19,22 @@ describe('Node finder', () => {
                 segmentIdAfterNode: '3',
             },
         ];
+
+        // when
+        const nodesOfTracks = listAllNodesOfTracks(trackCompositions);
+
+        // then
+        expect(nodesOfTracks).toEqual(expectedTrackNodes);
+    });
+
+    it('track finder ignore break nodes', () => {
+        // given
+        const trackCompositions: TrackComposition[] = [
+            { id: '1', name: 'A', segmentIds: ['0', `20${BREAK_IDENTIFIER}1`, '1', '3'], peopleCount: 200 },
+            { id: '2', name: 'B', segmentIds: ['2', `20${BREAK_IDENTIFIER}1`, '4'], peopleCount: 300 },
+        ];
+
+        const expectedTrackNodes: TrackNode[] = [];
 
         // when
         const nodesOfTracks = listAllNodesOfTracks(trackCompositions);
