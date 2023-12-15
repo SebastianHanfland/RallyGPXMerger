@@ -51,8 +51,9 @@ export function StreetResolvedTracks() {
                                 key={id}
                                 active={id === selectedTrackId}
                                 onClick={() => setSelectedTrackId(id)}
+                                title={name}
                             >
-                                {name}
+                                {trackStreetInfos.length > 6 ? name.substring(0, 2) : name}
                             </Pagination.Item>
                         ))}
                     </Pagination>
