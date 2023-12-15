@@ -2,21 +2,21 @@ import { GpxSegment } from '../../store/types.ts';
 import { getAverageSpeedInKmH } from '../../store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { getSegmentVelocities, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import { getSegmentSpeeds, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 
 export function SegmentSpeedRow({ gpxSegment }: { gpxSegment: GpxSegment }) {
     const { filename, id } = gpxSegment;
     const dispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
-    const segmentVelocities = useSelector(getSegmentVelocities);
+    const segmentSpeeds = useSelector(getSegmentSpeeds);
 
-    const segmentVelocity = segmentVelocities[id];
-    const hasCustomVelocity = (segmentVelocity ?? 0) > 0;
+    const segmentSpeed = segmentSpeeds[id];
+    const hasCustomSpeed = (segmentSpeed ?? 0) > 0;
     return (
         <tr>
             <td>{filename}</td>
-            {hasCustomVelocity ? (
+            {hasCustomSpeed ? (
                 <td style={{ backgroundColor: 'grey' }}>
                     <s>{averageSpeed.toFixed(1)}</s>
                 </td>
@@ -26,11 +26,9 @@ export function SegmentSpeedRow({ gpxSegment }: { gpxSegment: GpxSegment }) {
             <td>
                 <Form.Control
                     type="number"
-                    placeholder="Custom velocity"
-                    value={segmentVelocity?.toString()}
-                    onChange={(value) =>
-                        dispatch(gpxSegmentsActions.setSegmentVelocity({ id, velocity: getCount(value) }))
-                    }
+                    placeholder="Custom speed"
+                    value={segmentSpeed?.toString()}
+                    onChange={(value) => dispatch(gpxSegmentsActions.setSegmentSpeeds({ id, speed: getCount(value) }))}
                 />
             </td>
         </tr>

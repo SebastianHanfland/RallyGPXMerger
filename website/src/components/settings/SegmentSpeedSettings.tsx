@@ -29,8 +29,8 @@ export function SegmentSpeedSettings() {
                     <thead>
                         <tr>
                             <th style={{ width: '40%' }}>Segment</th>
-                            <th style={{ width: '30%', minWidth: '150px' }}>Global velocity in km/h</th>
-                            <th style={{ width: '30%', minWidth: '150px' }}>Custom velocity in km/h</th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>Global speed in km/h</th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>Custom speed in km/h</th>
                         </tr>
                     </thead>
                     <tbody>
