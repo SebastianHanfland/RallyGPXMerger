@@ -1,4 +1,3 @@
-import { listAllNodesOfTracks } from './helper/nodeFinder.ts';
 import { getAdjustedArrivalDateTime } from './helper/peopleDelayCounter.ts';
 
 import { assembleTrackFromSegments } from './helper/assembleTrackFromSegments.ts';
@@ -19,10 +18,8 @@ export interface GpxMergeLogic {
 }
 
 export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime: string) => {
-    const trackNodes = listAllNodesOfTracks(trackCompositions);
-
     return trackCompositions.map((track) => {
-        const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackNodes, trackCompositions);
+        const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackCompositions);
         return assembleTrackFromSegments(track, gpxSegments, endDate);
     });
 };
