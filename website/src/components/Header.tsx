@@ -37,6 +37,13 @@ export const AppHeader = ({ selectedSection, setSelectedSection }: Props) => {
                             >
                                 Import Export
                             </Pagination.Item>
+                            <Pagination.Item
+                                key={'settings'}
+                                active={'settings' === selectedSection}
+                                onClick={() => setSelectedSection('settings')}
+                            >
+                                Settings
+                            </Pagination.Item>
                         </Pagination>
                         <h1>Rally GPX Merger</h1>
                         <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>

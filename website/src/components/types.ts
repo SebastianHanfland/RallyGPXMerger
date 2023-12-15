@@ -1,1 +1,1 @@
-export type Sections = 'streets' | 'gps' | 'importExport';
+export type Sections = 'streets' | 'gps' | 'importExport' | 'settings';
