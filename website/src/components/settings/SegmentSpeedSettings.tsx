@@ -28,8 +28,9 @@ export function SegmentSpeedSettings() {
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
-                            <th style={{ width: '50%' }}>Segment</th>
-                            <th style={{ width: '50%', minWidth: '150px' }}>Average velocity in km/h</th>
+                            <th style={{ width: '40%' }}>Segment</th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>Global velocity in km/h</th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>Custom velocity in km/h</th>
                         </tr>
                     </thead>
                     <tbody>

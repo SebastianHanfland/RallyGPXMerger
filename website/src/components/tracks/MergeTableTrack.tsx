@@ -4,15 +4,10 @@ import { useDispatch } from 'react-redux';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { TrackSelectionCell } from './TrackSelectionCell.tsx';
 import { TrackButtonsCell } from './TrackButtonsCell.tsx';
-import { ChangeEvent } from 'react';
+import { getCount } from '../../utils/inputUtil.ts';
 
 interface Props {
     track: TrackComposition;
-}
-
-function getCount(value: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const number = Number(value.target.value);
-    return isNaN(number) ? 0 : number;
 }
 
 export function MergeTableTrack({ track }: Props) {
