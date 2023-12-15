@@ -1,4 +1,4 @@
-import { sumUpAllPeopleWithHigherPriority } from '../peopleDelayCounter.ts';
+import { sumUpAllPeopleWithHigherPriority, sumUpAllPeopleWithHigherPriority2 } from '../peopleDelayCounter.ts';
 
 describe('peopleDelayCounter', () => {
     describe('should sum up all people with higher priority', () => {
@@ -36,6 +36,38 @@ describe('peopleDelayCounter', () => {
 
             // then
             expect(number).toEqual(100);
+        });
+    });
+
+    describe('should find the number of people that reach the end before track', () => {
+        it('should add up to zero when no segments are present', () => {
+            // when
+            const number = sumUpAllPeopleWithHigherPriority2([], '1');
+
+            // then
+            expect(number).toEqual(0);
+        });
+
+        describe('Two branches', () => {
+            const twoBranches = [
+                { id: '1', segmentIds: ['A1', 'AB'], peopleCount: 200 },
+                { id: '2', segmentIds: ['B1', 'AB'], peopleCount: 150 },
+            ];
+            it('should add up to zero when index is zero', () => {
+                // when
+                const number = sumUpAllPeopleWithHigherPriority2(twoBranches, '1');
+
+                // then
+                expect(number).toEqual(0);
+            });
+
+            it('should add up other segments when they have more people', () => {
+                // when
+                const number = sumUpAllPeopleWithHigherPriority2(twoBranches, '2');
+
+                // then
+                expect(number).toEqual(200);
+            });
         });
     });
 });
