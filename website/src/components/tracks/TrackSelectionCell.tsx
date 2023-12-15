@@ -83,6 +83,7 @@ export function TrackSelectionCell({ track }: Props) {
                                 }
                                 return (
                                     <TrackSelectionOption
+                                        key={segmentId}
                                         segmentId={segmentId}
                                         trackId={id}
                                         segmentName={segmentName}
