@@ -14,9 +14,6 @@ const gpxSegmentsSlice = createSlice({
         addGpxSegments: (state: GpxSegmentsState, action: PayloadAction<GpxSegment[]>) => {
             state.segments = [...state.segments, ...action.payload];
         },
-        orderGpxSegments: (state: GpxSegmentsState, action: PayloadAction<string[]>) => {
-            console.log(action.payload, state.segments);
-        },
         removeGpxSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
         },
@@ -27,9 +24,6 @@ const gpxSegmentsSlice = createSlice({
             state.segments = state.segments.map((segment) =>
                 segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
             );
-        },
-        clearGpxSegments: (state: GpxSegmentsState) => {
-            state.segments = [];
         },
         setPeopleCountStart: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
             state.segments = state.segments.map((segment) =>
@@ -57,6 +51,13 @@ const gpxSegmentsSlice = createSlice({
                 state.segmentSpeeds[id] = speed;
             }
         },
+        addConstructionSegments: (state: GpxSegmentsState, action: PayloadAction<GpxSegment[]>) => {
+            state.constructionSegments = [...(state.constructionSegments ?? []), ...action.payload];
+        },
+        removeConstructionSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
+            state.constructionSegments = state.constructionSegments?.filter((segment) => segment.id !== action.payload);
+        },
+        clearGpxSegments: () => initialState,
     },
 });
 
@@ -64,6 +65,7 @@ export const gpxSegmentsActions = gpxSegmentsSlice.actions;
 export const gpxSegmentsReducer: Reducer<GpxSegmentsState> = gpxSegmentsSlice.reducer;
 const getBase = (state: State) => state.gpxSegments;
 export const getGpxSegments = (state: State) => getBase(state).segments;
+export const getConstructionSegments = (state: State) => getBase(state).constructionSegments ?? [];
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
 

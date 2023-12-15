@@ -11,6 +11,7 @@ export interface GpxSegmentsState {
     segments: GpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds?: Record<string, number | undefined>;
+    constructionSegments?: GpxSegment[];
 }
 
 export interface CalculatedTrack {

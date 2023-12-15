@@ -3,7 +3,8 @@ import { Table } from 'react-bootstrap';
 import { FileDisplay } from '../segments/FileDisplay.tsx';
 import { GpxSegment } from '../../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getConstructionSegments, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -18,15 +19,18 @@ async function toGpxSegment(file: File): Promise<GpxSegment> {
 export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
 
 export function ConstructionSites() {
-    const [constructionSites, setConstructionSites] = useState<GpxSegment[]>([]);
+    const dispatch = useDispatch();
+    const constructionSegments = useSelector(getConstructionSegments);
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) => setConstructionSites(newGpxSegments));
+        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
+            dispatch(gpxSegmentsActions.addConstructionSegments(newGpxSegments))
+        );
     };
     return (
-        <div>
+        <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
             <h3>Construction sites to display</h3>
-            {constructionSites.length > 0 ? (
+            {constructionSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
@@ -35,8 +39,8 @@ export function ConstructionSites() {
                         </tr>
                     </thead>
                     <tbody>
-                        {constructionSites.map((gpxSegment) => (
-                            <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
+                        {constructionSegments.map((gpxSegment) => (
+                            <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} hideChangeButton={true} />
                         ))}
                         <tr>
                             <td colSpan={3}>

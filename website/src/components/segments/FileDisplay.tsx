@@ -6,7 +6,7 @@ import { FileDownloader } from './FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 
-export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
+export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content } = gpxSegment;
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ export function FileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
             </td>
             <td>
                 <FileDownloader content={content} name={filename} id={id} onlyIcon={true} />
-                <FileChangeButton id={id} name={filename} />
+                {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                 <RemoveFileButton id={id} name={filename} />
             </td>
         </tr>

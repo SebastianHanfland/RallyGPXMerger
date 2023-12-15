@@ -15,7 +15,8 @@ export function SegmentSpeedSettings() {
     }, [filterTerm]);
 
     return (
-        <div>
+        <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+            <h3>Construction sites to display</h3>
             <div className={'my-2'}>
                 <Form.Control
                     type="text"
