@@ -72,6 +72,7 @@ export interface MapState {
     showBlockStreets?: boolean;
     showCalculatedTracks?: boolean;
     showGpxSegments?: boolean;
+    showConstructions?: boolean;
 }
 
 export interface State {

@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     getShowBlockStreets,
     getShowCalculatedTracks,
+    getShowConstructions,
     getShowGpxSegments,
     getShowMapMarker,
     mapActions,
 } from '../../store/map.reducer.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
+import { getConstructionSegments } from '../../store/gpxSegments.reducer.ts';
 export function MapContentSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
+    const showConstructions = useSelector(getShowConstructions);
+    const hasConstructions = useSelector(getConstructionSegments)?.length > 0;
     const showBlockStreets = useSelector(getShowBlockStreets);
     const showCalculatedTracks = useSelector(getShowCalculatedTracks);
     const showGpxSegments = useSelector(getShowGpxSegments);
@@ -52,6 +56,8 @@ export function MapContentSelection() {
                     readOnly
                     onClick={() => dispatch(mapActions.setShowBlockStreets(!showBlockStreets))}
                 ></Form.Check>
+            </Form>
+            <Form className={'d-flex'}>
                 <Form.Check
                     type={'checkbox'}
                     id={'marker'}
@@ -62,6 +68,18 @@ export function MapContentSelection() {
                     readOnly
                     onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                 ></Form.Check>
+                {hasConstructions && (
+                    <Form.Check
+                        type={'checkbox'}
+                        id={'marker'}
+                        className={'m-3'}
+                        label={'Constructions'}
+                        title={'Constructions'}
+                        checked={showConstructions}
+                        readOnly
+                        onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
+                    ></Form.Check>
+                )}
             </Form>
         </Form.Group>
     );
