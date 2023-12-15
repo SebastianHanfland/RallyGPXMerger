@@ -9,7 +9,10 @@ export function filterItems<T>(filterTerm: string | undefined, items: T[], getNa
                 if (term === '') {
                     return;
                 }
-                const matches = getName(track)?.replace(/\s/g, '').includes(term.replace(/\s/g, ''));
+                const matches = getName(track)
+                    ?.replace(/\s/g, '')
+                    .toLowerCase()
+                    .includes(term.replace(/\s/g, '').toLowerCase());
                 if (matches) {
                     match = true;
                 }
