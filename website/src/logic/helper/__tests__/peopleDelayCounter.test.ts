@@ -69,5 +69,36 @@ describe('peopleDelayCounter', () => {
                 expect(number).toEqual(200);
             });
         });
+
+        describe('Three branches meet at one point', () => {
+            const twoBranches = [
+                { id: '1', segmentIds: ['A1', 'ABC'], peopleCount: 200 },
+                { id: '2', segmentIds: ['B1', 'ABC'], peopleCount: 150 },
+                { id: '3', segmentIds: ['C1', 'ABC'], peopleCount: 300 },
+            ];
+            it('the longest branch should reach first', () => {
+                // when
+                const number = sumUpAllPeopleWithHigherPriority2(twoBranches, '1');
+
+                // then
+                expect(number).toEqual(300);
+            });
+
+            it('earlier matched branches should stay together and are evaluated together', () => {
+                // when
+                const number = sumUpAllPeopleWithHigherPriority2(twoBranches, '2');
+
+                // then
+                expect(number).toEqual(500);
+            });
+
+            it('later added branches are compared against the combined strength', () => {
+                // when
+                const number = sumUpAllPeopleWithHigherPriority2(twoBranches, '3');
+
+                // then
+                expect(number).toEqual(0);
+            });
+        });
     });
 });
