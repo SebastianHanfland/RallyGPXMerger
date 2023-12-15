@@ -58,12 +58,12 @@ describe('with Peoples Solver', () => {
         ];
         const trackCompositions: TrackComposition[] = [
             { id: '1', name: 'A', segmentIds: ['1', '3', '4'], peopleCount: 3000 },
-            { id: '2', name: 'B', segmentIds: ['2', '3', '4'], peopleCount: 3000 },
+            { id: '2', name: 'B', segmentIds: ['2', '3', '4'], peopleCount: 1500 },
             { id: '3', name: 'C', segmentIds: ['5', '4'], peopleCount: 3000 },
         ];
         const arrivalDateTime = '2023-10-17T22:00:00.000Z';
-        const arrivalDatePlus10 = '2023-10-17T22:10:00.000Z';
-        const arrivalDatePlus20 = '2023-10-17T22:20:00.000Z';
+        const arrivalDateTimePlus10 = '2023-10-17T22:10:00.000Z';
+        const arrivalDateTimePlus15 = '2023-10-17T22:15:00.000Z';
 
         const dummyCalculatedTrack = { id: 'id', filename: 'file', content: 'content' };
         (assembleTrackFromSegments as Mock).mockImplementation(() => dummyCalculatedTrack);
@@ -73,27 +73,27 @@ describe('with Peoples Solver', () => {
 
         // then
         expect((assembleTrackFromSegments as Mock).mock.calls.map((call) => call[2])).toEqual([
-            arrivalDatePlus10,
-            arrivalDatePlus20,
             arrivalDateTime,
+            arrivalDateTimePlus10,
+            arrivalDateTimePlus15,
         ]);
         expect(assembleTrackFromSegments).toHaveBeenNthCalledWith(
             1,
             trackCompositions[0],
             gpxSegments,
-            arrivalDatePlus10
+            arrivalDateTime
         );
         expect(assembleTrackFromSegments).toHaveBeenNthCalledWith(
             2,
             trackCompositions[1],
             gpxSegments,
-            arrivalDatePlus20
+            arrivalDateTimePlus10
         );
         expect(assembleTrackFromSegments).toHaveBeenNthCalledWith(
             3,
             trackCompositions[2],
             gpxSegments,
-            arrivalDateTime
+            arrivalDateTimePlus15
         );
         expect(calculatedTracks).toEqual([dummyCalculatedTrack, dummyCalculatedTrack, dummyCalculatedTrack]);
     });
