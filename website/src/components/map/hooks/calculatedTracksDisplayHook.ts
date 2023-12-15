@@ -8,10 +8,10 @@ import { getShowCalculatedTracks, getShowMapMarker } from '../../../store/map.re
 export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getFilteredCalculatedTracks);
     const showTracks = useSelector(getShowCalculatedTracks);
-    const showMapMarker = useSelector(getShowMapMarker);
+    const showMarker = useSelector(getShowMapMarker);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(calculatedTracksLayer, calculatedTracks, showTracks, showMapMarker);
-    }, [calculatedTracks, calculatedTracks.length, showTracks, showMapMarker]);
+        addTracksToLayer(calculatedTracksLayer, calculatedTracks, showTracks, { showMarker });
+    }, [calculatedTracks, calculatedTracks.length, showTracks, showMarker]);
 }

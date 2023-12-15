@@ -8,6 +8,7 @@ import { calculatedTracksDisplayHook } from './hooks/calculatedTracksDisplayHook
 import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
 import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
 import { centerPointHook } from './hooks/centerPointHook.tsx';
+import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -66,6 +67,7 @@ export const PlainMap = () => {
     const blockedStreetLayer = useRef<LayerGroup>(null);
     const calculatedTracksLayer = useRef<LayerGroup>(null);
     const trackMarkerLayer = useRef<LayerGroup>(null);
+    const constructionsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -79,12 +81,15 @@ export const PlainMap = () => {
         calculatedTracksLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         trackMarkerLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        constructionsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     gpxSegmentDisplayHook(gpxSegmentsLayer);
     blockedStreetsDisplayHook(blockedStreetLayer);
     calculatedTracksDisplayHook(calculatedTracksLayer);
     trackMarkerDisplayHook(trackMarkerLayer);
+    constructionsDisplayHook(constructionsLayer);
 
     return (
         <div className={'m-1 shadow'}>

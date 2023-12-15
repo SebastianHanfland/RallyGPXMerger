@@ -9,7 +9,11 @@ function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };
 }
 
-export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, showMarker: boolean) {
+export interface MapOptions {
+    showMarker: boolean;
+}
+
+export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
     const gpx = SimpleGPX.fromString(gpxSegment.content);
     gpx.tracks.forEach((track) => {
         const trackPoints = track.points.map(toLatLng);
@@ -21,7 +25,7 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
             sticky: true,
         });
         connection.addTo(routeLayer);
-        if (showMarker) {
+        if (options.showMarker) {
             const startMarker = L.marker(trackPoints[0], {
                 icon: startIcon,
                 title: gpxSegment.filename,
@@ -40,7 +44,7 @@ export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
     calculatedTracks: CalculatedTrack[] | GpxSegment[],
     show: boolean,
-    showMarker: boolean
+    options: MapOptions
 ) {
     const current = calculatedTracksLayer.current;
     if (!calculatedTracksLayer || !current) {
@@ -49,7 +53,7 @@ export function addTracksToLayer(
     current.clearLayers();
     if (show) {
         calculatedTracks.forEach((track) => {
-            addTrackToMap(track, current, showMarker);
+            addTrackToMap(track, current, options);
         });
     }
 }

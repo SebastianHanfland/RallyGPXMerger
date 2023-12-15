@@ -8,10 +8,10 @@ import { getShowGpxSegments, getShowMapMarker } from '../../../store/map.reducer
 export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const gpxSegments = useSelector(getFilteredGpxSegments);
     const showSegments = useSelector(getShowGpxSegments);
-    const showMapMarker = useSelector(getShowMapMarker);
+    const showMarker = useSelector(getShowMapMarker);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(gpxSegmentsLayer, gpxSegments, showSegments, showMapMarker);
-    }, [gpxSegments, gpxSegments.length, showSegments, showMapMarker]);
+        addTracksToLayer(gpxSegmentsLayer, gpxSegments, showSegments, { showMarker });
+    }, [gpxSegments, gpxSegments.length, showSegments, showMarker]);
 }
