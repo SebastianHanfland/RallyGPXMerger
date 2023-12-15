@@ -64,7 +64,7 @@ describe('assembleTrackFromSegments', () => {
         ];
         const trackComposition: TrackComposition = { id: '1', name: 'A', segmentIds: ['1', '3'] };
 
-        const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA' };
+        const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA', peopleCount: 0 };
 
         // when
         const calculatedTracks = assembleTrackFromSegments(trackComposition, gpxSegments, arrivalDateTime);
@@ -78,7 +78,7 @@ describe('assembleTrackFromSegments', () => {
         const gpxSegments: GpxSegment[] = [{ id: '1', filename: 'A1', content: 'cA1' }];
         const track: TrackComposition = { id: '1', name: 'A', segmentIds: ['1'] };
 
-        const expectedCalculatedTracks: CalculatedTrack = { id: '1', filename: 'A', content: 'cA1' };
+        const expectedCalculatedTracks: CalculatedTrack = { id: '1', filename: 'A', content: 'cA1', peopleCount: 0 };
 
         // when
         const calculatedTrack = assembleTrackFromSegments(track, gpxSegments, arrivalDateTime);
@@ -96,7 +96,7 @@ describe('assembleTrackFromSegments', () => {
         ];
         const track: TrackComposition = { id: '1', name: 'A', segmentIds: ['1', '2'] };
 
-        const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA' };
+        const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA', peopleCount: 0 };
 
         // when
         const calculatedTrack = assembleTrackFromSegments(track, gpxSegments, arrivalDateTime);
@@ -113,7 +113,7 @@ describe('assembleTrackFromSegments', () => {
         const track: TrackComposition = { id: '1', name: 'A', segmentIds: ['1', `30${BREAK_IDENTIFIER}1`] };
         const arrivalDateTime30min = '2023-10-17T21:30:00.000Z';
 
-        const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA1' };
+        const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA1', peopleCount: 0 };
 
         // when
         const calculatedTracks = assembleTrackFromSegments(track, gpxSegments, arrivalDateTime);

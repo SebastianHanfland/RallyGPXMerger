@@ -9,6 +9,10 @@ vi.mock('../../utils/SimpleGPX.ts');
 vi.mock('../helper/assembleTrackFromSegments.ts');
 
 describe('with Peoples Solver', () => {
+    afterEach(() => {
+        vi.resetAllMocks();
+    });
+
     it('merge A1 and AB to A and B1 and AB to B - Shifting time based on people on track', () => {
         // given
         setParticipantsDelay(0.2);
