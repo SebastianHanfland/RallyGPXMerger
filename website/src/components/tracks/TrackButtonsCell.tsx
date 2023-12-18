@@ -45,7 +45,7 @@ export function TrackButtonsCell({ track }: Props) {
                     dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
                     dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
                 }}
-                title={'Copy segmentIds to clipboard'}
+                title={'Paste segmentIds to clipboard'}
                 disabled={!segmentIdClipboard}
             >
                 <img src={inputFromClipboard} alt="input from clipboard" color={'#ffffff'} />
