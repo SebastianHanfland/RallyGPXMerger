@@ -13,7 +13,9 @@ interface BigDataCloudResponse {
 export const fetchPostCodeForCoordinate =
     (apiKey: string) =>
     async (lat: number, lon: number): Promise<{ postCode: number; district?: string }> => {
-        return fetch(`https://api.bigdatacloud.net/data/reverse-geocode?latitude=${lat}&longitude=${lon}&key=${apiKey}`)
+        return fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode?latitude=${lat}&longitude=${lon}&key=${apiKey}&localityLanguage=${'de'}`
+        )
             .then((response) => response.json())
             .then((result: BigDataCloudResponse) => {
                 return {

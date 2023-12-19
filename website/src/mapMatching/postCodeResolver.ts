@@ -41,7 +41,11 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                         if (district) {
                             dispatch(
                                 geoCodingActions.saveResolvedDistricts({
-                                    [postCodeKey]: district.replace('constituency for the Bundestag election ', ''),
+                                    [postCodeKey]: district
+                                        .replace('constituency for the Bundestag election ', '')
+                                        .replace('Bundestagswahlkreis ', '')
+                                        .replace('Munchen', 'München')
+                                        .replace('Munich', 'München'),
                                 })
                             );
                         }
