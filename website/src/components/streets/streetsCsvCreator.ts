@@ -1,4 +1,5 @@
 import { BlockedStreetInfo } from '../../mapMatching/types.ts';
+import { formatTimeOnly } from '../../utils/dateUtil.ts';
 
 export function convertStreetInfoToCsv(blockedStreets: BlockedStreetInfo[]): string {
     return (
@@ -6,7 +7,11 @@ export function convertStreetInfoToCsv(blockedStreets: BlockedStreetInfo[]): str
         blockedStreets
             .map(
                 ({ postCode, district, streetName, frontArrival, backPassage }) =>
-                    `${postCode};${district};${streetName};${frontArrival};${backPassage}`
+                    `${postCode};` +
+                    `${district};` +
+                    `${streetName};` +
+                    `${formatTimeOnly(frontArrival)};` +
+                    `${formatTimeOnly(backPassage)}`
             )
             .join('\n')
     );
