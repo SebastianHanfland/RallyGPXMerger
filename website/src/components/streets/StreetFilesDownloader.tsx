@@ -8,6 +8,7 @@ import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts'
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
+import { getLanguage } from '../../language.ts';
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
     const zip = new JSZip();
@@ -17,7 +18,10 @@ const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: 
             new Blob([convertTrackInfoToCsv(track)], { type: 'csv' })
         );
     });
-    zip.file(`BlockedStreets.csv`, new Blob([convertStreetInfoToCsv(blockedStreetInfos)], { type: 'csv' }));
+    zip.file(
+        getLanguage() === 'de' ? `Blockierte-Straßen.csv` : `Blocked-Streets.csv`,
+        new Blob([convertStreetInfoToCsv(blockedStreetInfos)], { type: 'csv' })
+    );
     zip.generateAsync({ type: 'blob' }).then(function (content) {
         FileSaver.saveAs(content, `StreetList-${new Date().toISOString()}.zip`);
     });
