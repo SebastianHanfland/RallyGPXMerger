@@ -4,43 +4,10 @@ import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import download from '../../assets/file-down.svg';
 import { BlockedStreetInfo, TrackStreetInfo } from '../../mapMatching/types.ts';
-import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
-
-const header = (trackInfo: TrackStreetInfo): string => {
-    const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
-    const durationString = `Duration in min;${duration.toFixed(2)}\n`;
-    const distance = `Distance in km;${trackInfo.distanceInKm.toFixed(2)}\n`;
-    const averageSpeed = `Average speed in km/h;${((trackInfo.distanceInKm / duration) * 60).toFixed(2)}\n`;
-    const times = `Start;${trackInfo.startFront}\nArrival of front;${trackInfo.arrivalFront}\nArrival of back;${trackInfo.arrivalBack}\n`;
-    const tableHeaders = `Street;Post code;District;Arrival of front;Passage of front;Arrival of back\n`;
-    return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
-};
-
-function convertTrackInfoToCsv(track: TrackStreetInfo): string {
-    return (
-        header(track) +
-        track.wayPoints
-            .map(
-                ({ streetName, postCode, district, frontArrival, frontPassage, backArrival }) =>
-                    `${streetName};${postCode};${district};${frontArrival};${frontPassage};${backArrival}`
-            )
-            .join('\n')
-    );
-}
-
-function convertStreetInfoToCsv(blockedStreets: BlockedStreetInfo[]): string {
-    return (
-        'Post code;District;Street;Blocked from;Blocked until;\n' +
-        blockedStreets
-            .map(
-                ({ postCode, district, streetName, frontArrival, backPassage }) =>
-                    `${postCode};${district};${streetName};${frontArrival};${backPassage}`
-            )
-            .join('\n')
-    );
-}
+import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
+import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
     const zip = new JSZip();
