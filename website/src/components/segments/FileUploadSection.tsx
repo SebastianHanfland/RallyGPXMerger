@@ -1,4 +1,5 @@
 import { GpxSegments } from './GpxSegments.tsx';
+import { SegmentFilesDownloader } from './SegmentFilesDownloader.tsx';
 
 export function FileUploadSection() {
     return (
@@ -14,6 +15,7 @@ export function FileUploadSection() {
                     Gpx Studio
                 </a>
             </p>
+            <SegmentFilesDownloader />
             <GpxSegments />
         </div>
     );
