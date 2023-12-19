@@ -1,3 +1,5 @@
+import { getLanguage } from '../language.ts';
+
 interface BigDataCloudResponse {
     postcode: number;
     localityInfo: {
@@ -13,8 +15,9 @@ interface BigDataCloudResponse {
 export const fetchPostCodeForCoordinate =
     (apiKey: string) =>
     async (lat: number, lon: number): Promise<{ postCode: number; district?: string }> => {
+        const language = getLanguage();
         return fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode?latitude=${lat}&longitude=${lon}&key=${apiKey}&localityLanguage=${'de'}`
+            `https://api.bigdatacloud.net/data/reverse-geocode?latitude=${lat}&longitude=${lon}&key=${apiKey}&localityLanguage=${language}`
         )
             .then((response) => response.json())
             .then((result: BigDataCloudResponse) => {
