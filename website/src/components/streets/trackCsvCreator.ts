@@ -4,7 +4,7 @@ import { getLanguage } from '../../language.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
 
-function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
+export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
     const language = getLanguage();
     return Intl.NumberFormat(language, { maximumFractionDigits: maximumFractionDigits }).format(numberToFormat);
 }
