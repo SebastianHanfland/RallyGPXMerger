@@ -22,8 +22,8 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo): string {
             .map(
                 ({ streetName, postCode, district, frontArrival, frontPassage, backArrival }) =>
                     `${streetName};` +
-                    `${postCode};` +
-                    `${district};` +
+                    `${postCode ?? ''};` +
+                    `${district ?? ''};` +
                     `${formatTimeOnly(frontArrival)};` +
                     `${formatTimeOnly(frontPassage)};` +
                     `${formatTimeOnly(backArrival)}`

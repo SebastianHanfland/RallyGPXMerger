@@ -7,8 +7,8 @@ export function convertStreetInfoToCsv(blockedStreets: BlockedStreetInfo[]): str
         blockedStreets
             .map(
                 ({ postCode, district, streetName, frontArrival, backPassage }) =>
-                    `${postCode};` +
-                    `${district};` +
+                    `${postCode ?? ''};` +
+                    `${district ?? ''};` +
                     `${streetName};` +
                     `${formatTimeOnly(frontArrival)};` +
                     `${formatTimeOnly(backPassage)}`
