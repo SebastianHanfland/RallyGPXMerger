@@ -1,23 +1,26 @@
 import { TrackStreetInfo } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { getLanguage } from '../../language.ts';
+import geoDistance from 'geo-distance-helper';
+import { toLatLng } from '../../logic/speedSimulator.ts';
 
-function formatGerman(numberToFormat: number) {
-    return Intl.NumberFormat('de-DE', { maximumFractionDigits: 2 }).format(numberToFormat);
+function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
+    const language = getLanguage();
+    return Intl.NumberFormat(language, { maximumFractionDigits: maximumFractionDigits }).format(numberToFormat);
 }
 
 const germanHeader = (trackInfo: TrackStreetInfo): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
-    const durationString = `Dauer in min;${formatGerman(duration)}\n`;
-    const distance = `Strecke in km;${formatGerman(trackInfo.distanceInKm)}\n`;
-    const averageSpeed = `Durchschnittsgeschwindigkeit in km/h;${formatGerman(
+    const durationString = `Dauer in min;${formatNumber(duration)}\n`;
+    const distance = `Strecke in km;${formatNumber(trackInfo.distanceInKm)}\n`;
+    const averageSpeed = `Durchschnittsgeschwindigkeit in km/h;${formatNumber(
         (trackInfo.distanceInKm / duration) * 60
     )}\n`;
 
     const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nAnkunft der Ersten;${formatTimeOnly(
         trackInfo.arrivalFront
     )}\nAnkunft der Letzten;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
-    const tableHeaders = `Straße;PLZ;Bezirk;Ankunft des Zugs auf der Straße;Ankunft des Zug am Ende;Straße blockiert bis\n`;
+    const tableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zug am Ende;Straße blockiert bis\n`;
 
     return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };
@@ -30,7 +33,7 @@ const englishHeader = (trackInfo: TrackStreetInfo): string => {
     const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nArrival of front;${formatTimeOnly(
         trackInfo.arrivalFront
     )}\nArrival of back;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
-    const tableHeaders = `Street;Post code;District;Arrival of front;Passage of front;Arrival of back\n`;
+    const tableHeaders = `Street;Post code;District;Length in km;Duration in min;Blockage in min;Arrival of front;Passage of front;Arrival of back\n`;
 
     return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };
@@ -50,10 +53,13 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo): string {
         getHeader(track) +
         track.wayPoints
             .map(
-                ({ streetName, postCode, district, frontArrival, frontPassage, backArrival }) =>
+                ({ streetName, postCode, district, frontArrival, frontPassage, backArrival, pointFrom, pointTo }) =>
                     `${streetName};` +
                     `${postCode ?? ''};` +
                     `${district ?? ''};` +
+                    `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +
+                    `${formatNumber(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60, 1)};` +
+                    `${formatNumber(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60, 1)};` +
                     `${formatTimeOnly(frontArrival)};` +
                     `${formatTimeOnly(frontPassage)};` +
                     `${formatTimeOnly(backArrival)}`
