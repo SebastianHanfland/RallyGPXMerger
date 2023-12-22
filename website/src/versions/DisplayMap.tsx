@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
 import { getMapConfiguration } from '../components/map/PlainMap.tsx';
 import { zipTracksDisplayHook } from '../components/map/hooks/zipTracksDisplayHook.ts';
+import { zipTrackMarkerDisplayHook } from '../components/map/hooks/zipTrackMarkerDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -20,14 +21,18 @@ export const DisplayMap = () => {
         }
     }, []);
 
-    const calculatedTracksLayer = useRef<LayerGroup>(null);
+    const zipTracksLayer = useRef<LayerGroup>(null);
+    const tracksLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         // @ts-ignore
-        calculatedTracksLayer.current = L.layerGroup().addTo(myMap);
+        zipTracksLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        tracksLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    zipTracksDisplayHook(calculatedTracksLayer);
+    zipTracksDisplayHook(zipTracksLayer);
+    zipTrackMarkerDisplayHook(tracksLayer);
 
     return (
         <div>

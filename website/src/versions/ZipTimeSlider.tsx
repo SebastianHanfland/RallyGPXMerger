@@ -1,17 +1,18 @@
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { mapActions } from '../store/map.reducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrenMapTime, mapActions } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../store/types.ts';
 import { formatDate } from '../utils/dateUtil.ts';
+import { getZipCurrentTimeStamp } from '../components/map/hooks/trackSimulationReader.ts';
 
 export function ZipTimeSlider() {
-    const mapTime = 10;
-    const dateValue = undefined;
+    const mapTime = useSelector(getCurrenMapTime);
+    const dateValue = useSelector(getZipCurrentTimeStamp);
     const dispatch = useDispatch();
 
     return (
         <Form.Group className={'m-2'}>
-            <div>{dateValue ? formatDate(dateValue) : 'No tracks yet calculated'}</div>
+            <div>{dateValue ? formatDate(dateValue) : 'Zeit'}</div>
             <div className={'d-flex'}>
                 <Form.Range
                     min={0}

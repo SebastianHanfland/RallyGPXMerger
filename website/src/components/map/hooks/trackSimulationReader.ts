@@ -1,4 +1,4 @@
-import { MAX_SLIDER_TIME, State, TrackComposition } from '../../../store/types.ts';
+import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition } from '../../../store/types.ts';
 import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
@@ -9,6 +9,7 @@ import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../st
 import { getReadableTracks } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
+import { getZipTracks } from '../../../store/zipTracks.reducer.ts';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
@@ -26,7 +27,7 @@ export function interpolatePosition(previous: Point, next: Point, timeStamp: str
 const extractLocation =
     (timeStampFront: string, trackParticipants: TrackComposition[]) =>
     (calculatedTrack: SimpleGPX, index: number): { lat: number; lng: number }[] => {
-        const participants = trackParticipants[index].peopleCount ?? 0;
+        const participants = trackParticipants.length > 0 ? trackParticipants[index].peopleCount ?? 0 : 0;
         let returnPoints: { lat: number; lng: number }[] = [];
         const timeStampEnd = date
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
@@ -89,6 +90,23 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
+export const getZipCurrentTimeStamp = (state: IFrameState): string | undefined => {
+    const calculatedTracks = getZipTracks(state);
+    if (Object.keys(calculatedTracks).length === 0) {
+        return;
+    }
+    const mapTime = getCurrenMapTime(state) ?? 0;
+    const start = getStartMapTime(state);
+    const end = getEndMapTime(state);
+    if (!start || !end) {
+        return undefined;
+    }
+
+    const percentage = mapTime / MAX_SLIDER_TIME;
+    const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
+    return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
+};
+
 export const getCurrentMarkerPositionsForTracks = createSelector(
     getCurrentTimeStamp,
     getTrackCompositions,
@@ -98,5 +116,17 @@ export const getCurrentMarkerPositionsForTracks = createSelector(
             return [];
         }
         return readableTracks?.map(extractLocation(timeStamp, trackParticipants)) ?? [];
+    }
+);
+
+export const getZipCurrentMarkerPositionsForTracks = createSelector(
+    getZipCurrentTimeStamp,
+    getZipTracks,
+    getReadableTracks,
+    (timeStamp, _, readableTracks) => {
+        if (!timeStamp) {
+            return [];
+        }
+        return readableTracks?.map(extractLocation(timeStamp, [])) ?? [];
     }
 );
