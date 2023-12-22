@@ -21,7 +21,7 @@ const zipTracksSlice = createSlice({
         selectVersion: (state: ZipTracksState, action: PayloadAction<string>) => {
             const version = action.payload;
             if (state.selectedVersions.includes(version)) {
-                state.selectedVersions.filter((selected) => selected !== version);
+                state.selectedVersions = state.selectedVersions.filter((selected) => selected !== version);
             } else {
                 state.selectedVersions = [...state.selectedVersions, version];
             }
