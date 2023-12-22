@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from '../store/zipTracks.reducer.ts';
 import Select from 'react-select';
+import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
@@ -28,7 +29,7 @@ export function MapVersionSelection() {
                         <div
                             key={versionName}
                             className={'mx-3'}
-                            style={{ width: `${100 / (Object.keys(zipTracks).length + 1)}vw` }}
+                            style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}
                         >
                             <Form.Check
                                 type={'checkbox'}
@@ -64,16 +65,19 @@ export function MapVersionSelection() {
                             />
                         </div>
                     ))}
-                <Form.Check
-                    type={'checkbox'}
-                    id={'marker'}
-                    className={'m-3'}
-                    label={'Marker'}
-                    title={showMapMarker ? 'Marker verstecken' : 'Marker anzeigen'}
-                    checked={showMapMarker}
-                    readOnly
-                    onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
-                ></Form.Check>
+                <div className={'mx-3'} style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}>
+                    <Form.Check
+                        type={'checkbox'}
+                        id={'marker'}
+                        className={'m-3'}
+                        label={'Marker'}
+                        title={showMapMarker ? 'Marker verstecken' : 'Marker anzeigen'}
+                        checked={showMapMarker}
+                        readOnly
+                        onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
+                    ></Form.Check>
+                    <ZipTimeSlider />
+                </div>
             </Form>
         </Form.Group>
     );
