@@ -78,15 +78,12 @@ export function TrackSelectionCell({ track }: Props) {
                         >
                             {segmentIds.map((segmentId) => {
                                 const segmentName = options.find((option) => option.value === segmentId)?.label;
-                                if (!segmentName) {
-                                    return null;
-                                }
                                 return (
                                     <TrackSelectionOption
                                         key={segmentId}
                                         segmentId={segmentId}
                                         trackId={id}
-                                        segmentName={segmentName}
+                                        segmentName={segmentName ?? 'Currently blank'}
                                     />
                                 );
                             })}
