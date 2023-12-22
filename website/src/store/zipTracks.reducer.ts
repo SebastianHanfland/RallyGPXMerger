@@ -3,6 +3,7 @@ import { IFrameState, ZipTrack, ZipTracksState } from './types';
 
 const initialState: ZipTracksState = {
     tracks: {},
+    selectedTracks: {},
     selectedVersions: [],
     isLoading: true,
 };
@@ -29,6 +30,13 @@ const zipTracksSlice = createSlice({
         removeZipTracks: (state: ZipTracksState) => {
             state.tracks = {};
         },
+        setDisplayTracks: (
+            state: ZipTracksState,
+            action: PayloadAction<{ version: string; selectedTracks: string[] | undefined }>
+        ) => {
+            const { version, selectedTracks } = action.payload;
+            state.selectedTracks[version] = selectedTracks;
+        },
     },
 });
 
@@ -38,3 +46,4 @@ const getBase = (state: IFrameState) => state.zipTracks;
 export const getZipTracks = (state: IFrameState) => getBase(state).tracks;
 export const getIsZipLoading = (state: IFrameState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: IFrameState) => getBase(state).selectedVersions;
+export const getSelectedTracks = (state: IFrameState) => getBase(state).selectedTracks;

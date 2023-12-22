@@ -1,25 +1,38 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getSelectedVersions, getZipTracks, zipTracksActions } from '../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from '../store/zipTracks.reducer.ts';
 import Select from 'react-select';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
     const zipTracks = useSelector(getZipTracks);
     const selectedVersions = useSelector(getSelectedVersions);
+    const selectedTracks = useSelector(getSelectedTracks);
     const dispatch = useDispatch();
+
+    const optionsMap: Record<string, { value: string; label: string }[] | undefined> = {};
+    Object.entries(zipTracks).forEach(([version, tracks]) => {
+        optionsMap[version] = tracks?.map((track) => ({
+            value: track.id,
+            label: track.filename,
+        }));
+    });
+
     return (
         <Form.Group>
             <Form className={'d-flex'}>
                 {Object.keys(zipTracks)
                     .sort()
                     .map((versionName) => (
-                        <div className={'mx-3'} style={{ width: `${100 / (Object.keys(zipTracks).length + 1)}vw` }}>
+                        <div
+                            key={versionName}
+                            className={'mx-3'}
+                            style={{ width: `${100 / (Object.keys(zipTracks).length + 1)}vw` }}
+                        >
                             <Form.Check
                                 type={'checkbox'}
                                 id={versionName}
-                                key={versionName}
                                 className={'m-3'}
                                 label={versionName}
                                 title={versionName}
@@ -29,15 +42,25 @@ export function MapVersionSelection() {
                             ></Form.Check>
                             <Select
                                 name="colors"
-                                // value={null}
+                                value={optionsMap[versionName]?.find((opt) =>
+                                    selectedTracks[versionName]?.includes(opt.value)
+                                )}
                                 placeholder={`Nur einzelne Routen der ${versionName} anzeigen`}
-                                options={zipTracks[versionName]?.map((track) => ({
-                                    value: track.id,
-                                    label: track.filename,
-                                }))}
+                                // @ts-ignore
+                                options={optionsMap[versionName] ?? []}
                                 className="basic-multi-select"
+                                isClearable={true}
                                 classNamePrefix="select"
-                                // onChange={() => {}}
+                                // @ts-ignore
+                                onChange={(newValue: { value: string }) => {
+                                    console.log(newValue);
+                                    dispatch(
+                                        zipTracksActions.setDisplayTracks({
+                                            version: versionName,
+                                            selectedTracks: newValue ? [newValue.value] : [],
+                                        })
+                                    );
+                                }}
                             />
                         </div>
                     ))}
