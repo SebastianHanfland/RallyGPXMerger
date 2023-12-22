@@ -64,6 +64,11 @@ const load = (): State | undefined => {
 const clear = () => {
     try {
         localStorage.removeItem(stateKey);
+        localStorage.removeItem(stateKey + '.gpxSegments');
+        localStorage.removeItem(stateKey + '.map');
+        localStorage.removeItem(stateKey + '.trackMerge');
+        localStorage.removeItem(stateKey + '.geoCoding');
+        localStorage.removeItem(stateKey + '.calculatedTracks');
     } catch (error) {
         console.log(error);
     }
