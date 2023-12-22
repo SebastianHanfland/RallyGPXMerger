@@ -26,6 +26,15 @@ export interface CalculatedTracksState {
     trackParticipants: number[];
 }
 
+export interface ZipTracksState {
+    tracks: Record<string, ZipTrack[]>;
+}
+
+export interface ZipTrack extends CalculatedTrack {
+    participants: number;
+    version: string;
+}
+
 export interface TrackComposition {
     id: string;
     name?: string;
@@ -82,6 +91,11 @@ export interface State {
     map: MapState;
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
+}
+
+export interface IFrameState {
+    zipTracks: ZipTracksState;
+    map: MapState;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

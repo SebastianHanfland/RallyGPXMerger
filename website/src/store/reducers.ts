@@ -7,6 +7,7 @@ import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
 import { geoCodingReducer } from './geoCoding.reducer.ts';
 import { geoCodingRequestsReducer } from './geoCodingRequests.reducer.ts';
+import { zipTracksReducer } from './zipTracks.reducer.ts';
 
 export const rootReducer: Reducer = combineReducers({
     gpxSegments: gpxSegmentsReducer,
@@ -27,5 +28,6 @@ export const storingReducer: Reducer = (state: State) => {
 export const iFrameReducer: Reducer = combineReducers({
     calculatedTracks: calculatedTracksReducer,
     trackMerge: trackMergeReducer,
+    zipTracks: zipTracksReducer,
     map: mapReducer,
 });
