@@ -35,7 +35,7 @@ export const DisplayMap = () => {
 
     return (
         <div>
-            <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
+            <div id="mapid" style={{ height: '90vh', zIndex: 0 }} />
         </div>
     );
 };
