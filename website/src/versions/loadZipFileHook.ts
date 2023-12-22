@@ -20,30 +20,36 @@ export function loadZipFileHook() {
     useEffect(() => {
         dispatch(mapActions.setShowCalculatedTracks(true));
         dispatch(zipTracksActions.removeZipTracks());
-        versions.map((version) => {
-            const zip = new JSZip();
-            fetch(version.url)
-                .then((res) => res.blob())
-                .then((blob) => {
-                    zip.loadAsync(blob).then((zipContent) => {
-                        const readTracks: Promise<ZipTrack>[] = Object.entries(zipContent.files).map(
-                            async ([filename, content]): Promise<ZipTrack> => {
-                                return content.async('text').then((text) => ({
-                                    id: uuidv4(),
-                                    filename: `${version.name} ${filename}`,
-                                    content: text,
-                                    version: version.name,
-                                    peopleCount: getPeopleCountFromFilename(filename),
-                                }));
-                            }
-                        );
-                        Promise.all(readTracks).then((tracks) => {
-                            extendReadableTracks(tracks.map((track) => SimpleGPX.fromString(track.content)));
-                            dispatch(zipTracksActions.setZipTracks({ version: version.name, tracks: tracks }));
+        dispatch(zipTracksActions.setIsLoading(true));
+        Promise.all(
+            versions.map((version) => {
+                const zip = new JSZip();
+                return fetch(version.url)
+                    .then((res) => res.blob())
+                    .then((blob) => {
+                        zip.loadAsync(blob).then((zipContent) => {
+                            const readTracks: Promise<ZipTrack>[] = Object.entries(zipContent.files).map(
+                                async ([filename, content]): Promise<ZipTrack> => {
+                                    return content.async('text').then((text) => ({
+                                        id: uuidv4(),
+                                        filename: `${version.name} ${filename}`,
+                                        content: text,
+                                        version: version.name,
+                                        peopleCount: getPeopleCountFromFilename(filename),
+                                    }));
+                                }
+                            );
+                            Promise.all(readTracks).then((tracks) => {
+                                extendReadableTracks(tracks.map((track) => SimpleGPX.fromString(track.content)));
+                                dispatch(zipTracksActions.setZipTracks({ version: version.name, tracks: tracks }));
+                            });
                         });
-                    });
-                })
-                .catch(console.error);
+                    })
+                    .catch(console.error)
+                    .finally();
+            })
+        ).then(() => {
+            dispatch(zipTracksActions.setIsLoading(false));
         });
     }, []);
 }

@@ -28,6 +28,7 @@ export interface CalculatedTracksState {
 
 export interface ZipTracksState {
     tracks: Record<string, ZipTrack[] | undefined>;
+    isLoading: boolean;
 }
 
 export interface ZipTrack extends CalculatedTrack {
