@@ -1,14 +1,12 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShowCalculatedTracks, getShowGpxSegments, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
     const showCalculatedTracks = useSelector(getShowCalculatedTracks);
     const showGpxSegments = useSelector(getShowGpxSegments);
     const dispatch = useDispatch();
-    const calculatedTracks = useSelector(getCalculatedTracks);
     return (
         <Form.Group>
             <Form className={'d-flex'}>
@@ -29,7 +27,6 @@ export function MapVersionSelection() {
                     label={'Tracks'}
                     title={'Calculated Tracks'}
                     checked={showCalculatedTracks}
-                    disabled={calculatedTracks.length === 0}
                     readOnly
                     onClick={() => dispatch(mapActions.setShowCalculatedTracks(!showCalculatedTracks))}
                 ></Form.Check>

@@ -3,10 +3,8 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
-import { calculatedTracksDisplayHook } from '../components/map/hooks/calculatedTracksDisplayHook.ts';
-import { centerPointHook } from '../components/map/hooks/centerPointHook.tsx';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getMapConfiguration } from '../components/map/PlainMap.tsx';
+import { zipTracksDisplayHook } from '../components/map/hooks/zipTracksDisplayHook.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 
@@ -22,8 +20,6 @@ export const DisplayMap = () => {
         }
     }, []);
 
-    centerPointHook(myMap, startZoom, getCalculatedTracks);
-
     const calculatedTracksLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
@@ -31,7 +27,7 @@ export const DisplayMap = () => {
         calculatedTracksLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    calculatedTracksDisplayHook(calculatedTracksLayer);
+    zipTracksDisplayHook(calculatedTracksLayer);
 
     return (
         <div>
