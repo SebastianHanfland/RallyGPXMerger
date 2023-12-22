@@ -31,7 +31,6 @@ export interface ZipTracksState {
 }
 
 export interface ZipTrack extends CalculatedTrack {
-    participants: number;
     version: string;
 }
 
