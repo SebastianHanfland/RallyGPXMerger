@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import JSZip from 'jszip';
 import { ZipTrack } from '../store/types.ts';
-import { v4 as uuidv4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { extendReadableTracks } from '../logic/MergeCalculation.ts';
 import { mapActions } from '../store/map.reducer.ts';
@@ -13,6 +13,8 @@ function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);
     return 0;
 }
+
+const nameSpace = '1dc89ce7-d3b5-4054-b9e3-b3e062645d48';
 
 export function loadZipFileHook() {
     const dispatch = useDispatch();
@@ -30,8 +32,10 @@ export function loadZipFileHook() {
                         zip.loadAsync(blob).then((zipContent) => {
                             const readTracks: Promise<ZipTrack>[] = Object.entries(zipContent.files).map(
                                 async ([filename, content]): Promise<ZipTrack> => {
+                                    console.log(nameSpace);
+                                    console.log(uuidv5('1', nameSpace));
                                     return content.async('text').then((text) => ({
-                                        id: uuidv4(),
+                                        id: uuidv5(version + filename, nameSpace),
                                         filename: `${version.name} ${filename}`,
                                         content: text,
                                         version: version.name,
