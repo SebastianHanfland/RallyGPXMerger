@@ -42,6 +42,7 @@ export function loadZipFileHook() {
                             Promise.all(readTracks).then((tracks) => {
                                 extendReadableTracks(tracks.map((track) => SimpleGPX.fromString(track.content)));
                                 dispatch(zipTracksActions.setZipTracks({ version: version.name, tracks: tracks }));
+                                dispatch(zipTracksActions.selectVersion(version.name));
                             });
                         });
                     })

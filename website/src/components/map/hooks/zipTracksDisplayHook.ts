@@ -3,19 +3,22 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from './addTrackToMap.ts';
 import { getShowCalculatedTracks, getShowMapMarker } from '../../../store/map.reducer.ts';
-import { getZipTracks } from '../../../store/zipTracks.reducer.ts';
+import { getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
 
 export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
-    const calculatedTracks = useSelector(getZipTracks);
+    const zipTracks = useSelector(getZipTracks);
     const showTracks = useSelector(getShowCalculatedTracks);
     const showMarker = useSelector(getShowMapMarker);
+    const selectedVersions = useSelector(getSelectedVersions);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const calculatedTrack = calculatedTracks[Object.keys(calculatedTracks)[0]] ?? [];
-        addTracksToLayer(calculatedTracksLayer, calculatedTrack, showTracks, {
+        const tracks = selectedVersions.flatMap((version) => {
+            return zipTracks[version] ?? [];
+        });
+        addTracksToLayer(calculatedTracksLayer, tracks, showTracks, {
             showMarker,
             opacity: 0.7,
         });
-    }, [calculatedTracks, calculatedTracks.length, showTracks, showMarker]);
+    }, [zipTracks, zipTracks.length, selectedVersions, showMarker]);
 }
