@@ -9,9 +9,11 @@ export function enrichGpxSegmentsWithTimeStamps(
 ) {
     return gpxSegments.map((segment) => {
         const gpxContent = SimpleGPX.fromString(segment.content);
+        let nextStartDate = '2020-10-10T10:00:00.000Z';
         gpxContent.tracks.forEach((track) => {
             const usedSpeed = (segmentSpeeds[segment.id] ?? 0) > 0 ? segmentSpeeds[segment.id]! : averageSpeed;
-            track.points = generateTimeData('2020-10-10T10:00:00.000Z', usedSpeed, track.points);
+            track.points = generateTimeData(nextStartDate, usedSpeed, track.points);
+            nextStartDate = track.points[track.points.length - 1].time.toISOString();
         });
         return {
             ...segment,
