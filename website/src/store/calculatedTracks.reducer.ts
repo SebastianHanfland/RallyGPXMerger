@@ -3,6 +3,8 @@ import { CalculatedTrack, CalculatedTracksState, State } from './types';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../utils/filterUtil.ts';
+import { setReadableTracks } from '../logic/MergeCalculation.ts';
+import { SimpleGPX } from '../utils/SimpleGPX.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
@@ -22,6 +24,10 @@ const calculatedTracksSlice = createSlice({
         removeCalculatedTracks: (state: CalculatedTracksState) => {
             state.tracks = [];
             state.trackParticipants = [];
+        },
+        removeSingleCalculatedTrack: (state: CalculatedTracksState, action: PayloadAction<string>) => {
+            state.tracks = state.tracks.filter((track) => track.id !== action.payload);
+            setReadableTracks(state.tracks.map((track) => SimpleGPX.fromString(track.content)));
         },
     },
 });

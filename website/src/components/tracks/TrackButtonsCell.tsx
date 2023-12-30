@@ -5,7 +5,7 @@ import { getSegmentIdClipboard, trackMergeActions } from '../../store/trackMerge
 import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { calculatedTracksActions, getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 
@@ -52,7 +52,10 @@ export function TrackButtonsCell({ track }: Props) {
             </Button>
             {showModal && (
                 <ConfirmationModal
-                    onConfirm={() => dispatch(trackMergeActions.removeTrackComposition(id))}
+                    onConfirm={() => {
+                        dispatch(calculatedTracksActions.removeSingleCalculatedTrack(id));
+                        dispatch(trackMergeActions.removeTrackComposition(id));
+                    }}
                     closeModal={() => setShowModal(false)}
                     title={`Removing track ${track.name ?? ''}`}
                     body={`Do you really want to remove the track ${track.name ?? ''}?`}
