@@ -9,7 +9,9 @@ export const parseCalculatedTracksHook = () => {
 
     useEffect(() => {
         if (calculatedTracks.length > 0) {
-            setReadableTracks(calculatedTracks.map((track) => SimpleGPX.fromString(track.content)));
+            setReadableTracks(
+                calculatedTracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }))
+            );
         }
     }, [calculatedTracks.length]);
 };

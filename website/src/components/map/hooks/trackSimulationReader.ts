@@ -3,10 +3,9 @@ import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
-import { getReadableTracks } from '../../../logic/MergeCalculation.ts';
+import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getZipTracks } from '../../../store/zipTracks.reducer.ts';
@@ -26,14 +25,14 @@ export function interpolatePosition(previous: Point, next: Point, timeStamp: str
 
 const extractLocation =
     (timeStampFront: string, trackParticipants: TrackComposition[]) =>
-    (calculatedTrack: SimpleGPX, index: number): { lat: number; lng: number }[] => {
+    (calculatedTrack: ReadableTrack, index: number): { lat: number; lng: number }[] => {
         const participants = trackParticipants.length > 0 ? trackParticipants[index].peopleCount ?? 0 : 0;
         let returnPoints: { lat: number; lng: number }[] = [];
         const timeStampEnd = date
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
             .toISOString();
 
-        calculatedTrack.tracks.forEach((track) => {
+        calculatedTrack.gpx.tracks.forEach((track) => {
             track.points.forEach((point, index, points) => {
                 if (index === 0) {
                     return;
@@ -60,8 +59,8 @@ export const getNumberOfPositionsInTracks = createSelector(
     getReadableTracks,
     (positionMap, readableTracks) => {
         let positionCount = 0;
-        readableTracks?.forEach((gpx) => {
-            gpx.tracks.forEach((track) => {
+        readableTracks?.forEach((readableTrack) => {
+            readableTrack.gpx.tracks.forEach((track) => {
                 positionCount += track.points.length;
             });
         });

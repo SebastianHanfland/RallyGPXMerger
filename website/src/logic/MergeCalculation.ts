@@ -18,18 +18,23 @@ import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { initializeResolvedPositions } from '../mapMatching/initializeResolvedPositions.ts';
 import date from 'date-and-time';
 
-let readableTracks: SimpleGPX[] | undefined = undefined;
+export interface ReadableTrack {
+    id: string;
+    gpx: SimpleGPX;
+}
+
+let readableTracks: ReadableTrack[] | undefined = undefined;
 
 export const clearReadableTracks = () => {
     readableTracks = undefined;
 };
 
 export const getReadableTracks = () => readableTracks;
-export const setReadableTracks = (newReadableTracks: SimpleGPX[]) => {
+export const setReadableTracks = (newReadableTracks: ReadableTrack[]) => {
     readableTracks = newReadableTracks;
 };
 
-export const extendReadableTracks = (newReadableTracks: SimpleGPX[]) => {
+export const extendReadableTracks = (newReadableTracks: ReadableTrack[]) => {
     if (readableTracks === undefined) {
         readableTracks = newReadableTracks;
     } else {
@@ -45,12 +50,12 @@ export function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, 
     let startDate = '9999-10-14T10:09:57.000Z';
 
     readableTracks?.forEach((track) => {
-        if (track.getStart() < startDate) {
-            startDate = track.getStart();
+        if (track.gpx.getStart() < startDate) {
+            startDate = track.gpx.getStart();
         }
 
-        if (track.getEnd() > endDate) {
-            endDate = track.getEnd();
+        if (track.gpx.getEnd() > endDate) {
+            endDate = track.gpx.getEnd();
         }
     });
 
@@ -87,7 +92,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     dispatch(mapActions.setShowCalculatedTracks(true));
 
     if (!readableTracks) {
-        readableTracks = calculatedTracks.map((track) => SimpleGPX.fromString(track.content));
+        readableTracks = calculatedTracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }));
         initializeResolvedPositions(dispatch);
     }
     calculateAndStoreStartAndEndOfSimulation(dispatch, getState());

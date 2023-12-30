@@ -27,7 +27,9 @@ const calculatedTracksSlice = createSlice({
         },
         removeSingleCalculatedTrack: (state: CalculatedTracksState, action: PayloadAction<string>) => {
             state.tracks = state.tracks.filter((track) => track.id !== action.payload);
-            setReadableTracks(state.tracks.map((track) => SimpleGPX.fromString(track.content)));
+            setReadableTracks(
+                state.tracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }))
+            );
         },
     },
 });

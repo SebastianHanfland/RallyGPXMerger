@@ -9,8 +9,8 @@ export function toKey({ lat, lon }: { lat: number; lon: number }): string {
 
 export const initializeResolvedPositions = (dispatch: AppDispatch) => {
     const positionMap: ResolvedPositions = {};
-    getReadableTracks()?.forEach((gpx) => {
-        gpx.tracks.forEach((track) => {
+    getReadableTracks()?.forEach((readableTrack) => {
+        readableTrack.gpx.tracks.forEach((track) => {
             track.points.forEach((point) => {
                 positionMap[toKey(point)] = null;
             });
