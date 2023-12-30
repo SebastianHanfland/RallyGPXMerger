@@ -24,15 +24,18 @@ export function interpolatePosition(previous: Point, next: Point, timeStamp: str
 }
 
 const extractLocation =
-    (timeStampFront: string, trackParticipants: TrackComposition[]) =>
-    (calculatedTrack: ReadableTrack, index: number): { lat: number; lng: number }[] => {
-        const participants = trackParticipants.length > 0 ? trackParticipants[index].peopleCount ?? 0 : 0;
+    (timeStampFront: string, trackCompositions: TrackComposition[]) =>
+    (readableTrack: ReadableTrack): { lat: number; lng: number }[] => {
+        const participants =
+            trackCompositions.length > 0
+                ? trackCompositions.find((track) => track.id === readableTrack.id)?.peopleCount ?? 0
+                : 0;
         let returnPoints: { lat: number; lng: number }[] = [];
         const timeStampEnd = date
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
             .toISOString();
 
-        calculatedTrack.gpx.tracks.forEach((track) => {
+        readableTrack.gpx.tracks.forEach((track) => {
             track.points.forEach((point, index, points) => {
                 if (index === 0) {
                     return;
