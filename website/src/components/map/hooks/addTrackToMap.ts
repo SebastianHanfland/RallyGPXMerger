@@ -1,5 +1,5 @@
 import { Point } from 'gpxparser';
-import { CalculatedTrack, GpxSegment } from '../../../store/types.ts';
+import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../../../store/types.ts';
 import L, { LayerGroup } from 'leaflet';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
@@ -45,7 +45,7 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
 
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
-    calculatedTracks: CalculatedTrack[] | GpxSegment[],
+    calculatedTracks: CalculatedTrack[] | GpxSegment[] | ZipTrack[],
     show: boolean,
     options: MapOptions
 ) {
@@ -56,7 +56,8 @@ export function addTracksToLayer(
     current.clearLayers();
     if (show) {
         calculatedTracks.forEach((track) => {
-            addTrackToMap(track, current, options);
+            const enhancedOptions = isZipTrack(track) ? { ...options, color: track.color } : options;
+            addTrackToMap(track, current, enhancedOptions);
         });
     }
 }

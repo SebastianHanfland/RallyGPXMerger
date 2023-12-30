@@ -33,8 +33,13 @@ export interface ZipTracksState {
     isLoading: boolean;
 }
 
+export function isZipTrack(track: GpxSegment | CalculatedTrack | ZipTrack): track is ZipTrack {
+    return (track as ZipTrack).color !== undefined;
+}
+
 export interface ZipTrack extends CalculatedTrack {
     version: string;
+    color?: string;
 }
 
 export interface TrackComposition {

@@ -40,6 +40,7 @@ export function loadZipFileHook() {
                                         content: text,
                                         version: version.name,
                                         peopleCount: getPeopleCountFromFilename(filename),
+                                        color: version.color,
                                     }));
                                 }
                             );
