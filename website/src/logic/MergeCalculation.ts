@@ -66,6 +66,29 @@ export function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, 
     dispatch(mapActions.setStartAndEndTime(payload));
 }
 
+export function setStartAndEndTime(dispatch: AppDispatch) {
+    const maxDelay = 0;
+
+    let endDate = '1990-10-14T10:09:57.000Z';
+    let startDate = '9999-10-14T10:09:57.000Z';
+
+    readableTracks?.forEach((track) => {
+        if (track.gpx.getStart() < startDate) {
+            startDate = track.gpx.getStart();
+        }
+
+        if (track.gpx.getEnd() > endDate) {
+            endDate = track.gpx.getEnd();
+        }
+    });
+
+    const payload = {
+        start: startDate,
+        end: date.addSeconds(new Date(endDate), maxDelay * PARTICIPANTS_DELAY_IN_SECONDS).toISOString(),
+    };
+    dispatch(mapActions.setStartAndEndTime(payload));
+}
+
 export async function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     const gpxSegments = getGpxSegments(getState());
     const trackCompositions = getTrackCompositions(getState());

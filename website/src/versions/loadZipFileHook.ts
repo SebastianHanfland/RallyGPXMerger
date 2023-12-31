@@ -4,10 +4,11 @@ import JSZip from 'jszip';
 import { ZipTrack } from '../store/types.ts';
 import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { extendReadableTracks } from '../logic/MergeCalculation.ts';
+import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculation.ts';
 import { mapActions } from '../store/map.reducer.ts';
 import { versions } from './versionLinks.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
+import { AppDispatch } from '../store/store.ts';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);
@@ -17,7 +18,7 @@ function getPeopleCountFromFilename(filename: string): number {
 const nameSpace = '1dc89ce7-d3b5-4054-b9e3-b3e062645d48';
 
 export function loadZipFileHook() {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
         dispatch(mapActions.setShowCalculatedTracks(true));
@@ -29,7 +30,7 @@ export function loadZipFileHook() {
                 return fetch(version.url)
                     .then((res) => res.blob())
                     .then((blob) => {
-                        zip.loadAsync(blob).then((zipContent) => {
+                        return zip.loadAsync(blob).then((zipContent) => {
                             const readTracks: Promise<ZipTrack>[] = Object.entries(zipContent.files).map(
                                 async ([filename, content]): Promise<ZipTrack> => {
                                     console.log(nameSpace);
@@ -44,7 +45,7 @@ export function loadZipFileHook() {
                                     }));
                                 }
                             );
-                            Promise.all(readTracks).then((tracks) => {
+                            return Promise.all(readTracks).then((tracks) => {
                                 extendReadableTracks(
                                     tracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }))
                                 );
@@ -58,6 +59,7 @@ export function loadZipFileHook() {
             })
         ).then(() => {
             dispatch(zipTracksActions.setIsLoading(false));
+            setStartAndEndTime(dispatch);
         });
     }, []);
 }
