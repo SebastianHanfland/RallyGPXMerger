@@ -1,7 +1,7 @@
 export const versions = [
     {
         name: 'Variante 1',
-        url: 'https://sebastianhanfland.github.io/RallyGPXMerger/variante1_002.zip',
+        url: 'https://sebastianhanfland.github.io/RallyGPXMerger/variante1_003.zip',
         color: 'blue',
     },
     {
@@ -11,7 +11,7 @@ export const versions = [
     },
     {
         name: 'Variante 3',
-        url: 'https://sebastianhanfland.github.io/RallyGPXMerger/variante3_001.zip',
+        url: 'https://sebastianhanfland.github.io/RallyGPXMerger/variante3_002.zip',
         color: 'green',
     },
 ];
