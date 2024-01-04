@@ -14,10 +14,16 @@ export function MapVersionSelection() {
 
     const optionsMap: Record<string, { value: string; label: string }[] | undefined> = {};
     Object.entries(zipTracks).forEach(([version, tracks]) => {
-        optionsMap[version] = tracks?.map((track) => ({
-            value: track.id,
-            label: track.filename,
-        }));
+        if (!tracks) {
+            return;
+        }
+        const trackCopy = [...tracks];
+        optionsMap[version] = trackCopy
+            ?.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { numeric: true }))
+            .map((track) => ({
+                value: track.id,
+                label: track.filename,
+            }));
     });
 
     return (
