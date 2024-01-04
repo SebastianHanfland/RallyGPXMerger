@@ -25,7 +25,7 @@ export function loadZipFileHook() {
         dispatch(zipTracksActions.removeZipTracks());
         dispatch(zipTracksActions.setIsLoading(true));
         Promise.all(
-            versions.map((version) => {
+            versions['kvr2324v3'].map((version) => {
                 const zip = new JSZip();
                 return fetch(version.url)
                     .then((res) => res.blob())
