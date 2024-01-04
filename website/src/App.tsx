@@ -7,7 +7,7 @@ import { RallyPlaner } from './RallyPlaner.tsx';
 
 export function App() {
     const urlParams = window.location.search;
-    const hasExternalUrl = urlParams.includes('?url=');
+    const hasExternalUrl = urlParams.includes('?version=');
 
     return <ErrorBoundary>{hasExternalUrl ? <RallyVersionControl /> : <RallyPlaner />}</ErrorBoundary>;
 }

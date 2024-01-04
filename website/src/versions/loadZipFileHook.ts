@@ -17,15 +17,20 @@ function getPeopleCountFromFilename(filename: string): number {
 
 const nameSpace = '1dc89ce7-d3b5-4054-b9e3-b3e062645d48';
 
+const versionKey = window.location.search.replace('?version=', '');
+
 export function loadZipFileHook() {
     const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
+        if (!versions[versionKey]) {
+            alert('Unknown version');
+        }
         dispatch(mapActions.setShowCalculatedTracks(true));
         dispatch(zipTracksActions.removeZipTracks());
         dispatch(zipTracksActions.setIsLoading(true));
         Promise.all(
-            versions['sf24_v1_v3'].map((version) => {
+            versions[versionKey].map((version) => {
                 const zip = new JSZip();
                 return fetch(version.url)
                     .then((res) => res.blob())
