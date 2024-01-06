@@ -53,7 +53,7 @@ export function StreetResolvedTracks() {
                                 onClick={() => setSelectedTrackId(id)}
                                 title={name}
                             >
-                                {trackStreetInfos.length > 6 ? name.substring(0, 2) : name}
+                                {trackStreetInfos.length > 6 ? name.split(' ')[0] : name}
                             </Pagination.Item>
                         ))}
                     </Pagination>
