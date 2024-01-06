@@ -11,6 +11,14 @@ export const BlockedStreetInfo = () => {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
 
+    const filteredBlockedStreets = blockedStreetInfos.filter((blockedStreetInfos) =>
+        onlyShowUnknown
+            ? blockedStreetInfos.streetName === 'Unknown' ||
+              blockedStreetInfos.postCode === undefined ||
+              blockedStreetInfos.district === undefined
+            : true
+    );
+
     return (
         <div>
             <h5>{'Blocked Streets'}</h5>
@@ -27,12 +35,9 @@ export const BlockedStreetInfo = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {blockedStreetInfos
-                        .filter((blockedStreetInfos) =>
-                            onlyShowUnknown ? blockedStreetInfos.streetName === 'Unknown' : true
-                        )
-                        .map(({ streetName, frontArrival, backPassage, postCode, district, pointFrom, pointTo }) => (
-                            <tr key={backPassage}>
+                    {filteredBlockedStreets.map(
+                        ({ streetName, frontArrival, backPassage, postCode, district, pointFrom, pointTo }) => (
+                            <tr key={backPassage + streetName + frontArrival}>
                                 <td>
                                     <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
                                 </td>
@@ -47,7 +52,8 @@ export const BlockedStreetInfo = () => {
                                 <td>{formatTimeOnly(frontArrival)}</td>
                                 <td>{formatTimeOnly(backPassage)}</td>
                             </tr>
-                        ))}
+                        )
+                    )}
                 </tbody>
             </Table>
         </div>

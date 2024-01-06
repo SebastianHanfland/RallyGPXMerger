@@ -50,7 +50,13 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 </thead>
                 <tbody>
                     {wayPoints
-                        .filter((wayPoint) => (onlyShowUnknown ? wayPoint.streetName === 'Unknown' : true))
+                        .filter((wayPoint) =>
+                            onlyShowUnknown
+                                ? wayPoint.streetName === 'Unknown' ||
+                                  wayPoint.postCode === undefined ||
+                                  wayPoint.district === undefined
+                                : true
+                        )
                         .map(
                             ({
                                 streetName,
@@ -62,7 +68,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 pointTo,
                                 pointFrom,
                             }) => (
-                                <tr key={backArrival}>
+                                <tr key={backArrival + streetName + frontArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName} />
                                     </td>
