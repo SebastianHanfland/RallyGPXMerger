@@ -4865,7 +4865,7 @@ PERFORMANCE OF THIS SOFTWARE.
 `;return`${`Start;${yr(e.startFront)}
 Ankunft der Ersten;${yr(e.arrivalFront)}
 Ankunft der Letzten;${yr(e.arrivalBack)}
-`}${i}${r}${n}Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zug am Ende;Straße blockiert bis
+`}${i}${r}${n}Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zugs am Ende;Straße blockiert bis
 `},AW=e=>{const t=Hi(e.arrivalBack,e.startFront)/60,i=`Duration in min;${t.toFixed(2)}
 `,r=`Distance in km;${e.distanceInKm.toFixed(2)}
 `,n=`Average speed in km/h;${(e.distanceInKm/t*60).toFixed(2)}
