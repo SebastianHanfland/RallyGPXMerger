@@ -20,7 +20,7 @@ const germanHeader = (trackInfo: TrackStreetInfo): string => {
     const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nAnkunft der Ersten;${formatTimeOnly(
         trackInfo.arrivalFront
     )}\nAnkunft der Letzten;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
-    const tableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zug am Ende;Straße blockiert bis\n`;
+    const tableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zugs am Ende;Straße blockiert bis\n`;
 
     return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };
