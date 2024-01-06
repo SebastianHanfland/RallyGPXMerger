@@ -10,17 +10,18 @@ import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
 import { getLanguage } from '../../language.ts';
 
+function createCsv(csv: string) {
+    return new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], { type: 'csv;charset=utf-8' });
+}
+
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
     const zip = new JSZip();
     trackStreetInfos.forEach((track) => {
-        zip.file(
-            `${track.name}-${track.distanceInKm.toFixed(2)}km.csv`,
-            new Blob([convertTrackInfoToCsv(track)], { type: 'csv' })
-        );
+        zip.file(`${track.name}-${track.distanceInKm.toFixed(2)}km.csv`, createCsv(convertTrackInfoToCsv(track)));
     });
     zip.file(
         getLanguage() === 'de' ? `Blockierte-Straßen.csv` : `Blocked-Streets.csv`,
-        new Blob([convertStreetInfoToCsv(blockedStreetInfos)], { type: 'csv' })
+        createCsv(convertStreetInfoToCsv(blockedStreetInfos))
     );
     zip.generateAsync({ type: 'blob' }).then(function (content) {
         FileSaver.saveAs(content, `StreetList-${new Date().toISOString()}.zip`);
