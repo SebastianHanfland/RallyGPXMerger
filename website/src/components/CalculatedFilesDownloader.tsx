@@ -7,8 +7,15 @@ import download from '../assets/file-down.svg';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
+    const usedFilenames: string[] = [];
+    let conflictCounter = 1;
     calculatedTracks.forEach((track) => {
-        zip.file(`${track.filename}.gpx`, new Blob([track.content], { type: 'gpx' }));
+        let intendedFileName = track.filename;
+        if (usedFilenames.includes(intendedFileName)) {
+            intendedFileName += `(${conflictCounter++})`;
+        }
+        zip.file(`${intendedFileName}.gpx`, new Blob([track.content], { type: 'gpx' }));
+        usedFilenames.push(intendedFileName);
     });
     zip.generateAsync({ type: 'blob' }).then(function (content) {
         FileSaver.saveAs(content, `${zipName}-${new Date().toISOString()}.zip`);
