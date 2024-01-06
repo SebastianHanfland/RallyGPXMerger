@@ -1,10 +1,10 @@
 import { FileUploader } from 'react-drag-drop-files';
 import { Table } from 'react-bootstrap';
-import { FileDisplay } from '../segments/FileDisplay.tsx';
 import { GpxSegment } from '../../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConstructionSegments, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
 
 const fileTypes = ['GPX'];
 
@@ -40,7 +40,7 @@ export function ConstructionSites() {
                     </thead>
                     <tbody>
                         {constructionSegments.map((gpxSegment) => (
-                            <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} hideChangeButton={true} />
+                            <ConstructionFileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                         <tr>
                             <td colSpan={3}>
