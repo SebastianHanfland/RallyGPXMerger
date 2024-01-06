@@ -1,7 +1,6 @@
 import { TrackStreetInfo } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
-import { StreetMapLink } from './StreetMapLink.tsx';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
@@ -66,11 +65,6 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 <tr key={backArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName} />
-                                        <StreetMapLink
-                                            pointTo={pointTo}
-                                            pointFrom={pointFrom}
-                                            streetName={streetName}
-                                        />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
