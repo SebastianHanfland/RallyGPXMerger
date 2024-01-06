@@ -1,5 +1,6 @@
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
+import { StreetMapLink } from './StreetMapLink.tsx';
 import { useSelector } from 'react-redux';
 import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
@@ -40,6 +41,7 @@ export const BlockedStreetInfo = () => {
                             <tr key={backPassage + streetName + frontArrival}>
                                 <td>
                                     <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} streetName={streetName} />
                                 </td>
                                 <td>
                                     <HighlightUnknown value={district ?? 'Unknown'} />
