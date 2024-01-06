@@ -39,6 +39,7 @@ const gpxSegmentsSlice = createSlice({
             state.segments = state.segments.map((segment) =>
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
             );
+            state.segmentFilterTerm = undefined;
         },
         setFilterTerm: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.segmentFilterTerm = action.payload;

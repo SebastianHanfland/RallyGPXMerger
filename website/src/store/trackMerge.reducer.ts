@@ -50,6 +50,7 @@ const trackMergeSlice = createSlice({
             state.trackCompositions = state.trackCompositions.map((track) =>
                 track.id === action.payload.id ? { ...track, name: action.payload.trackName } : track
             );
+            state.filterTerm = undefined;
         },
         setTrackPeopleCount: (
             state: TrackMergeState,
