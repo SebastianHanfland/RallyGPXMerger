@@ -9,6 +9,24 @@ import { storage } from '../../store/storage.ts';
 
 const fileTypes = ['JSON'];
 
+export function gpxShortener(loadedState: string): string {
+    const unnecessaryGpxElements = [
+        '<extensions>\n',
+        '<gpxtpx:TrackPointExtension>\n',
+        '<gpxtpx:Extensions>\n',
+        '<surface>asphalt</surface>\n',
+        '</gpxtpx:Extensions>\n',
+        '</gpxtpx:TrackPointExtension>\n',
+        '</extensions>\n',
+        '  ',
+    ];
+    let trippedGpxs = loadedState;
+    unnecessaryGpxElements.forEach((unusedTag) => {
+        trippedGpxs = trippedGpxs.replaceAll(unusedTag, '');
+    });
+    return trippedGpxs;
+}
+
 export function ImportExport() {
     const state = useSelector((a) => a);
     const [showDialog, setShowDialog] = useState(false);
@@ -23,7 +41,8 @@ export function ImportExport() {
             alert('You have to upload a state file first');
             return;
         }
-        storage.save(JSON.parse(loadedState));
+        const shortenedLoadedState = gpxShortener(loadedState);
+        storage.save(JSON.parse(shortenedLoadedState));
         window.location.reload();
     };
 
