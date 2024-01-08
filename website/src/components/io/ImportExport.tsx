@@ -6,26 +6,9 @@ import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
 import { storage } from '../../store/storage.ts';
+import { gpxShortener } from './gpxShortener.ts';
 
 const fileTypes = ['JSON'];
-
-export function gpxShortener(loadedState: string): string {
-    const unnecessaryGpxElements = [
-        '<extensions>\n',
-        '<gpxtpx:TrackPointExtension>\n',
-        '<gpxtpx:Extensions>\n',
-        '<surface>asphalt</surface>\n',
-        '</gpxtpx:Extensions>\n',
-        '</gpxtpx:TrackPointExtension>\n',
-        '</extensions>\n',
-        '  ',
-    ];
-    let trippedGpxs = loadedState;
-    unnecessaryGpxElements.forEach((unusedTag) => {
-        trippedGpxs = trippedGpxs.replaceAll(unusedTag, '');
-    });
-    return trippedGpxs;
-}
 
 export function ImportExport() {
     const state = useSelector((a) => a);
