@@ -20,7 +20,7 @@ describe('Calculated Track reducer test', () => {
         // given
         const store = createStore();
         expect(getCalculatedTracks(store.getState())).toEqual([]);
-        const dummyTrack = { content: 'a', id: '1', filename: 'b' };
+        const dummyTrack = { content: 'a trkpt', id: '1', filename: 'b' };
 
         // when
         store.dispatch(calculatedTracksActions.setCalculatedTracks([dummyTrack]));

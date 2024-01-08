@@ -3,8 +3,8 @@ import { getGpxSegments, gpxSegmentsActions } from '../gpxSegments.reducer.ts';
 import { GpxSegment } from '../types.ts';
 
 describe('Gpx segment reducer test', () => {
-    const dummyGpxSegment1: GpxSegment = { content: 'a', id: '1', filename: 'b' };
-    const dummyGpxSegment2: GpxSegment = { content: 'b', id: '2', filename: 'c' };
+    const dummyGpxSegment1: GpxSegment = { content: 'a trkpt', id: '1', filename: 'b' };
+    const dummyGpxSegment2: GpxSegment = { content: 'b trkpt', id: '2', filename: 'c' };
 
     it('should set and remove gpx segments', () => {
         // given
@@ -45,9 +45,12 @@ describe('Gpx segment reducer test', () => {
         store.dispatch(gpxSegmentsActions.addGpxSegments([dummyGpxSegment1, dummyGpxSegment2]));
 
         // when
-        store.dispatch(gpxSegmentsActions.changeGpxSegmentContent({ id: '2', newContent: 'newC' }));
+        store.dispatch(gpxSegmentsActions.changeGpxSegmentContent({ id: '2', newContent: 'newC trkpt' }));
 
         // then
-        expect(getGpxSegments(store.getState())).toEqual([dummyGpxSegment1, { ...dummyGpxSegment2, content: 'newC' }]);
+        expect(getGpxSegments(store.getState())).toEqual([
+            dummyGpxSegment1,
+            { ...dummyGpxSegment2, content: 'newC trkpt' },
+        ]);
     });
 });

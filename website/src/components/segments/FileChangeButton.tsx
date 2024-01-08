@@ -4,6 +4,7 @@ import check from '../../assets/check.svg';
 import { gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { useDispatch } from 'react-redux';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { optionallyCompress } from '../../store/compressHelper.ts';
 
 interface Props {
     id: string;
@@ -32,7 +33,11 @@ export function FileChangeButton({ id, name }: Props) {
         if (files && files.length === 1) {
             files[0]
                 ?.text()
-                .then((newContent) => dispatch(gpxSegmentsActions.changeGpxSegmentContent({ id, newContent })))
+                .then((newContent) =>
+                    dispatch(
+                        gpxSegmentsActions.changeGpxSegmentContent({ id, newContent: optionallyCompress(newContent) })
+                    )
+                )
                 .then(() => setIsLoading(true))
                 .catch(console.error);
         }

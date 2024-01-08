@@ -42,7 +42,6 @@ const load = (): State | undefined => {
             map = JSON.parse(mapStringified);
         }
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');
-        console.log({ trackMergeStringified });
         if (trackMergeStringified) {
             trackMerge = JSON.parse(trackMergeStringified);
             console.log({ trackMerge });
