@@ -8,7 +8,7 @@ export interface GpxSegment {
     peopleCountEnd?: number;
 }
 export interface GpxSegmentsState {
-    segments: GpxSegment[];
+    segments?: GpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds?: Record<string, number | undefined>;
     constructionSegments?: GpxSegment[];
@@ -22,7 +22,7 @@ export interface CalculatedTrack {
 }
 
 export interface CalculatedTracksState {
-    tracks: CalculatedTrack[];
+    tracks?: CalculatedTrack[];
     trackParticipants: number[];
 }
 

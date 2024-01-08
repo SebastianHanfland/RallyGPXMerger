@@ -5,6 +5,7 @@ import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../utils/filterUtil.ts';
 import { setReadableTracks } from '../logic/MergeCalculation.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
+import { optionallyDecompress } from './compressHelper.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
@@ -26,9 +27,9 @@ const calculatedTracksSlice = createSlice({
             state.trackParticipants = [];
         },
         removeSingleCalculatedTrack: (state: CalculatedTracksState, action: PayloadAction<string>) => {
-            state.tracks = state.tracks.filter((track) => track.id !== action.payload);
+            state.tracks = state.tracks?.filter((track) => track.id !== action.payload);
             setReadableTracks(
-                state.tracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }))
+                state.tracks?.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) })) ?? []
             );
         },
     },
@@ -37,7 +38,14 @@ const calculatedTracksSlice = createSlice({
 export const calculatedTracksActions = calculatedTracksSlice.actions;
 export const calculatedTracksReducer: Reducer<CalculatedTracksState> = calculatedTracksSlice.reducer;
 const getBase = (state: State) => state.calculatedTracks;
-export const getCalculatedTracks = (state: State) => getBase(state).tracks;
+
+export const getDecompressedCalculatedTracks = createSelector(
+    (state: State) => getBase(state).tracks,
+    (tracks) => {
+        return tracks?.map((track) => ({ ...track, content: optionallyDecompress(track.content) })) ?? [];
+    }
+);
+export const getCalculatedTracks = getDecompressedCalculatedTracks;
 export const getTrackParticipants = (state: State) => getBase(state).trackParticipants ?? [1000, 2000];
 
 export const getFilteredCalculatedTracks = createSelector(

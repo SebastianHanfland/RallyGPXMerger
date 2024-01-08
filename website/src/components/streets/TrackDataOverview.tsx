@@ -15,7 +15,7 @@ import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../../store/geoCoding.reducer.ts';
 
 export function TrackDataOverview() {
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getGpxSegments) ?? [];
     const requestProgress = useSelector(getRequestProgress);
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;

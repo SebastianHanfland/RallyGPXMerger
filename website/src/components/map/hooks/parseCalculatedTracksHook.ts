@@ -13,5 +13,5 @@ export const parseCalculatedTracksHook = () => {
                 calculatedTracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }))
             );
         }
-    }, [calculatedTracks.length]);
+    }, [calculatedTracks?.length]);
 };

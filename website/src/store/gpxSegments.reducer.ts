@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/to
 import { GpxSegment, GpxSegmentsState, State } from './types';
 import { storage } from './storage.ts';
 import { filterItems } from '../utils/filterUtil.ts';
+import { optionallyDecompress } from './compressHelper.ts';
 
 const initialState: GpxSegmentsState = {
     segments: [],
@@ -12,31 +13,31 @@ const gpxSegmentsSlice = createSlice({
     initialState: storage.load()?.gpxSegments ?? initialState,
     reducers: {
         addGpxSegments: (state: GpxSegmentsState, action: PayloadAction<GpxSegment[]>) => {
-            state.segments = [...state.segments, ...action.payload];
+            state.segments = [...(state.segments ?? []), ...action.payload];
         },
         removeGpxSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
-            state.segments = state.segments.filter((segment) => segment.id !== action.payload);
+            state.segments = (state.segments ?? []).filter((segment) => segment.id !== action.payload);
         },
         changeGpxSegmentContent: (
             state: GpxSegmentsState,
             action: PayloadAction<{ id: string; newContent: string }>
         ) => {
-            state.segments = state.segments.map((segment) =>
+            state.segments = (state.segments ?? []).map((segment) =>
                 segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
             );
         },
         setPeopleCountStart: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
-            state.segments = state.segments.map((segment) =>
+            state.segments = (state.segments ?? []).map((segment) =>
                 segment.id === action.payload.id ? { ...segment, peopleCountStart: action.payload.count } : segment
             );
         },
         setPeopleCountEnd: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
-            state.segments = state.segments.map((segment) =>
+            state.segments = (state.segments ?? []).map((segment) =>
                 segment.id === action.payload.id ? { ...segment, peopleCountEnd: action.payload.count } : segment
             );
         },
         setFilename: (state: GpxSegmentsState, action: PayloadAction<{ id: string; filename: string }>) => {
-            state.segments = state.segments.map((segment) =>
+            state.segments = (state.segments ?? []).map((segment) =>
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
             );
             state.segmentFilterTerm = undefined;
@@ -65,11 +66,18 @@ const gpxSegmentsSlice = createSlice({
 export const gpxSegmentsActions = gpxSegmentsSlice.actions;
 export const gpxSegmentsReducer: Reducer<GpxSegmentsState> = gpxSegmentsSlice.reducer;
 const getBase = (state: State) => state.gpxSegments;
-export const getGpxSegments = (state: State) => getBase(state).segments;
+
+export const getDecompressedGpxSegments = createSelector(
+    (state: State) => getBase(state).segments,
+    (segments) => {
+        return segments?.map((segment) => ({ ...segment, content: optionallyDecompress(segment.content) }));
+    }
+);
+export const getGpxSegments = getDecompressedGpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments ?? [];
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
-    return filterItems(filterTerm, segments, (track: GpxSegment) => track.filename);
+    return filterItems(filterTerm, segments ?? [], (track: GpxSegment) => track.filename);
 });

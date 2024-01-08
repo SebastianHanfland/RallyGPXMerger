@@ -8,7 +8,7 @@ import { SegmentSpeedRow } from './SegmentSpeedRow.tsx';
 
 export function SegmentSpeedSettings() {
     const [filterTerm, setFilterTerm] = useState('');
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getGpxSegments) ?? [];
     const [filteredSegments, setFilteredSegments] = useState<GpxSegment[]>([]);
     useEffect(() => {
         setFilteredSegments(filterItems(filterTerm, gpxSegments, (segment) => segment.filename));
