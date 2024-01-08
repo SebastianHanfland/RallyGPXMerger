@@ -29,7 +29,7 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
     dispatch(geoCodingRequestsActions.setIsLoadingData(true));
     dispatch(geoCodingRequestsActions.resetRequestDoneCounter());
 
-    const gpxSegments = getGpxSegments(getState()) ?? [];
+    const gpxSegments = getGpxSegments(getState());
     gpxSegments.forEach((segment) => {
         const gpx = SimpleGPX.fromString(segment.content);
         gpx.tracks.forEach((track) => {

@@ -9,7 +9,7 @@ import { CalculatedTrack, GpxSegment, State } from '../../../store/types.ts';
 export function centerPointHook(
     map: L.Map | undefined,
     startZoom: number,
-    selector: (state: State) => GpxSegment[] | CalculatedTrack[] | undefined = getGpxSegments
+    selector: (state: State) => GpxSegment[] | CalculatedTrack[] = getGpxSegments
 ) {
     const centerPoint = useSelector(getCenterPoint);
     const gpxSegments = useSelector(selector);
@@ -21,10 +21,10 @@ export function centerPointHook(
     }, [centerPoint]);
 
     useEffect(() => {
-        if (map && gpxSegments && gpxSegments.length > 0) {
+        if (map && gpxSegments.length > 0) {
             const firstSegment = SimpleGPX.fromString(gpxSegments[0].content);
             const { lat, lon } = firstSegment.tracks[0].points[0];
             map.setView({ lat, lng: lon }, startZoom);
         }
-    }, [(gpxSegments?.length ?? 0) > 0]);
+    }, [gpxSegments.length > 0]);
 }

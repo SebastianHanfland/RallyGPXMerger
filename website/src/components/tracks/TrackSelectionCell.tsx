@@ -50,7 +50,7 @@ const breaks = [
 export function TrackSelectionCell({ track }: Props) {
     const { id, segmentIds } = track;
     const dispatch = useDispatch();
-    const gpxSegments = useSelector(getGpxSegments) ?? [];
+    const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption), ...breaks];
 
     const setSegmentIds = (items: { id: string }[]) => {

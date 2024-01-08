@@ -5,7 +5,7 @@ import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { downloadFilesInZip } from '../CalculatedFilesDownloader.tsx';
 
 export const SegmentFilesDownloader = () => {
-    const calculatedTracks = useSelector(getGpxSegments) ?? [];
+    const calculatedTracks = useSelector(getGpxSegments);
     return (
         <Button
             onClick={() => downloadFilesInZip(calculatedTracks, 'Segments')}

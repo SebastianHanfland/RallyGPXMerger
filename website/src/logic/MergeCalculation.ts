@@ -90,7 +90,7 @@ export function setStartAndEndTime(dispatch: AppDispatch) {
 }
 
 export async function calculateMerge(dispatch: AppDispatch, getState: () => State) {
-    const gpxSegments = getGpxSegments(getState()) ?? [];
+    const gpxSegments = getGpxSegments(getState());
     const trackCompositions = getTrackCompositions(getState());
     const arrivalDateTime = getArrivalDateTime(getState());
     const averageSpeed = getAverageSpeedInKmH(getState());
