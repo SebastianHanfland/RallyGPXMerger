@@ -31,18 +31,17 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
 
     const gpxSegments = getGpxSegments(getState());
     gpxSegments.forEach((segment) => {
-        const gpx = SimpleGPX.fromString(segment.content);
-        gpx.tracks.forEach((track) => {
-            const listOfPoints = splitListIntoSections(track.points, 1000);
-            listOfPoints.forEach((points) => {
+        SimpleGPX.fromString(segment.content).tracks.forEach((track) => {
+            splitListIntoSections(track.points, 1000).forEach((points) => {
                 dispatch(geoCodingRequestsActions.increaseActiveRequestCounter());
                 setTimeout(() => {
-                    const body = toGeoApifyMapMatchingBody(points);
-                    geoApifyFetchMapMatching(geoApifyKey)(body).then((resolvedPositions) => {
-                        dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
-                        dispatch(geoCodingRequestsActions.decreaseActiveRequestCounter());
-                        dispatch(geoCodingRequestsActions.increaseRequestDoneCounter());
-                    });
+                    geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
+                        (resolvedPositions) => {
+                            dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                            dispatch(geoCodingRequestsActions.decreaseActiveRequestCounter());
+                            dispatch(geoCodingRequestsActions.increaseRequestDoneCounter());
+                        }
+                    );
                 }, 5000 * counter);
                 counter += 1;
             });
