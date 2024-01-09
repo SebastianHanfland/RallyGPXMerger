@@ -9,26 +9,14 @@ import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 
-function createPdf(trackStreets: TrackStreetInfo) {
+const infoHeaderLength = 6;
+
+function createStreetInfoPdf(trackStreets: TrackStreetInfo) {
     const doc = new JsPDF();
 
-    // It can parse html:
-    // <table id="my-table"><!-- ... --></table>
-    //     autoTable(doc, { html: '#my-table' })
-
-    // Or use javascript directly:
-
-    const csvBody = convertTrackInfoToCsv(trackStreets);
-
-    const infoBody: string[][] = csvBody
-        .split('\n')
-        .slice(0, 6)
-        .map((row) => row.split(';'));
-
-    const streetBody: string[][] = csvBody
-        .split('\n')
-        .slice(6)
-        .map((row) => row.split(';'));
+    const csvRows = convertTrackInfoToCsv(trackStreets).split('\n');
+    const infoBody: string[][] = csvRows.slice(0, infoHeaderLength).map((row) => row.split(';'));
+    const streetBody: string[][] = csvRows.slice(infoHeaderLength).map((row) => row.split(';'));
 
     doc.text(trackStreets.name, 10, 10);
     autoTable(doc, {
@@ -44,25 +32,9 @@ function createPdf(trackStreets: TrackStreetInfo) {
 }
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
-    // const zip = new JSZip();
-    // trackStreetInfos.forEach((track) => {
-    //     zip.file(`${track.name}-${track.distanceInKm.toFixed(2)}km.csv`, createCsv(convertTrackInfoToCsv(track)));
-    // });
-    createPdf(trackStreetInfos[0]);
-    // zip.file(
-    //     getLanguage() === 'de' ? `Blockierte-Straßen.csv` : `Blocked-Streets.csv`,
-    //
-    //     // createCsv(convertStreetInfoToCsv(blockedStreetInfos))
-    // );
-    // zip.generateAsync({ type: 'blob' }).then(function (content) {
-    //     FileSaver.saveAs(content, `StreetList-${new Date().toISOString()}.zip`);
-    // });
+    trackStreetInfos.forEach((info) => createStreetInfoPdf(info));
 
     console.log(trackStreetInfos, blockedStreetInfos);
-
-    // const printer = new pdfMake({});
-
-    // printer.createPdfKitDocument(docDefinition, {}).file().;
 };
 
 export const StreetFilesJsPdfDownloader = () => {
