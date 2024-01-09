@@ -24,6 +24,8 @@
     "geo-distance-helper": "^2.0.4",
     "gpx-builder": "^5.2.1",
     "gpxparser": "^3.0.8",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1",
     "jszip": "^3.10.1",
     "leaflet": "^1.9.4",
     "lz-string": "^1.5.0",

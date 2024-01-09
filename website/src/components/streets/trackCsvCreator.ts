@@ -38,7 +38,7 @@ const englishHeader = (trackInfo: TrackStreetInfo): string => {
     return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
 };
 
-const getHeader = (trackInfo: TrackStreetInfo): string => {
+export const getHeader = (trackInfo: TrackStreetInfo): string => {
     const language = getLanguage();
     switch (language) {
         case 'de':

@@ -6,6 +6,7 @@ import { StreetFilesDownloader } from './StreetFilesDownloader.tsx';
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
 import { geoCodingActions, getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';
+import { StreetFilesJsPdfDownloader } from './StreetFilesjsPdfDownloader.tsx';
 
 export function StreetResolvedTracks() {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
@@ -28,6 +29,9 @@ export function StreetResolvedTracks() {
                 <div className={'d-flex justify-content-between'}>
                     <div className={'mx-2'}>
                         <StreetFilesDownloader />
+                    </div>
+                    <div className={'mx-2'}>
+                        <StreetFilesJsPdfDownloader />
                     </div>
                     <div className={'mx-2'}>
                         <Button
