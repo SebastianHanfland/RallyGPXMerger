@@ -15,7 +15,7 @@ interface Props {
 
 export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
-    const { name, wayPoints, distanceInKm, startFront, arrivalBack, arrivalFront } = trackStreetInfo;
+    const { name, wayPoints, distanceInKm, startFront, arrivalBack, arrivalFront, peopleCount } = trackStreetInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
     return (
         <div>
@@ -26,6 +26,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 <div className={'m-3'}>{`Arrival: ${formatTimeOnly(arrivalFront)}`}</div>
                 <div className={'m-3'}>{`End: ${formatTimeOnly(arrivalBack)}`}</div>
                 <div className={'m-3'}>{`Average speed: ${average.toFixed(1)} km/h`}</div>
+                <div className={'m-3'}>{`#People: ${peopleCount ?? '---'}`}</div>
             </div>
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
