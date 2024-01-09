@@ -20,9 +20,10 @@ const germanHeader = (trackInfo: TrackStreetInfo): string => {
     const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nAnkunft der Ersten;${formatTimeOnly(
         trackInfo.arrivalFront
     )}\nAnkunft der Letzten;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
+    const peopleCount = `Geschätzte TeilnehmerInnen:;${trackInfo.peopleCount ?? ''}\n`;
     const tableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zugs am Ende;Straße blockiert bis\n`;
 
-    return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
+    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${tableHeaders}`;
 };
 const englishHeader = (trackInfo: TrackStreetInfo): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
@@ -33,9 +34,10 @@ const englishHeader = (trackInfo: TrackStreetInfo): string => {
     const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nArrival of front;${formatTimeOnly(
         trackInfo.arrivalFront
     )}\nArrival of back;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
+    const peopleCount = `People on track:;${trackInfo.peopleCount ?? ''}\n`;
     const tableHeaders = `Street;Post code;District;Length in km;Duration in min;Blockage in min;Arrival of front;Passage of front;Arrival of back\n`;
 
-    return `${times}${durationString}${distance}${averageSpeed}${tableHeaders}`;
+    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${tableHeaders}`;
 };
 
 export const getHeader = (trackInfo: TrackStreetInfo): string => {

@@ -69,6 +69,7 @@ export interface TrackStreetInfo {
     arrivalFront: string;
     distanceInKm: number;
     wayPoints: TrackWayPoint[];
+    peopleCount?: number;
 }
 
 export interface BlockedStreetInfo {

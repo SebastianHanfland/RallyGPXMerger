@@ -45,6 +45,7 @@ const enrichWithStreetsAndAggregate =
             arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
             arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
             distanceInKm: distance,
+            peopleCount: track.peopleCount,
             wayPoints,
         };
     };
