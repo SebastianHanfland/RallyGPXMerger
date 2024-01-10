@@ -53,22 +53,42 @@ function useLastKnownStreet(lastElement: AggregatedPoints, point: EnrichedPoints
     };
 }
 
-export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], participants: number): AggregatedPoints[] {
+function isNodePositions(nodePositions: { lat: number; lon: number }[], point: EnrichedPoints): boolean {
+    return !!nodePositions.find(
+        (nodePosition) => (geoDistance(toLatLng(nodePosition), toLatLng(point)) as number) < 0.00001
+    );
+}
+
+function isABreak(lastElement: AggregatedPoints, point: EnrichedPoints) {
+    const distance = geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number;
+    const timeDifference = getTimeDifferenceInSeconds(point.time, lastElement.frontPassage);
+    return distance < 0.01 && timeDifference > 200;
+}
+
+function createAggregatedPoint(point: EnrichedPoints, participants: number, type: TrackWayPointType) {
+    return {
+        streetName: point.street,
+        backArrival: shiftEndTimeByParticipants(point.time, participants),
+        frontPassage: point.time,
+        frontArrival: point.time,
+        pointFrom: extractLatLon(point),
+        pointTo: extractLatLon(point),
+        type: type,
+    };
+}
+
+export function aggregateEnrichedPoints(
+    enrichedPoints: EnrichedPoints[],
+    participants: number,
+    nodePositions: { lat: number; lon: number }[]
+): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point, index) => {
         if (point.street === 'Unknown' && index === 0) {
             return;
         }
         if (aggregatedPoints.length === 0) {
-            aggregatedPoints.push({
-                streetName: point.street,
-                backArrival: shiftEndTimeByParticipants(point.time, participants),
-                frontPassage: point.time,
-                frontArrival: point.time,
-                pointFrom: extractLatLon(point),
-                pointTo: extractLatLon(point),
-                type: TrackWayPointType.Track,
-            });
+            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Track));
             return;
         }
 
@@ -88,23 +108,17 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
 
-        const distance = geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number;
-        const timeDifference = getTimeDifferenceInSeconds(point.time, lastElement.frontPassage);
-
-        if (false && distance < 0.01 && timeDifference > 200) {
-            aggregatedPoints.push({
-                streetName: point.street,
-                backArrival: shiftEndTimeByParticipants(point.time, participants),
-                frontPassage: point.time,
-                frontArrival: point.time,
-                pointFrom: extractLatLon(point),
-                pointTo: extractLatLon(point),
-                type: TrackWayPointType.Break,
-            });
+        if (isABreak(lastElement, point)) {
+            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Break));
             return;
         }
 
-        if (anyStreetNameMatch(streetName, lastStreetName)) {
+        if (isNodePositions(nodePositions, point)) {
+            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Node));
+            return;
+        }
+
+        if (anyStreetNameMatch(streetName, lastStreetName) && lastElement.type === TrackWayPointType.Track) {
             const detailedStreetName = takeMostDetailedStreetName(streetName, lastStreetName);
             aggregatedPoints[lastIndex] = {
                 ...lastElement,
@@ -115,15 +129,7 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
                 type: TrackWayPointType.Track,
             };
         } else {
-            aggregatedPoints.push({
-                streetName: point.street,
-                backArrival: shiftEndTimeByParticipants(point.time, participants),
-                frontPassage: point.time,
-                frontArrival: point.time,
-                pointFrom: extractLatLon(point),
-                pointTo: extractLatLon(point),
-                type: TrackWayPointType.Track,
-            });
+            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Track));
         }
     });
     return aggregatedPoints;

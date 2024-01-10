@@ -35,6 +35,7 @@ function createStreetInfoPdf(trackStreets: TrackStreetInfo) {
     const streetBody: string[][] = csvRows.slice(streetInfoHeaderLength).map((row) => row.split(';'));
 
     doc.text(trackStreets.name, 10, 10);
+
     autoTable(doc, {
         head: infoBody.slice(0, 1),
         body: infoBody.slice(1),
@@ -48,7 +49,8 @@ function createStreetInfoPdf(trackStreets: TrackStreetInfo) {
 }
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
-    trackStreetInfos.forEach((info) => createStreetInfoPdf(info));
+    // trackStreetInfos.forEach((info) => createStreetInfoPdf(info, trackCompositions));
+    createStreetInfoPdf(trackStreetInfos[0]);
     createBlockedStreetPdf(blockedStreetInfos);
     console.log(trackStreetInfos, blockedStreetInfos);
 };

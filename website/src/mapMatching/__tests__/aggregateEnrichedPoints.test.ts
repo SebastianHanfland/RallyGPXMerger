@@ -20,7 +20,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, nodePositions);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -48,7 +48,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 100);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 100, nodePositions);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -71,7 +71,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, nodePositions);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -101,7 +101,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, nodePositions);
 
             // then
             expect(aggregatedPoints).toEqual([

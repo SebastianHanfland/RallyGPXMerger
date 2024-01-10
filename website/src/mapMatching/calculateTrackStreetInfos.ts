@@ -9,11 +9,13 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/speedSimulator.ts';
 import { geoCodingActions, getResolvedPositions } from '../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
+import { getNodePositions } from './getNodePositions.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
     (track: CalculatedTrack): TrackStreetInfo => {
         const resolvedPositions = getResolvedPositions(state);
+        const nodePositions = getNodePositions(state);
 
         const gpx = SimpleGPX.fromString(track.content);
         const points = gpx.tracks.flatMap((track) => track.points);
@@ -36,7 +38,7 @@ const enrichWithStreetsAndAggregate =
             };
         });
 
-        const wayPoints = aggregateEnrichedPoints(enrichedPoints, track.peopleCount ?? 0);
+        const wayPoints = aggregateEnrichedPoints(enrichedPoints, track.peopleCount ?? 0, nodePositions);
 
         return {
             id: track.id,
