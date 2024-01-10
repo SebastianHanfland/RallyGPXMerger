@@ -1,18 +1,37 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { listAllNodesOfTracks } from '../logic/helper/nodeFinder.ts';
+import { listAllNodesOfTracks, TrackNode } from '../logic/helper/nodeFinder.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
+import { TrackComposition } from '../store/types.ts';
+
+export interface NodePosition {
+    point: { lat: number; lon: number };
+    tracks: string[];
+}
+
+function getTracks(segmentId: string, trackNodes: TrackNode[], trackCompositions: TrackComposition[]): string[] {
+    const foundTrackNode = trackNodes.find((node) =>
+        node.segmentsBeforeNode.map((beforeNode) => beforeNode.segmentId).includes(segmentId)
+    );
+    return (
+        foundTrackNode?.segmentsBeforeNode.map((beforeNode) => {
+            const foundTrackComposition = trackCompositions.find((track) => track.id === beforeNode.trackId);
+            return foundTrackComposition?.name ?? '';
+        }) ?? []
+    );
+}
 
 export const getNodePositions = createSelector(
     getTrackCompositions,
     getGpxSegments,
-    (trackCompositions, gpxSegments): { lat: number; lon: number }[] => {
-        const segmentIdsBeforeNode = listAllNodesOfTracks(trackCompositions).flatMap((trackNode) =>
+    (trackCompositions, gpxSegments): NodePosition[] => {
+        const trackNodes = listAllNodesOfTracks(trackCompositions);
+        const segmentIdsBeforeNode = trackNodes.flatMap((trackNode) =>
             trackNode.segmentsBeforeNode.map((tr) => tr.segmentId)
         );
 
-        const nodePositions: { lat: number; lon: number }[] = [];
+        const nodePositions: NodePosition[] = [];
 
         segmentIdsBeforeNode.forEach((segmentId) => {
             const foundSegment = gpxSegments.find((gpxSegment) => gpxSegment.id === segmentId);
@@ -21,7 +40,10 @@ export const getNodePositions = createSelector(
                 const lastTrackIndex = simpleGPX.tracks.length - 1;
                 const lastPointOfSegment =
                     simpleGPX.tracks[lastTrackIndex].points[simpleGPX.tracks[lastTrackIndex].points.length - 1];
-                nodePositions.push(lastPointOfSegment);
+                nodePositions.push({
+                    point: lastPointOfSegment,
+                    tracks: getTracks(segmentId, trackNodes, trackCompositions),
+                });
             }
         });
         return nodePositions;

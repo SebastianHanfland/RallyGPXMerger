@@ -71,6 +71,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 pointFrom,
                                 type,
                                 breakLength,
+                                nodeTracks,
                             }) => (
                                 <tr key={backArrival + streetName + frontArrival}>
                                     <td>
@@ -80,10 +81,16 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                             pointFrom={pointFrom}
                                             streetName={streetName}
                                         />
-                                        {type === TrackWayPointType.Break
-                                            ? `Pause${breakLength ? ` (${breakLength} min)` : ''}`
-                                            : null}
-                                        {type === TrackWayPointType.Node ? 'Knoten' : null}
+                                        <b>
+                                            {type === TrackWayPointType.Break
+                                                ? `Pause${breakLength ? ` (${breakLength} min)` : ''}`
+                                                : null}
+                                        </b>
+                                        <b>
+                                            {type === TrackWayPointType.Node
+                                                ? `Knoten${nodeTracks ? ':  ' + nodeTracks.join(', ') : ''}`
+                                                : null}
+                                        </b>
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />

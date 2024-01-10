@@ -67,6 +67,7 @@ export interface TrackWayPoint {
     district?: string;
     type?: TrackWayPointType;
     breakLength?: number;
+    nodeTracks?: string[];
 }
 
 export interface TrackStreetInfo {

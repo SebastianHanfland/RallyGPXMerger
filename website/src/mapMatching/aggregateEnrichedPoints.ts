@@ -5,6 +5,7 @@ import { TrackWayPointType } from './types.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/speedSimulator.ts';
 import { getTimeDifferenceInSeconds } from '../utils/dateUtil.ts';
+import { NodePosition } from './getNodePositions.ts';
 
 export interface EnrichedPoints extends PointS {
     street: string;
@@ -23,6 +24,7 @@ interface AggregatedPoints {
     pointTo: { lat: number; lon: number };
     type?: TrackWayPointType;
     breakLength?: number;
+    nodeTracks?: string[];
 }
 
 export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
@@ -54,9 +56,12 @@ function useLastKnownStreet(lastElement: AggregatedPoints, point: EnrichedPoints
     };
 }
 
-function isNodePositions(nodePositions: { lat: number; lon: number }[], point: { lat: number; lon: number }): boolean {
-    return !!nodePositions.find(
-        (nodePosition) => (geoDistance(toLatLng(nodePosition), toLatLng(point)) as number) < 0.0000001
+function getMatchingNodePosition(
+    nodePositions: NodePosition[],
+    point: { lat: number; lon: number }
+): NodePosition | undefined {
+    return nodePositions.find(
+        (nodePosition) => (geoDistance(toLatLng(nodePosition.point), toLatLng(point)) as number) < 0.0000001
     );
 }
 
@@ -81,7 +86,7 @@ function createAggregatedPoint(point: EnrichedPoints, participants: number, type
 export function aggregateEnrichedPoints(
     enrichedPoints: EnrichedPoints[],
     participants: number,
-    nodePositions: { lat: number; lon: number }[]
+    nodePositions: NodePosition[]
 ): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point, index) => {
@@ -123,9 +128,13 @@ export function aggregateEnrichedPoints(
             return;
         }
 
-        if (isNodePositions(nodePositions, point)) {
-            if (!isNodePositions(nodePositions, lastElement.pointTo)) {
-                aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Node));
+        const matchingNodePosition = getMatchingNodePosition(nodePositions, point);
+        if (matchingNodePosition) {
+            if (!getMatchingNodePosition(nodePositions, lastElement.pointTo)) {
+                aggregatedPoints.push({
+                    ...createAggregatedPoint(point, participants, TrackWayPointType.Node),
+                    nodeTracks: matchingNodePosition.tracks,
+                });
             }
             return;
         }
