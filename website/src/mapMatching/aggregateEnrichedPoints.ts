@@ -4,6 +4,7 @@ import { PARTICIPANTS_DELAY_IN_SECONDS } from '../store/trackMerge.reducer.ts';
 import { TrackWayPointType } from './types.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/speedSimulator.ts';
+import { getTimeDifferenceInSeconds } from '../utils/dateUtil.ts';
 
 export interface EnrichedPoints extends PointS {
     street: string;
@@ -43,6 +44,15 @@ function shiftEndTimeByParticipants(endDateTime: string, participants: number): 
     return date.addSeconds(new Date(endDateTime), participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
 }
 
+function useLastKnownStreet(lastElement: AggregatedPoints, point: EnrichedPoints, participants: number) {
+    return {
+        ...lastElement,
+        backArrival: shiftEndTimeByParticipants(point.time, participants),
+        frontPassage: point.time,
+        pointTo: extractLatLon(point),
+    };
+}
+
 export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], participants: number): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point, index) => {
@@ -65,30 +75,23 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
         const lastElement = aggregatedPoints[lastIndex];
 
         if (point.street === 'Unknown' && index > 0 && enrichedPoints[index - 1].street !== 'Unknown') {
-            aggregatedPoints[lastIndex] = {
-                ...lastElement,
-                backArrival: shiftEndTimeByParticipants(point.time, participants),
-                frontPassage: point.time,
-                pointTo: extractLatLon(point),
-            };
+            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
 
         if (point.street === 'Unknown' && index > 1 && enrichedPoints[index - 2].street !== 'Unknown') {
-            aggregatedPoints[lastIndex] = {
-                ...lastElement,
-                backArrival: shiftEndTimeByParticipants(point.time, participants),
-                frontPassage: point.time,
-                pointTo: extractLatLon(point),
-            };
+            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
 
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
 
-        if ((geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number) < 0.00001) {
-            console.log('This is a break', toLatLng(point));
+        const distance = geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number;
+        const timeDifference = getTimeDifferenceInSeconds(point.time, lastElement.frontPassage);
+
+        if (distance < 0.01 && timeDifference > 200) {
+            console.log('This is a break', toLatLng(point), point.street, timeDifference, distance);
         }
 
         if (anyStreetNameMatch(streetName, lastStreetName)) {
