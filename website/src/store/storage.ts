@@ -44,7 +44,6 @@ const load = (): State | undefined => {
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');
         if (trackMergeStringified) {
             trackMerge = JSON.parse(trackMergeStringified);
-            console.log({ trackMerge });
         }
         const geoCodingStringified = localStorage.getItem(stateKey + '.geoCoding');
         if (geoCodingStringified) {

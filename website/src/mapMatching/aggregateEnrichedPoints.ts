@@ -91,7 +91,7 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
         const distance = geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number;
         const timeDifference = getTimeDifferenceInSeconds(point.time, lastElement.frontPassage);
 
-        if (distance < 0.01 && timeDifference > 200) {
+        if (false && distance < 0.01 && timeDifference > 200) {
             aggregatedPoints.push({
                 streetName: point.street,
                 backArrival: shiftEndTimeByParticipants(point.time, participants),
