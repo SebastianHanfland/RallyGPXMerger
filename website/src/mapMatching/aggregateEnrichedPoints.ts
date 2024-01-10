@@ -74,6 +74,16 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
             return;
         }
 
+        if (point.street === 'Unknown' && index > 1 && enrichedPoints[index - 2].street !== 'Unknown') {
+            aggregatedPoints[lastIndex] = {
+                ...lastElement,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
+                pointTo: extractLatLon(point),
+            };
+            return;
+        }
+
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
 
