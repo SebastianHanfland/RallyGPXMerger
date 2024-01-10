@@ -111,6 +111,16 @@ export function aggregateEnrichedPoints(
             return;
         }
 
+        if (point.street === 'Unknown' && index > 2 && enrichedPoints[index - 3].street !== 'Unknown') {
+            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
+            return;
+        }
+
+        if (point.street === 'Unknown' && index > 3 && enrichedPoints[index - 4].street !== 'Unknown') {
+            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
+            return;
+        }
+
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
 
