@@ -78,7 +78,7 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
         const streetName = point.street;
 
         if ((geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number) < 0.00001) {
-            console.log('This is a break');
+            console.log('This is a break', toLatLng(point));
         }
 
         if (anyStreetNameMatch(streetName, lastStreetName)) {

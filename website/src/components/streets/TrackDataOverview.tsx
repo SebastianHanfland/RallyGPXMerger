@@ -13,6 +13,7 @@ import {
 import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../../store/geoCoding.reducer.ts';
+import { calculateTrackStreetInfos } from '../../mapMatching/calculateTrackStreetInfos.ts';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);
@@ -34,6 +35,11 @@ export function TrackDataOverview() {
             <h4>Overview of calculated Data</h4>
             <TrackDataOverviewTable />
 
+            <div className={'mb-2'}>
+                <Button onClick={() => dispatch(calculateTrackStreetInfos)}>
+                    Recalculate the streets without fetching
+                </Button>
+            </div>
             <Button
                 variant={'success'}
                 onClick={() => dispatch(resolvePositions)}
