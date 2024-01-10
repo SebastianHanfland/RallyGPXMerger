@@ -11,7 +11,11 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
 
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+try {
+    (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+} catch (error) {
+    console.error('pdfmake error', error);
+}
 
 function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
     const trackInfo = convertStreetInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
