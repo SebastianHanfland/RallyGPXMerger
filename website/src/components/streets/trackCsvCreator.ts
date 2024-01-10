@@ -1,4 +1,4 @@
-import { TrackStreetInfo } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { getLanguage } from '../../language.ts';
 import geoDistance from 'geo-distance-helper';
@@ -50,13 +50,39 @@ export const getHeader = (trackInfo: TrackStreetInfo): string => {
     }
 };
 
+function getAdditionalInfo(
+    type: TrackWayPointType | undefined,
+    nodeTracks: string[] | undefined,
+    breakLength: number | undefined
+) {
+    if (type === TrackWayPointType.Break) {
+        return `: Pause${breakLength ? ` (${breakLength}) min` : ''}`;
+    }
+    if (type === TrackWayPointType.Node) {
+        return `: Knoten${nodeTracks ? ` (${nodeTracks.join(', ')})` : ''}`;
+    }
+    return '';
+}
+
 export function convertTrackInfoToCsv(track: TrackStreetInfo): string {
     return (
         getHeader(track) +
         track.wayPoints
             .map(
-                ({ streetName, postCode, district, frontArrival, frontPassage, backArrival, pointFrom, pointTo }) =>
-                    `${streetName};` +
+                ({
+                    streetName,
+                    postCode,
+                    district,
+                    frontArrival,
+                    frontPassage,
+                    backArrival,
+                    pointFrom,
+                    pointTo,
+                    type,
+                    nodeTracks,
+                    breakLength,
+                }) =>
+                    `${streetName}${getAdditionalInfo(type, nodeTracks, breakLength)};` +
                     `${postCode ?? ''};` +
                     `${district ?? ''};` +
                     `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +

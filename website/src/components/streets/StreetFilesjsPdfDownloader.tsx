@@ -28,13 +28,13 @@ function createBlockedStreetPdf(blockedStreet: BlockedStreetInfo[]) {
 }
 
 function createStreetInfoPdf(trackStreets: TrackStreetInfo) {
-    const doc = new JsPDF();
+    const doc = new JsPDF({ orientation: 'landscape' });
 
     const csvRows = convertTrackInfoToCsv(trackStreets).split('\n');
     const infoBody: string[][] = csvRows.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
     const streetBody: string[][] = csvRows.slice(streetInfoHeaderLength).map((row) => row.split(';'));
 
-    doc.text(trackStreets.name, 10, 10);
+    doc.text(trackStreets.name, 30, 10);
 
     autoTable(doc, {
         head: infoBody.slice(0, 1),

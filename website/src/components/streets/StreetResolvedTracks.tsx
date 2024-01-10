@@ -7,6 +7,7 @@ import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackS
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
 import { geoCodingActions, getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';
 import { StreetFilesJsPdfDownloader } from './StreetFilesjsPdfDownloader.tsx';
+import { StreetFilesPdfMakeDownloader } from './StreetFilesPdfMakeDownloader.tsx';
 
 export function StreetResolvedTracks() {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
@@ -32,6 +33,9 @@ export function StreetResolvedTracks() {
                     </div>
                     <div className={'mx-2'}>
                         <StreetFilesJsPdfDownloader />
+                    </div>{' '}
+                    <div className={'mx-2'}>
+                        <StreetFilesPdfMakeDownloader />
                     </div>
                     <div className={'mx-2'}>
                         <Button
