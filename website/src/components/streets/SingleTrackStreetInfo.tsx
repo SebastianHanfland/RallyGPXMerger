@@ -1,4 +1,4 @@
-import { TrackStreetInfo } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
@@ -69,6 +69,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 district,
                                 pointTo,
                                 pointFrom,
+                                type,
+                                breakLength,
                             }) => (
                                 <tr key={backArrival + streetName + frontArrival}>
                                     <td>
@@ -78,6 +80,10 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                             pointFrom={pointFrom}
                                             streetName={streetName}
                                         />
+                                        {type === TrackWayPointType.Break
+                                            ? `Pause${breakLength ? ` (${breakLength} min)` : ''}`
+                                            : null}
+                                        {type === TrackWayPointType.Node ? 'Knoten' : null}
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />

@@ -22,6 +22,7 @@ interface AggregatedPoints {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
     type?: TrackWayPointType;
+    breakLength?: number;
 }
 
 export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
@@ -53,9 +54,9 @@ function useLastKnownStreet(lastElement: AggregatedPoints, point: EnrichedPoints
     };
 }
 
-function isNodePositions(nodePositions: { lat: number; lon: number }[], point: EnrichedPoints): boolean {
+function isNodePositions(nodePositions: { lat: number; lon: number }[], point: { lat: number; lon: number }): boolean {
     return !!nodePositions.find(
-        (nodePosition) => (geoDistance(toLatLng(nodePosition), toLatLng(point)) as number) < 0.00001
+        (nodePosition) => (geoDistance(toLatLng(nodePosition), toLatLng(point)) as number) < 0.0000001
     );
 }
 
@@ -108,13 +109,24 @@ export function aggregateEnrichedPoints(
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
 
-        if (isABreak(lastElement, point)) {
-            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Break));
+        if (isABreak(lastElement, point) && lastElement.type !== TrackWayPointType.Break) {
+            aggregatedPoints.push({
+                streetName: point.street,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: lastElement.frontArrival,
+                frontArrival: lastElement.frontArrival,
+                pointFrom: extractLatLon(point),
+                pointTo: extractLatLon(point),
+                type: TrackWayPointType.Break,
+                breakLength: getTimeDifferenceInSeconds(point.time, lastElement.frontPassage) / 60,
+            });
             return;
         }
 
         if (isNodePositions(nodePositions, point)) {
-            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Node));
+            if (!isNodePositions(nodePositions, lastElement.pointTo)) {
+                aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Node));
+            }
             return;
         }
 
