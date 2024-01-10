@@ -7,6 +7,7 @@ import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackS
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -18,8 +19,8 @@ function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
 
     console.table(body);
 
-    const docDefinition = {
-        header: 'simple text',
+    const docDefinition: TDocumentDefinitions = {
+        pageOrientation: 'landscape',
         content: [
             '',
             { text: trackStreets.name.replaceAll('.gpx', ''), fontSize: 15 },
