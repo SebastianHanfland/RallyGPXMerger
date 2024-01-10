@@ -50,6 +50,12 @@ export interface GeoApifyMapMatchingResult {
     }[];
 }
 
+enum TrackWayPointType {
+    Track = 'TRACK',
+    Break = 'BREAK',
+    Node = 'NODE',
+}
+
 export interface TrackWayPoint {
     streetName: string;
     frontArrival: string;
@@ -59,6 +65,7 @@ export interface TrackWayPoint {
     pointTo: { lat: number; lon: number };
     postCode?: number;
     district?: string;
+    type?: TrackWayPointType;
 }
 
 export interface TrackStreetInfo {
