@@ -49,8 +49,7 @@ function createStreetInfoPdf(trackStreets: TrackStreetInfo) {
 }
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
-    // trackStreetInfos.forEach((info) => createStreetInfoPdf(info, trackCompositions));
-    createStreetInfoPdf(trackStreetInfos[0]);
+    trackStreetInfos.forEach((info) => createStreetInfoPdf(info));
     createBlockedStreetPdf(blockedStreetInfos);
     console.log(trackStreetInfos, blockedStreetInfos);
 };

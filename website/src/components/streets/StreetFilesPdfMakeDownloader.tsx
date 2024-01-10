@@ -9,10 +9,48 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
+import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
-function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
+function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
+    const trackInfo = convertStreetInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const body: string[][] = trackInfo.map((row) => row.split(';'));
+
+    const docDefinition: TDocumentDefinitions = {
+        pageOrientation: 'landscape',
+        content: [
+            '',
+            { text: 'Blockierte Straßen', fontSize: 15 },
+            '\n\n',
+            '',
+            '',
+            ' ',
+            ' ',
+            {
+                layout: 'lightHorizontalLines', // optional
+                table: {
+                    // headers are automatically repeated if the table spans over multiple pages
+                    // you can declare how many rows should be treated as headers
+                    headerRows: 1,
+                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                    body: body,
+                },
+            },
+        ],
+        styles: {
+            linkStyle: {
+                color: 'blue',
+            },
+            headerStyle: {
+                bold: true,
+            },
+        },
+    };
+    pdfMake.createPdf(docDefinition).download('Blockierte-Strassen.pdf');
+}
+
+export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
     const trackInfo = convertTrackInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
     const body: string[][] = trackInfo.slice(streetInfoHeaderLength).map((row) => row.split(';'));
     const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
@@ -34,11 +72,6 @@ function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
                 },
             },
             ' ',
-            {
-                text: 'link',
-                link: 'https://www.luftlinie.org/48.182862,11.631854/48.18251642200921,11.630176949955503',
-                style: 'linkStyle',
-            },
             ' ',
             {
                 layout: 'lightHorizontalLines', // optional
@@ -60,13 +93,12 @@ function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             },
         },
     };
-    pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition).download(trackStreets.name + '.pdf');
 }
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
-    createTrackStreetPdf(trackStreetInfos[0]);
-
-    console.log(trackStreetInfos, blockedStreetInfos);
+    trackStreetInfos.forEach(createTrackStreetPdf);
+    createBlockedStreetsPdf(blockedStreetInfos);
 };
 
 export const StreetFilesPdfMakeDownloader = () => {

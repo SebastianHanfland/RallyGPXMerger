@@ -5,8 +5,8 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
 import { formatNumber } from './trackCsvCreator.ts';
 
-const englishHeader = 'Post code;District;Street;Length in km;Blockage in min;Blocked from;Blocked until;';
-const germanHeader = 'PLZ;Bezirk;Straße;Länge in km;Blockiert Dauer in min;Blockiert von;Blockiert bis;';
+const englishHeader = 'Post code;District;Street;Length in km;Blockage in min;Blocked from;Blocked until';
+const germanHeader = 'PLZ;Bezirk;Straße;Länge in km;Blockiert Dauer in min;Blockiert von;Blockiert bis';
 
 const getHeader = () => {
     const language = getLanguage();
