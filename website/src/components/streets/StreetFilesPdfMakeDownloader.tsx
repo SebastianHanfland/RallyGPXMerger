@@ -34,6 +34,11 @@ function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
                 },
             },
             ' ',
+            {
+                text: 'link',
+                link: 'https://www.luftlinie.org/48.182862,11.631854/48.18251642200921,11.630176949955503',
+                style: 'linkStyle',
+            },
             ' ',
             {
                 layout: 'lightHorizontalLines', // optional
@@ -42,11 +47,18 @@ function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
                     // you can declare how many rows should be treated as headers
                     headerRows: 1,
                     widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
                     body: body,
                 },
             },
         ],
+        styles: {
+            linkStyle: {
+                color: 'blue',
+            },
+            headerStyle: {
+                bold: true,
+            },
+        },
     };
     pdfMake.createPdf(docDefinition).download();
 }
