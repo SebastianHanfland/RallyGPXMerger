@@ -67,6 +67,7 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
                 frontArrival: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
+                type: TrackWayPointType.Track,
             });
             return;
         }
@@ -91,7 +92,16 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
         const timeDifference = getTimeDifferenceInSeconds(point.time, lastElement.frontPassage);
 
         if (distance < 0.01 && timeDifference > 200) {
-            console.log('This is a break', toLatLng(point), point.street, timeDifference, distance);
+            aggregatedPoints.push({
+                streetName: point.street,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
+                frontArrival: point.time,
+                pointFrom: extractLatLon(point),
+                pointTo: extractLatLon(point),
+                type: TrackWayPointType.Break,
+            });
+            return;
         }
 
         if (anyStreetNameMatch(streetName, lastStreetName)) {
@@ -102,6 +112,7 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
                 backArrival: shiftEndTimeByParticipants(point.time, participants),
                 frontPassage: point.time,
                 pointTo: extractLatLon(point),
+                type: TrackWayPointType.Track,
             };
         } else {
             aggregatedPoints.push({
@@ -111,6 +122,7 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
                 frontArrival: point.time,
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
+                type: TrackWayPointType.Track,
             });
         }
     });
