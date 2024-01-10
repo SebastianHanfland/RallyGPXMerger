@@ -1,6 +1,9 @@
 import { Point } from 'gpxparser';
 import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../store/trackMerge.reducer.ts';
+import { TrackWayPointType } from './types.ts';
+import geoDistance from 'geo-distance-helper';
+import { toLatLng } from '../logic/speedSimulator.ts';
 
 export interface EnrichedPoints extends PointS {
     street: string;
@@ -17,6 +20,7 @@ interface AggregatedPoints {
     backArrival: string;
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
+    type?: TrackWayPointType;
 }
 
 export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
@@ -72,6 +76,11 @@ export function aggregateEnrichedPoints(enrichedPoints: EnrichedPoints[], partic
 
         const lastStreetName = lastElement.streetName;
         const streetName = point.street;
+
+        if ((geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number) < 0.00001) {
+            console.log('This is a break');
+        }
+
         if (anyStreetNameMatch(streetName, lastStreetName)) {
             const detailedStreetName = takeMostDetailedStreetName(streetName, lastStreetName);
             aggregatedPoints[lastIndex] = {

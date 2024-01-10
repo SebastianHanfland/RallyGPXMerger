@@ -1,5 +1,5 @@
 import { getResolvedDistricts, getResolvedPostCodes, getTrackStreetInfos } from '../store/geoCoding.reducer.ts';
-import { TrackStreetInfo } from './types.ts';
+import { TrackStreetInfo, TrackWayPointType } from './types.ts';
 import { getWayPointKey } from './postCodeResolver.ts';
 import { createSelector } from '@reduxjs/toolkit';
 
@@ -14,6 +14,7 @@ export const getEnrichedTrackStreetInfos = createSelector(
                 const postCodeKey = getWayPointKey(wayPoint).postCodeKey;
                 return {
                     ...wayPoint,
+                    type: TrackWayPointType.Track,
                     postCode: resolvedPostCodes[postCodeKey],
                     district: resolvedDistricts[postCodeKey],
                 };

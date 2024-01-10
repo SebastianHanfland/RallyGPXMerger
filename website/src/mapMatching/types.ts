@@ -50,7 +50,7 @@ export interface GeoApifyMapMatchingResult {
     }[];
 }
 
-enum TrackWayPointType {
+export enum TrackWayPointType {
     Track = 'TRACK',
     Break = 'BREAK',
     Node = 'NODE',
