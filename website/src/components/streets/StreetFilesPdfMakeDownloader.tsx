@@ -8,16 +8,14 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
-    const body: string[][] = convertTrackInfoToCsv(trackStreets)
-        .split('\n')
-        .slice(7)
-        .map((row) => row.split(';'));
-
-    console.table(body);
+    const trackInfo = convertTrackInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const body: string[][] = trackInfo.slice(streetInfoHeaderLength).map((row) => row.split(';'));
+    const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
 
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
@@ -27,6 +25,16 @@ function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             '\n\n',
             '',
             '',
+            {
+                layout: 'lightHorizontalLines', // optional
+                table: {
+                    widths: ['auto', 'auto'],
+
+                    body: infoBody,
+                },
+            },
+            ' ',
+            ' ',
             {
                 layout: 'lightHorizontalLines', // optional
                 table: {

@@ -10,7 +10,7 @@ import autoTable from 'jspdf-autotable';
 import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
 
-const streetInfoHeaderLength = 7;
+export const streetInfoHeaderLength = 7;
 
 function createBlockedStreetPdf(blockedStreet: BlockedStreetInfo[]) {
     const doc = new JsPDF();
