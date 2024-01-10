@@ -4,6 +4,7 @@ import {
     EnrichedPoints,
     takeMostDetailedStreetName,
 } from '../aggregateEnrichedPoints.ts';
+import { TrackWayPointType } from '../types.ts';
 
 describe('aggregateEnrichedPoints', () => {
     describe('aggregateEnrichedPoints', () => {
@@ -20,7 +21,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, nodePositions);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, []);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -31,6 +32,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T06:23:46Z',
                     pointFrom: { lat: 1, lon: 2 },
                     pointTo: { lat: 1, lon: 2 },
+                    type: TrackWayPointType.Track,
                 },
             ]);
         });
@@ -48,7 +50,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 100, nodePositions);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 100, []);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -59,6 +61,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T06:23:46Z',
                     pointFrom: { lat: 1, lon: 2 },
                     pointTo: { lat: 1, lon: 2 },
+                    type: TrackWayPointType.Track,
                 },
             ]);
         });
@@ -71,7 +74,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, nodePositions);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, []);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -82,6 +85,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T06:26:46Z',
                     pointFrom: { lat: 1, lon: 2 },
                     pointTo: { lat: 4, lon: 5 },
+                    type: TrackWayPointType.Track,
                 },
             ]);
         });
@@ -101,7 +105,7 @@ describe('aggregateEnrichedPoints', () => {
             ];
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, nodePositions);
+            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, []);
 
             // then
             expect(aggregatedPoints).toEqual([
@@ -112,6 +116,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T06:26:46Z',
                     pointFrom: { lat: 1, lon: 2 },
                     pointTo: { lat: 4, lon: 5 },
+                    type: TrackWayPointType.Track,
                 },
                 {
                     frontArrival: '2023-10-22T06:36:46Z',
@@ -120,6 +125,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T08:30:46Z',
                     pointFrom: { lat: 6, lon: 7 },
                     pointTo: { lat: 8, lon: 9 },
+                    type: TrackWayPointType.Track,
                 },
                 {
                     frontArrival: '2023-10-22T08:35:46Z',
@@ -128,6 +134,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T08:40:46Z',
                     pointFrom: { lat: 10, lon: 11 },
                     pointTo: { lat: 12, lon: 13 },
+                    type: TrackWayPointType.Track,
                 },
                 {
                     frontArrival: '2023-10-22T08:46:46Z',
@@ -136,6 +143,7 @@ describe('aggregateEnrichedPoints', () => {
                     frontPassage: '2023-10-22T09:00:46Z',
                     pointFrom: { lat: 14, lon: 15 },
                     pointTo: { lat: 16, lon: 17 },
+                    type: TrackWayPointType.Track,
                 },
             ]);
         });
