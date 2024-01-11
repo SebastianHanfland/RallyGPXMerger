@@ -2,7 +2,7 @@ import { TrackStreetInfo, TrackWayPoint, TrackWayPointType } from '../../mapMatc
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
-import { ContentTable } from 'pdfmake/interfaces';
+import { Content, ContentTable } from 'pdfmake/interfaces';
 import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 import { formatNumber, germanTableHeaders, getHeader } from './trackCsvCreator.ts';
 
@@ -106,4 +106,41 @@ export function createInfoTable(trackStreets: TrackStreetInfo): ContentTable {
             body: trackInfo,
         },
     };
+}
+
+export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (ContentTable | Content)[] {
+    const breaks = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Break);
+
+    if (breaks.length === 0) {
+        return [
+            { text: 'Pausenplätze', style: 'titleStyle' },
+            ' ',
+            { text: 'Auf dieser Route gibt es keine Pausenplätze' },
+        ];
+    }
+
+    return [
+        { text: 'Pausenplätze', style: 'titleStyle' },
+        ' ',
+        {
+            layout: 'lightHorizontalLines', // optional
+            table: {
+                widths: ['auto', 'auto', 'auto'],
+
+                headerRows: 1,
+                body: [
+                    ['Ort', 'Pausenstart', 'Pausenlänge'],
+                    ...breaks.map((breakWayPoint) => [
+                        {
+                            text: breakWayPoint.streetName ?? 'Unbekannt',
+                            link: getLink(breakWayPoint),
+                            style: 'linkStyle',
+                        },
+                        `${formatTimeOnly(breakWayPoint.frontArrival)}`,
+                        breakWayPoint.breakLength ? `${breakWayPoint.breakLength} min` : '',
+                    ]),
+                ],
+            },
+        },
+    ];
 }

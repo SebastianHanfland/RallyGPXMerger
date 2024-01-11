@@ -8,7 +8,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
-import { createInfoTable, createStreetTable } from './trackPdfContentCreator.ts';
+import { createBreakOverviewTable, createInfoTable, createStreetTable } from './trackPdfContentCreator.ts';
 
 try {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -60,10 +60,17 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             '',
             { text: trackStreets.name.replaceAll('.gpx', ''), fontSize: 15 },
             '\n\n',
-            '',
-            '',
+            ' ',
+            ' ',
+            { text: 'Routeninformationen', style: 'titleStyle' },
+            ' ',
             createInfoTable(trackStreets),
             ' ',
+            ' ',
+            ...createBreakOverviewTable(trackStreets),
+            ' ',
+            ' ',
+            { text: 'Straßenübersicht', style: 'titleStyle' },
             ' ',
             createStreetTable(trackStreets),
         ],
@@ -74,13 +81,18 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             headerStyle: {
                 bold: true,
             },
+            titleStyle: {
+                bold: true,
+                fontSize: 15,
+            },
         },
     };
     pdfMake.createPdf(docDefinition).download(trackStreets.name + '.pdf');
 }
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
-    trackStreetInfos.forEach(createTrackStreetPdf);
+    // trackStreetInfos.forEach(createTrackStreetPdf);
+    createTrackStreetPdf(trackStreetInfos[0]);
     createBlockedStreetsPdf(blockedStreetInfos);
 };
 
