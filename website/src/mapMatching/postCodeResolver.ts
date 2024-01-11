@@ -44,6 +44,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
                                     [postCodeKey]: district
                                         .replace('constituency for the Bundestag election ', '')
                                         .replace('Bundestagswahlkreis ', '')
+                                        .replace('Wahlkreis', '')
                                         .replace('Munchen', 'München')
                                         .replace('Munich', 'München'),
                                 })

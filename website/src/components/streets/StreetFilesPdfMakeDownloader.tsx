@@ -54,11 +54,35 @@ function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
     pdfMake.createPdf(docDefinition).download('Blockierte-Strassen.pdf');
 }
 
-export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
+function createStreetTable(trackStreets: TrackStreetInfo) {
     const trackInfo = convertTrackInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
     const body: string[][] = trackInfo.slice(streetInfoHeaderLength).map((row) => row.split(';'));
-    const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
+    return {
+        layout: 'lightHorizontalLines', // optional
+        table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            body: body,
+        },
+    };
+}
 
+function createInfoTable(trackStreets: TrackStreetInfo) {
+    const trackInfo = convertTrackInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
+    return {
+        layout: 'lightHorizontalLines', // optional
+        table: {
+            widths: ['auto', 'auto'],
+
+            body: infoBody,
+        },
+    };
+}
+
+export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
         content: [
@@ -67,26 +91,10 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             '\n\n',
             '',
             '',
-            {
-                layout: 'lightHorizontalLines', // optional
-                table: {
-                    widths: ['auto', 'auto'],
-
-                    body: infoBody,
-                },
-            },
+            createInfoTable(trackStreets),
             ' ',
             ' ',
-            {
-                layout: 'lightHorizontalLines', // optional
-                table: {
-                    // headers are automatically repeated if the table spans over multiple pages
-                    // you can declare how many rows should be treated as headers
-                    headerRows: 1,
-                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-                    body: body,
-                },
-            },
+            createStreetTable(trackStreets),
         ],
         styles: {
             linkStyle: {
