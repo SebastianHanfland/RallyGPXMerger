@@ -9,6 +9,9 @@ export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) 
     return Intl.NumberFormat(language, { maximumFractionDigits: maximumFractionDigits }).format(numberToFormat);
 }
 
+export const germanTableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zugs am Ende;Straße blockiert bis\n`;
+export const englishTableHeaders = `Street;Post code;District;Length in km;Duration in min;Blockage in min;Arrival of front;Passage of front;Arrival of back\n`;
+
 const germanHeader = (trackInfo: TrackStreetInfo): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
     const durationString = `Dauer in min;${formatNumber(duration)}\n`;
@@ -21,9 +24,8 @@ const germanHeader = (trackInfo: TrackStreetInfo): string => {
         trackInfo.arrivalFront
     )}\nAnkunft der Letzten;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
     const peopleCount = `Geschätzte TeilnehmerInnen:;${trackInfo.peopleCount ?? ''}\n`;
-    const tableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zugs am Ende;Straße blockiert bis\n`;
 
-    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${tableHeaders}`;
+    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${germanTableHeaders}`;
 };
 const englishHeader = (trackInfo: TrackStreetInfo): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
@@ -35,9 +37,8 @@ const englishHeader = (trackInfo: TrackStreetInfo): string => {
         trackInfo.arrivalFront
     )}\nArrival of back;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
     const peopleCount = `People on track:;${trackInfo.peopleCount ?? ''}\n`;
-    const tableHeaders = `Street;Post code;District;Length in km;Duration in min;Blockage in min;Arrival of front;Passage of front;Arrival of back\n`;
 
-    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${tableHeaders}`;
+    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${englishTableHeaders}`;
 };
 
 export const getHeader = (trackInfo: TrackStreetInfo): string => {
