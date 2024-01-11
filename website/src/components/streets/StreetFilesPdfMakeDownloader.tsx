@@ -6,10 +6,10 @@ import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts'
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { convertTrackInfoToCsv } from './trackCsvCreator.ts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
+import { convertTrackInfoToPdfContent } from './trackPdfContentCreator.ts';
 
 try {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -55,7 +55,7 @@ function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
 }
 
 function createStreetTable(trackStreets: TrackStreetInfo) {
-    const trackInfo = convertTrackInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const trackInfo = convertTrackInfoToPdfContent(trackStreets).replaceAll('Wahlkreis', '').split('\n');
     const body: string[][] = trackInfo.slice(streetInfoHeaderLength).map((row) => row.split(';'));
     return {
         layout: 'lightHorizontalLines', // optional
@@ -70,7 +70,7 @@ function createStreetTable(trackStreets: TrackStreetInfo) {
 }
 
 function createInfoTable(trackStreets: TrackStreetInfo) {
-    const trackInfo = convertTrackInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const trackInfo = convertTrackInfoToPdfContent(trackStreets).replaceAll('Wahlkreis', '').split('\n');
     const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
     return {
         layout: 'lightHorizontalLines', // optional
