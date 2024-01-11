@@ -140,7 +140,15 @@ export function aggregateEnrichedPoints(
 
         const matchingNodePosition = getMatchingNodePosition(nodePositions, point);
         if (matchingNodePosition) {
-            if (!getMatchingNodePosition(nodePositions, lastElement.pointTo)) {
+            const nodePoints = aggregatedPoints.filter((aggPoint) => aggPoint.type === TrackWayPointType.Node);
+
+            const lastNodeTracks =
+                nodePoints.length > 0 ? nodePoints[nodePoints.length - 1].nodeTracks?.join('') : undefined;
+
+            if (
+                !getMatchingNodePosition(nodePositions, lastElement.pointTo) &&
+                lastNodeTracks !== matchingNodePosition.tracks?.join('')
+            ) {
                 aggregatedPoints.push({
                     ...createAggregatedPoint(point, participants, TrackWayPointType.Node),
                     nodeTracks: matchingNodePosition.tracks,

@@ -1,4 +1,4 @@
-import { TrackStreetInfo, TrackWayPoint, TrackWayPointType } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
@@ -108,7 +108,7 @@ export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (Conten
                             style: 'linkStyle',
                         },
                         `${formatTimeOnly(breakWayPoint.frontArrival)}`,
-                        breakWayPoint.breakLength ? `${breakWayPoint.breakLength} min` : '',
+                        breakWayPoint.breakLength ? `${breakWayPoint.breakLength.toFixed(0)} min` : '',
                     ]),
                 ],
             },
@@ -116,25 +116,9 @@ export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (Conten
     ];
 }
 
-function consolidateNodes(nodes: TrackWayPoint[]): TrackWayPoint[] {
-    const conNodes: TrackWayPoint[] = [];
-    nodes.forEach((node) => {
-        if (conNodes.length === 0) {
-            conNodes.push(node);
-            return;
-        }
-        if (conNodes.length > 0 && conNodes[conNodes.length - 1].nodeTracks?.join('') !== node.nodeTracks?.join('')) {
-            conNodes.push(node);
-        }
-    });
-    return conNodes;
-}
-
 export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (ContentTable | Content)[] {
     const nodes = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Node);
-    const consolidatedNodes = consolidateNodes(nodes);
-
-    if (consolidatedNodes.length === 0) {
+    if (nodes.length === 0) {
         return [
             { text: 'Knotenpunkte', style: 'titleStyle' },
             ' ',
@@ -153,7 +137,7 @@ export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (Content
                 headerRows: 1,
                 body: [
                     ['Ort', 'Pausenstart', 'Andere Strecken'],
-                    ...consolidatedNodes.map((breakWayPoint) => [
+                    ...nodes.map((breakWayPoint) => [
                         {
                             text: breakWayPoint.streetName ?? 'Unbekannt',
                             link: getLink(breakWayPoint),
