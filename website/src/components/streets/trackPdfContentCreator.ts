@@ -3,6 +3,7 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { getLanguage } from '../../language.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
+import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 
 export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
     const language = getLanguage();
@@ -94,4 +95,32 @@ export function convertTrackInfoToPdfContent(track: TrackStreetInfo): string {
             )
             .join('\n')
     );
+}
+
+export function createStreetTable(trackStreets: TrackStreetInfo) {
+    const trackInfo = convertTrackInfoToPdfContent(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const body: string[][] = trackInfo.slice(streetInfoHeaderLength).map((row) => row.split(';'));
+    return {
+        layout: 'lightHorizontalLines', // optional
+        table: {
+            // headers are automatically repeated if the table spans over multiple pages
+            // you can declare how many rows should be treated as headers
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            body: body,
+        },
+    };
+}
+
+export function createInfoTable(trackStreets: TrackStreetInfo) {
+    const trackInfo = convertTrackInfoToPdfContent(trackStreets).replaceAll('Wahlkreis', '').split('\n');
+    const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
+    return {
+        layout: 'lightHorizontalLines', // optional
+        table: {
+            widths: ['auto', 'auto'],
+
+            body: infoBody,
+        },
+    };
 }

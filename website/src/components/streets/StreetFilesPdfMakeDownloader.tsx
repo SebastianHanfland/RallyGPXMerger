@@ -7,9 +7,8 @@ import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackS
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
-import { convertTrackInfoToPdfContent } from './trackPdfContentCreator.ts';
+import { createInfoTable, createStreetTable } from './trackPdfContentCreator.ts';
 
 try {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -52,34 +51,6 @@ function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
         },
     };
     pdfMake.createPdf(docDefinition).download('Blockierte-Strassen.pdf');
-}
-
-function createStreetTable(trackStreets: TrackStreetInfo) {
-    const trackInfo = convertTrackInfoToPdfContent(trackStreets).replaceAll('Wahlkreis', '').split('\n');
-    const body: string[][] = trackInfo.slice(streetInfoHeaderLength).map((row) => row.split(';'));
-    return {
-        layout: 'lightHorizontalLines', // optional
-        table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-            body: body,
-        },
-    };
-}
-
-function createInfoTable(trackStreets: TrackStreetInfo) {
-    const trackInfo = convertTrackInfoToPdfContent(trackStreets).replaceAll('Wahlkreis', '').split('\n');
-    const infoBody: string[][] = trackInfo.slice(0, streetInfoHeaderLength).map((row) => row.split(';'));
-    return {
-        layout: 'lightHorizontalLines', // optional
-        table: {
-            widths: ['auto', 'auto'],
-
-            body: infoBody,
-        },
-    };
 }
 
 export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
