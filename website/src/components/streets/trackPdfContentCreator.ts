@@ -3,7 +3,6 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
 import { Content, ContentTable } from 'pdfmake/interfaces';
-import { streetInfoHeaderLength } from './StreetFilesjsPdfDownloader.tsx';
 import { formatNumber, germanTableHeaders, getHeader } from './trackCsvCreator.ts';
 
 function getAdditionalInfo(
@@ -67,7 +66,7 @@ export function createStreetTable(trackStreets: TrackStreetInfo): ContentTable {
 export function createInfoTable(trackStreets: TrackStreetInfo): ContentTable {
     const trackInfo = getHeader(trackStreets)
         .split('\n')
-        .slice(0, streetInfoHeaderLength)
+        .slice(0, 7)
         .map((row) => row.split(';'));
     return {
         layout: 'lightHorizontalLines', // optional
