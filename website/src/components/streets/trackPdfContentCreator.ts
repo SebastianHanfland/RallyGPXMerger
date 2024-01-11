@@ -144,3 +144,40 @@ export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (Conten
         },
     ];
 }
+
+export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (ContentTable | Content)[] {
+    const nodes = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Node);
+
+    if (nodes.length === 0) {
+        return [
+            { text: 'Knotenpunkte', style: 'titleStyle' },
+            ' ',
+            { text: 'Auf dieser Route gibt es keine Knotenpunkte' },
+        ];
+    }
+
+    return [
+        { text: 'Knotenpunkte', style: 'titleStyle' },
+        ' ',
+        {
+            layout: 'lightHorizontalLines', // optional
+            table: {
+                widths: ['auto', 'auto', 'auto'],
+
+                headerRows: 1,
+                body: [
+                    ['Ort', 'Pausenstart', 'Andere Strecken'],
+                    ...nodes.map((breakWayPoint) => [
+                        {
+                            text: breakWayPoint.streetName ?? 'Unbekannt',
+                            link: getLink(breakWayPoint),
+                            style: 'linkStyle',
+                        },
+                        `${formatTimeOnly(breakWayPoint.frontArrival)}`,
+                        breakWayPoint.nodeTracks ? `${breakWayPoint.nodeTracks.join(', ')}` : '',
+                    ]),
+                ],
+            },
+        },
+    ];
+}

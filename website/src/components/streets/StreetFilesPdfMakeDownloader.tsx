@@ -8,7 +8,12 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
-import { createBreakOverviewTable, createInfoTable, createStreetTable } from './trackPdfContentCreator.ts';
+import {
+    createBreakOverviewTable,
+    createInfoTable,
+    createNodeOverviewTable,
+    createStreetTable,
+} from './trackPdfContentCreator.ts';
 
 try {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -68,6 +73,9 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             ' ',
             ' ',
             ...createBreakOverviewTable(trackStreets),
+            ' ',
+            ' ',
+            ...createNodeOverviewTable(trackStreets),
             ' ',
             ' ',
             { text: 'Straßenübersicht', style: 'titleStyle' },
