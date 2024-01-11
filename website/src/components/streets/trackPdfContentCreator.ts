@@ -1,4 +1,4 @@
-import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPoint, TrackWayPointType } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
@@ -116,10 +116,25 @@ export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (Conten
     ];
 }
 
+function consolidateNodes(nodes: TrackWayPoint[]): TrackWayPoint[] {
+    const conNodes: TrackWayPoint[] = [];
+    nodes.forEach((node) => {
+        if (conNodes.length === 0) {
+            conNodes.push(node);
+            return;
+        }
+        if (conNodes.length > 0 && conNodes[conNodes.length - 1].nodeTracks?.join('') !== node.nodeTracks?.join('')) {
+            conNodes.push(node);
+        }
+    });
+    return conNodes;
+}
+
 export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (ContentTable | Content)[] {
     const nodes = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Node);
+    const consolidatedNodes = consolidateNodes(nodes);
 
-    if (nodes.length === 0) {
+    if (consolidatedNodes.length === 0) {
         return [
             { text: 'Knotenpunkte', style: 'titleStyle' },
             ' ',
@@ -138,7 +153,7 @@ export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (Content
                 headerRows: 1,
                 body: [
                     ['Ort', 'Pausenstart', 'Andere Strecken'],
-                    ...nodes.map((breakWayPoint) => [
+                    ...consolidatedNodes.map((breakWayPoint) => [
                         {
                             text: breakWayPoint.streetName ?? 'Unbekannt',
                             link: getLink(breakWayPoint),
