@@ -1,4 +1,4 @@
-import { TrackStreetInfo, TrackWayPoint, TrackWayPointType } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
@@ -20,36 +20,7 @@ function getAdditionalInfo(
     return '';
 }
 
-export function convertTrackInfoToPdfContent(track: TrackStreetInfo): string {
-    return track.wayPoints
-        .map(
-            ({
-                streetName,
-                postCode,
-                district,
-                frontArrival,
-                frontPassage,
-                backArrival,
-                pointFrom,
-                pointTo,
-                type,
-                nodeTracks,
-                breakLength,
-            }) =>
-                `${streetName}${getAdditionalInfo(type, nodeTracks, breakLength)};` +
-                `${postCode ?? ''};` +
-                `${district ?? ''};` +
-                `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +
-                `${formatNumber(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60, 1)};` +
-                `${formatNumber(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60, 1)};` +
-                `${formatTimeOnly(frontArrival)};` +
-                `${formatTimeOnly(frontPassage)};` +
-                `${formatTimeOnly(backArrival)}`
-        )
-        .join('\n');
-}
-
-function getLink(waypoint: TrackWayPoint) {
+export function getLink(waypoint: { pointFrom: { lat: number; lon: number }; pointTo: { lat: number; lon: number } }) {
     if (waypoint.pointTo.lat === waypoint.pointFrom.lat && waypoint.pointTo.lon === waypoint.pointFrom.lon) {
         return `https://www.openstreetmap.org/#map=17/${waypoint.pointTo.lat}/${waypoint.pointTo.lon}`;
     }

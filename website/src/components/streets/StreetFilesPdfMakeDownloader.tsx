@@ -7,13 +7,13 @@ import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackS
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { convertStreetInfoToCsv } from './streetsCsvCreator.ts';
 import {
     createBreakOverviewTable,
     createInfoTable,
     createNodeOverviewTable,
     createStreetTable,
 } from './trackPdfContentCreator.ts';
+import { createBlockedStreetTable } from './streetsPdfCreator.ts';
 
 try {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -22,29 +22,16 @@ try {
 }
 
 function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
-    const trackInfo = convertStreetInfoToCsv(trackStreets).replaceAll('Wahlkreis', '').split('\n');
-    const body: string[][] = trackInfo.map((row) => row.split(';'));
-
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
         content: [
             '',
-            { text: 'Blockierte Straßen', fontSize: 15 },
+            { text: 'Blockierte Straßen', style: 'titleStyle' },
             '\n\n',
-            '',
-            '',
             ' ',
             ' ',
-            {
-                layout: 'lightHorizontalLines', // optional
-                table: {
-                    // headers are automatically repeated if the table spans over multiple pages
-                    // you can declare how many rows should be treated as headers
-                    headerRows: 1,
-                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-                    body: body,
-                },
-            },
+            ' ',
+            createBlockedStreetTable(trackStreets),
         ],
         styles: {
             linkStyle: {
@@ -63,7 +50,7 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
         pageOrientation: 'landscape',
         content: [
             '',
-            { text: trackStreets.name.replaceAll('.gpx', ''), fontSize: 15 },
+            { text: trackStreets.name.replaceAll('.gpx', ''), style: 'titleStyle' },
             '\n\n',
             ' ',
             ' ',
