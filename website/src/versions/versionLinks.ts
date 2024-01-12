@@ -32,6 +32,7 @@ export const versions: Record<string, Variant[]> = {
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/v3_mitPause.zip',
             color: 'red',
         },
+    ],
     kvr_sf_23_sf_24_v3p: [
         {
             name: 'SF23',
