@@ -137,7 +137,7 @@ export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (Content
 
                 headerRows: 1,
                 body: [
-                    ['Ort', 'Pausenstart', 'Andere Strecken'],
+                    ['Ort', 'Zeitpunkt', 'Andere Strecken'],
                     ...nodes.map((breakWayPoint) => [
                         {
                             text: breakWayPoint.streetName ?? 'Unbekannt',
