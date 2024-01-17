@@ -1,3 +1,5 @@
+import { getLink } from './trackPdfContentCreator.ts';
+
 interface Props {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
@@ -5,13 +7,9 @@ interface Props {
 }
 
 export function StreetMapLink({ pointFrom, pointTo }: Props) {
+    const link = getLink({ pointFrom, pointTo });
     return (
-        <a
-            href={`https://www.luftlinie.org/${pointFrom.lat},${pointFrom.lon}/${pointTo.lat},${pointTo.lon}`}
-            target={'_blank'}
-            referrerPolicy={'no-referrer'}
-            title={'Open street segment on map'}
-        >
+        <a href={link} target={'_blank'} referrerPolicy={'no-referrer'} title={'Open street segment on map'}>
             <img src={'geo-alt-blue.svg'} className="m-1" alt="open on map" color={'blue'} style={{ color: 'blue' }} />
         </a>
     );
