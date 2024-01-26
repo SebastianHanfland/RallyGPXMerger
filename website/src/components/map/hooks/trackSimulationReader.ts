@@ -1,4 +1,4 @@
-import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition } from '../../../store/types.ts';
+import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition, ZipTrack } from '../../../store/types.ts';
 import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
@@ -55,6 +55,45 @@ const extractLocation =
             });
         });
         return returnPoints;
+    };
+
+const extractLocationZip =
+    (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>
+    (readableTrack: ReadableTrack): { trackPositions: { lat: number; lng: number }[]; name: string } => {
+        let foundZipTrack: ZipTrack | undefined;
+        Object.values(zipTracks).forEach((tracks) => {
+            const find = tracks?.find((track) => track.id === readableTrack.id);
+            if (find) {
+                foundZipTrack = find;
+            }
+        });
+        const participants = foundZipTrack?.peopleCount ?? 0;
+
+        let returnPoints: { lat: number; lng: number }[] = [];
+        const timeStampEnd = date
+            .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
+            .toISOString();
+
+        readableTrack.gpx.tracks.forEach((track) => {
+            track.points.forEach((point, index, points) => {
+                if (index === 0) {
+                    return;
+                }
+                const next = point.time.toISOString();
+                const previous = points[index - 1].time.toISOString();
+
+                if (previous < timeStampFront && timeStampFront < next) {
+                    returnPoints.push(interpolatePosition(points[index - 1], point, timeStampFront));
+                }
+                if (previous < timeStampEnd && timeStampEnd < next) {
+                    returnPoints.push(interpolatePosition(points[index - 1], point, timeStampEnd));
+                }
+                if (timeStampEnd < next && next < timeStampFront) {
+                    returnPoints.push({ lat: point.lat, lng: point.lon });
+                }
+            });
+        });
+        return { trackPositions: returnPoints, name: foundZipTrack?.filename ?? 'N/A' };
     };
 
 export const getNumberOfPositionsInTracks = createSelector(
@@ -143,6 +182,9 @@ export const getZipCurrentMarkerPositionsForTracks = createSelector(
             return selectedTracks[version] ?? [];
         });
 
-        return filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(extractLocation(timeStamp, [])) ?? [];
+        return (
+            filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(extractLocationZip(timeStamp, zipTracks)) ??
+            []
+        );
     }
 );

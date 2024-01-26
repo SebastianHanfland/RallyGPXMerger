@@ -6,8 +6,6 @@ import { getZipCurrentMarkerPositionsForTracks } from './trackSimulationReader.t
 import { bikeIcon } from '../MapIcons.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
 
-const isDefined = <T>(arg: T | undefined | null): arg is T => arg !== undefined && arg !== null;
-
 export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const zipTracks = useSelector(getZipTracks);
     const showTracks = useSelector(getShowCalculatedTracks);
@@ -15,13 +13,10 @@ export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObjec
     const selectedTracks = useSelector(getSelectedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const pointsToDisplay = useSelector(getZipCurrentMarkerPositionsForTracks);
-    const trackIds = Object.values(useSelector(getZipTracks))
-        .flatMap((tracks) => tracks?.map((track) => track.id))
-        .filter(isDefined);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(calculatedTracksLayer, pointsToDisplay, trackIds, showTracks);
+        addTracksToLayer(calculatedTracksLayer, pointsToDisplay, showTracks);
     }, [zipTracks, showTracks, currentMapTime, selectedTracks, selectedVersions]);
 }
 
@@ -40,8 +35,7 @@ export function addTrackToMap(points: { lat: number; lng: number }[], trackId: s
 
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
-    calculatedTracks: { lat: number; lng: number }[][],
-    trackIds: string[],
+    calculatedTracks: { trackPositions: { lat: number; lng: number }[]; name: string }[],
     show: boolean
 ) {
     const current = calculatedTracksLayer.current;
@@ -51,8 +45,8 @@ export function addTracksToLayer(
     }
     current.clearLayers();
     if (show) {
-        calculatedTracks.forEach((track, index) => {
-            addTrackToMap(track, trackIds[index], current);
+        calculatedTracks.forEach((track) => {
+            addTrackToMap(track.trackPositions, track.name, current);
         });
     }
 }
