@@ -4,7 +4,6 @@ import L, { LayerGroup } from 'leaflet';
 import { getCurrenMapTime, getShowCalculatedTracks } from '../../../store/map.reducer.ts';
 import { getZipCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
 import { bikeIcon } from '../MapIcons.ts';
-import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
 
 const isDefined = <T>(arg: T | undefined | null): arg is T => arg !== undefined && arg !== null;
@@ -32,9 +31,9 @@ export function addTrackToMap(points: { lat: number; lng: number }[], trackId: s
     }
     const trackMarker = L.marker(points.reverse()[0], {
         icon: bikeIcon,
-        title: 'None',
+        title: trackId,
     });
-    const trackSnake = L.polyline(points, { weight: 20, color: getColorFromUuid(trackId), opacity: 1 });
+    const trackSnake = L.polyline(points, { weight: 20, color: 'white', opacity: 1 });
     trackMarker.addTo(routeLayer);
     trackSnake.addTo(routeLayer);
 }
