@@ -20,22 +20,27 @@ export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObjec
     }, [zipTracks, showTracks, currentMapTime, selectedTracks, selectedVersions]);
 }
 
-export function addTrackToMap(points: { lat: number; lng: number }[], trackId: string, routeLayer: LayerGroup) {
+export function addTrackToMap(
+    points: { lat: number; lng: number }[],
+    trackName: string,
+    trackColor: string,
+    routeLayer: LayerGroup
+) {
     if (points.length === 0) {
         return;
     }
     const trackMarker = L.marker(points.reverse()[0], {
         icon: bikeIcon,
-        title: trackId,
+        title: trackName,
     });
-    const trackSnake = L.polyline(points, { weight: 20, color: 'white', opacity: 1 });
+    const trackSnake = L.polyline(points, { weight: 20, color: trackColor, opacity: 1 });
     trackMarker.addTo(routeLayer);
     trackSnake.addTo(routeLayer);
 }
 
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
-    calculatedTracks: { trackPositions: { lat: number; lng: number }[]; name: string }[],
+    calculatedTracks: { trackPositions: { lat: number; lng: number }[]; name: string; color: string }[],
     show: boolean
 ) {
     const current = calculatedTracksLayer.current;
@@ -46,7 +51,7 @@ export function addTracksToLayer(
     current.clearLayers();
     if (show) {
         calculatedTracks.forEach((track) => {
-            addTrackToMap(track.trackPositions, track.name, current);
+            addTrackToMap(track.trackPositions, track.name, track.color, current);
         });
     }
 }

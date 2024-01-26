@@ -59,7 +59,7 @@ const extractLocation =
 
 const extractLocationZip =
     (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>
-    (readableTrack: ReadableTrack): { trackPositions: { lat: number; lng: number }[]; name: string } => {
+    (readableTrack: ReadableTrack): { trackPositions: { lat: number; lng: number }[]; name: string; color: string } => {
         let foundZipTrack: ZipTrack | undefined;
         Object.values(zipTracks).forEach((tracks) => {
             const find = tracks?.find((track) => track.id === readableTrack.id);
@@ -93,7 +93,11 @@ const extractLocationZip =
                 }
             });
         });
-        return { trackPositions: returnPoints, name: foundZipTrack?.filename ?? 'N/A' };
+        return {
+            trackPositions: returnPoints,
+            name: foundZipTrack?.filename ?? 'N/A',
+            color: foundZipTrack?.color ?? 'white',
+        };
     };
 
 export const getNumberOfPositionsInTracks = createSelector(
