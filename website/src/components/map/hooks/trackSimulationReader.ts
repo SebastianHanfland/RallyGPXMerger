@@ -8,7 +8,7 @@ import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../st
 import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { getZipTracks } from '../../../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
@@ -121,14 +121,28 @@ export const getCurrentMarkerPositionsForTracks = createSelector(
     }
 );
 
+function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, selectedTrackIds: string[]) {
+    return readableTracks?.filter((track) => selectedTrackIds.includes(track.id));
+}
+
 export const getZipCurrentMarkerPositionsForTracks = createSelector(
     getZipCurrentTimeStamp,
     getZipTracks,
     getReadableTracks,
-    (timeStamp, _, readableTracks) => {
+    getSelectedTracks,
+    getSelectedVersions,
+    (timeStamp, zipTracks, readableTracks, selectedTracks, selectedVersions) => {
         if (!timeStamp) {
             return [];
         }
-        return readableTracks?.map(extractLocation(timeStamp, [])) ?? [];
+        const selectedTrackIds = selectedVersions.flatMap((version) => {
+            const trackIdsOfVersion = zipTracks[version]?.map((track) => track.id) ?? [];
+            if ((selectedTracks[version]?.length ?? 0) === 0) {
+                return trackIdsOfVersion;
+            }
+            return selectedTracks[version] ?? [];
+        });
+
+        return filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(extractLocation(timeStamp, [])) ?? [];
     }
 );

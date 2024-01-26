@@ -5,7 +5,7 @@ import { getCurrenMapTime, getShowCalculatedTracks } from '../../../store/map.re
 import { getZipCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
 import { bikeIcon } from '../MapIcons.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
-import { getZipTracks } from '../../../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
 
 const isDefined = <T>(arg: T | undefined | null): arg is T => arg !== undefined && arg !== null;
 
@@ -13,6 +13,8 @@ export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObjec
     const zipTracks = useSelector(getZipTracks);
     const showTracks = useSelector(getShowCalculatedTracks);
     const currentMapTime = useSelector(getCurrenMapTime);
+    const selectedTracks = useSelector(getSelectedTracks);
+    const selectedVersions = useSelector(getSelectedVersions);
     const pointsToDisplay = useSelector(getZipCurrentMarkerPositionsForTracks);
     const trackIds = Object.values(useSelector(getZipTracks))
         .flatMap((tracks) => tracks?.map((track) => track.id))
@@ -21,7 +23,7 @@ export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObjec
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         addTracksToLayer(calculatedTracksLayer, pointsToDisplay, trackIds, showTracks);
-    }, [zipTracks, showTracks, currentMapTime]);
+    }, [zipTracks, showTracks, currentMapTime, selectedTracks, selectedVersions]);
 }
 
 export function addTrackToMap(points: { lat: number; lng: number }[], trackId: string, routeLayer: LayerGroup) {
