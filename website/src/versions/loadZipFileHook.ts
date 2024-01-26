@@ -41,7 +41,7 @@ export function loadZipFileHook() {
                                     console.log(nameSpace);
                                     console.log(uuidv5('1', nameSpace));
                                     return content.async('text').then((text) => ({
-                                        id: uuidv5(version + filename, nameSpace),
+                                        id: uuidv5(version.name + filename, nameSpace),
                                         filename: `${version.name} ${filename}`,
                                         content: text,
                                         version: version.name,
