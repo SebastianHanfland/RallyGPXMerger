@@ -4,6 +4,7 @@ import { getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from '../store/zipTracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
+import { getColorOfVersion } from './versionLinks.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
@@ -41,7 +42,21 @@ export function MapVersionSelection() {
                                 type={'checkbox'}
                                 id={versionName}
                                 className={'m-3'}
-                                label={versionName}
+                                label={
+                                    <span>
+                                        <span
+                                            style={{
+                                                background: getColorOfVersion(versionName),
+                                                color: getColorOfVersion(versionName),
+                                                width: '100px',
+                                            }}
+                                            className={'mx-3'}
+                                        >
+                                            ________
+                                        </span>
+                                        {versionName}
+                                    </span>
+                                }
                                 title={versionName}
                                 checked={selectedVersions.includes(versionName)}
                                 readOnly

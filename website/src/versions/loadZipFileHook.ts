@@ -6,7 +6,7 @@ import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculation.ts';
 import { mapActions } from '../store/map.reducer.ts';
-import { versions } from './versionLinks.ts';
+import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
 import { AppDispatch } from '../store/store.ts';
 
@@ -16,8 +16,6 @@ function getPeopleCountFromFilename(filename: string): number {
 }
 
 const nameSpace = '1dc89ce7-d3b5-4054-b9e3-b3e062645d48';
-
-const versionKey = window.location.search.replace('?version=', '');
 
 export function loadZipFileHook() {
     const dispatch: AppDispatch = useDispatch();
