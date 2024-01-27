@@ -103,7 +103,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     </td>
                                     <td>
                                         {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
-                                        {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min )
+                                        {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min)
                                     </td>
                                     <td>{formatTimeOnly(frontArrival)}</td>
                                     <td>{formatTimeOnly(frontPassage)}</td>
