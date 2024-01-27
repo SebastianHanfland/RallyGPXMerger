@@ -3,7 +3,7 @@ import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { Point } from 'gpxparser';
+import { Point, Track } from 'gpxparser';
 import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
@@ -35,7 +35,18 @@ const extractLocation =
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
             .toISOString();
 
+        let lastTrack: Track | null = null;
         readableTrack.gpx.tracks.forEach((track) => {
+            if (lastTrack !== null) {
+                const lastPointOfLastTrack = lastTrack.points[lastTrack.points.length - 1];
+                const firstPointNextTrack = track.points[0];
+                if (
+                    timeStampFront > lastPointOfLastTrack.time.toISOString() &&
+                    timeStampFront < firstPointNextTrack.time.toISOString()
+                ) {
+                    returnPoints.push({ lat: lastPointOfLastTrack.lat, lng: lastPointOfLastTrack.lon });
+                }
+            }
             track.points.forEach((point, index, points) => {
                 if (index === 0) {
                     return;
@@ -53,6 +64,7 @@ const extractLocation =
                     returnPoints.push({ lat: point.lat, lng: point.lon });
                 }
             });
+            lastTrack = track;
         });
         return returnPoints;
     };
@@ -74,7 +86,18 @@ const extractLocationZip =
             .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
             .toISOString();
 
+        let lastTrack: Track | null = null;
         readableTrack.gpx.tracks.forEach((track) => {
+            if (lastTrack !== null) {
+                const lastPointOfLastTrack = lastTrack.points[lastTrack.points.length - 1];
+                const firstPointNextTrack = track.points[0];
+                if (
+                    timeStampFront > lastPointOfLastTrack.time.toISOString() &&
+                    timeStampFront < firstPointNextTrack.time.toISOString()
+                ) {
+                    returnPoints.push({ lat: lastPointOfLastTrack.lat, lng: lastPointOfLastTrack.lon });
+                }
+            }
             track.points.forEach((point, index, points) => {
                 if (index === 0) {
                     return;
@@ -92,6 +115,7 @@ const extractLocationZip =
                     returnPoints.push({ lat: point.lat, lng: point.lon });
                 }
             });
+            lastTrack = track;
         });
         return {
             trackPositions: returnPoints,
