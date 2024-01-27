@@ -44,10 +44,12 @@ export function ImportExport() {
                 </Col>
                 <Col xl={6}>
                     <div className={'d-flex justify-content-between'} style={{ width: '500px' }}>
-                        <Button variant={'success'} onClick={() => setShowDialog(true)}>
-                            <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
-                            Import file
-                        </Button>
+                        <span title={!loadedState ? 'Please first upload a file ->' : ''}>
+                            <Button variant={'success'} onClick={() => setShowDialog(true)} disabled={!loadedState}>
+                                <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
+                                Import file
+                            </Button>
+                        </span>
                         <FileUploader
                             style={{ width: '100px' }}
                             handleChange={handleChange}
