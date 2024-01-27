@@ -4,7 +4,7 @@ import { getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from '../store/zipTracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
-import { getColorOfVersion } from './versionLinks.ts';
+import { getColorOfVersion, getUrlOfVersion } from './versionLinks.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
@@ -84,6 +84,9 @@ export function MapVersionSelection() {
                                     );
                                 }}
                             />
+                            <a href={getUrlOfVersion(versionName)} target={'_blank'}>
+                                {`GPX für ${versionName} herunterladen`}
+                            </a>
                         </div>
                     ))}
                 <div className={'mx-3'} style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}>
