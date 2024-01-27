@@ -33,7 +33,7 @@ function addStartAndBreakMarker(
         if (lastTrack === null) {
             const startMarker = L.marker(trackPoints[0], {
                 icon: startIcon,
-                title: `Start of ${gpxSegment.filename}`,
+                title: `Start von ${gpxSegment.filename}`,
             });
             startMarker.addTo(routeLayer);
         }
@@ -45,7 +45,7 @@ function addStartAndBreakMarker(
             if (timeDifferenceInSeconds > 4 * 60) {
                 const endMarker = L.marker(trackPoints[0], {
                     icon: endIcon,
-                    title: `${gpxSegment.filename} - ${(timeDifferenceInSeconds / 60).toFixed(0)} min break`,
+                    title: `${gpxSegment.filename} - ${(timeDifferenceInSeconds / 60).toFixed(0)} min Pause`,
                 });
                 endMarker.addTo(routeLayer);
             }

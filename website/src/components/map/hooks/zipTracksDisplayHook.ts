@@ -23,6 +23,7 @@ export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<Lay
         });
         addTracksToLayer(calculatedTracksLayer, tracks, showTracks, {
             showMarker,
+            onlyShowBreaks: true,
             opacity: 0.7,
         });
     }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker]);
