@@ -1,9 +1,10 @@
-import { Point } from 'gpxparser';
+import { Point, Track } from 'gpxparser';
 import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../../../store/types.ts';
 import L, { LayerGroup } from 'leaflet';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { endIcon, startIcon } from '../MapIcons.ts';
+import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };
@@ -11,13 +12,50 @@ function toLatLng(point: Point): { lat: number; lng: number } {
 
 export interface MapOptions {
     showMarker: boolean;
+    onlyShowBreaks?: boolean;
     color?: string;
     opacity?: number;
     weight?: number;
 }
 
+function addStartAndBreakMarker(
+    options: MapOptions,
+    lastTrack: Track | null,
+    trackPoints: {
+        lat: number;
+        lng: number;
+    }[],
+    gpxSegment: CalculatedTrack | GpxSegment,
+    routeLayer: LayerGroup<any>,
+    track: Track
+) {
+    if (options.showMarker) {
+        if (lastTrack === null) {
+            const startMarker = L.marker(trackPoints[0], {
+                icon: startIcon,
+                title: `Start of ${gpxSegment.filename}`,
+            });
+            startMarker.addTo(routeLayer);
+        }
+
+        if (lastTrack !== null) {
+            const lastTrackTime = lastTrack.points[lastTrack.points.length - 1].time.toISOString();
+            const nextTrackTime = track.points[0].time.toISOString();
+            const timeDifferenceInSeconds = getTimeDifferenceInSeconds(nextTrackTime, lastTrackTime);
+            if (timeDifferenceInSeconds > 4 * 60) {
+                const endMarker = L.marker(trackPoints[0], {
+                    icon: endIcon,
+                    title: `${gpxSegment.filename} - ${(timeDifferenceInSeconds / 60).toFixed(0)} min break`,
+                });
+                endMarker.addTo(routeLayer);
+            }
+        }
+    }
+}
+
 export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
     const gpx = SimpleGPX.fromString(gpxSegment.content);
+    let lastTrack: Track | null = null;
     gpx.tracks.forEach((track) => {
         const trackPoints = track.points.map(toLatLng);
         const connection = L.polyline(trackPoints, {
@@ -28,18 +66,23 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
             sticky: true,
         });
         connection.addTo(routeLayer);
-        if (options.showMarker) {
-            const startMarker = L.marker(trackPoints[0], {
-                icon: startIcon,
-                title: gpxSegment.filename,
-            });
-            startMarker.addTo(routeLayer);
-            const endMarker = L.marker(trackPoints.reverse()[0], {
-                icon: endIcon,
-                title: gpxSegment.filename,
-            });
-            endMarker.addTo(routeLayer);
+        if (options.onlyShowBreaks) {
+            addStartAndBreakMarker(options, lastTrack, trackPoints, gpxSegment, routeLayer, track);
+        } else {
+            if (options.showMarker) {
+                const startMarker = L.marker(trackPoints[0], {
+                    icon: startIcon,
+                    title: gpxSegment.filename,
+                });
+                startMarker.addTo(routeLayer);
+                const endMarker = L.marker(trackPoints.reverse()[0], {
+                    icon: endIcon,
+                    title: gpxSegment.filename,
+                });
+                endMarker.addTo(routeLayer);
+            }
         }
+        lastTrack = track;
     });
 }
 

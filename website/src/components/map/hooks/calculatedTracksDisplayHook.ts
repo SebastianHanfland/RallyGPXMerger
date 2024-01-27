@@ -12,6 +12,10 @@ export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObj
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(calculatedTracksLayer, calculatedTracks, showTracks, { showMarker, opacity: 0.7 });
+        addTracksToLayer(calculatedTracksLayer, calculatedTracks, showTracks, {
+            showMarker,
+            opacity: 0.7,
+            onlyShowBreaks: true,
+        });
     }, [calculatedTracks, calculatedTracks.length, showTracks, showMarker]);
 }
