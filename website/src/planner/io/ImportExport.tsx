@@ -1,11 +1,11 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import upload from '../../assets/file-up.svg';
-import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
+import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { ConfirmationModal } from '../ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../components/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
-import { storage } from '../../planner/store/storage.ts';
+import { storage } from '../store/storage.ts';
 import { gpxShortener } from './gpxShortener.ts';
 
 const fileTypes = ['JSON'];

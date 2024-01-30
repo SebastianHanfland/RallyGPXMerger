@@ -7,7 +7,7 @@ import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook
 import { PlainMap } from './map/PlainMap.tsx';
 import { MapToolbar } from './map/MapToolbar.tsx';
 import { Sections } from './types.ts';
-import { ImportExport } from './io/ImportExport.tsx';
+import { ImportExport } from '../planner/io/ImportExport.tsx';
 import { Settings } from '../planner/settings/Settings.tsx';
 
 interface Props {

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { gpxShortener } from '../../components/io/gpxShortener.ts';
+import { gpxShortener } from '../io/gpxShortener.ts';
 
 const fileTypes = ['GPX'];
 
