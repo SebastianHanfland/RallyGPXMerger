@@ -8,7 +8,7 @@ import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculat
 import { mapActions } from '../store/map.reducer.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
-import { AppDispatch } from '../planner/store.ts';
+import { Dispatch } from '@reduxjs/toolkit';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);
@@ -18,7 +18,7 @@ function getPeopleCountFromFilename(filename: string): number {
 const nameSpace = '1dc89ce7-d3b5-4054-b9e3-b3e062645d48';
 
 export function loadZipFileHook() {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch: Dispatch = useDispatch();
 
     useEffect(() => {
         if (!versions[versionKey]) {
