@@ -6,7 +6,7 @@ import { mergeSimpleGPXs, SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
 import { CalculatedTrack, GpxSegment } from '../../../../common/types.ts';
 
-vi.mock('../../../utils/SimpleGPX.ts');
+vi.mock('../../../../utils/SimpleGPX.ts');
 
 describe('assembleTrackFromSegments', () => {
     afterEach(() => {
