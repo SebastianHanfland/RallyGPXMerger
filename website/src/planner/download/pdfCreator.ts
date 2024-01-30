@@ -17,6 +17,19 @@ try {
     console.error('pdfmake error', error);
 }
 
+const styles = {
+    linkStyle: {
+        color: 'blue',
+    },
+    headerStyle: {
+        bold: true,
+    },
+    titleStyle: {
+        bold: true,
+        fontSize: 15,
+    },
+};
+
 export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
@@ -29,14 +42,7 @@ export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
             ' ',
             createBlockedStreetTable(trackStreets),
         ],
-        styles: {
-            linkStyle: {
-                color: 'blue',
-            },
-            headerStyle: {
-                bold: true,
-            },
-        },
+        styles,
     };
     pdfMake.createPdf(docDefinition).download('Blockierte-Strassen.pdf');
 }
@@ -65,18 +71,7 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
             ' ',
             createStreetTable(trackStreets),
         ],
-        styles: {
-            linkStyle: {
-                color: 'blue',
-            },
-            headerStyle: {
-                bold: true,
-            },
-            titleStyle: {
-                bold: true,
-                fontSize: 15,
-            },
-        },
+        styles,
     };
     pdfMake.createPdf(docDefinition).download(trackStreets.name + '.pdf');
 }
