@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getFilteredCalculatedTracks } from '../../../planner/store/calculatedTracks.reducer.ts';
+import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { addTracksToLayer } from './addTrackToMap.ts';
-import { getShowCalculatedTracks, getShowMapMarker } from '../../../planner/store/map.reducer.ts';
+import { getShowCalculatedTracks, getShowMapMarker } from '../../store/map.reducer.ts';
 
 export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getFilteredCalculatedTracks);

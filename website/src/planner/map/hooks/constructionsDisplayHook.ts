@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { getConstructionSegments } from '../../../planner/store/gpxSegments.reducer.ts';
+import { getConstructionSegments } from '../../store/gpxSegments.reducer.ts';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from './addTrackToMap.ts';
-import { getShowConstructions } from '../../../planner/store/map.reducer.ts';
+import { getShowConstructions } from '../../store/map.reducer.ts';
 
 export function constructionsDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const gpxSegments = useSelector(getConstructionSegments);

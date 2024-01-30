@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getCalculatedTracks } from '../../../planner/store/calculatedTracks.reducer.ts';
-import { getCurrenMapTime, getShowCalculatedTracks } from '../../../planner/store/map.reducer.ts';
+import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { getCurrenMapTime, getShowCalculatedTracks } from '../../store/map.reducer.ts';
 import { getCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
 import { bikeIcon } from '../../../common/MapIcons.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';

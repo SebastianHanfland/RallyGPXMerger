@@ -1,6 +1,6 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapTime, mapActions } from '../../planner/store/map.reducer.ts';
+import { getCurrenMapTime, mapActions } from '../store/map.reducer.ts';
 import { getCurrentTimeStamp } from './hooks/trackSimulationReader.ts';
 import { formatDate } from '../../utils/dateUtil.ts';
 import { useEffect, useState } from 'react';
