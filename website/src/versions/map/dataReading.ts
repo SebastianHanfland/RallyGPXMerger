@@ -12,7 +12,7 @@ import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { getReadableTracks } from '../../planner/cache/readableTracks.ts';
+import { getReadableTracks } from '../cache/readableTracks.ts';
 
 const extractLocationZip =
     (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>

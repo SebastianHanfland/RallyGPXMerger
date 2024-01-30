@@ -10,10 +10,3 @@ export const getReadableTracks = () => readableTracks;
 export const setReadableTracks = (newReadableTracks: ReadableTrack[]) => {
     readableTracks = newReadableTracks;
 };
-export const extendReadableTracks = (newReadableTracks: ReadableTrack[]) => {
-    if (readableTracks === undefined) {
-        readableTracks = newReadableTracks;
-    } else {
-        readableTracks = [...readableTracks, ...newReadableTracks];
-    }
-};
