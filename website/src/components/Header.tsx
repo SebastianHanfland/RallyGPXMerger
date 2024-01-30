@@ -1,5 +1,5 @@
 import { ButtonGroup, ButtonToolbar, Container, Pagination, Row } from 'react-bootstrap';
-import { HelpButton } from './tutorial/HelpButton.tsx';
+import { HelpButton } from '../planner/tutorial/HelpButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { LoadExampleDataButton } from './LoadExampleDataButton.tsx';
 import { Sections } from './types.ts';
