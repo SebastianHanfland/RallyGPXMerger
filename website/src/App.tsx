@@ -1,7 +1,7 @@
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import { ErrorBoundary } from './components/ErrorBoundary.tsx';
+import { ErrorBoundary } from './common/ErrorBoundary.tsx';
 import { RallyVersionControl } from './versions/RallyVersionControl.tsx';
 import { RallyPlaner } from './planner/RallyPlaner.tsx';
 
