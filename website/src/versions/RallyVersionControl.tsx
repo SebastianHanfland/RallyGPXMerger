@@ -4,7 +4,7 @@ import { DisplayMap } from './DisplayMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from '../store/zipTracks.reducer.ts';
-import { iframeStore } from './store.ts';
+import { versionsStore } from './store.ts';
 
 function RallyDisplay() {
     loadZipFileHook();
@@ -24,7 +24,7 @@ function RallyDisplay() {
 
 export function RallyVersionControl() {
     return (
-        <Provider store={iframeStore}>
+        <Provider store={versionsStore}>
             <RallyDisplay />
         </Provider>
     );

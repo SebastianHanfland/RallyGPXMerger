@@ -2,13 +2,13 @@ import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { zipTracksReducer } from '../store/zipTracks.reducer.ts';
 import { mapReducer } from '../store/map.reducer.ts';
 
-const iFrameReducer: Reducer = combineReducers({
+const versionsReducer: Reducer = combineReducers({
     zipTracks: zipTracksReducer,
     map: mapReducer,
 });
 
-const createIframeStore = () =>
+const createVersionsStore = () =>
     configureStore({
-        reducer: iFrameReducer,
+        reducer: versionsReducer,
     });
-export const iframeStore = createIframeStore();
+export const versionsStore = createVersionsStore();
