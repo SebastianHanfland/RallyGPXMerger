@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 

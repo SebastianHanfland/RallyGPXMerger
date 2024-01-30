@@ -1,8 +1,8 @@
-import { GpxSegment, TrackComposition } from '../../planner/store/types.ts';
+import { GpxSegment, TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';
-import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
+import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
 import { BREAK_IDENTIFIER } from '../../logic/types.ts';
 import { ReactSortable } from 'react-sortablejs';

@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
-import { TrackComposition } from '../../planner/store/types.ts';
+import { TrackComposition } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
-import { trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { TrackSelectionCell } from './TrackSelectionCell.tsx';
 import { TrackButtonsCell } from './TrackButtonsCell.tsx';
 import { getCount } from '../../utils/inputUtil.ts';

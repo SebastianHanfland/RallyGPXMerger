@@ -1,13 +1,13 @@
 import { MergeTable } from './MergeTable.tsx';
 import { ButtonGroup, ButtonToolbar, Form } from 'react-bootstrap';
-import { MergeTracksButton } from '../MergeTracksButton.tsx';
-import { CalculatedFilesDownloader } from '../CalculatedFilesDownloader.tsx';
+import { MergeTracksButton } from '../../components/MergeTracksButton.tsx';
+import { CalculatedFilesDownloader } from '../../components/CalculatedFilesDownloader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getFilteredTrackCompositions,
     getTrackCompositionFilterTerm,
     trackMergeActions,
-} from '../../planner/store/trackMerge.reducer.ts';
+} from '../store/trackMerge.reducer.ts';
 import { TrackCalculationSettings } from './TrackCalculationSettings.tsx';
 
 export function TrackCompositionSection() {

@@ -1,11 +1,11 @@
 import { Button } from 'react-bootstrap';
-import { TrackComposition } from '../../planner/store/types.ts';
+import { TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSegmentIdClipboard, trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
+import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { useState } from 'react';
-import { ConfirmationModal } from '../ConfirmationModal.tsx';
-import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
-import { calculatedTracksActions, getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
+import { ConfirmationModal } from '../../components/ConfirmationModal.tsx';
+import { FileDownloader } from '../segments/FileDownloader.tsx';
+import { calculatedTracksActions, getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 

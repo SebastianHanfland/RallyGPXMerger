@@ -1,5 +1,5 @@
 import '../App.css';
-import { TrackCompositionSection } from './tracks/TrackCompositionSection.tsx';
+import { TrackCompositionSection } from '../planner/tracks/TrackCompositionSection.tsx';
 import { FileUploadSection } from '../planner/segments/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
 import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
