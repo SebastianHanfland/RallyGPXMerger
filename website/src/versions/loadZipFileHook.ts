@@ -9,8 +9,6 @@ import { Dispatch } from '@reduxjs/toolkit';
 
 import { ZipTrack } from '../common/types.ts';
 import { extendReadableTracks, getReadableTracks } from './cache/readableTracks.ts';
-import date from 'date-and-time';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../planner/store/trackMerge.reducer.ts';
 import { mapActions } from './store/map.reducer.ts';
 
 function getPeopleCountFromFilename(filename: string): number {
@@ -21,8 +19,6 @@ function getPeopleCountFromFilename(filename: string): number {
 const nameSpace = '1dc89ce7-d3b5-4054-b9e3-b3e062645d48';
 
 function setStartAndEndTime(dispatch: Dispatch) {
-    const maxDelay = 0;
-
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 
@@ -38,7 +34,7 @@ function setStartAndEndTime(dispatch: Dispatch) {
 
     const payload = {
         start: startDate,
-        end: date.addSeconds(new Date(endDate), maxDelay * PARTICIPANTS_DELAY_IN_SECONDS).toISOString(),
+        end: endDate,
     };
     dispatch(mapActions.setStartAndEndTime(payload));
 }
