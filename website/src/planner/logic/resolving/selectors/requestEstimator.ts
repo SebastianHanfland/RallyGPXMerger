@@ -1,14 +1,14 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { State } from '../../planner/store/types.ts';
-import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { State } from '../../../store/types.ts';
+import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
+import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import {
     geoCodingRequestsActions,
     getNumberOfRequestsDone,
     getNumberOfRequestsRunning,
     getNumberOfRequiredRequests,
-} from '../../planner/store/geoCodingRequests.reducer.ts';
+} from '../../../store/geoCodingRequests.reducer.ts';
 
 export const estimateRequestsForStreetResolving = (dispatch: Dispatch, getState: () => State) => {
     let counter = 0;

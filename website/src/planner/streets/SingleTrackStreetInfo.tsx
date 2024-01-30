@@ -1,4 +1,4 @@
-import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';

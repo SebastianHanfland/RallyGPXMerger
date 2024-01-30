@@ -6,17 +6,17 @@ import { useEffect } from 'react';
 import {
     estimateRequestsForStreetResolving,
     getRequestProgress,
-} from '../../mapMatching/selectors/requestEstimator.ts';
+} from '../logic/resolving/selectors/requestEstimator.ts';
 import {
     getIsLoadingGeoData,
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
 } from '../store/geoCodingRequests.reducer.ts';
-import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postcode/postCodeResolver.ts';
+import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../logic/resolving/postcode/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../store/geoCoding.reducer.ts';
-import { calculateTrackStreetInfos } from '../../mapMatching/aggregate/calculateTrackStreetInfos.ts';
-import { resolvePositions } from '../../mapMatching/resolveStreetAndPostcodeInfo.ts';
+import { calculateTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
+import { resolvePositions } from '../logic/resolving/resolveStreetAndPostcodeInfo.ts';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);

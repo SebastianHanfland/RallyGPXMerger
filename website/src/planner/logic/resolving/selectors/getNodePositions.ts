@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositions } from '../../planner/store/trackMerge.reducer.ts';
-import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
-import { listAllNodesOfTracks, TrackNode } from '../../planner/logic/merge/helper/nodeFinder.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { TrackComposition } from '../../planner/store/types.ts';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
+import { listAllNodesOfTracks, TrackNode } from '../../merge/helper/nodeFinder.ts';
+import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
+import { TrackComposition } from '../../../store/types.ts';
 
 export interface NodePosition {
     point: { lat: number; lon: number };

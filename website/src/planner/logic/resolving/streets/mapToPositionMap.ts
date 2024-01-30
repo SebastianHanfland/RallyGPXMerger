@@ -1,5 +1,5 @@
 import { GeoApifyLeg, GeoApifyLegStep, GeoApifyMapMatchingResult, GeoApifyWayPoint } from '../types.ts';
-import { ResolvedPositions } from '../../planner/store/types.ts';
+import { ResolvedPositions } from '../../../store/types.ts';
 
 import { toKey } from '../helper/pointKeys.ts';
 

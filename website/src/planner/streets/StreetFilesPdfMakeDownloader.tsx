@@ -1,9 +1,9 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import download from '../../assets/file-down.svg';
-import { BlockedStreetInfo, TrackStreetInfo } from '../../mapMatching/types.ts';
-import { getBlockedStreetInfo } from '../../mapMatching/selectors/getBlockedStreetInfo.ts';
-import { getEnrichedTrackStreetInfos } from '../../mapMatching/selectors/getEnrichedTrackStreetInfos.ts';
+import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
+import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
+import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';

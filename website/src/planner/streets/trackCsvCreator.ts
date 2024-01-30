@@ -1,4 +1,4 @@
-import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { getLanguage } from '../../language.ts';
 import geoDistance from 'geo-distance-helper';

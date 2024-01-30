@@ -1,10 +1,10 @@
 import { Point } from 'gpxparser';
 import date from 'date-and-time';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../planner/store/trackMerge.reducer.ts';
+import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 import { TrackWayPointType } from '../types.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../planner/logic/merge/speedSimulator.ts';
-import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { toLatLng } from '../../merge/speedSimulator.ts';
+import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 import { NodePosition } from '../selectors/getNodePositions.ts';
 
 export interface EnrichedPoints extends PointS {

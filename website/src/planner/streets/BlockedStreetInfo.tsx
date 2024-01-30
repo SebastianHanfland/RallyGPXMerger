@@ -2,7 +2,7 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
 import { useSelector } from 'react-redux';
-import { getBlockedStreetInfo } from '../../mapMatching/selectors/getBlockedStreetInfo.ts';
+import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/merge/speedSimulator.ts';

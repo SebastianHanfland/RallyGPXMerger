@@ -1,12 +1,12 @@
-import { State } from '../../planner/store/types.ts';
-import { geoCodingActions, getGeoApifyKey } from '../../planner/store/geoCoding.reducer.ts';
+import { State } from '../../../store/types.ts';
+import { geoCodingActions, getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
-import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
+import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
-import { AppDispatch } from '../../planner/store/store.ts';
-import { geoCodingRequestsActions } from '../../planner/store/geoCodingRequests.reducer.ts';
+import { AppDispatch } from '../../../store/store.ts';
+import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {

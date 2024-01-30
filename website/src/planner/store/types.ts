@@ -1,4 +1,4 @@
-import { TrackStreetInfo } from '../../mapMatching/types.ts';
+import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
 
 export interface GpxSegmentsState {
