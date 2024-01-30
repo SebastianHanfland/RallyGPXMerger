@@ -3,9 +3,9 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
-import { getMapConfiguration } from '../components/map/PlainMap.tsx';
 import { zipTracksDisplayHook } from '../components/map/hooks/zipTracksDisplayHook.ts';
 import { zipTrackMarkerDisplayHook } from '../components/map/hooks/zipTrackMarkerDisplayHook.ts';
+import { getMapConfiguration } from '../common/mapConfig.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
 

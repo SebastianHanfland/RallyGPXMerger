@@ -9,41 +9,9 @@ import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
 import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
 import { centerPointHook } from './hooks/centerPointHook.tsx';
 import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
+import { getMapConfiguration } from '../../common/mapConfig.ts';
 
 const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
-
-interface Config {
-    tileUrlTemplate: string;
-    maxZoom?: number;
-    minZoom?: number;
-    zoomOffset?: number;
-    startZoom: number;
-}
-
-const generalConfig: Config = {
-    tileUrlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    maxZoom: 20,
-    minZoom: 2,
-    zoomOffset: -1,
-    startZoom: 10,
-};
-
-export function getMapConfiguration() {
-    const { tileUrlTemplate, maxZoom, minZoom, zoomOffset, startZoom } = generalConfig;
-
-    function getOptions() {
-        return {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom,
-            minZoom,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset,
-        };
-    }
-
-    return { tileUrlTemplate, startZoom, getOptions };
-}
 
 let myMap: L.Map | undefined;
 
