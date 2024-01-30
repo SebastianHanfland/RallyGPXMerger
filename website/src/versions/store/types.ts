@@ -23,7 +23,7 @@ export interface MapState {
     showMapMarker?: boolean;
 }
 
-export interface IFrameState {
+export interface VersionsState {
     zipTracks: ZipTracksState;
     map: MapState;
 }

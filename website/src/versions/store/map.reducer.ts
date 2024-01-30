@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { IFrameState, MapState } from './types';
+import { VersionsState, MapState } from './types';
 
 const initialState: MapState = {
     currentTime: 0,
@@ -24,6 +24,6 @@ const mapSlice = createSlice({
 
 export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
-const getBase = (state: IFrameState) => state.map;
-export const getCurrenMapTime = (state: IFrameState) => getBase(state).currentTime;
-export const getShowMapMarker = (state: IFrameState) => getBase(state).showMapMarker ?? false;
+const getBase = (state: VersionsState) => state.map;
+export const getCurrenMapTime = (state: VersionsState) => getBase(state).currentTime;
+export const getShowMapMarker = (state: VersionsState) => getBase(state).showMapMarker ?? false;

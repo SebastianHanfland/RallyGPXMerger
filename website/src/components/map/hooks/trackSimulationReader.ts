@@ -9,7 +9,7 @@ import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculatio
 import { getResolvedPositions } from '../../../planner/store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../versions/store/zipTracks.reducer.ts';
-import { IFrameState, ZipTrack } from '../../../versions/store/types';
+import { VersionsState, ZipTrack } from '../../../versions/store/types';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
@@ -160,7 +160,7 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
-export const getZipCurrentTimeStamp = (state: IFrameState): string | undefined => {
+export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined => {
     const calculatedTracks = getZipTracks(state);
     if (Object.keys(calculatedTracks).length === 0) {
         return;

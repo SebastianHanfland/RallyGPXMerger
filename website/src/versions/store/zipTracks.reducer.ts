@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { IFrameState, ZipTrack, ZipTracksState } from './types';
+import { VersionsState, ZipTrack, ZipTracksState } from './types';
 
 const initialState: ZipTracksState = {
     tracks: {},
@@ -42,8 +42,8 @@ const zipTracksSlice = createSlice({
 
 export const zipTracksActions = zipTracksSlice.actions;
 export const zipTracksReducer: Reducer<ZipTracksState> = zipTracksSlice.reducer;
-const getBase = (state: IFrameState) => state.zipTracks;
-export const getZipTracks = (state: IFrameState) => getBase(state).tracks;
-export const getIsZipLoading = (state: IFrameState) => getBase(state).isLoading;
-export const getSelectedVersions = (state: IFrameState) => getBase(state).selectedVersions;
-export const getSelectedTracks = (state: IFrameState) => getBase(state).selectedTracks;
+const getBase = (state: VersionsState) => state.zipTracks;
+export const getZipTracks = (state: VersionsState) => getBase(state).tracks;
+export const getIsZipLoading = (state: VersionsState) => getBase(state).isLoading;
+export const getSelectedVersions = (state: VersionsState) => getBase(state).selectedVersions;
+export const getSelectedTracks = (state: VersionsState) => getBase(state).selectedTracks;
