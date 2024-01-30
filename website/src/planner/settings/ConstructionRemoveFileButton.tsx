@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { ConfirmationModal } from '../../components/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 
 interface Props {

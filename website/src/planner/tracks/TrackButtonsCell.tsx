@@ -3,7 +3,7 @@ import { TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { useState } from 'react';
-import { ConfirmationModal } from '../../components/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { calculatedTracksActions, getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';

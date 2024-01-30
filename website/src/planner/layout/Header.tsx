@@ -1,8 +1,8 @@
 import { ButtonGroup, ButtonToolbar, Container, Pagination, Row } from 'react-bootstrap';
 import { HelpButton } from '../tutorial/HelpButton.tsx';
-import { RemoveDataButton } from '../../components/RemoveDataButton.tsx';
-import { LoadExampleDataButton } from '../../components/LoadExampleDataButton.tsx';
-import { Sections } from '../../components/types.ts';
+import { RemoveDataButton } from './RemoveDataButton.tsx';
+import { LoadExampleDataButton } from './LoadExampleDataButton.tsx';
+import { Sections } from './types.ts';
 
 interface Props {
     selectedSection: Sections;

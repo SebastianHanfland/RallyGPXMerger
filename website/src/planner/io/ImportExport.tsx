@@ -3,7 +3,7 @@ import upload from '../../assets/file-up.svg';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { ConfirmationModal } from '../../components/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
 import { storage } from '../store/storage.ts';
 import { gpxShortener } from './gpxShortener.ts';

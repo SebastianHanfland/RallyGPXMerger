@@ -6,7 +6,7 @@ import { StreetResolvingSection } from '../streets/StreetResolvingSection.tsx';
 import { parseCalculatedTracksHook } from '../../components/map/hooks/parseCalculatedTracksHook.ts';
 import { PlainMap } from '../../components/map/PlainMap.tsx';
 import { MapToolbar } from '../../components/map/MapToolbar.tsx';
-import { Sections } from '../../components/types.ts';
+import { Sections } from './types.ts';
 import { ImportExport } from '../io/ImportExport.tsx';
 import { Settings } from '../settings/Settings.tsx';
 

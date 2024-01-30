@@ -1,12 +1,12 @@
 import { Button } from 'react-bootstrap';
-import fileUpload from '../assets/file-up.svg';
+import fileUpload from '../../assets/file-up.svg';
 import { useDispatch } from 'react-redux';
-import { gpxSegmentsActions } from '../planner/store/gpxSegments.reducer.ts';
-import { fileContentA1 } from '../samples/sampleDataA1.ts';
-import { fileContentB1 } from '../samples/sampleDataB1.ts';
-import { fileContentAB } from '../samples/sampleDataAB.ts';
-import { trackMergeActions } from '../planner/store/trackMerge.reducer.ts';
-import { calculatedTracksActions } from '../planner/store/calculatedTracks.reducer.ts';
+import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import { fileContentA1 } from '../../samples/sampleDataA1.ts';
+import { fileContentB1 } from '../../samples/sampleDataB1.ts';
+import { fileContentAB } from '../../samples/sampleDataAB.ts';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 
 export function LoadExampleDataButton() {
     const dispatch = useDispatch();

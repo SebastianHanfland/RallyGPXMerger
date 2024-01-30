@@ -2,8 +2,8 @@ import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { getCalculatedTracks } from '../planner/store/calculatedTracks.reducer.ts';
-import download from '../assets/file-down.svg';
+import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import download from '../../assets/file-down.svg';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
