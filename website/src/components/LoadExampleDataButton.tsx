@@ -14,14 +14,28 @@ export function LoadExampleDataButton() {
         dispatch(gpxSegmentsActions.clearGpxSegments());
         dispatch(
             gpxSegmentsActions.addGpxSegments([
-                { id: '05901e', peopleCountEnd: 2000, filename: 'A1T.gpx', content: fileContentA1 },
-                { id: 'e84546', peopleCountEnd: 3000, filename: 'B1T.gpx', content: fileContentB1 },
+                { id: '05901e', filename: 'A1T.gpx', content: fileContentA1 },
+                { id: 'e84546', filename: 'B1T.gpx', content: fileContentB1 },
                 { id: 'f62bc0', filename: 'ABT.gpx', content: fileContentAB },
             ])
         );
         dispatch(trackMergeActions.clear());
-        dispatch(trackMergeActions.addTrackComposition({ id: 'dd91ed', name: 'A', segmentIds: ['05901e', 'f62bc0'] }));
-        dispatch(trackMergeActions.addTrackComposition({ id: '83e7c6', name: 'B', segmentIds: ['e84546', 'f62bc0'] }));
+        dispatch(
+            trackMergeActions.addTrackComposition({
+                id: 'dd91ed',
+                name: 'A',
+                segmentIds: ['05901e', 'f62bc0'],
+                peopleCount: 2000,
+            })
+        );
+        dispatch(
+            trackMergeActions.addTrackComposition({
+                id: '83e7c6',
+                name: 'B',
+                segmentIds: ['e84546', 'f62bc0'],
+                peopleCount: 3000,
+            })
+        );
         dispatch(trackMergeActions.setArrivalDateTime('2024-05-05T14:00:00.000Z'));
         dispatch(calculatedTracksActions.removeCalculatedTracks());
     };
