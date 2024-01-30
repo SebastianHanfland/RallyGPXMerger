@@ -1,5 +1,10 @@
 import { State, TrackComposition } from '../../store/types.ts';
 import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../store/map.reducer.ts';
+import {
+    getCurrenMapTime as zipGetCurrenMapTime,
+    getEndMapTime as zipGetEndMapTime,
+    getStartMapTime as zipGetStartMapTime,
+} from '../../../versions/store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
@@ -166,9 +171,9 @@ export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined
     if (Object.keys(calculatedTracks).length === 0) {
         return;
     }
-    const mapTime = getCurrenMapTime(state) ?? 0;
-    const start = getStartMapTime(state);
-    const end = getEndMapTime(state);
+    const mapTime = zipGetCurrenMapTime(state) ?? 0;
+    const start = zipGetStartMapTime(state);
+    const end = zipGetEndMapTime(state);
     if (!start || !end) {
         return undefined;
     }
