@@ -1,8 +1,8 @@
-import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
-import { getLanguage } from '../../language.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
+import { getLanguage } from '../../../language.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/merge/speedSimulator.ts';
+import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 
 export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
     const language = getLanguage();

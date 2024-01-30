@@ -6,8 +6,8 @@ import download from '../../assets/file-down.svg';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import { convertTrackInfoToCsv } from '../download/trackCsvCreator.ts';
-import { convertStreetInfoToCsv } from '../download/streetsCsvCreator.ts';
+import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv.ts';
+import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
 import { getLanguage } from '../../language.ts';
 
 function createCsv(csv: string) {

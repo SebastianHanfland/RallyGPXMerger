@@ -1,11 +1,13 @@
-import { BlockedStreetInfo } from '../logic/resolving/types.ts';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { BlockedStreetInfo } from '../../logic/resolving/types.ts';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/merge/speedSimulator.ts';
-import { formatNumber } from './trackCsvCreator.ts';
-import { ContentTable } from 'pdfmake/interfaces';
-import { getBlockedStreetsHeader } from './streetsCsvCreator.ts';
-import { getLink } from '../../utils/linkUtil.ts';
+import { toLatLng } from '../../logic/merge/speedSimulator.ts';
+import { formatNumber } from '../csv/trackStreetsCsv.ts';
+import { ContentTable, TDocumentDefinitions } from 'pdfmake/interfaces';
+import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv.ts';
+import { getLink } from '../../../utils/linkUtil.ts';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import { styles } from './pdfUtil.ts';
 
 export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): ContentTable {
     const tableHeader = getBlockedStreetsHeader()
@@ -38,4 +40,21 @@ export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): Con
             body: [tableHeader, ...wayPointRows],
         },
     };
+}
+
+export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
+    const docDefinition: TDocumentDefinitions = {
+        pageOrientation: 'landscape',
+        content: [
+            '',
+            { text: 'Blockierte Straßen', style: 'titleStyle' },
+            '\n\n',
+            ' ',
+            ' ',
+            ' ',
+            createBlockedStreetTable(trackStreets),
+        ],
+        styles,
+    };
+    pdfMake.createPdf(docDefinition).download('Blockierte-Strassen.pdf');
 }

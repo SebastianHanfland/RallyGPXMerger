@@ -4,7 +4,8 @@ import download from '../../assets/file-down.svg';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import { createBlockedStreetsPdf, createTrackStreetPdf } from '../download/pdfCreator.ts';
+import { createBlockedStreetsPdf } from '../download/pdf/blockedStreetsPdf.ts';
+import { createTrackStreetPdf } from '../download/pdf/trackStreetsPdf.ts';
 
 const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
     trackStreetInfos.forEach(createTrackStreetPdf);
