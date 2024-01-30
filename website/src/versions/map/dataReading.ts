@@ -1,5 +1,5 @@
-import { ReadableTrack } from '../../common/types.ts';
-import { VersionsState, ZipTrack } from '../store/types.ts';
+import { ReadableTrack, ZipTrack } from '../../common/types.ts';
+import { VersionsState } from '../store/types.ts';
 import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
 import {

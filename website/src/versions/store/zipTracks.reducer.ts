@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { VersionsState, ZipTrack, ZipTracksState } from './types';
+import { VersionsState, ZipTracksState } from './types';
+import { ZipTrack } from '../../common/types.ts';
 
 const initialState: ZipTracksState = {
     tracks: {},

@@ -1,8 +1,9 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GpxSegment, GpxSegmentsState, State } from './types.ts';
+import { GpxSegmentsState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { optionallyDecompress } from './compressHelper.ts';
+import { GpxSegment } from '../../common/types.ts';
 
 const initialState: GpxSegmentsState = {
     segments: [],

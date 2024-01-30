@@ -1,10 +1,10 @@
 import { Form, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { GpxSegment } from '../store/types.ts';
 import { useEffect, useState } from 'react';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { SegmentSpeedRow } from './SegmentSpeedRow.tsx';
+import { GpxSegment } from '../../common/types.ts';
 
 export function SegmentSpeedSettings() {
     const [filterTerm, setFilterTerm] = useState('');

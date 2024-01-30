@@ -1,4 +1,4 @@
-import { GpxSegment, TrackComposition } from '../store/types.ts';
+import { TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';
@@ -8,6 +8,7 @@ import { BREAK_IDENTIFIER } from '../../logic/types.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { Accordion } from 'react-bootstrap';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
+import { GpxSegment } from '../../common/types.ts';
 
 interface Props {
     track: TrackComposition;

@@ -1,6 +1,6 @@
-import { GpxSegment } from '../store/types.ts';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
+import { GpxSegment } from '../../common/types.ts';
 
 export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
     const { id, filename, content } = gpxSegment;

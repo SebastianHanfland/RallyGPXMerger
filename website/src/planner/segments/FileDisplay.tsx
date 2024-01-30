@@ -1,11 +1,11 @@
 import { Form } from 'react-bootstrap';
-import { GpxSegment } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 import { countUsagesOfSegment } from './segmentUsageCounter.ts';
+import { GpxSegment } from '../../common/types.ts';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content } = gpxSegment;

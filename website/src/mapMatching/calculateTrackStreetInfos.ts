@@ -1,4 +1,4 @@
-import { CalculatedTrack, State } from '../planner/store/types.ts';
+import { State } from '../planner/store/types.ts';
 import { TrackStreetInfo } from './types.ts';
 import { getCalculatedTracks } from '../planner/store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
@@ -10,6 +10,7 @@ import { toLatLng } from '../logic/speedSimulator.ts';
 import { geoCodingActions, getResolvedPositions } from '../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from './getNodePositions.ts';
+import { CalculatedTrack } from '../common/types.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>

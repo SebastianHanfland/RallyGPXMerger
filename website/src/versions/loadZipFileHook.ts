@@ -7,7 +7,8 @@ import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculat
 import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from './store/zipTracks.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
-import { ZipTrack } from './store/types';
+
+import { ZipTrack } from '../common/types.ts';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);

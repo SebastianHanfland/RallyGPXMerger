@@ -3,9 +3,9 @@ import { Form, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { GpxSegment } from '../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
+import { GpxSegment } from '../../common/types.ts';
 
 const fileTypes = ['GPX'];
 

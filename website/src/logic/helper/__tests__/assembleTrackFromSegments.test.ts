@@ -1,9 +1,10 @@
-import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../planner/store/types.ts';
+import { TrackComposition } from '../../../planner/store/types.ts';
 import { Mock } from 'vitest';
 import { BREAK_IDENTIFIER, GpxFileAccess } from '../../types.ts';
 
 import { mergeSimpleGPXs, SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
+import { CalculatedTrack, GpxSegment } from '../../../common/types.ts';
 
 vi.mock('../../../utils/SimpleGPX.ts');
 

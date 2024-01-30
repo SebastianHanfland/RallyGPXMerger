@@ -1,6 +1,7 @@
-import { CalculatedTrack, GpxSegment, State } from './types.ts';
+import { State } from './types.ts';
 
 import { optionallyCompress } from './compressHelper.ts';
+import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
 
 const localStorage = window.localStorage;
 

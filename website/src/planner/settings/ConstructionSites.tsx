@@ -1,10 +1,10 @@
 import { FileUploader } from 'react-drag-drop-files';
 import { Table } from 'react-bootstrap';
-import { GpxSegment } from '../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConstructionSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
+import { GpxSegment } from '../../common/types.ts';
 
 const fileTypes = ['GPX'];
 
