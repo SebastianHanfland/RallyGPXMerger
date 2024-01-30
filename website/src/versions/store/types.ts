@@ -1,4 +1,5 @@
-import { CalculatedTrack, GpxFile, GpxSegment } from '../../planner/store/types.ts';
+import { CalculatedTrack, GpxSegment } from '../../planner/store/types.ts';
+import { GpxFile } from '../../common/types.ts';
 
 export interface ZipTracksState {
     tracks: Record<string, ZipTrack[] | undefined>;
