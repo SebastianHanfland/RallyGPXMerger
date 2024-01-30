@@ -2,12 +2,11 @@ import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../planner/map/hooks/addTrackToMap.ts';
-import { getShowCalculatedTracks, getShowMapMarker } from '../../planner/store/map.reducer.ts';
+import { getShowMapMarker } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
 
 export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const zipTracks = useSelector(getZipTracks);
-    const showTracks = useSelector(getShowCalculatedTracks);
     const showMarker = useSelector(getShowMapMarker);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
@@ -21,7 +20,7 @@ export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<Lay
             }
             return tracksOfVersion.filter((track) => selectedTracks[version]?.includes(track.id));
         });
-        addTracksToLayer(calculatedTracksLayer, tracks, showTracks, {
+        addTracksToLayer(calculatedTracksLayer, tracks, true, {
             showMarker,
             onlyShowBreaks: true,
             opacity: 0.7,

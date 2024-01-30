@@ -1,14 +1,13 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getCurrenMapTime, getShowCalculatedTracks } from '../../planner/store/map.reducer.ts';
-import { getZipCurrentMarkerPositionsForTracks } from '../../planner/map/hooks/trackSimulationReader.ts';
+import { getCurrenMapTime } from '../store/map.reducer.ts';
 import { bikeIcon } from '../../common/MapIcons.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getZipCurrentMarkerPositionsForTracks } from './dataReading.ts';
 
 export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const zipTracks = useSelector(getZipTracks);
-    const showTracks = useSelector(getShowCalculatedTracks);
     const currentMapTime = useSelector(getCurrenMapTime);
     const selectedTracks = useSelector(getSelectedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
@@ -16,8 +15,8 @@ export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObjec
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(calculatedTracksLayer, pointsToDisplay, showTracks);
-    }, [zipTracks, showTracks, currentMapTime, selectedTracks, selectedVersions]);
+        addTracksToLayer(calculatedTracksLayer, pointsToDisplay, true);
+    }, [zipTracks, currentMapTime, selectedTracks, selectedVersions]);
 }
 
 export function addTrackToMap(
