@@ -1,10 +1,10 @@
 import { Provider, useSelector } from 'react-redux';
-import { iframeStore } from '../planner/store.ts';
 import { loadZipFileHook } from './loadZipFileHook.ts';
 import { DisplayMap } from './DisplayMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from '../store/zipTracks.reducer.ts';
+import { iframeStore } from './store.ts';
 
 function RallyDisplay() {
     loadZipFileHook();
