@@ -10,7 +10,7 @@ import {
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
 } from '../store/geoCodingRequests.reducer.ts';
-import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
+import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postcode/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../store/geoCoding.reducer.ts';
 import { calculateTrackStreetInfos } from '../../mapMatching/calculateTrackStreetInfos.ts';

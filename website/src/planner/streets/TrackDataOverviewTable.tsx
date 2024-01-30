@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getNumberOfRequiredRequests } from '../store/geoCodingRequests.reducer.ts';
-import { getNumberOfPostCodeRequests } from '../../mapMatching/postCodeResolver.ts';
+import { getNumberOfPostCodeRequests } from '../../mapMatching/postcode/postCodeResolver.ts';
 import { Table } from 'react-bootstrap';
 
 export function TrackDataOverviewTable() {

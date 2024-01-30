@@ -7,7 +7,7 @@ import { Point } from 'gpxparser';
 import { splitListIntoSections } from './helper/splitPointsService.ts';
 import { calculateTrackStreetInfos } from './calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../planner/store/store.ts';
-import { addPostCodeToStreetInfos } from './postCodeResolver.ts';
+import { addPostCodeToStreetInfos } from './postcode/postCodeResolver.ts';
 import { geoCodingRequestsActions } from '../planner/store/geoCodingRequests.reducer.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
