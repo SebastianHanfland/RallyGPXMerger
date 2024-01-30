@@ -3,10 +3,10 @@ import { CalculatedTracksState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { setReadableTracks } from '../logic/MergeCalculation.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { optionallyDecompress } from './compressHelper.ts';
 import { CalculatedTrack } from '../../common/types.ts';
+import { setReadableTracks } from '../cache/readableTracks.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],

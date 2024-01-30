@@ -7,8 +7,8 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
 import { mapActions } from '../store/map.reducer.ts';
-import { clearReadableTracks } from '../logic/MergeCalculation.ts';
 import { geoCodingActions } from '../store/geoCoding.reducer.ts';
+import { clearReadableTracks } from '../cache/readableTracks.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();

@@ -11,7 +11,8 @@ import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
-import { getReadableTracks } from '../../planner/logic/MergeCalculation.ts';
+
+import { getReadableTracks } from '../../planner/cache/readableTracks.ts';
 
 const extractLocationZip =
     (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>

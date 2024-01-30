@@ -1,8 +1,8 @@
 import { ResolvedPositions } from '../../planner/store/types.ts';
-import { getReadableTracks } from '../../planner/logic/MergeCalculation.ts';
 import { AppDispatch } from '../../planner/store/store.ts';
 import { geoCodingActions } from '../../planner/store/geoCoding.reducer.ts';
 import { toKey } from '../helper/pointKeys.ts';
+import { getReadableTracks } from '../../planner/cache/readableTracks.ts';
 
 export const initializeResolvedPositions = (dispatch: AppDispatch) => {
     const positionMap: ResolvedPositions = {};

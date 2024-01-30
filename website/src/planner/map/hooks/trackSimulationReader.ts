@@ -4,12 +4,12 @@ import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { getReadableTracks } from '../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
 import { extractSnakeTrack } from '../../../common/logic/extractSnakeTrack.ts';
 import { ReadableTrack } from '../../../common/types.ts';
+import { getReadableTracks } from '../../cache/readableTracks.ts';
 
 const extractLocation =
     (timeStampFront: string, trackCompositions: TrackComposition[]) =>
