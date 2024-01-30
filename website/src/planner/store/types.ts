@@ -1,9 +1,6 @@
 import { TrackStreetInfo } from '../../mapMatching/types.ts';
 
-export interface GpxSegment {
-    id: string;
-    filename: string;
-    content: string;
+export interface GpxSegment extends GpxFile {
     peopleCountStart?: number;
     peopleCountEnd?: number;
 }
@@ -14,10 +11,13 @@ export interface GpxSegmentsState {
     constructionSegments?: GpxSegment[];
 }
 
-export interface CalculatedTrack {
+export interface GpxFile {
     id: string;
     filename: string;
     content: string;
+}
+
+export interface CalculatedTrack extends GpxFile {
     peopleCount?: number;
 }
 

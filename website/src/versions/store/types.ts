@@ -1,4 +1,4 @@
-import { CalculatedTrack, GpxSegment } from '../../planner/store/types.ts';
+import { CalculatedTrack, GpxFile, GpxSegment } from '../../planner/store/types.ts';
 
 export interface ZipTracksState {
     tracks: Record<string, ZipTrack[] | undefined>;
@@ -11,9 +11,10 @@ export function isZipTrack(track: GpxSegment | CalculatedTrack | ZipTrack): trac
     return (track as ZipTrack).color !== undefined;
 }
 
-export interface ZipTrack extends CalculatedTrack {
+export interface ZipTrack extends GpxFile {
     version: string;
     color?: string;
+    peopleCount?: number;
 }
 
 export interface MapState {
