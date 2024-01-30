@@ -10,7 +10,7 @@ import { geoCodingActions, getResolvedPositions } from '../../planner/store/geoC
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../getNodePositions.ts';
 import { CalculatedTrack } from '../../common/types.ts';
-import { toKey } from '../helper/wayPointKey.ts';
+import { toKey } from '../helper/pointKeys.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
