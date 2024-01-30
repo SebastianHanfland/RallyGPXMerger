@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { TrackMergeSection } from '../../components/parameters/TrackMergeSection.tsx';
+import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
 import { useDispatch } from 'react-redux';
 import { calculateMerge } from '../../logic/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
