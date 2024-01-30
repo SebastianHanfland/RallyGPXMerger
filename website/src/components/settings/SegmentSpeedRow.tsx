@@ -1,4 +1,4 @@
-import { GpxSegment } from '../../store/types.ts';
+import { GpxSegment } from '../../planner/store/types.ts';
 import { getAverageSpeedInKmH } from '../../planner/store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';

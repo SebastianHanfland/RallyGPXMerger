@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GeoCodingState, ResolvedDistricts, ResolvedPositions, ResolvedPostCodes, State } from '../../store/types.ts';
+import { GeoCodingState, ResolvedDistricts, ResolvedPositions, ResolvedPostCodes, State } from './types.ts';
 import { storage } from './storage.ts';
 import { TrackStreetInfo } from '../../mapMatching/types.ts';
 

@@ -7,7 +7,7 @@ import {
     getSegmentFilterTerm,
     gpxSegmentsActions,
 } from '../../planner/store/gpxSegments.reducer.ts';
-import { GpxSegment } from '../../store/types.ts';
+import { GpxSegment } from '../../planner/store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
 

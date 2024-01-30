@@ -1,4 +1,4 @@
-import { GpxSegment, TrackComposition } from '../../store/types.ts';
+import { GpxSegment, TrackComposition } from '../../planner/store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';

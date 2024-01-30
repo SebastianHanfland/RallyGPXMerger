@@ -1,4 +1,4 @@
-import { GpxSegment, TrackComposition } from '../../store/types.ts';
+import { GpxSegment, TrackComposition } from '../../planner/store/types.ts';
 import { Break, BREAK_IDENTIFIER } from '../types.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 

@@ -1,4 +1,4 @@
-import { ResolvedPositions } from '../store/types.ts';
+import { ResolvedPositions } from '../planner/store/types.ts';
 import { getReadableTracks } from '../logic/MergeCalculation.ts';
 import { AppDispatch } from '../planner/store/store.ts';
 import { geoCodingActions } from '../planner/store/geoCoding.reducer.ts';

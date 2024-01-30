@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import { GpxSegment } from '../../store/types.ts';
+import { GpxSegment } from '../../planner/store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { gpxSegmentsActions } from '../../planner/store/gpxSegments.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';

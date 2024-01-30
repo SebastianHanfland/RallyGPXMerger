@@ -1,5 +1,5 @@
 import { Button } from 'react-bootstrap';
-import { TrackComposition } from '../../store/types.ts';
+import { TrackComposition } from '../../planner/store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSegmentIdClipboard, trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
 import { useState } from 'react';

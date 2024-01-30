@@ -1,7 +1,7 @@
 import { Table } from 'react-bootstrap';
 import { MergeTableTrack } from './MergeTableTrack.tsx';
 import { AddNewTrack } from './AddNewTrack.tsx';
-import { TrackComposition } from '../../store/types.ts';
+import { TrackComposition } from '../../planner/store/types.ts';
 
 interface Props {
     trackCompositions: TrackComposition[];

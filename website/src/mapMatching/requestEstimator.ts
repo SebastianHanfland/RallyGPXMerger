@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { State } from '../store/types.ts';
+import { State } from '../planner/store/types.ts';
 import { getGpxSegments } from '../planner/store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { splitListIntoSections } from './splitPointsService.ts';

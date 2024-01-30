@@ -1,4 +1,4 @@
-import { CalculatedTrack, State } from '../store/types.ts';
+import { CalculatedTrack, State } from '../planner/store/types.ts';
 import { TrackStreetInfo } from './types.ts';
 import { getCalculatedTracks } from '../planner/store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';

@@ -1,6 +1,6 @@
 import { Action, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
 import reduceReducer from 'reduce-reducers';
-import { State } from '../../store/types.ts';
+import { State } from './types.ts';
 import { gpxSegmentsReducer } from './gpxSegments.reducer.ts';
 import { trackMergeReducer } from './trackMerge.reducer.ts';
 import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';

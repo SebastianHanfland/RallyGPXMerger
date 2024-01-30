@@ -1,5 +1,5 @@
 import { Point, Track } from 'gpxparser';
-import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../../../store/types.ts';
+import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../../../planner/store/types.ts';
 import L, { LayerGroup } from 'leaflet';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';

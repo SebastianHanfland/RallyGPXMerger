@@ -1,4 +1,4 @@
-import { State } from '../store/types.ts';
+import { State } from '../planner/store/types.ts';
 import { geoCodingActions, getGeoApifyKey } from '../planner/store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
 import { getGpxSegments } from '../planner/store/gpxSegments.reducer.ts';

@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrenMapTime, mapActions } from '../planner/store/map.reducer.ts';
-import { MAX_SLIDER_TIME } from '../store/types.ts';
+import { MAX_SLIDER_TIME } from '../planner/store/types.ts';
 import { formatDate } from '../utils/dateUtil.ts';
 import { getZipCurrentTimeStamp } from '../components/map/hooks/trackSimulationReader.ts';
 

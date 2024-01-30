@@ -4,7 +4,7 @@ import { getCenterPoint } from '../../../planner/store/map.reducer.ts';
 import { getGpxSegments } from '../../../planner/store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
-import { CalculatedTrack, GpxSegment, State } from '../../../store/types.ts';
+import { CalculatedTrack, GpxSegment, State } from '../../../planner/store/types.ts';
 
 export function centerPointHook(
     map: L.Map | undefined,

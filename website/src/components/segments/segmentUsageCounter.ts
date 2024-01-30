@@ -1,4 +1,4 @@
-import { State } from '../../store/types.ts';
+import { State } from '../../planner/store/types.ts';
 import { getTrackCompositions } from '../../planner/store/trackMerge.reducer.ts';
 
 export const countUsagesOfSegment = (segmentId: string) => (state: State) => {

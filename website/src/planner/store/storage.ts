@@ -1,4 +1,4 @@
-import { CalculatedTrack, GpxSegment, State } from '../../store/types.ts';
+import { CalculatedTrack, GpxSegment, State } from './types.ts';
 
 import { optionallyCompress } from './compressHelper.ts';
 

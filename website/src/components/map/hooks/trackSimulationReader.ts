@@ -1,4 +1,4 @@
-import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition, ZipTrack } from '../../../store/types.ts';
+import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition, ZipTrack } from '../../../planner/store/types.ts';
 import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../planner/store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';

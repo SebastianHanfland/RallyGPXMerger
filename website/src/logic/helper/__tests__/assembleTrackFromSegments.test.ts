@@ -1,4 +1,4 @@
-import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../store/types.ts';
+import { CalculatedTrack, GpxSegment, TrackComposition } from '../../../planner/store/types.ts';
 import { Mock } from 'vitest';
 import { BREAK_IDENTIFIER, GpxFileAccess } from '../../types.ts';
 

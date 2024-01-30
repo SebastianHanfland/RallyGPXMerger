@@ -1,6 +1,6 @@
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { generateTimeData } from '../speedSimulator.ts';
-import { GpxSegment } from '../../store/types.ts';
+import { GpxSegment } from '../../planner/store/types.ts';
 
 export function enrichGpxSegmentsWithTimeStamps(
     gpxSegments: GpxSegment[],

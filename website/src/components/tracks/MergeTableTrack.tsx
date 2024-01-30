@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import { TrackComposition } from '../../store/types.ts';
+import { TrackComposition } from '../../planner/store/types.ts';
 import { useDispatch } from 'react-redux';
 import { trackMergeActions } from '../../planner/store/trackMerge.reducer.ts';
 import { TrackSelectionCell } from './TrackSelectionCell.tsx';

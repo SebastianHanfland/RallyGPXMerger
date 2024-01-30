@@ -1,4 +1,4 @@
-import { TrackStreetInfo } from '../mapMatching/types.ts';
+import { TrackStreetInfo } from '../../mapMatching/types.ts';
 
 export interface GpxSegment {
     id: string;

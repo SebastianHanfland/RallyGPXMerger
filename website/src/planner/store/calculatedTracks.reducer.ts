@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { CalculatedTrack, CalculatedTracksState, State } from '../../store/types.ts';
+import { CalculatedTrack, CalculatedTracksState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';

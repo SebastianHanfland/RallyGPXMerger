@@ -3,7 +3,7 @@ import { getTrackCompositions } from '../planner/store/trackMerge.reducer.ts';
 import { getGpxSegments } from '../planner/store/gpxSegments.reducer.ts';
 import { listAllNodesOfTracks, TrackNode } from '../logic/helper/nodeFinder.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { TrackComposition } from '../store/types.ts';
+import { TrackComposition } from '../planner/store/types.ts';
 
 export interface NodePosition {
     point: { lat: number; lon: number };

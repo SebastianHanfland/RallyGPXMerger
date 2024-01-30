@@ -1,4 +1,4 @@
-import { GpxSegment } from '../../store/types.ts';
+import { GpxSegment } from '../../planner/store/types.ts';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
 

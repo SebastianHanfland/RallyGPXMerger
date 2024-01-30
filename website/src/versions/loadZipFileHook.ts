@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import JSZip from 'jszip';
-import { ZipTrack } from '../store/types.ts';
+import { ZipTrack } from '../planner/store/types.ts';
 import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculation.ts';

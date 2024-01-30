@@ -1,4 +1,4 @@
-import { CalculatedTrack, GpxSegment, TrackComposition } from '../../store/types.ts';
+import { CalculatedTrack, GpxSegment, TrackComposition } from '../../planner/store/types.ts';
 import { mergeSimpleGPXs, SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Break, instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';

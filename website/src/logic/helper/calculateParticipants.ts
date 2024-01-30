@@ -1,5 +1,5 @@
 import { BREAK_IDENTIFIER } from '../types.ts';
-import { GpxSegment, TrackComposition } from '../../store/types.ts';
+import { GpxSegment, TrackComposition } from '../../planner/store/types.ts';
 
 export function calculateParticipants(gpxSegments: GpxSegment[], trackCompositions: TrackComposition[]): number[] {
     return trackCompositions.map((track) => {

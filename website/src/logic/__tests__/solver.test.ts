@@ -1,5 +1,5 @@
 import { mergeAndDelayAndAdjustTimes } from '../solver.ts';
-import { GpxSegment, TrackComposition } from '../../store/types.ts';
+import { GpxSegment, TrackComposition } from '../../planner/store/types.ts';
 import { Mock } from 'vitest';
 
 import { assembleTrackFromSegments } from '../helper/assembleTrackFromSegments.ts';

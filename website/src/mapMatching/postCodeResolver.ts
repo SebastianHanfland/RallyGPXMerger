@@ -6,7 +6,7 @@ import {
     getTrackStreetInfos,
 } from '../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
-import { State } from '../store/types.ts';
+import { State } from '../planner/store/types.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 import { TrackWayPoint } from './types.ts';
 import {

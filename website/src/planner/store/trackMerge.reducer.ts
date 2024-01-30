@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { State, TrackComposition, TrackMergeState } from '../../store/types.ts';
+import { State, TrackComposition, TrackMergeState } from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/helper/peopleDelayCounter.ts';

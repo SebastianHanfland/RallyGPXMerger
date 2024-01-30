@@ -1,4 +1,4 @@
-import { State } from '../store/types.ts';
+import { State } from '../planner/store/types.ts';
 import { AppDispatch } from '../planner/store/store.ts';
 import { getGpxSegments, getSegmentSpeeds } from '../planner/store/gpxSegments.reducer.ts';
 import {

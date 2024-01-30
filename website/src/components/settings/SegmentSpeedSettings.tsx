@@ -1,7 +1,7 @@
 import { Form, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
-import { GpxSegment } from '../../store/types.ts';
+import { GpxSegment } from '../../planner/store/types.ts';
 import { useEffect, useState } from 'react';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { SegmentSpeedRow } from './SegmentSpeedRow.tsx';
