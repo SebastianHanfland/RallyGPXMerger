@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar, Spinner } from 'react-bootstrap';
 import { AppDispatch } from '../store/store.ts';
-import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts';
+import { resolvePositions } from '../../mapMatching/streets/mapMatchingStreetResolver.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
