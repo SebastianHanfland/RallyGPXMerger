@@ -2,7 +2,7 @@ import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
 import GpxParser, { Link, MetaData, Point, Route, Track, Waypoint } from 'gpxparser';
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
-import { GpxFileAccess } from '../planner/logic/types.ts';
+import { GpxFileAccess } from '../planner/logic/merge/types.ts';
 import { getTimeDifferenceInSeconds } from './dateUtil.ts';
 
 export function mergeSimpleGPXs(parsers: (GpxParser | SimpleGPX)[]): SimpleGPX {

@@ -2,7 +2,7 @@ import { BlockedStreetInfo } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { getLanguage } from '../../language.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/speedSimulator.ts';
+import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { formatNumber } from './trackCsvCreator.ts';
 
 const englishHeader = 'Post code;District;Street;Length in km;Blockage in min;Blocked from;Blocked until';

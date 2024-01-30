@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/speedSimulator.ts';
+import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';

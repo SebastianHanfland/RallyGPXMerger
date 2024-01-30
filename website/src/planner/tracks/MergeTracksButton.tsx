@@ -1,7 +1,7 @@
 import { AppDispatch } from '../store/store.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
-import { calculateMerge } from '../logic/MergeCalculation.ts';
+import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import magic from '../../assets/magic.svg';
 import { useState } from 'react';

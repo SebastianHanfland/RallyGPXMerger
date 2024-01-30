@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
 import { useDispatch } from 'react-redux';
-import { calculateMerge } from '../logic/MergeCalculation.ts';
+import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 
 export function TrackCalculationSettings() {

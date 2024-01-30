@@ -4,7 +4,7 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
-import { BREAK_IDENTIFIER } from '../logic/types.ts';
+import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { Accordion } from 'react-bootstrap';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';

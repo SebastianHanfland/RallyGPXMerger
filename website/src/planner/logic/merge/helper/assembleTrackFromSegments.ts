@@ -1,9 +1,9 @@
-import { TrackComposition } from '../../store/types.ts';
-import { mergeSimpleGPXs, SimpleGPX } from '../../../utils/SimpleGPX.ts';
+import { TrackComposition } from '../../../store/types.ts';
+import { mergeSimpleGPXs, SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { Break, instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
-import { shiftEndDate } from '../../../utils/dateUtil.ts';
-import { CalculatedTrack, GpxSegment } from '../../../common/types.ts';
+import { shiftEndDate } from '../../../../utils/dateUtil.ts';
+import { CalculatedTrack, GpxSegment } from '../../../../common/types.ts';
 
 export function assembleTrackFromSegments(
     track: TrackComposition,

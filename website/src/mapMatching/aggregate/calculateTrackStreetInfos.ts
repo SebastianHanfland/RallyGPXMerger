@@ -5,7 +5,7 @@ import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../planner/logic/speedSimulator.ts';
+import { toLatLng } from '../../planner/logic/merge/speedSimulator.ts';
 import { geoCodingActions, getResolvedPositions } from '../../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';

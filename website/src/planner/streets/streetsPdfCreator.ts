@@ -1,7 +1,7 @@
 import { BlockedStreetInfo } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/speedSimulator.ts';
+import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { formatNumber } from './trackCsvCreator.ts';
 import { ContentTable } from 'pdfmake/interfaces';
 import { getLink } from './trackPdfContentCreator.ts';

@@ -7,7 +7,7 @@ import {
     getTrackCompositions,
     trackMergeActions,
 } from '../trackMerge.reducer.ts';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/helper/peopleDelayCounter.ts';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/merge/helper/peopleDelayCounter.ts';
 
 vi.mock('uuid', () => ({
     v4: () => '1',
