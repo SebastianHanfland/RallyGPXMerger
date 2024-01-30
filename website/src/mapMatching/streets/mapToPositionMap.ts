@@ -1,6 +1,7 @@
-import { GeoApifyLeg, GeoApifyLegStep, GeoApifyMapMatchingResult, GeoApifyWayPoint } from './types.ts';
-import { ResolvedPositions } from '../planner/store/types.ts';
-import { toKey } from './initializeResolvedPositions.ts';
+import { GeoApifyLeg, GeoApifyLegStep, GeoApifyMapMatchingResult, GeoApifyWayPoint } from '../types.ts';
+import { ResolvedPositions } from '../../planner/store/types.ts';
+
+import { toKey } from '../helper/wayPointKey.ts';
 
 const alternatives = [-1, 1, -2, 2, -3, 3, -4, 4, -5, 5];
 

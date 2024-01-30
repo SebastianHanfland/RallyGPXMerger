@@ -1,16 +1,16 @@
-import { State } from '../planner/store/types.ts';
-import { TrackStreetInfo } from './types.ts';
-import { getCalculatedTracks } from '../planner/store/calculatedTracks.reducer.ts';
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { toKey } from './initializeResolvedPositions.ts';
+import { State } from '../../planner/store/types.ts';
+import { TrackStreetInfo } from '../types.ts';
+import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/speedSimulator.ts';
-import { geoCodingActions, getResolvedPositions } from '../planner/store/geoCoding.reducer.ts';
+import { toLatLng } from '../../logic/speedSimulator.ts';
+import { geoCodingActions, getResolvedPositions } from '../../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
-import { getNodePositions } from './getNodePositions.ts';
-import { CalculatedTrack } from '../common/types.ts';
+import { getNodePositions } from '../getNodePositions.ts';
+import { CalculatedTrack } from '../../common/types.ts';
+import { toKey } from '../helper/wayPointKey.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>

@@ -14,7 +14,7 @@ import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../planner/store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { initializeResolvedPositions } from '../mapMatching/initializeResolvedPositions.ts';
+import { initializeResolvedPositions } from '../mapMatching/streets/initializeResolvedPositions.ts';
 import date from 'date-and-time';
 import { ReadableTrack } from '../common/types.ts';
 

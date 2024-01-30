@@ -11,7 +11,7 @@ import {
     geoCodingRequestsActions,
     getNumberOfPostCodeRequestsDone,
 } from '../../planner/store/geoCodingRequests.reducer.ts';
-import { getWayPointKey } from './wayPointKey.ts';
+import { getWayPointKey } from '../helper/wayPointKey.ts';
 
 export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());

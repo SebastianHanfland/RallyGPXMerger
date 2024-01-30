@@ -4,7 +4,7 @@ import {
     EnrichedPoints,
     takeMostDetailedStreetName,
 } from '../aggregateEnrichedPoints.ts';
-import { TrackWayPointType } from '../types.ts';
+import { TrackWayPointType } from '../../types.ts';
 
 describe('aggregateEnrichedPoints', () => {
     describe('aggregateEnrichedPoints', () => {

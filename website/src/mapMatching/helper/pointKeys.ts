@@ -1,5 +1,8 @@
 import { TrackWayPoint } from '../types.ts';
-import { toKey } from '../initializeResolvedPositions.ts';
+
+export function toKey({ lat, lon }: { lat: number; lon: number }): string {
+    return `lat:${lat.toFixed(10)}-lng:${lon.toFixed(10)}`;
+}
 
 export function getWayPointKey(wayPoint: TrackWayPoint) {
     const lat = (wayPoint.pointTo.lat + wayPoint.pointFrom.lat) / 2;

@@ -13,7 +13,7 @@ import {
 import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postcode/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../store/geoCoding.reducer.ts';
-import { calculateTrackStreetInfos } from '../../mapMatching/calculateTrackStreetInfos.ts';
+import { calculateTrackStreetInfos } from '../../mapMatching/aggregate/calculateTrackStreetInfos.ts';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);

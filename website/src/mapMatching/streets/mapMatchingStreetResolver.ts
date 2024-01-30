@@ -5,7 +5,7 @@ import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
-import { calculateTrackStreetInfos } from '../calculateTrackStreetInfos.ts';
+import { calculateTrackStreetInfos } from '../aggregate/calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../../planner/store/store.ts';
 import { addPostCodeToStreetInfos } from '../postcode/postCodeResolver.ts';
 import { geoCodingRequestsActions } from '../../planner/store/geoCodingRequests.reducer.ts';
