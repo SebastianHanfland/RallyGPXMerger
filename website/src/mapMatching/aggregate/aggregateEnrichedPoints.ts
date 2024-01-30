@@ -3,7 +3,7 @@ import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../planner/store/trackMerge.reducer.ts';
 import { TrackWayPointType } from '../types.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../logic/speedSimulator.ts';
+import { toLatLng } from '../../planner/logic/speedSimulator.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { NodePosition } from '../selectors/getNodePositions.ts';
 

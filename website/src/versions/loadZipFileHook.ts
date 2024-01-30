@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import JSZip from 'jszip';
 import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculation.ts';
+import { extendReadableTracks, setStartAndEndTime } from '../planner/logic/MergeCalculation.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from './store/zipTracks.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';

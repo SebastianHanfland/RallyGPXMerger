@@ -1,4 +1,4 @@
-import { TrackComposition } from '../../planner/store/types.ts';
+import { TrackComposition } from '../../store/types.ts';
 import { BREAK_IDENTIFIER } from '../types.ts';
 
 export interface TrackNodeSegment {

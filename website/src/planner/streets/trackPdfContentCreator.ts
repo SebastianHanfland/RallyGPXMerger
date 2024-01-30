@@ -1,7 +1,7 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../mapMatching/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../logic/speedSimulator.ts';
+import { toLatLng } from '../logic/speedSimulator.ts';
 import { Content, ContentTable } from 'pdfmake/interfaces';
 import { formatNumber, germanTableHeaders, getHeader } from './trackCsvCreator.ts';
 

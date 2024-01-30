@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { getBlockedStreetInfo } from '../../mapMatching/selectors/getBlockedStreetInfo.ts';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../logic/speedSimulator.ts';
+import { toLatLng } from '../logic/speedSimulator.ts';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 
 export const BlockedStreetInfo = () => {
