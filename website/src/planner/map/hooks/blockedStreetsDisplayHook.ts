@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowBlockStreets } from '../../store/map.reducer.ts';
-import { getBlockedStreetInfo } from '../../../mapMatching/getBlockedStreetInfo.ts';
+import { getBlockedStreetInfo } from '../../../mapMatching/selectors/getBlockedStreetInfo.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { BlockedStreetInfo } from '../../../mapMatching/types.ts';

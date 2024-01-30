@@ -3,7 +3,7 @@ import { SingleTrackStreetInfo } from './SingleTrackStreetInfo.tsx';
 import { Button, Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from './StreetFilesDownloader.tsx';
-import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
+import { getEnrichedTrackStreetInfos } from '../../mapMatching/selectors/getEnrichedTrackStreetInfos.ts';
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
 import { geoCodingActions, getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { StreetFilesPdfMakeDownloader } from './StreetFilesPdfMakeDownloader.tsx';

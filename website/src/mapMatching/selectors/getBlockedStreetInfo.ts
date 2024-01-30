@@ -1,4 +1,4 @@
-import { BlockedStreetInfo, TrackWayPoint } from './types.ts';
+import { BlockedStreetInfo, TrackWayPoint } from '../types.ts';
 import { getEnrichedTrackStreetInfos } from './getEnrichedTrackStreetInfos.ts';
 import { createSelector } from '@reduxjs/toolkit';
 

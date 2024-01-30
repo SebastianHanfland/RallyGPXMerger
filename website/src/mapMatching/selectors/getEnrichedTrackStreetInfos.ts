@@ -1,7 +1,11 @@
-import { getResolvedDistricts, getResolvedPostCodes, getTrackStreetInfos } from '../planner/store/geoCoding.reducer.ts';
-import { TrackStreetInfo } from './types.ts';
+import {
+    getResolvedDistricts,
+    getResolvedPostCodes,
+    getTrackStreetInfos,
+} from '../../planner/store/geoCoding.reducer.ts';
+import { TrackStreetInfo } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { getWayPointKey } from './helper/pointKeys.ts';
+import { getWayPointKey } from '../helper/pointKeys.ts';
 
 export const getEnrichedTrackStreetInfos = createSelector(
     getTrackStreetInfos,

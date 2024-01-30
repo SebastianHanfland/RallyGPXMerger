@@ -4,7 +4,10 @@ import { AppDispatch } from '../store/store.ts';
 import { resolvePositions } from '../../mapMatching/streets/mapMatchingStreetResolver.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
-import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
+import {
+    estimateRequestsForStreetResolving,
+    getRequestProgress,
+} from '../../mapMatching/selectors/requestEstimator.ts';
 import {
     getIsLoadingGeoData,
     getNumberOfPostCodeRequestsRunning,

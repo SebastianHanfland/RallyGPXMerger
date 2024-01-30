@@ -8,7 +8,7 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
 import { geoCodingActions, getResolvedPositions } from '../../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
-import { getNodePositions } from '../getNodePositions.ts';
+import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 import { toKey } from '../helper/pointKeys.ts';
 

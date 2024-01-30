@@ -1,8 +1,8 @@
-import { getBlockedStreetInfo } from '../getBlockedStreetInfo.ts';
+import { getBlockedStreetInfo } from '../selectors/getBlockedStreetInfo.ts';
 import { Mock } from 'vitest';
 import { BlockedStreetInfo, TrackStreetInfo } from '../types.ts';
 import { State } from '../../planner/store/types.ts';
-import { getEnrichedTrackStreetInfos } from '../getEnrichedTrackStreetInfos.ts';
+import { getEnrichedTrackStreetInfos } from '../selectors/getEnrichedTrackStreetInfos.ts';
 
 vi.mock('../getEnrichedTrackStreetInfos.ts');
 
