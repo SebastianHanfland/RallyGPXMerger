@@ -4,7 +4,7 @@ import L, { LayerGroup } from 'leaflet';
 import { getCurrenMapTime, getShowCalculatedTracks } from '../../../planner/store/map.reducer.ts';
 import { getZipCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
 import { bikeIcon } from '../MapIcons.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../versions/store/zipTracks.reducer.ts';
 
 export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const zipTracks = useSelector(getZipTracks);

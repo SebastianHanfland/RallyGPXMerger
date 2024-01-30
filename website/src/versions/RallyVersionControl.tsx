@@ -3,7 +3,7 @@ import { loadZipFileHook } from './loadZipFileHook.ts';
 import { DisplayMap } from './DisplayMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
-import { getIsZipLoading } from '../store/zipTracks.reducer.ts';
+import { getIsZipLoading } from './store/zipTracks.reducer.ts';
 import { versionsStore } from './store.ts';
 
 function RallyDisplay() {

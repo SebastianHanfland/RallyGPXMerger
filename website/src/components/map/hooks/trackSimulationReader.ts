@@ -8,7 +8,7 @@ import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../pl
 import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculation.ts';
 import { getResolvedPositions } from '../../../planner/store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../versions/store/zipTracks.reducer.ts';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();

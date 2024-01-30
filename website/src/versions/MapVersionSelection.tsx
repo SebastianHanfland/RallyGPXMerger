@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShowMapMarker, mapActions } from '../planner/store/map.reducer.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from '../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from './store/zipTracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { getColorOfVersion, getUrlOfVersion } from './versionLinks.ts';
