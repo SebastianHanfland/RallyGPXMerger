@@ -16,11 +16,7 @@ import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithT
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { initializeResolvedPositions } from '../mapMatching/initializeResolvedPositions.ts';
 import date from 'date-and-time';
-
-export interface ReadableTrack {
-    id: string;
-    gpx: SimpleGPX;
-}
+import { ReadableTrack } from '../common/types.ts';
 
 let readableTracks: ReadableTrack[] | undefined = undefined;
 
