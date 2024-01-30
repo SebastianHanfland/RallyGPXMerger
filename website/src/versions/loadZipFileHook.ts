@@ -8,7 +8,7 @@ import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculat
 import { mapActions } from '../store/map.reducer.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../planner/store.ts';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);

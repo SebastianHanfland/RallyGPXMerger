@@ -1,4 +1,4 @@
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../planner/store.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
 import { calculateMerge } from '../logic/MergeCalculation.ts';

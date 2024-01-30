@@ -1,7 +1,7 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import reduceReducer from 'reduce-reducers';
-import { iFrameReducer, rootReducer, storingReducer } from './reducers';
-import { State } from './types.ts';
+import { iFrameReducer, rootReducer, storingReducer } from '../store/reducers.ts';
+import { State } from '../store/types.ts';
 
 export const createStore = () =>
     configureStore({

@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
 import { useDispatch } from 'react-redux';
 import { calculateMerge } from '../../logic/MergeCalculation.ts';
-import { AppDispatch } from '../../store/store.ts';
+import { AppDispatch } from '../../planner/store.ts';
 
 export function TrackCalculationSettings() {
     const [showModal, setShowModal] = useState(false);

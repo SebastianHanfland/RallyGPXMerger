@@ -6,7 +6,7 @@ import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from './splitPointsService.ts';
 import { calculateTrackStreetInfos } from './calculateTrackStreetInfos.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../planner/store.ts';
 import { addPostCodeToStreetInfos } from './postCodeResolver.ts';
 import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
 

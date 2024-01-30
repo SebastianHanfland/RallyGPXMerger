@@ -1,5 +1,5 @@
 import { Provider, useSelector } from 'react-redux';
-import { iframeStore } from '../store/store.ts';
+import { iframeStore } from '../planner/store.ts';
 import { loadZipFileHook } from './loadZipFileHook.ts';
 import { DisplayMap } from './DisplayMap.tsx';
 import { Container } from 'react-bootstrap';

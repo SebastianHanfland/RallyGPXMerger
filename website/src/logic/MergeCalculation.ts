@@ -1,5 +1,5 @@
 import { State } from '../store/types.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../planner/store.ts';
 import { getGpxSegments, getSegmentSpeeds } from '../store/gpxSegments.reducer.ts';
 import {
     getArrivalDateTime,
