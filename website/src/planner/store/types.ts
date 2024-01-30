@@ -26,22 +26,6 @@ export interface CalculatedTracksState {
     trackParticipants: number[];
 }
 
-export interface ZipTracksState {
-    tracks: Record<string, ZipTrack[] | undefined>;
-    selectedTracks: Record<string, string[] | undefined>;
-    selectedVersions: string[];
-    isLoading: boolean;
-}
-
-export function isZipTrack(track: GpxSegment | CalculatedTrack | ZipTrack): track is ZipTrack {
-    return (track as ZipTrack).color !== undefined;
-}
-
-export interface ZipTrack extends CalculatedTrack {
-    version: string;
-    color?: string;
-}
-
 export interface TrackComposition {
     id: string;
     name?: string;
@@ -98,11 +82,6 @@ export interface State {
     map: MapState;
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
-}
-
-export interface IFrameState {
-    zipTracks: ZipTracksState;
-    map: MapState;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

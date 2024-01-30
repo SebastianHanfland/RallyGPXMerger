@@ -1,10 +1,11 @@
 import { Point, Track } from 'gpxparser';
-import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../../../planner/store/types.ts';
+import { CalculatedTrack, GpxSegment } from '../../../planner/store/types.ts';
 import L, { LayerGroup } from 'leaflet';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { endIcon, startIcon } from '../MapIcons.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
+import { isZipTrack, ZipTrack } from '../../../versions/store/types';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };

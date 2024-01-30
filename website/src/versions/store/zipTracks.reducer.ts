@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { IFrameState, ZipTrack, ZipTracksState } from '../../planner/store/types.ts';
+import { IFrameState, ZipTrack, ZipTracksState } from './types';
 
 const initialState: ZipTracksState = {
     tracks: {},

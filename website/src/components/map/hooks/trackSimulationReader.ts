@@ -1,4 +1,4 @@
-import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition, ZipTrack } from '../../../planner/store/types.ts';
+import { MAX_SLIDER_TIME, State, TrackComposition } from '../../../planner/store/types.ts';
 import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../planner/store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
@@ -9,6 +9,7 @@ import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculatio
 import { getResolvedPositions } from '../../../planner/store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../versions/store/zipTracks.reducer.ts';
+import { IFrameState, ZipTrack } from '../../../versions/store/types';
 
 export function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();

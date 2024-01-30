@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import JSZip from 'jszip';
-import { ZipTrack } from '../planner/store/types.ts';
 import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculation.ts';
@@ -9,6 +8,7 @@ import { mapActions } from '../planner/store/map.reducer.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from './store/zipTracks.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
+import { ZipTrack } from './store/types';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);

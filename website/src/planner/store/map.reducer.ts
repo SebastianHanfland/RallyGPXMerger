@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { IFrameState, MapState, State } from './types.ts';
+import { MapState, State } from './types.ts';
 import { storage } from './storage.ts';
+import { IFrameState } from '../../versions/store/types';
 
 const initialState: MapState = {
     currentTime: 0,
