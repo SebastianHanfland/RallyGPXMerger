@@ -1,8 +1,8 @@
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
-import { AppHeader } from '../components/Header.tsx';
-import { MergeAndMap } from '../components/MergeAndMap.tsx';
-import { AppFooter } from '../components/Footer.tsx';
+import { AppHeader } from './layout/Header.tsx';
+import { MergeAndMap } from './layout/MergeAndMap.tsx';
+import { AppFooter } from './layout/Footer.tsx';
 import { useState } from 'react';
 import { Sections } from '../components/types.ts';
 

@@ -1,14 +1,14 @@
-import '../App.css';
-import { TrackCompositionSection } from '../planner/tracks/TrackCompositionSection.tsx';
-import { FileUploadSection } from '../planner/segments/FileUploadSection.tsx';
+import '../../App.css';
+import { TrackCompositionSection } from '../tracks/TrackCompositionSection.tsx';
+import { FileUploadSection } from '../segments/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
-import { StreetResolvingSection } from '../planner/streets/StreetResolvingSection.tsx';
-import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook.ts';
-import { PlainMap } from './map/PlainMap.tsx';
-import { MapToolbar } from './map/MapToolbar.tsx';
-import { Sections } from './types.ts';
-import { ImportExport } from '../planner/io/ImportExport.tsx';
-import { Settings } from '../planner/settings/Settings.tsx';
+import { StreetResolvingSection } from '../streets/StreetResolvingSection.tsx';
+import { parseCalculatedTracksHook } from '../../components/map/hooks/parseCalculatedTracksHook.ts';
+import { PlainMap } from '../../components/map/PlainMap.tsx';
+import { MapToolbar } from '../../components/map/MapToolbar.tsx';
+import { Sections } from '../../components/types.ts';
+import { ImportExport } from '../io/ImportExport.tsx';
+import { Settings } from '../settings/Settings.tsx';
 
 interface Props {
     selectedSection: Sections;
