@@ -4,7 +4,7 @@ import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatc
 import { getGpxSegments } from '../planner/store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
-import { splitListIntoSections } from './splitPointsService.ts';
+import { splitListIntoSections } from './helper/splitPointsService.ts';
 import { calculateTrackStreetInfos } from './calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../planner/store/store.ts';
 import { addPostCodeToStreetInfos } from './postCodeResolver.ts';
