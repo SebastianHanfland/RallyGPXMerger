@@ -1,6 +1,7 @@
 import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 import { ContentTable } from 'pdfmake/interfaces';
-import { getHeader } from '../csv/trackStreetsCsv.ts';
+
+import { getHeader } from '../getHeader.ts';
 
 export function createInfoTable(trackStreets: TrackStreetInfo): ContentTable {
     const trackInfo = getHeader(trackStreets)
