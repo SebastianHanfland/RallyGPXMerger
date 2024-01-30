@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../planner/map/hooks/addTrackToMap.ts';
+import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getShowMapMarker } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
 
