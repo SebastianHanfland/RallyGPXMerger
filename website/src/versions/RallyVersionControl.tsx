@@ -1,6 +1,6 @@
 import { Provider, useSelector } from 'react-redux';
 import { loadZipFileHook } from './loadZipFileHook.ts';
-import { DisplayMap } from './DisplayMap.tsx';
+import { DisplayMap } from './map/DisplayMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
