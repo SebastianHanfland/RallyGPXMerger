@@ -1,9 +1,9 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
-import { MAX_SLIDER_TIME } from '../planner/store/types.ts';
 import { formatDate } from '../utils/dateUtil.ts';
 import { getZipCurrentTimeStamp } from '../components/map/hooks/trackSimulationReader.ts';
+import { MAX_SLIDER_TIME } from '../common/constants.ts';
 
 export function ZipTimeSlider() {
     const mapTime = useSelector(getCurrenMapTime);

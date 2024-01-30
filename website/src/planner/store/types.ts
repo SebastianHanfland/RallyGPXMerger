@@ -61,8 +61,6 @@ export interface TrackMergeState {
     segmentIdClipboard?: string[];
 }
 
-export const MAX_SLIDER_TIME = 100000;
-
 export interface MapState {
     currentTime: number;
     start?: string;
