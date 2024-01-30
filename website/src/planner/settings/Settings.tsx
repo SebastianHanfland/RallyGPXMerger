@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
+import { TrackMergeSection } from '../../components/parameters/TrackMergeSection.tsx';
 import { SegmentSpeedSettings } from './SegmentSpeedSettings.tsx';
 import { ConstructionSites } from './ConstructionSites.tsx';
 

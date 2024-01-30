@@ -1,5 +1,5 @@
-import { GpxSegment } from '../../planner/store/types.ts';
-import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
+import { GpxSegment } from '../store/types.ts';
+import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
 
 export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
