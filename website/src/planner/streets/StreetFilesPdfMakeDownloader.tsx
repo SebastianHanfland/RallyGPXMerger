@@ -12,8 +12,8 @@ import {
     createInfoTable,
     createNodeOverviewTable,
     createStreetTable,
-} from './trackPdfContentCreator.ts';
-import { createBlockedStreetTable } from './streetsPdfCreator.ts';
+} from '../download/trackPdfContentCreator.ts';
+import { createBlockedStreetTable } from '../download/streetsPdfCreator.ts';
 
 try {
     (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;

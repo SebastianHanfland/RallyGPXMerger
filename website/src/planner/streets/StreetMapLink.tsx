@@ -1,4 +1,4 @@
-import { getLink } from './trackPdfContentCreator.ts';
+import { getLink } from '../download/trackPdfContentCreator.ts';
 
 interface Props {
     pointFrom: { lat: number; lon: number };
