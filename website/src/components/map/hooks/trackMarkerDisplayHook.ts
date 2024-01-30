@@ -4,7 +4,7 @@ import L, { LayerGroup } from 'leaflet';
 import { getCalculatedTracks } from '../../../planner/store/calculatedTracks.reducer.ts';
 import { getCurrenMapTime, getShowCalculatedTracks } from '../../../planner/store/map.reducer.ts';
 import { getCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
-import { bikeIcon } from '../MapIcons.ts';
+import { bikeIcon } from '../../../common/MapIcons.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 
 export function trackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {

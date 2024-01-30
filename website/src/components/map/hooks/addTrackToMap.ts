@@ -3,7 +3,7 @@ import { CalculatedTrack, GpxSegment } from '../../../planner/store/types.ts';
 import L, { LayerGroup } from 'leaflet';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
-import { endIcon, startIcon } from '../MapIcons.ts';
+import { endIcon, startIcon } from '../../../common/MapIcons.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import { isZipTrack, ZipTrack } from '../../../versions/store/types';
 
