@@ -11,7 +11,6 @@ import {
 } from '../planner/store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../planner/store/calculatedTracks.reducer.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
-import { calculateParticipants } from './helper/calculateParticipants.ts';
 import { mapActions } from '../planner/store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
@@ -108,10 +107,8 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     const gpxSegmentsWithTimeStamp = enrichGpxSegmentsWithTimeStamps(gpxSegments, averageSpeed, segmentSpeeds);
 
     const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegmentsWithTimeStamp, trackCompositions, arrivalDateTime);
-    const participants = calculateParticipants(gpxSegmentsWithTimeStamp, trackCompositions);
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
-    dispatch(calculatedTracksActions.setParticipants(participants));
     dispatch(mapActions.setShowCalculatedTracks(true));
 
     if (!readableTracks) {

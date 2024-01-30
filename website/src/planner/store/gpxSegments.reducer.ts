@@ -26,16 +26,6 @@ const gpxSegmentsSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
             );
         },
-        setPeopleCountStart: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
-            state.segments = state.segments.map((segment) =>
-                segment.id === action.payload.id ? { ...segment, peopleCountStart: action.payload.count } : segment
-            );
-        },
-        setPeopleCountEnd: (state: GpxSegmentsState, action: PayloadAction<{ id: string; count: number }>) => {
-            state.segments = state.segments.map((segment) =>
-                segment.id === action.payload.id ? { ...segment, peopleCountEnd: action.payload.count } : segment
-            );
-        },
         setFilename: (state: GpxSegmentsState, action: PayloadAction<{ id: string; filename: string }>) => {
             state.segments = state.segments.map((segment) =>
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment

@@ -23,7 +23,6 @@ export interface CalculatedTrack extends GpxFile {
 
 export interface CalculatedTracksState {
     tracks: CalculatedTrack[];
-    trackParticipants: number[];
 }
 
 export interface TrackComposition {

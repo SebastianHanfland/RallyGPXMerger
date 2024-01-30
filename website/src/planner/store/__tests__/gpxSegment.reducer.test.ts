@@ -24,21 +24,6 @@ describe('Gpx segment reducer test', () => {
         expect(getGpxSegments(store.getState())).toEqual([]);
     });
 
-    it('should set people counter', () => {
-        // given
-        const store = createStore();
-        store.dispatch(gpxSegmentsActions.addGpxSegments([dummyGpxSegment1, dummyGpxSegment2]));
-
-        // when
-        store.dispatch(gpxSegmentsActions.setPeopleCountEnd({ id: '2', count: 500 }));
-
-        // then
-        expect(getGpxSegments(store.getState())).toEqual([
-            dummyGpxSegment1,
-            { ...dummyGpxSegment2, peopleCountEnd: 500 },
-        ]);
-    });
-
     it('should change file content', () => {
         // given
         const store = createStore();

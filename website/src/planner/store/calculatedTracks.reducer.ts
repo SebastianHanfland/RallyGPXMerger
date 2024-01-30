@@ -9,7 +9,6 @@ import { optionallyDecompress } from './compressHelper.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
-    trackParticipants: [],
 };
 
 const calculatedTracksSlice = createSlice({
@@ -19,12 +18,8 @@ const calculatedTracksSlice = createSlice({
         setCalculatedTracks: (state: CalculatedTracksState, action: PayloadAction<CalculatedTrack[]>) => {
             state.tracks = action.payload;
         },
-        setParticipants: (state: CalculatedTracksState, action: PayloadAction<number[]>) => {
-            state.trackParticipants = action.payload;
-        },
         removeCalculatedTracks: (state: CalculatedTracksState) => {
             state.tracks = [];
-            state.trackParticipants = [];
         },
         removeSingleCalculatedTrack: (state: CalculatedTracksState, action: PayloadAction<string>) => {
             state.tracks = state.tracks?.filter((track) => track.id !== action.payload);
@@ -46,10 +41,9 @@ export const getDecompressedCalculatedTracks = createSelector(
     }
 );
 export const getCalculatedTracks = getDecompressedCalculatedTracks;
-export const getTrackParticipants = (state: State) => getBase(state).trackParticipants ?? [1000, 2000];
 
 export const getFilteredCalculatedTracks = createSelector(
-    getCalculatedTracks,
+    getDecompressedCalculatedTracks,
     getTrackCompositionFilterTerm,
     (tracks, filterTerm) => {
         return filterItems(filterTerm, tracks, (track: CalculatedTrack) => track.filename);
