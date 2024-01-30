@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar, Spinner } from 'react-bootstrap';
-import { AppDispatch } from '../../planner/store/store.ts';
+import { AppDispatch } from '../store/store.ts';
 import { resolvePositions } from '../../mapMatching/mapMatchingStreetResolver.ts';
-import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
+import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { estimateRequestsForStreetResolving, getRequestProgress } from '../../mapMatching/requestEstimator.ts';
 import {
     getIsLoadingGeoData,
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
-} from '../../planner/store/geoCodingRequests.reducer.ts';
+} from '../store/geoCodingRequests.reducer.ts';
 import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapMatching/postCodeResolver.ts';
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
-import { geoCodingActions, getResolvedPostCodes } from '../../planner/store/geoCoding.reducer.ts';
+import { geoCodingActions, getResolvedPostCodes } from '../store/geoCoding.reducer.ts';
 import { calculateTrackStreetInfos } from '../../mapMatching/calculateTrackStreetInfos.ts';
 
 export function TrackDataOverview() {

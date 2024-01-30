@@ -6,7 +6,7 @@ import { getBlockedStreetInfo } from '../../mapMatching/getBlockedStreetInfo.ts'
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
-import { getOnlyShowUnknown } from '../../planner/store/geoCoding.reducer.ts';
+import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 
 export const BlockedStreetInfo = () => {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);

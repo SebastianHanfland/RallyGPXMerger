@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { geoCodingActions, getGeoApifyKey, getBigDataCloudKey } from '../../planner/store/geoCoding.reducer.ts';
+import { geoCodingActions, getGeoApifyKey, getBigDataCloudKey } from '../store/geoCoding.reducer.ts';
 
 export const ApiKeyInput = () => {
     const geoApifyKey = useSelector(getGeoApifyKey);

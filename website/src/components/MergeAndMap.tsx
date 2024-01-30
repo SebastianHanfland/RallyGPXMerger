@@ -2,7 +2,7 @@ import '../App.css';
 import { TrackCompositionSection } from '../planner/tracks/TrackCompositionSection.tsx';
 import { FileUploadSection } from '../planner/segments/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
-import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
+import { StreetResolvingSection } from '../planner/streets/StreetResolvingSection.tsx';
 import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook.ts';
 import { PlainMap } from './map/PlainMap.tsx';
 import { MapToolbar } from './map/MapToolbar.tsx';

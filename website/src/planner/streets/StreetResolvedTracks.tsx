@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { StreetFilesDownloader } from './StreetFilesDownloader.tsx';
 import { getEnrichedTrackStreetInfos } from '../../mapMatching/getEnrichedTrackStreetInfos.ts';
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
-import { geoCodingActions, getOnlyShowUnknown } from '../../planner/store/geoCoding.reducer.ts';
+import { geoCodingActions, getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { StreetFilesPdfMakeDownloader } from './StreetFilesPdfMakeDownloader.tsx';
 
 export function StreetResolvedTracks() {
