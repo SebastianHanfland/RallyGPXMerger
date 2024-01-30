@@ -10,8 +10,7 @@ import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts'
 import { centerPointHook } from './hooks/centerPointHook.tsx';
 import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
-
-const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
+import { Munich } from '../../common/locations.ts';
 
 let myMap: L.Map | undefined;
 

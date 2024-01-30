@@ -6,8 +6,7 @@ import L, { LayerGroup } from 'leaflet';
 import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
 import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
-
-const Munich = { name: 'München', lng: 11.581981, lat: 48.135125 };
+import { Munich } from '../../common/locations.ts';
 
 let myMap: L.Map;
 
