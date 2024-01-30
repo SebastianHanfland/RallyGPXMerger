@@ -4,8 +4,8 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { formatNumber } from './trackCsvCreator.ts';
 import { ContentTable } from 'pdfmake/interfaces';
-import { getLink } from './trackPdfContentCreator.ts';
 import { getBlockedStreetsHeader } from './streetsCsvCreator.ts';
+import { getLink } from '../../utils/linkUtil.ts';
 
 export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): ContentTable {
     const tableHeader = getBlockedStreetsHeader()

@@ -4,6 +4,7 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { Content, ContentTable } from 'pdfmake/interfaces';
 import { formatNumber, germanTableHeaders, getHeader } from './trackCsvCreator.ts';
+import { getLink } from '../../utils/linkUtil.ts';
 
 function getAdditionalInfo(
     type: TrackWayPointType | undefined,
@@ -17,15 +18,6 @@ function getAdditionalInfo(
         return `: Knoten${nodeTracks ? ` (${nodeTracks.join(', ')})` : ''}`;
     }
     return '';
-}
-
-export function getLink(waypoint: { pointFrom: { lat: number; lon: number }; pointTo: { lat: number; lon: number } }) {
-    if (waypoint.pointTo.lat === waypoint.pointFrom.lat && waypoint.pointTo.lon === waypoint.pointFrom.lon) {
-        // return `https://www.openstreetmap.org/#map=17/${waypoint.pointTo.lat}/${waypoint.pointTo.lon}`;
-        // return `https://www.google.com/maps/search/${waypoint.pointTo.lat},${waypoint.pointTo.lon}`;
-        return `https://www.openstreetmap.org/?mlat=${waypoint.pointTo.lat}&mlon=${waypoint.pointTo.lon}#map=17/${waypoint.pointTo.lat}/${waypoint.pointTo.lon}`;
-    }
-    return `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${waypoint.pointFrom.lat}%2C${waypoint.pointFrom.lon}%3B${waypoint.pointTo.lat}%2C${waypoint.pointTo.lon}`;
 }
 
 export function createStreetTable(trackStreets: TrackStreetInfo): ContentTable {
