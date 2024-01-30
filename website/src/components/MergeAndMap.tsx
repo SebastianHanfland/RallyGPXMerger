@@ -1,6 +1,6 @@
 import '../App.css';
 import { TrackCompositionSection } from './tracks/TrackCompositionSection.tsx';
-import { FileUploadSection } from './segments/FileUploadSection.tsx';
+import { FileUploadSection } from '../planner/segments/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
 import { StreetResolvingSection } from './streets/StreetResolvingSection.tsx';
 import { parseCalculatedTracksHook } from './map/hooks/parseCalculatedTracksHook.ts';

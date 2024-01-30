@@ -1,6 +1,6 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import upload from '../../assets/file-up.svg';
-import { FileDownloader } from '../segments/FileDownloader.tsx';
+import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';

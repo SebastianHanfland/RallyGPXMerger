@@ -1,8 +1,8 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import download from '../../assets/file-down.svg';
-import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
-import { downloadFilesInZip } from '../CalculatedFilesDownloader.tsx';
+import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { downloadFilesInZip } from '../../components/CalculatedFilesDownloader.tsx';
 
 export const SegmentFilesDownloader = () => {
     const calculatedTracks = useSelector(getGpxSegments);

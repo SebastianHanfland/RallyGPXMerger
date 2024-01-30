@@ -1,10 +1,10 @@
 import { Button } from 'react-bootstrap';
 import exchange from '../../assets/exchange.svg';
 import check from '../../assets/check.svg';
-import { gpxSegmentsActions } from '../../planner/store/gpxSegments.reducer.ts';
+import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { useDispatch } from 'react-redux';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { optionallyCompress } from '../../planner/store/compressHelper.ts';
+import { optionallyCompress } from '../store/compressHelper.ts';
 
 interface Props {
     id: string;
