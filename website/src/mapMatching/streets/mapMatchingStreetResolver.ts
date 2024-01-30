@@ -5,9 +5,7 @@ import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
-import { calculateTrackStreetInfos } from '../aggregate/calculateTrackStreetInfos.ts';
 import { AppDispatch } from '../../planner/store/store.ts';
-import { addPostCodeToStreetInfos } from '../postcode/postCodeResolver.ts';
 import { geoCodingRequestsActions } from '../../planner/store/geoCodingRequests.reducer.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
@@ -20,11 +18,8 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     };
 }
 
-export const resolvePositions = (dispatch: AppDispatch, getState: () => State) => {
+export function resolveStreetNames(getState: () => State, dispatch: AppDispatch) {
     const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
-    if (!geoApifyKey) {
-        return;
-    }
     let counter = 0;
     dispatch(geoCodingRequestsActions.setIsLoadingData(true));
     dispatch(geoCodingRequestsActions.resetRequestDoneCounter());
@@ -47,10 +42,5 @@ export const resolvePositions = (dispatch: AppDispatch, getState: () => State) =
             });
         });
     });
-    setTimeout(() => {
-        dispatch(calculateTrackStreetInfos);
-    }, 5000 * counter + 1000);
-    setTimeout(() => {
-        dispatch(addPostCodeToStreetInfos);
-    }, 5000 * counter + 2000);
-};
+    return counter;
+}

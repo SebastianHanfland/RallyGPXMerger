@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ProgressBar, Spinner } from 'react-bootstrap';
 import { AppDispatch } from '../store/store.ts';
-import { resolvePositions } from '../../mapMatching/streets/mapMatchingStreetResolver.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import {
@@ -17,6 +16,7 @@ import { addPostCodeToStreetInfos, getPostCodeRequestProgress } from '../../mapM
 import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../store/geoCoding.reducer.ts';
 import { calculateTrackStreetInfos } from '../../mapMatching/aggregate/calculateTrackStreetInfos.ts';
+import { resolvePositions } from '../../mapMatching/resolveStreetAndPostcodeInfo.ts';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);
