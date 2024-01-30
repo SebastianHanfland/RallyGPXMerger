@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { IFrameState, MapState, State } from './types';
+import { IFrameState, MapState, State } from '../../store/types.ts';
 import { storage } from './storage.ts';
 
 const initialState: MapState = {

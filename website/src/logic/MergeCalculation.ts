@@ -1,6 +1,6 @@
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../planner/store/store.ts';
-import { getGpxSegments, getSegmentSpeeds } from '../store/gpxSegments.reducer.ts';
+import { getGpxSegments, getSegmentSpeeds } from '../planner/store/gpxSegments.reducer.ts';
 import {
     getArrivalDateTime,
     getAverageSpeedInKmH,
@@ -8,11 +8,11 @@ import {
     getTrackCompositions,
     PARTICIPANTS_DELAY_IN_SECONDS,
     setParticipantsDelay,
-} from '../store/trackMerge.reducer.ts';
-import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
+} from '../planner/store/trackMerge.reducer.ts';
+import { calculatedTracksActions } from '../planner/store/calculatedTracks.reducer.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { calculateParticipants } from './helper/calculateParticipants.ts';
-import { mapActions } from '../store/map.reducer.ts';
+import { mapActions } from '../planner/store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { initializeResolvedPositions } from '../mapMatching/initializeResolvedPositions.ts';

@@ -1,12 +1,12 @@
 import { IFrameState, MAX_SLIDER_TIME, State, TrackComposition, ZipTrack } from '../../../store/types.ts';
-import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../store/map.reducer.ts';
+import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../../planner/store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
-import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks } from '../../../planner/store/calculatedTracks.reducer.ts';
 import { Point, Track } from 'gpxparser';
-import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
+import { getTrackCompositions, PARTICIPANTS_DELAY_IN_SECONDS } from '../../../planner/store/trackMerge.reducer.ts';
 import { getReadableTracks, ReadableTrack } from '../../../logic/MergeCalculation.ts';
-import { getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
+import { getResolvedPositions } from '../../../planner/store/geoCoding.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';
 

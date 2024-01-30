@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import { useSelector } from 'react-redux';
-import { getCenterPoint } from '../../../store/map.reducer.ts';
-import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
+import { getCenterPoint } from '../../../planner/store/map.reducer.ts';
+import { getGpxSegments } from '../../../planner/store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { CalculatedTrack, GpxSegment, State } from '../../../store/types.ts';

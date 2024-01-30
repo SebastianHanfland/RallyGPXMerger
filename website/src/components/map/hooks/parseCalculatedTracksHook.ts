@@ -1,6 +1,6 @@
 import { setReadableTracks } from '../../../logic/MergeCalculation.ts';
 import { useSelector } from 'react-redux';
-import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks } from '../../../planner/store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { useEffect } from 'react';
 

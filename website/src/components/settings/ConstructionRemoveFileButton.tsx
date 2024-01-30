@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import { gpxSegmentsActions } from '../../planner/store/gpxSegments.reducer.ts';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { useState } from 'react';
 

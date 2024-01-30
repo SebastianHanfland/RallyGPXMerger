@@ -4,12 +4,15 @@ import {
     getBigDataCloudKey,
     getResolvedPostCodes,
     getTrackStreetInfos,
-} from '../store/geoCoding.reducer.ts';
+} from '../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 import { TrackWayPoint } from './types.ts';
-import { geoCodingRequestsActions, getNumberOfPostCodeRequestsDone } from '../store/geoCodingRequests.reducer.ts';
+import {
+    geoCodingRequestsActions,
+    getNumberOfPostCodeRequestsDone,
+} from '../planner/store/geoCodingRequests.reducer.ts';
 
 export function getWayPointKey(wayPoint: TrackWayPoint) {
     const lat = (wayPoint.pointTo.lat + wayPoint.pointFrom.lat) / 2;

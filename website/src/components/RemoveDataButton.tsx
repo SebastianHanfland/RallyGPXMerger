@@ -1,14 +1,14 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
+import { gpxSegmentsActions } from '../planner/store/gpxSegments.reducer.ts';
+import { trackMergeActions } from '../planner/store/trackMerge.reducer.ts';
+import { calculatedTracksActions } from '../planner/store/calculatedTracks.reducer.ts';
 import { ConfirmationModal } from './ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../assets/trash.svg';
-import { mapActions } from '../store/map.reducer.ts';
+import { mapActions } from '../planner/store/map.reducer.ts';
 import { clearReadableTracks } from '../logic/MergeCalculation.ts';
-import { geoCodingActions } from '../store/geoCoding.reducer.ts';
+import { geoCodingActions } from '../planner/store/geoCoding.reducer.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();

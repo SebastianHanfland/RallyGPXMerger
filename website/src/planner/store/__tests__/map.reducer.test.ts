@@ -1,4 +1,4 @@
-import { createStore } from '../../planner/store/store.ts';
+import { createStore } from '../store.ts';
 import { getCurrenMapTime, mapActions } from '../map.reducer.ts';
 
 describe('Map reducer test', () => {

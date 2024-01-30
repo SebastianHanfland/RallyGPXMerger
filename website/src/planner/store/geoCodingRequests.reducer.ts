@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GeoCodingRequestsState, State } from './types';
+import { GeoCodingRequestsState, State } from '../../store/types.ts';
 
 const initialState: GeoCodingRequestsState = {
     requestCounter: 0,

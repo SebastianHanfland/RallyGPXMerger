@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { zipTracksReducer } from '../store/zipTracks.reducer.ts';
-import { mapReducer } from '../store/map.reducer.ts';
+import { mapReducer } from '../planner/store/map.reducer.ts';
 
 const versionsReducer: Reducer = combineReducers({
     zipTracks: zipTracksReducer,

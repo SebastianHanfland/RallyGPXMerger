@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ConfirmationModal } from '../ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
-import { storage } from '../../store/storage.ts';
+import { storage } from '../../planner/store/storage.ts';
 import { gpxShortener } from './gpxShortener.ts';
 
 const fileTypes = ['JSON'];

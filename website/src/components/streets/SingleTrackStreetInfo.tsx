@@ -7,7 +7,7 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/speedSimulator.ts';
 import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
-import { getOnlyShowUnknown } from '../../store/geoCoding.reducer.ts';
+import { getOnlyShowUnknown } from '../../planner/store/geoCoding.reducer.ts';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;

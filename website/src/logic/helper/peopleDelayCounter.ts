@@ -1,7 +1,7 @@
 import { TrackComposition } from '../../store/types.ts';
 import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from './nodeFinder.ts';
 import { shiftEndDate } from '../../utils/dateUtil.ts';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../store/trackMerge.reducer.ts';
+import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../planner/store/trackMerge.reducer.ts';
 
 export const DELAY_PER_PERSON_IN_SECONDS = 0.2;
 

@@ -2,7 +2,11 @@ import { FileUploader } from 'react-drag-drop-files';
 import { Form, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import {
+    getFilteredGpxSegments,
+    getSegmentFilterTerm,
+    gpxSegmentsActions,
+} from '../../planner/store/gpxSegments.reducer.ts';
 import { GpxSegment } from '../../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';

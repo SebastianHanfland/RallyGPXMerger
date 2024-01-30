@@ -2,7 +2,7 @@ import { AppDispatch } from '../planner/store/store.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Spinner } from 'react-bootstrap';
 import { calculateMerge } from '../logic/MergeCalculation.ts';
-import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
+import { getArrivalDateTime } from '../planner/store/trackMerge.reducer.ts';
 import magic from '../assets/magic.svg';
 import { useState } from 'react';
 

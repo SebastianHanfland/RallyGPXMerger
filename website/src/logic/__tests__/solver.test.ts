@@ -3,7 +3,7 @@ import { GpxSegment, TrackComposition } from '../../store/types.ts';
 import { Mock } from 'vitest';
 
 import { assembleTrackFromSegments } from '../helper/assembleTrackFromSegments.ts';
-import { setParticipantsDelay } from '../../store/trackMerge.reducer.ts';
+import { setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 
 vi.mock('../../utils/SimpleGPX.ts');
 vi.mock('../helper/assembleTrackFromSegments.ts');

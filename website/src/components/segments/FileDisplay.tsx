@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { GpxSegment } from '../../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import { gpxSegmentsActions } from '../../planner/store/gpxSegments.reducer.ts';
 import { FileDownloader } from './FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';

@@ -1,10 +1,10 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { CalculatedTrack, CalculatedTracksState, State } from './types';
+import { CalculatedTrack, CalculatedTracksState, State } from '../../store/types.ts';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
-import { filterItems } from '../utils/filterUtil.ts';
-import { setReadableTracks } from '../logic/MergeCalculation.ts';
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
+import { filterItems } from '../../utils/filterUtil.ts';
+import { setReadableTracks } from '../../logic/MergeCalculation.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { optionallyDecompress } from './compressHelper.ts';
 
 const initialState: CalculatedTracksState = {

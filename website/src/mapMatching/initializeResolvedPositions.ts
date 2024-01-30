@@ -1,7 +1,7 @@
 import { ResolvedPositions } from '../store/types.ts';
 import { getReadableTracks } from '../logic/MergeCalculation.ts';
 import { AppDispatch } from '../planner/store/store.ts';
-import { geoCodingActions } from '../store/geoCoding.reducer.ts';
+import { geoCodingActions } from '../planner/store/geoCoding.reducer.ts';
 
 export function toKey({ lat, lon }: { lat: number; lon: number }): string {
     return `lat:${lat.toFixed(10)}-lng:${lon.toFixed(10)}`;

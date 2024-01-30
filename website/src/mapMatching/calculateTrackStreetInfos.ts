@@ -1,13 +1,13 @@
 import { CalculatedTrack, State } from '../store/types.ts';
 import { TrackStreetInfo } from './types.ts';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks } from '../planner/store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { toKey } from './initializeResolvedPositions.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/speedSimulator.ts';
-import { geoCodingActions, getResolvedPositions } from '../store/geoCoding.reducer.ts';
+import { geoCodingActions, getResolvedPositions } from '../planner/store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from './getNodePositions.ts';
 

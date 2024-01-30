@@ -1,6 +1,6 @@
-import { createStore } from '../../planner/store/store.ts';
+import { createStore } from '../store.ts';
 import { getGpxSegments, gpxSegmentsActions } from '../gpxSegments.reducer.ts';
-import { GpxSegment } from '../types.ts';
+import { GpxSegment } from '../../../store/types.ts';
 
 describe('Gpx segment reducer test', () => {
     const dummyGpxSegment1: GpxSegment = { content: 'a trkpt', id: '1', filename: 'b' };

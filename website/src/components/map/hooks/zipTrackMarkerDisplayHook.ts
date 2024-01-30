@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getCurrenMapTime, getShowCalculatedTracks } from '../../../store/map.reducer.ts';
+import { getCurrenMapTime, getShowCalculatedTracks } from '../../../planner/store/map.reducer.ts';
 import { getZipCurrentMarkerPositionsForTracks } from './trackSimulationReader.ts';
 import { bikeIcon } from '../MapIcons.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../../../store/zipTracks.reducer.ts';

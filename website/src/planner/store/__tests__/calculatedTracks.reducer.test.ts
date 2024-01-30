@@ -1,4 +1,4 @@
-import { createStore } from '../../planner/store/store.ts';
+import { createStore } from '../store.ts';
 import { calculatedTracksActions, getCalculatedTracks, getTrackParticipants } from '../calculatedTracks.reducer.ts';
 
 describe('Calculated Track reducer test', () => {

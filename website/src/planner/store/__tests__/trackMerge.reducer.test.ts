@@ -1,4 +1,4 @@
-import { createStore } from '../../planner/store/store.ts';
+import { createStore } from '../store.ts';
 import {
     DEFAULT_AVERAGE_SPEED_IN_KM_H,
     getArrivalDateTime,
@@ -7,7 +7,7 @@ import {
     getTrackCompositions,
     trackMergeActions,
 } from '../trackMerge.reducer.ts';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/helper/peopleDelayCounter.ts';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../../logic/helper/peopleDelayCounter.ts';
 
 vi.mock('uuid', () => ({
     v4: () => '1',

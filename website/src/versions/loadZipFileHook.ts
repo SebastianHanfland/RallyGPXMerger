@@ -5,7 +5,7 @@ import { ZipTrack } from '../store/types.ts';
 import { v5 as uuidv5 } from 'uuid';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { extendReadableTracks, setStartAndEndTime } from '../logic/MergeCalculation.ts';
-import { mapActions } from '../store/map.reducer.ts';
+import { mapActions } from '../planner/store/map.reducer.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';

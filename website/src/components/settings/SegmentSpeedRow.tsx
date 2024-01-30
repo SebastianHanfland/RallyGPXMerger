@@ -1,8 +1,8 @@
 import { GpxSegment } from '../../store/types.ts';
-import { getAverageSpeedInKmH } from '../../store/trackMerge.reducer.ts';
+import { getAverageSpeedInKmH } from '../../planner/store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { getSegmentSpeeds, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
+import { getSegmentSpeeds, gpxSegmentsActions } from '../../planner/store/gpxSegments.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 
 export function SegmentSpeedRow({ gpxSegment }: { gpxSegment: GpxSegment }) {

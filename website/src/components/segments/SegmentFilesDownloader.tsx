@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import download from '../../assets/file-down.svg';
-import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
+import { getGpxSegments } from '../../planner/store/gpxSegments.reducer.ts';
 import { downloadFilesInZip } from '../CalculatedFilesDownloader.tsx';
 
 export const SegmentFilesDownloader = () => {

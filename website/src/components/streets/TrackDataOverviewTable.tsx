@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
-import { getNumberOfRequiredRequests } from '../../store/geoCodingRequests.reducer.ts';
+import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
+import { getNumberOfRequiredRequests } from '../../planner/store/geoCodingRequests.reducer.ts';
 import { getNumberOfPostCodeRequests } from '../../mapMatching/postCodeResolver.ts';
 import { Table } from 'react-bootstrap';
 

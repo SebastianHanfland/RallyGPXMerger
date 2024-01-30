@@ -7,7 +7,7 @@ import {
     getFilteredTrackCompositions,
     getTrackCompositionFilterTerm,
     trackMergeActions,
-} from '../../store/trackMerge.reducer.ts';
+} from '../../planner/store/trackMerge.reducer.ts';
 import { TrackCalculationSettings } from './TrackCalculationSettings.tsx';
 
 export function TrackCompositionSection() {
