@@ -70,7 +70,11 @@ export function TrackSelectionCell({ track }: Props) {
         <td>
             <Accordion className={'mt-0'}>
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header className={'m-0'}>{`${segmentIds.length} segments`}</Accordion.Header>
+                    <Accordion.Header className={'m-0'}>
+                        <span
+                            style={segmentIds.length === 0 ? { color: 'red' } : undefined}
+                        >{`${segmentIds.length} segments`}</span>
+                    </Accordion.Header>
                     <Accordion.Body>
                         <ReactSortable
                             delayOnTouchOnly={true}
