@@ -12,7 +12,7 @@ const cardStyle = {
     className: 'startPageCard shadow m-2',
 };
 
-export const StartPage = () => {
+export const WizardStartPage = () => {
     const dispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 

@@ -1,4 +1,4 @@
-import { StartPage } from './StartPage.tsx';
+import { WizardStartPage } from './WizardStartPage.tsx';
 import { AppFooter } from './Footer.tsx';
 import { MergeAndMap } from './MergeAndMap.tsx';
 import { AppHeader } from './Header.tsx';
@@ -28,7 +28,7 @@ export const RallyPlannerRouter = () => {
 
     const isFreshStart = selectedSection === 'start' && !arrivalDateTime;
     if (isFreshStart) {
-        return <StartPage />;
+        return <WizardStartPage />;
     }
 
     if (selectedSection === 'wizard-parameters') {
