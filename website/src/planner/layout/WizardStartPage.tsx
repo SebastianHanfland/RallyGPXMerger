@@ -6,6 +6,9 @@ import info from '../../assets/info.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
+import { useRef } from 'react';
+import { storage } from '../store/storage.ts';
+import { gpxShortener } from '../io/gpxShortener.ts';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -15,6 +18,28 @@ const cardStyle = {
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
+    const uploadInput = useRef<HTMLInputElement>(null);
+
+    const importButtonClicked = () => {
+        const current = uploadInput.current;
+        if (current) {
+            current.click();
+        }
+    };
+
+    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        if (files && files.length > 0) {
+            files[0]
+                ?.text()
+                .then((loadedState) => {
+                    const shortenedLoadedState = gpxShortener(loadedState);
+                    storage.save(JSON.parse(shortenedLoadedState));
+                    window.location.reload();
+                })
+                .catch(console.error);
+        }
+    };
 
     return (
         <Container>
@@ -39,7 +64,7 @@ export const WizardStartPage = () => {
                     </Card>
                 </Col>
                 <Col>
-                    <Card {...cardStyle} onClick={() => setSelectedSection('importExport')}>
+                    <Card {...cardStyle} onClick={importButtonClicked}>
                         <Card.Body>
                             <Card.Title>Load an existing planning</Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>Load an existing planning via json file</Card.Text>
@@ -49,6 +74,14 @@ export const WizardStartPage = () => {
                                 alt="open existing planning"
                                 style={{ height: '10rem', width: '10rem' }}
                                 color={'#ffffff'}
+                            />
+                            <input
+                                type="file"
+                                name="file"
+                                onChange={changeHandler}
+                                ref={uploadInput}
+                                hidden={true}
+                                accept={'application/json'}
                             />
                         </Card.Body>
                     </Card>
