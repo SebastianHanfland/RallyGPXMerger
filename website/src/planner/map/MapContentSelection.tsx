@@ -27,7 +27,7 @@ export function MapContentSelection() {
                 <Form.Check
                     type={'checkbox'}
                     id={'segments'}
-                    className={'m-3'}
+                    className={'m-2'}
                     label={'GPX'}
                     title={'GPX Segments'}
                     checked={showGpxSegments}
@@ -37,7 +37,7 @@ export function MapContentSelection() {
                 <Form.Check
                     type={'checkbox'}
                     id={'tracks'}
-                    className={'m-3'}
+                    className={'m-2'}
                     label={'Tracks'}
                     title={'Calculated Tracks'}
                     checked={showCalculatedTracks}
@@ -48,7 +48,7 @@ export function MapContentSelection() {
                 <Form.Check
                     type={'checkbox'}
                     id={'blocked streets'}
-                    className={'m-3'}
+                    className={'m-2'}
                     label={'Streets'}
                     title={'Blocked Streets'}
                     checked={showBlockStreets}
@@ -61,7 +61,7 @@ export function MapContentSelection() {
                 <Form.Check
                     type={'checkbox'}
                     id={'marker'}
-                    className={'m-3'}
+                    className={'m-2'}
                     label={'Marker'}
                     title={showMapMarker ? 'Hide marker' : 'Show marker'}
                     checked={showMapMarker}
@@ -72,7 +72,7 @@ export function MapContentSelection() {
                     <Form.Check
                         type={'checkbox'}
                         id={'marker'}
-                        className={'m-3'}
+                        className={'m-2'}
                         label={'Constructions'}
                         title={'Constructions'}
                         checked={showConstructions}

@@ -7,6 +7,7 @@ import { WizardParameters } from '../wizard/WizardParameters.tsx';
 import { useSelector } from 'react-redux';
 import { getSelectionSection } from '../store/layout.reducer.ts';
 import { WizardSegments } from '../wizard/WizardSegments.tsx';
+import { Container } from 'react-bootstrap';
 
 function isFreshStart(selectedSection: Sections): boolean {
     return selectedSection === 'start';
@@ -28,10 +29,10 @@ export const RallyPlannerRouter = () => {
     }
 
     return (
-        <>
+        <Container fluid className={'m-0'}>
             <AppHeader />
             <MergeAndMap />
             <AppFooter />
-        </>
+        </Container>
     );
 };

@@ -60,7 +60,7 @@ export const PlainMap = () => {
 
     return (
         <div className={'m-1 shadow'}>
-            <div id="mapid" style={{ height: '70vh', zIndex: 0 }} />
+            <div id="mapid" style={{ height: '65vh', zIndex: 0 }} />
         </div>
     );
 };

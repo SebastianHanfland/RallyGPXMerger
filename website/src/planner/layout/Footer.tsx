@@ -1,9 +1,9 @@
-import { Container } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 export const AppFooter = () => {
     return (
-        <div className="footer-copyright text-center py-3">
-            <Container fluid>
+        <Row className="footer-copyright text-center py-3">
+            <Col>
                 <ul className="nav justify-content-center border-top pb-3 mb-3">
                     <li className="nav-item">
                         <a
@@ -46,7 +46,7 @@ export const AppFooter = () => {
                         </a>
                     </li>
                 </ul>
-            </Container>
-        </div>
+            </Col>
+        </Row>
     );
 };

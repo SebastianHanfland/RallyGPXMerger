@@ -1,6 +1,6 @@
 import { TrackCompositionSection } from '../tracks/TrackCompositionSection.tsx';
 import { FileUploadSection } from '../segments/FileUploadSection.tsx';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { StreetResolvingSection } from '../streets/StreetResolvingSection.tsx';
 import { parseCalculatedTracksHook } from '../map/hooks/parseCalculatedTracksHook.ts';
 import { PlainMap } from '../map/PlainMap.tsx';
@@ -16,48 +16,34 @@ export function MergeAndMap() {
 
     if (selectedSection === 'gps') {
         return (
-            <Container fluid className={'m-0'}>
-                <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
-                    <Col xl={3}>
-                        <FileUploadSection />
-                    </Col>
-                    <Col xl={4}>
-                        <TrackCompositionSection />
-                    </Col>
-                    <Col xl={5}>
-                        <div style={{ height: '90%' }}>
-                            <PlainMap />
-                        </div>
-                        <div style={{ height: '5%' }}>
-                            <MapToolbar />
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+            <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
+                <Col xl={3}>
+                    <FileUploadSection />
+                </Col>
+                <Col xl={4}>
+                    <TrackCompositionSection />
+                </Col>
+                <Col xl={5}>
+                    <div style={{ height: '65vh' }}>
+                        <PlainMap />
+                    </div>
+                    <div style={{ height: '10%' }} className={'mt-1'}>
+                        <MapToolbar />
+                    </div>
+                </Col>
+            </Row>
         );
     }
 
     if (selectedSection === 'streets') {
-        return (
-            <Container fluid className={'m-0'}>
-                <StreetResolvingSection />
-            </Container>
-        );
+        return <StreetResolvingSection />;
     }
 
     if (selectedSection === 'importExport') {
-        return (
-            <Container fluid className={'m-0'}>
-                <ImportExport />
-            </Container>
-        );
+        return <ImportExport />;
     }
 
     if (selectedSection === 'settings') {
-        return (
-            <Container fluid className={'m-0'}>
-                <Settings />
-            </Container>
-        );
+        return <Settings />;
     }
 }
