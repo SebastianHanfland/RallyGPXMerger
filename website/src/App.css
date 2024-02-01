@@ -7,6 +7,11 @@
     background-color: #efefef;
 }
 
+.accordion-button {
+    margin: 0;
+    padding: 8px;
+}
+
 .logo {
     height: 6em;
     padding: 1.5em;

@@ -68,9 +68,9 @@ export function TrackSelectionCell({ track }: Props) {
 
     return (
         <td>
-            <Accordion className={'mt'}>
+            <Accordion className={'mt-0'}>
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header>{`${segmentIds.length} segments`}</Accordion.Header>
+                    <Accordion.Header className={'m-0'}>{`${segmentIds.length} segments`}</Accordion.Header>
                     <Accordion.Body>
                         <ReactSortable
                             delayOnTouchOnly={true}
