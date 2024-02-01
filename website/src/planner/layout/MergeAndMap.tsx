@@ -1,4 +1,3 @@
-import '../../App.css';
 import { TrackCompositionSection } from '../tracks/TrackCompositionSection.tsx';
 import { FileUploadSection } from '../segments/FileUploadSection.tsx';
 import { Col, Container, Row } from 'react-bootstrap';
