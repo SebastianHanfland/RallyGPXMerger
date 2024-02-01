@@ -3,6 +3,7 @@ import { Sections } from './types.ts';
 import stars from '../../assets/stars.svg';
 import fileUp from '../../assets/file-up.svg';
 import info from '../../assets/info.svg';
+import { WizardHeader } from '../wizard/WizardHeader.tsx';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -16,11 +17,11 @@ interface Props {
 export const StartPage = ({ setSelectedSection }: Props) => {
     return (
         <Container>
-            <h3 className={'mb-5'}>Rally GPX Merger</h3>
+            <WizardHeader />
             <h5 className={'mb-5'}>Choose your situation:</h5>
             <Row>
                 <Col>
-                    <Card {...cardStyle} onClick={() => setSelectedSection('gps')}>
+                    <Card {...cardStyle} onClick={() => setSelectedSection('wizard-parameters')}>
                         <Card.Body>
                             <Card.Title>Start a new planning</Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>

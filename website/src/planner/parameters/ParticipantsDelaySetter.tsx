@@ -6,7 +6,7 @@ export function ParticipantsDelaySetter() {
     const dispatch = useDispatch();
     const participantsDelay = useSelector(getParticipantsDelay);
     return (
-        <div>
+        <div className={'d-inline-block'}>
             <h5 className="form-label m-3">Expansion of participants</h5>
             <div className={'d-flex'}>
                 <span className={'mx-4'}>None</span>

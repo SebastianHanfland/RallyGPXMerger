@@ -6,7 +6,7 @@ export function AverageSpeedSetter() {
     const dispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
     return (
-        <div>
+        <div className={'d-inline-block'}>
             <h5 className="form-label m-3">Average speed of the rally</h5>
             <div className={'d-flex'}>
                 <span className={'mx-4'}>3&nbsp;km/h</span>

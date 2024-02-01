@@ -4,6 +4,7 @@ import { MergeAndMap } from './MergeAndMap.tsx';
 import { AppHeader } from './Header.tsx';
 import { useState } from 'react';
 import { Sections } from './types.ts';
+import { WizardParameters } from '../wizard/WizardParameters.tsx';
 
 function isFreshStart(selectedSection: Sections): boolean {
     return selectedSection === 'start';
@@ -14,6 +15,10 @@ export const RallyPlannerRouter = () => {
 
     if (isFreshStart(selectedSection)) {
         return <StartPage setSelectedSection={setSelectedSection} />;
+    }
+
+    if (selectedSection === 'wizard-parameters') {
+        return <WizardParameters />;
     }
     return (
         <>
