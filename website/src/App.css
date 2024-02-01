@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.startPageCard:hover {
+    background-color: #efefef;
+}
+
 .logo {
     height: 6em;
     padding: 1.5em;
