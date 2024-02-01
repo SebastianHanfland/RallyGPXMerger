@@ -7,6 +7,10 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
 import { storage } from '../store/storage.ts';
 import { gpxShortener } from './gpxShortener.ts';
+import { SegmentFilesDownloader } from '../segments/SegmentFilesDownloader.tsx';
+import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.tsx';
+import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
+import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 
 const fileTypes = ['JSON'];
 
@@ -32,16 +36,8 @@ export function ImportExport() {
     return (
         <div>
             <h3 className={'mb-5'}>Import and export the data</h3>
-            <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
-                <Col xl={6}>
-                    <FileDownloader
-                        onlyIcon={true}
-                        name={`RallyGPXMergeState-${new Date().toISOString()}.json`}
-                        label={' Export current state to file'}
-                        content={JSON.stringify(state)}
-                        id={'state-down'}
-                    />
-                </Col>
+            <Row className="flex-xl-nowrap" style={{ height: '20vh', minHeight: '200px', width: '100%' }}>
+                <Col xl={6}></Col>
                 <Col xl={6}>
                     <div className={'d-flex justify-content-between'} style={{ width: '500px' }}>
                         <span title={!loadedState ? 'Please first upload a file ->' : ''}>
@@ -70,6 +66,35 @@ export function ImportExport() {
                             body={'Do you really want to load data from a file and OVERWRITE EVERYTHING?'}
                         />
                     )}
+                </Col>
+            </Row>
+            <Row style={{ height: '50vh' }}>
+                <Col>
+                    <h4>Gpx Segments</h4>
+                    <SegmentFilesDownloader />
+                </Col>
+                <Col>
+                    <h4>Calculated Tracks</h4>
+                    <CalculatedFilesDownloader />
+                </Col>
+                <Col>
+                    <h4>Documents</h4>
+                    <div className={'m-2'}>
+                        <StreetFilesDownloader />
+                    </div>
+                    <div className={'m-2'}>
+                        <StreetFilesPdfMakeDownloader />
+                    </div>
+                </Col>
+                <Col>
+                    <h4>Complete status</h4>
+                    <FileDownloader
+                        onlyIcon={true}
+                        name={`RallyGPXMergeState-${new Date().toISOString()}.json`}
+                        label={' Export current state to file'}
+                        content={JSON.stringify(state)}
+                        id={'state-down'}
+                    />
                 </Col>
             </Row>
         </div>
