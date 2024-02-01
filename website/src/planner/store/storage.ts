@@ -9,7 +9,8 @@ const stateKey = `gpxMerger.state`;
 
 const save = (value: State) => {
     try {
-        const { gpxSegments, calculatedTracks, geoCoding, trackMerge, map } = value;
+        const { layout, gpxSegments, calculatedTracks, geoCoding, trackMerge, map } = value;
+        localStorage.setItem(stateKey + '.layout', JSON.stringify(layout));
         localStorage.setItem(stateKey + '.gpxSegments', JSON.stringify(gpxSegments));
         localStorage.setItem(stateKey + '.map', JSON.stringify(map));
         localStorage.setItem(stateKey + '.trackMerge', JSON.stringify(trackMerge));
@@ -22,12 +23,17 @@ const save = (value: State) => {
 
 const load = (): State | undefined => {
     try {
+        let layout = undefined;
         let gpxSegments = undefined;
         let map = undefined;
         let trackMerge = undefined;
         let geoCoding = undefined;
         let calculatedTracks = undefined;
 
+        const layoutString = localStorage.getItem(stateKey + '.layout');
+        if (layoutString) {
+            layout = JSON.parse(layoutString);
+        }
         const gpxSegmentsStringified = localStorage.getItem(stateKey + '.gpxSegments');
         if (gpxSegmentsStringified) {
             const parsedSegments = JSON.parse(gpxSegmentsStringified);
@@ -61,6 +67,7 @@ const load = (): State | undefined => {
             calculatedTracks = { ...parsedTracks, tracks: compressedTracks };
         }
         return {
+            layout,
             gpxSegments,
             map,
             trackMerge,
@@ -76,6 +83,7 @@ const load = (): State | undefined => {
 const clear = () => {
     try {
         localStorage.removeItem(stateKey);
+        localStorage.removeItem(stateKey + '.layout');
         localStorage.removeItem(stateKey + '.gpxSegments');
         localStorage.removeItem(stateKey + '.map');
         localStorage.removeItem(stateKey + '.trackMerge');

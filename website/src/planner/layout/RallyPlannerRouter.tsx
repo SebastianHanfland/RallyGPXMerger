@@ -2,21 +2,19 @@ import { StartPage } from './StartPage.tsx';
 import { AppFooter } from './Footer.tsx';
 import { MergeAndMap } from './MergeAndMap.tsx';
 import { AppHeader } from './Header.tsx';
-import { Sections } from './types.ts';
 import { WizardParameters } from '../wizard/WizardParameters.tsx';
 import { useSelector } from 'react-redux';
 import { getSelectionSection } from '../store/layout.reducer.ts';
 import { WizardSegments } from '../wizard/WizardSegments.tsx';
 import { Container } from 'react-bootstrap';
-
-function isFreshStart(selectedSection: Sections): boolean {
-    return selectedSection === 'start';
-}
+import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 
 export const RallyPlannerRouter = () => {
     const selectedSection = useSelector(getSelectionSection);
+    const arrivalDateTime = useSelector(getArrivalDateTime);
 
-    if (isFreshStart(selectedSection)) {
+    const isFreshStart = selectedSection === 'start' && !arrivalDateTime;
+    if (isFreshStart) {
         return <StartPage />;
     }
 
