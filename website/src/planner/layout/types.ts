@@ -5,4 +5,5 @@ export type Sections =
     | 'importExport'
     | 'settings'
     | 'wizard-parameters'
-    | 'wizard-segments';
+    | 'wizard-segments'
+    | 'wizard-complexity';

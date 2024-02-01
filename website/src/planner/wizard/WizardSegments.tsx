@@ -18,14 +18,22 @@ export const WizardSegments = () => {
             <Row>
                 <Col>
                     {gpxSegments.length > 5 && (
-                        <Button className={'my-4'} onClick={() => setSelectedSection('gps')}>
+                        <Button className={'my-4'} onClick={() => setSelectedSection('wizard-complexity')}>
                             Continue
                         </Button>
                     )}
                     <GpxSegments noFilter={true} />
                     <Button
-                        className={'my-4'}
+                        className={'m-4'}
+                        variant={'secondary'}
                         onClick={() => setSelectedSection('gps')}
+                        disabled={gpxSegments.length === 0}
+                    >
+                        Go Directly to the planner
+                    </Button>
+                    <Button
+                        className={'m-4'}
+                        onClick={() => setSelectedSection('wizard-complexity')}
                         disabled={gpxSegments.length === 0}
                     >
                         Continue

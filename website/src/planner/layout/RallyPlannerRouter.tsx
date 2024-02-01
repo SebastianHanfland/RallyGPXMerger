@@ -10,6 +10,7 @@ import { Container } from 'react-bootstrap';
 import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import { useEffect } from 'react';
 import { Sections } from './types.ts';
+import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
 
 export const RallyPlannerRouter = () => {
     const selectedSection = useSelector(getSelectionSection);
@@ -35,6 +36,10 @@ export const RallyPlannerRouter = () => {
 
     if (selectedSection === 'wizard-segments') {
         return <WizardSegments />;
+    }
+
+    if (selectedSection === 'wizard-complexity') {
+        return <WizardsComplexity />;
     }
 
     return (
