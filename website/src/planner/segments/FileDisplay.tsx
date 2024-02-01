@@ -10,14 +10,11 @@ import { GpxSegment } from '../../common/types.ts';
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content } = gpxSegment;
     const dispatch = useDispatch();
-    const { counter, tracks } = useSelector(countUsagesOfSegment(id));
-
-    const tooltip =
-        counter === 0 ? 'This segment is not used' : `This segment is used in ${counter} tracks:\n${tracks.join('\n')}`;
+    const { alert, tooltip } = useSelector(countUsagesOfSegment(id));
 
     return (
         <tr title={tooltip}>
-            <td style={counter === 0 ? { backgroundColor: 'red' } : undefined}>
+            <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 <Form.Control
                     type="text"
                     placeholder="File name"
@@ -25,7 +22,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                     onChange={(value) => dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }))}
                 />
             </td>
-            <td style={counter === 0 ? { backgroundColor: 'red' } : undefined}>
+            <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 <DropdownButton
                     as={ButtonGroup}
                     key={'primary'}
