@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
+import { simpleRallyThunk } from './simpleRallyThunk.ts';
+import { AppDispatch } from '../store/store.ts';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -13,15 +15,10 @@ const cardStyle = {
 };
 
 export const WizardsComplexity = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const continueAsSimpleRally = () => {
-        // TODO:
-        // Create tracks from each segment and then maybe also hide the section
-        // Trigger Merge Calculation
-        // Maybe even the street resolving
-        // Offer document for download
-        setSelectedSection('wizard-parameters');
+        dispatch(simpleRallyThunk);
     };
     const continueAsComplexRally = () => {
         setSelectedSection('wizard-tracks');
