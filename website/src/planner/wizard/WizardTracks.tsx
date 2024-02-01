@@ -5,9 +5,11 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { MergeTable } from '../tracks/MergeTable.tsx';
+import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
+import { AppDispatch } from '../store/store.ts';
 
 export const WizardTracks = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     return (
@@ -18,7 +20,13 @@ export const WizardTracks = () => {
                 <Col>
                     <MergeTable />
                     <DirectlyToPlannerButton />
-                    <Button className={'m-4'} onClick={() => setSelectedSection('gps')}>
+                    <Button
+                        className={'m-4'}
+                        onClick={() => {
+                            dispatch(calculateMerge);
+                            setSelectedSection('gps');
+                        }}
+                    >
                         Continue
                     </Button>
                 </Col>
