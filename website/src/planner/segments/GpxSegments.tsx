@@ -19,7 +19,11 @@ async function toGpxSegment(file: File): Promise<GpxSegment> {
 
 export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
 
-export function GpxSegments() {
+interface Props {
+    noFilter?: boolean;
+}
+
+export function GpxSegments({ noFilter }: Props) {
     const dispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
     const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
@@ -32,14 +36,16 @@ export function GpxSegments() {
     };
     return (
         <div>
-            <div className={'my-2'}>
-                <Form.Control
-                    type="text"
-                    placeholder="Filter tracks, separate term by ','"
-                    value={filterTerm}
-                    onChange={(value) => setFilterTerm(value.target.value)}
-                />
-            </div>
+            {!noFilter && (
+                <div className={'my-2'}>
+                    <Form.Control
+                        type="text"
+                        placeholder="Filter tracks, separate term by ','"
+                        value={filterTerm}
+                        onChange={(value) => setFilterTerm(value.target.value)}
+                    />
+                </div>
+            )}
             {filteredSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
@@ -49,6 +55,19 @@ export function GpxSegments() {
                         </tr>
                     </thead>
                     <tbody>
+                        {filteredSegments.length > 5 && (
+                            <tr>
+                                <td colSpan={3}>
+                                    <FileUploader
+                                        handleChange={handleChange}
+                                        name="file"
+                                        types={fileTypes}
+                                        multiple={true}
+                                        label={'Please upload the GPX segments here'}
+                                    />
+                                </td>
+                            </tr>
+                        )}
                         {filteredSegments.map((gpxSegment) => (
                             <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
