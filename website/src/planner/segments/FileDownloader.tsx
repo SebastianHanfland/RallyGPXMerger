@@ -1,5 +1,5 @@
 import FileSaver from 'file-saver';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import download from '../../assets/file-down.svg';
 
@@ -9,6 +9,11 @@ interface Props {
     name: string;
     onlyIcon?: boolean;
     label?: string;
+}
+
+interface DropdownProps {
+    content: string;
+    name: string;
 }
 
 const downloadFile = (name: string, content: string) => {
@@ -27,5 +32,13 @@ export const FileDownloader = ({ id, name, content, onlyIcon, label }: Props) =>
             {onlyIcon ? <img src={download} alt="download file" color={'#ffffff'} /> : name}
             {!!label && label}
         </Button>
+    );
+};
+
+export const FileDownloaderDropdownItem = ({ name, content }: DropdownProps) => {
+    return (
+        <Dropdown.Item onClick={() => downloadFile(name, content)} title={`Download file "${name}"`}>
+            Download file
+        </Dropdown.Item>
     );
 };

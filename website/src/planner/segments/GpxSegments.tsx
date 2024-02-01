@@ -47,7 +47,7 @@ export function GpxSegments({ noFilter }: Props) {
                 </div>
             )}
             {filteredSegments.length > 0 ? (
-                <Table striped bordered hover style={{ width: '100%' }}>
+                <Table striped bordered hover style={{ width: '100%' }} size="sm">
                     <thead>
                         <tr>
                             <th style={{ width: '30%' }}>File</th>
