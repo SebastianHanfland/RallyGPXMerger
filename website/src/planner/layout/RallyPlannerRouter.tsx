@@ -11,6 +11,7 @@ import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import { useEffect } from 'react';
 import { Sections } from './types.ts';
 import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
+import { WizardTracks } from '../wizard/WizardTracks.tsx';
 
 export const RallyPlannerRouter = () => {
     const selectedSection = useSelector(getSelectionSection);
@@ -40,6 +41,10 @@ export const RallyPlannerRouter = () => {
 
     if (selectedSection === 'wizard-complexity') {
         return <WizardsComplexity />;
+    }
+
+    if (selectedSection === 'wizard-tracks') {
+        return <WizardTracks />;
     }
 
     return (

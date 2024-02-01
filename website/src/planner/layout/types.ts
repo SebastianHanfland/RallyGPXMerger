@@ -6,4 +6,5 @@ export type Sections =
     | 'settings'
     | 'wizard-parameters'
     | 'wizard-segments'
-    | 'wizard-complexity';
+    | 'wizard-complexity'
+    | 'wizard-tracks';

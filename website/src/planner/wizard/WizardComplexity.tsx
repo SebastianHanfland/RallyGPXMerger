@@ -16,9 +16,16 @@ export const WizardsComplexity = () => {
     const dispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const continueAsSimpleRally = () => {
+        // TODO:
+        // Create tracks from each segment and then maybe also hide the section
+        // Trigger Merge Calculation
+        // Maybe even the street resolving
+        // Offer document for download
         setSelectedSection('wizard-parameters');
     };
-    const continueAsComplexRally = () => setSelectedSection('importExport');
+    const continueAsComplexRally = () => {
+        setSelectedSection('wizard-tracks');
+    };
 
     return (
         <Container>
