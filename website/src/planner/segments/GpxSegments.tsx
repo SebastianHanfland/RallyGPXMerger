@@ -50,8 +50,8 @@ export function GpxSegments({ noFilter }: Props) {
                 <Table striped bordered hover style={{ width: '100%' }} size="sm">
                     <thead>
                         <tr>
-                            <th style={{ width: '30%' }}>File</th>
-                            <th style={{ width: '10%', minWidth: '150px' }}>Actions</th>
+                            <th style={{ width: '100%' }}>File</th>
+                            <th style={{ width: '38px' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,7 +87,7 @@ export function GpxSegments({ noFilter }: Props) {
             ) : (
                 <div>
                     <div>No file selected</div>
-                    <div style={{ height: '70px' }}>
+                    <div style={{ height: '70px', width: '200px' }}>
                         <FileUploader
                             handleChange={handleChange}
                             name="file"

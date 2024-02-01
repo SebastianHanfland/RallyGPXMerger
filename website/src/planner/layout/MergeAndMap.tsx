@@ -18,13 +18,13 @@ export function MergeAndMap() {
         return (
             <Container fluid className={'m-0'}>
                 <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
-                    <Col xl={2}>
+                    <Col xl={3}>
                         <FileUploadSection />
                     </Col>
                     <Col xl={4}>
                         <TrackCompositionSection />
                     </Col>
-                    <Col xl={6}>
+                    <Col xl={5}>
                         <div style={{ height: '90%' }}>
                             <PlainMap />
                         </div>
