@@ -5,6 +5,7 @@ import { WizardHeader } from './WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
+import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -14,6 +15,10 @@ const cardStyle = {
 export const WizardsComplexity = () => {
     const dispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
+    const continueAsSimpleRally = () => {
+        setSelectedSection('wizard-parameters');
+    };
+    const continueAsComplexRally = () => setSelectedSection('importExport');
 
     return (
         <Container>
@@ -21,7 +26,7 @@ export const WizardsComplexity = () => {
             <h5 className={'mb-5'}>Choose your situation:</h5>
             <Row>
                 <Col>
-                    <Card {...cardStyle} onClick={() => setSelectedSection('wizard-parameters')}>
+                    <Card {...cardStyle} onClick={continueAsSimpleRally}>
                         <Card.Body>
                             <Card.Title>Simple</Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>Each Gps Segment should be a track</Card.Text>
@@ -36,7 +41,7 @@ export const WizardsComplexity = () => {
                     </Card>
                 </Col>
                 <Col>
-                    <Card {...cardStyle} onClick={() => setSelectedSection('importExport')}>
+                    <Card {...cardStyle} onClick={continueAsComplexRally}>
                         <Card.Body>
                             <Card.Title>Complex</Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>
@@ -51,6 +56,11 @@ export const WizardsComplexity = () => {
                             />
                         </Card.Body>
                     </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <DirectlyToPlannerButton />
                 </Col>
             </Row>
         </Container>

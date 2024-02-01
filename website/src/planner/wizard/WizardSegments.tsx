@@ -5,6 +5,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
 import { GpxSegments } from '../segments/GpxSegments.tsx';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 
 export const WizardSegments = () => {
     const dispatch = useDispatch();
@@ -23,14 +24,7 @@ export const WizardSegments = () => {
                         </Button>
                     )}
                     <GpxSegments noFilter={true} />
-                    <Button
-                        className={'m-4'}
-                        variant={'secondary'}
-                        onClick={() => setSelectedSection('gps')}
-                        disabled={gpxSegments.length === 0}
-                    >
-                        Go Directly to the planner
-                    </Button>
+                    <DirectlyToPlannerButton />
                     <Button
                         className={'m-4'}
                         onClick={() => setSelectedSection('wizard-complexity')}
