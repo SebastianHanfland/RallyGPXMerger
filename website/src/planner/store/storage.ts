@@ -31,7 +31,7 @@ const load = (): State | undefined => {
         let calculatedTracks = undefined;
 
         const layoutString = localStorage.getItem(stateKey + '.layout');
-        if (layoutString) {
+        if (layoutString && layoutString !== 'undefined') {
             layout = JSON.parse(layoutString);
         }
         const gpxSegmentsStringified = localStorage.getItem(stateKey + '.gpxSegments');
