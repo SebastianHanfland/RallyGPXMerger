@@ -3,13 +3,14 @@ import { HelpButton } from '../tutorial/HelpButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { LoadExampleDataButton } from './LoadExampleDataButton.tsx';
 import { Sections } from './types.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
 
-interface Props {
-    selectedSection: Sections;
-    setSelectedSection: (section: Sections) => void;
-}
+export const AppHeader = () => {
+    const dispatch = useDispatch();
+    const selectedSection = useSelector(getSelectionSection);
+    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
-export const AppHeader = ({ selectedSection, setSelectedSection }: Props) => {
     return (
         <div className="footer-copyright text-center py-3">
             <Container fluid>

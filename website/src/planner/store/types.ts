@@ -1,5 +1,6 @@
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
+import { Sections } from '../layout/types.ts';
 
 export interface GpxSegmentsState {
     segments: GpxSegment[];
@@ -10,6 +11,10 @@ export interface GpxSegmentsState {
 
 export interface CalculatedTracksState {
     tracks: CalculatedTrack[];
+}
+
+export interface LayoutState {
+    selectedSection: Sections;
 }
 
 export interface TrackComposition {
@@ -60,6 +65,7 @@ export interface MapState {
 }
 
 export interface State {
+    layout: LayoutState;
     gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;

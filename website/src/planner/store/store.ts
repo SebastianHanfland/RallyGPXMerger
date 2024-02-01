@@ -8,8 +8,10 @@ import { mapReducer } from './map.reducer.ts';
 import { geoCodingReducer } from './geoCoding.reducer.ts';
 import { geoCodingRequestsReducer } from './geoCodingRequests.reducer.ts';
 import { storage } from './storage.ts';
+import { layoutReducer } from './layout.reducer.ts';
 
 const rootReducer: Reducer = combineReducers({
+    layout: layoutReducer,
     gpxSegments: gpxSegmentsReducer,
     trackMerge: trackMergeReducer,
     calculatedTracks: calculatedTracksReducer,

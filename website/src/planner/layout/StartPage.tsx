@@ -4,17 +4,18 @@ import stars from '../../assets/stars.svg';
 import fileUp from '../../assets/file-up.svg';
 import info from '../../assets/info.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
+import { useDispatch } from 'react-redux';
+import { layoutActions } from '../store/layout.reducer.ts';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
     className: 'startPageCard shadow m-2',
 };
 
-interface Props {
-    setSelectedSection: (section: Sections) => void;
-}
+export const StartPage = () => {
+    const dispatch = useDispatch();
+    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
-export const StartPage = ({ setSelectedSection }: Props) => {
     return (
         <Container>
             <WizardHeader />
