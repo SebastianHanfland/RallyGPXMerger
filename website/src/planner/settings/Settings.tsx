@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
+import { TrackMergeParameters } from '../parameters/TrackMergeParameters.tsx';
 import { SegmentSpeedSettings } from './SegmentSpeedSettings.tsx';
 import { ConstructionSites } from './ConstructionSites.tsx';
 
@@ -9,7 +9,7 @@ export function Settings() {
             <h3 className={'mb-5'}>Settings</h3>
             <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
                 <Col xl={4}>
-                    <TrackMergeSection />
+                    <TrackMergeParameters />
                 </Col>
                 <Col xl={4}>
                     <SegmentSpeedSettings />

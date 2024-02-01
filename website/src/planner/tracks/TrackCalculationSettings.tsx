@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { TrackMergeSection } from '../parameters/TrackMergeSection.tsx';
+import { TrackMergeParameters } from '../parameters/TrackMergeParameters.tsx';
 import { useDispatch } from 'react-redux';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
@@ -20,7 +20,7 @@ export function TrackCalculationSettings() {
                         <Modal.Title>Calculation settings</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <TrackMergeSection />
+                        <TrackMergeParameters />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowModal(false)}>
