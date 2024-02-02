@@ -1,24 +1,24 @@
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Table } from 'react-bootstrap';
 import exchange from '../../assets/exchange.svg';
 import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { optionallyCompress } from '../store/compressHelper.ts';
+import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
-import { FileDisplay } from './FileDisplay.tsx';
 import { toGpxSegment } from './GpxSegments.tsx';
+import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
+import { AppDispatch } from '../store/store.ts';
+import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 
 interface Props {
     id: string;
     name: string;
 }
 export function FileChangeButton({ id, name }: Props) {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const replaceProcess = useSelector(getReplaceProcess);
 
-    // const uploadInput = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -27,31 +27,7 @@ export function FileChangeButton({ id, name }: Props) {
         }
     }, [isLoading]);
 
-    // const buttonClicked = () => {
-    //     const current = uploadInput.current;
-    //     if (current) {
-    //         current.click();
-    //     }
-    // };
-
-    const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files && files.length === 1) {
-            files[0]
-                ?.text()
-                .then((newContent) =>
-                    dispatch(
-                        gpxSegmentsActions.changeGpxSegmentContent({ id, newContent: optionallyCompress(newContent) })
-                    )
-                )
-                .then(() => setIsLoading(true))
-                .catch(console.error);
-        }
-    };
-
-    const replaceGpxSegment = () => {
-        changeHandler;
-    };
+    const replaceGpxSegment = () => dispatch(executeGpxSegmentReplacement);
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment)).then((replacementSegments) =>
@@ -84,6 +60,19 @@ export function FileChangeButton({ id, name }: Props) {
                     body={
                         <div>
                             <h6>Upload one or more new files</h6>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th style={{ width: '100%' }}>File</th>
+                                        <th style={{ width: '38px', minWidth: '38px' }}>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {(replaceProcess?.replacementSegments ?? []).map((gpxSegment) => (
+                                        <ReplaceFileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
+                                    ))}
+                                </tbody>
+                            </Table>
                             <FileUploader
                                 style={{ width: '100px' }}
                                 handleChange={handleChange}
@@ -92,9 +81,6 @@ export function FileChangeButton({ id, name }: Props) {
                                 multiple={true}
                                 label={'Please upload a state file here'}
                             />
-                            {(replaceProcess?.replacementSegments ?? []).map((gpxSegment) => (
-                                <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
-                            ))}
                         </div>
                     }
                     confirmDisabled={true}
