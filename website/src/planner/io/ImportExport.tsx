@@ -80,10 +80,7 @@ export function ImportExport() {
                 <Col>
                     <h4>Documents</h4>
                     <div className={'m-2'}>
-                        <StreetFilesDownloader />
-                    </div>
-                    <div className={'m-2'}>
-                        <StreetFilesPdfMakeDownloader />
+                        <StreetFilesDownloader /> <StreetFilesPdfMakeDownloader />
                     </div>
                 </Col>
                 <Col>

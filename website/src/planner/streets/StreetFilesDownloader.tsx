@@ -35,10 +35,10 @@ export const StreetFilesDownloader = () => {
         <Button
             onClick={() => downloadFiles(trackStreetInfos, blockedStreetInfos)}
             disabled={trackStreetInfos.length === 0}
-            title={'Download all GPX files for the tracks'}
+            title={'Download all information for the tracks as a csv'}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
-            Download Street files
+            CSV
         </Button>
     );
 };
