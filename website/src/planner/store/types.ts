@@ -16,6 +16,7 @@ export interface CalculatedTracksState {
 
 export interface LayoutState {
     selectedSection: Sections;
+    showDashboard: boolean;
 }
 
 export interface TrackComposition {

@@ -5,6 +5,7 @@ import { Sections } from '../layout/types.ts';
 
 const initialState: LayoutState = {
     selectedSection: 'start',
+    showDashboard: false,
 };
 
 const layoutSlice = createSlice({
@@ -14,6 +15,9 @@ const layoutSlice = createSlice({
         selectSection: (state: LayoutState, action: PayloadAction<Sections>) => {
             state.selectedSection = action.payload;
         },
+        setShowDashboard: (state: LayoutState, action: PayloadAction<boolean>) => {
+            state.showDashboard = action.payload;
+        },
     },
 });
 
@@ -22,3 +26,4 @@ export const layoutReducer: Reducer<LayoutState> = layoutSlice.reducer;
 const getBase = (state: State) => state.layout;
 
 export const getSelectionSection = (state: State) => getBase(state).selectedSection;
+export const getShowDashboard = (state: State) => getBase(state).showDashboard;

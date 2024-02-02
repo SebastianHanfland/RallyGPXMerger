@@ -3,11 +3,12 @@ import { HelpButton } from '../tutorial/HelpButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
+import { getSelectionSection, getShowDashboard, layoutActions } from '../store/layout.reducer.ts';
 
 export const AppHeader = () => {
     const dispatch = useDispatch();
     const selectedSection = useSelector(getSelectionSection);
+    const showDashboard = useSelector(getShowDashboard);
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     return (
@@ -42,6 +43,13 @@ export const AppHeader = () => {
                             onClick={() => setSelectedSection('settings')}
                         >
                             Settings
+                        </Pagination.Item>
+                        <Pagination.Item
+                            key={'dashboard'}
+                            active={showDashboard}
+                            onClick={() => dispatch(layoutActions.setShowDashboard(true))}
+                        >
+                            Overview
                         </Pagination.Item>
                     </Pagination>
                     <h1>Rally GPX Merger</h1>
