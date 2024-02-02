@@ -1,11 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { ReactNode } from 'react';
 
 interface Props {
     onConfirm: () => void;
     closeModal: () => void;
     title: string;
-    body: string;
+    body: string | ReactNode;
 }
 
 export function ConfirmationModal({ onConfirm, closeModal, title, body }: Props) {
