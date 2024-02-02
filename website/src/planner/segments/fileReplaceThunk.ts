@@ -13,7 +13,7 @@ export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () =>
     if (replacementSegments.length === 1) {
         const payload = { id: targetSegment, newContent: replacementSegments[0].content };
         dispatch(gpxSegmentsActions.changeGpxSegmentContent(payload));
-        gpxSegmentsActions.setFilename({ id: targetSegment, filename: replacementSegments[0].filename });
+        dispatch(gpxSegmentsActions.setFilename({ id: targetSegment, filename: replacementSegments[0].filename }));
     } else {
     }
 

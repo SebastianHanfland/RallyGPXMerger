@@ -27,7 +27,10 @@ export function FileChangeButton({ id, name }: Props) {
         }
     }, [isLoading]);
 
-    const replaceGpxSegment = () => dispatch(executeGpxSegmentReplacement);
+    const replaceGpxSegment = () => {
+        dispatch(executeGpxSegmentReplacement);
+        setShowModal(false);
+    };
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment)).then((replacementSegments) =>
@@ -83,7 +86,7 @@ export function FileChangeButton({ id, name }: Props) {
                             />
                         </div>
                     }
-                    confirmDisabled={true}
+                    confirmDisabled={(replaceProcess?.replacementSegments.length || 0) === 0}
                 />
             )}
         </>
