@@ -7,6 +7,7 @@ export interface GpxSegmentsState {
     segmentFilterTerm?: string;
     segmentSpeeds?: Record<string, number | undefined>;
     constructionSegments?: GpxSegment[];
+    replaceProcess?: { targetSegment: string; replacementSegments: GpxSegment[] };
 }
 
 export interface CalculatedTracksState {

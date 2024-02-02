@@ -7,9 +7,10 @@ interface Props {
     closeModal: () => void;
     title: string;
     body: string | ReactNode;
+    confirmDisabled?: boolean;
 }
 
-export function ConfirmationModal({ onConfirm, closeModal, title, body }: Props) {
+export function ConfirmationModal({ onConfirm, closeModal, title, body, confirmDisabled }: Props) {
     return (
         <Modal show={true} onHide={closeModal} backdrop="static" keyboard={false}>
             <Modal.Header closeButton>
@@ -20,7 +21,7 @@ export function ConfirmationModal({ onConfirm, closeModal, title, body }: Props)
                 <Button variant="secondary" onClick={closeModal}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={onConfirm}>
+                <Button variant="primary" onClick={onConfirm} disabled={confirmDisabled}>
                     Confirm
                 </Button>
             </Modal.Footer>

@@ -9,7 +9,7 @@ import { GpxSegment } from '../../common/types.ts';
 
 const fileTypes = ['GPX'];
 
-async function toGpxSegment(file: File): Promise<GpxSegment> {
+export async function toGpxSegment(file: File): Promise<GpxSegment> {
     return file.arrayBuffer().then((buffer) => ({
         id: uuidv4(),
         filename: file.name,

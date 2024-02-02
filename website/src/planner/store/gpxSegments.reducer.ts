@@ -27,6 +27,12 @@ const gpxSegmentsSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
             );
         },
+        setReplaceProcess: (
+            state: GpxSegmentsState,
+            action: PayloadAction<{ targetSegment: string; replacementSegments: GpxSegment[] } | undefined>
+        ) => {
+            state.replaceProcess = action.payload;
+        },
         setFilename: (state: GpxSegmentsState, action: PayloadAction<{ id: string; filename: string }>) => {
             state.segments = state.segments.map((segment) =>
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
@@ -67,6 +73,7 @@ export const getDecompressedGpxSegments = createSelector(
 export const getGpxSegments = getDecompressedGpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments ?? [];
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
+export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {

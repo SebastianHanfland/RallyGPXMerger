@@ -1,11 +1,13 @@
 import { Dropdown } from 'react-bootstrap';
 import exchange from '../../assets/exchange.svg';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { useDispatch } from 'react-redux';
+import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { optionallyCompress } from '../store/compressHelper.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
+import { FileDisplay } from './FileDisplay.tsx';
+import { toGpxSegment } from './GpxSegments.tsx';
 
 interface Props {
     id: string;
@@ -14,6 +16,7 @@ interface Props {
 export function FileChangeButton({ id, name }: Props) {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
+    const replaceProcess = useSelector(getReplaceProcess);
 
     // const uploadInput = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -50,9 +53,26 @@ export function FileChangeButton({ id, name }: Props) {
         changeHandler;
     };
 
+    const handleChange = (newFiles: FileList) => {
+        Promise.all([...newFiles].map(toGpxSegment)).then((replacementSegments) =>
+            dispatch(
+                gpxSegmentsActions.setReplaceProcess({
+                    targetSegment: replaceProcess!.targetSegment,
+                    replacementSegments,
+                })
+            )
+        );
+    };
+
     return (
         <>
-            <Dropdown.Item onClick={() => setShowModal(true)} title={`Change file for the segment "${name}"`}>
+            <Dropdown.Item
+                onClick={() => {
+                    setShowModal(true);
+                    dispatch(gpxSegmentsActions.setReplaceProcess({ targetSegment: id, replacementSegments: [] }));
+                }}
+                title={`Change file for the segment "${name}"`}
+            >
                 <img src={exchange} alt="exchange" className="m-1" />
                 <span>Replace segment with other file(s)</span>
             </Dropdown.Item>
@@ -66,14 +86,18 @@ export function FileChangeButton({ id, name }: Props) {
                             <h6>Upload one or more new files</h6>
                             <FileUploader
                                 style={{ width: '100px' }}
-                                handleChange={() => {}}
+                                handleChange={handleChange}
                                 name="file"
                                 types={['GPX']}
                                 multiple={true}
                                 label={'Please upload a state file here'}
                             />
+                            {(replaceProcess?.replacementSegments ?? []).map((gpxSegment) => (
+                                <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
+                            ))}
                         </div>
                     }
+                    confirmDisabled={true}
                 />
             )}
         </>
