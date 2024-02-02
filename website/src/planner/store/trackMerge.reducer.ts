@@ -69,6 +69,9 @@ const trackMergeSlice = createSlice({
         setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.arrivalDateTime = action.payload;
         },
+        setPlanningLabel: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.planningLabel = action.payload;
+        },
         setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
         },
@@ -91,6 +94,7 @@ const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
+export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;

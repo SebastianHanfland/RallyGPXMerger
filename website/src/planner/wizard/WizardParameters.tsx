@@ -7,6 +7,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import { WizardHeader } from './WizardHeader.tsx';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
+import { PlanningLabel } from '../parameters/PlanningLabel.tsx';
 
 export const WizardParameters = () => {
     const arrivalDateTime = useSelector(getArrivalDateTime);
@@ -21,8 +22,13 @@ export const WizardParameters = () => {
                     <ArrivalDateTimePicker />
                     {arrivalDateTime && (
                         <>
+                            <div className={'m-2'}>
+                                <Button onClick={() => setSelectedSection('wizard-segments')}>Continue</Button>
+                            </div>
                             <hr />
-                            <h5 className={'mt-5'}>Optional parameters</h5>
+                            <h3>Optional parameters</h3>
+                            <PlanningLabel />
+                            <hr />
                             <ParticipantsDelaySetter />
                             <hr />
                             <AverageSpeedSetter />

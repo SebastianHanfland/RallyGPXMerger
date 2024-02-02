@@ -15,7 +15,7 @@ export function TrackCalculationSettings() {
                 Calculation settings
             </Button>
             {showModal && (
-                <Modal show={true} onHide={() => setShowModal(false)} backdrop="static" keyboard={false}>
+                <Modal show={true} onHide={() => setShowModal(false)} backdrop="static" keyboard={false} size={'lg'}>
                     <Modal.Header closeButton>
                         <Modal.Title>Calculation settings</Modal.Title>
                     </Modal.Header>

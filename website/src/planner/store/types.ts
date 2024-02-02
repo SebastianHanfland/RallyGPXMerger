@@ -47,6 +47,7 @@ export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
     arrivalDateTime?: string;
+    planningLabel?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;
     segmentIdClipboard?: string[];
