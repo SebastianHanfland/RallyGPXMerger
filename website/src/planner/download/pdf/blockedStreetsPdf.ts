@@ -42,14 +42,14 @@ export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): Con
     };
 }
 
-export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[]) {
+export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[], planningLabel: string | undefined) {
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
         content: [
             '',
             { text: 'Blockierte Straßen', style: 'titleStyle' },
             '\n\n',
-            ' ',
+            planningLabel ? `${planningLabel}` : ' ',
             ' ',
             ' ',
             createBlockedStreetTable(trackStreets),

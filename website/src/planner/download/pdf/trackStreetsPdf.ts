@@ -7,14 +7,14 @@ import { createStreetTable } from './trackStreetTablePdf.ts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
 
-export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
+export const createTrackStreetPdf = (planningLabel?: string) => (trackStreets: TrackStreetInfo) => {
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
         content: [
             '',
             { text: trackStreets.name.replaceAll('.gpx', ''), style: 'titleStyle' },
             '\n\n',
-            ' ',
+            planningLabel ? `${planningLabel}` : ' ',
             ' ',
             { text: 'Routeninformationen', style: 'titleStyle' },
             ' ',
@@ -34,4 +34,4 @@ export function createTrackStreetPdf(trackStreets: TrackStreetInfo) {
         styles,
     };
     pdfMake.createPdf(docDefinition).download(trackStreets.name + '.pdf');
-}
+};

@@ -1,23 +1,29 @@
 import { Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import download from '../../assets/file-down.svg';
-import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { createBlockedStreetsPdf } from '../download/pdf/blockedStreetsPdf.ts';
 import { createTrackStreetPdf } from '../download/pdf/trackStreetsPdf.ts';
+import { getPlanningLabel } from '../store/trackMerge.reducer.ts';
+import { Dispatch } from '@reduxjs/toolkit';
+import { State } from '../store/types.ts';
+import { AppDispatch } from '../store/store.ts';
 
-const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: BlockedStreetInfo[]) => {
-    trackStreetInfos.forEach(createTrackStreetPdf);
-    createBlockedStreetsPdf(blockedStreetInfos);
+const downloadFiles = (_: Dispatch, getState: () => State) => {
+    const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
+    const blockedStreetInfos = getBlockedStreetInfo(getState());
+    const planningLabel = getPlanningLabel(getState());
+    trackStreetInfos.forEach(createTrackStreetPdf(planningLabel));
+    createBlockedStreetsPdf(blockedStreetInfos, planningLabel);
 };
 
 export const StreetFilesPdfMakeDownloader = () => {
+    const dispatch: AppDispatch = useDispatch();
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
-    const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Button
-            onClick={() => downloadFiles(trackStreetInfos, blockedStreetInfos)}
+            onClick={() => dispatch(downloadFiles)}
             disabled={trackStreetInfos.length === 0}
             title={'Download all information for the tracks as pdf'}
         >
