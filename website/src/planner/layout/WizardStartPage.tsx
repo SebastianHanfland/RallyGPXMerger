@@ -10,6 +10,8 @@ import { useRef } from 'react';
 import { storage } from '../store/storage.ts';
 import { gpxShortener } from '../io/gpxShortener.ts';
 import { loadSampleData } from '../io/loadSampleData.ts';
+import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
+import { AppFooter } from './Footer.tsx';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -115,6 +117,8 @@ export const WizardStartPage = () => {
                     </Card>
                 </Col>
             </Row>
+            <DirectlyToPlannerButton />
+            <AppFooter />
         </Container>
     );
 };
