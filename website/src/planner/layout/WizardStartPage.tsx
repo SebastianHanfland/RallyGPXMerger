@@ -9,6 +9,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { useRef } from 'react';
 import { storage } from '../store/storage.ts';
 import { gpxShortener } from '../io/gpxShortener.ts';
+import { loadSampleData } from '../io/loadSampleData.ts';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -87,11 +88,21 @@ export const WizardStartPage = () => {
                     </Card>
                 </Col>
                 <Col>
-                    <Card {...cardStyle} onClick={() => setSelectedSection('gps')}>
+                    <Card
+                        {...cardStyle}
+                        onClick={() => {
+                            loadSampleData(dispatch);
+                            setSelectedSection('gps');
+                        }}
+                    >
                         <Card.Body>
-                            <Card.Title>Learn how to do a planning</Card.Title>
+                            <Card.Title>Sample Planning</Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>
-                                Go through a sample planning of a demonstration with help
+                                Load a sample planning to play around:
+                                <ul>
+                                    <li>3 Gpx segments (A1, B1 and AB)</li>
+                                    <li>2 Tracks (A and B)</li>
+                                </ul>
                             </Card.Text>
                             <img
                                 src={info}

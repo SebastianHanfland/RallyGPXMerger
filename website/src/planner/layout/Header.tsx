@@ -1,7 +1,6 @@
 import { ButtonGroup, ButtonToolbar, Pagination, Row } from 'react-bootstrap';
 import { HelpButton } from '../tutorial/HelpButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
-import { LoadExampleDataButton } from './LoadExampleDataButton.tsx';
 import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
@@ -49,7 +48,6 @@ export const AppHeader = () => {
                     <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>
                         <ButtonGroup aria-label="help-buttons" className={'m-0'}>
                             <HelpButton />
-                            <LoadExampleDataButton />
                             <RemoveDataButton />
                         </ButtonGroup>
                     </ButtonToolbar>
