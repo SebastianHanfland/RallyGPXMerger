@@ -9,6 +9,7 @@ import trash from '../../assets/trash.svg';
 import { mapActions } from '../store/map.reducer.ts';
 import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 import { clearReadableTracks } from '../cache/readableTracks.ts';
+import { layoutActions } from '../store/layout.reducer.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export function RemoveDataButton() {
         dispatch(mapActions.setShowBlockStreets(false));
         dispatch(mapActions.setShowCalculatedTracks(false));
         dispatch(geoCodingActions.clear());
+        dispatch(layoutActions.selectSection('start'));
         localStorage.clear();
         setShowModal(false);
     };
