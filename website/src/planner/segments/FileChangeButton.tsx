@@ -1,9 +1,8 @@
-import { Button } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import exchange from '../../assets/exchange.svg';
-import check from '../../assets/check.svg';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { useDispatch } from 'react-redux';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { optionallyCompress } from '../store/compressHelper.ts';
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
 }
 export function FileChangeButton({ id, name }: Props) {
     const dispatch = useDispatch();
-    const uploadInput = useRef<HTMLInputElement>(null);
+    // const uploadInput = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -21,12 +20,12 @@ export function FileChangeButton({ id, name }: Props) {
         }
     }, [isLoading]);
 
-    const buttonClicked = () => {
-        const current = uploadInput.current;
-        if (current) {
-            current.click();
-        }
-    };
+    // const buttonClicked = () => {
+    //     const current = uploadInput.current;
+    //     if (current) {
+    //         current.click();
+    //     }
+    // };
 
     const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -44,9 +43,9 @@ export function FileChangeButton({ id, name }: Props) {
     };
 
     return (
-        <Button variant={'light'} onClick={buttonClicked} title={`Change file for the segment "${name}"`}>
-            <input type="file" name="file" onChange={changeHandler} ref={uploadInput} hidden={true} />
-            {isLoading ? <img src={check} alt="check-mark" /> : <img src={exchange} alt="exchange" />}
-        </Button>
+        <Dropdown.Item onClick={() => changeHandler} title={`Change file for the segment "${name}"`}>
+            <img src={exchange} alt="exchange" />
+            <span className={'mx-2'}>Replace segment with other file(s)</span>
+        </Dropdown.Item>
     );
 }

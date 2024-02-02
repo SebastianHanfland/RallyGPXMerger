@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
@@ -19,13 +19,9 @@ export function RemoveFileButton({ id, name }: Props) {
     };
     return (
         <>
-            <Button
-                variant="danger"
-                title={`Remove file "${name}" and all references`}
-                onClick={() => setShowModal(true)}
-            >
-                x
-            </Button>
+            <Dropdown.Item title={`Remove file "${name}" and all references`} onClick={() => setShowModal(true)}>
+                Remove file
+            </Dropdown.Item>
             {showModal && (
                 <ConfirmationModal
                     onConfirm={removeGpxSegment}

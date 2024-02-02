@@ -31,6 +31,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                     title={''}
                 >
                     <FileDownloaderDropdownItem content={content} name={filename} />
+
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
                 </DropdownButton>
