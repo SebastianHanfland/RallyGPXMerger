@@ -34,7 +34,7 @@ export function FileChangeButton({ id, name }: Props) {
             dispatch(
                 gpxSegmentsActions.setReplaceProcess({
                     targetSegment: replaceProcess!.targetSegment,
-                    replacementSegments,
+                    replacementSegments: [...replaceProcess!.replacementSegments, ...replacementSegments],
                 })
             )
         );
