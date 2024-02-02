@@ -44,8 +44,8 @@ export function FileChangeButton({ id, name }: Props) {
 
     return (
         <Dropdown.Item onClick={() => changeHandler} title={`Change file for the segment "${name}"`}>
-            <img src={exchange} alt="exchange" />
-            <span className={'mx-2'}>Replace segment with other file(s)</span>
+            <img src={exchange} alt="exchange" className="m-1" />
+            <span>Replace segment with other file(s)</span>
         </Dropdown.Item>
     );
 }

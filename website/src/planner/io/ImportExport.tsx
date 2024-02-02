@@ -42,7 +42,7 @@ export function ImportExport() {
                     <div className={'d-flex justify-content-between'} style={{ width: '500px' }}>
                         <span title={!loadedState ? 'Please first upload a file ->' : ''}>
                             <Button variant={'success'} onClick={() => setShowDialog(true)} disabled={!loadedState}>
-                                <img src={upload} className="m-1" alt="download file" color={'#ffffff'} />
+                                <img src={upload} className="m-1" alt="upload file" color={'#ffffff'} />
                                 Import file
                             </Button>
                         </span>

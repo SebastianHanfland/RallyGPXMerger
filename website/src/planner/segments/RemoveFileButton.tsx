@@ -4,6 +4,7 @@ import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
+import trash from '../../assets/trashB.svg';
 
 interface Props {
     id: string;
@@ -20,7 +21,8 @@ export function RemoveFileButton({ id, name }: Props) {
     return (
         <>
             <Dropdown.Item title={`Remove file "${name}" and all references`} onClick={() => setShowModal(true)}>
-                Remove file
+                <img src={trash} className="m-1" alt="trash" />
+                <span>Remove file</span>
             </Dropdown.Item>
             {showModal && (
                 <ConfirmationModal
