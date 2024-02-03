@@ -4,11 +4,11 @@ import { Card, Col, Container, Offcanvas, Row } from 'react-bootstrap';
 import check from '../../../assets/check-circle.svg';
 import warning from '../../../assets/warning.svg';
 import { ReactNode } from 'react';
-import { MergeTracksButton } from '../../tracks/MergeTracksButton.tsx';
 import { ArrowColumn } from './ArrowColumn.tsx';
 import { DashboardSettings } from './DashboardSettings.tsx';
 import { DashboardSegments } from './DashboardSegments.tsx';
 import { DashboardTracks } from './DashboardTracks.tsx';
+import { DashboardMerging } from './DashboardMerging.tsx';
 
 export function DashboardCard({
     text,
@@ -77,9 +77,7 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <Col>
-                            <DashboardCard text={'Tracks Merging'} done={false} canBeDone={true}>
-                                <MergeTracksButton />
-                            </DashboardCard>
+                            <DashboardMerging />
                         </Col>
                     </Row>
                     <Row>
