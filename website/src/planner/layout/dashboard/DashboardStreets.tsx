@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { layoutActions } from '../../store/layout.reducer.ts';
 import { getEnrichedTrackStreetInfos } from '../../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { resolvePositions } from '../../logic/resolving/resolveStreetAndPostcodeInfo.ts';
 import { AppDispatch } from '../../store/store.ts';
 import { calculateTrackStreetInfos } from '../../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
@@ -16,6 +16,18 @@ import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStr
 import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
 import { Done } from './Done.tsx';
 import { DashboardCard } from './DashboardCard.tsx';
+import { Warning } from './Warning.tsx';
+import { useState } from 'react';
+
+function StreetStatus(props: { done: boolean; loading: boolean }) {
+    if (props.loading) {
+        return <Spinner />;
+    }
+    if (props.done) {
+        return <Done />;
+    }
+    return <Warning />;
+}
 
 export function DashboardStreets() {
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
@@ -25,49 +37,78 @@ export function DashboardStreets() {
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
     const isLoading = useSelector(getIsLoadingGeoData);
+    const [isAggregating, setIsAggregating] = useState(false);
 
-    const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading;
+    const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading || isAggregating;
 
-    const done = true;
+    // TODO
+    const postCodesDone = true;
     const streetsDone = true;
-    const onClick = (thunk?: any) => () => {
-        dispatch(layoutActions.selectSection('streets'));
-        dispatch(layoutActions.setShowDashboard(false));
-        thunk && dispatch(thunk);
-    };
+
     return (
         <DashboardCard
             text={''}
             done={hasEnrichedTracks}
             canBeDone={hasMergedTracks}
             childrenOnly={true}
-            onClick={onClick()}
+            onClick={() => {
+                dispatch(layoutActions.selectSection('streets'));
+                dispatch(layoutActions.setShowDashboard(false));
+            }}
         >
             <div>
                 <div className={'d-flex justify-content-between m-1'}>
                     <b>External info</b>
-                    <Button size={'sm'} onClick={onClick(resolvePositions)} disabled={ongoingRequests}>
+                    <Button
+                        size={'sm'}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            dispatch(layoutActions.selectSection('streets'));
+                            resolvePositions && dispatch(resolvePositions);
+                        }}
+                        disabled={ongoingRequests}
+                    >
                         Trigger All
                     </Button>
                 </div>
                 <div className={'d-flex justify-content-between m-1'}>
-                    <Button size={'sm'} disabled={ongoingRequests} onClick={onClick(resolveStreetNames)}>
+                    <Button
+                        size={'sm'}
+                        disabled={ongoingRequests}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            dispatch(layoutActions.selectSection('streets'));
+                            resolveStreetNames && dispatch(resolveStreetNames);
+                        }}
+                    >
                         Street Info
                     </Button>
-                    {streetsDone && <Done />}
-                </div>
-                <div className={'d-flex justify-content-between m-1'}>
-                    <Button size={'sm'} onClick={onClick(calculateTrackStreetInfos)} disabled={ongoingRequests}>
-                        Aggregation
-                    </Button>
-                    {done && <Done />}
+                    <StreetStatus done={streetsDone} loading={runningRequests} />
                 </div>
                 <div className={'d-flex justify-content-between m-1'}>
                     <Button
                         size={'sm'}
-                        onClick={() => {
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            setIsAggregating(true);
                             dispatch(layoutActions.selectSection('streets'));
-                            dispatch(layoutActions.setShowDashboard(false));
+                            calculateTrackStreetInfos && dispatch(calculateTrackStreetInfos);
+                            setTimeout(() => {
+                                setIsAggregating(false);
+                            }, 5000);
+                        }}
+                        disabled={ongoingRequests}
+                    >
+                        Aggregation
+                    </Button>
+                    <StreetStatus done={hasEnrichedTracks} loading={isAggregating} />
+                </div>
+                <div className={'d-flex justify-content-between m-1'}>
+                    <Button
+                        size={'sm'}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            dispatch(layoutActions.selectSection('streets'));
                             dispatch(geoCodingActions.clearPostCodesAndDistricts());
                             dispatch(addPostCodeToStreetInfos);
                         }}
@@ -75,7 +116,7 @@ export function DashboardStreets() {
                     >
                         PostCodes
                     </Button>
-                    {done && <Done />}
+                    <StreetStatus done={postCodesDone} loading={runningPostCodeRequests} />
                 </div>
             </div>
         </DashboardCard>

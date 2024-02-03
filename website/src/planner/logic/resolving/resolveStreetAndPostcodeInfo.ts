@@ -3,8 +3,10 @@ import { State } from '../../store/types.ts';
 import { calculateTrackStreetInfos } from './aggregate/calculateTrackStreetInfos.ts';
 import { addPostCodeToStreetInfos } from './postcode/postCodeResolver.ts';
 import { resolveStreetNames } from './streets/mapMatchingStreetResolver.ts';
+import { geoCodingRequestsActions } from '../../store/geoCodingRequests.reducer.ts';
 
 export const resolvePositions = (dispatch: AppDispatch, getState: () => State) => {
+    dispatch(geoCodingRequestsActions.setIsLoadingData(true));
     const counter = resolveStreetNames(dispatch, getState);
     setTimeout(() => {
         dispatch(calculateTrackStreetInfos);

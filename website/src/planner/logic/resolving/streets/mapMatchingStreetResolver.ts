@@ -21,7 +21,6 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
 export function resolveStreetNames(dispatch: AppDispatch, getState: () => State) {
     const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
     let counter = 0;
-    dispatch(geoCodingRequestsActions.setIsLoadingData(true));
     dispatch(geoCodingRequestsActions.resetRequestDoneCounter());
 
     const gpxSegments = getGpxSegments(getState());
