@@ -33,7 +33,9 @@ export function ImportExport() {
 
     return (
         <div>
-            <h3 className={'mb-5'}>Import and export the data</h3>
+            <Row>
+                <h3 className={'mb-5'}>Import</h3>
+            </Row>
             <Row className="flex-xl-nowrap" style={{ height: '20vh', minHeight: '200px', width: '100%' }}>
                 <Col xl={6}></Col>
                 <Col xl={6}>
@@ -65,6 +67,10 @@ export function ImportExport() {
                         />
                     )}
                 </Col>
+            </Row>
+            <hr />
+            <Row>
+                <h3>Downloads</h3>
             </Row>
             <Row style={{ height: '50vh' }}>
                 <Col>
