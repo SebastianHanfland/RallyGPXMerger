@@ -23,7 +23,10 @@ export const StreetFilesPdfMakeDownloader = () => {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
     return (
         <Button
-            onClick={() => dispatch(downloadFiles)}
+            onClick={(event) => {
+                event.stopPropagation();
+                dispatch(downloadFiles);
+            }}
             disabled={trackStreetInfos.length === 0}
             title={'Download all information for the tracks as pdf'}
         >

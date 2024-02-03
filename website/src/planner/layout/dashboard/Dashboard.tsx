@@ -36,12 +36,12 @@ export function DashboardCard({
                         cursor: 'pointer',
                         backgroundColor: done ? 'lightgreen' : canBeDone ? undefined : 'lightsalmon',
                     }}
-                    className={'startPageCard shadow m-2 p-3'}
+                    className={'startPageCard shadow m-2 p-2'}
                     onClick={onClick}
                 >
                     {!childrenOnly && (
                         <div className={'d-flex justify-content-between'}>
-                            <h6>{text}</h6>
+                            <b>{text}</b>
                             {done && (
                                 <img
                                     src={check}

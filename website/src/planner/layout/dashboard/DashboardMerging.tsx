@@ -15,7 +15,7 @@ export function DashboardMerging() {
         <DashboardCard text={''} done={hasMergedTracks} canBeDone={hasTracks && hasSegments} childrenOnly={true}>
             <div>
                 <div className={'d-flex justify-content-between'}>
-                    <h6>Tracks Merging</h6>
+                    <b>Tracks Merging</b>
                     {hasMergedTracks && (
                         <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />
                     )}

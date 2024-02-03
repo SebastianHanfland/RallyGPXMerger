@@ -5,7 +5,7 @@ import { addPostCodeToStreetInfos } from './postcode/postCodeResolver.ts';
 import { resolveStreetNames } from './streets/mapMatchingStreetResolver.ts';
 
 export const resolvePositions = (dispatch: AppDispatch, getState: () => State) => {
-    const counter = resolveStreetNames(getState, dispatch);
+    const counter = resolveStreetNames(dispatch, getState);
     setTimeout(() => {
         dispatch(calculateTrackStreetInfos);
     }, 5000 * counter + 1000);
