@@ -43,6 +43,7 @@ export interface GeoCodingRequestsState {
     postCodeRequestDoneCounter: number;
     numberOfRequiredRequests?: number;
     isLoadingData: boolean;
+    isAggregating: boolean;
 }
 
 export interface TrackMergeState {

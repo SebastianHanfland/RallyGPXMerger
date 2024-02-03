@@ -11,6 +11,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
 import { toKey } from '../helper/pointKeys.ts';
+import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
@@ -54,7 +55,11 @@ const enrichWithStreetsAndAggregate =
     };
 
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
-    const calculatedTracks = getCalculatedTracks(getState());
-    const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
-    dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
+    dispatch(geoCodingRequestsActions.setIsAggregating(true));
+    setTimeout(() => {
+        const calculatedTracks = getCalculatedTracks(getState());
+        const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
+        dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
+        dispatch(geoCodingRequestsActions.setIsAggregating(false));
+    }, 10);
 }

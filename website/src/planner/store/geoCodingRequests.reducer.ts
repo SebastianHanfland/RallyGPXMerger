@@ -7,6 +7,7 @@ const initialState: GeoCodingRequestsState = {
     requestDoneCounter: 0,
     postCodeRequestDoneCounter: 0,
     isLoadingData: false,
+    isAggregating: false,
 };
 
 const geoCodingRequestsSlice = createSlice({
@@ -43,6 +44,9 @@ const geoCodingRequestsSlice = createSlice({
         setIsLoadingData: (state: GeoCodingRequestsState, action: PayloadAction<boolean>) => {
             state.isLoadingData = action.payload;
         },
+        setIsAggregating: (state: GeoCodingRequestsState, action: PayloadAction<boolean>) => {
+            state.isAggregating = action.payload;
+        },
     },
 });
 
@@ -55,3 +59,4 @@ export const getNumberOfPostCodeRequestsDone = (state: State) => getBase(state).
 export const getNumberOfRequestsRunning = (state: State) => getBase(state).requestCounter;
 export const getNumberOfPostCodeRequestsRunning = (state: State) => getBase(state).postCodeRequestCounter;
 export const getIsLoadingGeoData = (state: State) => getBase(state).isLoadingData;
+export const getIsAggregating = (state: State) => getBase(state).isAggregating;

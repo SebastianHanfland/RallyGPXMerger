@@ -11,6 +11,7 @@ import {
     getPostCodeRequestProgress,
 } from '../../logic/resolving/postcode/postCodeResolver.ts';
 import {
+    getIsAggregating,
     getIsLoadingGeoData,
     getNumberOfPostCodeRequestsRunning,
     getNumberOfRequestsRunning,
@@ -20,7 +21,6 @@ import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
 import { Done } from './Done.tsx';
 import { DashboardCard } from './DashboardCard.tsx';
 import { Warning } from './Warning.tsx';
-import { useState } from 'react';
 import { getRequestProgress } from '../../logic/resolving/selectors/requestEstimator.ts';
 
 function StreetStatus(props: { done: boolean; loading: boolean }) {
@@ -43,7 +43,7 @@ export function DashboardStreets() {
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
     const isLoading = useSelector(getIsLoadingGeoData);
-    const [isAggregating, setIsAggregating] = useState(false);
+    const isAggregating = useSelector(getIsAggregating);
 
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading || isAggregating;
 
@@ -80,7 +80,7 @@ export function DashboardStreets() {
                         onClick={(event) => {
                             event.stopPropagation();
                             dispatch(layoutActions.selectSection('streets'));
-                            resolveStreetNames && dispatch(resolveStreetNames);
+                            dispatch(resolveStreetNames);
                         }}
                     >
                         Street Info
@@ -92,12 +92,8 @@ export function DashboardStreets() {
                         size={'sm'}
                         onClick={(event) => {
                             event.stopPropagation();
-                            setIsAggregating(true);
                             dispatch(layoutActions.selectSection('streets'));
-                            calculateTrackStreetInfos && dispatch(calculateTrackStreetInfos);
-                            setTimeout(() => {
-                                setIsAggregating(false);
-                            }, 5000);
+                            dispatch(calculateTrackStreetInfos);
                         }}
                         disabled={ongoingRequests}
                     >
