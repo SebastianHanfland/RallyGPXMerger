@@ -41,7 +41,7 @@ export function DashboardCard({
                 >
                     {!childrenOnly && (
                         <div className={'d-flex justify-content-between'}>
-                            {text}
+                            <h6>{text}</h6>
                             {done && (
                                 <img
                                     src={check}
