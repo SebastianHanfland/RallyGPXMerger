@@ -11,7 +11,7 @@ import { DashboardTracks } from './DashboardTracks.tsx';
 import { DashboardMerging } from './DashboardMerging.tsx';
 import { DashboardStreets } from './DashboardStreets.tsx';
 import { ExportStateJson } from '../../io/ExportStateJson.tsx';
-import { StreetFilesPdfMakeDownloader } from '../../streets/StreetFilesPdfMakeDownloader.tsx';
+import { DashboardDocuments } from './DashboardDocuments.tsx';
 
 export function DashboardCard({
     text,
@@ -102,17 +102,7 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <Col>
-                            <DashboardCard
-                                text={'Documents'}
-                                done={false}
-                                canBeDone={false}
-                                onClick={() => {
-                                    dispatch(layoutActions.selectSection('importExport'));
-                                    dispatch(layoutActions.setShowDashboard(false));
-                                }}
-                            >
-                                <StreetFilesPdfMakeDownloader />
-                            </DashboardCard>
+                            <DashboardDocuments />
                         </Col>
                     </Row>
                     <hr />
