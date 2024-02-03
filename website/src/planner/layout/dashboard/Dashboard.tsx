@@ -29,23 +29,42 @@ export function DashboardCard({
     childrenOnly?: boolean;
 }) {
     return (
-        <Card
-            style={{ cursor: 'pointer', backgroundColor: done ? 'lightgreen' : canBeDone ? undefined : 'lightsalmon' }}
-            className={'startPageCard shadow m-2 p-3'}
-            onClick={onClick}
-        >
-            {!childrenOnly && (
-                <div className={'d-flex justify-content-between'}>
-                    {text}
-                    {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
-                    {!done && !canBeDone && (
-                        <img src={warning} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />
+        <Row>
+            <Col>
+                <Card
+                    style={{
+                        cursor: 'pointer',
+                        backgroundColor: done ? 'lightgreen' : canBeDone ? undefined : 'lightsalmon',
+                    }}
+                    className={'startPageCard shadow m-2 p-3'}
+                    onClick={onClick}
+                >
+                    {!childrenOnly && (
+                        <div className={'d-flex justify-content-between'}>
+                            {text}
+                            {done && (
+                                <img
+                                    src={check}
+                                    className="m-1"
+                                    alt="check"
+                                    style={{ width: '20px', height: '20px' }}
+                                />
+                            )}
+                            {!done && !canBeDone && (
+                                <img
+                                    src={warning}
+                                    className="m-1"
+                                    alt="warning"
+                                    style={{ width: '20px', height: '20px' }}
+                                />
+                            )}
+                            {children && children}
+                        </div>
                     )}
-                    {children && children}
-                </div>
-            )}
-            {childrenOnly && children && children}
-        </Card>
+                    {childrenOnly && children && children}
+                </Card>
+            </Col>
+        </Row>
     );
 }
 
@@ -60,51 +79,17 @@ export function Dashboard() {
             </Offcanvas.Header>
             <Offcanvas.Body>
                 <Container>
-                    <Row>
-                        <Col>
-                            <DashboardSettings />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ArrowColumn />
-                    </Row>
-                    <Row>
-                        <Col>
-                            <DashboardSegments />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ArrowColumn />
-                    </Row>
-                    <Row>
-                        <Col>
-                            <DashboardTracks />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ArrowColumn />
-                    </Row>
-                    <Row>
-                        <Col>
-                            <DashboardMerging />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ArrowColumn />
-                    </Row>
-                    <Row>
-                        <Col>
-                            <DashboardStreets />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ArrowColumn />
-                    </Row>
-                    <Row>
-                        <Col>
-                            <DashboardDocuments />
-                        </Col>
-                    </Row>
+                    <DashboardSettings />
+                    <ArrowColumn />
+                    <DashboardSegments />
+                    <ArrowColumn />
+                    <DashboardTracks />
+                    <ArrowColumn />
+                    <DashboardMerging />
+                    <ArrowColumn />
+                    <DashboardStreets />
+                    <ArrowColumn />
+                    <DashboardDocuments />
                     <hr />
                     <Row>
                         <ExportStateJson label={'Download current planning'} />
