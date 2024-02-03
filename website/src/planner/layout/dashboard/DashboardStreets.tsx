@@ -17,7 +17,7 @@ import {
     getNumberOfRequestsRunning,
 } from '../../store/geoCodingRequests.reducer.ts';
 import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
+import { geoCodingActions, getResolvedPositions } from '../../store/geoCoding.reducer.ts';
 import { Done } from './Done.tsx';
 import { DashboardCard } from './DashboardCard.tsx';
 import { Warning } from './Warning.tsx';
@@ -37,7 +37,10 @@ export function DashboardStreets() {
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
     const hasEnrichedTracks = useSelector(getEnrichedTrackStreetInfos).length > 0;
     const postCodesDone = useSelector(getPostCodeRequestProgress) === 100;
-    const streetsDone = useSelector(getRequestProgress) === 100;
+    const streetRequestDone = useSelector(getRequestProgress) === 100;
+    const resolvedPositions = useSelector(getResolvedPositions);
+    const hasStreetInfo = Object.values(resolvedPositions).filter((value) => value !== null).length > 0;
+    const streetsDone = streetRequestDone && hasStreetInfo;
     const dispatch: AppDispatch = useDispatch();
 
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
