@@ -29,13 +29,19 @@ export function DashboardStreets() {
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading;
 
     const done = true;
-    const onClick = (thunk: any) => () => {
+    const onClick = (thunk?: any) => () => {
         dispatch(layoutActions.selectSection('streets'));
         dispatch(layoutActions.setShowDashboard(false));
-        dispatch(thunk);
+        thunk && dispatch(thunk);
     };
     return (
-        <DashboardCard text={''} done={hasEnrichedTracks} canBeDone={hasMergedTracks} childrenOnly={true}>
+        <DashboardCard
+            text={''}
+            done={hasEnrichedTracks}
+            canBeDone={hasMergedTracks}
+            childrenOnly={true}
+            onClick={onClick()}
+        >
             <div>
                 <div className={'d-flex justify-content-between m-1'}>
                     <b>External info</b>
