@@ -28,7 +28,7 @@ export function MergeTracksButton() {
             ) : (
                 <img src={magic} className="m-1" alt="magic wand" />
             )}
-            <span>Merge Tracks</span>)
+            <span>Merge Tracks</span>
         </Button>
     );
 }

@@ -4,12 +4,27 @@ import { Card, Col, Container, Offcanvas, Row } from 'react-bootstrap';
 import arrowDown from '../../assets/arrow-down.svg';
 import check from '../../assets/check-circle.svg';
 import warning from '../../assets/warning.svg';
+import { ReactNode } from 'react';
+import { MergeTracksButton } from '../tracks/MergeTracksButton.tsx';
 
-function DashboardCard({ text, done, canBeDone }: { text: string; done: boolean; canBeDone: boolean }) {
+function DashboardCard({
+    text,
+    done,
+    canBeDone,
+    onClick,
+    children,
+}: {
+    text: string;
+    done: boolean;
+    canBeDone: boolean;
+    onClick?: () => void;
+    children?: ReactNode;
+}) {
     return (
         <Card
             style={{ cursor: 'pointer', backgroundColor: done ? 'lightgreen' : canBeDone ? undefined : 'lightsalmon' }}
-            className={'startPageCard shadow m-2 p-2'}
+            className={'startPageCard shadow m-2 p-3'}
+            onClick={onClick}
         >
             <div className={'d-flex justify-content-between'}>
                 {text}
@@ -17,7 +32,9 @@ function DashboardCard({ text, done, canBeDone }: { text: string; done: boolean;
                 {!done && !canBeDone && (
                     <img src={warning} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />
                 )}
+                {children && children}
             </div>
+            {/*{children && <div>{children}</div>}*/}
         </Card>
     );
 }
@@ -65,7 +82,9 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <Col>
-                            <DashboardCard text={'Tracks Merging'} done={false} canBeDone={true} />
+                            <DashboardCard text={'Tracks Merging'} done={false} canBeDone={true}>
+                                <MergeTracksButton />
+                            </DashboardCard>
                         </Col>
                     </Row>
                     <Row>
@@ -94,7 +113,15 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <Col>
-                            <DashboardCard text={'Documents'} done={false} canBeDone={false} />
+                            <DashboardCard
+                                text={'Documents'}
+                                done={false}
+                                canBeDone={false}
+                                onClick={() => {
+                                    dispatch(layoutActions.selectSection('importExport'));
+                                    dispatch(layoutActions.setShowDashboard(false));
+                                }}
+                            />
                         </Col>
                     </Row>
                 </Container>
