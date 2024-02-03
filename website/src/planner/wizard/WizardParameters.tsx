@@ -8,6 +8,7 @@ import { WizardHeader } from './WizardHeader.tsx';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
 import { PlanningLabel } from '../parameters/PlanningLabel.tsx';
+import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 
 export const WizardParameters = () => {
     const arrivalDateTime = useSelector(getArrivalDateTime);
@@ -20,6 +21,11 @@ export const WizardParameters = () => {
             <Row>
                 <Col>
                     <ArrivalDateTimePicker />
+                    {!arrivalDateTime && (
+                        <div>
+                            <DirectlyToPlannerButton />
+                        </div>
+                    )}
                     {arrivalDateTime && (
                         <>
                             <div className={'m-2'}>
@@ -35,6 +41,7 @@ export const WizardParameters = () => {
                             <hr />
                             <p>These parameters can still be changed afterwards</p>
                             <Button onClick={() => setSelectedSection('wizard-segments')}>Continue</Button>
+                            <DirectlyToPlannerButton />
                         </>
                     )}
                 </Col>

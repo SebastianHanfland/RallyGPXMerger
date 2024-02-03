@@ -7,6 +7,8 @@ import { ReactNode } from 'react';
 import { MergeTracksButton } from '../../tracks/MergeTracksButton.tsx';
 import { ArrowColumn } from './ArrowColumn.tsx';
 import { DashboardSettings } from './DashboardSettings.tsx';
+import { DashboardSegments } from './DashboardSegments.tsx';
+import { DashboardTracks } from './DashboardTracks.tsx';
 
 export function DashboardCard({
     text,
@@ -62,11 +64,11 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <Col>
-                            <DashboardCard text={'Segments'} done={true} canBeDone={true} />
+                            <DashboardSegments />
                         </Col>
 
                         <Col>
-                            <DashboardCard text={'Tracks'} done={true} canBeDone={true} />
+                            <DashboardTracks />
                         </Col>
                     </Row>
                     <Row>
