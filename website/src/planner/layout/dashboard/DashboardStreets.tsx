@@ -15,6 +15,7 @@ import {
     getNumberOfRequestsRunning,
 } from '../../store/geoCodingRequests.reducer.ts';
 import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStreetResolver.ts';
+import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
 
 export function DashboardStreets() {
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
@@ -55,7 +56,16 @@ export function DashboardStreets() {
                     {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
                 </div>
                 <div className={'d-flex justify-content-between m-1'}>
-                    <Button size={'sm'} onClick={onClick(addPostCodeToStreetInfos)} disabled={ongoingRequests}>
+                    <Button
+                        size={'sm'}
+                        onClick={() => {
+                            dispatch(layoutActions.selectSection('streets'));
+                            dispatch(layoutActions.setShowDashboard(false));
+                            dispatch(geoCodingActions.clearPostCodesAndDistricts());
+                            dispatch(addPostCodeToStreetInfos);
+                        }}
+                        disabled={ongoingRequests}
+                    >
                         PostCodes
                     </Button>
                     {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
