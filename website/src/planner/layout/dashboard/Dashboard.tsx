@@ -9,6 +9,9 @@ import { DashboardSettings } from './DashboardSettings.tsx';
 import { DashboardSegments } from './DashboardSegments.tsx';
 import { DashboardTracks } from './DashboardTracks.tsx';
 import { DashboardMerging } from './DashboardMerging.tsx';
+import { DashboardStreets } from './DashboardStreets.tsx';
+import { ExportStateJson } from '../../io/ExportStateJson.tsx';
+import { StreetFilesPdfMakeDownloader } from '../../streets/StreetFilesPdfMakeDownloader.tsx';
 
 export function DashboardCard({
     text,
@@ -16,12 +19,14 @@ export function DashboardCard({
     canBeDone,
     onClick,
     children,
+    childrenOnly,
 }: {
     text: string;
     done: boolean;
     canBeDone: boolean;
     onClick?: () => void;
     children?: ReactNode;
+    childrenOnly?: boolean;
 }) {
     return (
         <Card
@@ -29,15 +34,17 @@ export function DashboardCard({
             className={'startPageCard shadow m-2 p-3'}
             onClick={onClick}
         >
-            <div className={'d-flex justify-content-between'}>
-                {text}
-                {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
-                {!done && !canBeDone && (
-                    <img src={warning} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />
-                )}
-                {children && children}
-            </div>
-            {/*{children && <div>{children}</div>}*/}
+            {!childrenOnly && (
+                <div className={'d-flex justify-content-between'}>
+                    {text}
+                    {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
+                    {!done && !canBeDone && (
+                        <img src={warning} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />
+                    )}
+                    {children && children}
+                </div>
+            )}
+            {childrenOnly && children && children}
         </Card>
     );
 }
@@ -60,19 +67,21 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <ArrowColumn />
-                        <ArrowColumn />
                     </Row>
                     <Row>
                         <Col>
                             <DashboardSegments />
                         </Col>
-
+                    </Row>
+                    <Row>
+                        <ArrowColumn />
+                    </Row>
+                    <Row>
                         <Col>
                             <DashboardTracks />
                         </Col>
                     </Row>
                     <Row>
-                        <ArrowColumn />
                         <ArrowColumn />
                     </Row>
                     <Row>
@@ -85,23 +94,10 @@ export function Dashboard() {
                     </Row>
                     <Row>
                         <Col>
-                            <DashboardCard text={'Street info'} done={false} canBeDone={false} />
+                            <DashboardStreets />
                         </Col>
                     </Row>
                     <Row>
-                        <ArrowColumn />
-                        <ArrowColumn />
-                    </Row>
-                    <Row>
-                        <Col>
-                            <DashboardCard text={'Aggregation'} done={false} canBeDone={false} />
-                        </Col>
-                        <Col>
-                            <DashboardCard text={'Post codes'} done={false} canBeDone={false} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ArrowColumn />
                         <ArrowColumn />
                     </Row>
                     <Row>
@@ -114,8 +110,14 @@ export function Dashboard() {
                                     dispatch(layoutActions.selectSection('importExport'));
                                     dispatch(layoutActions.setShowDashboard(false));
                                 }}
-                            />
+                            >
+                                <StreetFilesPdfMakeDownloader />
+                            </DashboardCard>
                         </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <ExportStateJson label={'Download current planning'} />
                     </Row>
                 </Container>
             </Offcanvas.Body>

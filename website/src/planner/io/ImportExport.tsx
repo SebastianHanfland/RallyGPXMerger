@@ -1,7 +1,5 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import upload from '../../assets/file-up.svg';
-import { FileDownloader } from '../segments/FileDownloader.tsx';
-import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
@@ -11,11 +9,11 @@ import { SegmentFilesDownloader } from '../segments/SegmentFilesDownloader.tsx';
 import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.tsx';
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
+import { ExportStateJson } from './ExportStateJson.tsx';
 
 const fileTypes = ['JSON'];
 
 export function ImportExport() {
-    const state = useSelector((a) => a);
     const [showDialog, setShowDialog] = useState(false);
     const [loadedState, setLoadedState] = useState<string>();
 
@@ -85,13 +83,7 @@ export function ImportExport() {
                 </Col>
                 <Col>
                     <h4>Complete status</h4>
-                    <FileDownloader
-                        onlyIcon={true}
-                        name={`RallyGPXMergeState-${new Date().toISOString()}.json`}
-                        label={' Export current state to file'}
-                        content={JSON.stringify(state)}
-                        id={'state-down'}
-                    />
+                    <ExportStateJson label={'Export current state to file'} />
                 </Col>
             </Row>
         </div>
