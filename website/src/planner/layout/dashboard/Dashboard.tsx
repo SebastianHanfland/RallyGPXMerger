@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowDashboard, layoutActions } from '../store/layout.reducer.ts';
+import { getShowDashboard, layoutActions } from '../../store/layout.reducer.ts';
 import { Card, Col, Container, Offcanvas, Row } from 'react-bootstrap';
-import arrowDown from '../../assets/arrow-down.svg';
-import check from '../../assets/check-circle.svg';
-import warning from '../../assets/warning.svg';
+import check from '../../../assets/check-circle.svg';
+import warning from '../../../assets/warning.svg';
 import { ReactNode } from 'react';
-import { MergeTracksButton } from '../tracks/MergeTracksButton.tsx';
+import { MergeTracksButton } from '../../tracks/MergeTracksButton.tsx';
+import { ArrowColumn } from './ArrowColumn.tsx';
+import { DashboardSettings } from './DashboardSettings.tsx';
 
-function DashboardCard({
+export function DashboardCard({
     text,
     done,
     canBeDone,
@@ -39,14 +40,6 @@ function DashboardCard({
     );
 }
 
-function ArrowColumn() {
-    return (
-        <Col className={'d-flex justify-content-center'}>
-            <img src={arrowDown} className="m-1" alt="leads to" />
-        </Col>
-    );
-}
-
 export function Dashboard() {
     const show = useSelector(getShowDashboard);
     const dispatch = useDispatch();
@@ -60,7 +53,7 @@ export function Dashboard() {
                 <Container>
                     <Row>
                         <Col>
-                            <DashboardCard text={'Settings'} done={true} canBeDone={true} />
+                            <DashboardSettings />
                         </Col>
                     </Row>
                     <Row>
