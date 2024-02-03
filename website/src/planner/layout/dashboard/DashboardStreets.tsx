@@ -6,7 +6,10 @@ import { Button, Spinner } from 'react-bootstrap';
 import { resolvePositions } from '../../logic/resolving/resolveStreetAndPostcodeInfo.ts';
 import { AppDispatch } from '../../store/store.ts';
 import { calculateTrackStreetInfos } from '../../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
-import { addPostCodeToStreetInfos } from '../../logic/resolving/postcode/postCodeResolver.ts';
+import {
+    addPostCodeToStreetInfos,
+    getPostCodeRequestProgress,
+} from '../../logic/resolving/postcode/postCodeResolver.ts';
 import {
     getIsLoadingGeoData,
     getNumberOfPostCodeRequestsRunning,
@@ -18,6 +21,7 @@ import { Done } from './Done.tsx';
 import { DashboardCard } from './DashboardCard.tsx';
 import { Warning } from './Warning.tsx';
 import { useState } from 'react';
+import { getRequestProgress } from '../../logic/resolving/selectors/requestEstimator.ts';
 
 function StreetStatus(props: { done: boolean; loading: boolean }) {
     if (props.loading) {
@@ -32,6 +36,8 @@ function StreetStatus(props: { done: boolean; loading: boolean }) {
 export function DashboardStreets() {
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
     const hasEnrichedTracks = useSelector(getEnrichedTrackStreetInfos).length > 0;
+    const postCodesDone = useSelector(getPostCodeRequestProgress) === 100;
+    const streetsDone = useSelector(getRequestProgress) === 100;
     const dispatch: AppDispatch = useDispatch();
 
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
@@ -40,10 +46,6 @@ export function DashboardStreets() {
     const [isAggregating, setIsAggregating] = useState(false);
 
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading || isAggregating;
-
-    // TODO
-    const postCodesDone = true;
-    const streetsDone = true;
 
     return (
         <DashboardCard
