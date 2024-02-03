@@ -6,7 +6,7 @@ import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { ExportStateJson } from './ExportStateJson.tsx';
 import { importHook } from './importHook.ts';
-import warning from '../../assets/warning.svg';
+import { Warning } from '../layout/dashboard/Warning.tsx';
 
 export function ImportExport() {
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
@@ -22,12 +22,7 @@ export function ImportExport() {
                         <div>
                             <div className={'m-3'}>
                                 All current data is lost when importing another file
-                                <img
-                                    src={warning}
-                                    className="m-1"
-                                    alt="warning"
-                                    style={{ width: '20px', height: '20px' }}
-                                />
+                                <Warning />
                             </div>
                             <Button variant={'success'} onClick={importButtonClicked}>
                                 <img src={upload} className="m-1" alt="upload file" color={'#ffffff'} />

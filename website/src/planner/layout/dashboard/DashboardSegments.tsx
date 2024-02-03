@@ -1,8 +1,8 @@
-import { DashboardCard } from './Dashboard.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { getArrivalDateTime } from '../../store/trackMerge.reducer.ts';
 import { layoutActions } from '../../store/layout.reducer.ts';
+import { DashboardCard } from './DashboardCard.tsx';
 
 export function DashboardSegments() {
     const hasSegments = useSelector(getGpxSegments).length > 0;

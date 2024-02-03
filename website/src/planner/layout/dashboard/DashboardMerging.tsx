@@ -1,11 +1,11 @@
 import { MergeTracksButton } from '../../tracks/MergeTracksButton.tsx';
-import { DashboardCard } from './Dashboard.tsx';
 import { useSelector } from 'react-redux';
 import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { CalculatedFilesDownloader } from '../../tracks/CalculatedFilesDownloader.tsx';
 import check from '../../../assets/check-circle.svg';
+import { DashboardCard } from './DashboardCard.tsx';
 
 export function DashboardMerging() {
     const hasSegments = useSelector(getGpxSegments).length > 0;

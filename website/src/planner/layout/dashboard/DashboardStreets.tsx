@@ -1,9 +1,7 @@
-import { DashboardCard } from './Dashboard.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { layoutActions } from '../../store/layout.reducer.ts';
 import { getEnrichedTrackStreetInfos } from '../../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import check from '../../../assets/check-circle.svg';
 import { Button } from 'react-bootstrap';
 import { resolvePositions } from '../../logic/resolving/resolveStreetAndPostcodeInfo.ts';
 import { AppDispatch } from '../../store/store.ts';
@@ -16,6 +14,8 @@ import {
 } from '../../store/geoCodingRequests.reducer.ts';
 import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { geoCodingActions } from '../../store/geoCoding.reducer.ts';
+import { Done } from './Done.tsx';
+import { DashboardCard } from './DashboardCard.tsx';
 
 export function DashboardStreets() {
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
@@ -29,6 +29,7 @@ export function DashboardStreets() {
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading;
 
     const done = true;
+    const streetsDone = true;
     const onClick = (thunk?: any) => () => {
         dispatch(layoutActions.selectSection('streets'));
         dispatch(layoutActions.setShowDashboard(false));
@@ -53,13 +54,13 @@ export function DashboardStreets() {
                     <Button size={'sm'} disabled={ongoingRequests} onClick={onClick(resolveStreetNames)}>
                         Street Info
                     </Button>
-                    {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
+                    {streetsDone && <Done />}
                 </div>
                 <div className={'d-flex justify-content-between m-1'}>
                     <Button size={'sm'} onClick={onClick(calculateTrackStreetInfos)} disabled={ongoingRequests}>
                         Aggregation
                     </Button>
-                    {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
+                    {done && <Done />}
                 </div>
                 <div className={'d-flex justify-content-between m-1'}>
                     <Button
@@ -74,7 +75,7 @@ export function DashboardStreets() {
                     >
                         PostCodes
                     </Button>
-                    {done && <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />}
+                    {done && <Done />}
                 </div>
             </div>
         </DashboardCard>
