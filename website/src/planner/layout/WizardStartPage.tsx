@@ -6,12 +6,10 @@ import info from '../../assets/info.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
-import { useRef } from 'react';
-import { storage } from '../store/storage.ts';
-import { gpxShortener } from '../io/gpxShortener.ts';
 import { loadSampleData } from '../io/loadSampleData.ts';
 import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
 import { AppFooter } from './Footer.tsx';
+import { importHook } from '../io/importHook.ts';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -21,28 +19,7 @@ const cardStyle = {
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
-    const uploadInput = useRef<HTMLInputElement>(null);
-
-    const importButtonClicked = () => {
-        const current = uploadInput.current;
-        if (current) {
-            current.click();
-        }
-    };
-
-    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            files[0]
-                ?.text()
-                .then((loadedState) => {
-                    const shortenedLoadedState = gpxShortener(loadedState);
-                    storage.save(JSON.parse(shortenedLoadedState));
-                    window.location.reload();
-                })
-                .catch(console.error);
-        }
-    };
+    const { uploadInput, importButtonClicked, changeHandler } = importHook();
 
     return (
         <Container>

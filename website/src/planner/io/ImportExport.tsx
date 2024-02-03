@@ -1,35 +1,15 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import upload from '../../assets/file-up.svg';
-import { useState } from 'react';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { FileUploader } from 'react-drag-drop-files';
-import { storage } from '../store/storage.ts';
-import { gpxShortener } from './gpxShortener.ts';
 import { SegmentFilesDownloader } from '../segments/SegmentFilesDownloader.tsx';
 import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.tsx';
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { ExportStateJson } from './ExportStateJson.tsx';
-
-const fileTypes = ['JSON'];
+import { importHook } from './importHook.ts';
+import warning from '../../assets/warning.svg';
 
 export function ImportExport() {
-    const [showDialog, setShowDialog] = useState(false);
-    const [loadedState, setLoadedState] = useState<string>();
-
-    const handleChange = (uploadedFile: File) => {
-        uploadedFile.arrayBuffer().then((buffer) => setLoadedState(new TextDecoder().decode(buffer)));
-    };
-
-    const onLoadState = () => {
-        if (!loadedState) {
-            alert('You have to upload a state file first');
-            return;
-        }
-        const shortenedLoadedState = gpxShortener(loadedState);
-        storage.save(JSON.parse(shortenedLoadedState));
-        window.location.reload();
-    };
+    const { uploadInput, importButtonClicked, changeHandler } = importHook();
 
     return (
         <div>
@@ -37,35 +17,32 @@ export function ImportExport() {
                 <h3 className={'mb-5'}>Import</h3>
             </Row>
             <Row className="flex-xl-nowrap" style={{ height: '20vh', minHeight: '200px', width: '100%' }}>
-                <Col xl={6}></Col>
-                <Col xl={6}>
-                    <div className={'d-flex justify-content-between'} style={{ width: '500px' }}>
-                        <span title={!loadedState ? 'Please first upload a file ->' : ''}>
-                            <Button variant={'success'} onClick={() => setShowDialog(true)} disabled={!loadedState}>
+                <Col>
+                    <div className={'d-flex justify-content-center'}>
+                        <div>
+                            <div className={'m-3'}>
+                                All current data is lost when importing another file
+                                <img
+                                    src={warning}
+                                    className="m-1"
+                                    alt="warning"
+                                    style={{ width: '20px', height: '20px' }}
+                                />
+                            </div>
+                            <Button variant={'success'} onClick={importButtonClicked}>
                                 <img src={upload} className="m-1" alt="upload file" color={'#ffffff'} />
                                 Import file
                             </Button>
-                        </span>
-                        <FileUploader
-                            style={{ width: '100px' }}
-                            handleChange={handleChange}
-                            name="file"
-                            types={fileTypes}
-                            multiple={false}
-                            label={'Please upload a state file here'}
-                        />
+                        </div>
                     </div>
-                    {showDialog && (
-                        <ConfirmationModal
-                            onConfirm={() => {
-                                setShowDialog(false);
-                                onLoadState();
-                            }}
-                            closeModal={() => setShowDialog(false)}
-                            title={'Importing data'}
-                            body={'Do you really want to load data from a file and OVERWRITE EVERYTHING?'}
-                        />
-                    )}
+                    <input
+                        type="file"
+                        name="file"
+                        onChange={changeHandler}
+                        ref={uploadInput}
+                        hidden={true}
+                        accept={'application/json'}
+                    />
                 </Col>
             </Row>
             <hr />
