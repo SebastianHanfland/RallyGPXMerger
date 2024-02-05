@@ -3,12 +3,11 @@ import { HelpButton } from '../tutorial/HelpButton.tsx';
 import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelectionSection, getShowDashboard, layoutActions } from '../store/layout.reducer.ts';
+import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
 
 export const AppHeader = () => {
     const dispatch = useDispatch();
     const selectedSection = useSelector(getSelectionSection);
-    const showDashboard = useSelector(getShowDashboard);
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     return (
@@ -21,21 +20,21 @@ export const AppHeader = () => {
                             active={'gps' === selectedSection}
                             onClick={() => setSelectedSection('gps')}
                         >
-                            GPS Planner
+                            Planner
                         </Pagination.Item>
                         <Pagination.Item
                             key={'streets'}
                             active={'streets' === selectedSection}
                             onClick={() => setSelectedSection('streets')}
                         >
-                            Street Resolver
+                            Streets
                         </Pagination.Item>
                         <Pagination.Item
                             key={'importExport'}
                             active={'importExport' === selectedSection}
                             onClick={() => setSelectedSection('importExport')}
                         >
-                            Import Export
+                            Import/Export
                         </Pagination.Item>
                         <Pagination.Item
                             key={'settings'}
@@ -43,13 +42,6 @@ export const AppHeader = () => {
                             onClick={() => setSelectedSection('settings')}
                         >
                             Settings
-                        </Pagination.Item>
-                        <Pagination.Item
-                            key={'dashboard'}
-                            active={showDashboard}
-                            onClick={() => dispatch(layoutActions.setShowDashboard(true))}
-                        >
-                            Overview
                         </Pagination.Item>
                     </Pagination>
                     <h1>Rally GPX Merger</h1>

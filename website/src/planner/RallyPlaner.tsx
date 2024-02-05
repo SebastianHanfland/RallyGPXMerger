@@ -16,14 +16,19 @@ const style: CSSProperties = {
     overflowY: 'scroll',
     top: 0,
     zIndex: 10,
-    backgroundColor: '#0d6efd',
+    backgroundColor: 'rgba(220,220,255,1)',
     cursor: 'pointer',
 };
 
 function FloatingInfoButton() {
     const dispatch = useDispatch();
     return (
-        <div style={style} className={'shadow'} onClick={() => dispatch(layoutActions.setShowDashboard(true))}>
+        <div
+            style={style}
+            className={'shadow'}
+            onClick={() => dispatch(layoutActions.setShowDashboard(true))}
+            title={'See overview'}
+        >
             <img
                 src={info}
                 className={'m-1'}
@@ -37,7 +42,7 @@ function FloatingInfoButton() {
 export function RallyPlaner() {
     return (
         <Provider store={store}>
-            <div style={{ left: '30px', position: 'fixed' }}>
+            <div className={'canvas-wrapper'} style={{ left: '30px', position: 'fixed' }}>
                 <RallyPlannerRouter />
             </div>
             <FloatingInfoButton />

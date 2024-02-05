@@ -7,6 +7,14 @@
     background-color: #efefef;
 }
 
+.canvas-wrapper {
+    width: calc(100% - 30px);
+}
+
+.offcanvas {
+    background-color: rgba(220, 220, 255, 1);
+}
+
 .accordion-button {
     margin: 0;
     padding: 8px;
