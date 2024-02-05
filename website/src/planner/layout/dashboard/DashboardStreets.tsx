@@ -6,10 +6,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import { resolvePositions } from '../../logic/resolving/resolveStreetAndPostcodeInfo.ts';
 import { AppDispatch } from '../../store/store.ts';
 import { calculateTrackStreetInfos } from '../../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
-import {
-    addPostCodeToStreetInfos,
-    getPostCodeRequestProgress,
-} from '../../logic/resolving/postcode/postCodeResolver.ts';
+import { addPostCodeToStreetInfos } from '../../logic/resolving/postcode/postCodeResolver.ts';
 import {
     getIsAggregating,
     getIsLoadingGeoData,
@@ -17,11 +14,10 @@ import {
     getNumberOfRequestsRunning,
 } from '../../store/geoCodingRequests.reducer.ts';
 import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { geoCodingActions, getResolvedPositions } from '../../store/geoCoding.reducer.ts';
+import { geoCodingActions, getResolvedPositions, getResolvedPostCodes } from '../../store/geoCoding.reducer.ts';
 import { Done } from './Done.tsx';
 import { DashboardCard } from './DashboardCard.tsx';
 import { Warning } from './Warning.tsx';
-import { getRequestProgress } from '../../logic/resolving/selectors/requestEstimator.ts';
 
 function StreetStatus(props: { done: boolean; loading: boolean }) {
     if (props.loading) {
@@ -36,17 +32,19 @@ function StreetStatus(props: { done: boolean; loading: boolean }) {
 export function DashboardStreets() {
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
     const hasEnrichedTracks = useSelector(getEnrichedTrackStreetInfos).length > 0;
-    const postCodesDone = useSelector(getPostCodeRequestProgress) === 100;
-    const streetRequestDone = useSelector(getRequestProgress) === 100;
+    const postCodes = useSelector(getResolvedPostCodes);
     const resolvedPositions = useSelector(getResolvedPositions);
     const hasStreetInfo = Object.values(resolvedPositions).filter((value) => value !== null).length > 0;
-    const streetsDone = streetRequestDone && hasStreetInfo;
+    const hasPostCodeInfo = Object.values(postCodes).filter((value) => value !== null).length > 0;
     const dispatch: AppDispatch = useDispatch();
 
     const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
     const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
     const isLoading = useSelector(getIsLoadingGeoData);
     const isAggregating = useSelector(getIsAggregating);
+
+    const streetsDone = !runningRequests && hasStreetInfo;
+    const postCodesDone = !runningPostCodeRequests && hasPostCodeInfo;
 
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading || isAggregating;
 
