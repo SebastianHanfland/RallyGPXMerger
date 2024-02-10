@@ -59,5 +59,10 @@
     "msg.trackPeople": "Leute auf der Route",
     "msg.trackSegments": "Routensegmente",
     "msg.selectTrackSegment": "Abschnitt zum Hinzufügen auswählen",
-    "msg.filterTracks": "Routen filtern, Suchterme mit ',' trennen"
+    "msg.filterTracks": "Routen filtern, Suchterme mit ',' trennen",
+    "msg.removeTrackSegment": "Abschnitt \"{segmentName}\" von der Route entfernen",
+    "msg.removeTrack": "Route entfernen",
+    "msg.removeTrack.hint": "Route {name} entfernen",
+    "msg.pasteSegments": "Abschnitt-Ids in die Zwischenablage kopieren",
+    "msg.copySegments": "Abschnitt-Ids aus der Zwischenablage einfügen"
 }

@@ -59,5 +59,10 @@
     "msg.trackSegments": "Track segments",
     "msg.trackPeople": "People on Track",
     "msg.selectTrackSegment": "Select next segment to add",
-    "msg.filterTracks": "Filter tracks, separate term by ','"
+    "msg.filterTracks": "Filter tracks, separate term by ','",
+    "msg.removeTrackSegment": "Remove segment \"{segmentName}\" from track",
+    "msg.removeTrack": "Remove track",
+    "msg.removeTrack.hint": "`Remove track {name}",
+    "msg.pasteSegments": "Paste segmentIds to clipboard",
+    "msg.copySegments": "Copy segmentIds to clipboard"
 }

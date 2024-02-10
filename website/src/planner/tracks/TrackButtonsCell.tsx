@@ -9,12 +9,14 @@ import { calculatedTracksActions, getCalculatedTracks } from '../store/calculate
 import trash from '../../assets/trashB.svg';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
     track: TrackComposition;
 }
 
 export function TrackButtonsCell({ track }: Props) {
+    const intl = useIntl();
     const { id } = track;
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -30,27 +32,32 @@ export function TrackButtonsCell({ track }: Props) {
                 variant={'primary'.toLowerCase()}
                 title={''}
             >
-                <Dropdown.Item onClick={() => setShowModal(true)} title={`Remove track ${track.name ?? ''}`}>
-                    <img src={trash} className="m-1" alt="trash" />
-                    <span>Remove track</span>
-                </Dropdown.Item>
                 <Dropdown.Item
-                    onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}
-                    title={'Copy segmentIds to clipboard'}
+                    onClick={() => setShowModal(true)}
+                    title={intl.formatMessage({ id: 'msg.removeTrack.hint' }, { name: track.name ?? '' })}
                 >
+                    <img src={trash} className="m-1" alt="trash" />
+                    <span>
+                        <FormattedMessage id={'msg.removeTrack'} />
+                    </span>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}>
                     <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} className="m-1" />
-                    <span>Copy segmentIds to clipboard</span>
+                    <span>
+                        <FormattedMessage id={'msg.copySegments'} />
+                    </span>
                 </Dropdown.Item>
                 <Dropdown.Item
                     onClick={() => {
                         dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
                         dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
                     }}
-                    title={'Paste segmentIds to clipboard'}
                     disabled={!segmentIdClipboard}
                 >
                     <img src={inputFromClipboard} alt="input from clipboard" color={'#ffffff'} className={'m-1'} />
-                    <span>Paste segmentIds to clipboard</span>
+                    <span>
+                        <FormattedMessage id={'msg.pasteSegments'} />
+                    </span>
                 </Dropdown.Item>
                 {showModal && (
                     <ConfirmationModal

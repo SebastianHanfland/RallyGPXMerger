@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { useIntl } from 'react-intl';
 
 interface Props {
     trackId: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props) {
+    const intl = useIntl();
     const dispatch = useDispatch();
 
     return (
@@ -23,13 +25,15 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                 backgroundColor: getColorFromUuid(segmentId),
             }}
             key={segmentId}
-            title={segmentName}
         >
-            <div className={'m-1'}>{segmentName}</div>
+            <div className={'m-1'} title={segmentName}>
+                {segmentName}
+            </div>
             <Button
                 variant="danger"
                 size={'sm'}
                 onClick={() => dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }))}
+                title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
             >
                 X
             </Button>
