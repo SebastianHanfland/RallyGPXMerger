@@ -1,1 +1,9 @@
-{ "test": "Not Deutsch" }
+{
+    "test": "Not Deutsch",
+    "msg.loading": "Loading",
+    "msg.showMarker": "Show marker",
+    "msg.hideMarker": "Hide marker",
+    "msg.time": "Time",
+    "msg.onlyDisplaySingle": "Display only single route of {versionName}",
+    "msg.downloadVersionGpx": "Download GPX for {versionName}"
+}

@@ -5,6 +5,7 @@ import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions 
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { getColorOfVersion, getUrlOfVersion } from './versionLinks.ts';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
@@ -12,6 +13,7 @@ export function MapVersionSelection() {
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const optionsMap: Record<string, { value: string; label: string }[] | undefined> = {};
     Object.entries(zipTracks).forEach(([version, tracks]) => {
@@ -67,7 +69,7 @@ export function MapVersionSelection() {
                                 value={optionsMap[versionName]?.find((opt) =>
                                     selectedTracks[versionName]?.includes(opt.value)
                                 )}
-                                placeholder={`Nur einzelne Routen der ${versionName} anzeigen`}
+                                placeholder={intl.formatMessage({ id: 'msg.onlyDisplaySingle' }, { versionName })}
                                 // @ts-ignore
                                 options={optionsMap[versionName] ?? []}
                                 className="basic-multi-select"
@@ -85,7 +87,7 @@ export function MapVersionSelection() {
                                 }}
                             />
                             <a href={getUrlOfVersion(versionName)} target={'_blank'}>
-                                {`GPX für ${versionName} herunterladen`}
+                                <FormattedMessage id={'msg.downloadVersionGpx'} values={{ versionName }} />
                             </a>
                         </div>
                     ))}
@@ -95,7 +97,7 @@ export function MapVersionSelection() {
                         id={'marker'}
                         className={'m-3'}
                         label={'Marker'}
-                        title={showMapMarker ? 'Marker verstecken' : 'Marker anzeigen'}
+                        title={intl.formatMessage({ id: showMapMarker ? 'msg.hideMarker' : 'msg.showMarker' })}
                         checked={showMapMarker}
                         readOnly
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}

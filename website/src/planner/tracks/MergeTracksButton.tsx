@@ -5,6 +5,7 @@ import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import magic from '../../assets/magic.svg';
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export function MergeTracksButton() {
     const dispatch: AppDispatch = useDispatch();
@@ -23,7 +24,10 @@ export function MergeTracksButton() {
         >
             {isLoading ? (
                 <Spinner animation="border" role="status" size={'sm'}>
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">
+                        <FormattedMessage id={'msg.loading'} />
+                        ...
+                    </span>
                 </Spinner>
             ) : (
                 <img src={magic} className="m-1" alt="magic wand" />
