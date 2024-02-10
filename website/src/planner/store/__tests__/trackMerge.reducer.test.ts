@@ -22,7 +22,7 @@ describe('TrackMerge reducer', () => {
 
         // when & then
         store.dispatch(trackMergeActions.addTrackComposition());
-        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', segmentIds: [] }]);
+        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', segmentIds: [], name: '' }]);
 
         // when & then
         store.dispatch(trackMergeActions.setTrackName({ id: '1', trackName }));
