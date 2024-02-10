@@ -53,5 +53,11 @@
     "msg.mergeTracks.hint": "Merge GPX segments to tracks and adjust the times",
     "msg.downloadTracks": "GPX Files",
     "msg.downloadTracks.hint": "Download all GPX files for the tracks",
-    "msg.calculationSettings.title": "Calculation settings"
+    "msg.calculationSettings.title": "Calculation settings",
+    "msg.trackName": "Track name",
+    "msg.people": "People",
+    "msg.trackSegments": "Track segments",
+    "msg.trackPeople": "People on Track",
+    "msg.selectTrackSegment": "Select next segment to add",
+    "msg.filterTracks": "Filter tracks, separate term by ','"
 }

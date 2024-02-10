@@ -9,6 +9,7 @@ import { ReactSortable } from 'react-sortablejs';
 import { Accordion } from 'react-bootstrap';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { GpxSegment } from '../../common/types.ts';
+import { useIntl } from 'react-intl';
 
 interface Props {
     track: TrackComposition;
@@ -49,6 +50,7 @@ const breaks = [
 ];
 
 export function TrackSelectionCell({ track }: Props) {
+    const intl = useIntl();
     const { id, segmentIds } = track;
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
@@ -71,9 +73,9 @@ export function TrackSelectionCell({ track }: Props) {
             <Accordion className={'mt-0'}>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header className={'m-0'}>
-                        <span
-                            style={segmentIds.length === 0 ? { color: 'red' } : undefined}
-                        >{`${segmentIds.length} segments`}</span>
+                        <span style={segmentIds.length === 0 ? { color: 'red' } : undefined}>{`${
+                            segmentIds.length
+                        } ${intl.formatMessage({ id: 'msg.segments' })}`}</span>
                     </Accordion.Header>
                     <Accordion.Body>
                         <ReactSortable
@@ -96,7 +98,7 @@ export function TrackSelectionCell({ track }: Props) {
                         <Select
                             name="colors"
                             value={null}
-                            placeholder={'Select next segment to add'}
+                            placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
                             options={options.filter((option) => !segmentIds.includes(option.value))}
                             className="basic-multi-select"
                             classNamePrefix="select"

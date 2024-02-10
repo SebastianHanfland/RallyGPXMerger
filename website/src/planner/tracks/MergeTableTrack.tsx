@@ -5,12 +5,14 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { TrackSelectionCell } from './TrackSelectionCell.tsx';
 import { TrackButtonsCell } from './TrackButtonsCell.tsx';
 import { getCount } from '../../utils/inputUtil.ts';
+import { useIntl } from 'react-intl';
 
 interface Props {
     track: TrackComposition;
 }
 
 export function MergeTableTrack({ track }: Props) {
+    const intl = useIntl();
     const { name, id, peopleCount } = track;
     const dispatch = useDispatch();
 
@@ -19,7 +21,7 @@ export function MergeTableTrack({ track }: Props) {
             <td>
                 <Form.Control
                     type="text"
-                    placeholder="Track name"
+                    placeholder={intl.formatMessage({ id: 'msg.trackName' })}
                     value={name}
                     onChange={(value) =>
                         dispatch(trackMergeActions.setTrackName({ id, trackName: value.target.value }))
@@ -29,7 +31,7 @@ export function MergeTableTrack({ track }: Props) {
             <td>
                 <Form.Control
                     type="text"
-                    placeholder="People on track"
+                    placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
                     value={peopleCount}
                     onChange={(value) =>
                         dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }))

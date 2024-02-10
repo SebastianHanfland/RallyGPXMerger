@@ -53,5 +53,11 @@
     "msg.mergeTracks.hint": "Abschnitte zu Routen zusammenbauen und die Zeiten entsprechend anpassen",
     "msg.downloadTracks": "GPX Dateien",
     "msg.downloadTracks.hint": "Alle GPX Dateien für die Routen runterladen",
-    "msg.calculationSettings.title": "Berechnungseinstellungen"
+    "msg.calculationSettings.title": "Berechnungseinstellungen",
+    "msg.trackName": "Routenname",
+    "msg.people": "Leute",
+    "msg.trackPeople": "Leute auf der Route",
+    "msg.trackSegments": "Routensegmente",
+    "msg.selectTrackSegment": "Abschnitt zum Hinzufügen auswählen",
+    "msg.filterTracks": "Routen filtern, Suchterme mit ',' trennen"
 }

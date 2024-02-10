@@ -5,9 +5,10 @@ import { CalculatedFilesDownloader } from './CalculatedFilesDownloader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositionFilterTerm, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { TrackCalculationSettings } from './TrackCalculationSettings.tsx';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export function TrackCompositionSection() {
+    const intl = useIntl();
     const dispatch = useDispatch();
     const filterTerm = useSelector(getTrackCompositionFilterTerm);
     const setFilterTerm = (term: string) => dispatch(trackMergeActions.setTrackCompositionFilterTerm(term));
@@ -27,7 +28,7 @@ export function TrackCompositionSection() {
             <div className={'my-2'}>
                 <Form.Control
                     type="text"
-                    placeholder="Filter tracks, separate term by ','"
+                    placeholder={intl.formatMessage({ id: 'msg.filterTracks' })}
                     value={filterTerm ?? ''}
                     onChange={(value) => setFilterTerm(value.target.value)}
                 />
