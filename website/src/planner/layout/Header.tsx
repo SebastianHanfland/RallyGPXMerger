@@ -4,6 +4,7 @@ import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
+import { FormattedMessage } from 'react-intl';
 
 export const AppHeader = () => {
     const dispatch = useDispatch();
@@ -45,6 +46,9 @@ export const AppHeader = () => {
                         </Pagination.Item>
                     </Pagination>
                     <h1>Rally GPX Merger</h1>
+                    <h2>
+                        <FormattedMessage id={'test'} />
+                    </h2>
                     <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>
                         <ButtonGroup aria-label="help-buttons" className={'m-0'}>
                             <HelpButton />
