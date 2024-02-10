@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import download from '../../assets/file-down.svg';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
@@ -23,15 +24,16 @@ export const downloadFilesInZip = (calculatedTracks: { content: string; filename
 };
 
 export const CalculatedFilesDownloader = () => {
+    const intl = useIntl();
     const calculatedTracks = useSelector(getCalculatedTracks);
     return (
         <Button
             onClick={() => downloadFilesInZip(calculatedTracks, 'RallySimulation')}
             disabled={calculatedTracks.length === 0}
-            title={'Download all GPX files for the tracks'}
+            title={intl.formatMessage({ id: 'msg.downloadTracks.hint' })}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
-            GPX Files
+            <FormattedMessage id={'msg.downloadTracks'} />
         </Button>
     );
 };

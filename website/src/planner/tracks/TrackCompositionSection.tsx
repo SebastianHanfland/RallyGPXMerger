@@ -5,6 +5,7 @@ import { CalculatedFilesDownloader } from './CalculatedFilesDownloader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositionFilterTerm, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { TrackCalculationSettings } from './TrackCalculationSettings.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export function TrackCompositionSection() {
     const dispatch = useDispatch();
@@ -13,7 +14,9 @@ export function TrackCompositionSection() {
 
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-            <h4>Create Tracks from GPX Segments</h4>
+            <h4>
+                <FormattedMessage id={'msg.tracks.title'} />
+            </h4>
             <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-2 justify-content-center'}>
                 <ButtonGroup aria-label="help-buttons">
                     <MergeTracksButton />

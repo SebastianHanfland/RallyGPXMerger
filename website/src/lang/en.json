@@ -47,5 +47,11 @@
     "msg.removeSegment.modalTitle": "Removing Gpx Segment",
     "msg.removeSegment.modalBody": "Do you really want to remove the file \"{name}\" and all its references?",
     "msg.replaceSegment.modalTitle": "Replace GPX Segment",
-    "msg.replaceSegment.modalBody": "Upload one or more new files"
+    "msg.replaceSegment.modalBody": "Upload one or more new files",
+    "msg.tracks.title": "Create Tracks from GPX Segments",
+    "msg.mergeTracks": "Merge tracks",
+    "msg.mergeTracks.hint": "Merge GPX segments to tracks and adjust the times",
+    "msg.downloadTracks": "GPX Files",
+    "msg.downloadTracks.hint": "Download all GPX files for the tracks",
+    "msg.calculationSettings.title": "Calculation settings"
 }

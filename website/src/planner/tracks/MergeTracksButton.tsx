@@ -5,9 +5,10 @@ import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import magic from '../../assets/magic.svg';
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export function MergeTracksButton() {
+    const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const arrivalDate = useSelector(getArrivalDateTime);
     const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +21,7 @@ export function MergeTracksButton() {
             }}
             disabled={isLoading || !arrivalDate}
             variant={'success'}
-            title={'Merge GPX segments to tracks and adjust the times'}
+            title={intl.formatMessage({ id: 'msg.mergeTracks.hint' })}
         >
             {isLoading ? (
                 <Spinner animation="border" role="status" size={'sm'}>
@@ -32,7 +33,9 @@ export function MergeTracksButton() {
             ) : (
                 <img src={magic} className="m-1" alt="magic wand" />
             )}
-            <span>Merge Tracks</span>
+            <span>
+                <FormattedMessage id={'msg.mergeTracks'} />
+            </span>
         </Button>
     );
 }

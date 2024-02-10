@@ -32,7 +32,7 @@ export const FileDownloader = ({ id, name, content, onlyIcon, label }: Props) =>
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
             className={onlyIcon ? 'm-1' : undefined}
         >
-            {onlyIcon ? <img src={download} alt="download file" color={'#ffffff'} /> : name}
+            {onlyIcon ? <img src={download} alt="download file" color={'#ffffff'} className={'m-1'} /> : name}
             {!!label && label}
         </Button>
     );

@@ -47,5 +47,11 @@
     "msg.removeSegment.modalTitle": "GPX Abschnitt entfernen",
     "msg.removeSegment.modalBody": "Möchten Sie wirklich den Abschnitt \"{name}\" und alle seine Referenzen löschen?",
     "msg.replaceSegment.modalTitle": "GPX Abschnitt ersetzen",
-    "msg.replaceSegment.modalBody": "Laden Sie ein oder mehrere Dateien hoch"
+    "msg.replaceSegment.modalBody": "Laden Sie ein oder mehrere Dateien hoch",
+    "msg.tracks.title": "Routen aus den Abschnitten zusammenbauen",
+    "msg.mergeTracks": "Routen bauen",
+    "msg.mergeTracks.hint": "Abschnitte zu Routen zusammenbauen und die Zeiten entsprechend anpassen",
+    "msg.downloadTracks": "GPX Dateien",
+    "msg.downloadTracks.hint": "Alle GPX Dateien für die Routen runterladen",
+    "msg.calculationSettings.title": "Berechnungseinstellungen"
 }
