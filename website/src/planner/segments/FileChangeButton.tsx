@@ -9,12 +9,14 @@ import { toGpxSegment } from './GpxSegments.tsx';
 import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
 import { AppDispatch } from '../store/store.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
     id: string;
     name: string;
 }
 export function FileChangeButton({ id, name }: Props) {
+    const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const replaceProcess = useSelector(getReplaceProcess);
@@ -50,39 +52,49 @@ export function FileChangeButton({ id, name }: Props) {
                     setShowModal(true);
                     dispatch(gpxSegmentsActions.setReplaceProcess({ targetSegment: id, replacementSegments: [] }));
                 }}
-                title={`Change file for the segment "${name}"`}
+                title={intl.formatMessage({ id: 'msg.replaceFile.hint' }, { name })}
             >
                 <img src={exchange} alt="exchange" className="m-1" />
-                <span>Replace segment with other file(s)</span>
+                <span>
+                    <FormattedMessage id={'msg.replaceFile'} />
+                </span>
             </Dropdown.Item>
             {showModal && (
                 <ConfirmationModal
                     onConfirm={replaceGpxSegment}
                     closeModal={() => setShowModal(false)}
-                    title={'Replace Gpx Segment'}
+                    title={intl.formatMessage({ id: 'msg.replaceSegment.modalTitle' })}
                     body={
                         <div>
-                            <h6>Upload one or more new files</h6>
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th style={{ width: '100%' }}>File</th>
-                                        <th style={{ width: '38px', minWidth: '38px' }}>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {(replaceProcess?.replacementSegments ?? []).map((gpxSegment) => (
-                                        <ReplaceFileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
-                                    ))}
-                                </tbody>
-                            </Table>
+                            <h6>
+                                <FormattedMessage id={'msg.replaceSegment.modalBody'} />
+                            </h6>
+                            {(replaceProcess?.replacementSegments?.length ?? 0) > 0 && (
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th style={{ width: '100%' }}>
+                                                <FormattedMessage id={'msg.file'} />
+                                            </th>
+                                            <th style={{ width: '38px', minWidth: '38px' }}>
+                                                <FormattedMessage id={'msg.actions'} />
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {(replaceProcess?.replacementSegments ?? []).map((gpxSegment) => (
+                                            <ReplaceFileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            )}
                             <FileUploader
                                 style={{ width: '100px' }}
                                 handleChange={handleChange}
                                 name="file"
                                 types={['GPX']}
                                 multiple={true}
-                                label={'Please upload a state file here'}
+                                label={intl.formatMessage({ id: 'msg.uploadFile' })}
                             />
                         </div>
                     }

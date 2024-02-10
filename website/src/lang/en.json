@@ -39,7 +39,13 @@
     "msg.noFile": "No file uploaded",
     "msg.uploadFile": "Please upload the GPX segments here",
     "msg.downloadFile": "Download file",
+    "msg.downloadFile.hint": "Download file \"{name}\"",
     "msg.removeFile": "Remove file",
+    "msg.removeFile.hint": "Remove file \"{name}\" and all references",
+    "msg.replaceFile": "Replace segment with other file(s)",
+    "msg.replaceFile.hint": "Change file for the segment \"{name}\"",
     "msg.removeSegment.modalTitle": "Removing Gpx Segment",
-    "msg.removeSegment.modalBody": "Do you really want to remove the file \"{name}\" and all its references?"
+    "msg.removeSegment.modalBody": "Do you really want to remove the file \"{name}\" and all its references?",
+    "msg.replaceSegment.modalTitle": "Replace GPX Segment",
+    "msg.replaceSegment.modalBody": "Upload one or more new files"
 }

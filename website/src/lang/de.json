@@ -39,7 +39,13 @@
     "msg.noFile": "Keine Datei hochgeladen",
     "msg.uploadFile": "Hier bitte die GPX Abschnitte hochladen",
     "msg.downloadFile": "Datei herunterladen",
+    "msg.downloadFile.hint": "Datei \"{name}\" herunterladen",
     "msg.removeFile": "Datei entfernen",
+    "msg.removeFile.hint": "Datei \"{name}\" und alle Referenzen entfernen",
+    "msg.replaceFile": "Abschnitt mit andere(n) Datei(en) ersetzen",
+    "msg.replaceFile.hint": "Dateien für den Abschnitt \"{name}\" austauschen",
     "msg.removeSegment.modalTitle": "GPX Abschnitt entfernen",
-    "msg.removeSegment.modalBody": "Möchten Sie wirklich den Abschnitt \"{name}\" und alle seine Referenzen löschen?"
+    "msg.removeSegment.modalBody": "Möchten Sie wirklich den Abschnitt \"{name}\" und alle seine Referenzen löschen?",
+    "msg.replaceSegment.modalTitle": "GPX Abschnitt ersetzen",
+    "msg.replaceSegment.modalBody": "Laden Sie ein oder mehrere Dateien hoch"
 }

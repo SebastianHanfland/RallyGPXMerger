@@ -22,7 +22,10 @@ export function RemoveFileButton({ id, name }: Props) {
     };
     return (
         <>
-            <Dropdown.Item title={`Remove file "${name}" and all references`} onClick={() => setShowModal(true)}>
+            <Dropdown.Item
+                title={intl.formatMessage({ id: 'msg.removeFile.hint' }, { name })}
+                onClick={() => setShowModal(true)}
+            >
                 <img src={trash} className="m-1" alt="trash" />
                 <span>
                     <FormattedMessage id={'msg.removeFile'} />
