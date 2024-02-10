@@ -18,6 +18,7 @@ import { geoCodingActions, getResolvedPositions, getResolvedPostCodes } from '..
 import { Done } from './Done.tsx';
 import { DashboardCard } from './DashboardCard.tsx';
 import { Warning } from './Warning.tsx';
+import { FormattedMessage } from 'react-intl';
 
 function StreetStatus(props: { done: boolean; loading: boolean }) {
     if (props.loading) {
@@ -61,7 +62,9 @@ export function DashboardStreets() {
         >
             <div>
                 <div className={'d-flex justify-content-between m-1'}>
-                    <b>External info</b>
+                    <b>
+                        <FormattedMessage id={'msg.externalInfo'} />
+                    </b>
                     <Button
                         size={'sm'}
                         onClick={(event) => {
@@ -71,7 +74,7 @@ export function DashboardStreets() {
                         }}
                         disabled={ongoingRequests}
                     >
-                        Trigger All
+                        <FormattedMessage id={'msg.triggerAll'} />
                     </Button>
                 </div>
                 <div className={'d-flex justify-content-between m-1'}>
@@ -84,7 +87,7 @@ export function DashboardStreets() {
                             dispatch(resolveStreetNames);
                         }}
                     >
-                        Street Info
+                        <FormattedMessage id={'msg.streets'} />
                     </Button>
                     <StreetStatus done={streetsDone} loading={runningRequests} />
                 </div>
@@ -98,7 +101,7 @@ export function DashboardStreets() {
                         }}
                         disabled={ongoingRequests}
                     >
-                        Aggregation
+                        <FormattedMessage id={'msg.aggregation'} />
                     </Button>
                     <StreetStatus done={hasEnrichedTracks} loading={isAggregating} />
                 </div>
@@ -113,7 +116,7 @@ export function DashboardStreets() {
                         }}
                         disabled={ongoingRequests}
                     >
-                        PostCodes
+                        <FormattedMessage id={'msg.postCodes'} />
                     </Button>
                     <StreetStatus done={postCodesDone} loading={runningPostCodeRequests} />
                 </div>

@@ -5,5 +5,17 @@
     "msg.hideMarker": "Marker verstecken",
     "msg.time": "Zeit",
     "msg.onlyDisplaySingle": "Nur einzelne Routen der {versionName} anzeigen",
-    "msg.downloadVersionGpx": "GPX für {versionName} herunterladen"
+    "msg.downloadVersionGpx": "GPX für {versionName} herunterladen",
+    "msg.downloadPlanning": "Aktuellen Stand herunterladen",
+    "msg.dashboard": "Übersicht",
+    "msg.settings": "Einstellungen",
+    "msg.segments": "Abschnitte",
+    "msg.tracks": "Routen",
+    "msg.calculateTracks": "Routen berechnen",
+    "msg.triggerAll": "Alle starten",
+    "msg.externalInfo": "Externe Informationen",
+    "msg.streets": "Straßennamen",
+    "msg.aggregation": "Gruppieren",
+    "msg.postCodes": "Postleitzahlen",
+    "msg.documents": "Dokumente"
 }

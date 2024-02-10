@@ -6,8 +6,9 @@ import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { CalculatedFilesDownloader } from '../../tracks/CalculatedFilesDownloader.tsx';
 import check from '../../../assets/check-circle.svg';
 import { DashboardCard } from './DashboardCard.tsx';
+import { FormattedMessage } from 'react-intl';
 
-export function DashboardMerging() {
+export function DashboardCalculateTracks() {
     const hasSegments = useSelector(getGpxSegments).length > 0;
     const hasTracks = useSelector(getTrackCompositions).length > 0;
     const hasMergedTracks = useSelector(getCalculatedTracks).length > 0;
@@ -15,7 +16,9 @@ export function DashboardMerging() {
         <DashboardCard text={''} done={hasMergedTracks} canBeDone={hasTracks && hasSegments} childrenOnly={true}>
             <div>
                 <div className={'d-flex justify-content-between'}>
-                    <b>Tracks Merging</b>
+                    <b>
+                        <FormattedMessage id={'msg.calculateTracks'} />
+                    </b>
                     {hasMergedTracks && (
                         <img src={check} className="m-1" alt="trash" style={{ width: '20px', height: '20px' }} />
                     )}
