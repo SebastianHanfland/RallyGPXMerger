@@ -8,12 +8,14 @@ import play from '../../assets/play.svg';
 import fast from '../../assets/fast.svg';
 import stop from '../../assets/stop.svg';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
+import { useIntl } from 'react-intl';
 
 let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
 export function TimeSlider() {
+    const intl = useIntl();
     const mapTime = useSelector(getCurrenMapTime);
     const dateValue = useSelector(getCurrentTimeStamp);
     timeMirror = mapTime;
@@ -48,8 +50,9 @@ export function TimeSlider() {
                         size={'sm'}
                         variant={'success'}
                         className={'m-1'}
+                        disabled={playSpeed === 1}
                         onClick={() => setPlaySpeed(1)}
-                        title={'Play the rally simulation'}
+                        title={intl.formatMessage({ id: 'msg.play.normal' })}
                     >
                         <img src={play} className="m-1" alt="open file" />
                     </Button>
@@ -57,8 +60,9 @@ export function TimeSlider() {
                         size={'sm'}
                         variant={'warning'}
                         className={'m-1'}
+                        disabled={playSpeed === 5}
                         onClick={() => setPlaySpeed(5)}
-                        title={'Play the rally simulation fast'}
+                        title={intl.formatMessage({ id: 'msg.play.fast' })}
                     >
                         <img src={fast} className="m-1" alt="open file" />
                     </Button>
@@ -66,8 +70,9 @@ export function TimeSlider() {
                         size={'sm'}
                         variant={'danger'}
                         className={'m-1'}
+                        disabled={!playSpeed}
                         onClick={() => setPlaySpeed(undefined)}
-                        title={'Stop the rally simulation'}
+                        title={intl.formatMessage({ id: 'msg.play.stop' })}
                     >
                         <img src={stop} className="m-1" alt="open file" />
                     </Button>

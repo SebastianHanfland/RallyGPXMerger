@@ -11,7 +11,9 @@ import {
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getConstructionSegments } from '../store/gpxSegments.reducer.ts';
+import { useIntl } from 'react-intl';
 export function MapContentSelection() {
+    const intl = useIntl();
     const showMapMarker = useSelector(getShowMapMarker);
     const showConstructions = useSelector(getShowConstructions);
     const hasConstructions = useSelector(getConstructionSegments)?.length > 0;
@@ -28,7 +30,7 @@ export function MapContentSelection() {
                     type={'checkbox'}
                     id={'segments'}
                     className={'m-2'}
-                    label={'GPX'}
+                    label={intl.formatMessage({ id: 'msg.segments' })}
                     title={'GPX Segments'}
                     checked={showGpxSegments}
                     readOnly
@@ -38,7 +40,7 @@ export function MapContentSelection() {
                     type={'checkbox'}
                     id={'tracks'}
                     className={'m-2'}
-                    label={'Tracks'}
+                    label={intl.formatMessage({ id: 'msg.tracks' })}
                     title={'Calculated Tracks'}
                     checked={showCalculatedTracks}
                     disabled={calculatedTracks.length === 0}
@@ -49,7 +51,7 @@ export function MapContentSelection() {
                     type={'checkbox'}
                     id={'blocked streets'}
                     className={'m-2'}
-                    label={'Streets'}
+                    label={intl.formatMessage({ id: 'msg.streets' })}
                     title={'Blocked Streets'}
                     checked={showBlockStreets}
                     disabled={blockedStreetInfos.length === 0}
@@ -62,7 +64,7 @@ export function MapContentSelection() {
                     type={'checkbox'}
                     id={'marker'}
                     className={'m-2'}
-                    label={'Marker'}
+                    label={intl.formatMessage({ id: 'msg.marker' })}
                     title={showMapMarker ? 'Hide marker' : 'Show marker'}
                     checked={showMapMarker}
                     readOnly

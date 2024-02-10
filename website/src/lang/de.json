@@ -75,5 +75,9 @@
     "msg.downloadCsv": "Alle Informationen über die Routen als csv herunterladen",
     "msg.downloadPdf": "Alle Informationen über die Routen als PDFs herunterladen",
     "msg.downloads": "Downloads",
-    "msg.imports": "Imports"
+    "msg.imports": "Imports",
+    "msg.marker": "Marker",
+    "msg.play.normal": "Sternfahrtsimulation abspielen",
+    "msg.play.fast": "Sternfahrtsimulation schnell abspielen",
+    "msg.play.stop": "Sternfahrtsimulation stoppen"
 }

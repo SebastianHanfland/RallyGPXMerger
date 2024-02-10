@@ -75,5 +75,9 @@
     "msg.downloadCsv": "Download all information for the tracks as a csv",
     "msg.downloadPdf": "Download all information for the tracks as a PDFs",
     "msg.downloads": "Downloads",
-    "msg.imports": "Imports"
+    "msg.imports": "Imports",
+    "msg.marker": "Marker",
+    "msg.play.normal": "Play the rally simulation",
+    "msg.play.fast": "Play the rally simulation fast",
+    "msg.play.stop": "Stop the rally simulation"
 }
