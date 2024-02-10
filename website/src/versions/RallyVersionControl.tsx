@@ -5,7 +5,9 @@ import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
 import { versionsStore } from './store/store.ts';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, IntlProvider } from 'react-intl';
+import { getLanguage } from '../language.ts';
+import { getMessages } from '../lang/getMessages.ts';
 
 function RallyDisplay() {
     loadZipFileHook();
@@ -30,7 +32,9 @@ function RallyDisplay() {
 export function RallyVersionControl() {
     return (
         <Provider store={versionsStore}>
-            <RallyDisplay />
+            <IntlProvider locale={getLanguage()} messages={getMessages()}>
+                <RallyDisplay />
+            </IntlProvider>
         </Provider>
     );
 }

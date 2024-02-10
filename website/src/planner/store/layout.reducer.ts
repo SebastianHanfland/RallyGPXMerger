@@ -2,10 +2,17 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { LayoutState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { Sections } from '../layout/types.ts';
+import { setLanguage, SupportedLanguages } from '../../language.ts';
+
+const getInitialLanguage = (): SupportedLanguages => {
+    window.navigator.language;
+    return 'de';
+};
 
 const initialState: LayoutState = {
     selectedSection: 'start',
     showDashboard: false,
+    language: getInitialLanguage(),
 };
 
 const layoutSlice = createSlice({
@@ -18,6 +25,10 @@ const layoutSlice = createSlice({
         setShowDashboard: (state: LayoutState, action: PayloadAction<boolean>) => {
             state.showDashboard = action.payload;
         },
+        setLanguage: (state: LayoutState, action: PayloadAction<SupportedLanguages>) => {
+            state.language = action.payload;
+            setLanguage(action.payload);
+        },
     },
 });
 
@@ -27,3 +38,4 @@ const getBase = (state: State) => state.layout;
 
 export const getSelectionSection = (state: State) => getBase(state).selectedSection;
 export const getShowDashboard = (state: State) => getBase(state).showDashboard;
+export const getDisplayLanguage = (state: State) => getBase(state).language;

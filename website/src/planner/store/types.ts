@@ -1,6 +1,7 @@
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
+import { SupportedLanguages } from '../../language.ts';
 
 export interface GpxSegmentsState {
     segments: GpxSegment[];
@@ -17,6 +18,7 @@ export interface CalculatedTracksState {
 export interface LayoutState {
     selectedSection: Sections;
     showDashboard: boolean;
+    language: SupportedLanguages;
 }
 
 export interface TrackComposition {

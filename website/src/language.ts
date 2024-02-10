@@ -1,8 +1,8 @@
-type Language = 'de' | 'en';
+export type SupportedLanguages = 'de' | 'en';
 
-let language: Language = 'de';
+let language: SupportedLanguages = 'de';
 
 export const getLanguage = () => language;
-export const setLanguage = (newLanguage: Language) => {
+export const setLanguage = (newLanguage: SupportedLanguages) => {
     language = newLanguage;
 };

@@ -1,11 +1,13 @@
 import '../App.css';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from './store/store.ts';
 import { RallyPlannerRouter } from './layout/RallyPlannerRouter.tsx';
 import { Dashboard } from './layout/dashboard/Dashboard.tsx';
 import { CSSProperties } from 'react';
-import { layoutActions } from './store/layout.reducer.ts';
+import { getDisplayLanguage, layoutActions } from './store/layout.reducer.ts';
 import info from '../assets/info.svg';
+import { getMessages } from '../lang/getMessages.ts';
+import { IntlProvider } from 'react-intl';
 
 const style: CSSProperties = {
     position: 'fixed',
@@ -39,14 +41,23 @@ function FloatingInfoButton() {
     );
 }
 
-export function RallyPlaner() {
+export function RallyPlanner() {
+    const language = useSelector(getDisplayLanguage);
     return (
-        <Provider store={store}>
+        <IntlProvider locale={language} messages={getMessages()}>
             <div className={'canvas-wrapper'} style={{ left: '30px', position: 'fixed' }}>
                 <RallyPlannerRouter />
             </div>
             <FloatingInfoButton />
             <Dashboard />
+        </IntlProvider>
+    );
+}
+
+export function RallyPlannerWrapper() {
+    return (
+        <Provider store={store}>
+            <RallyPlanner />
         </Provider>
     );
 }
