@@ -5,6 +5,7 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trashB.svg';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
     id: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function RemoveFileButton({ id, name }: Props) {
+    const intl = useIntl();
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const removeGpxSegment = () => {
@@ -22,14 +24,16 @@ export function RemoveFileButton({ id, name }: Props) {
         <>
             <Dropdown.Item title={`Remove file "${name}" and all references`} onClick={() => setShowModal(true)}>
                 <img src={trash} className="m-1" alt="trash" />
-                <span>Remove file</span>
+                <span>
+                    <FormattedMessage id={'msg.removeFile'} />
+                </span>
             </Dropdown.Item>
             {showModal && (
                 <ConfirmationModal
                     onConfirm={removeGpxSegment}
                     closeModal={() => setShowModal(false)}
-                    title={'Removing Gpx Segment'}
-                    body={`Do you really want to remove the file "${name}" and all its references?`}
+                    title={intl.formatMessage({ id: 'msg.removeSegment.modalTitle' })}
+                    body={intl.formatMessage({ id: 'msg.removeSegment.modalBody' }, { name })}
                 />
             )}
         </>

@@ -29,5 +29,17 @@
     "msg.close": "Close",
     "msg.importExport": "Import/Export",
     "msg.help.hint": "A short explanation how to use this tool",
-    "msg.help": "Help"
+    "msg.help": "Help",
+    "msg.filterSegments": "Filter segments, separate term by ','",
+    "msg.uploadGpx.title": "Upload Segments (GPX)",
+    "msg.createGpx.part1": "You can create GPX segments with ",
+    "msg.createGpx.part2": " or ",
+    "msg.file": "File",
+    "msg.actions": "Actions",
+    "msg.noFile": "No file uploaded",
+    "msg.uploadFile": "Please upload the GPX segments here",
+    "msg.downloadFile": "Download file",
+    "msg.removeFile": "Remove file",
+    "msg.removeSegment.modalTitle": "Removing Gpx Segment",
+    "msg.removeSegment.modalBody": "Do you really want to remove the file \"{name}\" and all its references?"
 }

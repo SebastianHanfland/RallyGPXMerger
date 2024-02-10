@@ -3,6 +3,7 @@ import { Button, Dropdown } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import download from '../../assets/file-down.svg';
 import downloadB from '../../assets/file-downB.svg';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
     id: string;
@@ -40,7 +41,9 @@ export const FileDownloaderDropdownItem = ({ name, content }: DropdownProps) => 
     return (
         <Dropdown.Item onClick={() => downloadFile(name, content)} title={`Download file "${name}"`}>
             <img src={downloadB} alt="download file" color={'#ffffff'} className="m-1" />
-            <span>Download file</span>
+            <span>
+                <FormattedMessage id={'msg.downloadFile'} />
+            </span>
         </Dropdown.Item>
     );
 };

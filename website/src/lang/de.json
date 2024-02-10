@@ -29,5 +29,17 @@
     "msg.close": "Schließen",
     "msg.importExport": "Import/Export",
     "msg.help.hint": "Eine kurze Erklärung, wie man den Planer verwendet",
-    "msg.help": "Hilfe"
+    "msg.help": "Hilfe",
+    "msg.filterSegments": "Abschnitte filtern, Suchterme mit ',' trennen",
+    "msg.uploadGpx.title": "Abschnitte hochladen (GPX)",
+    "msg.createGpx.part1": "GPX Abschnitte erstellen mit ",
+    "msg.createGpx.part2": " oder ",
+    "msg.file": "Datei",
+    "msg.actions": "Aktionen",
+    "msg.noFile": "Keine Datei hochgeladen",
+    "msg.uploadFile": "Hier bitte die GPX Abschnitte hochladen",
+    "msg.downloadFile": "Datei herunterladen",
+    "msg.removeFile": "Datei entfernen",
+    "msg.removeSegment.modalTitle": "GPX Abschnitt entfernen",
+    "msg.removeSegment.modalBody": "Möchten Sie wirklich den Abschnitt \"{name}\" und alle seine Referenzen löschen?"
 }

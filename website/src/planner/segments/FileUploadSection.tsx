@@ -1,15 +1,20 @@
 import { GpxSegments } from './GpxSegments.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export function FileUploadSection() {
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-            <h4>Upload GPX Segments</h4>
+            <h4>
+                <FormattedMessage id={'msg.uploadGpx.title'} />
+            </h4>
             <p>
-                You can create GPX segments with{' '}
+                <FormattedMessage id={'msg.createGpx.part1'} />{' '}
                 <a href={'http://brouter.de/brouter-web'} target={'_blank'} referrerPolicy={'no-referrer'}>
                     brouter
                 </a>
-                <span> or </span>
+                <span>
+                    <FormattedMessage id={'msg.createGpx.part2'} />
+                </span>
                 <a href={'https://gpx.studio/'} target={'_blank'} referrerPolicy={'no-referrer'}>
                     Gpx Studio
                 </a>

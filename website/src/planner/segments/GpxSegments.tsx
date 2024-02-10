@@ -6,6 +6,7 @@ import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from
 import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const fileTypes = ['GPX'];
 
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export function GpxSegments({ noFilter }: Props) {
+    const intl = useIntl();
     const dispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
     const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
@@ -40,7 +42,7 @@ export function GpxSegments({ noFilter }: Props) {
                 <div className={'my-2'}>
                     <Form.Control
                         type="text"
-                        placeholder="Filter tracks, separate term by ','"
+                        placeholder={intl.formatMessage({ id: 'msg.filterSegments' })}
                         value={filterTerm}
                         onChange={(value) => setFilterTerm(value.target.value)}
                     />
@@ -50,8 +52,12 @@ export function GpxSegments({ noFilter }: Props) {
                 <Table striped bordered hover style={{ width: '100%' }} size="sm">
                     <thead>
                         <tr>
-                            <th style={{ width: '100%' }}>File</th>
-                            <th style={{ width: '38px' }}>Actions</th>
+                            <th style={{ width: '100%' }}>
+                                <FormattedMessage id={'msg.file'} />
+                            </th>
+                            <th style={{ width: '38px' }}>
+                                <FormattedMessage id={'msg.actions'} />
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +84,7 @@ export function GpxSegments({ noFilter }: Props) {
                                     name="file"
                                     types={fileTypes}
                                     multiple={true}
-                                    label={'Please upload the GPX segments here'}
+                                    label={intl.formatMessage({ id: 'msg.uploadFile' })}
                                 />
                             </td>
                         </tr>
@@ -86,14 +92,16 @@ export function GpxSegments({ noFilter }: Props) {
                 </Table>
             ) : (
                 <div>
-                    <div>No file selected</div>
+                    <div>
+                        <FormattedMessage id={'msg.noFile'} />
+                    </div>
                     <div style={{ height: '70px', width: '200px' }}>
                         <FileUploader
                             handleChange={handleChange}
                             name="file"
                             types={fileTypes}
                             multiple={true}
-                            label={'Please upload the GPX segments here'}
+                            label={intl.formatMessage({ id: 'msg.uploadFile' })}
                         />
                     </div>
                 </div>
