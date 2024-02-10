@@ -26,7 +26,7 @@ const trackMergeSlice = createSlice({
             if (action.payload) {
                 state.trackCompositions = [...state.trackCompositions, action.payload];
             } else {
-                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segmentIds: [] }];
+                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segmentIds: [], name: '' }];
             }
         },
         removeTrackComposition: (state: TrackMergeState, action: PayloadAction<string>) => {
