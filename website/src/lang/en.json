@@ -20,5 +20,10 @@
     "msg.postCodes": "Post codes",
     "msg.documents": "Documents",
     "msg.planner": "Planner",
-    "msg.appName": "Rally GPX Merger"
+    "msg.appName": "Rally GPX Merger",
+    "msg.removeAllData": "Remove all data",
+    "msg.removeAllData.modalBody": "Do you really want to remove all data?",
+    "msg.removeAllData.modalTitle": "Removing all data",
+    "msg.confirm": "Confirm",
+    "msg.close": "Close"
 }

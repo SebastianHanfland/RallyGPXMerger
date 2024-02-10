@@ -10,10 +10,13 @@ import { mapActions } from '../store/map.reducer.ts';
 import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 import { clearReadableTracks } from '../cache/readableTracks.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
+    const intl = useIntl();
+
     const removeAllData = () => {
         clearReadableTracks();
         dispatch(gpxSegmentsActions.clearGpxSegments());
@@ -35,14 +38,14 @@ export function RemoveDataButton() {
                 onClick={() => setShowModal(true)}
             >
                 <img src={trash} className="m-1" alt="trash" />
-                Remove all data
+                <FormattedMessage id={'msg.removeAllData'} />
             </Button>
             {showModal && (
                 <ConfirmationModal
                     onConfirm={removeAllData}
                     closeModal={() => setShowModal(false)}
-                    title={'Deleting all data'}
-                    body={'Do you really want to remove all data?'}
+                    title={intl.formatMessage({ id: 'msg.removeAllData.modalTitle' })}
+                    body={intl.formatMessage({ id: 'msg.removeAllData.modalBody' })}
                 />
             )}
         </>

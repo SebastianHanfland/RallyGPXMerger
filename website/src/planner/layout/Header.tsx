@@ -1,11 +1,11 @@
 import { ButtonGroup, ButtonToolbar, Pagination, Row } from 'react-bootstrap';
-import { HelpButton } from '../tutorial/HelpButton.tsx';
-import { RemoveDataButton } from './RemoveDataButton.tsx';
 import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
 import { LanguageSelection } from './LanguageSelection.tsx';
 import { FormattedMessage } from 'react-intl';
+import { HelpButton } from '../tutorial/HelpButton.tsx';
+import { RemoveDataButton } from './RemoveDataButton.tsx';
 
 export const AppHeader = () => {
     const dispatch = useDispatch();

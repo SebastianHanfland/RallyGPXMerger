@@ -1,6 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 interface Props {
     onConfirm: () => void;
@@ -19,10 +20,10 @@ export function ConfirmationModal({ onConfirm, closeModal, title, body, confirmD
             <Modal.Body>{body}</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
-                    Close
+                    <FormattedMessage id={'msg.close'} />
                 </Button>
                 <Button variant="primary" onClick={onConfirm} disabled={confirmDisabled}>
-                    Confirm
+                    <FormattedMessage id={'msg.confirm'} />
                 </Button>
             </Modal.Footer>
         </Modal>

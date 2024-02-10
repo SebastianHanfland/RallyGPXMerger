@@ -20,5 +20,10 @@
     "msg.postCodes": "Postleitzahlen",
     "msg.documents": "Dokumente",
     "msg.planner": "Planung",
-    "msg.appName": "Sternfahrtplaner"
+    "msg.appName": "Sternfahrtplaner",
+    "msg.removeAllData": "Alle Daten entfernen",
+    "msg.removeAllData.modalBody": "Möchten Sie wirklich alle Daten entfernen?",
+    "msg.removeAllData.modalTitle": "Alle Daten entfernen",
+    "msg.confirm": "Bestätigen",
+    "msg.close": "Schließen"
 }
