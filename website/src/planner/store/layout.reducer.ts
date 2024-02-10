@@ -2,12 +2,7 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { LayoutState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { Sections } from '../layout/types.ts';
-import { setLanguage, SupportedLanguages } from '../../language.ts';
-
-const getInitialLanguage = (): SupportedLanguages => {
-    window.navigator.language;
-    return 'de';
-};
+import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../language.ts';
 
 const initialState: LayoutState = {
     selectedSection: 'start',
