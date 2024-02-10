@@ -87,7 +87,7 @@ export function DashboardStreets() {
                             dispatch(resolveStreetNames);
                         }}
                     >
-                        <FormattedMessage id={'msg.streets'} />
+                        <FormattedMessage id={'msg.streetNames'} />
                     </Button>
                     <StreetStatus done={streetsDone} loading={runningRequests} />
                 </div>

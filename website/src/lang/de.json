@@ -14,8 +14,11 @@
     "msg.calculateTracks": "Routen berechnen",
     "msg.triggerAll": "Alle starten",
     "msg.externalInfo": "Externe Informationen",
-    "msg.streets": "Straßennamen",
+    "msg.streets": "Straßen",
+    "msg.streetNames": "Straßennamen",
     "msg.aggregation": "Gruppieren",
     "msg.postCodes": "Postleitzahlen",
-    "msg.documents": "Dokumente"
+    "msg.documents": "Dokumente",
+    "msg.planner": "Planung",
+    "msg.appName": "Sternfahrtplaner"
 }

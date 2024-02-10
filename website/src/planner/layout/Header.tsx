@@ -5,6 +5,7 @@ import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
 import { LanguageSelection } from './LanguageSelection.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export const AppHeader = () => {
     const dispatch = useDispatch();
@@ -21,14 +22,14 @@ export const AppHeader = () => {
                             active={'gps' === selectedSection}
                             onClick={() => setSelectedSection('gps')}
                         >
-                            Planner
+                            <FormattedMessage id={'msg.planner'} />
                         </Pagination.Item>
                         <Pagination.Item
                             key={'streets'}
                             active={'streets' === selectedSection}
                             onClick={() => setSelectedSection('streets')}
                         >
-                            Streets
+                            <FormattedMessage id={'msg.streets'} />
                         </Pagination.Item>
                         <Pagination.Item
                             key={'importExport'}
@@ -42,10 +43,12 @@ export const AppHeader = () => {
                             active={'settings' === selectedSection}
                             onClick={() => setSelectedSection('settings')}
                         >
-                            Settings
+                            <FormattedMessage id={'msg.settings'} />
                         </Pagination.Item>
                     </Pagination>
-                    <h1>Rally GPX Merger</h1>
+                    <h1>
+                        <FormattedMessage id={'msg.appName'} />
+                    </h1>
                     <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>
                         <ButtonGroup aria-label="help-buttons" className={'m-0'}>
                             <HelpButton />

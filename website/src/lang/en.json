@@ -14,8 +14,11 @@
     "msg.calculateTracks": "Calculate tracks",
     "msg.triggerAll": "Trigger all",
     "msg.externalInfo": "External info",
-    "msg.streets": "Street names",
+    "msg.streets": "Streets",
+    "msg.streetNames": "Street names",
     "msg.aggregation": "Aggregation",
     "msg.postCodes": "Post codes",
-    "msg.documents": "Documents"
+    "msg.documents": "Documents",
+    "msg.planner": "Planner",
+    "msg.appName": "Rally GPX Merger"
 }
