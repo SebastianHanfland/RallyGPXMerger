@@ -168,6 +168,12 @@ export function aggregateEnrichedPoints(
                 type: TrackWayPointType.Track,
             };
         } else {
+            aggregatedPoints[lastIndex] = {
+                ...lastElement,
+                backArrival: shiftEndTimeByParticipants(point.time, participants),
+                frontPassage: point.time,
+                pointTo: extractLatLon(point),
+            };
             aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Track));
         }
     });
