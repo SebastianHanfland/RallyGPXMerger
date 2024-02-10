@@ -4,6 +4,7 @@ import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
 import { getZipCurrentTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
+import { DateTimeFormat } from '../utils/dateUtil.ts';
 
 export function ZipTimeSlider() {
     const mapTime = useSelector(getCurrenMapTime);
@@ -13,7 +14,7 @@ export function ZipTimeSlider() {
 
     return (
         <Form.Group className={'m-2'}>
-            <div>{dateValue ? intl.formatDate(dateValue) : intl.formatMessage({ id: 'msg.time' })}</div>
+            <div>{dateValue ? intl.formatDate(dateValue, DateTimeFormat) : intl.formatMessage({ id: 'msg.time' })}</div>
             <div className={'d-flex'}>
                 <Form.Range
                     min={0}

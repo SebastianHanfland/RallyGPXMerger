@@ -1,4 +1,5 @@
 import date from 'date-and-time';
+import { FormatDateOptions } from 'react-intl';
 
 export function shiftEndDate(endDateString: string, breakInMinutes: number): string {
     return date.addSeconds(new Date(endDateString), -breakInMinutes * 60).toISOString();
@@ -21,3 +22,12 @@ export function formatTimeOnly(dateString: string): string {
     const TIME_FORMAT = 'HH:mm:ss';
     return date.format(new Date(dateString), TIME_FORMAT);
 }
+
+export const DateTimeFormat: FormatDateOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+};
