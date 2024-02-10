@@ -3,17 +3,19 @@ import { useSelector } from 'react-redux';
 import download from '../../assets/file-down.svg';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { downloadFilesInZip } from '../tracks/CalculatedFilesDownloader.tsx';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export const SegmentFilesDownloader = () => {
+    const intl = useIntl();
     const calculatedTracks = useSelector(getGpxSegments);
     return (
         <Button
             onClick={() => downloadFilesInZip(calculatedTracks, 'Segments')}
             disabled={calculatedTracks.length === 0}
-            title={'Download all GPX segments'}
+            title={intl.formatMessage({ id: 'msg.downloadSegments.hint' })}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
-            Download GPX Segments
+            <FormattedMessage id={'msg.downloadSegments'} />
         </Button>
     );
 };

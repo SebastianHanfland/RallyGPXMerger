@@ -10,6 +10,7 @@
     "msg.dashboard": "Dashboard",
     "msg.settings": "Settings",
     "msg.segments": "Segments",
+    "msg.segment": "Segment",
     "msg.tracks": "Tracks",
     "msg.calculateTracks": "Calculate tracks",
     "msg.triggerAll": "Trigger all",
@@ -53,6 +54,8 @@
     "msg.mergeTracks.hint": "Merge GPX segments to tracks and adjust the times",
     "msg.downloadTracks": "GPX Files",
     "msg.downloadTracks.hint": "Download all GPX files for the tracks",
+    "msg.downloadSegments": "GPX Segment Files",
+    "msg.downloadSegments.hint": "Download all GPX files of segments",
     "msg.calculationSettings.title": "Calculation settings",
     "msg.trackName": "Track name",
     "msg.people": "People",
@@ -64,5 +67,13 @@
     "msg.removeTrack": "Remove track",
     "msg.removeTrack.hint": "`Remove track {name}",
     "msg.pasteSegments": "Paste segmentIds to clipboard",
-    "msg.copySegments": "Copy segmentIds to clipboard"
+    "msg.copySegments": "Copy segmentIds to clipboard",
+    "msg.customSpeed": "Custom speed on segments",
+    "msg.importFile": "Import JSON file",
+    "msg.importFile.hint": "All current data is lost when importing another file",
+    "msg.completeStatus": "Complete planning status",
+    "msg.downloadCsv": "Download all information for the tracks as a csv",
+    "msg.downloadPdf": "Download all information for the tracks as a PDFs",
+    "msg.downloads": "Downloads",
+    "msg.imports": "Imports"
 }

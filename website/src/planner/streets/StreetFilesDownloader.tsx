@@ -9,6 +9,7 @@ import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnr
 import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv.ts';
 import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
 import { getLanguage } from '../../language.ts';
+import { useIntl } from 'react-intl';
 
 function createCsv(csv: string) {
     return new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], { type: 'csv;charset=utf-8' });
@@ -29,13 +30,14 @@ const downloadFiles = (trackStreetInfos: TrackStreetInfo[], blockedStreetInfos: 
 };
 
 export const StreetFilesDownloader = () => {
+    const intl = useIntl();
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Button
             onClick={() => downloadFiles(trackStreetInfos, blockedStreetInfos)}
             disabled={trackStreetInfos.length === 0}
-            title={'Download all information for the tracks as a csv'}
+            title={intl.formatMessage({ id: 'msg.downloadCsv' })}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
             CSV

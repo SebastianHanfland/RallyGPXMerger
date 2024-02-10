@@ -10,6 +10,7 @@
     "msg.dashboard": "Übersicht",
     "msg.settings": "Einstellungen",
     "msg.segments": "Abschnitte",
+    "msg.segment": "Abschnitt",
     "msg.tracks": "Routen",
     "msg.calculateTracks": "Routen berechnen",
     "msg.triggerAll": "Alle starten",
@@ -52,7 +53,9 @@
     "msg.mergeTracks": "Routen bauen",
     "msg.mergeTracks.hint": "Abschnitte zu Routen zusammenbauen und die Zeiten entsprechend anpassen",
     "msg.downloadTracks": "GPX Dateien",
-    "msg.downloadTracks.hint": "Alle GPX Dateien für die Routen runterladen",
+    "msg.downloadTracks.hint": "Alle GPX Dateien für die Routen herunterladen",
+    "msg.downloadSegments": "GPX Abschnitte",
+    "msg.downloadSegments.hint": "Alle GPX Dateien für die Abschnitte herunterladen",
     "msg.calculationSettings.title": "Berechnungseinstellungen",
     "msg.trackName": "Routenname",
     "msg.people": "Leute",
@@ -64,5 +67,13 @@
     "msg.removeTrack": "Route entfernen",
     "msg.removeTrack.hint": "Route {name} entfernen",
     "msg.pasteSegments": "Abschnitt-Ids in die Zwischenablage kopieren",
-    "msg.copySegments": "Abschnitt-Ids aus der Zwischenablage einfügen"
+    "msg.copySegments": "Abschnitt-Ids aus der Zwischenablage einfügen",
+    "msg.customSpeed": "Angepasste Geschwindigkeit auf Abschnitten",
+    "msg.importFile": "JSON Datei importieren",
+    "msg.importFile.hint": "Alle aktuellen Daten werden überschrieben, wenn eine andere Datei importiert wird",
+    "msg.completeStatus": "Aktueller Planungsstand",
+    "msg.downloadCsv": "Alle Informationen über die Routen als csv herunterladen",
+    "msg.downloadPdf": "Alle Informationen über die Routen als PDFs herunterladen",
+    "msg.downloads": "Downloads",
+    "msg.imports": "Imports"
 }

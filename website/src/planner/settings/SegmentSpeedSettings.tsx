@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { SegmentSpeedRow } from './SegmentSpeedRow.tsx';
 import { GpxSegment } from '../../common/types.ts';
+import { FormattedMessage } from 'react-intl';
 
 export function SegmentSpeedSettings() {
     const [filterTerm, setFilterTerm] = useState('');
@@ -16,7 +17,9 @@ export function SegmentSpeedSettings() {
 
     return (
         <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-            <h3>Construction sites to display</h3>
+            <h3>
+                <FormattedMessage id={'msg.customSpeed'} />
+            </h3>
             <div className={'my-2'}>
                 <Form.Control
                     type="text"
@@ -29,7 +32,9 @@ export function SegmentSpeedSettings() {
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
                         <tr>
-                            <th style={{ width: '40%' }}>Segment</th>
+                            <th style={{ width: '40%' }}>
+                                <FormattedMessage id={'msg.segment'} />
+                            </th>
                             <th style={{ width: '30%', minWidth: '150px' }}>Global speed in km/h</th>
                             <th style={{ width: '30%', minWidth: '150px' }}>Custom speed in km/h</th>
                         </tr>

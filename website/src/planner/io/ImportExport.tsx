@@ -7,26 +7,30 @@ import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownl
 import { ExportStateJson } from './ExportStateJson.tsx';
 import { importHook } from './importHook.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export function ImportExport() {
+    const intl = useIntl();
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
 
     return (
         <div>
             <Row>
-                <h3 className={'mb-5'}>Import</h3>
+                <h3 className={'mb-5'}>
+                    <FormattedMessage id={'msg.imports'} />
+                </h3>
             </Row>
             <Row className="flex-xl-nowrap" style={{ height: '20vh', minHeight: '200px', width: '100%' }}>
                 <Col>
                     <div className={'d-flex justify-content-center'}>
                         <div>
                             <div className={'m-3'}>
-                                All current data is lost when importing another file
+                                <FormattedMessage id={'msg.importFile.hint'} />
                                 <Warning />
                             </div>
                             <Button variant={'success'} onClick={importButtonClicked}>
                                 <img src={upload} className="m-1" alt="upload file" color={'#ffffff'} />
-                                Import file
+                                <FormattedMessage id={'msg.importFile'} />
                             </Button>
                         </div>
                     </div>
@@ -42,26 +46,36 @@ export function ImportExport() {
             </Row>
             <hr />
             <Row>
-                <h3>Downloads</h3>
+                <h3>
+                    <FormattedMessage id={'msg.downloads'} />
+                </h3>
             </Row>
             <Row style={{ height: '50vh' }}>
                 <Col>
-                    <h4>Gpx Segments</h4>
+                    <h4>
+                        <FormattedMessage id={'msg.segments'} />
+                    </h4>
                     <SegmentFilesDownloader />
                 </Col>
                 <Col>
-                    <h4>Calculated Tracks</h4>
+                    <h4>
+                        <FormattedMessage id={'msg.tracks'} />
+                    </h4>
                     <CalculatedFilesDownloader />
                 </Col>
                 <Col>
-                    <h4>Documents</h4>
+                    <h4>
+                        <FormattedMessage id={'msg.documents'} />
+                    </h4>
                     <div className={'m-2'}>
                         <StreetFilesDownloader /> <StreetFilesPdfMakeDownloader />
                     </div>
                 </Col>
                 <Col>
-                    <h4>Complete status</h4>
-                    <ExportStateJson label={'Export current state to file'} />
+                    <h4>
+                        <FormattedMessage id={'msg.completeStatus'} />
+                    </h4>
+                    <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
                 </Col>
             </Row>
         </div>

@@ -9,6 +9,7 @@ import { getPlanningLabel } from '../store/trackMerge.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
+import { useIntl } from 'react-intl';
 
 const downloadFiles = (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
@@ -19,6 +20,7 @@ const downloadFiles = (_: Dispatch, getState: () => State) => {
 };
 
 export const StreetFilesPdfMakeDownloader = () => {
+    const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
     return (
@@ -28,7 +30,7 @@ export const StreetFilesPdfMakeDownloader = () => {
                 dispatch(downloadFiles);
             }}
             disabled={trackStreetInfos.length === 0}
-            title={'Download all information for the tracks as pdf'}
+            title={intl.formatMessage({ id: 'msg.downloadPdf' })}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
             PDF

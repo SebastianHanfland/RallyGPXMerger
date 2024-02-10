@@ -6,7 +6,6 @@ import { ConstructionSites } from './ConstructionSites.tsx';
 export function Settings() {
     return (
         <div>
-            <h3 className={'mb-5'}>Settings</h3>
             <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
                 <Col xl={4}>
                     <TrackMergeParameters />
