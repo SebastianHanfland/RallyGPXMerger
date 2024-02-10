@@ -24,6 +24,10 @@
     "msg.removeAllData": "Alle Daten entfernen",
     "msg.removeAllData.modalBody": "Möchten Sie wirklich alle Daten entfernen?",
     "msg.removeAllData.modalTitle": "Alle Daten entfernen",
+    "msg.removeAllData.hint": "Alle Abschnitte, Routen und sonstige Daten löschen",
     "msg.confirm": "Bestätigen",
-    "msg.close": "Schließen"
+    "msg.close": "Schließen",
+    "msg.importExport": "Import/Export",
+    "msg.help.hint": "Eine kurze Erklärung, wie man den Planer verwendet",
+    "msg.help": "Hilfe"
 }

@@ -24,6 +24,10 @@
     "msg.removeAllData": "Remove all data",
     "msg.removeAllData.modalBody": "Do you really want to remove all data?",
     "msg.removeAllData.modalTitle": "Removing all data",
+    "msg.removeAllData.hint": "Delete all GPX segments, track compositions and tracks",
     "msg.confirm": "Confirm",
-    "msg.close": "Close"
+    "msg.close": "Close",
+    "msg.importExport": "Import/Export",
+    "msg.help.hint": "A short explanation how to use this tool",
+    "msg.help": "Help"
 }

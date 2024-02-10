@@ -36,7 +36,7 @@ export const AppHeader = () => {
                             active={'importExport' === selectedSection}
                             onClick={() => setSelectedSection('importExport')}
                         >
-                            Import/Export
+                            <FormattedMessage id={'msg.importExport'} />
                         </Pagination.Item>
                         <Pagination.Item
                             key={'settings'}

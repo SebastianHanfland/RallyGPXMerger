@@ -34,7 +34,7 @@ export function RemoveDataButton() {
         <>
             <Button
                 variant="danger"
-                title="Delete all GPX segments, track compositions and tracks"
+                title={intl.formatMessage({ id: 'msg.removeAllData.hint' })}
                 onClick={() => setShowModal(true)}
             >
                 <img src={trash} className="m-1" alt="trash" />
