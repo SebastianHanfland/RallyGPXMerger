@@ -8,7 +8,7 @@ import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -34,23 +34,37 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>
-                        <th>Street</th>
-                        <th>Post code</th>
-                        <th>District</th>
-                        <th>Length</th>
+                        <th>
+                            <FormattedMessage id={'msg.street'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.postCode'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.district'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.length'} />
+                        </th>
                         <th>
                             <span title={'Time required for a cyclist to pass this street'}>
-                                Duration
+                                <FormattedMessage id={'msg.duration'} />
                                 <img src={info} className={'m-1'} alt="help" />
                             </span>{' '}
                             <span title={'Time between the first and last cyclist on this street'}>
-                                ( Blockage
+                                ( <FormattedMessage id={'msg.blockage'} />
                                 <img src={info} className={'m-1'} alt="help" />)
                             </span>
                         </th>
-                        <th>Arrival of front</th>
-                        <th>Passage of front</th>
-                        <th>Arrival of back</th>
+                        <th>
+                            <FormattedMessage id={'msg.arrivalOfFront'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.passageOfFront'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.passageOfBack'} />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

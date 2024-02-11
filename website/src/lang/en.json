@@ -114,5 +114,16 @@
     "msg.trackStreetInfo": "Track Street Info",
     "msg.allEntries": "Show all entries",
     "msg.onlyUnknown": "Only show \"Unknown\"",
-    "msg.unknown": "Unknown"
+    "msg.unknown": "Unknown",
+    "msg.blockedStreets": "Blocked Streets",
+    "msg.postCode": "Post code",
+    "msg.district": "District",
+    "msg.street": "Street",
+    "msg.length": "Length",
+    "msg.duration": "Duration",
+    "msg.arrivalOfFront": "Arrival of front",
+    "msg.passageOfFront": "Passage of front",
+    "msg.passageOfBack": "Passage of back",
+    "msg.noTrackSelected": "No track selected",
+    "msg.blockage": "Blockage"
 }

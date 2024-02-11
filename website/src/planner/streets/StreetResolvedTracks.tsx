@@ -72,7 +72,11 @@ export function StreetResolvedTracks() {
                     <div>
                         {selectedInfo && <SingleTrackStreetInfo trackStreetInfo={selectedInfo} />}
                         {selectedTrackId === 'streets' && <BlockedStreetInfo />}
-                        {!selectedInfo && selectedTrackId !== 'streets' && <div>No Track selected</div>}
+                        {!selectedInfo && selectedTrackId !== 'streets' && (
+                            <div>
+                                <FormattedMessage id={'msg.noTrackSelected'} />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

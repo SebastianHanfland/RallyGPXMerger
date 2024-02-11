@@ -7,7 +7,7 @@ import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export const BlockedStreetInfo = () => {
     const intl = useIntl();
@@ -25,17 +25,33 @@ export const BlockedStreetInfo = () => {
 
     return (
         <div>
-            <h5>{'Blocked Streets'}</h5>
+            <h5>
+                <FormattedMessage id={'msg.blockedStreets'} />
+            </h5>
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>
-                        <th>Post code</th>
-                        <th>District</th>
-                        <th>Street</th>
-                        <th>Length</th>
-                        <th>Duration</th>
-                        <th>Arrival of front</th>
-                        <th>Passage of back</th>
+                        <th>
+                            <FormattedMessage id={'msg.postCode'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.district'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.street'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.length'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.duration'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.arrivalOfFront'} />
+                        </th>
+                        <th>
+                            <FormattedMessage id={'msg.passageOfBack'} />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

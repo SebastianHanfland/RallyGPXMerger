@@ -114,5 +114,16 @@
     "msg.trackStreetInfo": "Streckenabschnitte",
     "msg.allEntries": "Alle Einträge anzeigen",
     "msg.onlyUnknown": "Nur \"Unbekannte\" anzeigen",
-    "msg.unknown": "Unbekannt"
+    "msg.unknown": "Unbekannt",
+    "msg.blockedStreets": "Blockierte Straßen",
+    "msg.postCode": "PLZ",
+    "msg.district": "Bezirk",
+    "msg.street": "Straße",
+    "msg.length": "Länge",
+    "msg.duration": "Dauer",
+    "msg.arrivalOfFront": "Ankunft des Anfangs",
+    "msg.passageOfFront": "Durchgang des Anfangs",
+    "msg.passageOfBack": "Durchgang des Endes",
+    "msg.noTrackSelected": "Keine Route ausgewählt",
+    "msg.blockage": "Blockiert"
 }
