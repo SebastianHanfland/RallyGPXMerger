@@ -109,7 +109,7 @@
     "msg.requiredRequests.streets": "required Street requests",
     "msg.iAgree.part1": "with clicking, I agree to send data to",
     "msg.iAgree.part2": "and",
-    "msg.iAgree.part3": "",
+    "msg.iAgree.part3": " ",
     "msg.ownApiKey": "Use own API keys",
     "msg.trackStreetInfo": "Track Street Info",
     "msg.allEntries": "Show all entries",
