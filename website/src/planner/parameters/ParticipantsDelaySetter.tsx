@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getParticipantsDelay, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getAverageSpeedInKmH, getParticipantsDelay, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 
 export function ParticipantsDelaySetter() {
     const dispatch = useDispatch();
+    const averageSpeed = useSelector(getAverageSpeedInKmH);
     const participantsDelay = useSelector(getParticipantsDelay);
     return (
         <div className={'d-inline-block'}>
@@ -24,8 +25,10 @@ export function ParticipantsDelaySetter() {
                 <span className={'bg-info p-1'}>{participantsDelay.toFixed(2) + '\xa0s'}</span>
             </h6>
             <h6 className="form-label m-3">
-                {'Length of 100 people (based on 12 km/h): '}
-                <span className={'bg-info p-1'}>{Math.round((12 / 3.6) * 100 * participantsDelay) + '\xa0m'}</span>
+                {`Length of 100 people (based on ${averageSpeed.toFixed(1)} km/h): `}
+                <span className={'bg-info p-1'}>
+                    {Math.round((averageSpeed / 3.6) * 100 * participantsDelay) + '\xa0m'}
+                </span>
             </h6>
         </div>
     );
