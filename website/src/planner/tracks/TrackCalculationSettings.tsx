@@ -23,7 +23,9 @@ export function TrackCalculationSettings() {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <TrackMergeParameters />
+                        <div>
+                            <TrackMergeParameters />
+                        </div>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowModal(false)}>

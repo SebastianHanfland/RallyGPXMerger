@@ -87,5 +87,6 @@
     "msg.constructions": "Constructions",
     "msg.globalSpeed": "Global speed in km/h",
     "msg.customSpeed": "Custom speed in km/h",
-    "msg.customSpeed.placeholder": "Custom speed"
+    "msg.customSpeed.placeholder": "Custom speed",
+    "msg.rallyParameters.title": "Rally parameters"
 }

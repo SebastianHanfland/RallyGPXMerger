@@ -87,5 +87,6 @@
     "msg.constructions": "Baustellen",
     "msg.globalSpeed": "Globale Geschwindigkeit in km/h",
     "msg.customSpeed": "Angepasste Geschwindigkeit in km/h",
-    "msg.customSpeed.placeholder": "Angepasste Geschwindigkeit"
+    "msg.customSpeed.placeholder": "Angepasste Geschwindigkeit",
+    "msg.rallyParameters.title": "Sternfahrtparameter"
 }
