@@ -7,6 +7,7 @@ import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { MergeTable } from '../tracks/MergeTable.tsx';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
+import { FormattedMessage } from 'react-intl';
 
 export const WizardTracks = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -15,7 +16,9 @@ export const WizardTracks = () => {
     return (
         <Container>
             <WizardHeader />
-            <h5>Click the plus button to create a new track</h5>
+            <h5>
+                <FormattedMessage id={'msg.complex.title'} />
+            </h5>
             <Row>
                 <Col>
                     <MergeTable />
@@ -27,7 +30,7 @@ export const WizardTracks = () => {
                             setSelectedSection('gps');
                         }}
                     >
-                        Continue
+                        <FormattedMessage id={'msg.continue'} />
                     </Button>
                 </Col>
             </Row>

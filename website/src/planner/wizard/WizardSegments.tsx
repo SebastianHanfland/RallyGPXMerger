@@ -6,6 +6,7 @@ import { Sections } from '../layout/types.ts';
 import { GpxSegments } from '../segments/GpxSegments.tsx';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export const WizardSegments = () => {
     const dispatch = useDispatch();
@@ -15,12 +16,14 @@ export const WizardSegments = () => {
     return (
         <Container>
             <WizardHeader />
-            <h5>Upload single segments here, which will be used to construct different tracks</h5>
+            <h5>
+                <FormattedMessage id={'msg.wizardSegments.title'} />
+            </h5>
             <Row>
                 <Col>
                     {gpxSegments.length > 5 && (
                         <Button className={'my-4'} onClick={() => setSelectedSection('wizard-complexity')}>
-                            Continue
+                            <FormattedMessage id={'msg.continue'} />
                         </Button>
                     )}
                     <GpxSegments noFilter={true} />
@@ -30,7 +33,7 @@ export const WizardSegments = () => {
                         onClick={() => setSelectedSection('wizard-complexity')}
                         disabled={gpxSegments.length === 0}
                     >
-                        Continue
+                        <FormattedMessage id={'msg.continue'} />
                     </Button>
                 </Col>
             </Row>

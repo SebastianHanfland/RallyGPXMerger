@@ -35,8 +35,12 @@ export const WizardsComplexity = () => {
                 <Col>
                     <Card {...cardStyle} onClick={continueAsSimpleRally}>
                         <Card.Body>
-                            <Card.Title>Simple</Card.Title>
-                            <Card.Text style={{ minHeight: '3rem' }}>Each Gps Segment should be a track</Card.Text>
+                            <Card.Title>
+                                <FormattedMessage id={'msg.simple'} />
+                            </Card.Title>
+                            <Card.Text style={{ minHeight: '3rem' }}>
+                                <FormattedMessage id={'msg.simple.hint'} />
+                            </Card.Text>
                             <img
                                 src={line}
                                 className="m-1"
@@ -50,9 +54,11 @@ export const WizardsComplexity = () => {
                 <Col>
                     <Card {...cardStyle} onClick={continueAsComplexRally}>
                         <Card.Body>
-                            <Card.Title>Complex</Card.Title>
+                            <Card.Title>
+                                <FormattedMessage id={'msg.complex'} />
+                            </Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>
-                                Gps segments are shared and a track consists of multiple segments
+                                <FormattedMessage id={'msg.complex.hint'} />
                             </Card.Text>
                             <img
                                 src={mergeTracks}

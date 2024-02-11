@@ -161,5 +161,12 @@
     "msg.loadSample": "Sample Plan",
     "msg.loadSample.hint": "Load a sample plan to play around",
     "msg.loadSample.ex1": "3 Gpx segments (A1, B1 and AB)",
-    "msg.loadSample.ex2": "2 Tracks (A and B)"
+    "msg.loadSample.ex2": "2 Tracks (A and B)",
+    "msg.continue": "Continue",
+    "msg.wizardSegments.title": "Upload single segments here, which will be used to construct different tracks",
+    "msg.simple": "Simple",
+    "msg.complex": "Complex",
+    "msg.simple.hint": "Each Gps Segment should be a track",
+    "msg.complex.hint": "Gps segments are shared and a track consists of multiple segments",
+    "msg.complex.title": "Click the + button to create a new track"
 }

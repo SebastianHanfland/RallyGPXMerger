@@ -161,5 +161,12 @@
     "msg.loadSample": "Beispielplanung",
     "msg.loadSample.hint": "Beispielplanung um den Planer auszuprobieren",
     "msg.loadSample.ex1": "3 Gpx Abschnitte (A1, B1 und AB)",
-    "msg.loadSample.ex2": "2 Routen (A und B)"
+    "msg.loadSample.ex2": "2 Routen (A und B)",
+    "msg.continue": "Weiter",
+    "msg.wizardSegments.title": "Einzelne Streckenabschnitte hochladen, um aus ihnen die Routen zu bauen",
+    "msg.simple": "Einfach",
+    "msg.complex": "Komplex",
+    "msg.simple.hint": "Jeder Streckenabschnitt wird eine Route",
+    "msg.complex.hint": "Routen bestehen aus mehreren Abschnitten und teilen sich diese",
+    "msg.complex.title": "Den + Button anklicken um eine neue Route anzulegen"
 }

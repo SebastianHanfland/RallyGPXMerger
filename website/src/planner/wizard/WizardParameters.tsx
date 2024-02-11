@@ -9,6 +9,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
 import { PlanningLabel } from '../parameters/PlanningLabel.tsx';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export const WizardParameters = () => {
     const arrivalDateTime = useSelector(getArrivalDateTime);
@@ -29,7 +30,9 @@ export const WizardParameters = () => {
                     {arrivalDateTime && (
                         <>
                             <div className={'m-2'}>
-                                <Button onClick={() => setSelectedSection('wizard-segments')}>Continue</Button>
+                                <Button onClick={() => setSelectedSection('wizard-segments')}>
+                                    <FormattedMessage id={'msg.continue'} />
+                                </Button>
                             </div>
                             <hr />
                             <h3>Optional parameters</h3>
@@ -40,7 +43,9 @@ export const WizardParameters = () => {
                             <AverageSpeedSetter />
                             <hr />
                             <p>These parameters can still be changed afterwards</p>
-                            <Button onClick={() => setSelectedSection('wizard-segments')}>Continue</Button>
+                            <Button onClick={() => setSelectedSection('wizard-segments')}>
+                                <FormattedMessage id={'msg.continue'} />
+                            </Button>
                             <DirectlyToPlannerButton />
                         </>
                     )}
