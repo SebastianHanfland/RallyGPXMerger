@@ -24,12 +24,22 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
         <div>
             <h5>{name}</h5>
             <div className={'d-flex justify-content-between'}>
-                <div className={'m-3'}>{`Distance: ${distanceInKm.toFixed(2)} km`}</div>
-                <div className={'m-3'}>{`Start: ${formatTimeOnly(startFront)}`}</div>
-                <div className={'m-3'}>{`Arrival: ${formatTimeOnly(arrivalFront)}`}</div>
-                <div className={'m-3'}>{`End: ${formatTimeOnly(arrivalBack)}`}</div>
-                <div className={'m-3'}>{`Average speed: ${average.toFixed(1)} km/h`}</div>
-                <div className={'m-3'}>{`#People: ${peopleCount ?? '---'}`}</div>
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.distance' })}: ${distanceInKm.toFixed(
+                    2
+                )} km`}</div>
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.start' })}: ${formatTimeOnly(
+                    startFront
+                )}`}</div>
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.arrival' })}: ${formatTimeOnly(
+                    arrivalFront
+                )}`}</div>
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.end' })}: ${formatTimeOnly(
+                    arrivalBack
+                )}`}</div>
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.averageSpeed' })} ${average.toFixed(
+                    1
+                )} km/h`}</div>
+                <div className={'m-3'}>{`#${intl.formatMessage({ id: 'msg.people' })}: ${peopleCount ?? '---'}`}</div>
             </div>
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
@@ -47,11 +57,11 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                             <FormattedMessage id={'msg.length'} />
                         </th>
                         <th>
-                            <span title={'Time required for a cyclist to pass this street'}>
+                            <span title={intl.formatMessage({ id: 'msg.duration.hint' })}>
                                 <FormattedMessage id={'msg.duration'} />
                                 <img src={info} className={'m-1'} alt="help" />
                             </span>{' '}
-                            <span title={'Time between the first and last cyclist on this street'}>
+                            <span title={intl.formatMessage({ id: 'msg.blockage.hint' })}>
                                 ( <FormattedMessage id={'msg.blockage'} />
                                 <img src={info} className={'m-1'} alt="help" />)
                             </span>

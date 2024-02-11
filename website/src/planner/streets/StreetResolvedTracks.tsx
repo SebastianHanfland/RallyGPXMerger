@@ -52,7 +52,7 @@ export function StreetResolvedTracks() {
                             active={'streets' === selectedTrackId}
                             onClick={() => setSelectedTrackId('streets')}
                         >
-                            Streets
+                            <FormattedMessage id={'msg.streets'} />
                         </Pagination.Item>
                         {trackStreetInfos.map(({ id, name }) => (
                             <Pagination.Item

@@ -121,9 +121,15 @@
     "msg.street": "Straße",
     "msg.length": "Länge",
     "msg.duration": "Dauer",
+    "msg.duration.hint": "Zeit, die ein Fahrrad auf dieser Straße ist",
     "msg.arrivalOfFront": "Ankunft des Anfangs",
     "msg.passageOfFront": "Durchgang des Anfangs",
     "msg.passageOfBack": "Durchgang des Endes",
     "msg.noTrackSelected": "Keine Route ausgewählt",
-    "msg.blockage": "Blockiert"
+    "msg.blockage": "Blockiert",
+    "msg.blockage.hint": "Zeit zwischen dem ersten und letzten Fahrrad auf der Straße",
+    "msg.distance": "Distant",
+    "msg.start": "Start",
+    "msg.arrival": "Ankunft",
+    "msg.end": "Ende"
 }
