@@ -2,19 +2,20 @@ import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.
 import { Content, ContentTable } from 'pdfmake/interfaces';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
+import { IntlShape } from 'react-intl';
 
-export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (ContentTable | Content)[] {
+export function createNodeOverviewTable(trackStreets: TrackStreetInfo, intl: IntlShape): (ContentTable | Content)[] {
     const nodes = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Node);
     if (nodes.length === 0) {
         return [
-            { text: 'Knotenpunkte', style: 'titleStyle' },
+            { text: intl.formatMessage({ id: 'msg.nodePoints' }), style: 'titleStyle' },
             ' ',
-            { text: 'Auf dieser Route gibt es keine Knotenpunkte' },
+            { text: intl.formatMessage({ id: 'msg.noNodePoints' }) },
         ];
     }
 
     return [
-        { text: 'Knotenpunkte', style: 'titleStyle' },
+        { text: intl.formatMessage({ id: 'msg.nodePoints' }), style: 'titleStyle' },
         ' ',
         {
             layout: 'lightHorizontalLines', // optional
@@ -23,7 +24,9 @@ export function createNodeOverviewTable(trackStreets: TrackStreetInfo): (Content
 
                 headerRows: 1,
                 body: [
-                    ['Ort', 'Zeitpunkt', 'Andere Strecken'],
+                    ['msg.location', 'msg.pointInTime', 'msg.otherTracks'].map((key) =>
+                        intl.formatMessage({ id: key })
+                    ),
                     ...nodes.map((breakWayPoint) => [
                         {
                             text: breakWayPoint.streetName ?? 'Unbekannt',

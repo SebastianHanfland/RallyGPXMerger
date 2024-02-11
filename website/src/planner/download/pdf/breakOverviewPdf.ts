@@ -2,20 +2,21 @@ import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.
 import { Content, ContentTable } from 'pdfmake/interfaces';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
+import { IntlShape } from 'react-intl';
 
-export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (ContentTable | Content)[] {
+export function createBreakOverviewTable(trackStreets: TrackStreetInfo, intl: IntlShape): (ContentTable | Content)[] {
     const breaks = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Break);
 
     if (breaks.length === 0) {
         return [
-            { text: 'Pausenplätze', style: 'titleStyle' },
+            { text: intl.formatMessage({ id: 'msg.breakPoints' }), style: 'titleStyle' },
             ' ',
-            { text: 'Auf dieser Route gibt es keine Pausenplätze' },
+            { text: intl.formatMessage({ id: 'msg.noBreakPoints' }) },
         ];
     }
 
     return [
-        { text: 'Pausenplätze', style: 'titleStyle' },
+        { text: intl.formatMessage({ id: 'msg.breakPoints' }), style: 'titleStyle' },
         ' ',
         {
             layout: 'lightHorizontalLines', // optional
@@ -24,10 +25,10 @@ export function createBreakOverviewTable(trackStreets: TrackStreetInfo): (Conten
 
                 headerRows: 1,
                 body: [
-                    ['Ort', 'Pausenstart', 'Pausenlänge'],
+                    ['msg.location', 'msg.breakStart', 'msg.breakLength'].map((key) => intl.formatMessage({ id: key })),
                     ...breaks.map((breakWayPoint) => [
                         {
-                            text: breakWayPoint.streetName ?? 'Unbekannt',
+                            text: breakWayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' }),
                             link: getLink(breakWayPoint),
                             style: 'linkStyle',
                         },

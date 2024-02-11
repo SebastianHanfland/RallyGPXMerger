@@ -140,5 +140,16 @@
     "msg.blockedFrom": "Blockiert von",
     "msg.blockedUntil": "Blockiert bis",
     "msg.blockedStreetsFileName": "Blockierte-Straßen",
-    "msg.streetListZip": "Straßenliste"
+    "msg.streetListZip": "Straßenliste",
+    "msg.streetOverview": "Straßenübersicht",
+    "msg.nodePoints": "Knotenpunkte",
+    "msg.noNodePoints": "Auf dieser Route gibt es keine Knotenpunkte",
+    "msg.breakPoints": "Pausenplätze",
+    "msg.noBreakPoints": "Auf dieser Route gibt es keine Pausenplätze",
+    "msg.location": "Ort",
+    "msg.breakStart": "Pausenstart",
+    "msg.breakLength": "Pausenlänge",
+    "msg.pointInTime": "Zeitpunkt",
+    "msg.otherTracks": "Andere Routen",
+    "msg.trackInfo": "Routeninformationen"
 }

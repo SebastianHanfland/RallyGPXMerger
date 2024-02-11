@@ -52,7 +52,7 @@ export function createBlockedStreetsPdf(
         pageOrientation: 'landscape',
         content: [
             '',
-            { text: 'Blockierte Straßen', style: 'titleStyle' },
+            { text: intl.formatMessage({ id: 'msg.blockedStreets' }), style: 'titleStyle' },
             '\n\n',
             planningLabel ? `${planningLabel}` : ' ',
             ' ',
