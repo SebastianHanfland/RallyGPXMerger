@@ -7,14 +7,16 @@ import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
+import { useIntl } from 'react-intl';
 
 export const BlockedStreetInfo = () => {
+    const intl = useIntl();
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
 
     const filteredBlockedStreets = blockedStreetInfos.filter((blockedStreetInfos) =>
         onlyShowUnknown
-            ? blockedStreetInfos.streetName === 'Unknown' ||
+            ? blockedStreetInfos.streetName === intl.formatMessage({ id: 'msg.unknown' }) ||
               blockedStreetInfos.postCode === undefined ||
               blockedStreetInfos.district === undefined
             : true
@@ -40,11 +42,13 @@ export const BlockedStreetInfo = () => {
                         ({ streetName, frontArrival, backPassage, postCode, district, pointFrom, pointTo }) => (
                             <tr key={backPassage + streetName + frontArrival}>
                                 <td>
-                                    <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                    <HighlightUnknown
+                                        value={postCode?.toString() ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    />
                                     <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} streetName={streetName} />
                                 </td>
                                 <td>
-                                    <HighlightUnknown value={district ?? 'Unknown'} />
+                                    <HighlightUnknown value={district ?? intl.formatMessage({ id: 'msg.unknown' })} />
                                 </td>
                                 <td>
                                     <HighlightUnknown value={streetName} />

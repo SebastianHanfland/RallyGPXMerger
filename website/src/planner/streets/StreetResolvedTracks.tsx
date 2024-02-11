@@ -7,8 +7,10 @@ import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnr
 import { BlockedStreetInfo } from './BlockedStreetInfo.tsx';
 import { geoCodingActions, getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { StreetFilesPdfMakeDownloader } from './StreetFilesPdfMakeDownloader.tsx';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export function StreetResolvedTracks() {
+    const intl = useIntl();
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
@@ -25,7 +27,9 @@ export function StreetResolvedTracks() {
     return (
         <>
             <div className={'m-2 p-2'} style={{ height: '100px', overflow: 'hidden' }}>
-                <h3>Track Street Info</h3>
+                <h3>
+                    <FormattedMessage id={'msg.trackStreetInfo'} />
+                </h3>
                 <div className={'d-flex justify-content-between'}>
                     <div className={'mx-2'}>
                         <StreetFilesDownloader />
@@ -38,7 +42,7 @@ export function StreetResolvedTracks() {
                             variant={'secondary'}
                             onClick={() => dispatch(geoCodingActions.toggleOnlyShowUnknown())}
                         >
-                            {onlyShowUnknown ? 'Show all segments' : 'Only show "Unknown"'}
+                            {intl.formatMessage({ id: onlyShowUnknown ? 'msg.allEntries' : 'msg.onlyUnknown' })}
                         </Button>
                     </div>
                     <Pagination></Pagination>

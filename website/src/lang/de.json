@@ -110,5 +110,9 @@
     "msg.iAgree.part1": "mit dem Klick stimme ich zu, Daten zu ",
     "msg.iAgree.part2": "und",
     "msg.iAgree.part3": " zu senden",
-    "msg.ownApiKey": "Eigene API Keys verwenden"
+    "msg.ownApiKey": "Eigene API Keys verwenden",
+    "msg.trackStreetInfo": "Routenstraßeninformationen",
+    "msg.allEntries": "Alle Einträge anzeigen",
+    "msg.onlyUnknown": "Nur \"Unbekannte\" anzeigen",
+    "msg.unknown": "Unbekannt"
 }

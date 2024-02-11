@@ -8,12 +8,14 @@ import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
+import { useIntl } from 'react-intl';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
 }
 
 export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
+    const intl = useIntl();
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
     const { name, wayPoints, distanceInKm, startFront, arrivalBack, arrivalFront, peopleCount } = trackStreetInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
@@ -54,7 +56,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                     {wayPoints
                         .filter((wayPoint) =>
                             onlyShowUnknown
-                                ? wayPoint.streetName === 'Unknown' ||
+                                ? wayPoint.streetName === intl.formatMessage({ id: 'msg.unknown' }) ||
                                   wayPoint.postCode === undefined ||
                                   wayPoint.district === undefined
                                 : true
@@ -93,10 +95,14 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                         </b>
                                     </td>
                                     <td>
-                                        <HighlightUnknown value={postCode?.toString() ?? 'Unknown'} />
+                                        <HighlightUnknown
+                                            value={postCode?.toString() ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                        />
                                     </td>
                                     <td>
-                                        <HighlightUnknown value={district?.toString() ?? 'Unknown'} />
+                                        <HighlightUnknown
+                                            value={district?.toString() ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                        />
                                     </td>
                                     <td>
                                         {(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km
