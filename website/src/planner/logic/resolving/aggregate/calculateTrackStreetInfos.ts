@@ -30,7 +30,7 @@ const enrichWithStreetsAndAggregate =
                 distance += geoDistance(toLatLng(point), toLatLng(lastPoint)) as number;
             }
             const positionKey = toKey(point);
-            const street = resolvedPositions[positionKey] ?? 'Unknown';
+            const street = resolvedPositions[positionKey] ?? null;
             lastPoint = point;
 
             return {

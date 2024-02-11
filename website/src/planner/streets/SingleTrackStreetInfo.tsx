@@ -19,6 +19,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
     const { name, wayPoints, distanceInKm, startFront, arrivalBack, arrivalFront, peopleCount } = trackStreetInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
+    const unknown = intl.formatMessage({ id: 'msg.unknown' });
     return (
         <div>
             <h5>{name}</h5>
@@ -56,7 +57,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                     {wayPoints
                         .filter((wayPoint) =>
                             onlyShowUnknown
-                                ? wayPoint.streetName === intl.formatMessage({ id: 'msg.unknown' }) ||
+                                ? wayPoint.streetName === unknown ||
                                   wayPoint.postCode === undefined ||
                                   wayPoint.district === undefined
                                 : true
@@ -77,11 +78,11 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                             }) => (
                                 <tr key={backArrival + streetName + frontArrival}>
                                     <td>
-                                        <HighlightUnknown value={streetName} />
+                                        <HighlightUnknown value={streetName ?? unknown} />
                                         <StreetMapLink
                                             pointTo={pointTo}
                                             pointFrom={pointFrom}
-                                            streetName={streetName}
+                                            streetName={streetName ?? unknown}
                                         />
                                         <b>
                                             {type === TrackWayPointType.Break
@@ -95,14 +96,10 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                         </b>
                                     </td>
                                     <td>
-                                        <HighlightUnknown
-                                            value={postCode?.toString() ?? intl.formatMessage({ id: 'msg.unknown' })}
-                                        />
+                                        <HighlightUnknown value={postCode?.toString() ?? unknown} />
                                     </td>
                                     <td>
-                                        <HighlightUnknown
-                                            value={district?.toString() ?? intl.formatMessage({ id: 'msg.unknown' })}
-                                        />
+                                        <HighlightUnknown value={district?.toString() ?? unknown} />
                                     </td>
                                     <td>
                                         {(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km

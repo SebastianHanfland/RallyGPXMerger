@@ -13,10 +13,11 @@ export const BlockedStreetInfo = () => {
     const intl = useIntl();
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);
+    const unknown = intl.formatMessage({ id: 'msg.unknown' });
 
     const filteredBlockedStreets = blockedStreetInfos.filter((blockedStreetInfos) =>
         onlyShowUnknown
-            ? blockedStreetInfos.streetName === intl.formatMessage({ id: 'msg.unknown' }) ||
+            ? blockedStreetInfos.streetName === unknown ||
               blockedStreetInfos.postCode === undefined ||
               blockedStreetInfos.district === undefined
             : true
@@ -42,16 +43,18 @@ export const BlockedStreetInfo = () => {
                         ({ streetName, frontArrival, backPassage, postCode, district, pointFrom, pointTo }) => (
                             <tr key={backPassage + streetName + frontArrival}>
                                 <td>
-                                    <HighlightUnknown
-                                        value={postCode?.toString() ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <HighlightUnknown value={postCode?.toString() ?? unknown} />
+                                    <StreetMapLink
+                                        pointTo={pointTo}
+                                        pointFrom={pointFrom}
+                                        streetName={streetName ?? unknown}
                                     />
-                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} streetName={streetName} />
                                 </td>
                                 <td>
-                                    <HighlightUnknown value={district ?? intl.formatMessage({ id: 'msg.unknown' })} />
+                                    <HighlightUnknown value={district ?? unknown} />
                                 </td>
                                 <td>
-                                    <HighlightUnknown value={streetName} />
+                                    <HighlightUnknown value={streetName ?? unknown} />
                                 </td>
                                 <td>{(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km</td>
                                 <td>{(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60).toFixed(1)} min</td>

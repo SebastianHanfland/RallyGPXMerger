@@ -57,7 +57,7 @@ export enum TrackWayPointType {
 }
 
 export interface TrackWayPoint {
-    streetName: string;
+    streetName: string | null;
     frontArrival: string;
     frontPassage: string;
     backArrival: string;
@@ -82,7 +82,7 @@ export interface TrackStreetInfo {
 }
 
 export interface BlockedStreetInfo {
-    streetName: string;
+    streetName: string | null;
     postCode?: number;
     district?: string;
     frontArrival: string;

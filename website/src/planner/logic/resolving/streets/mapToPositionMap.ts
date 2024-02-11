@@ -31,7 +31,7 @@ function resolveWayPoint(legInfo: GeoApifyLeg[], resolvedPositions: ResolvedPosi
             }
             alternativeCounter++;
         }
-        resolvedPositions[positionKey] = streetName ?? 'Unknown';
+        resolvedPositions[positionKey] = streetName ?? null;
     };
 }
 

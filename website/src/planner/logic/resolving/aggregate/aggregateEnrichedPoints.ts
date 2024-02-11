@@ -8,7 +8,7 @@ import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 import { NodePosition } from '../selectors/getNodePositions.ts';
 
 export interface EnrichedPoints extends PointS {
-    street: string;
+    street: string | null;
 }
 
 export interface PointS extends Omit<Point, 'time'> {
@@ -16,7 +16,7 @@ export interface PointS extends Omit<Point, 'time'> {
 }
 
 interface AggregatedPoints {
-    streetName: string;
+    streetName: string | null;
     frontArrival: string;
     frontPassage: string;
     backArrival: string;
@@ -27,12 +27,24 @@ interface AggregatedPoints {
     nodeTracks?: string[];
 }
 
-export function anyStreetNameMatch(streetName: string, lastStreetName: string): boolean {
+export function anyStreetNameMatch(streetName: string | null, lastStreetName: string | null): boolean {
+    if (!streetName && !lastStreetName) {
+        return false;
+    }
+    if (!streetName || !lastStreetName) {
+        return true;
+    }
     const streetNameElements = streetName.split(', ');
     return lastStreetName.startsWith(streetNameElements[0]);
 }
 
-export function takeMostDetailedStreetName(streetName: string, lastStreetName: string): string {
+export function takeMostDetailedStreetName(streetName: string | null, lastStreetName: string | null): string | null {
+    if (!streetName && !lastStreetName) {
+        return null;
+    }
+    if (!streetName || !lastStreetName) {
+        return lastStreetName ? lastStreetName : streetName;
+    }
     if (!anyStreetNameMatch(streetName, lastStreetName)) {
         return streetName;
     }
@@ -90,7 +102,7 @@ export function aggregateEnrichedPoints(
 ): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point, index) => {
-        if (point.street === 'Unknown' && index === 0) {
+        if (point.street === null && index === 0) {
             return;
         }
         if (aggregatedPoints.length === 0) {
@@ -101,22 +113,22 @@ export function aggregateEnrichedPoints(
         const lastIndex = aggregatedPoints.length - 1;
         const lastElement = aggregatedPoints[lastIndex];
 
-        if (point.street === 'Unknown' && index > 0 && enrichedPoints[index - 1].street !== 'Unknown') {
+        if (point.street === null && index > 0 && enrichedPoints[index - 1].street !== null) {
             aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
 
-        if (point.street === 'Unknown' && index > 1 && enrichedPoints[index - 2].street !== 'Unknown') {
+        if (point.street === null && index > 1 && enrichedPoints[index - 2].street !== null) {
             aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
 
-        if (point.street === 'Unknown' && index > 2 && enrichedPoints[index - 3].street !== 'Unknown') {
+        if (point.street === null && index > 2 && enrichedPoints[index - 3].street !== null) {
             aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
 
-        if (point.street === 'Unknown' && index > 3 && enrichedPoints[index - 4].street !== 'Unknown') {
+        if (point.street === null && index > 3 && enrichedPoints[index - 4].street !== null) {
             aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
