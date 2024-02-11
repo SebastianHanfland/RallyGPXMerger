@@ -42,7 +42,7 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<
                     { lat: blockedStreet.pointTo.lat, lng: blockedStreet.pointTo.lon },
                 ];
                 const connection = L.polyline(streetPoints, {
-                    color: getColorForStreetName(blockedStreet.streetName),
+                    color: getColorForStreetName(blockedStreet.streetName ?? 'random'),
                     weight: 4,
                     dashArray: '5',
                 }).bindTooltip(createTooltip(blockedStreet), {
