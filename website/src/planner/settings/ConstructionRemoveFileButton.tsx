@@ -3,6 +3,8 @@ import { Button } from 'react-bootstrap';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
+import trash from '../../assets/trash.svg';
+import { useIntl } from 'react-intl';
 
 interface Props {
     id: string;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 export function ConstructionRemoveFileButton({ id, name }: Props) {
+    const intl = useIntl();
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const removeConstruction = () => {
@@ -19,17 +22,17 @@ export function ConstructionRemoveFileButton({ id, name }: Props) {
         <>
             <Button
                 variant="danger"
-                title={`Remove file "${name}" and all references`}
+                title={intl.formatMessage({ id: 'msg.removeFile' })}
                 onClick={() => setShowModal(true)}
             >
-                x
+                <img src={trash} className="m-1" alt="trash" />
             </Button>
             {showModal && (
                 <ConfirmationModal
                     onConfirm={removeConstruction}
                     closeModal={() => setShowModal(false)}
-                    title={'Removing Construction file'}
-                    body={`Do you really want to remove the construction file "${name}"?`}
+                    title={intl.formatMessage({ id: 'msg.removeConstruction.modalTitle' })}
+                    body={intl.formatMessage({ id: 'msg.removeConstruction.modalBody' }, { name })}
                 />
             )}
         </>

@@ -79,5 +79,10 @@
     "msg.marker": "Marker",
     "msg.play.normal": "Sternfahrtsimulation abspielen",
     "msg.play.fast": "Sternfahrtsimulation schnell abspielen",
-    "msg.play.stop": "Sternfahrtsimulation stoppen"
+    "msg.play.stop": "Sternfahrtsimulation stoppen",
+    "msg.constructions.title": "Baustellen für die Anzeige",
+    "msg.uploadConstructionFile": "Hier bitte die Baustellen als GPX Dateien hochladen",
+    "msg.removeConstruction.modalTitle": "Baustellendatei entfernen",
+    "msg.removeConstruction.modalBody": "Möchten Sie wirklich die Baustellendatei \"{name}\" entfernen?",
+    "msg.constructions": "Baustellen"
 }

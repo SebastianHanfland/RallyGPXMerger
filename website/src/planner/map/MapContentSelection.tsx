@@ -75,7 +75,7 @@ export function MapContentSelection() {
                         type={'checkbox'}
                         id={'marker'}
                         className={'m-2'}
-                        label={'Constructions'}
+                        label={intl.formatMessage({ id: 'msg.constructions' })}
                         title={'Constructions'}
                         checked={showConstructions}
                         readOnly

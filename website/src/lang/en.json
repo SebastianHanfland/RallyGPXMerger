@@ -79,5 +79,10 @@
     "msg.marker": "Marker",
     "msg.play.normal": "Play the rally simulation",
     "msg.play.fast": "Play the rally simulation fast",
-    "msg.play.stop": "Stop the rally simulation"
+    "msg.play.stop": "Stop the rally simulation",
+    "msg.constructions.title": "Construction sites to display",
+    "msg.uploadConstructionFile": "Please upload the GPX files for constructions here",
+    "msg.removeConstruction.modalTitle": "Removing construction file",
+    "msg.removeConstruction.modalBody": "Do you really want to remove the construction file \"{name}\"?",
+    "msg.constructions": "Constructions"
 }
