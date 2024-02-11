@@ -92,5 +92,12 @@
     "msg.arrivalDate.title": "Arrival of tracks",
     "msg.arrivalDate.hint": "Time when the first people should arrive at the end of the track:",
     "msg.label.title": "Label of current planning",
-    "msg.label.hint": "This can be a version string that appears in the file names and the documents"
+    "msg.label.hint": "This can be a version string that appears in the file names and the documents",
+    "msg.aLot": "A lot",
+    "msg.none": "None",
+    "msg.participantsDelay.title": "Expansion of participants",
+    "msg.participantsDelay": "Delay of one participant: ",
+    "msg.participantsLength": "Length of 100 people (based on {speed} km/h): ",
+    "msg.averageSpeed.title": "Average speed of the rally",
+    "msg.averageSpeed": "Average speed: "
 }
