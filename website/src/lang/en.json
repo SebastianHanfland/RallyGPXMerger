@@ -106,5 +106,8 @@
     "msg.uniquePositions": "Unique Positions",
     "msg.uniquePositions.unresolved": "Unique unresolved Positions",
     "msg.requiredRequests.postCodes": "required Post code requests",
-    "msg.requiredRequests.streets": "required Street requests"
+    "msg.requiredRequests.streets": "required Street requests",
+    "msg.iAgree.part1": "with clicking, I agree to send data to",
+    "msg.iAgree.part2": "and",
+    "msg.iAgree.part3": ""
 }

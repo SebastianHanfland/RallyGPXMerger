@@ -106,5 +106,8 @@
     "msg.uniquePositions": "Einmalige Positionen",
     "msg.uniquePositions.unresolved": "Einmalige unaufgelöste Positionen",
     "msg.requiredRequests.postCodes": "benötigte PLZ Anfragen",
-    "msg.requiredRequests.streets": "benötige Straßenanfragen"
+    "msg.requiredRequests.streets": "benötige Straßenanfragen",
+    "msg.iAgree.part1": "mit dem Klick stimme ich zu, Daten zu ",
+    "msg.iAgree.part2": "und",
+    "msg.iAgree.part3": " zu senden"
 }
