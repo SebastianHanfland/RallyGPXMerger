@@ -8,7 +8,6 @@ import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStr
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv.ts';
 import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
-import { getLanguage } from '../../language.ts';
 import { IntlShape, useIntl } from 'react-intl';
 
 function createCsv(csv: string) {
@@ -25,11 +24,11 @@ const downloadFiles = (
         zip.file(`${track.name}-${track.distanceInKm.toFixed(2)}km.csv`, createCsv(convertTrackInfoToCsv(track, intl)));
     });
     zip.file(
-        getLanguage() === 'de' ? `Blockierte-Straßen.csv` : `Blocked-Streets.csv`,
+        `${intl.formatMessage({ id: 'msg.blockedStreetsFileName' })}.csv`,
         createCsv(convertStreetInfoToCsv(blockedStreetInfos, intl))
     );
     zip.generateAsync({ type: 'blob' }).then(function (content) {
-        FileSaver.saveAs(content, `StreetList-${new Date().toISOString()}.zip`);
+        FileSaver.saveAs(content, `${intl.formatMessage({ id: 'msg.streetListZip' })}-${new Date().toISOString()}.zip`);
     });
 };
 

@@ -138,5 +138,7 @@
     "msg.lengthInKm": "Length in km",
     "msg.blockageInMin": "Blockage in min",
     "msg.blockedFrom": "Blocked from",
-    "msg.blockedUntil": "Blocked until"
+    "msg.blockedUntil": "Blocked until",
+    "msg.blockedStreetsFileName": "Blocked-Streets",
+    "msg.streetListZip": "StreetList"
 }
