@@ -11,9 +11,6 @@ export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) 
     return Intl.NumberFormat(language, { maximumFractionDigits: maximumFractionDigits }).format(numberToFormat);
 }
 
-export const germanTableHeaders = `Straße;PLZ;Bezirk;Länge in km;Dauer in min;Blockiert in min;Ankunft des Zugs auf der Straße;Ankunft des Zugs am Ende;Straße blockiert bis\n`;
-export const englishTableHeaders = `Street;Post code;District;Length in km;Duration in min;Blockage in min;Arrival of front;Passage of front;Arrival of back\n`;
-
 function getAdditionalInfo(
     type: TrackWayPointType | undefined,
     nodeTracks: string[] | undefined,

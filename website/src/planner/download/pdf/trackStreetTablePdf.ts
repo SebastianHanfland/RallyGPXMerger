@@ -3,9 +3,10 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateU
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 import { ContentTable } from 'pdfmake/interfaces';
-import { formatNumber, germanTableHeaders } from '../csv/trackStreetsCsv.ts';
+import { formatNumber } from '../csv/trackStreetsCsv.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
+import { getTrackTableHeaders } from '../getHeader.ts';
 
 function getAdditionalInfo(
     type: TrackWayPointType | undefined,
@@ -22,7 +23,7 @@ function getAdditionalInfo(
 }
 
 export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape): ContentTable {
-    const tableHeader = germanTableHeaders.split(';').map((text) => ({
+    const tableHeader = getTrackTableHeaders(intl).map((text) => ({
         text,
         style: 'headerStyle',
     }));

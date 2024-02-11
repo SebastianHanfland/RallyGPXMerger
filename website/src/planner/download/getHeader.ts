@@ -2,6 +2,19 @@ import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
 
+export const getTrackTableHeaders = (intl: IntlShape) =>
+    [
+        'msg.street',
+        'msg.postCode',
+        'msg.district',
+        'msg.lengthInKm',
+        'msg.durationInMin',
+        'msg.blockageInMin',
+        'msg.arrivalOfFront',
+        'msg.passageOfFront',
+        'msg.passageOfBack',
+    ].map((key) => intl.formatMessage({ id: key }));
+
 export const getHeader = (trackInfo: TrackStreetInfo, intl: IntlShape): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
     const durationString = `${intl.formatMessage({ id: 'msg.durationInMin' })};${duration.toFixed(2)}\n`;
@@ -18,17 +31,7 @@ export const getHeader = (trackInfo: TrackStreetInfo, intl: IntlShape): string =
     )}\n${intl.formatMessage({ id: 'msg.arrivalOfBack' })};${formatTimeOnly(trackInfo.arrivalBack)}\n`;
     const peopleCount = `# ${intl.formatMessage({ id: 'msg.people' })}:;${trackInfo.peopleCount ?? ''}\n`;
 
-    const tableHeaders =
-        [
-            'msg.street',
-            'msg.postCode',
-            'msg.lengthInKm',
-            'msg.durationInMin',
-            'msg.blockageInMin',
-            'msg.arrivalOfFront',
-            'msg.passageOfFront',
-            'msg.passageOfBack',
-        ].map((key) => intl.formatMessage({ id: key })) + '\n';
+    const tableHeaders = getTrackTableHeaders(intl).join(';') + '\n';
 
     return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${tableHeaders}`;
 };

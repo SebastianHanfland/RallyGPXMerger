@@ -9,6 +9,7 @@ export const getBlockedStreetsHeader = (intl: IntlShape) => {
     const headerKeys = [
         'msg.postCode',
         'msg.district',
+        'msg.street',
         'msg.lengthInKm',
         'msg.blockageInMin',
         'msg.blockedFrom',

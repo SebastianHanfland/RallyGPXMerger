@@ -124,6 +124,7 @@
     "msg.durationInMin": "Duration in min",
     "msg.duration.hint": "Time required for a cyclist to pass this street",
     "msg.arrivalOfFront": "Arrival of front",
+    "msg.arrivalOfBack": "Arrival of back",
     "msg.passageOfFront": "Passage of front",
     "msg.passageOfBack": "Passage of back",
     "msg.noTrackSelected": "No track selected",

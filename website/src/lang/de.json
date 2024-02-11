@@ -124,6 +124,7 @@
     "msg.durationInMin": "Dauer in min",
     "msg.duration.hint": "Zeit, die ein Fahrrad auf dieser Straße ist",
     "msg.arrivalOfFront": "Ankunft des Anfangs",
+    "msg.arrivalOfBack": "Ankunft des Endes",
     "msg.passageOfFront": "Durchgang des Anfangs",
     "msg.passageOfBack": "Durchgang des Endes",
     "msg.noTrackSelected": "Keine Route ausgewählt",
