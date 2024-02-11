@@ -99,5 +99,12 @@
     "msg.participantsDelay": "Delay of one participant: ",
     "msg.participantsLength": "Length of 100 people (based on {speed} km/h): ",
     "msg.averageSpeed.title": "Average speed of the rally",
-    "msg.averageSpeed": "Average speed: "
+    "msg.averageSpeed": "Average speed: ",
+    "msg.externalDataOverview": "Overview of calculated Data",
+    "msg.property": "Property",
+    "msg.value": "Value",
+    "msg.uniquePositions": "Unique Positions",
+    "msg.uniquePositions.unresolved": "Unique unresolved Positions",
+    "msg.requiredRequests.postCodes": "required Post code requests",
+    "msg.requiredRequests.streets": "required Street requests"
 }

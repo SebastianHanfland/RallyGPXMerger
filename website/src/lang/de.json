@@ -99,5 +99,12 @@
     "msg.participantsDelay": "Verzögerung durch einen Teilnehmenden: ",
     "msg.participantsLength": "Länge von 100 Leuten (basierend auf {speed} km/h): ",
     "msg.averageSpeed.title": "Durchschnittsgeschwindigkeit der Sternfahrt",
-    "msg.averageSpeed": "Durchschnittsgeschwindigkeit: "
+    "msg.averageSpeed": "Durchschnittsgeschwindigkeit: ",
+    "msg.externalDataOverview": "Übersicht der berechneten Daten",
+    "msg.property": "Eigenschaft",
+    "msg.value": "Wert",
+    "msg.uniquePositions": "Einmalige Positionen",
+    "msg.uniquePositions.unresolved": "Einmalige unaufgelöste Positionen",
+    "msg.requiredRequests.postCodes": "benötigte PLZ Anfragen",
+    "msg.requiredRequests.streets": "benötige Straßenanfragen"
 }

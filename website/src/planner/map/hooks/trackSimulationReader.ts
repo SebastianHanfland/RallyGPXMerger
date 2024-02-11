@@ -21,23 +21,12 @@ const extractLocation =
         return extractSnakeTrack(timeStampFront, participants, readableTrack);
     };
 
-export const getNumberOfPositionsInTracks = createSelector(
-    getResolvedPositions,
-    getReadableTracks,
-    (positionMap, readableTracks) => {
-        let positionCount = 0;
-        readableTracks?.forEach((readableTrack) => {
-            readableTrack.gpx.tracks.forEach((track) => {
-                positionCount += track.points.length;
-            });
-        });
-        return {
-            uniquePositionCount: Object.keys(positionMap).length,
-            positionCount,
-            unresolvedUniquePositionCount: Object.values(positionMap).filter((value) => !value).length,
-        };
-    }
-);
+export const getNumberOfPositionsInTracks = createSelector(getResolvedPositions, getReadableTracks, (positionMap) => {
+    return {
+        uniquePositionCount: Object.keys(positionMap).length,
+        unresolvedUniquePositionCount: Object.values(positionMap).filter((value) => !value).length,
+    };
+});
 
 export const getCurrentTimeStamp = (state: State): string | undefined => {
     const calculatedTracks = getCalculatedTracks(state);

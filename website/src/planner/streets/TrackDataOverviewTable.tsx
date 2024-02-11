@@ -4,10 +4,10 @@ import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getNumberOfRequiredRequests } from '../store/geoCodingRequests.reducer.ts';
 import { getNumberOfPostCodeRequests } from '../logic/resolving/postcode/postCodeResolver.ts';
 import { Table } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 
 export function TrackDataOverviewTable() {
-    const { positionCount, uniquePositionCount, unresolvedUniquePositionCount } =
-        useSelector(getNumberOfPositionsInTracks);
+    const { uniquePositionCount, unresolvedUniquePositionCount } = useSelector(getNumberOfPositionsInTracks);
     const calculatedTracks = useSelector(getCalculatedTracks);
     const numberOfRequiredRequests = useSelector(getNumberOfRequiredRequests);
     const numberOfPostCodeRequests = useSelector(getNumberOfPostCodeRequests);
@@ -16,30 +16,38 @@ export function TrackDataOverviewTable() {
         <Table striped bordered hover style={{ width: '100%' }}>
             <thead>
                 <tr>
-                    <th>Property</th>
-                    <th>Value</th>
+                    <th>
+                        <FormattedMessage id={'msg.property'} />
+                    </th>
+                    <th>
+                        <FormattedMessage id={'msg.value'} />
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td># Tracks</td>
+                    <td>
+                        # <FormattedMessage id={'msg.tracks'} />
+                    </td>
                     <td>{calculatedTracks.length}</td>
                 </tr>
                 <tr>
-                    <td># Positions</td>
-                    <td>{positionCount}</td>
-                </tr>
-                <tr>
-                    <td># Unique positions</td>
+                    <td>
+                        # <FormattedMessage id={'msg.uniquePositions'} />
+                    </td>
                     <td>{uniquePositionCount}</td>
                 </tr>
                 <tr>
-                    <td># Unresolved unique Positions</td>
+                    <td>
+                        # <FormattedMessage id={'msg.uniquePositions.unresolved'} />
+                    </td>
                     <td>{unresolvedUniquePositionCount}</td>
                 </tr>
                 {!!numberOfRequiredRequests && (
                     <tr>
-                        <td># required street Requests</td>
+                        <td>
+                            # <FormattedMessage id={'msg.requiredRequests.streets'} />
+                        </td>
                         <td>
                             {numberOfRequiredRequests} = {numberOfRequiredRequests * 5} s
                         </td>
@@ -47,7 +55,9 @@ export function TrackDataOverviewTable() {
                 )}
                 {numberOfPostCodeRequests > 0 && (
                     <tr>
-                        <td># required Post code Requests</td>
+                        <td>
+                            # <FormattedMessage id={'msg.requiredRequests.postCodes'} />
+                        </td>
                         <td>
                             {numberOfPostCodeRequests} = {(numberOfPostCodeRequests * 0.2).toFixed(1)} s
                         </td>

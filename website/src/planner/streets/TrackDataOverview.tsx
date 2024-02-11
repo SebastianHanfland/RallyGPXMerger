@@ -17,6 +17,7 @@ import { TrackDataOverviewTable } from './TrackDataOverviewTable.tsx';
 import { geoCodingActions, getResolvedPostCodes } from '../store/geoCoding.reducer.ts';
 import { calculateTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
 import { resolvePositions } from '../logic/resolving/resolveStreetAndPostcodeInfo.ts';
+import { FormattedMessage } from 'react-intl';
 
 export function TrackDataOverview() {
     const gpxSegments = useSelector(getGpxSegments);
@@ -35,7 +36,9 @@ export function TrackDataOverview() {
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading;
     return (
         <div className={'m-2 p-2'}>
-            <h4>Overview of calculated Data</h4>
+            <h4>
+                <FormattedMessage id={'msg.externalDataOverview'} />
+            </h4>
             <TrackDataOverviewTable />
 
             <div className={'mb-2'}>
