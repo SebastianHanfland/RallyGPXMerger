@@ -68,7 +68,7 @@
     "msg.removeTrack.hint": "`Remove track {name}",
     "msg.pasteSegments": "Paste segmentIds to clipboard",
     "msg.copySegments": "Copy segmentIds to clipboard",
-    "msg.customSpeed": "Custom speed on segments",
+    "msg.customSpeed.title": "Custom speed on segments",
     "msg.importFile": "Import JSON file",
     "msg.importFile.hint": "All current data is lost when importing another file",
     "msg.completeStatus": "Complete planning status",
@@ -84,5 +84,8 @@
     "msg.uploadConstructionFile": "Please upload the GPX files for constructions here",
     "msg.removeConstruction.modalTitle": "Removing construction file",
     "msg.removeConstruction.modalBody": "Do you really want to remove the construction file \"{name}\"?",
-    "msg.constructions": "Constructions"
+    "msg.constructions": "Constructions",
+    "msg.globalSpeed": "Global speed in km/h",
+    "msg.customSpeed": "Custom speed in km/h",
+    "msg.customSpeed.placeholder": "Custom speed"
 }

@@ -68,7 +68,7 @@
     "msg.removeTrack.hint": "Route {name} entfernen",
     "msg.pasteSegments": "Abschnitt-Ids in die Zwischenablage kopieren",
     "msg.copySegments": "Abschnitt-Ids aus der Zwischenablage einfügen",
-    "msg.customSpeed": "Angepasste Geschwindigkeit auf Abschnitten",
+    "msg.customSpeed.title": "Angepasste Geschwindigkeit auf Abschnitten",
     "msg.importFile": "JSON Datei importieren",
     "msg.importFile.hint": "Alle aktuellen Daten werden überschrieben, wenn eine andere Datei importiert wird",
     "msg.completeStatus": "Aktueller Planungsstand",
@@ -84,5 +84,8 @@
     "msg.uploadConstructionFile": "Hier bitte die Baustellen als GPX Dateien hochladen",
     "msg.removeConstruction.modalTitle": "Baustellendatei entfernen",
     "msg.removeConstruction.modalBody": "Möchten Sie wirklich die Baustellendatei \"{name}\" entfernen?",
-    "msg.constructions": "Baustellen"
+    "msg.constructions": "Baustellen",
+    "msg.globalSpeed": "Globale Geschwindigkeit in km/h",
+    "msg.customSpeed": "Angepasste Geschwindigkeit in km/h",
+    "msg.customSpeed.placeholder": "Angepasste Geschwindigkeit"
 }
