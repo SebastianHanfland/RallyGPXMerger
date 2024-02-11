@@ -10,6 +10,7 @@ import { loadSampleData } from '../io/loadSampleData.ts';
 import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
 import { AppFooter } from './Footer.tsx';
 import { importHook } from '../io/importHook.ts';
+import { FormattedMessage } from 'react-intl';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -24,14 +25,18 @@ export const WizardStartPage = () => {
     return (
         <Container>
             <WizardHeader />
-            <h5 className={'mb-5'}>Choose your situation:</h5>
+            <h5 className={'mb-5'}>
+                <FormattedMessage id={'msg.choose'} />:
+            </h5>
             <Row>
                 <Col>
                     <Card {...cardStyle} onClick={() => setSelectedSection('wizard-parameters')}>
                         <Card.Body>
-                            <Card.Title>Start a new plan</Card.Title>
+                            <Card.Title>
+                                <FormattedMessage id={'msg.startPlan'} />
+                            </Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>
-                                Plan a moving demonstration with multiple branches
+                                <FormattedMessage id={'msg.startPlan.hint'} />
                             </Card.Text>
                             <img
                                 src={stars}
@@ -46,8 +51,12 @@ export const WizardStartPage = () => {
                 <Col>
                     <Card {...cardStyle} onClick={importButtonClicked}>
                         <Card.Body>
-                            <Card.Title>Load an existing plan</Card.Title>
-                            <Card.Text style={{ minHeight: '3rem' }}>Load an existing plan via json file</Card.Text>
+                            <Card.Title>
+                                <FormattedMessage id={'msg.loadPlan'} />
+                            </Card.Title>
+                            <Card.Text style={{ minHeight: '3rem' }}>
+                                <FormattedMessage id={'msg.loadPlan.hint'} />
+                            </Card.Text>
                             <img
                                 src={fileUp}
                                 className="m-1"
@@ -75,12 +84,18 @@ export const WizardStartPage = () => {
                         }}
                     >
                         <Card.Body>
-                            <Card.Title>Sample Planning</Card.Title>
+                            <Card.Title>
+                                <FormattedMessage id={'msg.loadSample'} />
+                            </Card.Title>
                             <Card.Text style={{ minHeight: '3rem' }}>
-                                Load a sample plan to play around:
+                                <FormattedMessage id={'msg.loadSample.hint'} />:
                                 <ul>
-                                    <li>3 Gpx segments (A1, B1 and AB)</li>
-                                    <li>2 Tracks (A and B)</li>
+                                    <li>
+                                        <FormattedMessage id={'msg.loadSample.ex1'} />:
+                                    </li>
+                                    <li>
+                                        <FormattedMessage id={'msg.loadSample.ex2'} />:
+                                    </li>
                                 </ul>
                             </Card.Text>
                             <img

@@ -151,5 +151,15 @@
     "msg.breakLength": "Break length",
     "msg.pointInTime": "Time",
     "msg.otherTracks": "Other tracks",
-    "msg.trackInfo": "Track information"
+    "msg.trackInfo": "Track information",
+    "msg.choose": "Choose your situation",
+    "msg.directToPlanner": "Go directly to the planner",
+    "msg.startPlan": "Start a new plan",
+    "msg.startPlan.hint": "Plan a moving demonstration with multiple branches",
+    "msg.loadPlan": "Load an existing plan via json file",
+    "msg.loadPlan.hint": "Load an existing plan",
+    "msg.loadSample": "Sample Plan",
+    "msg.loadSample.hint": "Load a sample plan to play around",
+    "msg.loadSample.ex1": "3 Gpx segments (A1, B1 and AB)",
+    "msg.loadSample.ex2": "2 Tracks (A and B)"
 }

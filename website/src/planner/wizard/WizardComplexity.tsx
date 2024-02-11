@@ -8,6 +8,7 @@ import { Sections } from '../layout/types.ts';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { simpleRallyThunk } from './simpleRallyThunk.ts';
 import { AppDispatch } from '../store/store.ts';
+import { FormattedMessage } from 'react-intl';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
@@ -27,7 +28,9 @@ export const WizardsComplexity = () => {
     return (
         <Container>
             <WizardHeader />
-            <h5 className={'mb-5'}>Choose your situation:</h5>
+            <h5 className={'mb-5'}>
+                <FormattedMessage id={'msg.choose'} />:
+            </h5>
             <Row>
                 <Col>
                     <Card {...cardStyle} onClick={continueAsSimpleRally}>

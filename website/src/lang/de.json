@@ -151,5 +151,15 @@
     "msg.breakLength": "Pausenlänge",
     "msg.pointInTime": "Zeitpunkt",
     "msg.otherTracks": "Andere Routen",
-    "msg.trackInfo": "Routeninformationen"
+    "msg.trackInfo": "Routeninformationen",
+    "msg.choose": "Situation auswählen",
+    "msg.directToPlanner": "Direkt zum Sternfahrtplaner",
+    "msg.startPlan": "Eine neue Planung starten",
+    "msg.startPlan.hint": "Eine sich bewegende Demonstration mit mehreren Routen planen",
+    "msg.loadPlan": "Existierende Planung laden",
+    "msg.loadPlan.hint": "Existierende Planung über eine json Datei laden",
+    "msg.loadSample": "Beispielplanung",
+    "msg.loadSample.hint": "Beispielplanung um den Planer auszuprobieren",
+    "msg.loadSample.ex1": "3 Gpx Abschnitte (A1, B1 und AB)",
+    "msg.loadSample.ex2": "2 Routen (A und B)"
 }
