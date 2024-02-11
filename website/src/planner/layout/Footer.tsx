@@ -17,6 +17,7 @@ export const AppFooter = () => {
                         <a
                             href="https://github.com/SebastianHanfland/RallyGPXMerger/tree/main/docs"
                             className="nav-link px-2 text-muted"
+                            target={'_blank'}
                         >
                             Docs
                         </a>

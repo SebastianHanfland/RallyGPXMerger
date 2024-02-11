@@ -29,10 +29,10 @@ interface AggregatedPoints {
 
 export function anyStreetNameMatch(streetName: string | null, lastStreetName: string | null): boolean {
     if (!streetName && !lastStreetName) {
-        return false;
+        return true;
     }
     if (!streetName || !lastStreetName) {
-        return true;
+        return false;
     }
     const streetNameElements = streetName.split(', ');
     return lastStreetName.startsWith(streetNameElements[0]);
