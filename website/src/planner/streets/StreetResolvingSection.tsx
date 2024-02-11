@@ -2,6 +2,7 @@ import { Accordion, Col, Row } from 'react-bootstrap';
 import { TrackDataOverview } from './TrackDataOverview.tsx';
 import { ApiKeyInput } from './ApiKeyInput.tsx';
 import { StreetResolvedTracks } from './StreetResolvedTracks.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export const StreetResolvingSection = () => {
     return (
@@ -12,7 +13,9 @@ export const StreetResolvingSection = () => {
                     <hr />
                     <Accordion>
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header>Use own API keys</Accordion.Header>
+                            <Accordion.Header>
+                                <FormattedMessage id={'msg.ownApiKey'} />
+                            </Accordion.Header>
                             <Accordion.Body>
                                 <ApiKeyInput />
                             </Accordion.Body>
