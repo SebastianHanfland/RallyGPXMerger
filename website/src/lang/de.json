@@ -88,5 +88,9 @@
     "msg.globalSpeed": "Globale Geschwindigkeit in km/h",
     "msg.customSpeed": "Angepasste Geschwindigkeit in km/h",
     "msg.customSpeed.placeholder": "Angepasste Geschwindigkeit",
-    "msg.rallyParameters.title": "Sternfahrtparameter"
+    "msg.rallyParameters.title": "Sternfahrtparameter",
+    "msg.arrivalDate.title": "Ankunft der Routen",
+    "msg.arrivalDate.hint": "Zeitpunkt, wenn die ersten Routen am Ziel ankommen sollen:",
+    "msg.label.title": "Bezeichnung der Planung",
+    "msg.label.hint": "Dieser Text kann als Versionsbezeichnung benutzt werden. Er taucht in den Dokumenten auf"
 }

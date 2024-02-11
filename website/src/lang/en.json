@@ -88,5 +88,9 @@
     "msg.globalSpeed": "Global speed in km/h",
     "msg.customSpeed": "Custom speed in km/h",
     "msg.customSpeed.placeholder": "Custom speed",
-    "msg.rallyParameters.title": "Rally parameters"
+    "msg.rallyParameters.title": "Rally parameters",
+    "msg.arrivalDate.title": "Arrival of tracks",
+    "msg.arrivalDate.hint": "Time when the first people should arrive at the end of the track:",
+    "msg.label.title": "Label of current planning",
+    "msg.label.hint": "This can be a version string that appears in the file names and the documents"
 }
