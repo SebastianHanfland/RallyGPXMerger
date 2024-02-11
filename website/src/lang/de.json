@@ -99,7 +99,7 @@
     "msg.participantsDelay": "Verzögerung durch einen Teilnehmenden: ",
     "msg.participantsLength": "Länge von 100 Leuten (basierend auf {speed} km/h): ",
     "msg.averageSpeed.title": "Durchschnittsgeschwindigkeit der Sternfahrt",
-    "msg.averageSpeed": "Durchschnittsgeschwindigkeit: ",
+    "msg.averageSpeed": "Durchschnittsgeschwindigkeit",
     "msg.externalDataOverview": "Übersicht der berechneten Daten",
     "msg.property": "Eigenschaft",
     "msg.value": "Wert",
@@ -121,6 +121,7 @@
     "msg.street": "Straße",
     "msg.length": "Länge",
     "msg.duration": "Dauer",
+    "msg.durationInMin": "Dauer in min",
     "msg.duration.hint": "Zeit, die ein Fahrrad auf dieser Straße ist",
     "msg.arrivalOfFront": "Ankunft des Anfangs",
     "msg.passageOfFront": "Durchgang des Anfangs",
@@ -128,8 +129,13 @@
     "msg.noTrackSelected": "Keine Route ausgewählt",
     "msg.blockage": "Blockiert",
     "msg.blockage.hint": "Zeit zwischen dem ersten und letzten Fahrrad auf der Straße",
-    "msg.distance": "Distant",
+    "msg.distance": "Distanz",
+    "msg.distanceInKm": "Distanz in km",
     "msg.start": "Start",
     "msg.arrival": "Ankunft",
-    "msg.end": "Ende"
+    "msg.end": "Ende",
+    "msg.lengthInKm": "Länge in km",
+    "msg.blockageInMin": "Blockierte Dauer in min",
+    "msg.blockedFrom": "Blockiert von",
+    "msg.blockedUntil": "Blockiert bis"
 }

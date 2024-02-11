@@ -8,9 +8,10 @@ import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
+import { IntlShape } from 'react-intl';
 
-export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): ContentTable {
-    const tableHeader = getBlockedStreetsHeader()
+export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[], intl: IntlShape): ContentTable {
+    const tableHeader = getBlockedStreetsHeader(intl)
         .split(';')
         .map((text) => ({
             text,
@@ -21,7 +22,7 @@ export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): Con
         `${streetPoint.postCode ?? ''}`,
         `${streetPoint.district?.replace('Wahlkreis', '') ?? ''}`,
         {
-            text: `${streetPoint.streetName}`,
+            text: `${streetPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}`,
             style: 'linkStyle',
             link: getLink(streetPoint),
         },
@@ -42,7 +43,11 @@ export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[]): Con
     };
 }
 
-export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[], planningLabel: string | undefined) {
+export function createBlockedStreetsPdf(
+    trackStreets: BlockedStreetInfo[],
+    planningLabel: string | undefined,
+    intl: IntlShape
+) {
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
         content: [
@@ -52,7 +57,7 @@ export function createBlockedStreetsPdf(trackStreets: BlockedStreetInfo[], plann
             planningLabel ? `${planningLabel}` : ' ',
             ' ',
             ' ',
-            createBlockedStreetTable(trackStreets),
+            createBlockedStreetTable(trackStreets, intl),
         ],
         styles,
     };

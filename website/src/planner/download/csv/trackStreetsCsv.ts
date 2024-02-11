@@ -4,6 +4,7 @@ import { getLanguage } from '../../../language.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 import { getHeader } from '../getHeader.ts';
+import { IntlShape } from 'react-intl';
 
 export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
     const language = getLanguage();
@@ -27,9 +28,9 @@ function getAdditionalInfo(
     return '';
 }
 
-export function convertTrackInfoToCsv(track: TrackStreetInfo): string {
+export function convertTrackInfoToCsv(track: TrackStreetInfo, intl: IntlShape): string {
     return (
-        getHeader(track) +
+        getHeader(track, intl) +
         track.wayPoints
             .map(
                 ({
@@ -45,7 +46,11 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo): string {
                     nodeTracks,
                     breakLength,
                 }) =>
-                    `${streetName}${getAdditionalInfo(type, nodeTracks, breakLength)};` +
+                    `${streetName ?? intl.formatMessage({ id: 'msg.unknown' })}${getAdditionalInfo(
+                        type,
+                        nodeTracks,
+                        breakLength
+                    )};` +
                     `${postCode ?? ''};` +
                     `${district ?? ''};` +
                     `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +

@@ -5,6 +5,7 @@ import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 import { ContentTable } from 'pdfmake/interfaces';
 import { formatNumber, germanTableHeaders } from '../csv/trackStreetsCsv.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
+import { IntlShape } from 'react-intl';
 
 function getAdditionalInfo(
     type: TrackWayPointType | undefined,
@@ -20,7 +21,7 @@ function getAdditionalInfo(
     return '';
 }
 
-export function createStreetTable(trackStreets: TrackStreetInfo): ContentTable {
+export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape): ContentTable {
     const tableHeader = germanTableHeaders.split(';').map((text) => ({
         text,
         style: 'headerStyle',
@@ -28,7 +29,7 @@ export function createStreetTable(trackStreets: TrackStreetInfo): ContentTable {
 
     const wayPointRows = trackStreets.wayPoints.map((waypoint) => [
         {
-            text: `${waypoint.streetName}${getAdditionalInfo(
+            text: `${waypoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}${getAdditionalInfo(
                 waypoint.type,
                 waypoint.nodeTracks,
                 waypoint.breakLength

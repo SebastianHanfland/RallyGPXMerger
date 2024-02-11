@@ -99,7 +99,7 @@
     "msg.participantsDelay": "Delay of one participant: ",
     "msg.participantsLength": "Length of 100 people (based on {speed} km/h): ",
     "msg.averageSpeed.title": "Average speed of the rally",
-    "msg.averageSpeed": "Average speed: ",
+    "msg.averageSpeed": "Average speed",
     "msg.externalDataOverview": "Overview of calculated Data",
     "msg.property": "Property",
     "msg.value": "Value",
@@ -121,6 +121,7 @@
     "msg.street": "Street",
     "msg.length": "Length",
     "msg.duration": "Duration",
+    "msg.durationInMin": "Duration in min",
     "msg.duration.hint": "Time required for a cyclist to pass this street",
     "msg.arrivalOfFront": "Arrival of front",
     "msg.passageOfFront": "Passage of front",
@@ -129,7 +130,12 @@
     "msg.blockage": "Blockage",
     "msg.blockage.hint": "Time between the first and last cyclist on this street",
     "msg.distance": "Distance",
+    "msg.distanceInKm": "Distance in km",
     "msg.start": "Start",
     "msg.arrival": "Arrival",
-    "msg.end": "End"
+    "msg.end": "End",
+    "msg.lengthInKm": "Length in km",
+    "msg.blockageInMin": "Blockage in min",
+    "msg.blockedFrom": "Blocked from",
+    "msg.blockedUntil": "Blocked until"
 }

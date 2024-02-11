@@ -1,42 +1,34 @@
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
-import { getLanguage } from '../../language.ts';
-import { englishTableHeaders, formatNumber, germanTableHeaders } from './csv/trackStreetsCsv.ts';
+import { IntlShape } from 'react-intl';
 
-const germanHeader = (trackInfo: TrackStreetInfo): string => {
+export const getHeader = (trackInfo: TrackStreetInfo, intl: IntlShape): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
-    const durationString = `Dauer in min;${formatNumber(duration)}\n`;
-    const distance = `Strecke in km;${formatNumber(trackInfo.distanceInKm)}\n`;
-    const averageSpeed = `Durchschnittsgeschwindigkeit in km/h;${formatNumber(
-        (trackInfo.distanceInKm / duration) * 60
-    )}\n`;
+    const durationString = `${intl.formatMessage({ id: 'msg.durationInMin' })};${duration.toFixed(2)}\n`;
+    const distance = `${intl.formatMessage({ id: 'msg.distanceInKm' })};${trackInfo.distanceInKm.toFixed(2)}\n`;
+    const averageSpeed = `${intl.formatMessage({ id: 'msg.averageSpeed' })};${(
+        (trackInfo.distanceInKm / duration) *
+        60
+    ).toFixed(2)}\n`;
 
-    const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nAnkunft der Ersten;${formatTimeOnly(
+    const times = `${intl.formatMessage({ id: 'msg.start' })};${formatTimeOnly(
+        trackInfo.startFront
+    )}\n${intl.formatMessage({ id: 'msg.arrivalOfFront' })};${formatTimeOnly(
         trackInfo.arrivalFront
-    )}\nAnkunft der Letzten;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
-    const peopleCount = `Geschätzte TeilnehmerInnen:;${trackInfo.peopleCount ?? ''}\n`;
+    )}\n${intl.formatMessage({ id: 'msg.arrivalOfBack' })};${formatTimeOnly(trackInfo.arrivalBack)}\n`;
+    const peopleCount = `# ${intl.formatMessage({ id: 'msg.people' })}:;${trackInfo.peopleCount ?? ''}\n`;
 
-    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${germanTableHeaders}`;
-};
-const englishHeader = (trackInfo: TrackStreetInfo): string => {
-    const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
-    const durationString = `Duration in min;${duration.toFixed(2)}\n`;
-    const distance = `Distance in km;${trackInfo.distanceInKm.toFixed(2)}\n`;
-    const averageSpeed = `Average speed in km/h;${((trackInfo.distanceInKm / duration) * 60).toFixed(2)}\n`;
+    const tableHeaders =
+        [
+            'msg.street',
+            'msg.postCode',
+            'msg.lengthInKm',
+            'msg.durationInMin',
+            'msg.blockageInMin',
+            'msg.arrivalOfFront',
+            'msg.passageOfFront',
+            'msg.passageOfBack',
+        ].map((key) => intl.formatMessage({ id: key })) + '\n';
 
-    const times = `Start;${formatTimeOnly(trackInfo.startFront)}\nArrival of front;${formatTimeOnly(
-        trackInfo.arrivalFront
-    )}\nArrival of back;${formatTimeOnly(trackInfo.arrivalBack)}\n`;
-    const peopleCount = `People on track:;${trackInfo.peopleCount ?? ''}\n`;
-
-    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${englishTableHeaders}`;
-};
-export const getHeader = (trackInfo: TrackStreetInfo): string => {
-    const language = getLanguage();
-    switch (language) {
-        case 'de':
-            return germanHeader(trackInfo);
-        case 'en':
-            return englishHeader(trackInfo);
-    }
+    return `${times}${durationString}${distance}${averageSpeed}${peopleCount}${tableHeaders}`;
 };

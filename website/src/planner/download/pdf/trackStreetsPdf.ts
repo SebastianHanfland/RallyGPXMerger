@@ -6,8 +6,9 @@ import { createNodeOverviewTable } from './nodeOverviewTablePdf.ts';
 import { createStreetTable } from './trackStreetTablePdf.ts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
+import { IntlShape } from 'react-intl';
 
-export const createTrackStreetPdf = (planningLabel?: string) => (trackStreets: TrackStreetInfo) => {
+export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) => (trackStreets: TrackStreetInfo) => {
     const docDefinition: TDocumentDefinitions = {
         pageOrientation: 'landscape',
         content: [
@@ -18,7 +19,7 @@ export const createTrackStreetPdf = (planningLabel?: string) => (trackStreets: T
             ' ',
             { text: 'Routeninformationen', style: 'titleStyle' },
             ' ',
-            createInfoTable(trackStreets),
+            createInfoTable(trackStreets, intl),
             ' ',
             ' ',
             ...createBreakOverviewTable(trackStreets),
@@ -29,7 +30,7 @@ export const createTrackStreetPdf = (planningLabel?: string) => (trackStreets: T
             ' ',
             { text: 'Straßenübersicht', style: 'titleStyle' },
             ' ',
-            createStreetTable(trackStreets),
+            createStreetTable(trackStreets, intl),
         ],
         styles,
     };

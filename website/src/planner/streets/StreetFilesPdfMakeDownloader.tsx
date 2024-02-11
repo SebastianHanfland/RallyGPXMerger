@@ -9,14 +9,14 @@ import { getPlanningLabel } from '../store/trackMerge.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
-import { useIntl } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 
-const downloadFiles = (_: Dispatch, getState: () => State) => {
+const downloadFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
     const blockedStreetInfos = getBlockedStreetInfo(getState());
     const planningLabel = getPlanningLabel(getState());
-    trackStreetInfos.forEach(createTrackStreetPdf(planningLabel));
-    createBlockedStreetsPdf(blockedStreetInfos, planningLabel);
+    trackStreetInfos.forEach(createTrackStreetPdf(intl, planningLabel));
+    createBlockedStreetsPdf(blockedStreetInfos, planningLabel, intl);
 };
 
 export const StreetFilesPdfMakeDownloader = () => {
@@ -27,7 +27,7 @@ export const StreetFilesPdfMakeDownloader = () => {
         <Button
             onClick={(event) => {
                 event.stopPropagation();
-                dispatch(downloadFiles);
+                dispatch(downloadFiles(intl));
             }}
             disabled={trackStreetInfos.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadPdf' })}

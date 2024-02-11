@@ -36,7 +36,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.end' })}: ${formatTimeOnly(
                     arrivalBack
                 )}`}</div>
-                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.averageSpeed' })} ${average.toFixed(
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.averageSpeed' })}: ${average.toFixed(
                     1
                 )} km/h`}</div>
                 <div className={'m-3'}>{`#${intl.formatMessage({ id: 'msg.people' })}: ${peopleCount ?? '---'}`}</div>

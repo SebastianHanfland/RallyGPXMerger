@@ -24,6 +24,7 @@ export function AverageSpeedSetter() {
             </div>
             <h6 className="form-label m-3">
                 <FormattedMessage id={'msg.averageSpeed'} />
+                {': '}
                 <span className={'bg-info p-1'}>{averageSpeed.toFixed(1) + '\xa0km/h'}</span>
             </h6>
         </div>
