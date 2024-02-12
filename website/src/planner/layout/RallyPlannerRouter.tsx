@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import { Sections } from './types.ts';
 import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
 import { WizardTracks } from '../wizard/WizardTracks.tsx';
+import { WizardVersions } from '../wizard/WizardVersions.tsx';
+import { Dashboard } from './dashboard/Dashboard.tsx';
+import { FloatingInfoButton } from '../FloatingInfoButton.tsx';
 
 export const RallyPlannerRouter = () => {
     const selectedSection = useSelector(getSelectionSection);
@@ -47,11 +50,21 @@ export const RallyPlannerRouter = () => {
         return <WizardTracks />;
     }
 
+    if (selectedSection === 'wizard-versions') {
+        return <WizardVersions />;
+    }
+
     return (
-        <Container fluid className={'m-0'}>
-            <AppHeader />
-            <MergeAndMap />
-            <AppFooter />
-        </Container>
+        <>
+            <div className={'canvas-wrapper'} style={{ left: '30px', position: 'fixed' }}>
+                <Container fluid className={'m-0'}>
+                    <AppHeader />
+                    <MergeAndMap />
+                    <AppFooter />
+                </Container>
+            </div>
+            <FloatingInfoButton />
+            <Dashboard />
+        </>
     );
 };
