@@ -147,6 +147,55 @@ describe('aggregateEnrichedPoints', () => {
                 },
             ]);
         });
+
+        describe('getting rid of unknown streets', () => {
+            function createWayPointWithStreetName(street: string | null, lat: number) {
+                return {
+                    street,
+                    time: '2023-10-22T06:23:46Z',
+                    lat,
+                    lon: 2,
+                    ele: 3,
+                } as unknown as EnrichedPoints;
+            }
+
+            it('should take previous street name it unknown occurs for 5 waypoints', () => {
+                // given
+                const longList: EnrichedPoints[] = [
+                    createWayPointWithStreetName('A', 1),
+                    createWayPointWithStreetName(null, 2),
+                    createWayPointWithStreetName(null, 3),
+                    createWayPointWithStreetName(null, 4),
+                    createWayPointWithStreetName(null, 5),
+                    createWayPointWithStreetName(null, 6),
+                ];
+
+                // when
+                const aggregatedPoints = aggregateEnrichedPoints(longList, 100, []);
+
+                // then
+                expect(aggregatedPoints).toEqual([
+                    {
+                        streetName: 'A',
+                        frontArrival: '2023-10-22T06:23:46Z',
+                        backArrival: '2023-10-22T06:24:06.000Z',
+                        frontPassage: '2023-10-22T06:23:46Z',
+                        pointFrom: { lat: 1, lon: 2 },
+                        pointTo: { lat: 6, lon: 2 },
+                        type: TrackWayPointType.Track,
+                    },
+                    {
+                        backArrival: '2023-10-22T06:24:06.000Z',
+                        frontArrival: '2023-10-22T06:23:46Z',
+                        frontPassage: '2023-10-22T06:23:46Z',
+                        pointFrom: { lat: 6, lon: 2 },
+                        pointTo: { lat: 6, lon: 2 },
+                        streetName: null,
+                        type: 'TRACK',
+                    },
+                ]);
+            });
+        });
     });
     describe('anyStreetNameMatch', () => {
         it('should find a match', () => {
