@@ -95,6 +95,25 @@ function createAggregatedPoint(point: EnrichedPoints, participants: number, type
     };
 }
 
+const NumberOfPreviousPointsToInferNameOf = 4;
+
+function streetUnknownAndAPreviousPointHasAStreet(
+    point: EnrichedPoints,
+    index: number,
+    enrichedPoints: EnrichedPoints[]
+) {
+    if (point.street !== null) {
+        return false;
+    }
+    let previousStreetKnown = false;
+    for (let i = 0; i < NumberOfPreviousPointsToInferNameOf; i++) {
+        if (index > i && enrichedPoints[index - (i + 1)].street !== null) {
+            previousStreetKnown = true;
+        }
+    }
+    return previousStreetKnown;
+}
+
 export function aggregateEnrichedPoints(
     enrichedPoints: EnrichedPoints[],
     participants: number,
@@ -113,22 +132,7 @@ export function aggregateEnrichedPoints(
         const lastIndex = aggregatedPoints.length - 1;
         const lastElement = aggregatedPoints[lastIndex];
 
-        if (point.street === null && index > 0 && enrichedPoints[index - 1].street !== null) {
-            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
-            return;
-        }
-
-        if (point.street === null && index > 1 && enrichedPoints[index - 2].street !== null) {
-            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
-            return;
-        }
-
-        if (point.street === null && index > 2 && enrichedPoints[index - 3].street !== null) {
-            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
-            return;
-        }
-
-        if (point.street === null && index > 3 && enrichedPoints[index - 4].street !== null) {
+        if (streetUnknownAndAPreviousPointHasAStreet(point, index, enrichedPoints)) {
             aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
             return;
         }
