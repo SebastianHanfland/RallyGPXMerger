@@ -32,7 +32,7 @@ export function MergeTableTrack({ track }: Props) {
                 <Form.Control
                     type="text"
                     placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                    value={peopleCount}
+                    value={peopleCount?.toString() ?? ''}
                     onChange={(value) =>
                         dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }))
                     }
