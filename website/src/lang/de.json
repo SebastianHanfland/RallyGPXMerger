@@ -168,5 +168,10 @@
     "msg.complex": "Komplex",
     "msg.simple.hint": "Jeder Streckenabschnitt wird eine Route",
     "msg.complex.hint": "Routen bestehen aus mehreren Abschnitten und teilen sich diese",
-    "msg.complex.title": "Den + Button anklicken um eine neue Route anzulegen"
+    "msg.complex.title": "Den + Button anklicken um eine neue Route anzulegen",
+    "msg.versions": "Versionen",
+    "msg.versions.hint": "Eine Übersicht über alle verfügbaren Versionen",
+    "msg.back": "Zurück",
+    "msg.versionName": "Versionsname",
+    "msg.variants": "Varianten"
 }

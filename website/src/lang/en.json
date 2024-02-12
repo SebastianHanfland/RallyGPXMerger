@@ -168,5 +168,10 @@
     "msg.complex": "Complex",
     "msg.simple.hint": "Each Gps Segment should be a track",
     "msg.complex.hint": "Gps segments are shared and a track consists of multiple segments",
-    "msg.complex.title": "Click the + button to create a new track"
+    "msg.complex.title": "Click the + button to create a new track",
+    "msg.versions": "Versions",
+    "msg.versions.hint": "A list of all available version overviews",
+    "msg.back": "Back",
+    "msg.versionName": "Version name",
+    "msg.variants": "Variants"
 }
