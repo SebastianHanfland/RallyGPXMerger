@@ -7,11 +7,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 export const SegmentFilesDownloader = () => {
     const intl = useIntl();
-    const calculatedTracks = useSelector(getGpxSegments);
+    const segments = useSelector(getGpxSegments);
     return (
         <Button
-            onClick={() => downloadFilesInZip(calculatedTracks, 'Segments')}
-            disabled={calculatedTracks.length === 0}
+            onClick={() => downloadFilesInZip(segments, 'Segments')}
+            disabled={segments.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadSegments.hint' })}
         >
             <img src={download} className="m-1" alt="download file" color={'#ffffff'} />

@@ -13,7 +13,7 @@ const fileTypes = ['GPX'];
 export async function toGpxSegment(file: File): Promise<GpxSegment> {
     return file.arrayBuffer().then((buffer) => ({
         id: uuidv4(),
-        filename: file.name,
+        filename: file.name.replace('.gpx', ''),
         content: gpxShortener(new TextDecoder().decode(buffer)),
     }));
 }
@@ -69,7 +69,7 @@ export function GpxSegments({ noFilter }: Props) {
                                         name="file"
                                         types={fileTypes}
                                         multiple={true}
-                                        label={'Please upload the GPX segments here'}
+                                        label={intl.formatMessage({ id: 'msg.uploadFile' })}
                                     />
                                 </td>
                             </tr>

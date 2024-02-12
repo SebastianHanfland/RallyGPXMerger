@@ -11,7 +11,7 @@ export const downloadFilesInZip = (calculatedTracks: { content: string; filename
     const usedFilenames: string[] = [];
     let conflictCounter = 1;
     calculatedTracks.forEach((track) => {
-        let intendedFileName = track.filename;
+        let intendedFileName = track.filename.replace('.gpx', '');
         if (usedFilenames.includes(intendedFileName)) {
             intendedFileName += `(${conflictCounter++})`;
         }
