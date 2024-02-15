@@ -1,6 +1,8 @@
 # RallyGPXMerger
 A web tool to merge GPX tracks for big bike rallies written in React and TypeScript. Once the code is pushed to main, it is deployed.
 
+![Sketch](./docs/images/englishSketch.svg)
+
 ## Current deployment
 https://sebastianhanfland.github.io/RallyGPXMerger/
 
@@ -32,3 +34,7 @@ For organizing a rally, it is helpful to automate the time calculation for the d
 * ```docs```: Code Docs based on arc42
 * ```testdata```: Example Gpx files
 * ```website```: Code (React + vite project)
+
+## German naming sketch
+
+![Sketch](./docs/images/germanSketch.svg)
