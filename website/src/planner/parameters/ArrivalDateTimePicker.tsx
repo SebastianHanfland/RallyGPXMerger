@@ -12,7 +12,7 @@ export function ArrivalDateTimePicker() {
             <h5 className="form-label m-3">
                 <FormattedMessage id={'msg.arrivalDate.title'} />
             </h5>
-            <p>
+            <p style={!arrivalDateTime ? { backgroundColor: 'red' } : undefined}>
                 <FormattedMessage id={'msg.arrivalDate.hint'} />
             </p>
             <DatePicker

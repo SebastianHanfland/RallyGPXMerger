@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositionFilterTerm, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { TrackCalculationSettings } from './TrackCalculationSettings.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
 
 export function TrackCompositionSection() {
     const intl = useIntl();
@@ -18,6 +19,7 @@ export function TrackCompositionSection() {
             <h4>
                 <FormattedMessage id={'msg.tracks.title'} />
             </h4>
+            <ArrivalDateTimePicker />
             <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-2 justify-content-center'}>
                 <ButtonGroup aria-label="help-buttons">
                     <MergeTracksButton />
