@@ -6,10 +6,12 @@ import { useDispatch } from 'react-redux';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
+import { incompleteTrackDataHook } from './incompleteTrackDataHook.ts';
 
 export function TrackCalculationSettings() {
     const [showModal, setShowModal] = useState(false);
     const dispatch: AppDispatch = useDispatch();
+    const hasIncompleteTrackData = incompleteTrackDataHook();
     return (
         <>
             <Button variant={'info'} onClick={() => setShowModal(true)}>
@@ -34,7 +36,9 @@ export function TrackCalculationSettings() {
                         <Button
                             variant="primary"
                             onClick={() => {
-                                dispatch(calculateMerge);
+                                if (!hasIncompleteTrackData) {
+                                    dispatch(calculateMerge);
+                                }
                                 setShowModal(false);
                             }}
                         >

@@ -7,9 +7,11 @@ import { MergeTable } from '../tracks/MergeTable.tsx';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
+import { incompleteTrackDataHook } from '../tracks/incompleteTrackDataHook.ts';
 
 export const WizardTracks = () => {
     const dispatch: AppDispatch = useDispatch();
+    const hasIncompleteTrackData = incompleteTrackDataHook();
 
     return (
         <Container>
@@ -28,6 +30,7 @@ export const WizardTracks = () => {
                             dispatch(layoutActions.setShowDashboard(true));
                             dispatch(layoutActions.selectSection('gps'));
                         }}
+                        disabled={hasIncompleteTrackData}
                     >
                         <FormattedMessage id={'msg.continue'} />
                     </Button>
