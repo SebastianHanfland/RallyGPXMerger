@@ -47,6 +47,7 @@ const geoCodingRequestsSlice = createSlice({
         setIsAggregating: (state: GeoCodingRequestsState, action: PayloadAction<boolean>) => {
             state.isAggregating = action.payload;
         },
+        clear: () => initialState,
     },
 });
 

@@ -11,6 +11,7 @@ import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 import { clearReadableTracks } from '../cache/readableTracks.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export function RemoveDataButton() {
         dispatch(mapActions.setShowCalculatedTracks(false));
         dispatch(geoCodingActions.clear());
         dispatch(layoutActions.selectSection('start'));
+        dispatch(geoCodingRequestsActions.clear());
         localStorage.clear();
         setShowModal(false);
     };
