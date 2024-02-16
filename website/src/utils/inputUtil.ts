@@ -5,5 +5,13 @@ export function getCount(value: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
         return undefined;
     }
     const number = Number(value.target.value);
-    return isNaN(number) ? undefined : number;
+    if (isNaN(number)) {
+        return undefined;
+    }
+    console.log(number);
+    if (number < 0) {
+        return 0;
+    }
+
+    return number;
 }

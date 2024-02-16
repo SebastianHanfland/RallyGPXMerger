@@ -27,10 +27,10 @@ export function SegmentSpeedRow({ gpxSegment }: { gpxSegment: GpxSegment }) {
             )}
             <td>
                 <Form.Control
-                    type="number"
+                    type="text"
                     placeholder={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
                     title={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
-                    value={segmentSpeed?.toString()}
+                    value={segmentSpeed?.toString() ?? ''}
                     onChange={(value) => dispatch(gpxSegmentsActions.setSegmentSpeeds({ id, speed: getCount(value) }))}
                 />
             </td>
