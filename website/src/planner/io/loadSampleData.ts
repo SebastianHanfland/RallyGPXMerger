@@ -5,6 +5,7 @@ import { fileContentB1 } from '../../samples/sampleDataB1.ts';
 import { fileContentAB } from '../../samples/sampleDataAB.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
+import { mapActions } from '../store/map.reducer.ts';
 
 export const loadSampleData = (dispatch: Dispatch) => {
     dispatch(gpxSegmentsActions.clearGpxSegments());
@@ -34,4 +35,5 @@ export const loadSampleData = (dispatch: Dispatch) => {
     );
     dispatch(trackMergeActions.setArrivalDateTime('2024-05-05T14:00:00.000Z'));
     dispatch(calculatedTracksActions.removeCalculatedTracks());
+    dispatch(mapActions.setShowGpxSegments(true));
 };
