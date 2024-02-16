@@ -7,6 +7,7 @@ import { GpxSegments } from '../segments/GpxSegments.tsx';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { FormattedMessage } from 'react-intl';
+import { GpxCreationHint } from '../segments/GpxCreationHint.tsx';
 
 export const WizardSegments = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export const WizardSegments = () => {
             <h5>
                 <FormattedMessage id={'msg.wizardSegments.title'} />
             </h5>
+            <GpxCreationHint />
             <Row>
                 <Col>
                     {gpxSegments.length > 5 && (
