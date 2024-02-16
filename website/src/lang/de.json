@@ -174,5 +174,9 @@
     "msg.back": "Zurück",
     "msg.versionName": "Versionsname",
     "msg.variants": "Varianten",
-    "msg.noCalculatedTracks": "Noch keine Routen gebaut"
+    "msg.noCalculatedTracks": "Noch keine Routen gebaut",
+    "msg.backToStart.modalBody": "Beim zurück gehen werden alle Daten gelöscht",
+    "msg.backToStart.dataHint": "Aktuelle Planung wird verworfen",
+    "msg.backToStart.modalTitle": "Zurück zum Start",
+    "msg.backToStart.question": "Wollen Sie wirklich alle Daten dieser Planung löschen und zum Start zurück?"
 }
