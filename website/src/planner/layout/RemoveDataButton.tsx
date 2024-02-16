@@ -1,17 +1,10 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
-import { mapActions } from '../store/map.reducer.ts';
-import { geoCodingActions } from '../store/geoCoding.reducer.ts';
-import { clearReadableTracks } from '../cache/readableTracks.ts';
-import { layoutActions } from '../store/layout.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
+import { resetData } from '../io/resetData.ts';
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -19,17 +12,7 @@ export function RemoveDataButton() {
     const intl = useIntl();
 
     const removeAllData = () => {
-        clearReadableTracks();
-        dispatch(gpxSegmentsActions.clearGpxSegments());
-        dispatch(trackMergeActions.clear());
-        dispatch(calculatedTracksActions.removeCalculatedTracks());
-        dispatch(mapActions.setShowGpxSegments(true));
-        dispatch(mapActions.setShowBlockStreets(false));
-        dispatch(mapActions.setShowCalculatedTracks(false));
-        dispatch(geoCodingActions.clear());
-        dispatch(layoutActions.selectSection('start'));
-        dispatch(geoCodingRequestsActions.clear());
-        localStorage.clear();
+        resetData(dispatch);
         setShowModal(false);
     };
     return (
