@@ -32,6 +32,13 @@ export const AppHeader = () => {
                             <FormattedMessage id={'msg.planner'} />
                         </Pagination.Item>
                         <Pagination.Item
+                            key={'settings'}
+                            active={'settings' === selectedSection}
+                            onClick={() => setSelectedSection('settings')}
+                        >
+                            <FormattedMessage id={'msg.settings'} />
+                        </Pagination.Item>
+                        <Pagination.Item
                             key={'streets'}
                             active={'streets' === selectedSection}
                             onClick={() => setSelectedSection('streets')}
@@ -44,13 +51,6 @@ export const AppHeader = () => {
                             onClick={() => setSelectedSection('importExport')}
                         >
                             <FormattedMessage id={'msg.importExport'} />
-                        </Pagination.Item>
-                        <Pagination.Item
-                            key={'settings'}
-                            active={'settings' === selectedSection}
-                            onClick={() => setSelectedSection('settings')}
-                        >
-                            <FormattedMessage id={'msg.settings'} />
                         </Pagination.Item>
                     </Pagination>
                     <h1>
