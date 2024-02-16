@@ -6,7 +6,10 @@ import { FormattedMessage } from 'react-intl';
 
 export const DirectlyToPlannerButton = () => {
     const dispatch = useDispatch();
-    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
+    const setSelectedSection = (section: Sections) => {
+        dispatch(layoutActions.setShowDashboard(true));
+        dispatch(layoutActions.selectSection(section));
+    };
 
     return (
         <Button className={'m-4'} variant={'secondary'} onClick={() => setSelectedSection('gps')}>
