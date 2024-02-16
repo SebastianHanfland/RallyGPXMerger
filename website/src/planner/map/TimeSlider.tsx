@@ -37,7 +37,7 @@ export function TimeSlider() {
 
     return (
         <Form.Group className={'m-2'}>
-            <div>{dateValue ? formatDate(dateValue) : 'No tracks yet calculated'}</div>
+            <div>{dateValue ? formatDate(dateValue) : intl.formatMessage({ id: 'msg.noCalculatedTracks' })}</div>
             <div className={'d-flex'}>
                 <Form.Range
                     min={0}

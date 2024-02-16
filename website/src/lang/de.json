@@ -173,5 +173,6 @@
     "msg.versions.hint": "Eine Übersicht über alle verfügbaren Versionen",
     "msg.back": "Zurück",
     "msg.versionName": "Versionsname",
-    "msg.variants": "Varianten"
+    "msg.variants": "Varianten",
+    "msg.noCalculatedTracks": "Noch keine Routen gebaut"
 }

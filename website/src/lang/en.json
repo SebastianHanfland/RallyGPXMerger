@@ -173,5 +173,6 @@
     "msg.versions.hint": "A list of all available version overviews",
     "msg.back": "Back",
     "msg.versionName": "Version name",
-    "msg.variants": "Variants"
+    "msg.variants": "Variants",
+    "msg.noCalculatedTracks": "No tracks yet calculated"
 }
