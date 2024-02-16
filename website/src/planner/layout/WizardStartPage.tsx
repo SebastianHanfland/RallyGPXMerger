@@ -83,6 +83,7 @@ export const WizardStartPage = () => {
                         {...cardStyle}
                         onClick={() => {
                             loadSampleData(dispatch);
+                            dispatch(layoutActions.setShowDashboard(true));
                             setSelectedSection('gps');
                         }}
                     >

@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { WizardHeader } from './WizardHeader.tsx';
 import { layoutActions } from '../store/layout.reducer.ts';
-import { Sections } from '../layout/types.ts';
 import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { MergeTable } from '../tracks/MergeTable.tsx';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
@@ -11,7 +10,6 @@ import { FormattedMessage } from 'react-intl';
 
 export const WizardTracks = () => {
     const dispatch: AppDispatch = useDispatch();
-    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     return (
         <Container>
@@ -27,7 +25,8 @@ export const WizardTracks = () => {
                         className={'m-4'}
                         onClick={() => {
                             dispatch(calculateMerge);
-                            setSelectedSection('gps');
+                            dispatch(layoutActions.setShowDashboard(true));
+                            dispatch(layoutActions.selectSection('gps'));
                         }}
                     >
                         <FormattedMessage id={'msg.continue'} />
