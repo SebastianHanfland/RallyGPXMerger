@@ -21,6 +21,7 @@ import { Done } from './Done.tsx';
 import { Warning } from './Warning.tsx';
 import { FormattedMessage } from 'react-intl';
 import { getRequestProgress } from '../../logic/resolving/selectors/requestEstimator.ts';
+import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 
 export function StreetStatus(props: { done: boolean; loading: boolean }) {
     if (props.loading) {
@@ -53,6 +54,8 @@ export function DashboardStreetsContent() {
 
     const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading || isAggregating;
 
+    const hasNoTrack = useSelector(getCalculatedTracks).length === 0;
+
     return (
         <div>
             <div className={'d-flex justify-content-between m-1'}>
@@ -67,7 +70,7 @@ export function DashboardStreetsContent() {
                         dispatch(layoutActions.selectSection('streets'));
                         resolvePositions && dispatch(resolvePositions);
                     }}
-                    disabled={ongoingRequests}
+                    disabled={ongoingRequests || hasNoTrack}
                 >
                     <FormattedMessage id={'msg.triggerAll'} /> *
                 </Button>
@@ -75,7 +78,7 @@ export function DashboardStreetsContent() {
             <div className={'d-flex justify-content-between m-1'}>
                 <Button
                     size={'sm'}
-                    disabled={ongoingRequests}
+                    disabled={ongoingRequests || hasNoTrack}
                     onClick={(event) => {
                         event.stopPropagation();
                         dispatch(layoutActions.selectSection('streets'));
@@ -99,7 +102,7 @@ export function DashboardStreetsContent() {
                         dispatch(layoutActions.selectSection('streets'));
                         dispatch(calculateTrackStreetInfos);
                     }}
-                    disabled={ongoingRequests}
+                    disabled={ongoingRequests || hasNoTrack}
                 >
                     <FormattedMessage id={'msg.aggregation'} />
                 </Button>
@@ -114,7 +117,7 @@ export function DashboardStreetsContent() {
                         dispatch(geoCodingActions.clearPostCodesAndDistricts());
                         dispatch(addPostCodeToStreetInfos);
                     }}
-                    disabled={ongoingRequests}
+                    disabled={ongoingRequests || hasNoTrack}
                 >
                     <FormattedMessage id={'msg.postCodes'} /> *
                 </Button>
