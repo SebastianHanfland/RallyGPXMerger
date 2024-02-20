@@ -17,13 +17,13 @@ export function MergeAndMap() {
     if (selectedSection === 'gps') {
         return (
             <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
-                <Col xl={3}>
+                <Col xxl={3} xl={4} lg={12}>
                     <FileUploadSection />
                 </Col>
-                <Col xl={4}>
+                <Col xl={4} lg={12}>
                     <TrackCompositionSection />
                 </Col>
-                <Col xl={5}>
+                <Col xxl={5} xl={4} lg={12}>
                     <div style={{ height: '65vh' }}>
                         <PlainMap />
                     </div>

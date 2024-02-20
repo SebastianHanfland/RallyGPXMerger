@@ -9,7 +9,7 @@ export const AppHeader = () => {
     return (
         <>
             <Row className={'d-lg-none'}>
-                <h3 className={'m-2 d-lg-none'}>
+                <h3 className={'m-2'}>
                     <FormattedMessage id={'msg.appName'} />
                 </h3>
             </Row>
