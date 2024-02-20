@@ -15,7 +15,9 @@ export const HelpButton = () => {
                 title={intl.formatMessage({ id: 'msg.help.hint' })}
             >
                 <img src={info} className={'m-1'} alt="help" />
-                <FormattedMessage id={'msg.help'} />
+                <span className={'d-none d-lg-block'}>
+                    <FormattedMessage id={'msg.help'} />
+                </span>
             </Button>
             {showHelp && <TutorialModal closeModal={() => setShowHelp(false)} />}
         </>

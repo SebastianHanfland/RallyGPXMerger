@@ -53,9 +53,12 @@ export const AppHeader = () => {
                             <FormattedMessage id={'msg.importExport'} />
                         </Pagination.Item>
                     </Pagination>
-                    <h1>
+                    <h1 className={'d-none d-lg-block'}>
                         <FormattedMessage id={'msg.appName'} />
                     </h1>
+                    <h3 className={'d-lg-none'}>
+                        <FormattedMessage id={'msg.appName'} />
+                    </h3>
                     <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>
                         <ButtonGroup aria-label="help-buttons" className={'m-0'}>
                             <HelpButton />

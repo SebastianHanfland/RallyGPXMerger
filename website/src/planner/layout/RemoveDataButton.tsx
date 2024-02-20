@@ -23,7 +23,9 @@ export function RemoveDataButton() {
                 onClick={() => setShowModal(true)}
             >
                 <img src={trash} className="m-1" alt="trash" />
-                <FormattedMessage id={'msg.removeAllData'} />
+                <span className={'d-none d-lg-block'}>
+                    <FormattedMessage id={'msg.removeAllData'} />
+                </span>
             </Button>
             {showModal && (
                 <ConfirmationModal
