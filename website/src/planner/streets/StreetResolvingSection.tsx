@@ -8,7 +8,7 @@ export const StreetResolvingSection = () => {
     return (
         <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
             <Col xl={4}>
-                <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+                <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                     <TrackDataOverview />
                     <hr />
                     <Accordion>
@@ -24,7 +24,7 @@ export const StreetResolvingSection = () => {
                 </div>
             </Col>
             <Col xl={8}>
-                <div className={'m-2 p-2 shadow'} style={{ height: '95%' }}>
+                <div className={'p-2 shadow'} style={{ height: '95%' }}>
                     <StreetResolvedTracks />
                 </div>
             </Col>

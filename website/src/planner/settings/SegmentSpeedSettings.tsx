@@ -17,7 +17,7 @@ export function SegmentSpeedSettings() {
     }, [filterTerm]);
 
     return (
-        <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+        <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
             <h3>
                 <FormattedMessage id={'msg.customSpeed.title'} />
             </h3>

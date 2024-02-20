@@ -15,7 +15,7 @@ export function TrackCompositionSection() {
     const setFilterTerm = (term: string) => dispatch(trackMergeActions.setTrackCompositionFilterTerm(term));
 
     return (
-        <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+        <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
             <h4>
                 <FormattedMessage id={'msg.tracks.title'} />
             </h4>

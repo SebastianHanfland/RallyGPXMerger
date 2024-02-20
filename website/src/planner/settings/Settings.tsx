@@ -9,7 +9,7 @@ export function Settings() {
         <div>
             <Row className="flex-xl-nowrap" style={{ height: '80vh', width: '100%' }}>
                 <Col xl={4}>
-                    <div className={'m-2 p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+                    <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
                         <h4>
                             <FormattedMessage id={'msg.rallyParameters.title'} />
                         </h4>
