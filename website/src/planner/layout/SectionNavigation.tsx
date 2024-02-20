@@ -5,6 +5,15 @@ import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
 import { FormattedMessage } from 'react-intl';
 import { BackToStartDialog } from './BackToStartDialog.tsx';
 import { useState } from 'react';
+import Select from 'react-select';
+
+const navigationSections: { section: Sections; openModal?: boolean }[] = [
+    { section: 'start', openModal: true },
+    { section: 'gps' },
+    { section: 'settings' },
+    { section: 'streets' },
+    { section: 'importExport' },
+];
 
 export const SectionNavigation = () => {
     const dispatch = useDispatch();
@@ -15,38 +24,16 @@ export const SectionNavigation = () => {
 
     return (
         <>
-            <Pagination>
-                <Pagination.Item key={'start'} onClick={() => setShowModal(true)}>
-                    <FormattedMessage id={'msg.start'} />
-                </Pagination.Item>
-                <Pagination.Item
-                    key={'gps'}
-                    active={'gps' === selectedSection}
-                    onClick={() => setSelectedSection('gps')}
-                >
-                    <FormattedMessage id={'msg.planner'} />
-                </Pagination.Item>
-                <Pagination.Item
-                    key={'settings'}
-                    active={'settings' === selectedSection}
-                    onClick={() => setSelectedSection('settings')}
-                >
-                    <FormattedMessage id={'msg.settings'} />
-                </Pagination.Item>
-                <Pagination.Item
-                    key={'streets'}
-                    active={'streets' === selectedSection}
-                    onClick={() => setSelectedSection('streets')}
-                >
-                    <FormattedMessage id={'msg.streets'} />
-                </Pagination.Item>
-                <Pagination.Item
-                    key={'importExport'}
-                    active={'importExport' === selectedSection}
-                    onClick={() => setSelectedSection('importExport')}
-                >
-                    <FormattedMessage id={'msg.importExport'} />
-                </Pagination.Item>
+            <Pagination className={'d-none d-lg-flex'}>
+                {navigationSections.map((entry) => (
+                    <Pagination.Item
+                        key={entry.section}
+                        active={entry.section === selectedSection}
+                        onClick={() => (entry.openModal ? setShowModal(true) : setSelectedSection(entry.section))}
+                    >
+                        <FormattedMessage id={`msg.${entry.section}`} />
+                    </Pagination.Item>
+                ))}
             </Pagination>
             {showModal && <BackToStartDialog closeModal={() => setShowModal(false)} />}
         </>

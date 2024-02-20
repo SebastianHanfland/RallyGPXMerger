@@ -20,7 +20,7 @@
     "msg.aggregation": "Gruppieren",
     "msg.postCodes": "Postleitzahlen",
     "msg.documents": "Dokumente",
-    "msg.planner": "Planung",
+    "msg.gps": "Planung",
     "msg.appName": "Sternfahrtplaner",
     "msg.removeAllData": "Alle Daten entfernen",
     "msg.removeAllData.modalBody": "Möchten Sie wirklich alle Daten entfernen?",

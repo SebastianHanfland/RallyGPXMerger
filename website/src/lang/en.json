@@ -20,7 +20,7 @@
     "msg.aggregation": "Aggregation",
     "msg.postCodes": "Post codes",
     "msg.documents": "Documents",
-    "msg.planner": "Planner",
+    "msg.gps": "Planner",
     "msg.appName": "Rally GPX Merger",
     "msg.removeAllData": "Remove all data",
     "msg.removeAllData.modalBody": "Do you really want to remove all data?",
