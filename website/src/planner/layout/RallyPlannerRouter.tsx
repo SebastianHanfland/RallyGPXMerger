@@ -56,7 +56,7 @@ export const RallyPlannerRouter = () => {
 
     return (
         <>
-            <div className={'canvas-wrapper'} style={{ left: '30px', position: 'fixed' }}>
+            <div className={'canvas-wrapper'} style={{ left: '30px', position: 'fixed', overflow: 'auto' }}>
                 <Container fluid className={'m-0'}>
                     <AppHeader />
                     <MergeAndMap />
