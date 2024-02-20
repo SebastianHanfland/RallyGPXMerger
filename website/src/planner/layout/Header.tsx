@@ -9,7 +9,7 @@ export const AppHeader = () => {
     return (
         <>
             <Row className={'d-lg-none'}>
-                <h3 className={'d-lg-none'}>
+                <h3 className={'m-2 d-lg-none'}>
                     <FormattedMessage id={'msg.appName'} />
                 </h3>
             </Row>
@@ -17,9 +17,9 @@ export const AppHeader = () => {
                 <div className="footer-copyright text-center py-3">
                     <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
                         <SectionNavigation />
-                        <h1 className={'d-none d-lg-block'}>
+                        <h3 className={'d-none d-lg-block'}>
                             <FormattedMessage id={'msg.appName'} />
-                        </h1>
+                        </h3>
                         <ButtonToolbar aria-label="Toolbar with Button groups" className={'m-0'}>
                             <ButtonGroup aria-label="help-buttons" className={'m-0'}>
                                 <HelpButton />

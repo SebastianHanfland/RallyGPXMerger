@@ -65,7 +65,7 @@ export function MapVersionSelection() {
                                 onClick={() => dispatch(zipTracksActions.selectVersion(versionName))}
                             ></Form.Check>
                             <Select
-                                name="colors"
+                                name="version"
                                 value={optionsMap[versionName]?.find((opt) =>
                                     selectedTracks[versionName]?.includes(opt.value)
                                 )}

@@ -96,7 +96,7 @@ export function TrackSelectionCell({ track }: Props) {
                             })}
                         </ReactSortable>
                         <Select
-                            name="colors"
+                            name="segmentSelect"
                             value={null}
                             placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
                             options={options.filter((option) => !segmentIds.includes(option.value))}

@@ -2,7 +2,7 @@ import { Pagination } from 'react-bootstrap';
 import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { BackToStartDialog } from './BackToStartDialog.tsx';
 import { useState } from 'react';
 import Select from 'react-select';
@@ -16,15 +16,35 @@ const navigationSections: { section: Sections; openModal?: boolean }[] = [
 ];
 
 export const SectionNavigation = () => {
+    const intl = useIntl();
     const dispatch = useDispatch();
     const selectedSection = useSelector(getSelectionSection);
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     const [showModal, setShowModal] = useState(false);
 
+    const options = navigationSections.map((entry) => ({
+        label: intl.formatMessage({ id: `msg.${entry.section}` }),
+        value: entry.section,
+        openModal: entry.openModal,
+    }));
+
     return (
         <>
-            <Pagination className={'d-none d-lg-flex'}>
+            <div style={{ width: '150px' }} className={'d-xl-none'}>
+                <Select
+                    aria-label="Default select example"
+                    options={options}
+                    value={options.find((option) => option.value === selectedSection)}
+                    onChange={(option) => {
+                        if (option) {
+                            option?.openModal ? setShowModal(true) : setSelectedSection(option?.value);
+                        }
+                    }}
+                    isSearchable={false}
+                />
+            </div>
+            <Pagination className={'d-none d-xl-flex'}>
                 {navigationSections.map((entry) => (
                     <Pagination.Item
                         key={entry.section}
