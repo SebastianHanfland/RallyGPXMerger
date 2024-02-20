@@ -178,5 +178,6 @@
     "msg.backToStart.modalBody": "With going to the start all data is discarded",
     "msg.backToStart.dataHint": "Current plan is discarded",
     "msg.backToStart.modalTitle": "Back to the start",
-    "msg.backToStart.question": "Do you really want to delete all data of the current plan and go back to the start?"
+    "msg.backToStart.question": "Do you really want to delete all data of the current plan and go back to the start?",
+    "msg.addNewTrack": "Add new track"
 }

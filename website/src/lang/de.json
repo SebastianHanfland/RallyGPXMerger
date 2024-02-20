@@ -178,5 +178,6 @@
     "msg.backToStart.modalBody": "Beim zurück gehen werden alle Daten gelöscht",
     "msg.backToStart.dataHint": "Aktuelle Planung wird verworfen",
     "msg.backToStart.modalTitle": "Zurück zum Start",
-    "msg.backToStart.question": "Wollen Sie wirklich alle Daten dieser Planung löschen und zum Start zurück?"
+    "msg.backToStart.question": "Wollen Sie wirklich alle Daten dieser Planung löschen und zum Start zurück?",
+    "msg.addNewTrack": "Neue Route"
 }
