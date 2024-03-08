@@ -66,7 +66,7 @@
     "msg.removeTrackSegment": "Remove segment \"{segmentName}\" from track",
     "msg.removeTrack": "Remove track",
     "msg.removeTrack.hint": "`Remove track {name}",
-    "msg.pasteSegments": "Paste segmentIds to clipboard",
+    "msg.pasteSegments": "Paste segmentIds from clipboard",
     "msg.copySegments": "Copy segmentIds to clipboard",
     "msg.customSpeed.title": "Custom speed on segments",
     "msg.importFile": "Import JSON file",
