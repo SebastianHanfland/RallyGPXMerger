@@ -1,16 +1,17 @@
 import { State } from '../store/types.ts';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { IntlShape } from 'react-intl';
 
-function createTooltip(counter: number, tracks: string[], planningHasTracks: boolean) {
+function createTooltip(intl: IntlShape, counter: number, tracks: string[], planningHasTracks: boolean) {
     if (!planningHasTracks) {
         return '';
     }
     return counter === 0
-        ? 'This segment is not used'
-        : `This segment is used in ${counter} tracks:\n${tracks.join('\n')}`;
+        ? intl.formatMessage({ id: 'msg.segmentNotUsed.hint' })
+        : intl.formatMessage({ id: 'msg.segmentUsed.hint' }, { counter, tracks: tracks.join('\n') });
 }
 
-export const countUsagesOfSegment = (segmentId: string) => (state: State) => {
+export const countUsagesOfSegment = (segmentId: string, intl: IntlShape) => (state: State) => {
     const trackCompositions = getTrackCompositions(state);
     let counter = 0;
     const tracks: string[] = [];
@@ -22,7 +23,7 @@ export const countUsagesOfSegment = (segmentId: string) => (state: State) => {
             }
         }
     });
-    const tooltip = createTooltip(counter, tracks, trackCompositions.length > 0);
+    const tooltip = createTooltip(intl, counter, tracks, trackCompositions.length > 0);
     const alert = counter === 0 && trackCompositions.length > 0;
     return { alert, tooltip };
 };

@@ -179,5 +179,8 @@
     "msg.backToStart.dataHint": "Aktuelle Planung wird verworfen",
     "msg.backToStart.modalTitle": "Zurück zum Start",
     "msg.backToStart.question": "Wollen Sie wirklich alle Daten dieser Planung löschen und zum Start zurück?",
-    "msg.addNewTrack": "Neue Route"
+    "msg.addNewTrack": "Neue Route",
+    "msg.filename": "Dateiname",
+    "msg.segmentNotUsed.hint": "Dieser Abschnitt wird nicht verwendet",
+    "msg.segmentUsed.hint": "Dieser Abschnitt wird in {counter} Routen verwendet:\n{tracks}"
 }
