@@ -17,7 +17,7 @@ export function resetData(dispatch: Dispatch) {
     dispatch(mapActions.setShowBlockStreets(false));
     dispatch(mapActions.setShowCalculatedTracks(false));
     dispatch(geoCodingActions.clear());
-    dispatch(layoutActions.selectSection('start'));
+    dispatch(layoutActions.selectSection('menu'));
     dispatch(geoCodingRequestsActions.clear());
     localStorage.clear();
 }

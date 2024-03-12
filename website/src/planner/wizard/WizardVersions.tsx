@@ -17,7 +17,7 @@ export const WizardVersions = () => {
             <h3>
                 <FormattedMessage id={'msg.versions'} />
             </h3>
-            <Button onClick={() => setSelectedSection('start')}>
+            <Button onClick={() => setSelectedSection('menu')}>
                 <FormattedMessage id={'msg.back'} />
             </Button>
             <Row>

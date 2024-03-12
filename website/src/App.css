@@ -12,7 +12,11 @@
 }
 
 .offcanvas {
-    background-color: rgba(220, 220, 255, 1);
+    background-color: #0dcaf0;
+}
+
+.nav-menu {
+    background-color: #0dcaf0;
 }
 
 .accordion-button {

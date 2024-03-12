@@ -24,12 +24,12 @@ export const RallyPlannerRouter = () => {
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     useEffect(() => {
-        if (selectedSection === 'start' && !!arrivalDateTime) {
+        if (selectedSection === 'menu' && !!arrivalDateTime) {
             setSelectedSection('gps');
         }
     }, [arrivalDateTime, selectedSection]);
 
-    const isFreshStart = selectedSection === 'start' && !arrivalDateTime;
+    const isFreshStart = selectedSection === 'menu' && !arrivalDateTime;
     if (isFreshStart) {
         return <WizardStartPage />;
     }

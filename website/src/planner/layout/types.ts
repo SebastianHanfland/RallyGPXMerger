@@ -1,5 +1,5 @@
 export type Sections =
-    | 'start'
+    | 'menu'
     | 'streets'
     | 'gps'
     | 'importExport'

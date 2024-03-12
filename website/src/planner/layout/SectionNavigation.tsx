@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Select from 'react-select';
 
 const navigationSections: { section: Sections; openModal?: boolean }[] = [
-    { section: 'start', openModal: true },
+    { section: 'menu', openModal: true },
     { section: 'gps' },
     { section: 'settings' },
     { section: 'streets' },
@@ -49,6 +49,7 @@ export const SectionNavigation = () => {
                     <Pagination.Item
                         key={entry.section}
                         active={entry.section === selectedSection}
+                        linkClassName={entry.openModal ? 'nav-menu' : undefined}
                         onClick={() => (entry.openModal ? setShowModal(true) : setSelectedSection(entry.section))}
                     >
                         <FormattedMessage id={`msg.${entry.section}`} />

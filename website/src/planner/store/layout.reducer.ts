@@ -5,7 +5,7 @@ import { Sections } from '../layout/types.ts';
 import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../language.ts';
 
 const initialState: LayoutState = {
-    selectedSection: 'start',
+    selectedSection: 'menu',
     showDashboard: false,
     language: getInitialLanguage(),
 };
