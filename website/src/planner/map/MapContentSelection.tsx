@@ -10,8 +10,9 @@ import {
 } from '../store/map.reducer.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getConstructionSegments } from '../store/gpxSegments.reducer.ts';
+import { getConstructionSegments, getFilteredGpxSegments, getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useIntl } from 'react-intl';
+import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 export function MapContentSelection() {
     const intl = useIntl();
     const showMapMarker = useSelector(getShowMapMarker);
@@ -23,6 +24,21 @@ export function MapContentSelection() {
     const dispatch = useDispatch();
     const calculatedTracks = useSelector(getCalculatedTracks);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
+
+    const numberOfFilteredSections = useSelector(getFilteredGpxSegments).length;
+    const numberOfAllSections = useSelector(getGpxSegments).length;
+    const showSectionExtra = numberOfFilteredSections !== numberOfAllSections;
+    const sectionLabel =
+        intl.formatMessage({ id: 'msg.segments' }) +
+        (showSectionExtra ? ` (${numberOfFilteredSections}/${numberOfAllSections})` : '');
+
+    const numberOfFilteredTracks = useSelector(getFilteredTrackCompositions).length;
+    const numberOfAllTracks = useSelector(getTrackCompositions).length;
+    const showTrackExtra = numberOfFilteredTracks !== numberOfAllTracks;
+    const trackLabel =
+        intl.formatMessage({ id: 'msg.tracks' }) +
+        (showTrackExtra ? ` (${numberOfFilteredTracks}/${numberOfAllTracks})` : '');
+
     return (
         <Form.Group>
             <Form className={'d-flex'}>
@@ -30,7 +46,7 @@ export function MapContentSelection() {
                     type={'checkbox'}
                     id={'segments'}
                     className={'m-2'}
-                    label={intl.formatMessage({ id: 'msg.segments' })}
+                    label={sectionLabel}
                     title={'GPX Segments'}
                     checked={showGpxSegments}
                     readOnly
@@ -40,13 +56,15 @@ export function MapContentSelection() {
                     type={'checkbox'}
                     id={'tracks'}
                     className={'m-2'}
-                    label={intl.formatMessage({ id: 'msg.tracks' })}
+                    label={trackLabel}
                     title={'Calculated Tracks'}
                     checked={showCalculatedTracks}
                     disabled={calculatedTracks.length === 0}
                     readOnly
                     onClick={() => dispatch(mapActions.setShowCalculatedTracks(!showCalculatedTracks))}
                 ></Form.Check>
+            </Form>
+            <Form className={'d-flex'}>
                 <Form.Check
                     type={'checkbox'}
                     id={'blocked streets'}
@@ -58,8 +76,6 @@ export function MapContentSelection() {
                     readOnly
                     onClick={() => dispatch(mapActions.setShowBlockStreets(!showBlockStreets))}
                 ></Form.Check>
-            </Form>
-            <Form className={'d-flex'}>
                 <Form.Check
                     type={'checkbox'}
                     id={'marker'}
