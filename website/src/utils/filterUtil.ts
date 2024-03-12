@@ -1,5 +1,6 @@
 export function filterItems<T>(filterTerm: string | undefined, items: T[], getName: (item: T) => string | undefined) {
     const allFilterTerms = filterTerm?.split(',');
+    console.log(filterTerm, allFilterTerms, 'filter two');
     if (!filterTerm || !allFilterTerms) {
         return items;
     } else {

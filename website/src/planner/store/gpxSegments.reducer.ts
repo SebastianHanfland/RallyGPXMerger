@@ -37,9 +37,8 @@ const gpxSegmentsSlice = createSlice({
             state.segments = state.segments.map((segment) =>
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
             );
-            state.segmentFilterTerm = undefined;
         },
-        setFilterTerm: (state: GpxSegmentsState, action: PayloadAction<string>) => {
+        setFilterTerm: (state: GpxSegmentsState, action: PayloadAction<string | undefined>) => {
             state.segmentFilterTerm = action.payload;
         },
         setSegmentSpeeds: (state: GpxSegmentsState, action: PayloadAction<{ id: string; speed?: number }>) => {
@@ -77,5 +76,6 @@ export const getReplaceProcess = (state: State) => getBase(state).replaceProcess
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
+    console.log('Filter is called');
     return filterItems(filterTerm, segments, (track: GpxSegment) => track.filename);
 });

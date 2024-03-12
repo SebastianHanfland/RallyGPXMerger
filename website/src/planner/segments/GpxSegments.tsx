@@ -43,7 +43,7 @@ export function GpxSegments({ noFilter }: Props) {
                     <Form.Control
                         type="text"
                         placeholder={intl.formatMessage({ id: 'msg.filterSegments' })}
-                        value={filterTerm}
+                        value={filterTerm ?? ''}
                         onChange={(value) => setFilterTerm(value.target.value)}
                     />
                 </div>

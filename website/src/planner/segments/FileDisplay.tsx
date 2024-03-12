@@ -21,7 +21,10 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                     type="text"
                     placeholder={intl.formatMessage({ id: 'msg.filename' })}
                     value={filename}
-                    onChange={(value) => dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }))}
+                    onChange={(value) => {
+                        dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }));
+                        dispatch(gpxSegmentsActions.setFilterTerm(undefined));
+                    }}
                 />
             </td>
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
