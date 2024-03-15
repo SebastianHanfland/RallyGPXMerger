@@ -71,14 +71,26 @@ export const versions: Record<string, Variant[]> = {
     ],
     kvr_sf_24_v3p_v3_3p: [
         {
-            name: 'SF23',
+            name: 'SF24',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_mitPausen.zip',
             color: 'blue',
         },
         {
-            name: 'SF24',
+            name: 'SF24_0315',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_3_mitPausen.zip',
             color: 'red',
+        },
+    ],
+    kvr_sf_24_v3p_v3_3p: [
+        {
+            name: 'SF24_0315',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_3_mitPausen.zip',
+            color: 'red',
+        },
+        {
+            name: 'SF24_v1',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240204.zip',
+            color: 'blue',
         },
     ],
 };
