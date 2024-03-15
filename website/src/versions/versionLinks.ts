@@ -69,6 +69,18 @@ export const versions: Record<string, Variant[]> = {
             color: 'red',
         },
     ],
+    kvr_sf_24_v3p_v3_3p: [
+        {
+            name: 'SF23',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_mitPausen.zip',
+            color: 'blue',
+        },
+        {
+            name: 'SF24',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_3_mitPausen.zip',
+            color: 'red',
+        },
+    ],
 };
 export const versionKey = window.location.search.replace('?version=', '');
 
