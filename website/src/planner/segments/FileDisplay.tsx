@@ -7,6 +7,7 @@ import { RemoveFileButton } from './RemoveFileButton.tsx';
 import { countUsagesOfSegment } from './segmentUsageCounter.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
+import { mapActions } from '../store/map.reducer.ts';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content } = gpxSegment;
@@ -15,7 +16,11 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
     const { alert, tooltip } = useSelector(countUsagesOfSegment(id, intl));
 
     return (
-        <tr title={tooltip}>
+        <tr
+            title={tooltip}
+            onMouseEnter={() => dispatch(mapActions.setHighlightedSegmentId(id))}
+            onMouseLeave={() => dispatch(mapActions.setHighlightedSegmentId(undefined))}
+        >
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 <Form.Control
                     type="text"
