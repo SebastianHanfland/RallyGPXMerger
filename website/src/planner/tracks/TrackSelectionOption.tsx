@@ -3,6 +3,7 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
+import { mapActions } from '../store/map.reducer.ts';
 
 interface Props {
     trackId: string;
@@ -16,6 +17,8 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
 
     return (
         <div
+            onMouseEnter={() => dispatch(mapActions.setHighlightedSegmentId(segmentId))}
+            onMouseLeave={() => dispatch(mapActions.setHighlightedSegmentId(undefined))}
             className={'d-flex justify-content-between'}
             style={{
                 border: '1px solid transparent',

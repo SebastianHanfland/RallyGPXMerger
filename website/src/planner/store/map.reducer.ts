@@ -35,6 +35,9 @@ const mapSlice = createSlice({
         setShowConstructions: (state: MapState, action: PayloadAction<boolean>) => {
             state.showConstructions = action.payload;
         },
+        setHighlightedSegmentId: (state: MapState, action: PayloadAction<string | undefined>) => {
+            state.highlightedSegmentId = action.payload;
+        },
     },
 });
 
@@ -50,3 +53,4 @@ export const getShowBlockStreets = (state: State) => getBase(state).showBlockStr
 export const getShowCalculatedTracks = (state: State) => getBase(state).showCalculatedTracks ?? false;
 export const getShowGpxSegments = (state: State) => getBase(state).showGpxSegments ?? false;
 export const getShowConstructions = (state: State) => getBase(state).showConstructions ?? false;
+export const getHighlightedSegmentId = (state: State) => getBase(state).highlightedSegmentId;
