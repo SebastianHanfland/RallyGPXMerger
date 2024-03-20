@@ -4,7 +4,7 @@ import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { optionallyDecompress } from './compressHelper.ts';
+import { optionallyCompress, optionallyDecompress } from './compressHelper.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 import { setReadableTracks } from '../cache/readableTracks.ts';
 
@@ -17,7 +17,8 @@ const calculatedTracksSlice = createSlice({
     initialState: storage.load()?.calculatedTracks ?? initialState,
     reducers: {
         setCalculatedTracks: (state: CalculatedTracksState, action: PayloadAction<CalculatedTrack[]>) => {
-            state.tracks = action.payload;
+            state.tracks =
+                action.payload?.map((track) => ({ ...track, content: optionallyCompress(track.content) })) ?? [];
         },
         removeCalculatedTracks: (state: CalculatedTracksState) => {
             state.tracks = [];
