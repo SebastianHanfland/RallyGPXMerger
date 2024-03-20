@@ -8,9 +8,9 @@ import { getHighlightedSegmentId, getShowGpxSegments, getShowMapMarker } from '.
 export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const filteredGpxSegments = useSelector(getFilteredGpxSegments);
     const gpxSegments = useSelector(getGpxSegments);
-    const showSegments = useSelector(getShowGpxSegments);
-    const showMarker = useSelector(getShowMapMarker);
     const highlightedSegmentId = useSelector(getHighlightedSegmentId);
+    const showSegments = useSelector(getShowGpxSegments) || !!highlightedSegmentId;
+    const showMarker = useSelector(getShowMapMarker);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -21,7 +21,7 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
         addTracksToLayer(gpxSegmentsLayer, tracks, showSegments, {
             showMarker,
             opacity: highlightedSegmentId ? 100 : undefined,
-            weight: highlightedSegmentId ? 10 : undefined,
+            weight: highlightedSegmentId ? 15 : undefined,
         });
     }, [filteredGpxSegments, filteredGpxSegments.length, showSegments, showMarker, highlightedSegmentId]);
 }

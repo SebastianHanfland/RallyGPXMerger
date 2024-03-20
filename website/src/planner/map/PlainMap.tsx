@@ -52,11 +52,11 @@ export const PlainMap = () => {
         constructionsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    gpxSegmentDisplayHook(gpxSegmentsLayer);
     blockedStreetsDisplayHook(blockedStreetLayer);
     calculatedTracksDisplayHook(calculatedTracksLayer);
     trackMarkerDisplayHook(trackMarkerLayer);
     constructionsDisplayHook(constructionsLayer);
+    gpxSegmentDisplayHook(gpxSegmentsLayer);
 
     return (
         <div className={'m-1 shadow'}>
