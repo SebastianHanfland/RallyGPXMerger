@@ -11,7 +11,7 @@ export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: GpxSegment
                 <div>{filename}</div>
             </td>
             <td>
-                <FileDownloader content={content} name={filename} id={id} onlyIcon={true} />
+                <FileDownloader content={content} name={`${filename}.gpx`} id={id} onlyIcon={true} />
                 <ConstructionRemoveFileButton id={id} name={filename} />
             </td>
         </tr>

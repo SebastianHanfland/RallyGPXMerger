@@ -19,8 +19,8 @@ interface DropdownProps {
 }
 
 const downloadFile = (name: string, content: string) => {
-    const blob = new Blob([content], { type: 'gpx' });
-    FileSaver.saveAs(blob, `${name}${name.includes('.gpx') ? '' : '.gpx'}`);
+    const blob = new Blob([content], { type: name.includes('.gpx') ? 'gpx' : 'json' });
+    FileSaver.saveAs(blob, `${name}`);
 };
 
 export const FileDownloader = ({ id, name, content, onlyIcon, label }: Props) => {
