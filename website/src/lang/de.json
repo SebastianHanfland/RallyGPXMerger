@@ -183,5 +183,6 @@
     "msg.filename": "Dateiname",
     "msg.segmentNotUsed.hint": "Dieser Abschnitt wird nicht verwendet",
     "msg.segmentUsed.hint": "Dieser Abschnitt wird in {counter} Routen verwendet:\n{tracks}",
-    "msg.menu": "Menü"
+    "msg.menu": "Menü",
+    "msg.pointOfInterest": "Wichtiger Punkt"
 }

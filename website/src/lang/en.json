@@ -183,5 +183,6 @@
     "msg.filename": "File name",
     "msg.segmentNotUsed.hint": "This segment is not used",
     "msg.segmentUsed.hint": "This segment is used in {counter} tracks:\n{tracks}",
-    "msg.menu": "Menu"
+    "msg.menu": "Menu",
+    "msg.pointOfInterest": "Point of interest"
 }

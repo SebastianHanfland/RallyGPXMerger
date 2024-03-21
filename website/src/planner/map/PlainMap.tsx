@@ -13,6 +13,7 @@ import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
 import { useDispatch } from 'react-redux';
 import { pointsActions } from '../store/points.reducer.ts';
+import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -67,6 +68,7 @@ export const PlainMap = () => {
     return (
         <div className={'m-1 shadow'}>
             <div id="mapid" style={{ height: '65vh', zIndex: 0 }} />
+            <PointsOfInterestModal />
         </div>
     );
 };
