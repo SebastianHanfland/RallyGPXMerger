@@ -68,6 +68,7 @@ export interface MapState {
     showCalculatedTracks?: boolean;
     showGpxSegments?: boolean;
     showConstructions?: boolean;
+    showPointsOfInterest?: boolean;
     highlightedSegmentId?: string;
 }
 

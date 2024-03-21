@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContextMenuPoint, pointsActions } from '../../store/points.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { PointOfInterestType } from '../../store/types.ts';
+import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
 
 export function PointsOfInterestModal() {
     const dispatch = useDispatch();
@@ -17,16 +17,15 @@ export function PointsOfInterestModal() {
         if (!markedPoint) {
             return;
         }
-        dispatch(
-            pointsActions.addPoint({
-                ...markedPoint,
-                id: uuidv4(),
-                title: 'Here',
-                description: 'Descr',
-                radiusInM: 100,
-                type: PointOfInterestType.IMPEDIMENT,
-            })
-        );
+        const newPoint: PointOfInterest = {
+            ...markedPoint,
+            id: uuidv4(),
+            title: 'Here',
+            description: 'Descr',
+            radiusInM: 100,
+            type: PointOfInterestType.IMPEDIMENT,
+        };
+        dispatch(pointsActions.addPoint(newPoint));
         dispatch(pointsActions.setContextMenuPoint(undefined));
     };
     return (

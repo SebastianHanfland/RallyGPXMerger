@@ -14,6 +14,7 @@ import { Munich } from '../../common/locations.ts';
 import { useDispatch } from 'react-redux';
 import { pointsActions } from '../store/points.reducer.ts';
 import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
+import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook.ts';
 
 let myMap: L.Map | undefined;
 
@@ -26,7 +27,7 @@ export const PlainMap = () => {
             myMap = L.map('mapid').setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             myMap.on('contextmenu', (event: LeafletMouseEvent) => {
-                dispatch(pointsActions.setContextMenuPoint(event.latlng));
+                dispatch(pointsActions.setContextMenuPoint({ lat: event.latlng.lat, lng: event.latlng.lng }));
             });
         }
         return () => {
@@ -42,6 +43,7 @@ export const PlainMap = () => {
     const calculatedTracksLayer = useRef<LayerGroup>(null);
     const trackMarkerLayer = useRef<LayerGroup>(null);
     const constructionsLayer = useRef<LayerGroup>(null);
+    const pointsOfInterestLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -57,12 +59,15 @@ export const PlainMap = () => {
         trackMarkerLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         constructionsLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        pointsOfInterestLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     blockedStreetsDisplayHook(blockedStreetLayer);
     calculatedTracksDisplayHook(calculatedTracksLayer);
     trackMarkerDisplayHook(trackMarkerLayer);
     constructionsDisplayHook(constructionsLayer);
+    pointsOfInterestDisplayHook(pointsOfInterestLayer);
     gpxSegmentDisplayHook(gpxSegmentsLayer);
 
     return (
