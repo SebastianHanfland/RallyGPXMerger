@@ -9,6 +9,7 @@ import { geoCodingReducer } from './geoCoding.reducer.ts';
 import { geoCodingRequestsReducer } from './geoCodingRequests.reducer.ts';
 import { storage } from './storage.ts';
 import { layoutReducer } from './layout.reducer.ts';
+import { pointsReducer } from './points.reducer.ts';
 
 const rootReducer: Reducer = combineReducers({
     layout: layoutReducer,
@@ -16,6 +17,7 @@ const rootReducer: Reducer = combineReducers({
     trackMerge: trackMergeReducer,
     calculatedTracks: calculatedTracksReducer,
     map: mapReducer,
+    points: pointsReducer,
     geoCoding: geoCodingReducer,
     geoCodingRequests: geoCodingRequestsReducer,
 });

@@ -71,12 +71,35 @@ export interface MapState {
     highlightedSegmentId?: string;
 }
 
+export interface PointOfInterest {
+    id: string;
+    lat: number;
+    lon: number;
+    title: string;
+    description: string;
+    type: PointOfInterestType;
+    radiusInM: number;
+}
+
+export enum PointOfInterestType {
+    TOILET = 'TOILET',
+    IMPEDIMENT = 'IMPEDIMENT',
+    GATHERING = 'GATHERING',
+    COMMENT = 'COMMENT',
+    OTHER = 'OTHER',
+}
+
+export interface PointsState {
+    points: PointOfInterest[];
+}
+
 export interface State {
     layout: LayoutState;
     gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
     map: MapState;
+    points: PointsState;
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
 }
