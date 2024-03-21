@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
-import L, { LayerGroup } from 'leaflet';
+import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
 import { gpxSegmentDisplayHook } from './hooks/gpxSegmentsDisplayHook.ts';
 import { calculatedTracksDisplayHook } from './hooks/calculatedTracksDisplayHook.ts';
 import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
@@ -11,16 +11,22 @@ import { centerPointHook } from './hooks/centerPointHook.tsx';
 import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
+import { useDispatch } from 'react-redux';
+import { pointsActions } from '../store/points.reducer.ts';
 
 let myMap: L.Map | undefined;
 
 export const PlainMap = () => {
+    const dispatch = useDispatch();
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
 
     useEffect(() => {
         if (!myMap) {
             myMap = L.map('mapid').setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
+            myMap.on('contextmenu', (event: LeafletMouseEvent) => {
+                dispatch(pointsActions.setContextMenuPoint(event.latlng));
+            });
         }
         return () => {
             myMap?.remove();

@@ -20,6 +20,9 @@ const pointSlice = createSlice({
         removePoint: (state: PointsState, action: PayloadAction<string>) => {
             state.points = state.points.filter(({ id }) => id !== action.payload);
         },
+        setContextMenuPoint: (state: PointsState, action: PayloadAction<{ lat: number; lng: number } | undefined>) => {
+            state.contextMenuPoint = action.payload;
+        },
     },
 });
 
@@ -27,3 +30,4 @@ export const pointsActions = pointSlice.actions;
 export const pointsReducer: Reducer<PointsState> = pointSlice.reducer;
 const getBase = (state: State) => state.points;
 export const getPoints = (state: State) => getBase(state).points;
+export const getContextMenuPoint = (state: State) => getBase(state).contextMenuPoint;

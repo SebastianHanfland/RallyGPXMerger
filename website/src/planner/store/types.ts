@@ -74,7 +74,7 @@ export interface MapState {
 export interface PointOfInterest {
     id: string;
     lat: number;
-    lon: number;
+    lng: number;
     title: string;
     description: string;
     type: PointOfInterestType;
@@ -91,6 +91,7 @@ export enum PointOfInterestType {
 
 export interface PointsState {
     points: PointOfInterest[];
+    contextMenuPoint?: { lat: number; lng: number };
 }
 
 export interface State {
