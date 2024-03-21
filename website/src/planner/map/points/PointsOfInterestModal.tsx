@@ -5,11 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getContextMenuPoint, pointsActions } from '../../store/points.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
+import { useState } from 'react';
+import { PointsOfInterestForm } from './PointsOfInterestForm.tsx';
 
 export function PointsOfInterestModal() {
     const dispatch = useDispatch();
     const markedPoint = useSelector(getContextMenuPoint);
     const hasMarkedPoint = !!markedPoint;
+
+    const [pointOfInterestValues, setPointOfInterestValues] = useState<Partial<PointOfInterest>>({});
+
     const closeModal = () => {
         dispatch(pointsActions.setContextMenuPoint(undefined));
     };
@@ -20,10 +25,10 @@ export function PointsOfInterestModal() {
         const newPoint: PointOfInterest = {
             ...markedPoint,
             id: uuidv4(),
-            title: 'Here',
-            description: 'Descr',
-            radiusInM: 100,
-            type: PointOfInterestType.IMPEDIMENT,
+            title: pointOfInterestValues?.title ?? '',
+            description: pointOfInterestValues?.description ?? '',
+            radiusInM: pointOfInterestValues?.radiusInM ?? 0,
+            type: pointOfInterestValues?.type ?? PointOfInterestType.OTHER,
         };
         dispatch(pointsActions.addPoint(newPoint));
         dispatch(pointsActions.setContextMenuPoint(undefined));
@@ -35,7 +40,9 @@ export function PointsOfInterestModal() {
                     <FormattedMessage id={'msg.pointOfInterest'} />
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>{'Fields here'}</Modal.Body>
+            <Modal.Body>
+                <PointsOfInterestForm values={pointOfInterestValues} setValues={setPointOfInterestValues} />
+            </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
