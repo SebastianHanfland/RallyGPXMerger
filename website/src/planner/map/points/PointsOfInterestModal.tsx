@@ -11,10 +11,12 @@ import { PointsOfInterestForm } from './PointsOfInterestForm.tsx';
 export function PointsOfInterestModal() {
     const dispatch = useDispatch();
     const markedPoint = useSelector(getContextMenuPoint);
-    const hasMarkedPoint = !!markedPoint;
     const editPointOfInterest = useSelector(getEditPointOfInterest);
+    const hasMarkedPoint = !!markedPoint || !!editPointOfInterest;
 
     const [pointOfInterestValues, setPointOfInterestValues] = useState<Partial<PointOfInterest>>({});
+
+    console.log('Here comes, editPointOfInterest', editPointOfInterest, markedPoint);
 
     useEffect(() => {
         if (editPointOfInterest) {
@@ -36,13 +38,13 @@ export function PointsOfInterestModal() {
     };
 
     const savePoint = () => {
-        if (!markedPoint) {
+        if (!markedPoint && !editPointOfInterest) {
             return;
         }
         // TODO validation?
         if (editPointOfInterest) {
             dispatch(pointsActions.updatePoint(pointOfInterestValues as PointOfInterest));
-        } else {
+        } else if (markedPoint) {
             const newPoint: PointOfInterest = {
                 ...markedPoint,
                 id: uuidv4(),

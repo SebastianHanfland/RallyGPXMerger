@@ -186,5 +186,6 @@
     "msg.menu": "Menü",
     "msg.pointOfInterest": "Wichtiger Punkt",
     "msg.delete": "Löschen",
-    "msg.save": "Speichern"
+    "msg.save": "Speichern",
+    "msg.points": "Punkte"
 }

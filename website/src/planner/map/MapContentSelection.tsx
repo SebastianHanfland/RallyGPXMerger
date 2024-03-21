@@ -6,6 +6,7 @@ import {
     getShowConstructions,
     getShowGpxSegments,
     getShowMapMarker,
+    getShowPointsOfInterest,
     mapActions,
 } from '../store/map.reducer.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
@@ -13,9 +14,11 @@ import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStr
 import { getConstructionSegments, getFilteredGpxSegments, getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useIntl } from 'react-intl';
 import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
+
 export function MapContentSelection() {
     const intl = useIntl();
     const showMapMarker = useSelector(getShowMapMarker);
+    const showPointsOfInterest = useSelector(getShowPointsOfInterest);
     const showConstructions = useSelector(getShowConstructions);
     const hasConstructions = useSelector(getConstructionSegments)?.length > 0;
     const showBlockStreets = useSelector(getShowBlockStreets);
@@ -85,6 +88,16 @@ export function MapContentSelection() {
                     checked={showMapMarker}
                     readOnly
                     onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
+                ></Form.Check>
+                <Form.Check
+                    type={'checkbox'}
+                    id={'points'}
+                    className={'m-2'}
+                    label={intl.formatMessage({ id: 'msg.points' })}
+                    title={showPointsOfInterest ? 'Hide Points' : 'Show Points'}
+                    checked={showPointsOfInterest}
+                    readOnly
+                    onClick={() => dispatch(mapActions.setShowPointsOfInterest(!showPointsOfInterest))}
                 ></Form.Check>
                 {hasConstructions && (
                     <Form.Check

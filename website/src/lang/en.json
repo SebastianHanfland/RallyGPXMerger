@@ -186,5 +186,6 @@
     "msg.menu": "Menu",
     "msg.pointOfInterest": "Point of interest",
     "msg.delete": "Delete",
-    "msg.save": "Save"
+    "msg.save": "Save",
+    "msg.points": "Points"
 }
