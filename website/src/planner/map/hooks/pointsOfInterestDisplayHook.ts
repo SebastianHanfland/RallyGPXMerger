@@ -1,12 +1,13 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowPointsOfInterest } from '../../store/map.reducer.ts';
-import { getPoints } from '../../store/points.reducer.ts';
+import { getPoints, pointsActions } from '../../store/points.reducer.ts';
 
 export function pointsOfInterestDisplayHook(pointsOfInterestLayer: MutableRefObject<LayerGroup | null>) {
     const points = useSelector(getPoints);
     const showPointsOfInterest = useSelector(getShowPointsOfInterest);
+    const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -17,7 +18,7 @@ export function pointsOfInterestDisplayHook(pointsOfInterestLayer: MutableRefObj
         current.clearLayers();
         if (showPointsOfInterest) {
             points.forEach((point) => {
-                const connection = L.circle(point, {
+                const pointOfInterest = L.circle(point, {
                     radius: point.radiusInM,
                     // weight: options.weight ?? 8,
                     // color: options.color ?? getColorFromUuid(gpxSegment.id),
@@ -25,7 +26,10 @@ export function pointsOfInterestDisplayHook(pointsOfInterestLayer: MutableRefObj
                 }).bindTooltip(point.title + '\n' + '\n' + point.description, {
                     sticky: true,
                 });
-                connection.addTo(current);
+                pointOfInterest.on('contextmenu', () => {
+                    dispatch(pointsActions.setEditPointOfInterest(point));
+                });
+                pointOfInterest.addTo(current);
             });
         }
     }, [points, points.length, showPointsOfInterest]);

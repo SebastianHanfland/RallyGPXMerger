@@ -93,6 +93,7 @@ export enum PointOfInterestType {
 export interface PointsState {
     points: PointOfInterest[];
     contextMenuPoint?: { lat: number; lng: number };
+    editPointOfInterest?: PointOfInterest;
 }
 
 export interface State {

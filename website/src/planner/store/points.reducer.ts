@@ -23,6 +23,9 @@ const pointSlice = createSlice({
         setContextMenuPoint: (state: PointsState, action: PayloadAction<{ lat: number; lng: number } | undefined>) => {
             state.contextMenuPoint = action.payload;
         },
+        setEditPointOfInterest: (state: PointsState, action: PayloadAction<PointOfInterest | undefined>) => {
+            state.editPointOfInterest = action.payload;
+        },
     },
 });
 
@@ -31,3 +34,4 @@ export const pointsReducer: Reducer<PointsState> = pointSlice.reducer;
 const getBase = (state: State) => state.points;
 export const getPoints = (state: State) => getBase(state).points;
 export const getContextMenuPoint = (state: State) => getBase(state).contextMenuPoint;
+export const getEditPointOfInterest = (state: State) => getBase(state).editPointOfInterest;
