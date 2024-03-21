@@ -184,5 +184,7 @@
     "msg.segmentNotUsed.hint": "Dieser Abschnitt wird nicht verwendet",
     "msg.segmentUsed.hint": "Dieser Abschnitt wird in {counter} Routen verwendet:\n{tracks}",
     "msg.menu": "Menü",
-    "msg.pointOfInterest": "Wichtiger Punkt"
+    "msg.pointOfInterest": "Wichtiger Punkt",
+    "msg.delete": "Löschen",
+    "msg.save": "Speichern"
 }

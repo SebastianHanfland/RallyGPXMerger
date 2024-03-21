@@ -25,7 +25,16 @@ export function PointsOfInterestModal() {
     const closeModal = () => {
         dispatch(pointsActions.setContextMenuPoint(undefined));
         setPointOfInterestValues({});
+        dispatch(pointsActions.setEditPointOfInterest(undefined));
     };
+
+    const deletePoint = () => {
+        if (editPointOfInterest) {
+            dispatch(pointsActions.removePoint(editPointOfInterest.id));
+            closeModal();
+        }
+    };
+
     const savePoint = () => {
         if (!markedPoint) {
             return;
@@ -62,8 +71,13 @@ export function PointsOfInterestModal() {
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
                 </Button>
+                {editPointOfInterest && (
+                    <Button variant="danger" onClick={deletePoint}>
+                        <FormattedMessage id={'msg.delete'} />
+                    </Button>
+                )}
                 <Button variant="primary" onClick={savePoint}>
-                    <FormattedMessage id={'msg.confirm'} />
+                    <FormattedMessage id={'msg.save'} />
                 </Button>
             </Modal.Footer>
         </Modal>
