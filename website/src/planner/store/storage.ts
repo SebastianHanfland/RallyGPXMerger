@@ -9,10 +9,11 @@ const stateKey = `gpxMerger.state`;
 
 const save = (value: State) => {
     try {
-        const { layout, gpxSegments, calculatedTracks, geoCoding, trackMerge, map } = value;
+        const { layout, gpxSegments, calculatedTracks, geoCoding, trackMerge, map, points } = value;
         localStorage.setItem(stateKey + '.layout', JSON.stringify(layout));
         localStorage.setItem(stateKey + '.gpxSegments', JSON.stringify(gpxSegments));
         localStorage.setItem(stateKey + '.map', JSON.stringify(map));
+        localStorage.setItem(stateKey + '.points', JSON.stringify(points));
         localStorage.setItem(stateKey + '.trackMerge', JSON.stringify(trackMerge));
         localStorage.setItem(stateKey + '.geoCoding', JSON.stringify(geoCoding));
         localStorage.setItem(stateKey + '.calculatedTracks', JSON.stringify(calculatedTracks));
@@ -26,6 +27,7 @@ const load = (): State | undefined => {
         let layout = undefined;
         let gpxSegments = undefined;
         let map = undefined;
+        let points = undefined;
         let trackMerge = undefined;
         let geoCoding = undefined;
         let calculatedTracks = undefined;
@@ -47,6 +49,10 @@ const load = (): State | undefined => {
         const mapStringified = localStorage.getItem(stateKey + '.map');
         if (mapStringified) {
             map = JSON.parse(mapStringified);
+        }
+        const pointsStringified = localStorage.getItem(stateKey + '.points');
+        if (pointsStringified) {
+            points = JSON.parse(pointsStringified);
         }
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');
         if (trackMergeStringified) {
@@ -70,6 +76,7 @@ const load = (): State | undefined => {
             layout,
             gpxSegments,
             map,
+            points,
             trackMerge,
             geoCoding,
             calculatedTracks,
