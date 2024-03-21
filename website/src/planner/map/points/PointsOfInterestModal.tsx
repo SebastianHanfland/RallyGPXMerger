@@ -17,6 +17,7 @@ export function PointsOfInterestModal() {
 
     const closeModal = () => {
         dispatch(pointsActions.setContextMenuPoint(undefined));
+        setPointOfInterestValues({});
     };
     const savePoint = () => {
         if (!markedPoint) {
@@ -32,6 +33,7 @@ export function PointsOfInterestModal() {
         };
         dispatch(pointsActions.addPoint(newPoint));
         dispatch(pointsActions.setContextMenuPoint(undefined));
+        setPointOfInterestValues({});
     };
     return (
         <Modal show={hasMarkedPoint} onHide={closeModal} backdrop="static" keyboard={false}>
