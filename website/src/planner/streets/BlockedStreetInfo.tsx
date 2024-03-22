@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../logic/merge/speedSimulator.ts';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { toLatLng } from '../../utils/pointUtil.ts';
 
 export const BlockedStreetInfo = () => {
     const intl = useIntl();

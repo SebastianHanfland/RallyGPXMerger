@@ -1,7 +1,6 @@
 import { BlockedStreetInfo } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 import { formatNumber } from '../csv/trackStreetsCsv.ts';
 import { ContentTable, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv.ts';
@@ -9,6 +8,7 @@ import { getLink } from '../../../utils/linkUtil.ts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
 import { IntlShape } from 'react-intl';
+import { toLatLng } from '../../../utils/pointUtil.ts';
 
 export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[], intl: IntlShape): ContentTable {
     const tableHeader = getBlockedStreetsHeader(intl)

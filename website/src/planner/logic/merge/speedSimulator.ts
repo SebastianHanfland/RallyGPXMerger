@@ -1,7 +1,7 @@
 import geoDistance from 'geo-distance-helper';
-import { GeoPoint } from 'geo-distance-helper/dist/geoDistance';
 import { Point } from 'gpxparser';
 import date from 'date-and-time';
+import { toLatLng } from '../../../utils/pointUtil.ts';
 
 function slopeFactor(slope: number): number {
     const max_slope = 100;
@@ -17,8 +17,6 @@ function slopeFactor(slope: number): number {
         return 10;
     }
 }
-
-export const toLatLng = ({ lat, lon }: Omit<Point, 'time' | 'ele'>): GeoPoint => ({ lat, lng: lon });
 
 export function generateTimeData(start: string, avg: number, points: Omit<Point, 'time'>[]): Point[] {
     const alpha = 0.15;

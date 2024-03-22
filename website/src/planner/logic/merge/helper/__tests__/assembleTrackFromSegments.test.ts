@@ -7,6 +7,8 @@ import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
 import { CalculatedTrack, GpxSegment } from '../../../../../common/types.ts';
 
 vi.mock('../../../../../utils/SimpleGPX.ts');
+vi.mock('../../../../store/store.ts');
+vi.mock('../../../../store/points.reducer.ts');
 
 describe('assembleTrackFromSegments', () => {
     afterEach(() => {

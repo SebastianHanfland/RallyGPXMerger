@@ -5,13 +5,13 @@ import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../merge/speedSimulator.ts';
 import { geoCodingActions, getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
 import { toKey } from '../helper/pointKeys.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
+import { toLatLng } from '../../../../utils/pointUtil.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>

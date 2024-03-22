@@ -2,9 +2,9 @@ import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import { getLanguage } from '../../../language.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 import { getHeader } from '../getHeader.ts';
 import { IntlShape } from 'react-intl';
+import { toLatLng } from '../../../utils/pointUtil.ts';
 
 export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
     const language = getLanguage();

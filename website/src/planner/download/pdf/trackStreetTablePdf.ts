@@ -1,12 +1,12 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from '../../logic/merge/speedSimulator.ts';
 import { ContentTable } from 'pdfmake/interfaces';
 import { formatNumber } from '../csv/trackStreetsCsv.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
 import { getTrackTableHeaders } from '../getHeader.ts';
+import { toLatLng } from '../../../utils/pointUtil.ts';
 
 function getAdditionalInfo(
     type: TrackWayPointType | undefined,
