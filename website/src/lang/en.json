@@ -187,5 +187,10 @@
     "msg.pointOfInterest": "Point of interest",
     "msg.delete": "Delete",
     "msg.save": "Save",
-    "msg.points": "Points"
+    "msg.points": "Points",
+    "msg.gaps": "Gaps",
+    "msg.title": "Title",
+    "msg.description": "Description",
+    "msg.radius": "Radius in m",
+    "msg.type": "Type"
 }

@@ -9,6 +9,7 @@ import { ImportExport } from '../io/ImportExport.tsx';
 import { Settings } from '../settings/Settings.tsx';
 import { useSelector } from 'react-redux';
 import { getSelectionSection } from '../store/layout.reducer.ts';
+import { PointsOverview } from '../points/PointsOverview.tsx';
 
 export function MergeAndMap() {
     parseCalculatedTracksHook();
@@ -45,5 +46,9 @@ export function MergeAndMap() {
 
     if (selectedSection === 'settings') {
         return <Settings />;
+    }
+
+    if (selectedSection === 'points') {
+        return <PointsOverview />;
     }
 }

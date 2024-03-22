@@ -13,6 +13,7 @@ const navigationSections: { section: Sections; openModal?: boolean }[] = [
     { section: 'settings' },
     { section: 'streets' },
     { section: 'importExport' },
+    { section: 'points' },
 ];
 
 export const SectionNavigation = () => {

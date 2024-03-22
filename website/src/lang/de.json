@@ -187,5 +187,10 @@
     "msg.pointOfInterest": "Wichtiger Punkt",
     "msg.delete": "Löschen",
     "msg.save": "Speichern",
-    "msg.points": "Punkte"
+    "msg.points": "Punkte",
+    "msg.gaps": "Lücken",
+    "msg.title": "Titel",
+    "msg.description": "Beschreibung",
+    "msg.radius": "Radius in m",
+    "msg.type": "Typ"
 }

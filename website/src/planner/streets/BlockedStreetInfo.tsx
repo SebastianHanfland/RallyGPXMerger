@@ -60,11 +60,7 @@ export const BlockedStreetInfo = () => {
                             <tr key={backPassage + streetName + frontArrival}>
                                 <td>
                                     <HighlightUnknown value={postCode?.toString() ?? unknown} />
-                                    <StreetMapLink
-                                        pointTo={pointTo}
-                                        pointFrom={pointFrom}
-                                        streetName={streetName ?? unknown}
-                                    />
+                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
                                 </td>
                                 <td>
                                     <HighlightUnknown value={district ?? unknown} />

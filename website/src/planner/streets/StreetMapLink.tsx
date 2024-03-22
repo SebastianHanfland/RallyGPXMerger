@@ -3,7 +3,6 @@ import { getLink } from '../../utils/linkUtil.ts';
 interface Props {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
-    streetName: string;
 }
 
 export function StreetMapLink({ pointFrom, pointTo }: Props) {
