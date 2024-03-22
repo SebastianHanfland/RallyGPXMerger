@@ -144,8 +144,8 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     getEndPoint(): Point {
-        const lastTrack = this.tracks.reverse()[0];
-        return lastTrack.points.reverse()[0];
+        const lastTrack = this.tracks[this.tracks.length - 1];
+        return lastTrack.points[lastTrack.points.length - 1];
     }
 
     getStartPoint(): Point {

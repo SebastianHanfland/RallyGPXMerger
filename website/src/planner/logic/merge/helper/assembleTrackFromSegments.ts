@@ -12,11 +12,11 @@ import { NamedGpx } from './types.ts';
 
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
     const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(gpxOrBreak.gpx.getEndPoint())) as number;
-    if (distanceBetweenSegments > 0.1) {
+    if (distanceBetweenSegments > 0.01) {
         console.log(
-            `Here is something too far away: track ${track.name}, between '${lastSegmentName}' and '${
+            `Here is something too far away: track ${track.name}, between '${
                 gpxOrBreak.name
-            }: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`
+            }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`
         );
     }
 }
