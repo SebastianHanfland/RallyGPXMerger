@@ -16,8 +16,6 @@ export function PointsOfInterestModal() {
 
     const [pointOfInterestValues, setPointOfInterestValues] = useState<Partial<PointOfInterest>>({});
 
-    console.log('Here comes, editPointOfInterest', editPointOfInterest, markedPoint);
-
     useEffect(() => {
         if (editPointOfInterest) {
             setPointOfInterestValues(editPointOfInterest);

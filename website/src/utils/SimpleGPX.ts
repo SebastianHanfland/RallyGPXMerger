@@ -142,6 +142,15 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     getEnd(): string {
         return this.end.toISOString();
     }
+
+    getEndPoint(): Point {
+        const lastTrack = this.tracks.reverse()[0];
+        return lastTrack.points.reverse()[0];
+    }
+
+    getStartPoint(): Point {
+        return this.tracks[0].points[0];
+    }
 }
 
 function toLink(link: string | Link | undefined): gpxBuilder.Link | undefined {
