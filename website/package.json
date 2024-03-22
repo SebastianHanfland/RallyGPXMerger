@@ -65,7 +65,7 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vitest": "^0.34.6"
+    "vitest": "^1.4.0"
   },
   "husky": {
     "hooks": {
