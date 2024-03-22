@@ -11,7 +11,7 @@ function createPointOfInterest(point: PointOfInterest) {
         return L.marker(point, { icon: wcIcon });
     }
 
-    if (point.type === PointOfInterestType.IMPEDIMENT) {
+    if (point.type === PointOfInterestType.IMPEDIMENT || point.type === PointOfInterestType.GAP) {
         return L.circle(point, { radius: point.radiusInM, color: 'red' });
     }
 

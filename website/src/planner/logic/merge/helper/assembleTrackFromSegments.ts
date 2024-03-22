@@ -1,4 +1,4 @@
-import { TrackComposition } from '../../../store/types.ts';
+import { PointOfInterestType, TrackComposition } from '../../../store/types.ts';
 import { mergeSimpleGPXs, SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
@@ -9,14 +9,27 @@ import geoDistance from 'geo-distance-helper';
 import { toLatLng } from '../speedSimulator.ts';
 import { formatNumber } from '../../../download/csv/trackStreetsCsv.ts';
 import { NamedGpx } from './types.ts';
+import { store } from '../../../store/store.ts';
+import { pointsActions } from '../../../store/points.reducer.ts';
+import { v4 as uuidv4 } from 'uuid';
 
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
-    const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(gpxOrBreak.gpx.getEndPoint())) as number;
-    if (distanceBetweenSegments > 0.01) {
-        console.log(
-            `Here is something too far away: track ${track.name}, between '${
-                gpxOrBreak.name
-            }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`
+    const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
+    const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(endOfNextSegment)) as number;
+    if (distanceBetweenSegments > 0.1) {
+        const message = `Here is something too far away: track ${track.name}, between '${
+            gpxOrBreak.name
+        }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`;
+        store.dispatch(
+            pointsActions.addPoint({
+                id: uuidv4(),
+                type: PointOfInterestType.GAP,
+                radiusInM: 1000,
+                description: message,
+                title: `Too big gap on ${track.name}`,
+                lat: (lastPoint.lat + endOfNextSegment.lat) / 2,
+                lng: (lastPoint.lon + endOfNextSegment.lon) / 2,
+            })
         );
     }
 }

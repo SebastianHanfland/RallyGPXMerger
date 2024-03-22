@@ -87,6 +87,7 @@ export enum PointOfInterestType {
     IMPEDIMENT = 'IMPEDIMENT',
     GATHERING = 'GATHERING',
     COMMENT = 'COMMENT',
+    GAP = 'GAP',
     OTHER = 'OTHER',
 }
 
