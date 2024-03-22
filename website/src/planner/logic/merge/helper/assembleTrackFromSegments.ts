@@ -16,12 +16,12 @@ import { v4 as uuidv4 } from 'uuid';
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
     const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
     const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(endOfNextSegment)) as number;
-    if (distanceBetweenSegments > 0.1) {
+    if (distanceBetweenSegments > 0.01) {
         const message = `Here is something too far away: track ${track.name}, between '${
             gpxOrBreak.name
         }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`;
         store.dispatch(
-            pointsActions.addPoint({
+            pointsActions.addGapPoint({
                 id: uuidv4(),
                 type: PointOfInterestType.GAP,
                 radiusInM: 1000,

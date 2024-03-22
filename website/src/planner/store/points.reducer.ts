@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { PointOfInterest, PointsState, State } from './types.ts';
+import { PointOfInterest, PointOfInterestType, PointsState, State } from './types.ts';
 import { storage } from './storage.ts';
 
 const initialState: PointsState = {
@@ -12,6 +12,27 @@ const pointSlice = createSlice({
     reducers: {
         addPoint: (state: PointsState, action: PayloadAction<PointOfInterest>) => {
             state.points = [...state.points, action.payload];
+        },
+        addGapPoint: (state: PointsState, action: PayloadAction<PointOfInterest>) => {
+            const newGap = action.payload;
+            const gapAlreadyAtLocation = state.points.find(
+                (point) =>
+                    point.lat === newGap.lat && point.lng === newGap.lng && point.type === PointOfInterestType.GAP
+            );
+            console.log(newGap, gapAlreadyAtLocation, 'GAP');
+            if (!gapAlreadyAtLocation) {
+                state.points = [...state.points, newGap];
+            } else {
+                const updatedPoint = gapAlreadyAtLocation.description.includes(newGap.description)
+                    ? gapAlreadyAtLocation
+                    : {
+                          ...gapAlreadyAtLocation,
+                          description: gapAlreadyAtLocation.description + '\n' + newGap.description,
+                      };
+                state.points = state.points.map((point) =>
+                    point.lat === newGap.lat && point.lng === newGap.lng ? updatedPoint : point
+                );
+            }
         },
         updatePoint: (state: PointsState, action: PayloadAction<PointOfInterest>) => {
             const updatedPoint = action.payload;
