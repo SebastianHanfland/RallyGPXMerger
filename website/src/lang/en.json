@@ -192,5 +192,6 @@
     "msg.title": "Title",
     "msg.description": "Description",
     "msg.radius": "Radius in m",
-    "msg.type": "Type"
+    "msg.type": "Type",
+    "msg.flipGpx": "Flip Gpx file"
 }

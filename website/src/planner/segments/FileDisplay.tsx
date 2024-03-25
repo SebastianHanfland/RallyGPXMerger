@@ -8,6 +8,7 @@ import { countUsagesOfSegment } from './segmentUsageCounter.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
+import { FlipGpxButton } from './FlipGpxButton.tsx';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content } = gpxSegment;
@@ -44,6 +45,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
 
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
+                    <FlipGpxButton id={id} name={filename} />
                 </DropdownButton>
             </td>
         </tr>
