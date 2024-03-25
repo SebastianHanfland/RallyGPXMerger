@@ -15,6 +15,11 @@
     background-color: #0dcaf0;
 }
 
+.leaflet-tooltip {
+    width: 250px;
+    white-space: break-spaces;
+}
+
 .nav-menu {
     background-color: #0dcaf0;
 }
