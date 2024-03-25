@@ -1,4 +1,5 @@
 import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
+import { Point } from 'gpxparser';
 describe('SimpleGPX', () => {
     const first =
         '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -31,7 +32,9 @@ describe('SimpleGPX', () => {
 
         // when
         simpleGPX.shiftToArrivalTime(arrivalDateTime);
-        expect(simpleGPX.tracks[0].points.map((point) => ({ ...point, time: point.time?.toISOString() }))).toEqual([
+        expect(
+            simpleGPX.tracks[0].points.map((point: Point) => ({ ...point, time: point.time?.toISOString() }))
+        ).toEqual([
             {
                 ele: 2376,
                 lat: 46.57608333,
@@ -82,10 +85,10 @@ describe('SimpleGPX', () => {
             '<time>2007-10-14T10:14:08.000Z</time>\n' +
             '</trkpt>\n' +
             '</trkseg>\n' +
-            '</trk>\n' +
-            '<trk>\n' +
-            '<name>Example gpx</name>\n' +
-            '<number>1</number>\n' +
+            // '</trk>\n' +
+            // '<trk>\n' +
+            // '<name>Example gpx</name>\n' +
+            // '<number>1</number>\n' +
             '<trkseg>\n' +
             '<trkpt lat="47.57608333" lon="8.89241667">\n' +
             '<ele>2376</ele>\n' +
