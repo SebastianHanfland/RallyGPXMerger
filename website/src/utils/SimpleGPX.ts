@@ -25,6 +25,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     routes: Route[];
     start: Date;
     end: Date;
+    mergeTracks: Boolean;
 
     public static fromString(raw: string) {
         const parser = new GpxParser();
@@ -37,17 +38,24 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         return SimpleGPX.fromString(this.toString());
     }
 
-    public constructor(metadata: MetaData, waypoints: Waypoint[], tracks: Track[], routes: Route[]) {
+    public constructor(
+        metadata: MetaData,
+        waypoints: Waypoint[],
+        tracks: Track[],
+        routes: Route[],
+        mergeTracks: Boolean = true
+    ) {
         super();
         this.metadata = metadata;
         this.waypoints = waypoints;
         this.tracks = tracks;
         this.routes = routes;
+        this.mergeTracks = mergeTracks;
 
         const times = <number[]>[];
         [...routes, ...tracks].forEach((thing) => {
             times.push(
-                ...thing.points.map((_point) => {
+                ...thing.points.map((_point: Point) => {
                     return new Date(_point.time).getTime();
                 })
             );
@@ -61,7 +69,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         this.end = date.addSeconds(this.end, interval);
         // immediately propagate to all the time points
         [...this.routes, ...this.tracks].forEach((thing) => {
-            thing.points.forEach((_point) => {
+            thing.points.forEach((_point: Point) => {
                 _point.time = date.addSeconds(_point.time, interval);
             });
         });
@@ -112,7 +120,6 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
 
     public toString() {
         // this is an expensive operation
-        // TODO sort the stuff or check if it's sorted anyway
         const builder = new BaseBuilder();
         const m = this.metadata;
         builder.setMetadata(
@@ -127,7 +134,26 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
             builder.setRoutes(this.routes.map((_route) => route2route(_route)));
         }
         if (this.tracks.length) {
-            builder.setTracks(this.tracks.map((_track) => track2track(_track)));
+            if (this.mergeTracks) {
+                // ensure the output file contains only a single track
+                const first = this.tracks.at(0);
+                builder.setTracks([
+                    new gpxBuilder.Track(
+                        this.tracks.map((_track) => track2seg(_track)),
+                        {
+                            name: first?.name,
+                            cmt: first?.cmt,
+                            desc: first?.desc,
+                            src: first?.src,
+                            link: toLink(first?.link),
+                            number: Number(first?.number),
+                            type: first?.type,
+                        }
+                    ),
+                ]);
+            } else {
+                builder.setTracks(this.tracks.map((_track) => track2track(_track)));
+            }
         }
         if (this.waypoints.length) {
             builder.setWayPoints(this.waypoints.map((_waypoint) => waypoint2waypoint(_waypoint)));
@@ -180,19 +206,20 @@ function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
 }
 
 function track2track(_track: Track, timeshift: number = 0): gpxBuilder.Track {
-    // gpx-builder tracks can have segments, but gpx-parser ones do not
-    return new gpxBuilder.Track(
-        [new gpxBuilder.Segment(_track.points.map((_point) => point2point(_point, timeshift)))],
-        {
-            name: _track.name,
-            cmt: _track.cmt,
-            desc: _track.desc,
-            src: _track.src,
-            link: toLink(_track.link),
-            number: Number(_track.number),
-            type: _track.type,
-        }
-    );
+    return new gpxBuilder.Track([track2seg(_track, timeshift)], {
+        name: _track.name,
+        cmt: _track.cmt,
+        desc: _track.desc,
+        src: _track.src,
+        link: toLink(_track.link),
+        number: Number(_track.number),
+        type: _track.type,
+    });
+}
+
+function track2seg(_track: Track, timeshift: number = 0): gpxBuilder.Segment {
+    // gpx-builder (i.e. output) tracks can have segments, but gpx-parser (i.e. input) ones do not
+    return new gpxBuilder.Segment(_track.points.map((_point: Point) => point2point(_point, timeshift)));
 }
 
 function route2route(_route: Route, timeshift: number = 0): gpxBuilder.Route {
@@ -202,7 +229,7 @@ function route2route(_route: Route, timeshift: number = 0): gpxBuilder.Route {
 
     return new gpxBuilder.Route({
         ...without,
-        rtept: _route.points.map((_point) => point2point(_point, timeshift)),
+        rtept: _route.points.map((_point: Point) => point2point(_point, timeshift)),
         // @ts-ignore
         link: toLink(_track.link),
         number: Number(_route.number),
