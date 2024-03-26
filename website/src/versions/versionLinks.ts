@@ -125,12 +125,12 @@ export const versions: Record<string, Variant[]> = {
         },
         {
             name: 'SF24_v1_A96',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240315.zip',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240319.zip',
             color: 'blue',
         },
         {
             name: 'SF24_v1_A95',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Planeg.zip',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Planegg.zip',
             color: 'green',
         },
         {
