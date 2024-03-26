@@ -11,7 +11,7 @@ import { mapActions } from '../store/map.reducer.ts';
 import { FlipGpxButton } from './FlipGpxButton.tsx';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
-    const { id, filename, content } = gpxSegment;
+    const { id, filename, content, flipped } = gpxSegment;
     const intl = useIntl();
     const dispatch = useDispatch();
     const { alert, tooltip } = useSelector(countUsagesOfSegment(id, intl));
@@ -45,7 +45,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
 
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
-                    <FlipGpxButton id={id} name={filename} />
+                    <FlipGpxButton id={id} name={filename} flipped={flipped} />
                 </DropdownButton>
             </td>
         </tr>

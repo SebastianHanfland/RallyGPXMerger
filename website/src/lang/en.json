@@ -193,5 +193,6 @@
     "msg.description": "Description",
     "msg.radius": "Radius in m",
     "msg.type": "Type",
-    "msg.flipGpx": "Flip Gpx file"
+    "msg.flipGpx": "Flip Gpx file",
+    "msg.unflipGpx": "Use normal direction"
 }

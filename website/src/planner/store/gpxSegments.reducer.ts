@@ -19,6 +19,11 @@ const gpxSegmentsSlice = createSlice({
         removeGpxSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
         },
+        flipGpxSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload ? { ...segment, flipped: !segment.flipped } : segment
+            );
+        },
         changeGpxSegmentContent: (
             state: GpxSegmentsState,
             action: PayloadAction<{ id: string; newContent: string }>

@@ -11,7 +11,9 @@ export interface ReadableTrack {
     gpx: SimpleGPX;
 }
 
-export interface GpxSegment extends GpxFile {}
+export interface GpxSegment extends GpxFile {
+    flipped?: boolean;
+}
 
 export interface CalculatedTrack extends GpxFile {
     peopleCount?: number;

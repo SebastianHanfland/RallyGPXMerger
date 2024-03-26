@@ -193,5 +193,6 @@
     "msg.description": "Beschreibung",
     "msg.radius": "Radius in m",
     "msg.type": "Typ",
-    "msg.flipGpx": "Gpx Datei umdrehen"
+    "msg.flipGpx": "Gpx Datei umdrehen",
+    "msg.unflipGpx": "Normale Richtung verwenden"
 }
