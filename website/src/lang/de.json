@@ -194,5 +194,6 @@
     "msg.radius": "Radius in m",
     "msg.type": "Typ",
     "msg.flipGpx": "Gpx Datei umdrehen",
-    "msg.unflipGpx": "Normale Richtung verwenden"
+    "msg.unflipGpx": "Normale Richtung verwenden",
+    "msg.flipGpx.hint": "Die Fahrtrichtung auf dem Abschnitt ändern, z.B. wenn die Autobahn gegen die Fahrtrichtung benutzt wird"
 }

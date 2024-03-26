@@ -19,7 +19,7 @@ export function FlipGpxButton({ id, name, flipped }: Props) {
     return (
         <>
             <Dropdown.Item
-                title={intl.formatMessage({ id: 'msg.removeFile.hint' }, { name })}
+                title={intl.formatMessage({ id: 'msg.flipGpx.hint' }, { name })}
                 onClick={() => flipGpxSegment()}
             >
                 <img src={flip} className="m-1" alt="flip" />
