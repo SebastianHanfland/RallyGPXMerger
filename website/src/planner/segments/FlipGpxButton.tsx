@@ -22,7 +22,7 @@ export function FlipGpxButton({ id, name, flipped }: Props) {
                 title={intl.formatMessage({ id: 'msg.removeFile.hint' }, { name })}
                 onClick={() => flipGpxSegment()}
             >
-                <img src={flip} className="m-1" alt="trash" />
+                <img src={flip} className="m-1" alt="flip" />
                 <span>
                     <FormattedMessage id={flipped ? 'msg.unflipGpx' : 'msg.flipGpx'} />
                 </span>
