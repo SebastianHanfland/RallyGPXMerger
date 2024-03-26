@@ -117,6 +117,28 @@ export const versions: Record<string, Variant[]> = {
             color: 'red',
         },
     ],
+    sf_24_v3_v1_96_v1_95_v1_95inv: [
+        {
+            name: 'SF24_v3_0315',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_3_mitPausen.zip',
+            color: 'red',
+        },
+        {
+            name: 'SF24_v1_A96',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240315.zip',
+            color: 'blue',
+        },
+        {
+            name: 'SF24_v1_A95',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Planeg.zip',
+            color: 'green',
+        },
+        {
+            name: 'SF24_v1_A95_inv',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Rückwärts.zip',
+            color: 'purple',
+        },
+    ],
 };
 export const versionKey = window.location.search.replace('?version=', '');
 
