@@ -279,7 +279,7 @@ export const versions: Record<string, Variant[]> = {
         },
         {
             name: 'SF24_A95_Rueckwaerts',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A96_rueck.zip',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_rueck.zip',
             color: 'black',
         },
     ],
