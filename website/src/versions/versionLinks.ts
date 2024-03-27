@@ -164,12 +164,12 @@ export const versions: Record<string, Variant[]> = {
         },
 		{
             name: 'SF24_A95_1',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Vorwärts_Stadtwest.json',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Vorwärts_Stadtwest.zip',
             color: 'blue',
         },
 		{
             name: 'SF24_A95_2',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Rückwärts_Stadtwest.json',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Rückwärts_Stadtwest.zip',
             color: 'green',
         },
     ],
