@@ -156,7 +156,7 @@ export const versions: Record<string, Variant[]> = {
             color: 'green',
         },
     ],
-    KVR_24_A95vars: [
+    KVR_24_A95variants: [
         {
             name: 'SF24_A96',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240319.zip',
