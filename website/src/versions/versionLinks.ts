@@ -156,6 +156,23 @@ export const versions: Record<string, Variant[]> = {
             color: 'green',
         },
     ],
+    KVR_24_A95vars: [
+        {
+            name: 'SF24_A96',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240319.zip',
+            color: 'red',
+        },
+		{
+            name: 'SF24_A95_1',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Vorwärts_Stadtwest.json',
+            color: 'blue',
+        },
+		{
+            name: 'SF24_A95_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Rückwärts_Stadtwest.json',
+            color: 'green',
+        },
+    ],
 };
 export const versionKey = window.location.search.replace('?version=', '');
 
