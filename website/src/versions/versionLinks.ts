@@ -162,15 +162,47 @@ export const versions: Record<string, Variant[]> = {
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240319.zip',
             color: 'red',
         },
-		{
+        {
             name: 'SF24_A95_1',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Vorwärts_Stadtwest.zip',
             color: 'blue',
         },
-		{
+        {
             name: 'SF24_A95_2',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Rückwärts_Stadtwest.zip',
             color: 'green',
+        },
+    ],
+    KVR_24_March: [
+        {
+            name: 'SF23',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF23like24_mitPausen.zip',
+            color: 'red',
+        },
+        {
+            name: 'SF24_urspruenglich',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_mitPausen.zip',
+            color: 'blue',
+        },
+        {
+            name: 'SF24_A96_1',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240319.zip',
+            color: 'green',
+        },
+        {
+            name: 'SF24_A96_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/4-A96_kurz.zip',
+            color: 'yellow',
+        },
+        {
+            name: 'SF24_A95_Vorwaerts',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/5-A95_vor.zip',
+            color: 'brown',
+        },
+        {
+            name: 'SF24_A95_Rueckwaerts',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/6-A95_rueck.zip',
+            color: 'black',
         },
     ],
 };
