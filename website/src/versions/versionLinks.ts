@@ -139,6 +139,23 @@ export const versions: Record<string, Variant[]> = {
             color: 'purple',
         },
     ],
+    AutobahnVarianten: [
+        {
+            name: '1_SF23',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF23like24_mitPausen.zip',
+            color: 'blue',
+        },
+        {
+            name: '2_SF24_1',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_mitPausen.zip',
+            color: 'red',
+        },
+        {
+            name: '3_SF24_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A96_klein.zip',
+            color: 'green',
+        },
+    ],
 };
 export const versionKey = window.location.search.replace('?version=', '');
 
