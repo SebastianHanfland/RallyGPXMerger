@@ -244,7 +244,7 @@ export const versions: Record<string, Variant[]> = {
             color: 'black',
         },
     ],
-    KVR_24_3_BAB: [
+    KVR_24_03_BAB: [
         {
             name: 'SF23',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF23like24_mitPausen.zip',
@@ -261,7 +261,7 @@ export const versions: Record<string, Variant[]> = {
             color: 'yellow',
         },
     ],
-    KVR_24_3_A95: [
+    KVR_24_03_A95: [
         {
             name: 'SF24_A96_1',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v1_mitPausen_20240319.zip',
