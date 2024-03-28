@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { TrackOverviewDownload } from './TrackOverviewDownload.tsx';
 
 export const TracksOverview = () => {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
@@ -12,8 +13,11 @@ export const TracksOverview = () => {
         <div>
             <Row>
                 <h3 className={'mb-5'}>
-                    <FormattedMessage id={'msg.points'} />
+                    <FormattedMessage id={'msg.tracks'} />
                 </h3>
+                <div className={'mb-5'}>
+                    <TrackOverviewDownload />
+                </div>
             </Row>
             <Row className="flex-xl-nowrap" style={{ height: '70vh', minHeight: '200px', width: '100%' }}>
                 <Col>
