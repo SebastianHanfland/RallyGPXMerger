@@ -1,9 +1,9 @@
 import { BlockedStreetInfo } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
-import { formatNumber } from './trackStreetsCsv.ts';
 import { IntlShape } from 'react-intl';
 import { toLatLng } from '../../../utils/pointUtil.ts';
+import { formatNumber } from '../../../utils/numberUtil.ts';
 
 export const getBlockedStreetsHeader = (intl: IntlShape) => {
     const headerKeys = [
