@@ -4,6 +4,7 @@ export type Sections =
     | 'gps'
     | 'importExport'
     | 'settings'
+    | 'tracks'
     | 'points'
     | 'wizard-parameters'
     | 'wizard-segments'

@@ -12,6 +12,7 @@ const navigationSections: { section: Sections; openModal?: boolean }[] = [
     { section: 'gps' },
     { section: 'settings' },
     { section: 'streets' },
+    { section: 'tracks' },
     { section: 'importExport' },
     { section: 'points' },
 ];

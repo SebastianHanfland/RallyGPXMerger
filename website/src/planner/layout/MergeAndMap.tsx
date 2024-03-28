@@ -10,6 +10,7 @@ import { Settings } from '../settings/Settings.tsx';
 import { useSelector } from 'react-redux';
 import { getSelectionSection } from '../store/layout.reducer.ts';
 import { PointsOverview } from '../points/PointsOverview.tsx';
+import { TracksOverview } from '../trackoverview/TracksOverview.tsx';
 
 export function MergeAndMap() {
     parseCalculatedTracksHook();
@@ -38,6 +39,10 @@ export function MergeAndMap() {
 
     if (selectedSection === 'streets') {
         return <StreetResolvingSection />;
+    }
+
+    if (selectedSection === 'tracks') {
+        return <TracksOverview />;
     }
 
     if (selectedSection === 'importExport') {

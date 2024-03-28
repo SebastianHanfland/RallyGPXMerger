@@ -195,5 +195,6 @@
     "msg.type": "Type",
     "msg.flipGpx": "Flip Gpx file",
     "msg.unflipGpx": "Use normal direction",
-    "msg.flipGpx.hint": "Flip the Gpx, e.g. when going against the direction on a motorway"
+    "msg.flipGpx.hint": "Flip the Gpx, e.g. when going against the direction on a motorway",
+    "msg.track": "Track"
 }
