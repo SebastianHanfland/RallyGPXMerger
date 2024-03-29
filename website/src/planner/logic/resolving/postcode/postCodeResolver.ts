@@ -33,6 +33,28 @@ export const getUnresolvedPostCodeEntries = (state: State) => {
     );
 };
 
+async function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCodeKey: string, dispatch: Dispatch) {
+    const { lon, lat } = fromKey(postCodeKey);
+
+    return fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
+        batch(() => {
+            dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
+            if (district) {
+                dispatch(
+                    geoCodingActions.saveResolvedDistricts({
+                        [postCodeKey]: district
+                            .replace('constituency for the Bundestag election ', '')
+                            .replace('Bundestagswahlkreis ', '')
+                            .replace('Wahlkreis', '')
+                            .replace('Munchen', 'München')
+                            .replace('Munich', 'München'),
+                    })
+                );
+            }
+        });
+    });
+}
+
 export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => State) => {
     const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
     if (!bigDataCloudKey) {
@@ -40,38 +62,12 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     }
     dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
 
-    let counter = 0;
     const unresolvedPostCodeKeys = getUnresolvedPostCodeEntries(getState());
     unresolvedPostCodeKeys.forEach(async (postCodeKey) => {
-        setTimeout(() => {
-            // (async function (bigDataCloudKey: string, postCodeKey: string, dispatch: Dispatch) {
-            const { lon, lat } = fromKey(postCodeKey);
-
-            return fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
-                batch(() => {
-                    dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
-                    if (district) {
-                        dispatch(
-                            geoCodingActions.saveResolvedDistricts({
-                                [postCodeKey]: district
-                                    .replace('constituency for the Bundestag election ', '')
-                                    .replace('Bundestagswahlkreis ', '')
-                                    .replace('Wahlkreis', '')
-                                    .replace('Munchen', 'München')
-                                    .replace('Munich', 'München'),
-                            })
-                        );
-                        // }
-                    }
-                });
-            });
-        }, 300 * counter);
-        counter += 1;
+        await fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch);
     });
 
-    setTimeout(() => {
-        dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false));
-    }, 200 * counter);
+    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false));
 };
 
 export const getPostCodeRequestProgress = createSelector(
