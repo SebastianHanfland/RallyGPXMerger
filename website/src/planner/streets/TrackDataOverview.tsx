@@ -24,7 +24,7 @@ export function TrackDataOverview() {
             </h4>
             <TrackDataOverviewTable />
 
-            <DashboardStreetsContent />
+            <DashboardStreetsContent showClearButton={true} />
         </div>
     );
 }

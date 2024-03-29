@@ -33,7 +33,7 @@ export function StreetStatus(props: { done: boolean; loading: boolean }) {
     return <Warning />;
 }
 
-export function DashboardStreetsContent() {
+export function DashboardStreetsContent({ showClearButton }: { showClearButton?: boolean }) {
     const hasEnrichedTracks = useSelector(getEnrichedTrackStreetInfos).length > 0;
     const postCodes = useSelector(getResolvedPostCodes);
     const resolvedPositions = useSelector(getResolvedPositions);
@@ -114,13 +114,25 @@ export function DashboardStreetsContent() {
                     onClick={(event) => {
                         event.stopPropagation();
                         dispatch(layoutActions.selectSection('streets'));
-                        dispatch(geoCodingActions.clearPostCodesAndDistricts());
                         dispatch(addPostCodeToStreetInfos);
                     }}
                     disabled={ongoingRequests || hasNoTrack}
                 >
                     <FormattedMessage id={'msg.postCodes'} /> *
                 </Button>
+                {showClearButton && (
+                    <Button
+                        size={'sm'}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            dispatch(geoCodingActions.clearPostCodesAndDistricts());
+                        }}
+                        variant={'danger'}
+                        disabled={ongoingRequests || hasNoTrack}
+                    >
+                        <FormattedMessage id={'msg.clearPostCodes'} />
+                    </Button>
+                )}
                 <StreetStatus done={postCodesDone} loading={runningPostCodeRequests} />
             </div>
             {postCodeProgress !== undefined && (

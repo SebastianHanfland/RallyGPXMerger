@@ -19,6 +19,7 @@
     "msg.streetNames": "Street names",
     "msg.aggregation": "Aggregation",
     "msg.postCodes": "Post codes",
+    "msg.clearPostCodes": "Clear all post codes",
     "msg.documents": "Documents",
     "msg.gps": "Planner",
     "msg.appName": "Rally GPX Merger",

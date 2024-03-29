@@ -19,6 +19,7 @@
     "msg.streetNames": "Straßennamen",
     "msg.aggregation": "Gruppieren",
     "msg.postCodes": "Postleitzahlen",
+    "msg.clearPostCodes": "Alle Postleitzahlen löschen",
     "msg.documents": "Dokumente",
     "msg.gps": "Planung",
     "msg.appName": "Sternfahrtplaner",
