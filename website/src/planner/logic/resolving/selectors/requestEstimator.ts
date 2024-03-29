@@ -1,21 +1,9 @@
 import { State } from '../../../store/types.ts';
 import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
-import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { GpxSegment } from '../../../../common/types.ts';
 
 function getNumberOfRequestsForSegments(gpxSegments: GpxSegment[]) {
-    let counter = 0;
-    gpxSegments.forEach((segment) => {
-        const gpx = SimpleGPX.fromString(segment.content);
-        gpx.tracks.forEach((track) => {
-            const listOfPoints = splitListIntoSections(track.points, 1000);
-            listOfPoints.forEach(() => {
-                counter += 1;
-            });
-        });
-    });
-    return counter;
+    return gpxSegments.length;
 }
 
 export const getNumberOfRequiredRequests = (state: State) => {

@@ -25,16 +25,17 @@ export function resolveStreetNames(dispatch: AppDispatch, getState: () => State)
 
     gpxSegments.forEach((segment) => {
         SimpleGPX.fromString(segment.content).tracks.forEach((track) => {
-            splitListIntoSections(track.points, 1000).forEach(async (points) => {
-                await geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
-                    (resolvedPositions) => {
-                        dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
-                        dispatch(
-                            gpxSegmentsActions.setSegmentStreetsResolved({ id: segment.id, streetsResolved: true })
-                        );
-                    }
-                );
-            });
+            splitListIntoSections(track.points, 1000).forEach(
+                async (points) =>
+                    await geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
+                        (resolvedPositions) => {
+                            dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                            dispatch(
+                                gpxSegmentsActions.setSegmentStreetsResolved({ id: segment.id, streetsResolved: true })
+                            );
+                        }
+                    )
+            );
         });
     });
 
