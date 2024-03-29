@@ -54,10 +54,5 @@ const geoCodingRequestsSlice = createSlice({
 export const geoCodingRequestsActions = geoCodingRequestsSlice.actions;
 export const geoCodingRequestsReducer: Reducer<GeoCodingRequestsState> = geoCodingRequestsSlice.reducer;
 const getBase = (state: State) => state.geoCodingRequests;
-export const getNumberOfRequiredRequests = (state: State) => getBase(state).numberOfRequiredRequests;
-export const getNumberOfRequestsDone = (state: State) => getBase(state).requestDoneCounter;
-export const getNumberOfPostCodeRequestsDone = (state: State) => getBase(state).postCodeRequestDoneCounter;
-export const getNumberOfRequestsRunning = (state: State) => getBase(state).requestCounter;
-export const getNumberOfPostCodeRequestsRunning = (state: State) => getBase(state).postCodeRequestCounter;
 export const getIsLoadingGeoData = (state: State) => getBase(state).isLoadingData;
 export const getIsAggregating = (state: State) => getBase(state).isAggregating;

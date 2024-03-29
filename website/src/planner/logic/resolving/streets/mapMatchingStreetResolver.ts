@@ -29,12 +29,14 @@ export function resolveStreetNames(dispatch: AppDispatch, getState: () => State)
                     geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
                         (resolvedPositions) => {
                             dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                            dispatch(
+                                gpxSegmentsActions.setSegmentStreetsResolved({ id: segment.id, streetsResolved: true })
+                            );
                         }
                     );
                 }, 5000 * counter);
                 counter += 1;
             });
-            dispatch(gpxSegmentsActions.setSegmentStreetsResolved({ id: segment.id, streetsResolved: true }));
         });
     });
     return counter;

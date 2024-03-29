@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
-import { getNumberOfRequiredRequests } from '../store/geoCodingRequests.reducer.ts';
 import { getUnresolvedPostCodeEntries } from '../logic/resolving/postcode/postCodeResolver.ts';
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import { getNumberOfRequiredRequests } from '../logic/resolving/selectors/requestEstimator.ts';
 
 export function TrackDataOverviewTable() {
     const { uniquePositionCount, unresolvedUniquePositionCount } = useSelector(getNumberOfPositionsInTracks);

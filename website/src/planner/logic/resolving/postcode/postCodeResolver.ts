@@ -77,7 +77,7 @@ export const getPostCodeRequestProgress = (state: State): undefined | number => 
     const numberOfResolvedPostCodeEntries = Object.keys(getResolvedPostCodes(state)).length;
 
     if (numberOfUniquePostCodeEntries === 0) {
-        return 100;
+        return 0;
     }
 
     return (numberOfResolvedPostCodeEntries / numberOfUniquePostCodeEntries) * 100;

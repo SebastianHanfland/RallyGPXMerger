@@ -25,6 +25,10 @@ export const estimateRequestsForStreetResolving = (dispatch: Dispatch, getState:
     const counter = getNumberOfRequestsForSegments(gpxSegments);
     dispatch(geoCodingRequestsActions.setNumberOfRequiredRequests(counter));
 };
+export const getNumberOfRequiredRequests = (state: State) => {
+    const gpxSegments = getGpxSegments(state).filter((segment) => !segment.streetsResolved);
+    return getNumberOfRequestsForSegments(gpxSegments);
+};
 
 export const getRequestProgress = (state: State): undefined | number => {
     const gpxSegments = getGpxSegments(state);
@@ -32,7 +36,7 @@ export const getRequestProgress = (state: State): undefined | number => {
     const resolvedRequests = getNumberOfRequestsForSegments(gpxSegments.filter((segment) => segment.streetsResolved));
 
     if (allRequests === 0) {
-        return 100;
+        return 0;
     }
 
     return (resolvedRequests / allRequests) * 100;

@@ -9,12 +9,7 @@ import {
     addPostCodeToStreetInfos,
     getPostCodeRequestProgress,
 } from '../../logic/resolving/postcode/postCodeResolver.ts';
-import {
-    getIsAggregating,
-    getIsLoadingGeoData,
-    getNumberOfPostCodeRequestsRunning,
-    getNumberOfRequestsRunning,
-} from '../../store/geoCodingRequests.reducer.ts';
+import { getIsAggregating, getIsLoadingGeoData } from '../../store/geoCodingRequests.reducer.ts';
 import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { geoCodingActions, getResolvedPositions, getResolvedPostCodes } from '../../store/geoCoding.reducer.ts';
 import { Done } from './Done.tsx';
@@ -41,18 +36,16 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
     const hasPostCodeInfo = Object.values(postCodes).filter((value) => value !== null).length > 0;
     const dispatch: AppDispatch = useDispatch();
 
-    const runningRequests = useSelector(getNumberOfRequestsRunning) > 0;
-    const runningPostCodeRequests = useSelector(getNumberOfPostCodeRequestsRunning) > 0;
     const isLoading = useSelector(getIsLoadingGeoData);
     const isAggregating = useSelector(getIsAggregating);
 
     const requestProgress = useSelector(getRequestProgress);
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
 
-    const streetsDone = !runningRequests && hasStreetInfo;
-    const postCodesDone = !runningPostCodeRequests && hasPostCodeInfo;
+    const streetsDone = requestProgress === 100 && hasStreetInfo;
+    const postCodesDone = postCodeProgress === 100 && hasPostCodeInfo;
 
-    const ongoingRequests = runningRequests || runningPostCodeRequests || isLoading || isAggregating;
+    const ongoingRequests = isLoading || isAggregating;
 
     const hasNoTrack = useSelector(getCalculatedTracks).length === 0;
 
@@ -87,7 +80,7 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
                 >
                     <FormattedMessage id={'msg.streetNames'} /> *
                 </Button>
-                <StreetStatus done={streetsDone} loading={runningRequests} />
+                <StreetStatus done={streetsDone} loading={false} />
             </div>
             {requestProgress !== undefined && (
                 <div className={'m-2'}>
@@ -133,7 +126,7 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
                         <FormattedMessage id={'msg.clearPostCodes'} />
                     </Button>
                 )}
-                <StreetStatus done={postCodesDone} loading={runningPostCodeRequests} />
+                <StreetStatus done={postCodesDone} loading={false} />
             </div>
             {postCodeProgress !== undefined && (
                 <div className={'m-2'}>
