@@ -12,7 +12,7 @@ import {
 
 export const estimateRequestsForStreetResolving = (dispatch: Dispatch, getState: () => State) => {
     let counter = 0;
-    const gpxSegments = getGpxSegments(getState());
+    const gpxSegments = getGpxSegments(getState()).filter((segment) => !segment.streetsResolved);
     gpxSegments.forEach((segment) => {
         const gpx = SimpleGPX.fromString(segment.content);
         gpx.tracks.forEach((track) => {

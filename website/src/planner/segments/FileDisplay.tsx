@@ -10,9 +10,10 @@ import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
 import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
+import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
-    const { id, filename, content, flipped } = gpxSegment;
+    const { id, filename, content, flipped, streetsResolved } = gpxSegment;
     const intl = useIntl();
     const dispatch = useDispatch();
     const { alert, tooltip } = useSelector(countUsagesOfSegment(id, intl));
@@ -48,6 +49,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
                     <FlipGpxButton id={id} name={filename} flipped={flipped} />
+                    <ResetResolvedStreetsButton id={id} name={filename} streetsResolved={streetsResolved} />
                 </DropdownButton>
             </td>
         </tr>
