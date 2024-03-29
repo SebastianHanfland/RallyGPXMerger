@@ -9,6 +9,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../../../store/types.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { fromKey, getWayPointKey } from '../helper/pointKeys.ts';
+import { batch } from 'react-redux';
 
 const getUniquePostCodeEntries = (state: State) => {
     const uniquePostCodeKeys: string[] = [];
@@ -36,19 +37,21 @@ function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCodeKey: 
     const { lon, lat } = fromKey(postCodeKey);
 
     fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
-        dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
-        if (district) {
-            dispatch(
-                geoCodingActions.saveResolvedDistricts({
-                    [postCodeKey]: district
-                        .replace('constituency for the Bundestag election ', '')
-                        .replace('Bundestagswahlkreis ', '')
-                        .replace('Wahlkreis', '')
-                        .replace('Munchen', 'München')
-                        .replace('Munich', 'München'),
-                })
-            );
-        }
+        batch(() => {
+            dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
+            if (district) {
+                dispatch(
+                    geoCodingActions.saveResolvedDistricts({
+                        [postCodeKey]: district
+                            .replace('constituency for the Bundestag election ', '')
+                            .replace('Bundestagswahlkreis ', '')
+                            .replace('Wahlkreis', '')
+                            .replace('Munchen', 'München')
+                            .replace('Munich', 'München'),
+                    })
+                );
+            }
+        });
     });
 }
 
@@ -64,7 +67,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     unresolvedPostCodeKeys.forEach(async (postCodeKey) => {
         setTimeout(() => {
             fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch);
-        }, 200 * counter);
+        }, 300 * counter);
         counter += 1;
     });
 

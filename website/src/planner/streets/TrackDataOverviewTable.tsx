@@ -59,7 +59,7 @@ export function TrackDataOverviewTable() {
                             # <FormattedMessage id={'msg.requiredRequests.postCodes'} />
                         </td>
                         <td>
-                            {numberOfPostCodeRequests} = {(numberOfPostCodeRequests * 0.2).toFixed(1)} s
+                            {numberOfPostCodeRequests} = {(numberOfPostCodeRequests * 0.3).toFixed(1)} s
                         </td>
                     </tr>
                 )}
