@@ -283,6 +283,18 @@ export const versions: Record<string, Variant[]> = {
             color: 'black',
         },
     ],
+    SF_24_03_A95: [
+        {
+            name: 'SF24_A95_Rueckwaerts',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_rueck.zip',
+            color: 'black',
+        },
+        {
+            name: 'SF24_A95_RMpol',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol.zip',
+            color: 'red',
+        },
+    ],
 };
 export const versionKey = window.location.search.replace('?version=', '');
 
