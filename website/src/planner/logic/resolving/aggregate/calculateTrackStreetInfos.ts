@@ -60,6 +60,8 @@ export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: ()
         const calculatedTracks = getCalculatedTracks(getState());
         const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
         dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
-        dispatch(geoCodingRequestsActions.setIsAggregating(false));
     }, 10);
+    setTimeout(() => {
+        dispatch(geoCodingRequestsActions.setIsAggregating(false));
+    }, 1000);
 }

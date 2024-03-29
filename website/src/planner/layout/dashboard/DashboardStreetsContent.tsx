@@ -9,7 +9,12 @@ import {
     addPostCodeToStreetInfos,
     getPostCodeRequestProgress,
 } from '../../logic/resolving/postcode/postCodeResolver.ts';
-import { getIsAggregating, getIsLoadingGeoData } from '../../store/geoCodingRequests.reducer.ts';
+import {
+    getIsAggregating,
+    getIsLoadingGeoData,
+    getIsLoadingPostCodeData,
+    getIsLoadingStreetData,
+} from '../../store/geoCodingRequests.reducer.ts';
 import { resolveStreetNames } from '../../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { geoCodingActions, getResolvedPositions, getResolvedPostCodes } from '../../store/geoCoding.reducer.ts';
 import { Done } from './Done.tsx';
@@ -38,6 +43,8 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
 
     const isLoading = useSelector(getIsLoadingGeoData);
     const isAggregating = useSelector(getIsAggregating);
+    const isLoadingStreetData = useSelector(getIsLoadingStreetData);
+    const isLoadingPostCodeData = useSelector(getIsLoadingPostCodeData);
 
     const requestProgress = useSelector(getRequestProgress);
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
@@ -80,7 +87,7 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
                 >
                     <FormattedMessage id={'msg.streetNames'} /> *
                 </Button>
-                <StreetStatus done={streetsDone} loading={false} />
+                <StreetStatus done={streetsDone} loading={isLoadingStreetData} />
             </div>
             {requestProgress !== undefined && (
                 <div className={'m-2'}>
@@ -126,7 +133,7 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
                         <FormattedMessage id={'msg.clearPostCodes'} />
                     </Button>
                 )}
-                <StreetStatus done={postCodesDone} loading={false} />
+                <StreetStatus done={postCodesDone} loading={isLoadingPostCodeData} />
             </div>
             {postCodeProgress !== undefined && (
                 <div className={'m-2'}>

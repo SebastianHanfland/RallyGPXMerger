@@ -57,19 +57,20 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     if (!bigDataCloudKey) {
         return;
     }
+    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
 
     let counter = 0;
     const unresolvedPostCodeKeys = getUnresolvedPostCodeEntries(getState());
-    console.log('There are unresolced: ', unresolvedPostCodeKeys);
-    unresolvedPostCodeKeys.forEach(async (postCodeKey, index) => {
+    unresolvedPostCodeKeys.forEach(async (postCodeKey) => {
         setTimeout(() => {
             fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch);
-            if (index === unresolvedPostCodeKeys.length - 1) {
-                dispatch(geoCodingRequestsActions.setIsLoadingData(false));
-            }
         }, 200 * counter);
         counter += 1;
     });
+
+    setTimeout(() => {
+        dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false));
+    }, 200 * counter);
 };
 
 export const getPostCodeRequestProgress = (state: State): undefined | number => {
