@@ -5,16 +5,16 @@ import {
     getResolvedPostCodes,
     getTrackStreetInfos,
 } from '../../../store/geoCoding.reducer.ts';
-import { Dispatch } from '@reduxjs/toolkit';
+import { createSelector, Dispatch } from '@reduxjs/toolkit';
 import { State } from '../../../store/types.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { fromKey, getWayPointKey } from '../helper/pointKeys.ts';
 import { batch } from 'react-redux';
 
-const getUniquePostCodeEntries = (state: State) => {
+const getUniquePostCodeEntries = createSelector([getTrackStreetInfos], (infos) => {
     const uniquePostCodeKeys: string[] = [];
 
-    getTrackStreetInfos(state).forEach((info) =>
+    infos.forEach((info) =>
         info.wayPoints.forEach((wayPoint) => {
             const postCodeKey = getWayPointKey(wayPoint).postCodeKey;
             if (!uniquePostCodeKeys.includes(postCodeKey)) {
@@ -23,7 +23,7 @@ const getUniquePostCodeEntries = (state: State) => {
         })
     );
     return uniquePostCodeKeys;
-};
+});
 
 export const getUnresolvedPostCodeEntries = (state: State) => {
     const uniquePostCodeEntries = getUniquePostCodeEntries(state);
@@ -76,13 +76,16 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     }, 200 * counter);
 };
 
-export const getPostCodeRequestProgress = (state: State): undefined | number => {
-    const numberOfUniquePostCodeEntries = getUniquePostCodeEntries(state).length;
-    const numberOfResolvedPostCodeEntries = Object.keys(getResolvedPostCodes(state)).length;
+export const getPostCodeRequestProgress = createSelector(
+    [getUniquePostCodeEntries, getResolvedPostCodes],
+    (uniquePostCode, resolvedPostCodes) => {
+        const numberOfUniquePostCodeEntries = uniquePostCode.length;
+        const numberOfResolvedPostCodeEntries = Object.keys(resolvedPostCodes).length;
 
-    if (numberOfUniquePostCodeEntries === 0) {
-        return 0;
+        if (numberOfUniquePostCodeEntries === 0) {
+            return 0;
+        }
+
+        return (numberOfResolvedPostCodeEntries / numberOfUniquePostCodeEntries) * 100;
     }
-
-    return (numberOfResolvedPostCodeEntries / numberOfUniquePostCodeEntries) * 100;
-};
+);
