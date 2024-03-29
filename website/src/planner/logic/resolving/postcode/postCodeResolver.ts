@@ -33,10 +33,10 @@ export const getUnresolvedPostCodeEntries = (state: State) => {
     );
 };
 
-function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCodeKey: string, dispatch: Dispatch) {
+async function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCodeKey: string, dispatch: Dispatch) {
     const { lon, lat } = fromKey(postCodeKey);
 
-    fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
+    return fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
         batch(() => {
             dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
             if (district) {
