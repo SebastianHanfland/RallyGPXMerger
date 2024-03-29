@@ -198,5 +198,6 @@
     "msg.flipGpx.hint": "Die Fahrtrichtung auf dem Abschnitt ändern, z.B. wenn die Autobahn gegen die Fahrtrichtung benutzt wird",
     "msg.track": "Route",
     "msg.resetStreets.hint": "Straßenauflösung für {name} zurücksetzen, so dass beim nächsten Mal Straßenauflösen auch dieser Abschnitt neu aufgelöst wird",
-    "msg.resetStreets": "Straßenauflösung zurücksetzen"
+    "msg.resetStreets": "Straßenauflösung zurücksetzen",
+    "msg:streetsResolved": "Straßenauflösung ist erfolgt"
 }

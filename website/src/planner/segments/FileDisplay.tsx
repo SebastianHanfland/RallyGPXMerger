@@ -10,6 +10,7 @@ import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
 import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
+import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
@@ -37,6 +38,14 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
             </td>
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 {flipped && <img src={flip} className="m-1" alt="flip" />}
+                {streetsResolved && (
+                    <img
+                        src={check}
+                        className="m-1"
+                        alt="check"
+                        title={intl.formatMessage({ id: 'msg:streetsResolved' })}
+                    />
+                )}
                 <DropdownButton
                     as={ButtonGroup}
                     key={'primary'}

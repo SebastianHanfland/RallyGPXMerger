@@ -43,7 +43,7 @@ export function TrackDataOverviewTable() {
                     </td>
                     <td>{unresolvedUniquePositionCount}</td>
                 </tr>
-                {!!numberOfRequiredRequests && (
+                {numberOfRequiredRequests !== undefined && (
                     <tr>
                         <td>
                             # <FormattedMessage id={'msg.requiredRequests.streets'} />

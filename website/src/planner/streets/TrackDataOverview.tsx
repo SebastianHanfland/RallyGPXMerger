@@ -15,7 +15,7 @@ export function TrackDataOverview() {
 
     useEffect(() => {
         dispatch(estimateRequestsForStreetResolving);
-    }, [gpxSegments.length, calculatedTracks.length]);
+    }, [gpxSegments.length, gpxSegments.filter((segment) => segment.streetsResolved).length, calculatedTracks.length]);
 
     return (
         <div className={'m-2 p-2'}>
