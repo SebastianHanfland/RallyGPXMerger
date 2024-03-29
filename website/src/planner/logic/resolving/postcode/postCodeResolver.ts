@@ -1,14 +1,31 @@
 import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
-import {
-    geoCodingActions,
-    getBigDataCloudKey,
-    getResolvedPostCodes,
-    getTrackStreetInfos,
-} from '../../../store/geoCoding.reducer.ts';
+import { geoCodingActions, getBigDataCloudKey, getTrackStreetInfos } from '../../../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../../../store/types.ts';
 import { geoCodingRequestsActions, getNumberOfPostCodeRequestsDone } from '../../../store/geoCodingRequests.reducer.ts';
 import { getWayPointKey } from '../helper/pointKeys.ts';
+import { TrackWayPoint } from '../types.ts';
+
+function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, wayPoint: TrackWayPoint, dispatch: Dispatch) {
+    const { lon, postCodeKey, lat } = getWayPointKey(wayPoint);
+    fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
+        dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
+        if (district) {
+            dispatch(
+                geoCodingActions.saveResolvedDistricts({
+                    [postCodeKey]: district
+                        .replace('constituency for the Bundestag election ', '')
+                        .replace('Bundestagswahlkreis ', '')
+                        .replace('Wahlkreis', '')
+                        .replace('Munchen', 'München')
+                        .replace('Munich', 'München'),
+                })
+            );
+        }
+    });
+    dispatch(geoCodingRequestsActions.increasePostCodeRequestDoneCounter());
+    dispatch(geoCodingRequestsActions.decreaseActivePostCodeRequestCounter());
+}
 
 export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());
@@ -23,29 +40,7 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
         trackStreetInfo.wayPoints.forEach(async (wayPoint, index) => {
             dispatch(geoCodingRequestsActions.increaseActivePostCodeRequestCounter());
             setTimeout(() => {
-                const { lat, lon, postCodeKey } = getWayPointKey(wayPoint);
-                if (
-                    !getResolvedPostCodes(getState())[postCodeKey] ||
-                    getResolvedPostCodes(getState())[postCodeKey] === -1
-                ) {
-                    fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
-                        dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
-                        if (district) {
-                            dispatch(
-                                geoCodingActions.saveResolvedDistricts({
-                                    [postCodeKey]: district
-                                        .replace('constituency for the Bundestag election ', '')
-                                        .replace('Bundestagswahlkreis ', '')
-                                        .replace('Wahlkreis', '')
-                                        .replace('Munchen', 'München')
-                                        .replace('Munich', 'München'),
-                                })
-                            );
-                        }
-                    });
-                }
-                dispatch(geoCodingRequestsActions.increasePostCodeRequestDoneCounter());
-                dispatch(geoCodingRequestsActions.decreaseActivePostCodeRequestCounter());
+                fetchAndStorePostCodeAndDistrict(bigDataCloudKey, wayPoint, dispatch);
                 if (trackInfoIndex === trackStreetInfos.length - 1 && index === trackStreetInfo.wayPoints.length - 1) {
                     dispatch(geoCodingRequestsActions.setIsLoadingData(false));
                 }

@@ -53,7 +53,7 @@ export function TrackDataOverviewTable() {
                         </td>
                     </tr>
                 )}
-                {numberOfPostCodeRequests > 0 && (
+                {numberOfPostCodeRequests !== undefined && (
                     <tr>
                         <td>
                             # <FormattedMessage id={'msg.requiredRequests.postCodes'} />
