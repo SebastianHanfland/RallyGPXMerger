@@ -91,6 +91,5 @@ export const getReplaceProcess = (state: State) => getBase(state).replaceProcess
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
-    console.log('Filter is called');
     return filterItems(filterTerm, segments, (track: GpxSegment) => track.filename);
 });

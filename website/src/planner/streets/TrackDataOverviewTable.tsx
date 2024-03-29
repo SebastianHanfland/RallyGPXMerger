@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { getNumberOfPositionsInTracks } from '../map/hooks/trackSimulationReader.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getNumberOfRequiredRequests } from '../store/geoCodingRequests.reducer.ts';
-import { getNumberOfPostCodeRequests } from '../logic/resolving/postcode/postCodeResolver.ts';
+import { getUnresolvedPostCodeEntries } from '../logic/resolving/postcode/postCodeResolver.ts';
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
@@ -10,7 +10,7 @@ export function TrackDataOverviewTable() {
     const { uniquePositionCount, unresolvedUniquePositionCount } = useSelector(getNumberOfPositionsInTracks);
     const calculatedTracks = useSelector(getCalculatedTracks);
     const numberOfRequiredRequests = useSelector(getNumberOfRequiredRequests);
-    const numberOfPostCodeRequests = useSelector(getNumberOfPostCodeRequests);
+    const numberOfPostCodeRequests = useSelector(getUnresolvedPostCodeEntries).length;
 
     return (
         <Table striped bordered hover style={{ width: '100%' }}>
