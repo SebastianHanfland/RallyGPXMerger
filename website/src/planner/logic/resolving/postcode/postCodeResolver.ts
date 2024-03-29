@@ -60,14 +60,14 @@ export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => Sta
     if (!bigDataCloudKey) {
         return;
     }
-    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
+    setTimeout(() => {
+        dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
+    }, 10);
 
     const unresolvedPostCodeKeys = getUnresolvedPostCodeEntries(getState());
     unresolvedPostCodeKeys.forEach(async (postCodeKey) => {
         await fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch);
     });
-
-    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false));
 };
 
 export const getPostCodeRequestProgress = createSelector(

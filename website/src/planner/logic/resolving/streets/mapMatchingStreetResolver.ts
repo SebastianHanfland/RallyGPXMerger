@@ -21,23 +21,27 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
 export function resolveStreetNames(dispatch: AppDispatch, getState: () => State) {
     const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
     const gpxSegments = getGpxSegments(getState()).filter((segment) => !segment.streetsResolved);
-    dispatch(geoCodingRequestsActions.setIsLoadingStreetData(true));
-
-    gpxSegments.forEach((segment) => {
-        SimpleGPX.fromString(segment.content).tracks.forEach((track) => {
-            splitListIntoSections(track.points, 1000).forEach(
-                async (points) =>
-                    await geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
-                        (resolvedPositions) => {
-                            dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
-                            dispatch(
-                                gpxSegmentsActions.setSegmentStreetsResolved({ id: segment.id, streetsResolved: true })
-                            );
-                        }
-                    )
-            );
+    setTimeout(() => {
+        dispatch(geoCodingRequestsActions.setIsLoadingStreetData(true));
+    }, 10);
+    setTimeout(() => {
+        gpxSegments.forEach((segment) => {
+            SimpleGPX.fromString(segment.content).tracks.forEach((track) => {
+                splitListIntoSections(track.points, 1000).forEach(
+                    async (points) =>
+                        await geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
+                            (resolvedPositions) => {
+                                dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                                dispatch(
+                                    gpxSegmentsActions.setSegmentStreetsResolved({
+                                        id: segment.id,
+                                        streetsResolved: true,
+                                    })
+                                );
+                            }
+                        )
+                );
+            });
         });
-    });
-
-    dispatch(geoCodingRequestsActions.setIsLoadingStreetData(false));
+    }, 10);
 }

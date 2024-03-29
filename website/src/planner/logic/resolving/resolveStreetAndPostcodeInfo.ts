@@ -10,6 +10,6 @@ export const resolvePositions = async (dispatch: AppDispatch, getState: () => St
         await dispatch(calculateTrackStreetInfos);
         setTimeout(async () => {
             await dispatch(addPostCodeToStreetInfos);
-        }, 2000);
+        }, 4000);
     }, 5000);
 };
