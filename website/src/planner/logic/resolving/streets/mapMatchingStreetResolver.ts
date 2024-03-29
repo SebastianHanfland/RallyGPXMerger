@@ -1,7 +1,7 @@
 import { State } from '../../../store/types.ts';
 import { geoCodingActions, getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
-import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
+import { getGpxSegments, gpxSegmentsActions } from '../../../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
@@ -23,7 +23,8 @@ export function resolveStreetNames(dispatch: AppDispatch, getState: () => State)
     let counter = 0;
     dispatch(geoCodingRequestsActions.resetRequestDoneCounter());
 
-    const gpxSegments = getGpxSegments(getState());
+    const gpxSegments = getGpxSegments(getState()).filter((segment) => !segment.streetsResolved);
+
     gpxSegments.forEach((segment) => {
         SimpleGPX.fromString(segment.content).tracks.forEach((track) => {
             splitListIntoSections(track.points, 1000).forEach((points) => {
@@ -39,6 +40,7 @@ export function resolveStreetNames(dispatch: AppDispatch, getState: () => State)
                 }, 5000 * counter);
                 counter += 1;
             });
+            dispatch(gpxSegmentsActions.setSegmentStreetsResolved({ id: segment.id, streetsResolved: true }));
         });
     });
     return counter;

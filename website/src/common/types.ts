@@ -13,6 +13,7 @@ export interface ReadableTrack {
 
 export interface GpxSegment extends GpxFile {
     flipped?: boolean;
+    streetsResolved?: boolean;
 }
 
 export interface CalculatedTrack extends GpxFile {

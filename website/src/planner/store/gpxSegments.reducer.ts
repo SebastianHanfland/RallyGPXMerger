@@ -32,6 +32,16 @@ const gpxSegmentsSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
             );
         },
+        setSegmentStreetsResolved: (
+            state: GpxSegmentsState,
+            action: PayloadAction<{ id: string; streetsResolved: boolean }>
+        ) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload.id
+                    ? { ...segment, streetsResolved: action.payload.streetsResolved }
+                    : segment
+            );
+        },
         setReplaceProcess: (
             state: GpxSegmentsState,
             action: PayloadAction<{ targetSegment: string; replacementSegments: GpxSegment[] } | undefined>
