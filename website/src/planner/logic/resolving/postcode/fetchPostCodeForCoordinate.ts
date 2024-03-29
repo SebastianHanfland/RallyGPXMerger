@@ -2,6 +2,7 @@ import { getLanguage } from '../../../../language.ts';
 
 interface BigDataCloudResponse {
     postcode: number;
+    city?: string;
     localityInfo: {
         informative: [
             {
@@ -26,7 +27,8 @@ export const fetchPostCodeForCoordinate =
                     district:
                         result.localityInfo.informative.find((entry) => entry.order === 6)?.name ??
                         result.localityInfo.informative.find((entry) => entry.order === 7)?.name ??
-                        result.localityInfo.informative.find((entry) => entry.order === 8)?.name,
+                        result.localityInfo.informative.find((entry) => entry.order === 8)?.name ??
+                        result.city,
                 };
             })
             .catch((error) => {
