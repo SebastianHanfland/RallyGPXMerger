@@ -15,6 +15,7 @@ export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () =>
     if (replacementSegments.length === 1) {
         const payload = { id: targetSegment, newContent: replacementSegments[0].content };
         dispatch(gpxSegmentsActions.changeGpxSegmentContent(payload));
+        dispatch(gpxSegmentsActions.setSegmentStreetsResolved({ id: targetSegment, streetsResolved: false }));
         dispatch(gpxSegmentsActions.setFilename({ id: targetSegment, filename: replacementSegments[0].filename }));
     } else {
         const replacementIds = replacementSegments.map((segment) => segment.id);
