@@ -98,6 +98,7 @@ export function TrackSelectionCell({ track }: Props) {
                         <Select
                             name="segmentSelect"
                             value={null}
+                            menuPlacement={'top'}
                             placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
                             options={options.filter((option) => !segmentIds.includes(option.value))}
                             className="basic-multi-select"
