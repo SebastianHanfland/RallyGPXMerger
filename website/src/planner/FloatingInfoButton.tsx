@@ -14,6 +14,7 @@ const style: CSSProperties = {
     zIndex: 10,
     backgroundColor: 'rgba(220,220,255,1)',
     cursor: 'pointer',
+    overflow: 'hidden',
 };
 
 export function FloatingInfoButton() {

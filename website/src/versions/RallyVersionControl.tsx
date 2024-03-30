@@ -26,7 +26,8 @@ const style: CSSProperties = {
     bottom: 0,
     zIndex: 10,
     backgroundColor: 'white',
-    cursor: 'pointer',
+    cursor: 'default',
+    overflow: 'hidden',
 };
 
 function RallyDisplay() {
