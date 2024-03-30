@@ -8,10 +8,14 @@ import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
+export let storedState: State | undefined;
+
 export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch) {
     return fetch(version.url)
         .then((res) => res.json())
         .then((planning: State) => {
+            // TODO: fix this, when there are multiple json uploads...
+            storedState = planning;
             const calculatedTracks: ZipTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 version: version.name,

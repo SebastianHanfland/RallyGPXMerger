@@ -11,7 +11,7 @@ import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
 import { IntlShape, useIntl } from 'react-intl';
 
-const downloadFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
+export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
     const blockedStreetInfos = getBlockedStreetInfo(getState());
     const planningLabel = getPlanningLabel(getState());
@@ -27,7 +27,7 @@ export const StreetFilesPdfMakeDownloader = () => {
         <Button
             onClick={(event) => {
                 event.stopPropagation();
-                dispatch(downloadFiles(intl));
+                dispatch(downloadPdfFiles(intl));
             }}
             disabled={trackStreetInfos.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadPdf' })}
