@@ -3,7 +3,7 @@ import { getSingleZipTracks } from '../store/zipTracks.reducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 
 const cardStyle = {
-    style: { width: '200px', height: '130px', cursor: 'pointer' },
+    style: { width: '180px', height: '180px', cursor: 'pointer' },
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
@@ -20,7 +20,9 @@ export function TrackInformationModalBody() {
                         <Card {...cardStyle} key={track.id}>
                             <Card.Body className={'m-0 p-0'}>
                                 <h6>{track.filename}</h6>
-                                <p>Start: 10:00</p>
+                                <p className={'p-0 m-0'}>Start: 10:00</p>
+                                <p className={'p-0 m-0'}>Ziel: 15:00</p>
+                                <p className={'p-0 m-0'}>Länge: 10 km</p>
                                 <div>
                                     <div>
                                         <Button>GPX</Button>
