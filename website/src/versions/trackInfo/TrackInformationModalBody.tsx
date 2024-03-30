@@ -4,7 +4,7 @@ import { Button, Card, Col, Row } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 
 const cardStyle = {
-    style: { width: '175x', height: '175px', cursor: 'pointer' },
+    style: { width: '180x', height: '180px', cursor: 'pointer' },
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
