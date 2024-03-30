@@ -15,7 +15,7 @@ export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch
             const calculatedTracks: ZipTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 version: version.name,
-                color: getColorFromUuid(track.id),
+                color: version.color ?? getColorFromUuid(track.id),
                 content: optionallyDecompress(track.content),
             }));
             extendReadableTracks(

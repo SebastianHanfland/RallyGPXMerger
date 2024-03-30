@@ -7,6 +7,7 @@ import { extendReadableTracks } from '../cache/readableTracks.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
 import { Variant } from '../versionLinks.ts';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);
@@ -21,15 +22,14 @@ export async function loadZipFileOfVersion(version: Variant, dispatch: Dispatch)
             return zip.loadAsync(blob).then((zipContent) => {
                 const readTracks: Promise<ZipTrack>[] = Object.entries(zipContent.files).map(
                     async ([filename, content]): Promise<ZipTrack> => {
-                        console.log(nameSpace);
-                        console.log(uuidv5('1', nameSpace));
+                        const id = uuidv5(version.name + filename, nameSpace);
                         return content.async('text').then((text) => ({
-                            id: uuidv5(version.name + filename, nameSpace),
+                            id: id,
                             filename: `${version.name} ${filename}`,
                             content: text,
                             version: version.name,
                             peopleCount: getPeopleCountFromFilename(filename),
-                            color: version.color,
+                            color: version.color ?? getColorFromUuid(id),
                         }));
                     }
                 );

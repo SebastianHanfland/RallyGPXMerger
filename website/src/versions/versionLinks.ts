@@ -1,7 +1,7 @@
 export interface Variant {
     name: string;
     url: string;
-    color: string;
+    color?: string; // Optional: when not set, color is taken from the ids
 }
 export const versions: Record<string, Variant[]> = {
     sf24_v1_v3: [
@@ -299,7 +299,6 @@ export const versions: Record<string, Variant[]> = {
         {
             name: 'SF24_A95_RMpol',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol.json',
-            color: 'red',
         },
     ],
 };
