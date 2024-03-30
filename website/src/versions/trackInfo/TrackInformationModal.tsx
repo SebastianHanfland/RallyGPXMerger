@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import { getShowSingleTrackInfo, getShowTrackInfo, mapActions } from '../store/map.reducer.ts';
 import { TrackInformationModalBody } from './TrackInformationModalBody.tsx';
+import { ZipFilesDownloader } from './TracksDownload.tsx';
 
 export function TrackInformationModal() {
     const dispatch = useDispatch();
@@ -41,9 +42,7 @@ export function TrackInformationModal() {
                     <TrackInformationModalBody />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="success" onClick={() => 1}>
-                        Alle GPX herunterladen
-                    </Button>
+                    <ZipFilesDownloader />
                     <Button variant="success" onClick={() => 2}>
                         Alle PDF herunterladen
                     </Button>
