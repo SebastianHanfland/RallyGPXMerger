@@ -1,4 +1,4 @@
-interface Variant {
+export interface Variant {
     name: string;
     url: string;
     color: string;
