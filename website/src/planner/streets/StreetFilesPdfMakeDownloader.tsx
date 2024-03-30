@@ -11,6 +11,12 @@ import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
 import { IntlShape, useIntl } from 'react-intl';
 
+export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
+    const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
+    const planningLabel = getPlanningLabel(getState());
+    trackStreetInfos.filter((info) => info.id === id).forEach(createTrackStreetPdf(intl, planningLabel));
+};
+
 export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
     const blockedStreetInfos = getBlockedStreetInfo(getState());

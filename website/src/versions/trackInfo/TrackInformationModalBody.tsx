@@ -5,6 +5,10 @@ import download from '../../assets/file-down.svg';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
 import { ZipTrack } from '../../common/types.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
+import { downloadSinglePdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
+import { storedState } from '../data/loadJsonFile.ts';
+import { State } from '../../planner/store/types.ts';
+import { useIntl } from 'react-intl';
 
 const cardStyle = {
     style: { width: '170px', height: '170px', cursor: 'pointer' },
@@ -12,6 +16,7 @@ const cardStyle = {
 };
 
 function TrackInfo({ track }: { track: ZipTrack }) {
+    const intl = useIntl();
     return (
         <>
             <h6>{track.filename}</h6>
@@ -28,10 +33,18 @@ function TrackInfo({ track }: { track: ZipTrack }) {
                         onlyIcon={true}
                         size={'sm'}
                     />
-                    <Button size={'sm'} className={'m-1'}>
-                        <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
-                        PDF
-                    </Button>
+                    {storedState && (
+                        <Button
+                            size={'sm'}
+                            className={'m-1'}
+                            onClick={() =>
+                                downloadSinglePdfFiles(intl, track.id)(undefined as any, () => storedState as State)
+                            }
+                        >
+                            <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
+                            PDF
+                        </Button>
+                    )}
                 </div>
             </div>
         </>
