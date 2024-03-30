@@ -10,6 +10,21 @@ import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { PresentationMap } from './map/PresentationMap.tsx';
+import { ZipTimeSlider } from './ZipTimeSlider.tsx';
+import { CSSProperties } from 'react';
+
+const style: CSSProperties = {
+    position: 'fixed',
+    width: '250px',
+    height: '100px',
+    left: 0,
+    right: 0,
+    overflowY: 'scroll',
+    bottom: 0,
+    zIndex: 10,
+    backgroundColor: 'white',
+    cursor: 'pointer',
+};
 
 function RallyDisplay() {
     loadFilesHook();
@@ -27,6 +42,9 @@ function RallyDisplay() {
         return (
             <Container fluid>
                 <PresentationMap />
+                <div style={style}>
+                    <ZipTimeSlider />
+                </div>
             </Container>
         );
     }

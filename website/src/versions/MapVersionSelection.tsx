@@ -53,9 +53,7 @@ export function MapVersionSelection() {
                                                 width: '100px',
                                             }}
                                             className={'mx-3'}
-                                        >
-                                            ________
-                                        </span>
+                                        ></span>
                                         {versionName}
                                     </span>
                                 }
