@@ -34,5 +34,5 @@ export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) =>
         ],
         styles,
     };
-    pdfMake.createPdf(docDefinition).download(trackStreets.name + '.pdf');
+    return pdfMake.createPdf(docDefinition);
 };

@@ -61,5 +61,5 @@ export function createBlockedStreetsPdf(
         ],
         styles,
     };
-    pdfMake.createPdf(docDefinition).download('Blockierte-Strassen.pdf');
+    return pdfMake.createPdf(docDefinition);
 }

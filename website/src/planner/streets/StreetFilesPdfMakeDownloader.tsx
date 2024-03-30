@@ -10,6 +10,8 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/store.ts';
 import { IntlShape, useIntl } from 'react-intl';
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
@@ -21,8 +23,25 @@ export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () 
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
     const blockedStreetInfos = getBlockedStreetInfo(getState());
     const planningLabel = getPlanningLabel(getState());
-    trackStreetInfos.forEach(createTrackStreetPdf(intl, planningLabel));
-    createBlockedStreetsPdf(blockedStreetInfos, planningLabel, intl);
+
+    const zip = new JSZip();
+    trackStreetInfos.forEach((track) => {
+        createTrackStreetPdf(
+            intl,
+            planningLabel
+        )(track).getBlob((blob) => zip.file(`${track.name}-${track.distanceInKm.toFixed(2)}km.pdf`, blob));
+    });
+    createBlockedStreetsPdf(blockedStreetInfos, planningLabel, intl).getBlob((blob) =>
+        zip.file(`Blockierte-Strassen.pdf`, blob)
+    );
+    setTimeout(() => {
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+            FileSaver.saveAs(
+                content,
+                `${intl.formatMessage({ id: 'msg.streetListZip' })}-pdf-${new Date().toISOString()}.zip`
+            );
+        });
+    }, 500);
 };
 
 export const StreetFilesPdfMakeDownloader = () => {
