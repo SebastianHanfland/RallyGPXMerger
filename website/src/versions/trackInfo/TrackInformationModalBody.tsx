@@ -4,6 +4,7 @@ import { Button, Card, Col, Row } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
 import { ZipTrack } from '../../common/types.ts';
+import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 
 const cardStyle = {
     style: { width: '170px', height: '170px', cursor: 'pointer' },
@@ -19,12 +20,16 @@ function TrackInfo({ track }: { track: ZipTrack }) {
             <p className={'p-0 m-0'}>Länge: 10 km</p>
             <div>
                 <div>
-                    <Button size={'sm'}>
-                        <img src={download} alt="download file" color={'#ffffff'} />
-                        GPX
-                    </Button>
-                    <Button size={'sm'} className={'mx-2'}>
-                        <img src={download} alt="download file" color={'#ffffff'} />
+                    <FileDownloader
+                        name={`${track.filename}.gpx`}
+                        content={track.content}
+                        id={track.id}
+                        label={'GPX'}
+                        onlyIcon={true}
+                        size={'sm'}
+                    />
+                    <Button size={'sm'} className={'m-1'}>
+                        <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
                         PDF
                     </Button>
                 </div>
@@ -54,7 +59,7 @@ export function TrackInformationModalBody() {
                 {sortedTracks?.map((track) => (
                     <Col key={track.id}>
                         <Card {...cardStyle}>
-                            <Card.Body className={'m-0 p-0'}>
+                            <Card.Body className={'track-card m-0 p-0'}>
                                 <TrackInfo track={track} />
                             </Card.Body>
                         </Card>

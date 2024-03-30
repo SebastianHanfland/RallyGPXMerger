@@ -15,6 +15,13 @@
     background-color: #0dcaf0;
 }
 
+.track-card {
+    font-size: 12px;
+    button {
+        font-size: 12px;
+    }
+}
+
 .leaflet-tooltip {
     width: 250px;
     white-space: break-spaces;

@@ -11,6 +11,7 @@ interface Props {
     name: string;
     onlyIcon?: boolean;
     label?: string;
+    size?: 'lg' | 'sm';
 }
 
 interface DropdownProps {
@@ -23,12 +24,13 @@ const downloadFile = (name: string, content: string) => {
     FileSaver.saveAs(blob, name);
 };
 
-export const FileDownloader = ({ id, name, content, onlyIcon, label }: Props) => {
+export const FileDownloader = ({ id, name, content, onlyIcon, label, size }: Props) => {
     const intl = useIntl();
     return (
         <Button
             onClick={() => downloadFile(name, content)}
             style={{ backgroundColor: getColorFromUuid(id) }}
+            size={size}
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
             className={onlyIcon ? 'm-1' : undefined}
         >
