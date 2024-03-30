@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 import { getSingleZipTracks } from '../store/zipTracks.reducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
+import download from '../../assets/file-down.svg';
 
 const cardStyle = {
-    style: { width: '180px', height: '180px', cursor: 'pointer' },
+    style: { width: '175x', height: '175px', cursor: 'pointer' },
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
@@ -25,8 +26,14 @@ export function TrackInformationModalBody() {
                                 <p className={'p-0 m-0'}>Länge: 10 km</p>
                                 <div>
                                     <div>
-                                        <Button>GPX</Button>
-                                        <Button className={'mx-2'}>PDF</Button>
+                                        <Button size={'sm'}>
+                                            <img src={download} alt="download file" color={'#ffffff'} />
+                                            GPX
+                                        </Button>
+                                        <Button size={'sm'} className={'mx-2'}>
+                                            <img src={download} alt="download file" color={'#ffffff'} />
+                                            PDF
+                                        </Button>
                                     </div>
                                 </div>
                             </Card.Body>

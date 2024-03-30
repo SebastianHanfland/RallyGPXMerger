@@ -26,6 +26,12 @@ export function TrackInformationModal() {
                     <TrackInformationModalBody />
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button variant="success" onClick={() => 1}>
+                        Alle GPX herunterladen
+                    </Button>
+                    <Button variant="success" onClick={() => 2}>
+                        Alle PDF herunterladen
+                    </Button>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>
                         <FormattedMessage id={'msg.close'} />
                     </Button>
