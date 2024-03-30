@@ -1,7 +1,7 @@
 import { Provider, useSelector } from 'react-redux';
 import { loadFilesHook } from './data/loadFilesHook.ts';
 import { ComparisonMap } from './map/ComparisonMap.tsx';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
 import { versionsStore } from './store/store.ts';
@@ -14,9 +14,10 @@ import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { CSSProperties } from 'react';
 
 const style: CSSProperties = {
+    marginLeft: '15px',
     position: 'fixed',
     width: '250px',
-    height: '100px',
+    height: '120px',
     left: 0,
     right: 0,
     overflowY: 'scroll',
@@ -44,6 +45,9 @@ function RallyDisplay() {
                 <PresentationMap />
                 <div style={style}>
                     <ZipTimeSlider />
+                    <div>
+                        <Button>Streckeninformation</Button>
+                    </div>
                 </div>
             </Container>
         );
