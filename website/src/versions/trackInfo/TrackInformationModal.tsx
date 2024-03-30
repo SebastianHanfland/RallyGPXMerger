@@ -39,20 +39,22 @@ export function TrackInformationModal() {
                 <Modal.Body>
                     <TrackInformationModalBody />
                 </Modal.Body>
-                <Modal.Footer>
-                    <ZipFilesDownloader />
-                    {storedState && (
-                        <Button
-                            variant="success"
-                            onClick={() => downloadPdfFiles(intl)(undefined as any, () => storedState as State)}
-                        >
-                            Alle PDF herunterladen
+                {!singleTrackId && (
+                    <Modal.Footer>
+                        <ZipFilesDownloader />
+                        {storedState && (
+                            <Button
+                                variant="success"
+                                onClick={() => downloadPdfFiles(intl)(undefined as any, () => storedState as State)}
+                            >
+                                Alle PDF herunterladen
+                            </Button>
+                        )}
+                        <Button variant="secondary" onClick={close}>
+                            <FormattedMessage id={'msg.close'} />
                         </Button>
-                    )}
-                    <Button variant="secondary" onClick={close}>
-                        <FormattedMessage id={'msg.close'} />
-                    </Button>
-                </Modal.Footer>
+                    </Modal.Footer>
+                )}
             </Modal>
         </>
     );
