@@ -43,7 +43,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                         src={check}
                         className="m-1"
                         alt="check"
-                        title={intl.formatMessage({ id: 'msg:streetsResolved' })}
+                        title={intl.formatMessage({ id: 'msg.streetsResolved' })}
                     />
                 )}
                 <DropdownButton

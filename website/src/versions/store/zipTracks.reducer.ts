@@ -45,6 +45,8 @@ export const zipTracksActions = zipTracksSlice.actions;
 export const zipTracksReducer: Reducer<ZipTracksState> = zipTracksSlice.reducer;
 const getBase = (state: VersionsState) => state.zipTracks;
 export const getZipTracks = (state: VersionsState) => getBase(state).tracks;
+export const getSingleZipTracks = (state: VersionsState) =>
+    getBase(state).tracks[Object.keys(getBase(state).tracks)[0]];
 export const getIsZipLoading = (state: VersionsState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: VersionsState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: VersionsState) => getBase(state).selectedTracks;
