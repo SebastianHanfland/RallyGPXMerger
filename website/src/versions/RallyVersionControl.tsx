@@ -13,6 +13,7 @@ import { PresentationMap } from './map/PresentationMap.tsx';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { CSSProperties } from 'react';
 import { TrackInformationModal } from './trackInfo/TrackInformationModal.tsx';
+import { LoadStateButton } from './store/LoadStateButton.tsx';
 
 const style: CSSProperties = {
     paddingLeft: '15px',
@@ -47,6 +48,7 @@ function RallyDisplay() {
                 <div style={style} className={'shadow'}>
                     <h5 className={'mt-2'}>Sternfahrt Muc 2024</h5>
                     <ZipTimeSlider />
+                    <LoadStateButton />
                     <div>
                         <TrackInformationModal />
                     </div>

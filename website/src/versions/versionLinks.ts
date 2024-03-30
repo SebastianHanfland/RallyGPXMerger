@@ -298,11 +298,11 @@ export const versions: Record<string, Variant[]> = {
     SF_24_JSON: [
         {
             name: 'SF24_A95_RMpol',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol.json',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol_correct.json',
         },
     ],
 };
-export const versionKey = window.location.search.replace('?version=', '');
+export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
 
 export function getColorOfVersion(versionName: string) {
     return versions[versionKey].find((version) => version.name === versionName)?.color;
