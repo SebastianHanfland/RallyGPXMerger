@@ -8,6 +8,8 @@ import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
+import { versionKey, versions } from './versionLinks.ts';
+import { PresentationMap } from './map/PresentationMap.tsx';
 
 function RallyDisplay() {
     loadFilesHook();
@@ -18,6 +20,14 @@ function RallyDisplay() {
             <div>
                 <FormattedMessage id={'msg.loading'} />
             </div>
+        );
+    }
+
+    if (versions[versionKey].length === 1) {
+        return (
+            <Container fluid>
+                <PresentationMap />
+            </Container>
         );
     }
 
