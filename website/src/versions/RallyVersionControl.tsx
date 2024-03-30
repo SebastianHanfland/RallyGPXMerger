@@ -1,5 +1,5 @@
 import { Provider, useSelector } from 'react-redux';
-import { loadZipFileHook } from './data/loadZipFileHook.ts';
+import { loadFilesHook } from './data/loadFilesHook.ts';
 import { DisplayMap } from './map/DisplayMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
@@ -10,7 +10,7 @@ import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 
 function RallyDisplay() {
-    loadZipFileHook();
+    loadFilesHook();
     const isLoading = useSelector(getIsZipLoading);
 
     if (isLoading) {

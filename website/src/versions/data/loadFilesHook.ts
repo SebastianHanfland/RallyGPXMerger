@@ -28,7 +28,7 @@ function setStartAndEndTime(dispatch: Dispatch) {
     dispatch(mapActions.setStartAndEndTime(payload));
 }
 
-export function loadZipFileHook() {
+export function loadFilesHook() {
     const dispatch: Dispatch = useDispatch();
 
     useEffect(() => {
