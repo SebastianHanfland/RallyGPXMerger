@@ -1,6 +1,6 @@
 import { Provider, useSelector } from 'react-redux';
 import { loadFilesHook } from './data/loadFilesHook.ts';
-import { DisplayMap } from './map/DisplayMap.tsx';
+import { ComparisonMap } from './map/ComparisonMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
@@ -24,7 +24,7 @@ function RallyDisplay() {
     return (
         <Container fluid>
             <NavigationBar />
-            <DisplayMap />
+            <ComparisonMap />
         </Container>
     );
 }

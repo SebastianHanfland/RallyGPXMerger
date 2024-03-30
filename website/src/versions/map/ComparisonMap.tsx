@@ -10,7 +10,7 @@ import { Munich } from '../../common/locations.ts';
 
 let myMap: L.Map;
 
-export const DisplayMap = () => {
+export const ComparisonMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
 
     useEffect(() => {
