@@ -17,8 +17,8 @@ export function TrackInformationModalBody() {
         <div>
             <Row>
                 {sortedTracks?.map((track) => (
-                    <Col>
-                        <Card {...cardStyle} key={track.id}>
+                    <Col key={track.id}>
+                        <Card {...cardStyle}>
                             <Card.Body className={'m-0 p-0'}>
                                 <h6>{track.filename}</h6>
                                 <p className={'p-0 m-0'}>Start: 10:00</p>

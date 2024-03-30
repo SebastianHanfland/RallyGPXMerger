@@ -16,6 +16,7 @@ export interface MapOptions {
     color?: string;
     opacity?: number;
     weight?: number;
+    clickCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
 }
 
 function addStartAndBreakMarker(
@@ -65,6 +66,13 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
         }).bindTooltip(gpxSegment.filename, {
             sticky: true,
         });
+        const clickCallBack = options?.clickCallBack;
+        if (clickCallBack) {
+            connection.on('click', () => {
+                clickCallBack(gpxSegment);
+                console.log('here...');
+            });
+        }
         connection.addTo(routeLayer);
         if (options.onlyShowBreaks) {
             addStartAndBreakMarker(options, lastTrack, trackPoints, gpxSegment, routeLayer, track);

@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
-import { getShowMapMarker } from '../store/map.reducer.ts';
+import { getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
 
 export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
@@ -10,6 +10,7 @@ export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<Lay
     const showMarker = useSelector(getShowMapMarker);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
+    const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -24,6 +25,7 @@ export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<Lay
             showMarker,
             onlyShowBreaks: true,
             opacity: 0.7,
+            clickCallBack: () => dispatch(mapActions.setShowTrackInfo(true)),
         });
     }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker]);
 }
