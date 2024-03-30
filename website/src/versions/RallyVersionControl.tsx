@@ -1,7 +1,7 @@
 import { Provider, useSelector } from 'react-redux';
 import { loadFilesHook } from './data/loadFilesHook.ts';
 import { ComparisonMap } from './map/ComparisonMap.tsx';
-import { Button, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
 import { versionsStore } from './store/store.ts';
@@ -12,12 +12,13 @@ import { versionKey, versions } from './versionLinks.ts';
 import { PresentationMap } from './map/PresentationMap.tsx';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { CSSProperties } from 'react';
+import { TrackInformationModal } from './trackInfo/TrackInformationModal.tsx';
 
 const style: CSSProperties = {
-    marginLeft: '15px',
+    paddingLeft: '15px',
     position: 'fixed',
     width: '250px',
-    height: '120px',
+    height: '160px',
     left: 0,
     right: 0,
     overflowY: 'scroll',
@@ -41,12 +42,13 @@ function RallyDisplay() {
 
     if (versions[versionKey].length === 1) {
         return (
-            <Container fluid>
+            <Container fluid className={'p-0'}>
                 <PresentationMap />
-                <div style={style}>
+                <div style={style} className={'shadow'}>
+                    <h5 className={'mt-2'}>Sternfahrt Muc 2024</h5>
                     <ZipTimeSlider />
                     <div>
-                        <Button>Streckeninformation</Button>
+                        <TrackInformationModal />
                     </div>
                 </div>
             </Container>

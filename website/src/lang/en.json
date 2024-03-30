@@ -200,5 +200,6 @@
     "msg.track": "Track",
     "msg.resetStreets.hint": "Reset resolved streets for segment {name} so that the next time you resolve the streets, this segment is resolved as well",
     "msg.resetStreets": "Reset resolved streets",
-    "msg:streetsResolved": "Street information is resolved"
+    "msg:streetsResolved": "Street information is resolved",
+    "msg:trackInfo": "Track information"
 }

@@ -19,6 +19,9 @@ const mapSlice = createSlice({
         setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
             state.showMapMarker = action.payload;
         },
+        setShowTrackInfo: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showTrackInfo = action.payload;
+        },
     },
 });
 
@@ -29,3 +32,4 @@ export const getCurrenMapTime = (state: VersionsState) => getBase(state).current
 export const getStartMapTime = (state: VersionsState) => getBase(state).start;
 export const getEndMapTime = (state: VersionsState) => getBase(state).end;
 export const getShowMapMarker = (state: VersionsState) => getBase(state).showMapMarker ?? false;
+export const getShowTrackInfo = (state: VersionsState) => getBase(state).showTrackInfo ?? false;
