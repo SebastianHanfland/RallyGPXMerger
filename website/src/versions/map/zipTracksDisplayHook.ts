@@ -25,7 +25,10 @@ export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<Lay
             showMarker,
             onlyShowBreaks: true,
             opacity: 0.7,
-            clickCallBack: () => dispatch(mapActions.setShowTrackInfo(true)),
+            clickCallBack: (track) => {
+                dispatch(mapActions.setShowTrackInfo(true));
+                dispatch(mapActions.setShowSingleTrackInfo(track.id));
+            },
         });
     }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker]);
 }

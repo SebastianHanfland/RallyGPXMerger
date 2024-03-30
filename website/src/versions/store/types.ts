@@ -13,6 +13,7 @@ export interface MapState {
     end?: string;
     showMapMarker?: boolean;
     showTrackInfo?: boolean;
+    showSingleTrackInfo?: string;
 }
 
 export interface VersionsState {
