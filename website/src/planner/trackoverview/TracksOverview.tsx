@@ -19,7 +19,10 @@ export const TracksOverview = () => {
                     <TrackOverviewDownload />
                 </div>
             </Row>
-            <Row className="flex-xl-nowrap" style={{ height: '70vh', minHeight: '200px', width: '100%' }}>
+            <Row
+                className="flex-xl-nowrap"
+                style={{ height: '70vh', minHeight: '200px', width: '100%', overflowY: 'auto' }}
+            >
                 <Col className={'m-3'}>
                     <Table striped bordered hover style={{ width: '100%' }}>
                         <thead>

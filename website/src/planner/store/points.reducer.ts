@@ -47,6 +47,7 @@ const pointSlice = createSlice({
         setEditPointOfInterest: (state: PointsState, action: PayloadAction<PointOfInterest | undefined>) => {
             state.editPointOfInterest = action.payload;
         },
+        clear: () => initialState,
     },
 });
 

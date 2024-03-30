@@ -7,6 +7,7 @@ import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
+import { pointsActions } from '../store/points.reducer.ts';
 
 export function resetData(dispatch: Dispatch) {
     clearReadableTracks();
@@ -19,5 +20,6 @@ export function resetData(dispatch: Dispatch) {
     dispatch(geoCodingActions.clear());
     dispatch(layoutActions.selectSection('menu'));
     dispatch(geoCodingRequestsActions.clear());
+    dispatch(pointsActions.clear());
     localStorage.clear();
 }
