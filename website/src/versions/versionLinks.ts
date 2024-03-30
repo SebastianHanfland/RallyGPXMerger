@@ -295,6 +295,13 @@ export const versions: Record<string, Variant[]> = {
             color: 'red',
         },
     ],
+    SF_24_JSON: [
+        {
+            name: 'SF24_A95_RMpol',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol.json',
+            color: 'red',
+        },
+    ],
 };
 export const versionKey = window.location.search.replace('?version=', '');
 
