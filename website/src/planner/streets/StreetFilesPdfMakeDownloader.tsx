@@ -16,7 +16,9 @@ import FileSaver from 'file-saver';
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
     const planningLabel = getPlanningLabel(getState());
-    trackStreetInfos.filter((info) => info.id === id).forEach(createTrackStreetPdf(intl, planningLabel));
+    trackStreetInfos
+        .filter((info) => info.id === id)
+        .forEach((track) => createTrackStreetPdf(intl, planningLabel)(track).download(`${track.name}.pdf`));
 };
 
 export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
