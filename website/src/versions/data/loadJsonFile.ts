@@ -6,6 +6,7 @@ import { zipTracksActions } from '../store/zipTracks.reducer.ts';
 import { Variant } from '../versionLinks.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
 export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch) {
     return fetch(version.url)
@@ -14,7 +15,7 @@ export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch
             const calculatedTracks: ZipTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 version: version.name,
-                color: version.color,
+                color: getColorFromUuid(track.id),
                 content: optionallyDecompress(track.content),
             }));
             extendReadableTracks(
