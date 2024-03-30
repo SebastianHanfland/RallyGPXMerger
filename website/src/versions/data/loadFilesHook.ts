@@ -6,6 +6,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { getReadableTracks } from '../cache/readableTracks.ts';
 import { mapActions } from '../store/map.reducer.ts';
 import { loadZipFileOfVersion } from './loadZipFile.ts';
+import { loadJsonFileOfVersion } from './loadJsonFile.ts';
 
 function setStartAndEndTime(dispatch: Dispatch) {
     let endDate = '1990-10-14T10:09:57.000Z';
@@ -39,7 +40,13 @@ export function loadFilesHook() {
         dispatch(zipTracksActions.setIsLoading(true));
         Promise.all(
             versions[versionKey].map((version) => {
-                return loadZipFileOfVersion(version, dispatch);
+                if (version.url.endsWith('.zip')) {
+                    return loadZipFileOfVersion(version, dispatch);
+                }
+                if (version.url.endsWith('.json')) {
+                    return loadJsonFileOfVersion(version, dispatch);
+                }
+                alert(`Unsupported file: ${version.name} (${version.url})\n Only json and zips are supported`);
             })
         ).then(() => {
             dispatch(zipTracksActions.setIsLoading(false));
