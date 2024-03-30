@@ -1,5 +1,5 @@
 import { Provider, useSelector } from 'react-redux';
-import { loadZipFileHook } from './loadZipFileHook.ts';
+import { loadZipFileHook } from './data/loadZipFileHook.ts';
 import { DisplayMap } from './map/DisplayMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';

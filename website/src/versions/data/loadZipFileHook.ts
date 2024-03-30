@@ -2,14 +2,14 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import JSZip from 'jszip';
 import { v5 as uuidv5 } from 'uuid';
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { versionKey, versions } from './versionLinks.ts';
-import { zipTracksActions } from './store/zipTracks.reducer.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { versionKey, versions } from '../versionLinks.ts';
+import { zipTracksActions } from '../store/zipTracks.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 
-import { ZipTrack } from '../common/types.ts';
-import { extendReadableTracks, getReadableTracks } from './cache/readableTracks.ts';
-import { mapActions } from './store/map.reducer.ts';
+import { ZipTrack } from '../../common/types.ts';
+import { extendReadableTracks, getReadableTracks } from '../cache/readableTracks.ts';
+import { mapActions } from '../store/map.reducer.ts';
 
 function getPeopleCountFromFilename(filename: string): number {
     console.log(filename);
