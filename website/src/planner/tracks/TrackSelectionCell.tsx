@@ -47,6 +47,14 @@ const breaks = [
     { value: `30${BREAK_IDENTIFIER}2`, label: '+ 30 min' },
     { value: `30${BREAK_IDENTIFIER}3`, label: '+ 30 min' },
     { value: `30${BREAK_IDENTIFIER}4`, label: '+ 30 min' },
+    { value: `-05${BREAK_IDENTIFIER}1`, label: '- 05 min' },
+    { value: `-05${BREAK_IDENTIFIER}2`, label: '- 05 min' },
+    { value: `-05${BREAK_IDENTIFIER}3`, label: '- 05 min' },
+    { value: `-05${BREAK_IDENTIFIER}4`, label: '- 05 min' },
+    { value: `-10${BREAK_IDENTIFIER}1`, label: '- 10 min' },
+    { value: `-10${BREAK_IDENTIFIER}2`, label: '- 10 min' },
+    { value: `-10${BREAK_IDENTIFIER}3`, label: '- 10 min' },
+    { value: `-10${BREAK_IDENTIFIER}4`, label: '- 10 min' },
 ];
 
 export function TrackSelectionCell({ track }: Props) {
