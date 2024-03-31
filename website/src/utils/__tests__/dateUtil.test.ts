@@ -1,4 +1,4 @@
-import { getTimeDifferenceInSeconds } from '../dateUtil.ts';
+import { getTimeDifferenceInSeconds, roundStartTimes } from '../dateUtil.ts';
 
 describe('dateUtil', () => {
     it('should calculate difference in seconds and shift date accordingly', () => {
@@ -26,5 +26,24 @@ describe('dateUtil', () => {
         const secondsOfHour = 60 * 60;
         const secondsOfADay = 24 * secondsOfHour;
         expect(differenceInSeconds).toEqual(-(31 * secondsOfADay - secondsOfHour)); // 3600 + 60 = 3660
+    });
+
+    describe('roundStartTimes', () => {
+        const testCases = [
+            {
+                input: '2007-10-14T10:09:57.000Z',
+                output: '2007-10-14T10:00:00.000Z',
+            },
+            {
+                input: '2007-10-14T10:10:00.000Z',
+                output: '2007-10-14T10:05:00.000Z',
+            },
+        ];
+
+        testCases.forEach(({ output, input }) =>
+            it(`${input} -> ${output}`, () => {
+                expect(roundStartTimes(input)).toEqual(output);
+            })
+        );
     });
 });

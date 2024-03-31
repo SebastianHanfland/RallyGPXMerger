@@ -31,3 +31,13 @@ export const DateTimeFormat: FormatDateOptions = {
     month: 'short',
     day: 'numeric',
 };
+
+const MINUTES_TO_ROUND_TO = 5;
+const MINUTES_TO_SUBTRACT = 5;
+
+export function roundStartTimes(startFront: string) {
+    const timeMinus5Min = date.addSeconds(new Date(startFront), -MINUTES_TO_SUBTRACT * 60).toISOString();
+
+    const coeff = 1000 * 60 * MINUTES_TO_ROUND_TO;
+    return new Date(Math.floor(new Date(timeMinus5Min).getTime() / coeff) * coeff).toISOString();
+}

@@ -11,7 +11,7 @@ import { State } from '../../planner/store/types.ts';
 import { useIntl } from 'react-intl';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
 
 const cardStyle = {
     style: { width: '170px', height: '170px', cursor: 'pointer' },
@@ -31,7 +31,7 @@ function TrackInfo({ track }: { track: ZipTrack }) {
     return (
         <>
             <h6>{track.filename}</h6>
-            <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(foundInfo.startFront)}`}</p>
+            <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(roundStartTimes(foundInfo.startFront))}`}</p>
             <p className={'p-0 m-0'}>{`Ziel: ${formatTimeOnly(foundInfo.arrivalFront)}`}</p>
             <p className={'p-0 m-0'}>{`Länge: ${formatNumber(foundInfo.distanceInKm)} km`}</p>
             <div>

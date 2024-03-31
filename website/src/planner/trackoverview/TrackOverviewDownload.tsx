@@ -5,17 +5,26 @@ import { IntlShape, useIntl } from 'react-intl';
 import FileSaver from 'file-saver';
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
 
-const headerKeys = ['msg.track', 'msg.distanceInKm', 'msg.trackPeople', 'msg.start', 'msg.arrival', 'msg.end'];
+const headerKeys = [
+    'msg.track',
+    'msg.distanceInKm',
+    'msg.trackPeople',
+    'msg.communicatedStart',
+    'msg.start',
+    'msg.arrival',
+    'msg.end',
+];
 
 const getBody = (trackStreetInfos: TrackStreetInfo[]): string => {
     return trackStreetInfos
         .map(
             (info) =>
-                `${info.name};${formatNumber(info.distanceInKm)};${info.peopleCount ?? ''};${formatTimeOnly(
-                    info.startFront
-                )};${formatTimeOnly(info.arrivalFront)};${formatTimeOnly(info.arrivalBack)}`
+                `${info.name};${formatNumber(info.distanceInKm)};${info.peopleCount ?? ''};
+                ${formatTimeOnly(roundStartTimes(info.startFront))};${formatTimeOnly(info.startFront)};${formatTimeOnly(
+                    info.arrivalFront
+                )};${formatTimeOnly(info.arrivalBack)}`
         )
         .join('\n');
 };
