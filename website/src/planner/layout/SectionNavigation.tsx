@@ -15,6 +15,7 @@ const navigationSections: { section: Sections; openModal?: boolean }[] = [
     { section: 'tracks' },
     { section: 'importExport' },
     { section: 'points' },
+    { section: 'nodePoints' },
 ];
 
 export const SectionNavigation = () => {

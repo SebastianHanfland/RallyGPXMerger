@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { getSelectionSection } from '../store/layout.reducer.ts';
 import { PointsOverview } from '../points/PointsOverview.tsx';
 import { TracksOverview } from '../trackoverview/TracksOverview.tsx';
+import { NodePointsOverview } from '../nodes/NodePointsOverview.tsx';
 
 export function MergeAndMap() {
     parseCalculatedTracksHook();
@@ -55,5 +56,9 @@ export function MergeAndMap() {
 
     if (selectedSection === 'points') {
         return <PointsOverview />;
+    }
+
+    if (selectedSection === 'nodePoints') {
+        return <NodePointsOverview />;
     }
 }

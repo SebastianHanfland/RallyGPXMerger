@@ -6,6 +6,7 @@ export type Sections =
     | 'settings'
     | 'tracks'
     | 'points'
+    | 'nodePoints'
     | 'wizard-parameters'
     | 'wizard-segments'
     | 'wizard-complexity'
