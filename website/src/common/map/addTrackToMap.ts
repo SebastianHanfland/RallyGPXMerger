@@ -2,7 +2,7 @@ import { Point, Track } from 'gpxparser';
 import L, { LayerGroup } from 'leaflet';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
-import { endIcon, startIcon } from '../MapIcons.ts';
+import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../types.ts';
 
@@ -45,7 +45,7 @@ function addStartAndBreakMarker(
             const timeDifferenceInSeconds = getTimeDifferenceInSeconds(nextTrackTime, lastTrackTime);
             if (timeDifferenceInSeconds > 4 * 60) {
                 const endMarker = L.marker(trackPoints[0], {
-                    icon: endIcon,
+                    icon: breakIcon,
                     title: `${gpxSegment.filename} - ${(timeDifferenceInSeconds / 60).toFixed(0)} min Pause`,
                 });
                 endMarker.addTo(routeLayer);
