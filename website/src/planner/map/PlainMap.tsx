@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { pointsActions } from '../store/points.reducer.ts';
 import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
 import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook.ts';
+import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 
 let myMap: L.Map | undefined;
 
@@ -44,6 +45,7 @@ export const PlainMap = () => {
     const trackMarkerLayer = useRef<LayerGroup>(null);
     const constructionsLayer = useRef<LayerGroup>(null);
     const pointsOfInterestLayer = useRef<LayerGroup>(null);
+    const nodePointsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -61,6 +63,8 @@ export const PlainMap = () => {
         constructionsLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         pointsOfInterestLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        nodePointsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     blockedStreetsDisplayHook(blockedStreetLayer);
@@ -68,6 +72,7 @@ export const PlainMap = () => {
     trackMarkerDisplayHook(trackMarkerLayer);
     constructionsDisplayHook(constructionsLayer);
     pointsOfInterestDisplayHook(pointsOfInterestLayer);
+    nodePointsDisplayHook(nodePointsLayer);
     gpxSegmentDisplayHook(gpxSegmentsLayer);
 
     return (
