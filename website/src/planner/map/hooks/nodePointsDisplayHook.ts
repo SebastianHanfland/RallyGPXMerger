@@ -8,7 +8,7 @@ import { toLatLng } from '../../../utils/pointUtil.ts';
 
 export function nodePointsDisplayHook(pointsOfInterestLayer: MutableRefObject<LayerGroup | null>) {
     const points = useSelector(getNodePositions);
-    const showPointsOfInterest = useSelector(getShowPointsOfInterest) || true;
+    const showPointsOfInterest = useSelector(getShowPointsOfInterest);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
