@@ -35,9 +35,10 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): Tra
     return segmentIdsUsedMultipleTimes.map((segmentId) => {
         const segmentsBeforeNode: TrackNodeSegment[] = [];
         trackCompositions.forEach((track) => {
-            const indexOfSegment = track.segmentIds.indexOf(segmentId);
+            const segmentsWithoutBreaks = track.segmentIds.filter((segmentId) => !segmentId.includes(BREAK_IDENTIFIER));
+            const indexOfSegment = segmentsWithoutBreaks.indexOf(segmentId);
             if (indexOfSegment > 0) {
-                const segmentIdBeforeNode = track.segmentIds[indexOfSegment - 1];
+                const segmentIdBeforeNode = segmentsWithoutBreaks[indexOfSegment - 1];
                 segmentsBeforeNode.push({
                     segmentId: segmentIdBeforeNode,
                     trackId: track.id,
