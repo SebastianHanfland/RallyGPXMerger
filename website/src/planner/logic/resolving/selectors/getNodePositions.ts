@@ -49,3 +49,37 @@ export const getNodePositions = createSelector(
         return nodePositions;
     }
 );
+
+function getTrueTracks(segmentId: string, trackNodes: TrackNode[], trackCompositions: TrackComposition[]): string[] {
+    const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === segmentId);
+    return (
+        foundTrackNode?.segmentsBeforeNode.map((beforeNode) => {
+            const foundTrackComposition = trackCompositions.find((track) => track.id === beforeNode.trackId);
+            return foundTrackComposition?.name ?? '';
+        }) ?? []
+    );
+}
+
+export const getTrueNodePositions = createSelector(
+    getTrackCompositions,
+    getGpxSegments,
+    (trackCompositions, gpxSegments): NodePosition[] => {
+        const trackNodes = listAllNodesOfTracks(trackCompositions);
+        const segmentIdsAfterNode = trackNodes.map((trackNode) => trackNode.segmentIdAfterNode);
+
+        const nodePositions: NodePosition[] = [];
+
+        segmentIdsAfterNode.forEach((segmentId) => {
+            const foundSegment = gpxSegments.find((gpxSegment) => gpxSegment.id === segmentId);
+            if (foundSegment) {
+                const simpleGPX = SimpleGPX.fromString(foundSegment.content);
+                const firstPointOfSegment = simpleGPX.tracks[0].points[0];
+                nodePositions.push({
+                    point: firstPointOfSegment,
+                    tracks: getTrueTracks(segmentId, trackNodes, trackCompositions),
+                });
+            }
+        });
+        return nodePositions;
+    }
+);
