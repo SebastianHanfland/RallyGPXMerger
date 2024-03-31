@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { listAllNodesOfTracks } from '../logic/merge/helper/nodeFinder.ts';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { getNodePositions } from '../logic/resolving/selectors/getNodePositions.ts';
+import { getTrueNodePositions } from '../logic/resolving/selectors/getNodePositions.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { useState } from 'react';
 
@@ -12,7 +12,7 @@ export const NodePointsOverview = () => {
     const tracks = useSelector(getTrackCompositions);
     const trackNodes = listAllNodesOfTracks(tracks);
     const gpxSegments = useSelector(getGpxSegments);
-    const nodePositions = useSelector(getNodePositions);
+    const nodePositions = useSelector(getTrueNodePositions);
 
     const getGpxSegment = (segmentId: string) => gpxSegments.find((segment) => segment.id === segmentId);
     const getTrackComposition = (trackId: string) => tracks.find((track) => track.id === trackId);
@@ -34,7 +34,7 @@ export const NodePointsOverview = () => {
                                 <th>
                                     <FormattedMessage id={'msg.title'} />
                                 </th>
-                                <th style={{ width: '50%' }}>
+                                <th style={{ width: '300px' }}>
                                     <FormattedMessage id={'msg.description'} />
                                 </th>
                             </tr>
@@ -43,7 +43,7 @@ export const NodePointsOverview = () => {
                             {trackNodes.map((trackNode) => (
                                 <tr key={trackNode.segmentIdAfterNode}>
                                     <td>{getGpxSegment(trackNode.segmentIdAfterNode)?.filename}</td>
-                                    <td style={{ wordBreak: 'break-all', whiteSpace: 'nowrap' }}>
+                                    <td style={{ wordBreak: 'break-all', whiteSpace: 'pre' }}>
                                         {trackNode.segmentsBeforeNode
                                             .map((segment) => {
                                                 const trackName = getTrackComposition(segment.trackId)?.name;
@@ -64,7 +64,7 @@ export const NodePointsOverview = () => {
                                 <th>
                                     <FormattedMessage id={'msg.title'} />
                                 </th>
-                                <th style={{ width: '50%' }}>
+                                <th style={{ width: '300px' }}>
                                     <FormattedMessage id={'msg.description'} />
                                 </th>
                             </tr>
@@ -73,11 +73,8 @@ export const NodePointsOverview = () => {
                             {nodePositions.map((trackNode) => (
                                 <tr key={JSON.stringify(trackNode.point)}>
                                     <td>{JSON.stringify(trackNode.point)}</td>
-                                    <td style={{ wordBreak: 'break-all', whiteSpace: 'nowrap' }}>
-                                        {trackNode.tracks.join(',')}
-                                    </td>
-                                    <td style={{ wordBreak: 'break-all', whiteSpace: 'nowrap' }}>
-                                        {JSON.stringify(trackNode)}
+                                    <td style={{ wordBreak: 'break-all', whiteSpace: 'pre' }}>
+                                        {trackNode.tracks.join('\n')}
                                     </td>
                                 </tr>
                             ))}
