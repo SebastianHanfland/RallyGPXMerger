@@ -138,18 +138,15 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
                 // ensure the output file contains only a single track
                 const first = this.tracks.at(0);
                 builder.setTracks([
-                    new gpxBuilder.Track(
-                        this.tracks.map((_track) => track2seg(_track)),
-                        {
-                            name: first?.name,
-                            cmt: first?.cmt,
-                            desc: first?.desc,
-                            src: first?.src,
-                            link: toLink(first?.link),
-                            number: Number(first?.number),
-                            type: first?.type,
-                        }
-                    ),
+                    new gpxBuilder.Track([tracks2seg(this.tracks)], {
+                        name: first?.name,
+                        cmt: first?.cmt,
+                        desc: first?.desc,
+                        src: first?.src,
+                        link: toLink(first?.link),
+                        number: Number(first?.number),
+                        type: first?.type,
+                    }),
                 ]);
             } else {
                 builder.setTracks(this.tracks.map((_track) => track2track(_track)));
@@ -220,6 +217,12 @@ function track2track(_track: Track, timeshift: number = 0): gpxBuilder.Track {
 function track2seg(_track: Track, timeshift: number = 0): gpxBuilder.Segment {
     // gpx-builder (i.e. output) tracks can have segments, but gpx-parser (i.e. input) ones do not
     return new gpxBuilder.Segment(_track.points.map((_point: Point) => point2point(_point, timeshift)));
+}
+
+function tracks2seg(_track: Track[], timeshift: number = 0): gpxBuilder.Segment {
+    return new gpxBuilder.Segment(
+        _track.flatMap((track) => track.points.map((_point: Point) => point2point(_point, timeshift)))
+    );
 }
 
 function route2route(_route: Route, timeshift: number = 0): gpxBuilder.Route {
