@@ -16,7 +16,7 @@ function RallyDisplay() {
     loadFilesHook();
     const isLoading = useSelector(getIsZipLoading);
 
-    if (isLoading) {
+    if (isLoading && !(versions[versionKey][0].mode === 'present')) {
         return (
             <div>
                 <FormattedMessage id={'msg.loading'} />
