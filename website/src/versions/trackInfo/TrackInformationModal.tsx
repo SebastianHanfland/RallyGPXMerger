@@ -8,6 +8,7 @@ import { ZipFilesDownloader } from './TracksDownload.tsx';
 import { downloadPdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
 import { storedState } from '../data/loadJsonFile.ts';
 import { State } from '../../planner/store/types.ts';
+import { showTimes } from '../store/LoadStateButton.tsx';
 
 export function TrackInformationModal() {
     const intl = useIntl();
@@ -38,7 +39,7 @@ export function TrackInformationModal() {
             {!singleTrackId && (
                 <Modal.Footer>
                     <ZipFilesDownloader />
-                    {storedState && (
+                    {storedState && showTimes && (
                         <Button
                             variant="success"
                             onClick={() => downloadPdfFiles(intl)(undefined as any, () => storedState as State)}

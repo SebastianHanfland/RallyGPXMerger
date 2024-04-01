@@ -13,7 +13,15 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-export function ZipTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: boolean; showPlayButton?: boolean }) {
+export function ZipTimeSlider({
+    bigThumb,
+    showPlayButton,
+    showTimes,
+}: {
+    bigThumb?: boolean;
+    showPlayButton?: boolean;
+    showTimes: boolean;
+}) {
     const mapTime = useSelector(getCurrenMapTime);
     const dateValue = useSelector(getZipCurrentTimeStamp);
     const dispatch = useDispatch();
@@ -38,11 +46,13 @@ export function ZipTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: boolean
         <div className={'d-flex'}>
             <div className={'flex-fill'}>
                 <Form.Group className={'mx-3'}>
-                    <div>
-                        {dateValue
-                            ? intl.formatDate(dateValue, DateTimeFormat)
-                            : intl.formatMessage({ id: 'msg.time' })}
-                    </div>
+                    {showTimes && (
+                        <div>
+                            {dateValue
+                                ? intl.formatDate(dateValue, DateTimeFormat)
+                                : intl.formatMessage({ id: 'msg.time' })}
+                        </div>
+                    )}
                     <div className={`d-flex${bigThumb ? ' my-2' : ''}`}>
                         <Form.Range
                             min={0}

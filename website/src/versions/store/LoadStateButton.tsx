@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { storage } from '../../planner/store/storage.ts';
 
 export const canEdit = window.location.search.includes('&edit');
+export const showTimes = window.location.search.includes('&showTimes');
 
 export const LoadStateButton = () => {
     if (!storedState) {

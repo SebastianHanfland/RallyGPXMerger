@@ -102,7 +102,7 @@ export function MapVersionSelection() {
                         readOnly
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                     ></Form.Check>
-                    <ZipTimeSlider />
+                    <ZipTimeSlider showTimes={true} />
                 </div>
             </Form>
         </Form.Group>
