@@ -16,6 +16,8 @@ const style: CSSProperties = {
     backgroundColor: 'white',
     cursor: 'default',
     overflow: 'hidden',
+    borderRadius: '10px',
+    margin: '10px',
 };
 
 export function PresentationMenu() {
