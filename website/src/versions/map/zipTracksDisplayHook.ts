@@ -29,7 +29,7 @@ export function zipTracksDisplayHook(
         addTracksToLayer(calculatedTracksLayer, tracksToDisplay, true, {
             showMarker,
             onlyShowBreaks: true,
-            opacity: 0.7,
+            opacity: highlightedTrack ? 1 : 0.7,
             clickCallBack: (track) => {
                 dispatch(mapActions.setShowTrackInfo(true));
                 dispatch(mapActions.setShowSingleTrackInfo(track.id));
