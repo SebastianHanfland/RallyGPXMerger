@@ -85,10 +85,6 @@ describe('SimpleGPX', () => {
             '<time>2007-10-14T10:14:08.000Z</time>\n' +
             '</trkpt>\n' +
             '</trkseg>\n' +
-            // '</trk>\n' +
-            // '<trk>\n' +
-            // '<name>Example gpx</name>\n' +
-            // '<number>1</number>\n' +
             '<trkseg>\n' +
             '<trkpt lat="47.57608333" lon="8.89241667">\n' +
             '<ele>2376</ele>\n' +
