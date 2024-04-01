@@ -30,7 +30,7 @@ export const PresentationMap = () => {
         tracksLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    zipTracksDisplayHook(zipTracksLayer);
+    zipTracksDisplayHook(zipTracksLayer, true);
     zipTrackMarkerDisplayHook(tracksLayer);
 
     return (

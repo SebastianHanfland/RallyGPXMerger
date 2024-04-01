@@ -5,9 +5,12 @@ import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
 
-export function zipTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
+export function zipTracksDisplayHook(
+    calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
+    showMarkerOverwrite?: boolean
+) {
     const zipTracks = useSelector(getZipTracks);
-    const showMarker = useSelector(getShowMapMarker);
+    const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const dispatch = useDispatch();
