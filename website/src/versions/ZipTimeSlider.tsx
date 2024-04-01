@@ -13,7 +13,7 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
+export function ZipTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: boolean; showPlayButton?: boolean }) {
     const mapTime = useSelector(getCurrenMapTime);
     const dateValue = useSelector(getZipCurrentTimeStamp);
     const dispatch = useDispatch();
@@ -55,21 +55,23 @@ export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
                     </div>
                 </Form.Group>
             </div>
-            <div className={'mt-3'}>
-                <Button
-                    size={'sm'}
-                    variant={playing ? 'danger' : 'success'}
-                    className={'m-1'}
-                    onClick={() => setPlaying(!playing)}
-                    title={intl.formatMessage({ id: playing ? 'msg.play.stop' : 'msg.play.normal' })}
-                >
-                    {playing ? (
-                        <img src={stop} className="m-1" alt="open file" />
-                    ) : (
-                        <img src={play} className="m-1" alt="open file" />
-                    )}
-                </Button>
-            </div>
+            {showPlayButton && (
+                <div className={'mt-3'}>
+                    <Button
+                        size={'sm'}
+                        variant={playing ? 'danger' : 'success'}
+                        className={'m-1'}
+                        onClick={() => setPlaying(!playing)}
+                        title={intl.formatMessage({ id: playing ? 'msg.play.stop' : 'msg.play.normal' })}
+                    >
+                        {playing ? (
+                            <img src={stop} className="m-1" alt="open file" />
+                        ) : (
+                            <img src={play} className="m-1" alt="open file" />
+                        )}
+                    </Button>
+                </div>
+            )}
         </div>
     );
 }
