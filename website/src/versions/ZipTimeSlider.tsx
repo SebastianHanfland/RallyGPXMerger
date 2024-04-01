@@ -15,7 +15,7 @@ export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
     return (
         <Form.Group className={'m-2'}>
             <div>{dateValue ? intl.formatDate(dateValue, DateTimeFormat) : intl.formatMessage({ id: 'msg.time' })}</div>
-            <div className={'d-flex'}>
+            <div className={'d-flex' + bigThumb ? ' my-2' : ''}>
                 <Form.Range
                     min={0}
                     max={MAX_SLIDER_TIME}
