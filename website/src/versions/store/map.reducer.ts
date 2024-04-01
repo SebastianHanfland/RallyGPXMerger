@@ -25,6 +25,9 @@ const mapSlice = createSlice({
         setShowSingleTrackInfo: (state: MapState, action: PayloadAction<string | undefined>) => {
             state.showSingleTrackInfo = action.payload;
         },
+        setHighlightedTrack: (state: MapState, action: PayloadAction<string | undefined>) => {
+            state.highlightedTrack = action.payload;
+        },
     },
 });
 
@@ -37,3 +40,4 @@ export const getEndMapTime = (state: VersionsState) => getBase(state).end;
 export const getShowMapMarker = (state: VersionsState) => getBase(state).showMapMarker ?? false;
 export const getShowTrackInfo = (state: VersionsState) => getBase(state).showTrackInfo ?? false;
 export const getShowSingleTrackInfo = (state: VersionsState) => getBase(state).showSingleTrackInfo;
+export const getHighlightedTrack = (state: VersionsState) => getBase(state).highlightedTrack;

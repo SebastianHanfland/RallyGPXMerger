@@ -14,6 +14,7 @@ export interface MapState {
     showMapMarker?: boolean;
     showTrackInfo?: boolean;
     showSingleTrackInfo?: string;
+    highlightedTrack?: string;
 }
 
 export interface VersionsState {

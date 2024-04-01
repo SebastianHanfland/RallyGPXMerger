@@ -17,6 +17,8 @@ export interface MapOptions {
     opacity?: number;
     weight?: number;
     clickCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
+    mouseInCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
+    mouseOutCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
 }
 
 function addStartAndBreakMarker(
@@ -70,9 +72,23 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
         if (clickCallBack) {
             connection.on('click', () => {
                 clickCallBack(gpxSegment);
-                console.log('here...');
             });
         }
+
+        const mouseInCallBack = options?.mouseInCallBack;
+        if (mouseInCallBack) {
+            connection.on('mouseover', () => {
+                mouseInCallBack(gpxSegment);
+            });
+        }
+
+        const mouseOutCallBack = options?.mouseOutCallBack;
+        if (mouseOutCallBack) {
+            connection.on('mouseout', () => {
+                mouseOutCallBack(gpxSegment);
+            });
+        }
+
         connection.addTo(routeLayer);
         if (options.onlyShowBreaks) {
             addStartAndBreakMarker(options, lastTrack, trackPoints, gpxSegment, routeLayer, track);
