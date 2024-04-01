@@ -21,7 +21,7 @@ export const WizardVersions = () => {
                 <FormattedMessage id={'msg.back'} />
             </Button>
             <Row>
-                <Col>
+                <Col style={{ overflow: 'auto' }}>
                     <Table>
                         <thead>
                             <tr>
