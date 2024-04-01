@@ -5,6 +5,7 @@ import { LoadStateButton } from '../store/LoadStateButton.tsx';
 
 const style: CSSProperties = {
     paddingLeft: '15px',
+    paddingRight: '15px',
     position: 'fixed',
     width: '250px',
     height: '160px',
@@ -22,13 +23,23 @@ const style: CSSProperties = {
 
 export function PresentationMenu() {
     return (
-        <div style={style} className={'shadow'}>
-            <h5 className={'mt-2'}>Sternfahrt Muc 2024</h5>
-            <ZipTimeSlider />
-            <LoadStateButton />
-            <div>
-                <TrackInformationModal />
+        <>
+            <div style={style} className={'shadow d-sm-block'}>
+                <h5 className={'mt-2'}>Sternfahrt Muc 2024</h5>
+                <ZipTimeSlider />
+                <LoadStateButton />
+                <div>
+                    <TrackInformationModal />
+                </div>
             </div>
-        </div>
+            <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
+                <h5 className={'mt-2'}>Sternfahrt Muc 2024</h5>
+                <ZipTimeSlider />
+                <LoadStateButton />
+                <div>
+                    <TrackInformationModal />
+                </div>
+            </div>
+        </>
     );
 }
