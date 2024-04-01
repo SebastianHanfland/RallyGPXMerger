@@ -36,7 +36,7 @@ export function PresentationMenu() {
             </div>
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
                 <h5 className={'mt-2'}>Sternfahrt MUC 2024</h5>
-                <ZipTimeSlider />
+                <ZipTimeSlider bigThumb={true} />
                 <LoadStateButton />
                 <div>
                     <TrackInformationModal />

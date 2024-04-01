@@ -6,7 +6,7 @@ import { getZipCurrentTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
 import { DateTimeFormat } from '../utils/dateUtil.ts';
 
-export function ZipTimeSlider() {
+export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
     const mapTime = useSelector(getCurrenMapTime);
     const dateValue = useSelector(getZipCurrentTimeStamp);
     const dispatch = useDispatch();
@@ -21,6 +21,8 @@ export function ZipTimeSlider() {
                     max={MAX_SLIDER_TIME}
                     value={mapTime}
                     onChange={(event) => dispatch(mapActions.setCurrentTime(Number(event.target.value)))}
+                    height={'100px'}
+                    className={bigThumb ? 'bigThumb' : undefined}
                 />
             </div>
         </Form.Group>
