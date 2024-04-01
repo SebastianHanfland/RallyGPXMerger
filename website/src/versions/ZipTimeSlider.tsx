@@ -7,7 +7,11 @@ import { useIntl } from 'react-intl';
 import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+let interval: NodeJS.Timeout | undefined;
+
+let timeMirror = 0;
 
 export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
     const mapTime = useSelector(getCurrenMapTime);
@@ -15,6 +19,20 @@ export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
     const dispatch = useDispatch();
     const intl = useIntl();
     const [playing, setPlaying] = useState(false);
+
+    timeMirror = mapTime;
+
+    useEffect(() => {
+        if (interval) {
+            clearInterval(interval);
+        }
+        if (playing) {
+            interval = setInterval(
+                () => dispatch(mapActions.setCurrentTime((timeMirror + 100) % MAX_SLIDER_TIME)),
+                100
+            );
+        }
+    }, [playing]);
 
     return (
         <div className={'d-flex'}>
@@ -43,7 +61,7 @@ export function ZipTimeSlider({ bigThumb }: { bigThumb?: boolean }) {
                     variant={playing ? 'danger' : 'success'}
                     className={'m-1'}
                     onClick={() => setPlaying(!playing)}
-                    title={intl.formatMessage({ id: 'msg.play.normal' })}
+                    title={intl.formatMessage({ id: playing ? 'msg.play.stop' : 'msg.play.normal' })}
                 >
                     {playing ? (
                         <img src={stop} className="m-1" alt="open file" />
