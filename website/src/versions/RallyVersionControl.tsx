@@ -42,7 +42,7 @@ function RallyDisplay() {
         );
     }
 
-    if (versions[versionKey].length === 1) {
+    if (versions[versionKey].length === 1 && versions[versionKey][0].mode === 'present') {
         return (
             <Container fluid className={'p-0'}>
                 <PresentationMap />
