@@ -10,25 +10,7 @@ import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { versionKey, versions } from './versionLinks.ts';
 import { PresentationMap } from './map/PresentationMap.tsx';
-import { ZipTimeSlider } from './ZipTimeSlider.tsx';
-import { CSSProperties } from 'react';
-import { TrackInformationModal } from './trackInfo/TrackInformationModal.tsx';
-import { LoadStateButton } from './store/LoadStateButton.tsx';
-
-const style: CSSProperties = {
-    paddingLeft: '15px',
-    position: 'fixed',
-    width: '250px',
-    height: '160px',
-    left: 0,
-    right: 0,
-    overflowY: 'scroll',
-    bottom: 0,
-    zIndex: 10,
-    backgroundColor: 'white',
-    cursor: 'default',
-    overflow: 'hidden',
-};
+import { PresentationMenu } from './menu/PresentationMenu.tsx';
 
 function RallyDisplay() {
     loadFilesHook();
@@ -46,14 +28,7 @@ function RallyDisplay() {
         return (
             <Container fluid className={'p-0'}>
                 <PresentationMap />
-                <div style={style} className={'shadow'}>
-                    <h5 className={'mt-2'}>Sternfahrt Muc 2024</h5>
-                    <ZipTimeSlider />
-                    <LoadStateButton />
-                    <div>
-                        <TrackInformationModal />
-                    </div>
-                </div>
+                <PresentationMenu />
             </Container>
         );
     }
