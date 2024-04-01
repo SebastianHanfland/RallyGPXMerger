@@ -27,7 +27,7 @@ export function PresentationMenu() {
         <>
             <div style={style} className={'shadow d-sm-block'}>
                 <h5 className={'mt-2'}>Sternfahrt MUC 2024</h5>
-                <ZipTimeSlider showPlayButton={true} />
+                <ZipTimeSlider showPlayButton={true} bigThumb={true} />
                 <LoadStateButton />
                 <div>
                     <TrackInformationModal />
