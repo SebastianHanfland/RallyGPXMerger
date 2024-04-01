@@ -2,6 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { clearGpxCache } from '../../common/map/gpxCache.ts';
 
 export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
@@ -17,6 +18,7 @@ export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () =>
         dispatch(gpxSegmentsActions.changeGpxSegmentContent(payload));
         dispatch(gpxSegmentsActions.setSegmentStreetsResolved({ id: targetSegment, streetsResolved: false }));
         dispatch(gpxSegmentsActions.setFilename({ id: targetSegment, filename: replacementSegments[0].filename }));
+        clearGpxCache();
     } else {
         const replacementIds = replacementSegments.map((segment) => segment.id);
         trackCompositions.forEach((track) => {

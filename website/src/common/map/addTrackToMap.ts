@@ -1,10 +1,10 @@
 import { Point, Track } from 'gpxparser';
 import L, { LayerGroup } from 'leaflet';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../types.ts';
+import { getGpx } from './gpxCache.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };
@@ -55,7 +55,7 @@ function addStartAndBreakMarker(
 }
 
 export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
-    const gpx = SimpleGPX.fromString(gpxSegment.content);
+    const gpx = getGpx(gpxSegment);
     let lastTrack: Track | null = null;
     gpx.tracks.forEach((track) => {
         const trackPoints = track.points.map(toLatLng);
