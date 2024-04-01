@@ -307,8 +307,15 @@ export const versions: Record<string, Variant[]> = {
         {
             name: 'SF24_A95_RMpol',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol_correct.json',
-            mode: 'present',
+            color: 'red',
         },
+        {
+            name: 'SF24_A95_RMpol_p_0.75',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_p_0.75.json',
+            color: 'blue',
+        },
+    ],
+    Sternfahrt2024: [
         {
             name: 'SF24_A95_RMpol_p_0.75',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_p_0.75.json',
