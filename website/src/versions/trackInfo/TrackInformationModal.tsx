@@ -26,36 +26,31 @@ export function TrackInformationModal() {
         });
     };
     return (
-        <>
-            <Button onClick={() => setShowModal(true)}>
-                <FormattedMessage id={'msg.trackInfoShort'} />
-            </Button>
-            <Modal show={showModal} onHide={close} keyboard={false} size={singleTrackId ? 'sm' : 'xl'}>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        <FormattedMessage id={'msg.trackInfo'} />
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <TrackInformationModalBody />
-                </Modal.Body>
-                {!singleTrackId && (
-                    <Modal.Footer>
-                        <ZipFilesDownloader />
-                        {storedState && (
-                            <Button
-                                variant="success"
-                                onClick={() => downloadPdfFiles(intl)(undefined as any, () => storedState as State)}
-                            >
-                                Alle PDF herunterladen
-                            </Button>
-                        )}
-                        <Button variant="secondary" onClick={close}>
-                            <FormattedMessage id={'msg.close'} />
+        <Modal show={showModal} onHide={close} keyboard={false} size={singleTrackId ? 'sm' : 'xl'}>
+            <Modal.Header closeButton>
+                <Modal.Title>
+                    <FormattedMessage id={'msg.trackInfo'} />
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <TrackInformationModalBody />
+            </Modal.Body>
+            {!singleTrackId && (
+                <Modal.Footer>
+                    <ZipFilesDownloader />
+                    {storedState && (
+                        <Button
+                            variant="success"
+                            onClick={() => downloadPdfFiles(intl)(undefined as any, () => storedState as State)}
+                        >
+                            Alle PDF herunterladen
                         </Button>
-                    </Modal.Footer>
-                )}
-            </Modal>
-        </>
+                    )}
+                    <Button variant="secondary" onClick={close}>
+                        <FormattedMessage id={'msg.close'} />
+                    </Button>
+                </Modal.Footer>
+            )}
+        </Modal>
     );
 }

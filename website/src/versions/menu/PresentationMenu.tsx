@@ -3,6 +3,7 @@ import { CSSProperties } from 'react';
 import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
 import { LoadStateButton } from '../store/LoadStateButton.tsx';
 import { SurveyButton } from './SurveyButton.tsx';
+import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton.tsx';
 
 const style: CSSProperties = {
     paddingLeft: '15px',
@@ -25,12 +26,13 @@ const style: CSSProperties = {
 export function PresentationMenu() {
     return (
         <>
+            <TrackInformationModal />
             <div style={style} className={'shadow d-sm-block'}>
                 <h5 className={'mt-2'}>Sternfahrt MUC 2024</h5>
                 <ZipTimeSlider showPlayButton={true} bigThumb={true} />
                 <LoadStateButton />
                 <div>
-                    <TrackInformationModal />
+                    <TrackInformationModalButton />
                     <SurveyButton />
                 </div>
             </div>
@@ -39,7 +41,7 @@ export function PresentationMenu() {
                 <ZipTimeSlider showPlayButton={true} bigThumb={true} />
                 <LoadStateButton />
                 <div>
-                    <TrackInformationModal />
+                    <TrackInformationModalButton />
                     <SurveyButton />
                 </div>
             </div>
