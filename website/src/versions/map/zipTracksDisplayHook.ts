@@ -1,9 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
-import { LayerGroup } from 'leaflet';
+import L, { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
+
+const motorwayUnsecurityPoint = {
+    lat: 48.1095121,
+    lng: 11.5196071,
+    radiusInM: 2000,
+    title: 'Genaue Planung steht noch nicht fest',
+};
 
 export function zipTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
@@ -41,5 +48,11 @@ export function zipTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
+        const circle = L.circle(motorwayUnsecurityPoint, { radius: motorwayUnsecurityPoint.radiusInM, color: 'red' });
+        const current = calculatedTracksLayer.current;
+        if (current) {
+            circle.bindTooltip(motorwayUnsecurityPoint.title, { sticky: true });
+            circle.addTo(current);
+        }
     }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
 }
