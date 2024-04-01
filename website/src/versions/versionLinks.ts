@@ -303,6 +303,18 @@ export const versions: Record<string, Variant[]> = {
             mode: 'present',
         },
     ],
+    SF_24_p_JSON: [
+        {
+            name: 'SF24_A95_RMpol',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_RMpol_correct.json',
+            mode: 'present',
+        },
+        {
+            name: 'SF24_A95_RMpol_p_0.75',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_p_0.75.json',
+            mode: 'present',
+        },
+    ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
 
