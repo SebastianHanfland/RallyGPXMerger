@@ -28,6 +28,9 @@ const zipTracksSlice = createSlice({
                 state.selectedVersions = [...state.selectedVersions, version];
             }
         },
+        setSelectVersions: (state: ZipTracksState, action: PayloadAction<string[]>) => {
+            state.selectedVersions = action.payload;
+        },
         removeZipTracks: (state: ZipTracksState) => {
             state.tracks = {};
         },

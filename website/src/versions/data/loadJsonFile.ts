@@ -29,7 +29,7 @@ export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch
                 }))
             );
             dispatch(zipTracksActions.setZipTracks({ version: version.name, tracks: calculatedTracks }));
-            dispatch(zipTracksActions.selectVersion(version.name));
+            dispatch(zipTracksActions.setSelectVersions([version.name]));
         })
         .catch(console.error)
         .finally();
