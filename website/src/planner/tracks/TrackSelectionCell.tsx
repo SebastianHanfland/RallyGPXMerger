@@ -23,6 +23,14 @@ function toOption(gpxSegment: GpxSegment): { value: string; label: string } {
 }
 
 const breaks = [
+    { value: `01${BREAK_IDENTIFIER}1`, label: '+ 01 min' },
+    { value: `01${BREAK_IDENTIFIER}2`, label: '+ 01 min' },
+    { value: `01${BREAK_IDENTIFIER}3`, label: '+ 01 min' },
+    { value: `01${BREAK_IDENTIFIER}4`, label: '+ 01 min' },
+    { value: `02${BREAK_IDENTIFIER}1`, label: '+ 02 min' },
+    { value: `02${BREAK_IDENTIFIER}2`, label: '+ 02 min' },
+    { value: `02${BREAK_IDENTIFIER}3`, label: '+ 02 min' },
+    { value: `02${BREAK_IDENTIFIER}4`, label: '+ 02 min' },
     { value: `05${BREAK_IDENTIFIER}1`, label: '+ 05 min' },
     { value: `05${BREAK_IDENTIFIER}2`, label: '+ 05 min' },
     { value: `05${BREAK_IDENTIFIER}3`, label: '+ 05 min' },
