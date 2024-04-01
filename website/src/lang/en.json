@@ -153,6 +153,7 @@
     "msg.pointInTime": "Time",
     "msg.otherTracks": "Other tracks",
     "msg.trackInfo": "Track information",
+    "msg.trackInfoShort": "Track info",
     "msg.choose": "Choose your situation",
     "msg.directToPlanner": "Go directly to the planner",
     "msg.startPlan": "Start a new plan",

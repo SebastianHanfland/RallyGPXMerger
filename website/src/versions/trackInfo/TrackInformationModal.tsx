@@ -28,7 +28,7 @@ export function TrackInformationModal() {
     return (
         <>
             <Button onClick={() => setShowModal(true)}>
-                <FormattedMessage id={'msg.trackInfo'} />
+                <FormattedMessage id={'msg.trackInfoShort'} />
             </Button>
             <Modal show={showModal} onHide={close} keyboard={false} size={singleTrackId ? 'sm' : 'xl'}>
                 <Modal.Header closeButton>

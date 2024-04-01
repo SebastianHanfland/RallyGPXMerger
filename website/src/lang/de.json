@@ -153,6 +153,7 @@
     "msg.pointInTime": "Zeitpunkt",
     "msg.otherTracks": "Andere Routen",
     "msg.trackInfo": "Routeninformationen",
+    "msg.trackInfoShort": "Routeninfos",
     "msg.choose": "Situation auswählen",
     "msg.directToPlanner": "Direkt zum Sternfahrtplaner",
     "msg.startPlan": "Eine neue Planung starten",
