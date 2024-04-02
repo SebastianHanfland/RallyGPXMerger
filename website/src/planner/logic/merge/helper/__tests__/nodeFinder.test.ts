@@ -54,7 +54,7 @@ describe('Node finder', () => {
             {
                 segmentsBeforeNode: [
                     { segmentId: '1', trackId: '1', amount: 200 },
-                    { trackId: '2', amount: 300 },
+                    { segmentId: '2', trackId: '2', amount: 300, trackIdInsteadOfSegmentId: true },
                 ],
                 segmentIdAfterNode: '3',
             },

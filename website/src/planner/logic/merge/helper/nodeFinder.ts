@@ -2,9 +2,10 @@ import { TrackComposition } from '../../../store/types.ts';
 import { BREAK_IDENTIFIER } from '../types.ts';
 
 export interface TrackNodeSegment {
-    segmentId?: string;
+    segmentId: string;
     trackId: string;
     amount: number;
+    trackIdInsteadOfSegmentId?: boolean;
 }
 
 export interface TrackNode {
@@ -46,8 +47,10 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): Tra
                 });
             } else if (indexOfSegment === 0) {
                 segmentsBeforeNode.push({
+                    segmentId: track.id,
                     trackId: track.id,
                     amount: track?.peopleCount ?? 0,
+                    trackIdInsteadOfSegmentId: true,
                 });
             }
         });
