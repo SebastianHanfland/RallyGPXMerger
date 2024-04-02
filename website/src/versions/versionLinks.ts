@@ -366,6 +366,23 @@ export const versions: Record<string, Variant[]> = {
             mode: 'present',
         },
     ],
+    KVR_24_chronik: [
+        {
+            name: 'SF24_urspruenglich',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24v3_mitPausen.zip',
+            color: 'blue',
+        },
+        {
+            name: 'SF24_A96_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A96.zip',
+            color: 'green',
+        },
+        {
+            name: 'SF24_A95_parallel_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für_A95.zip',
+            color: 'red',
+        },
+    ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
 
