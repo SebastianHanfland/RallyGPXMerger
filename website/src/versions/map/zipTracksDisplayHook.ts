@@ -4,12 +4,13 @@ import L, { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
+import { versionKey } from '../versionLinks.ts';
 
 const motorwayUnsecurityPoint = {
     lat: 48.1095121,
     lng: 11.5196071,
     radiusInM: 2000,
-    title: 'Genaue Planung steht noch nicht fest',
+    title: 'Planung in diesem Bereich ist vorläufig',
 };
 
 export function zipTracksDisplayHook(
@@ -48,11 +49,16 @@ export function zipTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-        const circle = L.circle(motorwayUnsecurityPoint, { radius: motorwayUnsecurityPoint.radiusInM, color: 'red' });
-        const current = calculatedTracksLayer.current;
-        if (current) {
-            circle.bindTooltip(motorwayUnsecurityPoint.title, { sticky: true });
-            circle.addTo(current);
+        if (versionKey === 'Sternfahrt2024') {
+            const circle = L.circle(motorwayUnsecurityPoint, {
+                radius: motorwayUnsecurityPoint.radiusInM,
+                color: 'red',
+            });
+            const current = calculatedTracksLayer.current;
+            if (current) {
+                circle.bindTooltip(motorwayUnsecurityPoint.title, { sticky: true });
+                circle.addTo(current);
+            }
         }
     }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
 }
