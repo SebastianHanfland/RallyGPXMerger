@@ -52,7 +52,10 @@ describe('Node finder', () => {
 
         const expectedTrackNodes: TrackNode[] = [
             {
-                segmentsBeforeNode: [{ segmentId: '1', trackId: '1', amount: 200 }],
+                segmentsBeforeNode: [
+                    { segmentId: '1', trackId: '1', amount: 200 },
+                    { trackId: '2', amount: 300 },
+                ],
                 segmentIdAfterNode: '3',
             },
         ];

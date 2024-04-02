@@ -2,7 +2,7 @@ import { TrackComposition } from '../../../store/types.ts';
 import { BREAK_IDENTIFIER } from '../types.ts';
 
 export interface TrackNodeSegment {
-    segmentId: string;
+    segmentId?: string;
     trackId: string;
     amount: number;
 }
@@ -41,6 +41,11 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): Tra
                 const segmentIdBeforeNode = segmentsWithoutBreaks[indexOfSegment - 1];
                 segmentsBeforeNode.push({
                     segmentId: segmentIdBeforeNode,
+                    trackId: track.id,
+                    amount: track?.peopleCount ?? 0,
+                });
+            } else if (indexOfSegment === 0) {
+                segmentsBeforeNode.push({
                     trackId: track.id,
                     amount: track?.peopleCount ?? 0,
                 });
