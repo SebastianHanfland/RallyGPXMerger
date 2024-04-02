@@ -325,6 +325,11 @@ export const versions: Record<string, Variant[]> = {
     ],
     KVR_24_A95_seriell_parallel: [
         {
+            name: 'SF24_A95_alter_Stand',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_rueck.zip',
+            color: 'black',
+        },
+        {
             name: 'SF24_A95_seriell',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_seriell.zip',
             color: 'red',
