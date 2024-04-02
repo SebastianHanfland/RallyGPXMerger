@@ -323,17 +323,38 @@ export const versions: Record<string, Variant[]> = {
             mode: 'present',
         },
     ],
-    KVR_24_A95_ser_par: [
+    KVR_24_A95_seriell_parallel: [
+        {
+            name: 'SF24_A95_seriell',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_seriell.zip',
+            color: 'red',
+        },
+        {
+            name: 'SF24_A95_parallel_1',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für.zip',
+            color: 'blue',
+        },
+        {
+            name: 'SF24_A95_parallel_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für_A95.zip',
+            color: 'green',
+        },
+    ],
+    KVR_24_A95_seriell: [
         {
             name: 'SF24_A95_seriell',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_seriell.json',
             color: 'red',
         },
+    ],
+    KVR_24_A95_parallel_1: [
         {
             name: 'SF24_A95_parallel_1',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für.json',
             color: 'blue',
         },
+    ],
+    KVR_24_A95_parallel_2: [
         {
             name: 'SF24_A95_parallel_2',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für_A95.json',
