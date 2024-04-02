@@ -77,10 +77,13 @@ function getMatchingNodePosition(
     );
 }
 
+const MINIMUM_SECONDS_FOR_BREAK = 200;
+const MAXMIMUM_DISTANCE_IN_KM_FOR_BREAK = 0.1;
+
 function isABreak(lastElement: AggregatedPoints, point: EnrichedPoints) {
     const distance = geoDistance(toLatLng(lastElement.pointTo), toLatLng(point)) as number;
     const timeDifference = getTimeDifferenceInSeconds(point.time, lastElement.frontPassage);
-    return distance < 0.01 && timeDifference > 200;
+    return distance < MAXMIMUM_DISTANCE_IN_KM_FOR_BREAK && timeDifference > MINIMUM_SECONDS_FOR_BREAK;
 }
 
 function createAggregatedPoint(point: EnrichedPoints, participants: number, type: TrackWayPointType) {
