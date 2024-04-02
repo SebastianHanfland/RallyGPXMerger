@@ -33,11 +33,11 @@ export function zipTracksDisplayHook(
             }
             return tracksOfVersion.filter((track) => selectedTracks[version]?.includes(track.id));
         });
-        const tracksToDisplay = highlightedTrack ? tracks.filter((track) => track.id === highlightedTrack) : tracks;
-        addTracksToLayer(calculatedTracksLayer, tracksToDisplay, true, {
+        addTracksToLayer(calculatedTracksLayer, tracks, true, {
             showMarker,
             onlyShowBreaks: true,
-            opacity: highlightedTrack ? 1 : 0.7,
+            opacity: highlightedTrack ? 0.2 : 0.7,
+            highlightedId: highlightedTrack,
             clickCallBack: (track) => {
                 dispatch(mapActions.setShowTrackInfo(true));
                 dispatch(mapActions.setShowSingleTrackInfo(track.id));

@@ -16,6 +16,7 @@ export interface MapOptions {
     color?: string;
     opacity?: number;
     weight?: number;
+    highlightedId?: string;
     clickCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
     mouseInCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
     mouseOutCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
@@ -123,7 +124,9 @@ export function addTracksToLayer(
     current.clearLayers();
     if (show) {
         calculatedTracks.forEach((track) => {
-            const enhancedOptions = isZipTrack(track) ? { ...options, color: track.color } : options;
+            const enhancedOptions = isZipTrack(track)
+                ? { ...options, color: track.color, opacity: options.highlightedId === track.id ? 1 : options.opacity }
+                : options;
             addTrackToMap(track, current, enhancedOptions);
         });
     }
