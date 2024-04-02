@@ -43,6 +43,27 @@ describe('Node finder', () => {
         expect(nodesOfTracks).toEqual(expectedTrackNodes);
     });
 
+    it('should find a node when a track is a subset of another track', () => {
+        // given
+        const trackCompositions: TrackComposition[] = [
+            { id: '1', name: 'A', segmentIds: ['0', '1', '3'], peopleCount: 200 },
+            { id: '2', name: 'B', segmentIds: ['3'], peopleCount: 300 },
+        ];
+
+        const expectedTrackNodes: TrackNode[] = [
+            {
+                segmentsBeforeNode: [{ segmentId: '1', trackId: '1', amount: 200 }],
+                segmentIdAfterNode: '3',
+            },
+        ];
+
+        // when
+        const nodesOfTracks = listAllNodesOfTracks(trackCompositions);
+
+        // then
+        expect(nodesOfTracks).toEqual(expectedTrackNodes);
+    });
+
     describe('node finding regardless of breaks', () => {
         const getA = (segmentIds: string[]) => ({ id: '1', name: 'A', segmentIds, peopleCount: 200 });
         const getB = (segmentIds: string[]) => ({ id: '2', name: 'B', segmentIds, peopleCount: 300 });
