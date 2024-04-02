@@ -1,9 +1,10 @@
 import { storedState } from '../data/loadJsonFile.ts';
 import { Button } from 'react-bootstrap';
 import { storage } from '../../planner/store/storage.ts';
+import { versionKey } from '../versionLinks.ts';
 
 export const canEdit = window.location.search.includes('&edit');
-export const showTimes = window.location.search.includes('&showTimes');
+export const showTimes = window.location.search.includes('&showTimes') || versionKey !== 'Sternfahrt2024';
 
 export const LoadStateButton = () => {
     if (!storedState) {
