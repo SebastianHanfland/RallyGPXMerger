@@ -344,21 +344,21 @@ export const versions: Record<string, Variant[]> = {
         {
             name: 'SF24_A95_seriell',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_seriell.json',
-            color: 'red',
+            mode: 'present',
         },
     ],
     KVR_24_A95_parallel_1: [
         {
             name: 'SF24_A95_parallel_1',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für.json',
-            color: 'blue',
+            mode: 'present',
         },
     ],
     KVR_24_A95_parallel_2: [
         {
             name: 'SF24_A95_parallel_2',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für_A95.json',
-            color: 'green',
+            mode: 'present',
         },
     ],
 };
