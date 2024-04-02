@@ -7,6 +7,7 @@ import { Variant } from '../versionLinks.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 
 export let storedState: State | undefined;
 
@@ -28,6 +29,7 @@ export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch
                     gpx: SimpleGPX.fromString(track.content),
                 }))
             );
+            setParticipantsDelay(planning.trackMerge.participantDelay);
             dispatch(zipTracksActions.setZipTracks({ version: version.name, tracks: calculatedTracks }));
             dispatch(zipTracksActions.setSelectVersions([version.name]));
         })
