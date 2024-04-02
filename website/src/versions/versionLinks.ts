@@ -245,6 +245,7 @@ export const versions: Record<string, Variant[]> = {
             color: 'black',
         },
     ],
+    //IMPORTANT: The following _BAB-variants might have to be kept online for the next 1-3 years (starting in 2024)
     KVR_24_03_BAB: [
         {
             name: 'SF23',
@@ -320,6 +321,23 @@ export const versions: Record<string, Variant[]> = {
             name: 'SF24_A95_RMpol_p_0.75',
             url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_p_0.75.json',
             mode: 'present',
+        },
+    ],
+    KVR_24_A95_ser_par: [
+        {
+            name: 'SF24_A95_seriell',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_seriell.json',
+            color: 'red',
+        },
+        {
+            name: 'SF24_A95_parallel_1',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für.json',
+            color: 'blue',
+        },
+        {
+            name: 'SF24_A95_parallel_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für_A95.json',
+            color: 'green',
         },
     ],
 };
