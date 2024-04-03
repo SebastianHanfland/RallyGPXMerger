@@ -202,5 +202,7 @@
     "msg.resetStreets.hint": "Reset resolved streets for segment {name} so that the next time you resolve the streets, this segment is resolved as well",
     "msg.resetStreets": "Reset resolved streets",
     "msg.streetsResolved": "Street information is resolved",
-    "msg.communicatedStart": "Published start times"
+    "msg.communicatedStart": "Published start times",
+    "msg.priority": "Prio",
+    "msg.priority.hint": "The higher the priority the more it is prioritized at a node"
 }

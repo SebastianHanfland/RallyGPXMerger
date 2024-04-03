@@ -60,6 +60,14 @@ const trackMergeSlice = createSlice({
                 track.id === action.payload.id ? { ...track, peopleCount: action.payload.peopleCount } : track
             );
         },
+        setTrackPriority: (
+            state: TrackMergeState,
+            action: PayloadAction<{ id: string; priority: number | undefined }>
+        ) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, priority: action.payload.priority } : track
+            );
+        },
         removeGpxSegment: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.map((track) => ({
                 ...track,

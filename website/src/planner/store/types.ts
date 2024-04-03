@@ -26,6 +26,7 @@ export interface TrackComposition {
     name?: string;
     segmentIds: string[];
     peopleCount?: number;
+    priority?: number;
 }
 
 export interface GeoCodingState {

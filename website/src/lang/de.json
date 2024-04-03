@@ -202,5 +202,7 @@
     "msg.resetStreets.hint": "Straßenauflösung für {name} zurücksetzen, so dass beim nächsten Mal Straßenauflösen auch dieser Abschnitt neu aufgelöst wird",
     "msg.resetStreets": "Straßenauflösung zurücksetzen",
     "msg.streetsResolved": "Straßenauflösung ist erfolgt",
-    "msg.communicatedStart": "Veröffentliche Startzeiten"
+    "msg.communicatedStart": "Veröffentliche Startzeiten",
+    "msg.priority": "Prio",
+    "msg.priority.hint": "Umso höher die Priorität ist, desto priorisierter ist eine Route bei Knotenpunkten"
 }

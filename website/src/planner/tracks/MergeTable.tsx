@@ -22,6 +22,12 @@ export const MergeTable = () => {
                     >
                         <FormattedMessage id={'msg.people'} />
                     </th>
+                    <th
+                        style={{ width: '10%', minWidth: '80px' }}
+                        title={intl.formatMessage({ id: 'msg.priority.hint' })}
+                    >
+                        <FormattedMessage id={'msg.priority'} />
+                    </th>
                     <th style={{ width: '50%' }}>
                         <FormattedMessage id={'msg.trackSegments'} />
                     </th>

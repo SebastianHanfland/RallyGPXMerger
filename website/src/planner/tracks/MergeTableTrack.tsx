@@ -13,7 +13,7 @@ interface Props {
 
 export function MergeTableTrack({ track }: Props) {
     const intl = useIntl();
-    const { name, id, peopleCount } = track;
+    const { name, id, peopleCount, priority } = track;
     const dispatch = useDispatch();
 
     return (
@@ -35,6 +35,16 @@ export function MergeTableTrack({ track }: Props) {
                     value={peopleCount?.toString() ?? ''}
                     onChange={(value) =>
                         dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }))
+                    }
+                />
+            </td>
+            <td>
+                <Form.Control
+                    type="text"
+                    placeholder={intl.formatMessage({ id: 'msg.priority' })}
+                    value={priority?.toString() ?? ''}
+                    onChange={(value) =>
+                        dispatch(trackMergeActions.setTrackPriority({ id, priority: getCount(value) }))
                     }
                 />
             </td>
