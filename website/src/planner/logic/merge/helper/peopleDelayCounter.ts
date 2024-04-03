@@ -8,6 +8,12 @@ export const DELAY_PER_PERSON_IN_SECONDS = 0.2;
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>
     (tA: TrackComposition, tB: TrackComposition) => {
+        if ((tA.priority ?? 0) > (tB.priority ?? 0)) {
+            return -1;
+        }
+        if ((tA.priority ?? 0) < (tB.priority ?? 0)) {
+            return 1;
+        }
         const segmentA = segmentsBeforeNode.find((seg) => seg.trackId === tA.id)?.segmentId;
         const segmentB = segmentsBeforeNode.find((seg) => seg.trackId === tB.id)?.segmentId;
         if (!segmentA) {
