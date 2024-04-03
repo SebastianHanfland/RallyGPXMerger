@@ -7,11 +7,14 @@ import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
 import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
+import { useDispatch } from 'react-redux';
+import { mapActions } from '../store/map.reducer.ts';
 
 let myMap: L.Map;
 
 export const PresentationMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!myMap) {
@@ -34,7 +37,7 @@ export const PresentationMap = () => {
     zipTrackMarkerDisplayHook(tracksLayer);
 
     return (
-        <div>
+        <div onMouseLeave={() => dispatch(mapActions.setHighlightedTrack())}>
             <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
         </div>
     );
