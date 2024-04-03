@@ -36,7 +36,7 @@ export function ZipTimeSlider({
         }
         if (playing) {
             interval = setInterval(
-                () => dispatch(mapActions.setCurrentTime((timeMirror + 100) % MAX_SLIDER_TIME)),
+                () => dispatch(mapActions.setCurrentTime((timeMirror + 500) % MAX_SLIDER_TIME)),
                 100
             );
         }
