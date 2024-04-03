@@ -383,6 +383,18 @@ export const versions: Record<string, Variant[]> = {
             color: 'red',
         },
     ],
+    KVR_24_A95_Vgl_A7_8_9: [
+        {
+            name: 'SF24_A95_parallel_2',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_parallel_Für_A95.zip',
+            color: 'red',
+        },
+        {
+            name: 'SF24_v1_A95_inv',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SF24_v1_A95_Rückwärts.zip',
+            color: 'green',
+        },
+    ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
 
