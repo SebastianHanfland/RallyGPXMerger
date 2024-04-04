@@ -319,7 +319,7 @@ export const versions: Record<string, Variant[]> = {
     Sternfahrt2024: [
         {
             name: 'SF24_A95_RMpol_p_0.75',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_ErstertStandWebsite.json',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_ErsterStandWebsite.json',
             mode: 'present',
         },
     ],
