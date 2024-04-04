@@ -18,7 +18,7 @@ export const PresentationMap = () => {
 
     useEffect(() => {
         if (!myMap) {
-            myMap = L.map('mapid').setView(Munich, startZoom);
+            myMap = L.map('mapid', { tap: !L.Browser.mobile, dragging: !L.Browser.mobile }).setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
     }, []);
