@@ -33,7 +33,7 @@ export const DateTimeFormat: FormatDateOptions = {
 };
 
 const MINUTES_TO_ROUND_TO = 5;
-const MINUTES_TO_SUBTRACT = 5;
+const MINUTES_TO_SUBTRACT = 10;
 
 export function roundStartTimes(startFront: string) {
     const timeMinus5Min = date.addSeconds(new Date(startFront), -MINUTES_TO_SUBTRACT * 60).toISOString();

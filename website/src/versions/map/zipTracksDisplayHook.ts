@@ -7,9 +7,9 @@ import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/z
 import { versionKey } from '../versionLinks.ts';
 
 const motorwayUnsecurityPoint = {
-    lat: 48.1095121,
-    lng: 11.5196071,
-    radiusInM: 2000,
+    lat: 48.0996967215098,
+    lng: 11.446380615234375,
+    radiusInM: 2800,
     title: 'Planung in diesem Bereich ist vorläufig',
 };
 
