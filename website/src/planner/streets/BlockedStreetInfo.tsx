@@ -18,6 +18,7 @@ export const BlockedStreetInfo = () => {
     const filteredBlockedStreets = blockedStreetInfos.filter((blockedStreetInfos) =>
         onlyShowUnknown
             ? blockedStreetInfos.streetName === unknown ||
+              !blockedStreetInfos.streetName ||
               blockedStreetInfos.postCode === undefined ||
               blockedStreetInfos.district === undefined
             : true

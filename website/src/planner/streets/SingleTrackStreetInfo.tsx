@@ -82,6 +82,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         .filter((wayPoint) =>
                             onlyShowUnknown
                                 ? wayPoint.streetName === unknown ||
+                                  !wayPoint.streetName ||
                                   wayPoint.postCode === undefined ||
                                   wayPoint.district === undefined
                                 : true
