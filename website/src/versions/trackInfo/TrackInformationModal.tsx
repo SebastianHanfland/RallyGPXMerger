@@ -27,7 +27,13 @@ export function TrackInformationModal() {
         });
     };
     return (
-        <Modal show={showModal} onHide={close} keyboard={false} size={singleTrackId ? 'sm' : 'xl'}>
+        <Modal
+            show={showModal}
+            onHide={close}
+            keyboard={false}
+            size={singleTrackId ? 'sm' : 'xl'}
+            dialogClassName={'m-0'}
+        >
             <Modal.Header closeButton>
                 <Modal.Title>
                     <FormattedMessage id={'msg.trackInfo'} />

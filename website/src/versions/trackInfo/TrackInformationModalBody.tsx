@@ -15,7 +15,7 @@ import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
 import { showTimes } from '../store/LoadStateButton.tsx';
 
 const cardStyle = {
-    style: { width: '170px', height: showTimes ? '170px' : '120px', cursor: 'default' },
+    style: { width: '170px', height: showTimes ? '145px' : '120px', cursor: 'default' },
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
@@ -84,7 +84,7 @@ export function TrackInformationModalBody() {
         <div>
             <Row>
                 {sortedTracks?.map((track) => (
-                    <Col key={track.id}>
+                    <Col key={track.id} className={'p-0'}>
                         <Card {...cardStyle}>
                             <Card.Body className={'track-card m-0 p-0'}>
                                 <TrackInfo track={track} />
