@@ -18,8 +18,8 @@ export function formatDate(dateString: string): string {
     return date.format(new Date(dateString), DATE_FORMAT);
 }
 
-export function formatTimeOnly(dateString: string): string {
-    const TIME_FORMAT = 'HH:mm:ss';
+export function formatTimeOnly(dateString: string, noSecond = false): string {
+    const TIME_FORMAT = noSecond ? 'HH:mm' : 'HH:mm:ss';
     return date.format(new Date(dateString), TIME_FORMAT);
 }
 
