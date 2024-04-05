@@ -54,6 +54,22 @@ function addStartAndBreakMarker(
                 endMarker.addTo(routeLayer);
             }
         }
+
+        let lastPoint: Point | null = null;
+        track.points.forEach((point) => {
+            const lastTimeStamp = lastPoint?.time.toISOString();
+            if (lastTimeStamp) {
+                const timeDifferenceInSeconds = getTimeDifferenceInSeconds(point.time.toISOString(), lastTimeStamp);
+                if (timeDifferenceInSeconds > 4 * 60) {
+                    const endMarker = L.marker(toLatLng(point), {
+                        icon: breakIcon,
+                        title: `${gpxSegment.filename} - ${(timeDifferenceInSeconds / 60).toFixed(0)} min Pause`,
+                    });
+                    endMarker.addTo(routeLayer);
+                }
+            }
+            lastPoint = point;
+        });
     }
 }
 
