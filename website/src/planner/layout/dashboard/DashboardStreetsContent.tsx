@@ -101,6 +101,19 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
                 >
                     <FormattedMessage id={'msg.streetNames'} /> *
                 </Button>
+                {showClearButton && (
+                    <Button
+                        size={'sm'}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            dispatch(geoCodingActions.clearStreetNames());
+                        }}
+                        variant={'danger'}
+                        disabled={ongoingRequests || hasNoTrack}
+                    >
+                        <FormattedMessage id={'msg.clearStreetNames'} />
+                    </Button>
+                )}
                 <StreetStatus done={streetsDone} loading={isLoadingStreetData} />
             </div>
             {requestProgress !== undefined && (

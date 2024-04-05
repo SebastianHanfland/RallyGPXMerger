@@ -58,6 +58,9 @@ const geoCodingSlice = createSlice({
             state.resolvedPostCodes = undefined;
             state.resolvedDistricts = undefined;
         },
+        clearStreetNames: (state: GeoCodingState) => {
+            state.resolvedPositions = undefined;
+        },
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;
         },
