@@ -70,6 +70,9 @@ const gpxSegmentsSlice = createSlice({
         removeConstructionSegment: (state: GpxSegmentsState, action: PayloadAction<string>) => {
             state.constructionSegments = state.constructionSegments?.filter((segment) => segment.id !== action.payload);
         },
+        setAllSegmentsToUnresolved: (state: GpxSegmentsState) => {
+            state.segments = state.segments.map((segment) => ({ ...segment, streetsResolved: undefined }));
+        },
         clearGpxSegments: () => initialState,
     },
 });
