@@ -9,6 +9,7 @@ import { downloadPdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownlo
 import { storedState } from '../data/loadJsonFile.ts';
 import { State } from '../../planner/store/types.ts';
 import { showTimes } from '../store/LoadStateButton.tsx';
+import L from 'leaflet';
 
 export function TrackInformationModal() {
     const intl = useIntl();
@@ -32,7 +33,7 @@ export function TrackInformationModal() {
             onHide={close}
             keyboard={false}
             size={singleTrackId ? 'sm' : 'xl'}
-            dialogClassName={'m-0'}
+            dialogClassName={L.Browser.mobile ? 'm-0' : undefined}
         >
             <Modal.Header closeButton>
                 <Modal.Title>

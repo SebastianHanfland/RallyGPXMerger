@@ -13,6 +13,7 @@ import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selec
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
 import { showTimes } from '../store/LoadStateButton.tsx';
+import L from 'leaflet';
 
 const cardStyle = {
     style: { width: '170px', height: showTimes ? '145px' : '120px', cursor: 'default' },
@@ -84,7 +85,7 @@ export function TrackInformationModalBody() {
         <div>
             <Row>
                 {sortedTracks?.map((track) => (
-                    <Col key={track.id} className={'p-0'}>
+                    <Col key={track.id} className={L.Browser.mobile ? 'p-0' : undefined}>
                         <Card {...cardStyle}>
                             <Card.Body className={'track-card m-0 p-0'}>
                                 <TrackInfo track={track} />
