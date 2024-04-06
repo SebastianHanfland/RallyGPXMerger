@@ -3,12 +3,10 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
-import geoDistance from 'geo-distance-helper';
 import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { toLatLng } from '../../utils/pointUtil.ts';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -57,6 +55,9 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                             <FormattedMessage id={'msg.length'} />
                         </th>
                         <th>
+                            <FormattedMessage id={'msg.speed'} />
+                        </th>
+                        <th>
                             <span title={intl.formatMessage({ id: 'msg.duration.hint' })}>
                                 <FormattedMessage id={'msg.duration'} />
                                 <img src={info} className={'m-1'} alt="help" />
@@ -100,6 +101,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 type,
                                 breakLength,
                                 nodeTracks,
+                                distanceInKm,
+                                speed,
                             }) => (
                                 <tr key={backArrival + streetName + frontArrival}>
                                     <td>
@@ -122,9 +125,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     <td>
                                         <HighlightUnknown value={district?.toString() ?? unknown} />
                                     </td>
-                                    <td>
-                                        {(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number).toFixed(2)} km
-                                    </td>
+                                    <td>{(distanceInKm ?? 0).toFixed(2)} km</td>
+                                    <td>{(speed ?? 0).toFixed(1)} km/h</td>
                                     <td>
                                         {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
                                         {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min)

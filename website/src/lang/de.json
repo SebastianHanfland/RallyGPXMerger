@@ -205,5 +205,6 @@
     "msg.streetsResolved": "Straßenauflösung ist erfolgt",
     "msg.communicatedStart": "Veröffentliche Startzeiten",
     "msg.priority": "Prio",
-    "msg.priority.hint": "Umso höher die Priorität ist, desto priorisierter ist eine Route bei Knotenpunkten"
+    "msg.priority.hint": "Umso höher die Priorität ist, desto priorisierter ist eine Route bei Knotenpunkten",
+    "msg.speed": "Geschwindigkeit"
 }

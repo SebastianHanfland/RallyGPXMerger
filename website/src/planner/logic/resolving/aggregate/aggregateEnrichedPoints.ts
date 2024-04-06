@@ -20,8 +20,10 @@ interface AggregatedPoints {
     frontArrival: string;
     frontPassage: string;
     backArrival: string;
-    pointFrom: { lat: number; lon: number };
-    pointTo: { lat: number; lon: number };
+    pointFrom: { lat: number; lon: number; time: string };
+    pointTo: { lat: number; lon: number; time: string };
+    speed?: number;
+    distanceInKm?: number;
     type?: TrackWayPointType;
     breakLength?: number;
     nodeTracks?: string[];
@@ -53,7 +55,7 @@ export function takeMostDetailedStreetName(streetName: string | null, lastStreet
     return [...new Set([...lastStreetNameElements, ...streetNameElements])].join(', ');
 }
 
-const extractLatLon = ({ lat, lon }: EnrichedPoints) => ({ lat, lon });
+const extractLatLon = ({ lat, lon, time }: EnrichedPoints) => ({ lat, lon, time });
 
 function shiftEndTimeByParticipants(endDateTime: string, participants: number): string {
     return date.addSeconds(new Date(endDateTime), participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
@@ -152,6 +154,7 @@ export function aggregateEnrichedPoints(
                 pointFrom: extractLatLon(point),
                 pointTo: extractLatLon(point),
                 type: TrackWayPointType.Break,
+                distanceInKm: 0,
                 breakLength: getTimeDifferenceInSeconds(point.time, lastElement.frontPassage) / 60,
             });
             return;
@@ -178,12 +181,20 @@ export function aggregateEnrichedPoints(
 
         if (anyStreetNameMatch(streetName, lastStreetName) && lastElement.type === TrackWayPointType.Track) {
             const detailedStreetName = takeMostDetailedStreetName(streetName, lastStreetName);
+            const newDistance =
+                (lastElement.distanceInKm ?? 0) +
+                (geoDistance(toLatLng(point), toLatLng(lastElement.pointTo)) as number);
             aggregatedPoints[lastIndex] = {
                 ...lastElement,
                 streetName: detailedStreetName,
                 backArrival: shiftEndTimeByParticipants(point.time, participants),
                 frontPassage: point.time,
                 pointTo: extractLatLon(point),
+                distanceInKm: newDistance,
+                speed:
+                    newDistance > 0
+                        ? (newDistance / getTimeDifferenceInSeconds(point.time, lastElement.pointFrom.time)) * 3600
+                        : undefined,
                 type: TrackWayPointType.Track,
             };
         } else {

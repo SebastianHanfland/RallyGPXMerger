@@ -65,6 +65,8 @@ export interface TrackWayPoint {
     pointTo: { lat: number; lon: number };
     postCode?: number;
     district?: string;
+    distanceInKm?: number;
+    speed?: number;
     type?: TrackWayPointType;
     breakLength?: number;
     nodeTracks?: string[];
