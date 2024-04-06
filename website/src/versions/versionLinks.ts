@@ -410,7 +410,7 @@ export const versions: Record<string, Variant[]> = {
     KVR_24_A95_Neuried: [
         {
             name: 'SF24_A95_Neuried',
-            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_ZweiterStandWebsite.json',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/A95_ZweiterStandWebseite_mit_Speed.json',
             mode: 'present',
         },
     ],
