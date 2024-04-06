@@ -60,7 +60,6 @@ export function calculateSpeed(points: Point[]): number {
 
     const timeInHours =
         getTimeDifferenceInSeconds(endPoint.time.toISOString(), startPoint.time.toISOString()) / 60 / 60;
-    console.log(distance, timeInHours);
 
     return distance / timeInHours;
 }

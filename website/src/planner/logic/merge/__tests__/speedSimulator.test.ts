@@ -34,7 +34,7 @@ describe('speedSimulator', () => {
             { lat: 1, lon: 1, ele: 1, time: '2020-02-02T20:20:20.000Z' },
             { lat: 1, lon: 1.0001, ele: 1, time: '2020-02-02T20:20:23.335Z' },
         ]);
-        expect(calculateSpeed(points)).toEqual(12);
+        expect(calculateSpeed(points).toFixed(2)).toEqual('12.00');
     });
 
     it('should take elevation into account', () => {
