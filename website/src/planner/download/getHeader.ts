@@ -8,6 +8,7 @@ export const getTrackTableHeaders = (intl: IntlShape) =>
         'msg.postCode',
         'msg.district',
         'msg.lengthInKm',
+        'msg.speed',
         'msg.durationInMin',
         'msg.blockageInMin',
         'msg.arrivalOfFront',

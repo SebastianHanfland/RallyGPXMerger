@@ -1,11 +1,9 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import geoDistance from 'geo-distance-helper';
 import { ContentTable } from 'pdfmake/interfaces';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
 import { getTrackTableHeaders } from '../getHeader.ts';
-import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
 
 function getAdditionalInfo(
@@ -40,7 +38,8 @@ export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape
         },
         `${waypoint.postCode ?? ''}`,
         `${waypoint.district?.replace('Wahlkreis', '') ?? ''}`,
-        `${formatNumber(geoDistance(toLatLng(waypoint.pointFrom), toLatLng(waypoint.pointTo)) as number, 2)}`,
+        `${formatNumber(waypoint.distanceInKm ?? 0, 2)}`,
+        `${formatNumber(waypoint.speed ?? 0, 1)} km/h`,
         `${formatNumber(getTimeDifferenceInSeconds(waypoint.frontPassage, waypoint.frontArrival) / 60, 1)}`,
         `${formatNumber(getTimeDifferenceInSeconds(waypoint.backArrival, waypoint.frontArrival) / 60, 1)}`,
         `${formatTimeOnly(waypoint.frontArrival)}`,
@@ -53,7 +52,7 @@ export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape
             // headers are automatically repeated if the table spans over multiple pages
             // you can declare how many rows should be treated as headers
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: tableHeader.map(() => 'auto'),
             body: [tableHeader, ...wayPointRows],
         },
     };
