@@ -2,6 +2,7 @@ import geoDistance from 'geo-distance-helper';
 import { Point } from 'gpxparser';
 import date from 'date-and-time';
 import { toLatLng } from '../../../utils/pointUtil.ts';
+import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 
 function slopeFactor(slope: number): number {
     const max_slope = 100;
@@ -42,4 +43,24 @@ export function generateTimeData(start: string, avg: number, points: Omit<Point,
         previousPoint = { ...point, time };
         return { ...point, time };
     });
+}
+
+export function calculateSpeed(points: Point[]): number {
+    const startPoint = { ...points[0] };
+    const endPoint = { ...points[points.length - 1] };
+
+    let distance = 0;
+    let lastPoint: Point | null = null;
+    points.forEach((point) => {
+        if (lastPoint) {
+            distance += geoDistance(toLatLng(lastPoint), toLatLng(point)) as number;
+        }
+        lastPoint = point;
+    });
+
+    const timeInHours =
+        getTimeDifferenceInSeconds(endPoint.time.toISOString(), startPoint.time.toISOString()) / 60 / 60;
+    console.log(distance, timeInHours);
+
+    return distance / timeInHours;
 }
