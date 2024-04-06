@@ -39,7 +39,7 @@ export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape
         `${waypoint.postCode ?? ''}`,
         `${waypoint.district?.replace('Wahlkreis', '') ?? ''}`,
         `${formatNumber(waypoint.distanceInKm ?? 0, 2)}`,
-        `${formatNumber(waypoint.speed ?? 0, 1)} km/h`,
+        `${formatNumber(waypoint.speed ?? 0, 1)}`,
         `${formatNumber(getTimeDifferenceInSeconds(waypoint.frontPassage, waypoint.frontArrival) / 60, 1)}`,
         `${formatNumber(getTimeDifferenceInSeconds(waypoint.backArrival, waypoint.frontArrival) / 60, 1)}`,
         `${formatTimeOnly(waypoint.frontArrival)}`,
