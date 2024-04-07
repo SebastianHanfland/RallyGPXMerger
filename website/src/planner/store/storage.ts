@@ -52,12 +52,6 @@ const load = (): State | undefined => {
         }
         const pointsStringified = localStorage.getItem(stateKey + '.points');
         if (pointsStringified && pointsStringified !== 'undefined') {
-            console.log(
-                pointsStringified,
-                pointsStringified === undefined,
-                pointsStringified === 'undefined',
-                'points'
-            );
             points = JSON.parse(pointsStringified);
         }
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');

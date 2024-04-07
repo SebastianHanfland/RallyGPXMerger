@@ -31,9 +31,17 @@ export function zipTracksDisplayHook(
             if ((selectedTracks[version]?.length ?? 0) === 0) {
                 return tracksOfVersion;
             }
-            return tracksOfVersion.filter((track) => selectedTracks[version]?.includes(track.id));
+            const zipTracks1 = tracksOfVersion
+                .filter((track) => selectedTracks[version]?.includes(track.id))
+                .sort((a, b) => b.filename.localeCompare(a.filename, undefined, { numeric: true }));
+
+            console.log(zipTracks1.map((track) => track.filename));
+            return zipTracks1;
         });
-        addTracksToLayer(calculatedTracksLayer, tracks, true, {
+
+        const sortedTracks = tracks.sort((a, b) => -b.filename.localeCompare(a.filename, undefined, { numeric: true }));
+
+        addTracksToLayer(calculatedTracksLayer, sortedTracks, true, {
             showMarker,
             onlyShowBreaks: true,
             opacity: highlightedTrack ? 0.2 : 0.7,
