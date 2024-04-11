@@ -1,17 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
-import L, { LayerGroup } from 'leaflet';
+import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
-import { versionKey } from '../versionLinks.ts';
-
-const motorwayUnsecurityPoint = {
-    lat: 48.0996967215098,
-    lng: 11.446380615234375,
-    radiusInM: 2800,
-    title: 'Planung in diesem Bereich ist vorläufig',
-};
 
 export function zipTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
@@ -57,16 +49,5 @@ export function zipTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-        if (versionKey === 'Sternfahrt2024') {
-            const circle = L.circle(motorwayUnsecurityPoint, {
-                radius: motorwayUnsecurityPoint.radiusInM,
-                color: 'red',
-            });
-            const current = calculatedTracksLayer.current;
-            if (current) {
-                circle.bindTooltip(motorwayUnsecurityPoint.title, { sticky: true });
-                circle.addTo(current);
-            }
-        }
     }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
 }
