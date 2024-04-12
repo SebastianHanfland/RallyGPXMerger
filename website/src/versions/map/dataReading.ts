@@ -4,6 +4,7 @@ import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
 import {
     getCurrenMapTime as zipGetCurrenMapTime,
+    getCurrentRealTime,
     getEndMapTime as zipGetEndMapTime,
     getStartMapTime as zipGetStartMapTime,
 } from '../store/map.reducer.ts';
@@ -55,12 +56,18 @@ export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
+export const getDisplayTimeStamp = (state: VersionsState): string | undefined => {
+    const sliderTimeStamp = getZipCurrentTimeStamp(state);
+    const currentRealTime = getCurrentRealTime(state);
+    return currentRealTime ?? sliderTimeStamp;
+};
+
 function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, selectedTrackIds: string[]) {
     return readableTracks?.filter((track) => selectedTrackIds.includes(track.id));
 }
 
 export const getZipCurrentMarkerPositionsForTracks = createSelector(
-    getZipCurrentTimeStamp,
+    getDisplayTimeStamp,
     getZipTracks,
     getReadableTracks,
     getSelectedTracks,

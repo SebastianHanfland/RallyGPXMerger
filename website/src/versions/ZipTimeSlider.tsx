@@ -1,8 +1,8 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapTime, getCurrentRealTime, mapActions } from './store/map.reducer.ts';
+import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
-import { getZipCurrentTimeStamp } from './map/dataReading.ts';
+import { getDisplayTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
 import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
@@ -26,9 +26,7 @@ export function ZipTimeSlider({
     showTimes: boolean;
 }) {
     const mapTime = useSelector(getCurrenMapTime);
-    const currentRealTime = useSelector(getCurrentRealTime);
-    const sliderTime = useSelector(getZipCurrentTimeStamp);
-    const dateValue = currentRealTime ?? sliderTime;
+    const dateValue = useSelector(getDisplayTimeStamp);
     const dispatch = useDispatch();
     const intl = useIntl();
     const [playing, setPlaying] = useState(false);
