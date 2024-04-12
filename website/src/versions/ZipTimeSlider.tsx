@@ -13,6 +13,8 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
+export const isLive = window.location.search.includes('&live');
+
 export function ZipTimeSlider({
     bigThumb,
     showPlayButton,
@@ -41,6 +43,12 @@ export function ZipTimeSlider({
             );
         }
     }, [playing]);
+
+    if (isLive) {
+        return (
+            <div>{dateValue ? intl.formatDate(dateValue, DateTimeFormat) : intl.formatMessage({ id: 'msg.time' })}</div>
+        );
+    }
 
     return (
         <div className={'d-flex'}>

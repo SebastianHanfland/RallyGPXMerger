@@ -2,6 +2,7 @@ import { MutableRefObject, useEffect, useState } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
 import { CriticalMapsLocation } from './types.ts';
+import { isLive } from '../ZipTimeSlider.tsx';
 
 const EVERY_MINUTE = 60 * 1000;
 const convertToCoord = (latitude: number) => {
@@ -24,9 +25,13 @@ const filterCoordinatesAroundMunich = (locations: CriticalMapsLocation[]): Criti
 export const criticalMapsHook = (criticalMapsLayer: MutableRefObject<LayerGroup | null>) => {
     const [fetchCounter, setFetchCounter] = useState(0);
 
-    setInterval(() => {
-        setFetchCounter(fetchCounter + 1);
-    }, EVERY_MINUTE);
+    useEffect(() => {
+        if (isLive) {
+            setInterval(() => {
+                setFetchCounter(fetchCounter + 1);
+            }, EVERY_MINUTE);
+        }
+    }, []);
 
     useEffect(() => {
         const current = criticalMapsLayer.current;
