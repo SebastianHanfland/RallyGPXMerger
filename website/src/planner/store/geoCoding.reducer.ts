@@ -1,9 +1,20 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { GeoCodingState, ResolvedDistricts, ResolvedPositions, ResolvedPostCodes, State } from './types.ts';
 import { storage } from './storage.ts';
-import { TrackStreetInfo } from '../logic/resolving/types.ts';
+import { TrackStreetInfo, TrackWayPoint } from '../logic/resolving/types.ts';
 
 const initialState: GeoCodingState = {};
+
+function sameWayPoint(wayPointA: TrackWayPoint, wayPointB: TrackWayPoint) {
+    return (
+        wayPointA.streetName === wayPointB.streetName &&
+        wayPointA.pointTo.lat === wayPointB.pointTo.lat &&
+        wayPointA.pointTo.lon === wayPointB.pointTo.lon &&
+        wayPointA.pointFrom.lat === wayPointB.pointFrom.lat &&
+        wayPointA.pointFrom.lon === wayPointB.pointFrom.lon &&
+        wayPointA.backArrival === wayPointB.backArrival
+    );
+}
 
 const geoCodingSlice = createSlice({
     name: 'geoCoding',
@@ -63,6 +74,24 @@ const geoCodingSlice = createSlice({
         },
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;
+        },
+        changeTrackStreetInfoName: (
+            state: GeoCodingState,
+            action: PayloadAction<{ trackInfoId: string; previous: TrackWayPoint; updated: TrackWayPoint }>
+        ) => {
+            const { previous, updated, trackInfoId } = action.payload;
+            state.trackStreetInfos = state.trackStreetInfos?.map((info) => {
+                if (info.id === trackInfoId) {
+                    return {
+                        ...info,
+                        wayPoints: info.wayPoints.map((wayPoint) =>
+                            sameWayPoint(wayPoint, previous) ? updated : previous
+                        ),
+                    };
+                } else {
+                    return info;
+                }
+            });
         },
         toggleOnlyShowUnknown: (state: GeoCodingState) => {
             state.onlyShowUnknown = !state.onlyShowUnknown;
