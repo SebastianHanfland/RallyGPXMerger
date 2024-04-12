@@ -10,8 +10,8 @@ const convertToCoord = (latitude: number) => {
     return latitude / 1000000;
 };
 
-const NortWestOfAugsburg = { lat: 48368052, lng: 11395999 };
-const SouthEastOfRosenheim = { lat: 48036715, lng: 11740695 };
+const NortWestOfAugsburg = { lat: 48468052, lng: 10735999 };
+const SouthEastOfRosenheim = { lat: 47776715, lng: 12240695 };
 
 const filterCoordinatesAroundMunich = (locations: CriticalMapsLocation[]): CriticalMapsLocation[] => {
     return locations.filter(
@@ -59,6 +59,14 @@ export const criticalMapsHook = (criticalMapsLayer: React.MutableRefObject<Layer
                 point.addTo(current);
             });
         });
+
+        L.rectangle(
+            [
+                [NortWestOfAugsburg.lat / 1000000, NortWestOfAugsburg.lng / 1000000],
+                [SouthEastOfRosenheim.lat / 1000000, SouthEastOfRosenheim.lng / 1000000],
+            ],
+            { fill: false }
+        ).addTo(current);
     }, [fetchCounter]);
     bikeCounterMirror = bikeCounter;
 };
