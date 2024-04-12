@@ -85,7 +85,7 @@ const geoCodingSlice = createSlice({
                     return {
                         ...info,
                         wayPoints: info.wayPoints.map((wayPoint) =>
-                            sameWayPoint(wayPoint, previous) ? updated : previous
+                            sameWayPoint(wayPoint, previous) ? updated : wayPoint
                         ),
                     };
                 } else {
