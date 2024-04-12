@@ -3,6 +3,7 @@ import L, { LayerGroup } from 'leaflet';
 import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
 import { CriticalMapsLocation } from './types.ts';
 import { isLive } from '../ZipTimeSlider.tsx';
+import { blueBike } from '../../common/MapIcons.ts';
 
 const EVERY_MINUTE = 60 * 1000;
 const convertToCoord = (latitude: number) => {
@@ -29,7 +30,7 @@ export const criticalMapsHook = (criticalMapsLayer: MutableRefObject<LayerGroup 
         if (isLive) {
             setInterval(() => {
                 setFetchCounter(fetchCounter + 1);
-            }, EVERY_MINUTE);
+            }, EVERY_MINUTE / 2);
         }
     }, []);
 
@@ -43,10 +44,13 @@ export const criticalMapsHook = (criticalMapsLayer: MutableRefObject<LayerGroup 
 
         fetchCriticalMapsLocation().then((locations) => {
             filterCoordinatesAroundMunich(locations).forEach((location) => {
-                const point = L.marker({
-                    lat: convertToCoord(location.latitude),
-                    lng: convertToCoord(location.longitude),
-                });
+                const point = L.marker(
+                    {
+                        lat: convertToCoord(location.latitude),
+                        lng: convertToCoord(location.longitude),
+                    },
+                    { icon: blueBike }
+                );
                 point.addTo(current);
             });
         });
