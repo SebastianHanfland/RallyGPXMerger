@@ -32,7 +32,7 @@ export const criticalMapsHook = (criticalMapsLayer: React.MutableRefObject<Layer
     useEffect(() => {
         if (isLive) {
             setInterval(() => {
-                setFetchCounter(fetchCounter + 1);
+                setFetchCounter(Date.now);
             }, EVERY_MINUTE / 3);
         }
     }, []);
