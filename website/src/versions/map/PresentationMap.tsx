@@ -9,6 +9,7 @@ import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
 import { useDispatch } from 'react-redux';
 import { mapActions } from '../store/map.reducer.ts';
+import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
 
 let myMap: L.Map;
 
@@ -25,16 +26,20 @@ export const PresentationMap = () => {
 
     const zipTracksLayer = useRef<LayerGroup>(null);
     const tracksLayer = useRef<LayerGroup>(null);
+    const criticalMapsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         // @ts-ignore
         zipTracksLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         tracksLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        criticalMapsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     zipTracksDisplayHook(zipTracksLayer, true);
     zipTrackMarkerDisplayHook(tracksLayer);
+    criticalMapsHook(criticalMapsLayer);
 
     return (
         <div onMouseLeave={() => dispatch(mapActions.setHighlightedTrack())}>
