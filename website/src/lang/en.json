@@ -205,5 +205,6 @@
     "msg.communicatedStart": "Published start times",
     "msg.priority": "Prio",
     "msg.priority.hint": "The higher the priority the more it is prioritized at a node",
-    "msg.speed": "Speed in km/h"
+    "msg.speed": "Speed in km/h",
+    "msg.changeStreetName": "Change street name"
 }

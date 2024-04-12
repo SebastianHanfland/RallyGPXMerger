@@ -206,5 +206,6 @@
     "msg.communicatedStart": "Veröffentliche Startzeiten",
     "msg.priority": "Prio",
     "msg.priority.hint": "Umso höher die Priorität ist, desto priorisierter ist eine Route bei Knotenpunkten",
-    "msg.speed": "Geschwindigkeit in km/h"
+    "msg.speed": "Geschwindigkeit in km/h",
+    "msg.changeStreetName": "Straßennamen ändern"
 }

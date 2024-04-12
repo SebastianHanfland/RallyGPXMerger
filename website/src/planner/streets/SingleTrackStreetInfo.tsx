@@ -7,6 +7,7 @@ import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { EditStreetNameButton } from './EditStreetNameButton.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -88,8 +89,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                   wayPoint.district === undefined
                                 : true
                         )
-                        .map(
-                            ({
+                        .map((waypoint) => {
+                            const {
                                 streetName,
                                 backArrival,
                                 frontArrival,
@@ -103,7 +104,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 nodeTracks,
                                 distanceInKm,
                                 speed,
-                            }) => (
+                            } = waypoint;
+                            return (
                                 <tr key={backArrival + streetName + frontArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName ?? unknown} />
@@ -118,6 +120,10 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                                 ? `Knoten${nodeTracks ? ':  ' + nodeTracks.join(', ') : ''}`
                                                 : null}
                                         </b>
+                                        <EditStreetNameButton
+                                            waypoint={waypoint}
+                                            trackStreetInfoId={trackStreetInfo.id}
+                                        />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? unknown} />
@@ -135,8 +141,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     <td>{formatTimeOnly(frontPassage)}</td>
                                     <td>{formatTimeOnly(backArrival)}</td>
                                 </tr>
-                            )
-                        )}
+                            );
+                        })}
                 </tbody>
             </Table>
         </div>
