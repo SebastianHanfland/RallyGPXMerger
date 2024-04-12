@@ -1,6 +1,6 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
+import { getCurrenMapTime, getCurrentRealTime, mapActions } from './store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
 import { getZipCurrentTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
@@ -8,6 +8,7 @@ import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
+import { bikeCounterMirror } from './criticalmaps/criticalMapsHook.ts';
 
 let interval: NodeJS.Timeout | undefined;
 
@@ -25,7 +26,9 @@ export function ZipTimeSlider({
     showTimes: boolean;
 }) {
     const mapTime = useSelector(getCurrenMapTime);
-    const dateValue = useSelector(getZipCurrentTimeStamp);
+    const currentRealTime = useSelector(getCurrentRealTime);
+    const sliderTime = useSelector(getZipCurrentTimeStamp);
+    const dateValue = currentRealTime ?? sliderTime;
     const dispatch = useDispatch();
     const intl = useIntl();
     const [playing, setPlaying] = useState(false);
@@ -44,9 +47,23 @@ export function ZipTimeSlider({
         }
     }, [playing]);
 
+    useEffect(() => {
+        if (isLive) {
+            dispatch(mapActions.setCurrentRealTime());
+            setInterval(() => {
+                dispatch(mapActions.setCurrentRealTime());
+            }, 20 * 1000);
+        }
+    }, []);
+
     if (isLive) {
         return (
-            <div>{dateValue ? intl.formatDate(dateValue, DateTimeFormat) : intl.formatMessage({ id: 'msg.time' })}</div>
+            <div>
+                <h6>{`Eingeschaltete Apps: ${bikeCounterMirror}`}</h6>
+                <div>
+                    {dateValue ? intl.formatDate(dateValue, DateTimeFormat) : intl.formatMessage({ id: 'msg.time' })}
+                </div>
+            </div>
         );
     }
 

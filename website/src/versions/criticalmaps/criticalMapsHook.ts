@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
 import { CriticalMapsLocation } from './types.ts';
@@ -23,14 +23,17 @@ const filterCoordinatesAroundMunich = (locations: CriticalMapsLocation[]): Criti
     );
 };
 
-export const criticalMapsHook = (criticalMapsLayer: MutableRefObject<LayerGroup | null>) => {
+export let bikeCounterMirror = 0;
+
+export const criticalMapsHook = (criticalMapsLayer: React.MutableRefObject<LayerGroup | null>) => {
     const [fetchCounter, setFetchCounter] = useState(0);
+    const [bikeCounter, setBikeCounter] = useState(0);
 
     useEffect(() => {
         if (isLive) {
             setInterval(() => {
                 setFetchCounter(fetchCounter + 1);
-            }, EVERY_MINUTE / 2);
+            }, EVERY_MINUTE / 3);
         }
     }, []);
 
@@ -43,7 +46,9 @@ export const criticalMapsHook = (criticalMapsLayer: MutableRefObject<LayerGroup 
         current.clearLayers();
 
         fetchCriticalMapsLocation().then((locations) => {
-            filterCoordinatesAroundMunich(locations).forEach((location) => {
+            const bikesAroundMunich = filterCoordinatesAroundMunich(locations);
+            setBikeCounter(bikesAroundMunich.length);
+            bikesAroundMunich.forEach((location) => {
                 const point = L.marker(
                     {
                         lat: convertToCoord(location.latitude),
@@ -55,4 +60,5 @@ export const criticalMapsHook = (criticalMapsLayer: MutableRefObject<LayerGroup 
             });
         });
     }, [fetchCounter]);
+    bikeCounterMirror = bikeCounter;
 };

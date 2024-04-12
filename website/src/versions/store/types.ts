@@ -9,6 +9,7 @@ export interface ZipTracksState {
 
 export interface MapState {
     currentTime: number;
+    currentRealTime?: string;
     start?: string;
     end?: string;
     showMapMarker?: boolean;
