@@ -38,6 +38,9 @@ export const criticalMapsHook = (criticalMapsLayer: React.MutableRefObject<Layer
     }, []);
 
     useEffect(() => {
+        if (!isLive) {
+            return;
+        }
         const current = criticalMapsLayer.current;
 
         if (!criticalMapsLayer || !current) {
