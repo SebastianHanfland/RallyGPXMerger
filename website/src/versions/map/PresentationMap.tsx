@@ -13,13 +13,16 @@ import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
 
 let myMap: L.Map;
 
+export const isInIframe = window.location.search.includes('&iframe');
+
 export const PresentationMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (!myMap) {
-            myMap = L.map('mapid', { tap: !L.Browser.mobile, dragging: !L.Browser.mobile }).setView(Munich, startZoom);
+            const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
+            myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
     }, []);
