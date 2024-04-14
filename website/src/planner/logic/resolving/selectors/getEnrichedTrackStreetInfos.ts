@@ -20,7 +20,7 @@ export const getEnrichedTrackStreetInfos = createSelector(
                     };
                 })
                 .filter(
-                    (wayPoint) => (wayPoint.distanceInKm ?? 0) > 0.001 && wayPoint.type !== TrackWayPointType.Break
+                    (wayPoint) => (wayPoint.distanceInKm ?? 0) > 0.001 || wayPoint.type !== TrackWayPointType.Track
                 ),
         }));
     }
