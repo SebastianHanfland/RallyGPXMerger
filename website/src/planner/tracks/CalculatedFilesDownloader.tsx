@@ -15,7 +15,7 @@ export const downloadFilesInZip = (calculatedTracks: { content: string; filename
         if (usedFilenames.includes(intendedFileName)) {
             intendedFileName += `(${conflictCounter++})`;
         }
-        zip.file(`${intendedFileName}.gpx`, new Blob([track.content], { type: 'gpx' }));
+        zip.file(`${intendedFileName}.gpx`, new Blob([track.content], { type: 'application/gpx+xml' }));
         usedFilenames.push(intendedFileName);
     });
     zip.generateAsync({ type: 'blob' }).then(function (content) {
