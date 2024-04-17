@@ -1,4 +1,4 @@
-import { TrackWayPoint, TrackWayPointType } from '../logic/resolving/types.ts';
+import { TrackWayPoint } from '../logic/resolving/types.ts';
 import Button from 'react-bootstrap/Button';
 import pencil from '../../assets/pencil.svg';
 import { useState } from 'react';
@@ -17,10 +17,6 @@ export function EditStreetNameButton(props: Props) {
     const { trackStreetInfoId, waypoint } = props;
 
     const [showModal, setShowModal] = useState(false);
-
-    if (waypoint.type !== TrackWayPointType.Track) {
-        return null;
-    }
 
     return (
         <>
