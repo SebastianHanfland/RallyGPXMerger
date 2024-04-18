@@ -1,14 +1,13 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getCurrenMapTime } from '../store/map.reducer.ts';
 import { bikeIcon } from '../../common/MapIcons.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
-import { getZipCurrentMarkerPositionsForTracks } from './dataReading.ts';
+import { getDisplayTimeStamp, getZipCurrentMarkerPositionsForTracks } from './dataReading.ts';
 
 export function zipTrackMarkerDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const zipTracks = useSelector(getZipTracks);
-    const currentMapTime = useSelector(getCurrenMapTime);
+    const currentMapTime = useSelector(getDisplayTimeStamp);
     const selectedTracks = useSelector(getSelectedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const pointsToDisplay = useSelector(getZipCurrentMarkerPositionsForTracks);
