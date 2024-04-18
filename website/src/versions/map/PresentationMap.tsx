@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
+import 'leaflet.locatecontrol'; // Import plugin
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
 import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
 import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
@@ -10,6 +12,7 @@ import { Munich } from '../../common/locations.ts';
 import { useDispatch } from 'react-redux';
 import { mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
+import { isLive } from '../ZipTimeSlider.tsx';
 
 let myMap: L.Map;
 
@@ -24,6 +27,10 @@ export const PresentationMap = () => {
             const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
             myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
+            if (isLive) {
+                // @ts-ignore
+                L.control.locate().addTo(myMap);
+            }
         }
     }, []);
 
