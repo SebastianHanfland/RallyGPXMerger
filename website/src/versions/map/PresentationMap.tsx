@@ -28,8 +28,9 @@ export const PresentationMap = () => {
             myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             if (isLive) {
-                L.control.locate({ initialZoomLevel: startZoom }).addTo(myMap);
-                myMap.locate();
+                const locate = L.control.locate({ initialZoomLevel: startZoom });
+                locate.addTo(myMap);
+                locate.start();
             }
         }
     }, []);
