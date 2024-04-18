@@ -421,6 +421,13 @@ export const versions: Record<string, Variant[]> = {
             mode: 'present',
         },
     ],
+    simtest: [
+        {
+            name: 'SimTest',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/SimTest.json',
+            mode: 'present',
+        },
+    ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
 
