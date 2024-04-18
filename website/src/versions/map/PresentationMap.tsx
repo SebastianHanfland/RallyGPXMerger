@@ -27,7 +27,7 @@ export const PresentationMap = () => {
             const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
             myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
-            if (isLive) {
+            if (isLive && L.Browser.mobile) {
                 const locate = L.control.locate({ initialZoomLevel: startZoom });
                 locate.addTo(myMap);
                 locate.start();
