@@ -34,7 +34,9 @@ function TrackInfo({ track }: { track: ZipTrack }) {
         <>
             <h6>{track.filename}</h6>
             {showTimes && (
-                <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(roundStartTimes(foundInfo.startFront))}`}</p>
+                <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(
+                    roundStartTimes(foundInfo.startFront, track.filename)
+                )}`}</p>
             )}
             {showTimes && <p className={'p-0 m-0'}>{`Ziel: ${formatTimeOnly(foundInfo.arrivalFront)}`}</p>}
             <p className={'p-0 m-0'}>{`Länge: ${formatNumber(foundInfo.distanceInKm)} km`}</p>

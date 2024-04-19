@@ -56,7 +56,7 @@ export const TracksOverview = () => {
                                     <td>{info.name}</td>
                                     <td>{formatNumber(info.distanceInKm)}</td>
                                     <td>{info.peopleCount ?? ''}</td>
-                                    <td>{formatTimeOnly(roundStartTimes(info.startFront))}</td>
+                                    <td>{formatTimeOnly(roundStartTimes(info.startFront, info.name))}</td>
                                     <td>{formatTimeOnly(info.startFront)}</td>
                                     <td>{formatTimeOnly(info.arrivalFront)}</td>
                                     <td>{formatTimeOnly(info.arrivalBack)}</td>

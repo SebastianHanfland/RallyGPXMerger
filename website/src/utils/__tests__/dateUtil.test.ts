@@ -31,18 +31,34 @@ describe('dateUtil', () => {
     describe('roundStartTimes', () => {
         const testCases = [
             {
+                description: 'Should subtract 15 minutes and round down to full 15 minutes for M routes',
                 input: '2007-10-14T10:09:57.000Z',
-                output: '2007-10-14T09:55:00.000Z',
+                trackName: 'M1',
+                output: '2007-10-14T09:45:00.000Z',
             },
             {
-                input: '2007-10-14T10:10:00.000Z',
+                description: 'Should subtract 15 minutes and round down to full 15 minutes for M routes',
+                input: '2007-10-14T10:15:00.000Z',
+                trackName: 'M1',
                 output: '2007-10-14T10:00:00.000Z',
+            },
+            {
+                description: 'Should subtract 10 minutes and round down to full 5 minutes for A routes',
+                input: '2007-10-14T10:10:00.000Z',
+                trackName: 'A9',
+                output: '2007-10-14T10:00:00.000Z',
+            },
+            {
+                description: 'Should subtract 10 minutes and round down to full 5 minutes for A routes',
+                input: '2007-10-14T10:09:57.000Z',
+                trackName: 'A9',
+                output: '2007-10-14T09:55:00.000Z',
             },
         ];
 
-        testCases.forEach(({ output, input }) =>
-            it(`${input} -> ${output}`, () => {
-                expect(roundStartTimes(input)).toEqual(output);
+        testCases.forEach(({ output, input, trackName, description }) =>
+            it(`${description}: ${input} -> ${output}`, () => {
+                expect(roundStartTimes(input, trackName)).toEqual(output);
             })
         );
     });

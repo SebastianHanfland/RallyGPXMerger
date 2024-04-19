@@ -22,9 +22,9 @@ const getBody = (trackStreetInfos: TrackStreetInfo[]): string => {
         .map(
             (info) =>
                 `${info.name};${formatNumber(info.distanceInKm)};${info.peopleCount ?? ''};
-                ${formatTimeOnly(roundStartTimes(info.startFront))};${formatTimeOnly(info.startFront)};${formatTimeOnly(
-                    info.arrivalFront
-                )};${formatTimeOnly(info.arrivalBack)}`
+                ${formatTimeOnly(roundStartTimes(info.startFront, info.name))};${formatTimeOnly(
+                    info.startFront
+                )};${formatTimeOnly(info.arrivalFront)};${formatTimeOnly(info.arrivalBack)}`
         )
         .join('\n');
 };
