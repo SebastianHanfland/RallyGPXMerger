@@ -3,12 +3,10 @@ import { Sections } from './types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSelectionSection, layoutActions } from '../store/layout.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { BackToStartDialog } from './BackToStartDialog.tsx';
-import { useState } from 'react';
 import Select from 'react-select';
 
-const navigationSections: { section: Sections; openModal?: boolean }[] = [
-    { section: 'menu', openModal: true },
+const navigationSections: { section: Sections }[] = [
+    { section: 'menu' },
     { section: 'gps' },
     { section: 'settings' },
     { section: 'streets' },
@@ -24,12 +22,9 @@ export const SectionNavigation = () => {
     const selectedSection = useSelector(getSelectionSection);
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
-    const [showModal, setShowModal] = useState(false);
-
     const options = navigationSections.map((entry) => ({
         label: intl.formatMessage({ id: `msg.${entry.section}` }),
         value: entry.section,
-        openModal: entry.openModal,
     }));
 
     return (
@@ -41,7 +36,7 @@ export const SectionNavigation = () => {
                     value={options.find((option) => option.value === selectedSection)}
                     onChange={(option) => {
                         if (option) {
-                            option?.openModal ? setShowModal(true) : setSelectedSection(option?.value);
+                            setSelectedSection(option?.value);
                         }
                     }}
                     isSearchable={false}
@@ -52,14 +47,12 @@ export const SectionNavigation = () => {
                     <Pagination.Item
                         key={entry.section}
                         active={entry.section === selectedSection}
-                        linkClassName={entry.openModal ? 'nav-menu' : undefined}
-                        onClick={() => (entry.openModal ? setShowModal(true) : setSelectedSection(entry.section))}
+                        onClick={() => setSelectedSection(entry.section)}
                     >
                         <FormattedMessage id={`msg.${entry.section}`} />
                     </Pagination.Item>
                 ))}
             </Pagination>
-            {showModal && <BackToStartDialog closeModal={() => setShowModal(false)} />}
         </>
     );
 };
