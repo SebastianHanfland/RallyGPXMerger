@@ -157,8 +157,8 @@
     "msg.trackInfoShort": "Routeninfos",
     "msg.choose": "Situation auswählen",
     "msg.directToPlanner": "Direkt zum Sternfahrtplaner",
-    "msg.startPlan": "Eine neue Planung starten",
-    "msg.startPlan.hint": "Eine sich bewegende Demonstration mit mehreren Routen planen",
+    "msg.startPlan": "Neue Planung",
+    "msg.startPlan.hint": "Öffnet einen leeren Planer",
     "msg.loadPlan": "Existierende Planung laden",
     "msg.loadPlan.hint": "Existierende Planung über eine json Datei laden",
     "msg.loadSample": "Beispielplanung",
@@ -209,5 +209,7 @@
     "msg.speed": "Geschwindigkeit in km/h",
     "msg.changeStreetName": "Straßennamen ändern",
     "msg.continuePlan": "Planung weiter bearbeiten",
-    "msg.continuePlan.hint": "Öffnet den Planer für die letzte Planung"
+    "msg.continuePlan.hint": "Öffnet den Planer für die letzte Planung",
+    "msg.startWizard": "Assistent starten",
+    "msg.startWizard.hint": "Schrittweise eine Sternfahrt erstellen"
 }

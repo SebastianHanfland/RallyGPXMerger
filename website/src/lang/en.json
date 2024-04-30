@@ -156,8 +156,8 @@
     "msg.trackInfoShort": "Track info",
     "msg.choose": "Choose your situation",
     "msg.directToPlanner": "Go directly to the planner",
-    "msg.startPlan": "Start a new plan",
-    "msg.startPlan.hint": "Plan a moving demonstration with multiple branches",
+    "msg.startPlan": "New plan",
+    "msg.startPlan.hint": "Opens an empty planer",
     "msg.loadPlan": "Load an existing plan via json file",
     "msg.loadPlan.hint": "Load an existing plan",
     "msg.loadSample": "Sample Plan",
@@ -208,5 +208,7 @@
     "msg.speed": "Speed in km/h",
     "msg.changeStreetName": "Change street name",
     "msg.continuePlan": "Continue planning",
-    "msg.continuePlan.hint": "Opens last planning in planner"
+    "msg.continuePlan.hint": "Opens last planning in planner",
+    "msg.startWizard": "Start Wizard",
+    "msg.startWizard.hint": "Create a rally step by step"
 }
