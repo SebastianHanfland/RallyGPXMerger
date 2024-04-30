@@ -2,11 +2,11 @@ import { Card } from 'react-bootstrap';
 import { ReactNode } from 'react';
 
 const cardStyle = {
-    style: { minWidth: '18rem', minHeight: '30rem', cursor: 'pointer' },
-    className: 'startPageCard shadow m-2',
+    style: { minWidth: '12rem', minHeight: '20rem', cursor: 'pointer' },
+    className: 'startPageCard shadow p-1 m-1',
 };
 
-const imageStyle = { height: '10rem', width: '10rem' };
+const imageStyle = { height: '7rem', width: '7rem' };
 
 interface Props {
     onClick: () => void;

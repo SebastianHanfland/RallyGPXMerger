@@ -21,11 +21,8 @@ export const WizardStartPage = () => {
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
 
     return (
-        <Container>
+        <Container fluid className={'m-0'}>
             <WizardHeader />
-            <h5 className={'mb-5'}>
-                <FormattedMessage id={'msg.choose'} />:
-            </h5>
             <Row>
                 <Col>
                     <WizardCard
