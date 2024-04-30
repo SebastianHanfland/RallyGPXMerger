@@ -1,4 +1,4 @@
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import line from '../../assets/line.svg';
 import mergeTracks from '../../assets/mergeTracks.svg';
 import { WizardHeader } from './WizardHeader.tsx';
@@ -9,11 +9,7 @@ import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { simpleRallyThunk } from './simpleRallyThunk.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
-
-const cardStyle = {
-    style: { minWidth: '18rem', minHeight: '25rem', cursor: 'pointer' },
-    className: 'startPageCard shadow m-2',
-};
+import { WizardStartPageCard } from '../layout/WizardStartPageCard.tsx';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -33,42 +29,20 @@ export const WizardsComplexity = () => {
             </h5>
             <Row>
                 <Col>
-                    <Card {...cardStyle} onClick={continueAsSimpleRally}>
-                        <Card.Body>
-                            <Card.Title>
-                                <FormattedMessage id={'msg.simple'} />
-                            </Card.Title>
-                            <Card.Text style={{ minHeight: '3rem' }}>
-                                <FormattedMessage id={'msg.simple.hint'} />
-                            </Card.Text>
-                            <img
-                                src={line}
-                                className="m-1"
-                                alt="simple route"
-                                style={{ height: '10rem', width: '10rem' }}
-                                color={'#ffffff'}
-                            />
-                        </Card.Body>
-                    </Card>
+                    <WizardStartPageCard
+                        onClick={continueAsSimpleRally}
+                        title={<FormattedMessage id={'msg.simple'} />}
+                        text={<FormattedMessage id={'msg.simple.hint'} />}
+                        icon={line}
+                    />
                 </Col>
                 <Col>
-                    <Card {...cardStyle} onClick={continueAsComplexRally}>
-                        <Card.Body>
-                            <Card.Title>
-                                <FormattedMessage id={'msg.complex'} />
-                            </Card.Title>
-                            <Card.Text style={{ minHeight: '3rem' }}>
-                                <FormattedMessage id={'msg.complex.hint'} />
-                            </Card.Text>
-                            <img
-                                src={mergeTracks}
-                                className="m-1"
-                                alt="complex route  "
-                                style={{ height: '10rem', width: '10rem' }}
-                                color={'#ffffff'}
-                            />
-                        </Card.Body>
-                    </Card>
+                    <WizardStartPageCard
+                        onClick={continueAsComplexRally}
+                        title={<FormattedMessage id={'msg.complex'} />}
+                        text={<FormattedMessage id={'msg.complex.hint'} />}
+                        icon={mergeTracks}
+                    />
                 </Col>
             </Row>
             <Row>
