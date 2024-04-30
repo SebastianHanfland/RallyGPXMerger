@@ -4,6 +4,7 @@ import stars from '../../assets/stars.svg';
 import fileUp from '../../assets/file-up.svg';
 import info from '../../assets/info.svg';
 import versionSvg from '../../assets/version.svg';
+import pencil from '../../assets/pencil.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
@@ -32,6 +33,14 @@ export const WizardStartPage = () => {
                         onClick={() => setSelectedSection('wizard-parameters')}
                         title={<FormattedMessage id={'msg.startPlan'} />}
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}
+                    />
+                </Col>
+                <Col>
+                    <WizardCard
+                        icon={pencil}
+                        onClick={() => setSelectedSection('gps')}
+                        title={<FormattedMessage id={'msg.continuePlan'} />}
+                        text={<FormattedMessage id={'msg.continuePlan.hint'} />}
                     />
                 </Col>
                 <Col>
