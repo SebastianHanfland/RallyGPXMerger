@@ -5,6 +5,7 @@ import fileUp from '../../assets/file-up.svg';
 import info from '../../assets/info.svg';
 import versionSvg from '../../assets/version.svg';
 import pencil from '../../assets/pencil.svg';
+import magic from '../../assets/magic_b.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
@@ -27,7 +28,8 @@ export const WizardStartPage = () => {
                 <Col>
                     <WizardCard
                         icon={stars}
-                        onClick={() => setSelectedSection('wizard-parameters')}
+                        // TODO delete old planing
+                        onClick={() => setSelectedSection('gps')}
                         title={<FormattedMessage id={'msg.startPlan'} />}
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}
                     />
@@ -35,9 +37,19 @@ export const WizardStartPage = () => {
                 <Col>
                     <WizardCard
                         icon={pencil}
+                        // TODO Only show when planing in progress
                         onClick={() => setSelectedSection('gps')}
                         title={<FormattedMessage id={'msg.continuePlan'} />}
                         text={<FormattedMessage id={'msg.continuePlan.hint'} />}
+                    />
+                </Col>
+                <Col>
+                    <WizardCard
+                        icon={magic}
+                        // TODO delete old planing
+                        onClick={() => setSelectedSection('wizard-parameters')}
+                        title={<FormattedMessage id={'msg.startWizard'} />}
+                        text={<FormattedMessage id={'msg.startWizard.hint'} />}
                     />
                 </Col>
                 <Col>
