@@ -59,19 +59,7 @@ export const WizardStartPage = () => {
                             setSelectedSection('gps');
                         }}
                         title={<FormattedMessage id={'msg.loadSample'} />}
-                        text={
-                            <>
-                                <FormattedMessage id={'msg.loadSample.hint'} />:
-                                <ul>
-                                    <li>
-                                        <FormattedMessage id={'msg.loadSample.ex1'} />:
-                                    </li>
-                                    <li>
-                                        <FormattedMessage id={'msg.loadSample.ex2'} />:
-                                    </li>
-                                </ul>
-                            </>
-                        }
+                        text={<FormattedMessage id={'msg.loadSample.hint'} />}
                     />
                 </Col>
                 <Col>
