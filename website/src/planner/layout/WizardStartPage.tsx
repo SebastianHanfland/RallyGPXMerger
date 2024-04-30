@@ -12,6 +12,7 @@ import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
 import { AppFooter } from './Footer.tsx';
 import { importHook } from '../io/importHook.ts';
 import { FormattedMessage } from 'react-intl';
+import { WizardStartPageCard } from './WizardStartPageCard.tsx';
 
 const cardStyle = {
     style: { minWidth: '18rem', minHeight: '30rem', cursor: 'pointer' },
@@ -33,23 +34,12 @@ export const WizardStartPage = () => {
             </h5>
             <Row>
                 <Col>
-                    <Card {...cardStyle} onClick={() => setSelectedSection('wizard-parameters')}>
-                        <Card.Body>
-                            <img
-                                src={stars}
-                                className="m-1"
-                                alt="start new plan"
-                                style={imageStyle}
-                                color={'#ffffff'}
-                            />
-                            <Card.Title className={'mt-3'}>
-                                <FormattedMessage id={'msg.startPlan'} />
-                            </Card.Title>
-                            <Card.Text style={{ minHeight: '3rem' }}>
-                                <FormattedMessage id={'msg.startPlan.hint'} />
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+                    <WizardStartPageCard
+                        icon={stars}
+                        onClick={() => setSelectedSection('wizard-parameters')}
+                        title={<FormattedMessage id={'msg.startPlan'} />}
+                        text={<FormattedMessage id={'msg.startPlan.hint'} />}
+                    />
                 </Col>
                 <Col>
                     <Card {...cardStyle} onClick={importButtonClicked}>
