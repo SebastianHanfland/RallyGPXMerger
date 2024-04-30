@@ -9,7 +9,7 @@ import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { simpleRallyThunk } from './simpleRallyThunk.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
-import { WizardStartPageCard } from '../layout/WizardStartPageCard.tsx';
+import { WizardCard } from '../layout/WizardCard.tsx';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -29,7 +29,7 @@ export const WizardsComplexity = () => {
             </h5>
             <Row>
                 <Col>
-                    <WizardStartPageCard
+                    <WizardCard
                         onClick={continueAsSimpleRally}
                         title={<FormattedMessage id={'msg.simple'} />}
                         text={<FormattedMessage id={'msg.simple.hint'} />}
@@ -37,7 +37,7 @@ export const WizardsComplexity = () => {
                     />
                 </Col>
                 <Col>
-                    <WizardStartPageCard
+                    <WizardCard
                         onClick={continueAsComplexRally}
                         title={<FormattedMessage id={'msg.complex'} />}
                         text={<FormattedMessage id={'msg.complex.hint'} />}
