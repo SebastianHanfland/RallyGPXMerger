@@ -15,21 +15,33 @@ import { AppFooter } from './Footer.tsx';
 import { importHook } from '../io/importHook.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
+import { BackToStartDialog } from './BackToStartDialog.tsx';
+import { useState } from 'react';
 
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
+    const [showModal, setShowModal] = useState(false);
+    const [nextSection, setNextSection] = useState<'gps' | 'wizard-parameters' | undefined>();
 
     return (
         <Container fluid className={'m-0'}>
+            {showModal && (
+                <BackToStartDialog
+                    closeModal={() => setShowModal(false)}
+                    onConfirm={() => nextSection && setSelectedSection(nextSection)}
+                />
+            )}
             <WizardHeader />
             <Row>
                 <Col>
                     <WizardCard
                         icon={stars}
-                        // TODO delete old planing
-                        onClick={() => setSelectedSection('gps')}
+                        onClick={() => {
+                            setShowModal(true);
+                            setNextSection('gps');
+                        }}
                         title={<FormattedMessage id={'msg.startPlan'} />}
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}
                     />
@@ -46,8 +58,10 @@ export const WizardStartPage = () => {
                 <Col>
                     <WizardCard
                         icon={magic}
-                        // TODO delete old planing
-                        onClick={() => setSelectedSection('wizard-parameters')}
+                        onClick={() => {
+                            setShowModal(true);
+                            setNextSection('wizard-parameters');
+                        }}
                         title={<FormattedMessage id={'msg.startWizard'} />}
                         text={<FormattedMessage id={'msg.startWizard.hint'} />}
                     />

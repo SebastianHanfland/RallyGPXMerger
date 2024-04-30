@@ -6,13 +6,14 @@ import { ExportStateJson } from '../io/ExportStateJson.tsx';
 import { useState } from 'react';
 import { Warning } from './dashboard/Warning.tsx';
 
-export function BackToStartDialog(props: { closeModal: () => void }) {
+export function BackToStartDialog(props: { closeModal: () => void; onConfirm?: () => void }) {
     const dispatch = useDispatch();
     const intl = useIntl();
     const [downloaded, setDownloaded] = useState(false);
 
     const removeAllData = () => {
         resetData(dispatch);
+        props.onConfirm && props.onConfirm();
         props.closeModal();
     };
 
