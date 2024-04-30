@@ -12,7 +12,7 @@ import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
 import { AppFooter } from './Footer.tsx';
 import { importHook } from '../io/importHook.ts';
 import { FormattedMessage } from 'react-intl';
-import { WizardStartPageCard } from './WizardStartPageCard.tsx';
+import { WizardCard } from './WizardCard.tsx';
 
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export const WizardStartPage = () => {
             </h5>
             <Row>
                 <Col>
-                    <WizardStartPageCard
+                    <WizardCard
                         icon={stars}
                         onClick={() => setSelectedSection('wizard-parameters')}
                         title={<FormattedMessage id={'msg.startPlan'} />}
@@ -35,7 +35,7 @@ export const WizardStartPage = () => {
                     />
                 </Col>
                 <Col>
-                    <WizardStartPageCard
+                    <WizardCard
                         icon={fileUp}
                         onClick={importButtonClicked}
                         title={<FormattedMessage id={'msg.loadPlan'} />}
@@ -51,7 +51,7 @@ export const WizardStartPage = () => {
                     />
                 </Col>
                 <Col>
-                    <WizardStartPageCard
+                    <WizardCard
                         icon={info}
                         onClick={() => {
                             loadSampleData(dispatch);
@@ -63,7 +63,7 @@ export const WizardStartPage = () => {
                     />
                 </Col>
                 <Col>
-                    <WizardStartPageCard
+                    <WizardCard
                         icon={versionSvg}
                         onClick={() => setSelectedSection('wizard-versions')}
                         title={<FormattedMessage id={'msg.versions'} />}

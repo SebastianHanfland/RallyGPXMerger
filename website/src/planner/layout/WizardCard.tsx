@@ -15,7 +15,7 @@ interface Props {
     icon: string;
 }
 
-export const WizardStartPageCard = ({ text, title, onClick, icon }: Props) => {
+export const WizardCard = ({ text, title, onClick, icon }: Props) => {
     return (
         <Card {...cardStyle} onClick={onClick}>
             <Card.Body>
