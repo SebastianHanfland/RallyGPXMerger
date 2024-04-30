@@ -207,5 +207,7 @@
     "msg.priority": "Prio",
     "msg.priority.hint": "Umso höher die Priorität ist, desto priorisierter ist eine Route bei Knotenpunkten",
     "msg.speed": "Geschwindigkeit in km/h",
-    "msg.changeStreetName": "Straßennamen ändern"
+    "msg.changeStreetName": "Straßennamen ändern",
+    "msg.continuePlan": "Planung weiter bearbeiten",
+    "msg.continuePlan.hint": "Öffnet den Planer für die letzte Planung"
 }
