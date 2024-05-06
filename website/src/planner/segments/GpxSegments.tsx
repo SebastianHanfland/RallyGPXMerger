@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
+import { AppDispatch } from '../store/store.ts';
 
 const fileTypes = ['GPX'];
 
@@ -26,15 +28,15 @@ interface Props {
 
 export function GpxSegments({ noFilter }: Props) {
     const intl = useIntl();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
     const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
-            dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments))
-        );
+        Promise.all([...newFiles].map(toGpxSegment))
+            .then((newGpxSegments) => dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments)))
+            .then(() => dispatch(resolveStreetNames));
     };
     return (
         <div>
