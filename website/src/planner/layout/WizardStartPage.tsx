@@ -7,7 +7,7 @@ import versionSvg from '../../assets/version.svg';
 import pencil from '../../assets/pencil.svg';
 import magic from '../../assets/magic_b.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { loadSampleData } from '../io/loadSampleData.ts';
 import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
@@ -17,9 +17,11 @@ import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
 import { BackToStartDialog } from './BackToStartDialog.tsx';
 import { useState } from 'react';
+import { isPlanningInProgress } from '../store/planner.selector.ts';
 
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
+    const planningInProgress = useSelector(isPlanningInProgress);
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
@@ -46,15 +48,16 @@ export const WizardStartPage = () => {
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}
                     />
                 </Col>
-                <Col>
-                    <WizardCard
-                        icon={pencil}
-                        // TODO Only show when planing in progress
-                        onClick={() => setSelectedSection('gps')}
-                        title={<FormattedMessage id={'msg.continuePlan'} />}
-                        text={<FormattedMessage id={'msg.continuePlan.hint'} />}
-                    />
-                </Col>
+                {planningInProgress && (
+                    <Col>
+                        <WizardCard
+                            icon={pencil}
+                            onClick={() => setSelectedSection('gps')}
+                            title={<FormattedMessage id={'msg.continuePlan'} />}
+                            text={<FormattedMessage id={'msg.continuePlan.hint'} />}
+                        />
+                    </Col>
+                )}
                 <Col>
                     <WizardCard
                         icon={magic}
