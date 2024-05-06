@@ -6,12 +6,14 @@ import { getDisplayLanguage } from './store/layout.reducer.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
+import { AppFooter } from './layout/Footer.tsx';
 
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);
     return (
         <IntlProvider locale={language ?? getLanguage()} messages={getMessages()}>
             <RallyPlannerRouter />
+            <AppFooter />
         </IntlProvider>
     );
 }
