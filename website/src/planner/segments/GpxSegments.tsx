@@ -55,7 +55,7 @@ export function GpxSegments({ noFilter }: Props) {
                             <th style={{ width: '100%' }}>
                                 <FormattedMessage id={'msg.file'} />
                             </th>
-                            <th style={{ width: '38px' }}>
+                            <th style={{ width: '70px', minWidth: '70px' }}>
                                 <FormattedMessage id={'msg.actions'} />
                             </th>
                         </tr>
