@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { layoutActions } from './store/layout.reducer.ts';
-import info from '../assets/info.svg';
 import { CSSProperties } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const style: CSSProperties = {
     position: 'fixed',
@@ -26,12 +26,9 @@ export function FloatingInfoButton() {
             onClick={() => dispatch(layoutActions.setShowDashboard(true))}
             title={'See overview'}
         >
-            <img
-                src={info}
-                className={'m-1'}
-                style={{ height: '20px', width: '20px', position: 'fixed', top: '48vh', left: 0 }}
-                alt="help"
-            />
+            <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
+                <FormattedMessage id={'msg.dashboard'} />
+            </span>
         </div>
     );
 }
