@@ -53,12 +53,6 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
 
     useEffect(() => {
-        if (requestProgress === 100) {
-            dispatch(geoCodingRequestsActions.setIsLoadingStreetData(false));
-        }
-    }, [requestProgress]);
-
-    useEffect(() => {
         if (postCodeProgress === 100) {
             dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false));
         }

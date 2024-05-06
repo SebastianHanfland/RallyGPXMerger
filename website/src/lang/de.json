@@ -211,5 +211,6 @@
     "msg.continuePlan": "Planung weiter bearbeiten",
     "msg.continuePlan.hint": "Öffnet den Planer für die letzte Planung",
     "msg.startWizard": "Assistent starten",
-    "msg.startWizard.hint": "Schrittweise eine Sternfahrt erstellen"
+    "msg.startWizard.hint": "Schrittweise eine Sternfahrt erstellen",
+    "msg.loadingStreetNames": "...lädt Straßennamen"
 }

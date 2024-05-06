@@ -1,5 +1,5 @@
 import { FileUploader } from 'react-drag-drop-files';
-import { Form, Table } from 'react-bootstrap';
+import { Form, Spinner, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
@@ -9,6 +9,7 @@ import { GpxSegment } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { AppDispatch } from '../store/store.ts';
+import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -30,6 +31,7 @@ export function GpxSegments({ noFilter }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
+    const isLoadingStreetData = useSelector(getIsLoadingStreetData);
     const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
@@ -40,6 +42,12 @@ export function GpxSegments({ noFilter }: Props) {
     };
     return (
         <div>
+            {isLoadingStreetData && (
+                <span>
+                    <Spinner size={'sm'} />
+                    <FormattedMessage id={'msg.loadingStreetNames'} />
+                </span>
+            )}
             {!noFilter && (
                 <div className={'my-2'}>
                     <Form.Control

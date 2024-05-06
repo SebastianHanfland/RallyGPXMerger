@@ -25,23 +25,23 @@ export function resolveStreetNames(dispatch: AppDispatch, getState: () => State)
         dispatch(geoCodingRequestsActions.setIsLoadingStreetData(true));
     }, 10);
     setTimeout(() => {
-        gpxSegments.forEach((segment) => {
-            SimpleGPX.fromString(segment.content).tracks.forEach((track) => {
-                splitListIntoSections(track.points, 1000).forEach(
-                    async (points) =>
-                        await geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
-                            (resolvedPositions) => {
-                                dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
-                                dispatch(
-                                    gpxSegmentsActions.setSegmentStreetsResolved({
-                                        id: segment.id,
-                                        streetsResolved: true,
-                                    })
-                                );
-                            }
-                        )
-                );
-            });
-        });
+        const promises = gpxSegments.flatMap((segment) =>
+            SimpleGPX.fromString(segment.content).tracks.flatMap((track) =>
+                splitListIntoSections(track.points, 1000).flatMap((points) =>
+                    geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
+                        (resolvedPositions) => {
+                            dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                            dispatch(
+                                gpxSegmentsActions.setSegmentStreetsResolved({
+                                    id: segment.id,
+                                    streetsResolved: true,
+                                })
+                            );
+                        }
+                    )
+                )
+            )
+        );
+        Promise.all(promises).then(() => dispatch(geoCodingRequestsActions.setIsLoadingStreetData(false)));
     }, 10);
 }
