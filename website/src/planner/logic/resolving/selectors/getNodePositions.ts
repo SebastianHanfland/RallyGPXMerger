@@ -4,6 +4,7 @@ import { getGpxSegments } from '../../../store/gpxSegments.reducer.ts';
 import { listAllNodesOfTracks, TrackNode } from '../../merge/helper/nodeFinder.ts';
 import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { TrackComposition } from '../../../store/types.ts';
+import { getGpx } from '../../../../common/cache/gpxCache.ts';
 
 export interface NodePosition {
     point: { lat: number; lon: number };
@@ -36,7 +37,7 @@ export const getNodePositions = createSelector(
         segmentIdsBeforeNode.forEach((segmentId) => {
             const foundSegment = gpxSegments.find((gpxSegment) => gpxSegment.id === segmentId);
             if (foundSegment) {
-                const simpleGPX = SimpleGPX.fromString(foundSegment.content);
+                const simpleGPX = getGpx(foundSegment);
                 const lastTrackIndex = simpleGPX.tracks.length - 1;
                 const lastPointOfSegment =
                     simpleGPX.tracks[lastTrackIndex].points[simpleGPX.tracks[lastTrackIndex].points.length - 1];

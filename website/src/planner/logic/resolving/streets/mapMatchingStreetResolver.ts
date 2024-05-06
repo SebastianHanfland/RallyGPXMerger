@@ -2,11 +2,11 @@ import { State } from '../../../store/types.ts';
 import { geoCodingActions, getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
 import { getGpxSegments, gpxSegmentsActions } from '../../../store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { Point } from 'gpxparser';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { AppDispatch } from '../../../store/store.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
+import { getGpx } from '../../../../common/cache/gpxCache.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -26,7 +26,7 @@ export function resolveStreetNames(dispatch: AppDispatch, getState: () => State)
     }, 10);
     setTimeout(() => {
         const promises = gpxSegments.flatMap((segment) =>
-            SimpleGPX.fromString(segment.content).tracks.flatMap((track) =>
+            getGpx(segment).tracks.flatMap((track) =>
                 splitListIntoSections(track.points, 1000).flatMap((points) =>
                     geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then(
                         (resolvedPositions) => {
