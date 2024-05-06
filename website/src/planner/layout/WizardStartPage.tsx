@@ -10,8 +10,6 @@ import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { loadSampleData } from '../io/loadSampleData.ts';
-import { DirectlyToPlannerButton } from '../wizard/DirectlyToPlannerButton.tsx';
-import { AppFooter } from './Footer.tsx';
 import { importHook } from '../io/importHook.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
@@ -106,8 +104,6 @@ export const WizardStartPage = () => {
                     />
                 </Col>
             </Row>
-            <DirectlyToPlannerButton />
-            <AppFooter />
         </Container>
     );
 };
