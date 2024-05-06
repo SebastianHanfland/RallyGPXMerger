@@ -8,7 +8,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { pointsActions } from '../store/points.reducer.ts';
-import { clearGpxCache } from '../../common/map/gpxCache.ts';
+import { clearGpxCache } from '../../common/cache/gpxCache.ts';
 
 export function resetData(dispatch: Dispatch) {
     clearReadableTracks();

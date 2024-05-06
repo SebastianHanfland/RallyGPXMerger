@@ -16,6 +16,21 @@ export interface GpxSegment extends GpxFile {
     streetsResolved?: boolean;
 }
 
+export interface ResolvedGpxSegment {
+    id: string;
+    filename: string;
+    content: SimpleGPX;
+    flipped?: boolean;
+    streetsResolved?: boolean;
+}
+
+export interface ResolvedCalculatedTrack {
+    id: string;
+    filename: string;
+    content: SimpleGPX;
+    peopleCount?: number;
+}
+
 export interface CalculatedTrack extends GpxFile {
     peopleCount?: number;
 }

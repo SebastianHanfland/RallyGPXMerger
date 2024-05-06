@@ -2,7 +2,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { clearGpxCache } from '../../common/map/gpxCache.ts';
+import { clearGpxCache } from '../../common/cache/gpxCache.ts';
 
 export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
