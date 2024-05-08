@@ -19,16 +19,16 @@ let myMap: L.Map;
 export const isInIframe = window.location.search.includes('&iframe');
 
 export const PresentationMap = () => {
-    const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
+    const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (!myMap) {
             const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
-            myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, startZoom);
+            myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, 12);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             if (isLive && L.Browser.mobile && !isInIframe) {
-                const locate = L.control.locate({ initialZoomLevel: startZoom });
+                const locate = L.control.locate({ initialZoomLevel: 12 });
                 locate.addTo(myMap);
                 locate.start();
             }
