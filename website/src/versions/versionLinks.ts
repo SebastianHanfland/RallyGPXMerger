@@ -428,6 +428,13 @@ export const versions: Record<string, Variant[]> = {
             mode: 'present',
         },
     ],
+    rideofsilence: [
+        {
+            name: 'Ride of Silence MUC 2024',
+            url: 'https://sebastianhanfland.github.io/RallyGPXMerger/RideOfSilence2024.json',
+            mode: 'present',
+        },
+    ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
 
