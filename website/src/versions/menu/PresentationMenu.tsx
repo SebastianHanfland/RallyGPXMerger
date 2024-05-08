@@ -2,7 +2,6 @@ import { ZipTimeSlider } from '../ZipTimeSlider.tsx';
 import { CSSProperties } from 'react';
 import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
 import { LoadStateButton, showTimes } from '../store/LoadStateButton.tsx';
-import { SurveyButton } from './SurveyButton.tsx';
 import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton.tsx';
 
 const style: CSSProperties = {
@@ -28,21 +27,19 @@ export function PresentationMenu() {
         <>
             <TrackInformationModal />
             <div style={style} className={'shadow d-sm-block'}>
-                <h5 className={'mt-2'}>Sternfahrt MUC 2024</h5>
+                <h5 className={'mt-2'}>Ride of Silence MUC 2024</h5>
                 <ZipTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
                 <LoadStateButton />
                 <div>
                     <TrackInformationModalButton />
-                    <SurveyButton />
                 </div>
             </div>
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
-                <h5 className={'mt-2'}>Sternfahrt MUC 2024</h5>
+                <h5 className={'mt-2'}>Ride of Silence MUC 2024</h5>
                 <ZipTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
                 <LoadStateButton />
                 <div>
                     <TrackInformationModalButton />
-                    <SurveyButton />
                 </div>
             </div>
         </>
