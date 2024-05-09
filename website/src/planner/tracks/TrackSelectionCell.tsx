@@ -10,6 +10,8 @@ import { Accordion } from 'react-bootstrap';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
+import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { AppDispatch } from '../store/store.ts';
 
 interface Props {
     track: TrackComposition;
@@ -84,19 +86,21 @@ const breaks = [
 export function TrackSelectionCell({ track }: Props) {
     const intl = useIntl();
     const { id, segmentIds } = track;
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption), ...breaks];
 
     const setSegmentIds = (items: { id: string }[]) => {
         const newSegments = items.map((segmentOption) => segmentOption.id);
-        return dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
+        dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
+        dispatch(mergeAndGroupAndResolve);
     };
 
     const addSegmentToTrack = (newValue: SingleValue<{ value: string }>) => {
         if (newValue) {
             const segments = [...segmentIds, newValue.value];
             dispatch(trackMergeActions.setSegments({ id, segments: segments }));
+            dispatch(mergeAndGroupAndResolve);
         }
     };
 

@@ -65,7 +65,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     // TODO: 161 This part, creating a string out of it again takes, quite some time...
     // If we manage to bring this into another process or debounce it, we could easily use the logic and have an update within a second
-    const speedUp = true;
+    const speedUp = false;
     if (!speedUp) {
         dispatch(
             calculatedTracksActions.setCalculatedTracks(
