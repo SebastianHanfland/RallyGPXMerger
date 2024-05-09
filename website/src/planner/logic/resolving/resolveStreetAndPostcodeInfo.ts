@@ -6,10 +6,6 @@ import { resolveStreetNames } from './streets/mapMatchingStreetResolver.ts';
 
 export const resolvePositions = async (dispatch: AppDispatch, getState: () => State) => {
     await resolveStreetNames(dispatch, getState);
-    setTimeout(async () => {
-        await dispatch(calculateTrackStreetInfos);
-        setTimeout(async () => {
-            await dispatch(addPostCodeToStreetInfos);
-        }, 4000);
-    }, 5000);
+    await dispatch(calculateTrackStreetInfos);
+    await dispatch(addPostCodeToStreetInfos);
 };

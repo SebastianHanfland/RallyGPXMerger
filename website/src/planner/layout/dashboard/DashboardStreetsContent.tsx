@@ -10,7 +10,6 @@ import {
     getPostCodeRequestProgress,
 } from '../../logic/resolving/postcode/postCodeResolver.ts';
 import {
-    geoCodingRequestsActions,
     getIsAggregating,
     getIsLoadingGeoData,
     getIsLoadingPostCodeData,
@@ -23,7 +22,6 @@ import { Warning } from './Warning.tsx';
 import { FormattedMessage } from 'react-intl';
 import { getRequestProgress } from '../../logic/resolving/selectors/requestEstimator.ts';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
-import { useEffect } from 'react';
 import { gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 
 export function StreetStatus(props: { done: boolean; loading: boolean }) {
@@ -51,12 +49,6 @@ export function DashboardStreetsContent({ showClearButton }: { showClearButton?:
 
     const requestProgress = useSelector(getRequestProgress);
     const postCodeProgress = useSelector(getPostCodeRequestProgress);
-
-    useEffect(() => {
-        if (postCodeProgress === 100) {
-            dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false));
-        }
-    }, [postCodeProgress]);
 
     const streetsDone = requestProgress === 100 && hasStreetInfo;
     const postCodesDone = postCodeProgress === 100 && hasPostCodeInfo;
