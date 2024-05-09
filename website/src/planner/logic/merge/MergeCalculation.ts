@@ -13,10 +13,11 @@ import { calculatedTracksActions } from '../../store/calculatedTracks.reducer.ts
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../../store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
+import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { initializeResolvedPositions } from '../resolving/streets/initializeResolvedPositions.ts';
 import date from 'date-and-time';
 import { clearReadableTracks, getReadableTracks, setReadableTracks } from '../../cache/readableTracks.ts';
-import { clearGpxCache } from '../../../common/cache/gpxCache.ts';
+import { clearGpxCache } from '../../../common/map/gpxCache.ts';
 
 export function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, state: State) {
     const trackParticipants = getTrackCompositions(state).map((track) => track.peopleCount ?? 0);
@@ -63,21 +64,14 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegmentsWithTimeStamp, trackCompositions, arrivalDateTime);
 
-    // TODO: 161 This part, creating a string out of it again takes, quite some time...
-    // If we manage to bring this into another process or debounce it, we could easily use the logic and have an update within a second
-    const speedUp = false;
-    if (!speedUp) {
-        dispatch(
-            calculatedTracksActions.setCalculatedTracks(
-                calculatedTracks.map((track) => ({ ...track, content: track.content.toString() }))
-            )
-        );
-        dispatch(mapActions.setShowCalculatedTracks(true));
-    }
+    dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
+    dispatch(mapActions.setShowCalculatedTracks(true));
 
     const readableTracks = getReadableTracks();
     if (!readableTracks) {
-        setReadableTracks(calculatedTracks.map((track) => ({ id: track.id, gpx: track.content })));
+        setReadableTracks(
+            calculatedTracks.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) }))
+        );
         initializeResolvedPositions(dispatch);
     }
     calculateAndStoreStartAndEndOfSimulation(dispatch, getState());

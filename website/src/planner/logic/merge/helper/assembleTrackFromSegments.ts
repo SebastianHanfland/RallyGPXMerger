@@ -3,7 +3,7 @@ import { mergeSimpleGPXs, SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
 import { shiftEndDate } from '../../../../utils/dateUtil.ts';
-import { ResolvedCalculatedTrack, ResolvedGpxSegment } from '../../../../common/types.ts';
+import { CalculatedTrack, GpxSegment } from '../../../../common/types.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
 import { NamedGpx } from './types.ts';
@@ -36,9 +36,9 @@ function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposi
 
 export function assembleTrackFromSegments(
     track: TrackComposition,
-    gpxSegments: ResolvedGpxSegment[],
+    gpxSegments: GpxSegment[],
     initialEndDate: string
-): ResolvedCalculatedTrack {
+): CalculatedTrack {
     let arrivalTimeForPreviousSegment = initialEndDate;
     let shiftedGpxContents: SimpleGPX[] = [];
 
@@ -62,7 +62,7 @@ export function assembleTrackFromSegments(
         }
     });
 
-    const trackContent = mergeSimpleGPXs(shiftedGpxContents);
+    const trackContent = mergeSimpleGPXs(shiftedGpxContents).toString();
 
     return { id: track.id, content: trackContent, filename: track.name!, peopleCount: track.peopleCount ?? 0 };
 }
