@@ -1,6 +1,7 @@
 import { CSSProperties, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { PlannerSidebarContent } from './PlannerSidebarContent.tsx';
+import { PlannerSidebarNavigation } from './PlannerSidebarNavigation.tsx';
 
 const getStyle = (width: number): CSSProperties => ({
     position: 'fixed',
@@ -15,17 +16,24 @@ const getStyle = (width: number): CSSProperties => ({
     overflow: 'hidden',
 });
 
+export type SidebarSections = 'gpx' | 'tracks' | 'documents';
+
 export function PlannerSidebar() {
     const [show, setShow] = useState(false);
+    const [selectedSection, setSelectedSection] = useState<SidebarSections>('gpx');
+
     return (
         <div
-            style={getStyle(show ? 400 : 30)}
+            style={getStyle(show ? 500 : 30)}
             className={'shadow'}
-            onClick={() => setShow(!show)}
+            onClick={() => setShow(true)}
             title={'See overview'}
         >
             {show ? (
-                <PlannerSidebarContent />
+                <div>
+                    <PlannerSidebarNavigation setSelectedSection={setSelectedSection} />
+                    <PlannerSidebarContent selectedSection={selectedSection} />
+                </div>
             ) : (
                 <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
                     <FormattedMessage id={'msg.dashboard'} />
