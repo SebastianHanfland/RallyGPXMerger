@@ -18,6 +18,7 @@ export const PlannerSidebarDocuments = () => {
     const onHide = () => setSelectedTrackId(undefined);
     return (
         <div>
+            {'TODO: Pdf download, zip download, maybe overview of tables'}
             <Pagination style={{ flexFlow: 'wrap' }}>
                 {trackStreetInfos.map((track) => (
                     <PageItem
