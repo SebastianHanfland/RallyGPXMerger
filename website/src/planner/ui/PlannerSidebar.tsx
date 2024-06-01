@@ -24,7 +24,7 @@ export function PlannerSidebar() {
 
     return (
         <div
-            style={getStyle(show ? 500 : 30)}
+            style={getStyle(show ? 900 : 30)}
             className={'shadow'}
             onClick={() => setShow(true)}
             title={'See overview'}

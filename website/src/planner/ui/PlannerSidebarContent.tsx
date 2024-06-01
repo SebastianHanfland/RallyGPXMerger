@@ -1,6 +1,7 @@
 import { FileUploadSection } from '../segments/FileUploadSection.tsx';
 import { SidebarSections } from './PlannerSidebar.tsx';
 import { PlannerSidebarTracks } from './PlannerSidebarTracks.tsx';
+import { PlannerSidebarDocuments } from './PlannerSidebarDocuments.tsx';
 
 export const PlannerSidebarContent = ({ selectedSection }: { selectedSection: SidebarSections }) => {
     switch (selectedSection) {
@@ -9,6 +10,6 @@ export const PlannerSidebarContent = ({ selectedSection }: { selectedSection: Si
         case 'tracks':
             return <PlannerSidebarTracks />;
         case 'documents':
-            return null;
+            return <PlannerSidebarDocuments />;
     }
 };
