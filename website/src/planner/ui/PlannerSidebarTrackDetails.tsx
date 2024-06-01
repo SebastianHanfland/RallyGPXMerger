@@ -1,17 +1,16 @@
 import { TrackSelectionCell } from '../tracks/TrackSelectionCell.tsx';
 import { TrackButtonsCell } from '../tracks/TrackButtonsCell.tsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { useDispatch } from 'react-redux';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { TrackComposition } from '../store/types.ts';
 
-export const PlannerSidebarTrackDetails = () => {
-    const trackCompositions = useSelector(getFilteredTrackCompositions);
+export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
     const dispatch = useDispatch();
 
-    const track = trackCompositions[0];
     const { name, id, peopleCount, priority } = track;
     return (
         <div className={'m-2'}>
