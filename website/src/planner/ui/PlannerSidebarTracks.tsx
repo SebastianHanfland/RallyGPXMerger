@@ -14,6 +14,7 @@ export const PlannerSidebarTracks = () => {
     const selectedTrack = trackCompositions.find((track) => track.id === selectedTrackId);
     return (
         <div>
+            {'TODO: Maybe a filter here'}
             <Pagination style={{ flexFlow: 'wrap' }}>
                 {trackCompositions.map((track) => (
                     <PageItem
