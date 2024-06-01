@@ -48,7 +48,9 @@ export function MergeTableTrack({ track }: Props) {
                     }
                 />
             </td>
-            <TrackSelectionCell track={track} />
+            <td>
+                <TrackSelectionCell track={track} />
+            </td>
             <TrackButtonsCell track={track} />
         </tr>
     );

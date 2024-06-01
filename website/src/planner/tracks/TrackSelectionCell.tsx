@@ -105,45 +105,43 @@ export function TrackSelectionCell({ track }: Props) {
     };
 
     return (
-        <td>
-            <Accordion className={'mt-0'}>
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header className={'m-0'}>
-                        <span style={segmentIds.length === 0 ? { color: 'red' } : undefined}>{`${
-                            segmentIds.length
-                        } ${intl.formatMessage({ id: 'msg.segments' })}`}</span>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <ReactSortable
-                            delayOnTouchOnly={true}
-                            list={segmentIds.map((segmentId) => ({ id: segmentId }))}
-                            setList={setSegmentIds}
-                        >
-                            {segmentIds.map((segmentId) => {
-                                const segmentName = options.find((option) => option.value === segmentId)?.label;
-                                return (
-                                    <TrackSelectionOption
-                                        key={segmentId}
-                                        segmentId={segmentId}
-                                        trackId={id}
-                                        segmentName={segmentName ?? 'Currently blank'}
-                                    />
-                                );
-                            })}
-                        </ReactSortable>
-                        <Select
-                            name="segmentSelect"
-                            value={null}
-                            menuPlacement={'top'}
-                            placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
-                            options={options.filter((option) => !segmentIds.includes(option.value))}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            onChange={addSegmentToTrack}
-                        />
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
-        </td>
+        <Accordion className={'mt-0'}>
+            <Accordion.Item eventKey="0">
+                <Accordion.Header className={'m-0'}>
+                    <span style={segmentIds.length === 0 ? { color: 'red' } : undefined}>{`${
+                        segmentIds.length
+                    } ${intl.formatMessage({ id: 'msg.segments' })}`}</span>
+                </Accordion.Header>
+                <Accordion.Body>
+                    <ReactSortable
+                        delayOnTouchOnly={true}
+                        list={segmentIds.map((segmentId) => ({ id: segmentId }))}
+                        setList={setSegmentIds}
+                    >
+                        {segmentIds.map((segmentId) => {
+                            const segmentName = options.find((option) => option.value === segmentId)?.label;
+                            return (
+                                <TrackSelectionOption
+                                    key={segmentId}
+                                    segmentId={segmentId}
+                                    trackId={id}
+                                    segmentName={segmentName ?? 'Currently blank'}
+                                />
+                            );
+                        })}
+                    </ReactSortable>
+                    <Select
+                        name="segmentSelect"
+                        value={null}
+                        menuPlacement={'top'}
+                        placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
+                        options={options.filter((option) => !segmentIds.includes(option.value))}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={addSegmentToTrack}
+                    />
+                </Accordion.Body>
+            </Accordion.Item>
+        </Accordion>
     );
 }
