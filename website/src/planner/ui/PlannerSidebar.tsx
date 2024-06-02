@@ -5,6 +5,8 @@ import { PlannerSidebarNavigation } from './PlannerSidebarNavigation.tsx';
 import { PlannerHomeButton } from './PlannerHomeButton.tsx';
 import { PlannerSidebarSimpleContent } from './PlannerSidebarSimpleContent.tsx';
 import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation.tsx';
+import { useSelector } from 'react-redux';
+import { getHasSingleTrack } from '../store/layout.reducer.ts';
 
 const getStyle = (width: number): CSSProperties => ({
     position: 'fixed',
@@ -44,10 +46,9 @@ function SimpleContent(props: {
     );
 }
 
-const isSimple = true;
-
 function Content(props: { setSelectedSection: (value: SidebarSections) => void; selectedSection: SidebarSections }) {
-    return isSimple ? (
+    const hasSingleTrack = useSelector(getHasSingleTrack);
+    return hasSingleTrack ? (
         <SimpleContent setSelectedSection={props.setSelectedSection} selectedSection={props.selectedSection} />
     ) : (
         <ComplexContent setSelectedSection={props.setSelectedSection} selectedSection={props.selectedSection} />
