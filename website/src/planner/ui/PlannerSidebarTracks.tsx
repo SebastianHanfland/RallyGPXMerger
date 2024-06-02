@@ -5,7 +5,6 @@ import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
-import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getFilteredTrackCompositions);
@@ -15,7 +14,6 @@ export const PlannerSidebarTracks = () => {
     const selectedTrack = trackCompositions.find((track) => track.id === selectedTrackId);
     return (
         <div>
-            <ArrivalDateTimePicker />
             <div>{'TODO: Maybe a filter here'}</div>
             <Pagination style={{ flexFlow: 'wrap' }}>
                 {trackCompositions.map((track) => (
