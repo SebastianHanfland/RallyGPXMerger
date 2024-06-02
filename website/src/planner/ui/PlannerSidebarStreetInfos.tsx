@@ -1,9 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { useSelector } from 'react-redux';
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { v4 as uuidv4 } from 'uuid';
 import { SingleTrackStreetInfo } from '../streets/SingleTrackStreetInfo.tsx';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import Modal from 'react-bootstrap/Modal';
@@ -11,7 +9,6 @@ import Button from 'react-bootstrap/Button';
 
 export const PlannerSidebarStreetInfos = () => {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
-    const dispatch = useDispatch();
 
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
     const selectedTrack = trackStreetInfos.find((track) => track.id === selectedTrackId);
@@ -28,16 +25,6 @@ export const PlannerSidebarStreetInfos = () => {
                         {track.name || 'N.N.'}
                     </PageItem>
                 ))}
-                <PageItem
-                    key={'new track'}
-                    onClick={() => {
-                        const newTrackId = uuidv4();
-                        dispatch(trackMergeActions.addTrackComposition({ id: newTrackId, segmentIds: [], name: '' }));
-                        setSelectedTrackId(newTrackId);
-                    }}
-                >
-                    + <FormattedMessage id={'msg.addNewTrack'} />
-                </PageItem>
             </Pagination>
             {selectedTrack && (
                 <Modal show={true} onHide={onHide} backdrop="static" keyboard={false} size={'xl'}>

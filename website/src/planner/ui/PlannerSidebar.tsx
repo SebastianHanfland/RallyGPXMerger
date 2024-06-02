@@ -15,11 +15,11 @@ const getStyle = (width: number): CSSProperties => ({
     overflow: 'hidden',
 });
 
-export type SidebarSections = 'gpx' | 'tracks' | 'documents';
+export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings';
 
 export function PlannerSidebar() {
     const [show, setShow] = useState(false);
-    const [selectedSection, setSelectedSection] = useState<SidebarSections>('gpx');
+    const [selectedSection, setSelectedSection] = useState<SidebarSections>('segments');
 
     return (
         <div
