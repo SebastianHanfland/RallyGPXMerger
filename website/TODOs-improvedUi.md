@@ -9,8 +9,12 @@
   * Integrated in the map
 * Points maybe via dialog or extra tab?
 * Construction sites and others
+* Track name (and ensured creation) for single track
 
 ### Improvement
+* Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
+* Map interactions, via floating buttons
+* Having an icon which signals that some background processes are working
 * break management
   * It should be possible to assign a toilet icon and location
 * Warning section or Toast due to missing things
@@ -29,6 +33,9 @@
 * Maybe improve handling on the nodes
 * Settings for start time communication or such not having it in code
 * Button or example on copying something for an iframe
+* Having ::: left of line that can be shifted
+* ? Adding Toasts once the needed actions is done
+* Smooth the starting way and maybe rework the menu and the way to it
 
 ### Backend like improvement
 * Being able to save the planning (just as such send an json)
