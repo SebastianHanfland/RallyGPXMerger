@@ -2,6 +2,7 @@ import { CSSProperties, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { PlannerSidebarContent } from './PlannerSidebarContent.tsx';
 import { PlannerSidebarNavigation } from './PlannerSidebarNavigation.tsx';
+import { PlannerHomeButton } from './PlannerHomeButton.tsx';
 
 const getStyle = (width: number): CSSProperties => ({
     position: 'fixed',
@@ -38,6 +39,7 @@ export function PlannerSidebar() {
                     <FormattedMessage id={'msg.dashboard'} />
                 </span>
             )}
+            <PlannerHomeButton />
         </div>
     );
 }
