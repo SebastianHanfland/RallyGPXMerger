@@ -23,7 +23,7 @@ export const WizardStartPage = () => {
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
-    const [nextSection, setNextSection] = useState<'gps' | 'wizard-parameters' | undefined>();
+    const [nextSection, setNextSection] = useState<'gps' | 'wizard-parameters' | 'wizard-complexity' | undefined>();
 
     return (
         <Container fluid className={'m-0'}>
@@ -40,7 +40,7 @@ export const WizardStartPage = () => {
                         icon={stars}
                         onClick={() => {
                             setShowModal(true);
-                            setNextSection('gps');
+                            setNextSection('wizard-complexity');
                         }}
                         title={<FormattedMessage id={'msg.startPlan'} />}
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}

@@ -16,6 +16,7 @@ export const WizardsComplexity = () => {
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const continueAsSimpleRally = () => {
         dispatch(simpleRallyThunk);
+        dispatch(layoutActions.setHasSingleTrack(true));
     };
     const continueAsComplexRally = () => {
         setSelectedSection('wizard-tracks');
