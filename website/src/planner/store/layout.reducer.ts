@@ -7,6 +7,7 @@ import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../langu
 const initialState: LayoutState = {
     selectedSection: 'menu',
     showDashboard: false,
+    hasSingleTrack: false,
     language: getInitialLanguage(),
 };
 
@@ -24,6 +25,9 @@ const layoutSlice = createSlice({
             state.language = action.payload;
             setLanguage(action.payload);
         },
+        setHasSingleTrack: (state: LayoutState, action: PayloadAction<boolean>) => {
+            state.hasSingleTrack = action.payload;
+        },
     },
 });
 
@@ -34,3 +38,4 @@ const getBase = (state: State) => state.layout;
 export const getSelectionSection = (state: State) => getBase(state).selectedSection;
 export const getShowDashboard = (state: State) => getBase(state).showDashboard;
 export const getDisplayLanguage = (state: State) => getBase(state).language;
+export const getHasSingleTrack = (state: State) => getBase(state).hasSingleTrack;

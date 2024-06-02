@@ -19,6 +19,7 @@ export interface LayoutState {
     selectedSection: Sections;
     showDashboard: boolean;
     language: SupportedLanguages;
+    hasSingleTrack: boolean;
 }
 
 export interface TrackComposition {
