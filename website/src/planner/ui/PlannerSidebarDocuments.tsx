@@ -1,60 +1,44 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { PageItem, Pagination } from 'react-bootstrap';
-import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { v4 as uuidv4 } from 'uuid';
-import { SingleTrackStreetInfo } from '../streets/SingleTrackStreetInfo.tsx';
-import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { PlannerSidebarStreetInfos } from './PlannerSidebarStreetInfos.tsx';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { SegmentFilesDownloader } from '../segments/SegmentFilesDownloader.tsx';
+import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.tsx';
+import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
+import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
+import { ExportStateJson } from '../io/ExportStateJson.tsx';
 
 export const PlannerSidebarDocuments = () => {
-    const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
-    const dispatch = useDispatch();
-
-    const [selectedTrackId, setSelectedTrackId] = useState<string>();
-    const selectedTrack = trackStreetInfos.find((track) => track.id === selectedTrackId);
-    const onHide = () => setSelectedTrackId(undefined);
+    const intl = useIntl();
     return (
         <div>
-            {'TODO: Pdf download, zip download, maybe overview of tables'}
-            <Pagination style={{ flexFlow: 'wrap' }}>
-                {trackStreetInfos.map((track) => (
-                    <PageItem
-                        key={track.id}
-                        active={selectedTrackId === track.id}
-                        onClick={() => setSelectedTrackId(track.id)}
-                    >
-                        {track.name || 'N.N.'}
-                    </PageItem>
-                ))}
-                <PageItem
-                    key={'new track'}
-                    onClick={() => {
-                        const newTrackId = uuidv4();
-                        dispatch(trackMergeActions.addTrackComposition({ id: newTrackId, segmentIds: [], name: '' }));
-                        setSelectedTrackId(newTrackId);
-                    }}
-                >
-                    + <FormattedMessage id={'msg.addNewTrack'} />
-                </PageItem>
-            </Pagination>
-            {selectedTrack && (
-                <Modal show={true} onHide={onHide} backdrop="static" keyboard={false} size={'xl'}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{selectedTrack.name}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <SingleTrackStreetInfo trackStreetInfo={selectedTrack} />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={onHide}>
-                            <FormattedMessage id={'msg.close'} />
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            )}
+            <div>
+                <h3>
+                    <FormattedMessage id={'msg.street'} />
+                </h3>
+                <PlannerSidebarStreetInfos />
+            </div>
+            <div>
+                <h3>
+                    <FormattedMessage id={'msg.documents'} />
+                </h3>
+                <h4>
+                    <FormattedMessage id={'msg.segments'} />
+                </h4>
+                <SegmentFilesDownloader />
+                <h4>
+                    <FormattedMessage id={'msg.tracks'} />
+                </h4>
+                <CalculatedFilesDownloader />
+                <h4>
+                    <FormattedMessage id={'msg.documents'} />
+                </h4>
+                <div className={'m-2'}>
+                    <StreetFilesDownloader /> <StreetFilesPdfMakeDownloader />
+                </div>
+                <h4>
+                    <FormattedMessage id={'msg.completeStatus'} />
+                </h4>
+                <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
+            </div>
         </div>
     );
 };

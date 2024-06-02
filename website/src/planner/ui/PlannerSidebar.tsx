@@ -12,7 +12,6 @@ const getStyle = (width: number): CSSProperties => ({
     top: 0,
     zIndex: 10,
     backgroundColor: 'white',
-    cursor: 'pointer',
     overflow: 'hidden',
 });
 
