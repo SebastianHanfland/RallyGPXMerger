@@ -16,8 +16,9 @@ let timeMirror = 0;
 
 const sliderStyle: CSSProperties = {
     position: 'fixed',
-    width: '35opx',
+    width: '350px',
     height: '45px',
+    borderRadius: '2px',
     left: 60,
     bottom: 50,
     zIndex: 10,
