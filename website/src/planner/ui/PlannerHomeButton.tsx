@@ -6,8 +6,8 @@ import { Sections } from '../layout/types.ts';
 
 const homeStyle: CSSProperties = {
     position: 'fixed',
-    width: '40px',
-    height: '40px',
+    width: '45px',
+    height: '45px',
     left: 10,
     bottom: 50,
     zIndex: 10,
