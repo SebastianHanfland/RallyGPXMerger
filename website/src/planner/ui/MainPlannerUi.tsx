@@ -1,6 +1,8 @@
 import { Container } from 'react-bootstrap';
 import { InteractionMap } from '../map/InteractionMap.tsx';
 import { PlannerSidebar } from './PlannerSidebar.tsx';
+import { PlannerHomeButton } from './PlannerHomeButton.tsx';
+import { TimeSlider } from '../map/TimeSlider.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -9,6 +11,8 @@ export const MainPlannerUi = () => {
                 <Container fluid className={'m-0 p-0'}>
                     <InteractionMap />
                 </Container>
+                <PlannerHomeButton />
+                <TimeSlider />
             </div>
             <PlannerSidebar />
         </>
