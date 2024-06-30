@@ -12,6 +12,7 @@ import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
 import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
+import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content, flipped, streetsResolved } = gpxSegment;
@@ -36,6 +37,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                     }}
                 />
             </td>
+            <SegmentSpeedCells gpxSegment={gpxSegment} />
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 {flipped && <img src={flip} className="m-1" alt="flip" />}
                 {streetsResolved && (
