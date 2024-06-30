@@ -1,15 +1,15 @@
 ### Things to integrate
 -[x] speed settings for single gpx file on the dropdown on the gpx tab
--[ ] Other settings via a dialog
--[ ] Api keys somewhere and then also a feedback if the automatic fetching did not work
-  -[ ] Using Toasts for this to inform the user?
+-[x] Other settings via a dialog, only construction was missing and is now on the settings page
+-[x] Api keys somewhere and then also a feedback if the automatic fetching did not work
+-[ ] Using Toasts for this to inform the user about failing API Calls?
 -[x] Import Export maybe also on the document table
   -[x] There you can download everything you need
 -[x] Map mode changes
     -[x] Integrated in the map
--[ ] Points maybe via dialog or extra tab?
--[ ] Construction sites and others
--[ ] Track name (and ensured creation) for single track
+-[ ] Points maybe via dialog or extra tab, or accordion?
+-[x] Construction sites and others
+-[x] Track name (and ensured creation) for single track
 
 ### Improvement
 -[ ] Having numbers and (/) etc in the tab name to give the user a better feeling for what happens

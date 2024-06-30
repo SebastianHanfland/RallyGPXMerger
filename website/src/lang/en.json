@@ -212,5 +212,6 @@
     "msg.continuePlan.hint": "Opens last planning in planner",
     "msg.startWizard": "Start Wizard",
     "msg.startWizard.hint": "Create a rally step by step",
-    "msg.loadingStreetNames": "...is loading street data"
+    "msg.loadingStreetNames": "...is loading street data",
+    "msg.trackSettings": "Track Settings"
 }
