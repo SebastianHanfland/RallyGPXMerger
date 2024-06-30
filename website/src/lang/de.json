@@ -214,5 +214,6 @@
     "msg.startWizard.hint": "Schrittweise eine Sternfahrt erstellen",
     "msg.loadingStreetNames": "...lädt Straßennamen",
     "msg.trackSettings": "Routeneinstellungen",
-    "msg.gapSetting": "Lückenfinder"
+    "msg.gapSetting": "Lückenfinder",
+    "msg.gapTolerance.hint": "Lücken Grenzwert zwischen Abschnitten (in km)"
 }
