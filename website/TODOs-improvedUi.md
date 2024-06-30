@@ -1,10 +1,10 @@
 ### Things to integrate
--[ ] speed settings for single gpx file on the dropdown on the gpx tab
+-[x] speed settings for single gpx file on the dropdown on the gpx tab
 -[ ] Other settings via a dialog
 -[ ] Api keys somewhere and then also a feedback if the automatic fetching did not work
   -[ ] Using Toasts for this to inform the user?
--[ ] Import Export maybe also on the document table
-  -[ ] There you can download everything you need
+-[x] Import Export maybe also on the document table
+  -[x] There you can download everything you need
 -[x] Map mode changes
     -[x] Integrated in the map
 -[ ] Points maybe via dialog or extra tab?
