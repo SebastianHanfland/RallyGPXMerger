@@ -213,5 +213,6 @@
     "msg.startWizard": "Start Wizard",
     "msg.startWizard.hint": "Create a rally step by step",
     "msg.loadingStreetNames": "...is loading street data",
-    "msg.trackSettings": "Track Settings"
+    "msg.trackSettings": "Track Settings",
+    "msg.gapSetting": "Gap Finder"
 }

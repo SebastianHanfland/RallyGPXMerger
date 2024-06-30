@@ -16,7 +16,8 @@ import { formatNumber } from '../../../../utils/numberUtil.ts';
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
     const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
     const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(endOfNextSegment)) as number;
-    if (distanceBetweenSegments > 0.01) {
+    const gapToleranceInKm = 0.01;
+    if (distanceBetweenSegments > gapToleranceInKm) {
         const message = `Here is something too far away: track ${track.name}, between '${
             gpxOrBreak.name
         }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`;
@@ -24,7 +25,7 @@ function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposi
             pointsActions.addGapPoint({
                 id: uuidv4(),
                 type: PointOfInterestType.GAP,
-                radiusInM: 1000,
+                radiusInM: (distanceBetweenSegments * 1000) / 2,
                 description: message,
                 title: `Too big gap on ${track.name}`,
                 lat: (lastPoint.lat + endOfNextSegment.lat) / 2,
@@ -34,6 +35,10 @@ function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposi
     }
 }
 
+function clearAllGaps() {
+    store.dispatch(pointsActions.removeAllGapPoint());
+}
+
 export function assembleTrackFromSegments(
     track: TrackComposition,
     gpxSegments: GpxSegment[],
@@ -41,6 +46,7 @@ export function assembleTrackFromSegments(
 ): CalculatedTrack {
     let arrivalTimeForPreviousSegment = initialEndDate;
     let shiftedGpxContents: SimpleGPX[] = [];
+    clearAllGaps();
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
     let lastPoint: Point | undefined = undefined;
