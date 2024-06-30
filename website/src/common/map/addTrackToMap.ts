@@ -1,5 +1,5 @@
 import { Point, Track } from 'gpxparser';
-import L, { LayerGroup } from 'leaflet';
+import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
@@ -17,7 +17,7 @@ export interface MapOptions {
     opacity?: number;
     weight?: number;
     highlightedId?: string;
-    clickCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
+    clickCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack, event?: LeafletMouseEvent) => void;
     mouseInCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
     mouseOutCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
 }
@@ -89,8 +89,8 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
         });
         const clickCallBack = options?.clickCallBack;
         if (clickCallBack) {
-            connection.on('click', () => {
-                clickCallBack(gpxSegment);
+            connection.on('click', (event: LeafletMouseEvent) => {
+                clickCallBack(gpxSegment, event);
             });
         }
 

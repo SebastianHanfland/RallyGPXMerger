@@ -30,6 +30,10 @@ export const InteractionMap = () => {
             myMap.on('contextmenu', (event: LeafletMouseEvent) => {
                 dispatch(pointsActions.setContextMenuPoint({ lat: event.latlng.lat, lng: event.latlng.lng }));
             });
+            myMap.on('click', (event: LeafletMouseEvent) => {
+                console.log(event);
+                // dispatch(pointsActions.setContextMenuPoint({ lat: event.latlng.lat, lng: event.latlng.lng }));
+            });
         }
         return () => {
             myMap?.remove();
