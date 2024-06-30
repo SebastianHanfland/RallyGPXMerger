@@ -5,6 +5,7 @@ import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.t
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { ExportStateJson } from '../io/ExportStateJson.tsx';
+import { PlanningLabel } from '../parameters/PlanningLabel.tsx';
 
 export const PlannerSidebarDocuments = () => {
     const intl = useIntl();
@@ -20,6 +21,7 @@ export const PlannerSidebarDocuments = () => {
                 <h3>
                     <FormattedMessage id={'msg.documents'} />
                 </h3>
+                <PlanningLabel />
                 <h4>
                     <FormattedMessage id={'msg.segments'} />
                 </h4>
