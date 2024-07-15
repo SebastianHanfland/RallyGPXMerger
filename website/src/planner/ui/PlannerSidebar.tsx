@@ -7,6 +7,7 @@ import { PlannerSidebarSimpleContent } from './PlannerSidebarSimpleContent.tsx';
 import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation.tsx';
 import { useSelector } from 'react-redux';
 import { getHasSingleTrack } from '../store/layout.reducer.ts';
+import { TimeSlider } from '../map/TimeSlider.tsx';
 
 const getStyle = (width: number): CSSProperties => ({
     position: 'fixed',
@@ -74,6 +75,7 @@ export function PlannerSidebar() {
                 </span>
             )}
             <PlannerHomeButton />
+            <TimeSlider />
         </div>
     );
 }
