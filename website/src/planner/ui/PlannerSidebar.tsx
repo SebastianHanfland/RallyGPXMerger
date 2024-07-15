@@ -4,8 +4,8 @@ import { PlannerSidebarContent } from './PlannerSidebarContent.tsx';
 import { PlannerSidebarNavigation } from './PlannerSidebarNavigation.tsx';
 import { PlannerSidebarSimpleContent } from './PlannerSidebarSimpleContent.tsx';
 import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation.tsx';
-import { useSelector } from 'react-redux';
-import { getHasSingleTrack } from '../store/layout.reducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
 
 const getStyle = (width: number): CSSProperties => ({
     position: 'fixed',
@@ -55,17 +55,18 @@ function Content(props: { setSelectedSection: (value: SidebarSections) => void; 
 }
 
 export function PlannerSidebar() {
-    const [show, setShow] = useState(false);
     const [selectedSection, setSelectedSection] = useState<SidebarSections>('segments');
+    const showSidebar = useSelector(getIsSidebarOpen);
+    const dispatch = useDispatch();
 
     return (
         <div
-            style={getStyle(show ? 900 : 30)}
+            style={getStyle(showSidebar ? 900 : 30)}
             className={'shadow'}
-            onClick={() => setShow(true)}
+            onClick={() => dispatch(layoutActions.setIsSidebarOpen(true))}
             title={'See overview'}
         >
-            {show ? (
+            {showSidebar ? (
                 <Content setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
             ) : (
                 <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>

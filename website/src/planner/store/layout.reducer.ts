@@ -9,6 +9,7 @@ const initialState: LayoutState = {
     showDashboard: false,
     hasSingleTrack: false,
     language: getInitialLanguage(),
+    isSidebarOpen: true,
 };
 
 const layoutSlice = createSlice({
@@ -28,6 +29,9 @@ const layoutSlice = createSlice({
         setHasSingleTrack: (state: LayoutState, action: PayloadAction<boolean>) => {
             state.hasSingleTrack = action.payload;
         },
+        setIsSidebarOpen: (state: LayoutState, action: PayloadAction<boolean>) => {
+            state.isSidebarOpen = action.payload;
+        },
     },
 });
 
@@ -39,3 +43,4 @@ export const getSelectionSection = (state: State) => getBase(state).selectedSect
 export const getShowDashboard = (state: State) => getBase(state).showDashboard;
 export const getDisplayLanguage = (state: State) => getBase(state).language;
 export const getHasSingleTrack = (state: State) => getBase(state).hasSingleTrack;
+export const getIsSidebarOpen = (state: State) => getBase(state).isSidebarOpen;

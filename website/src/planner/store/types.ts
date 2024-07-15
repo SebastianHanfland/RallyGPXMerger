@@ -20,6 +20,7 @@ export interface LayoutState {
     showDashboard: boolean;
     language: SupportedLanguages;
     hasSingleTrack: boolean;
+    isSidebarOpen: boolean;
 }
 
 export interface TrackComposition {
