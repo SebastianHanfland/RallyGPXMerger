@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getArrivalDateTime, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FormattedMessage } from 'react-intl';
+import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { AppDispatch } from '../store/store.ts';
 
 export function ArrivalDateTimePicker() {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const arrivalDateTime = useSelector(getArrivalDateTime);
     return (
         <div className={'d-inline-block'}>
@@ -15,7 +17,10 @@ export function ArrivalDateTimePicker() {
             <DatePicker
                 className={'form-control'}
                 dateFormat={'dd.MM.yyyy HH:mm'}
-                onChange={(date) => dispatch(trackMergeActions.setArrivalDateTime(date?.toISOString() ?? undefined))}
+                onChange={(date) => {
+                    dispatch(trackMergeActions.setArrivalDateTime(date?.toISOString() ?? undefined));
+                    dispatch(mergeAndGroupAndResolve);
+                }}
                 selected={arrivalDateTime ? new Date(arrivalDateTime) : null}
                 isClearable={true}
                 locale={'en'}
