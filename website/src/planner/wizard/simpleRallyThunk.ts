@@ -15,6 +15,8 @@ export const simpleRallyThunk = (dispatch: AppDispatch, getState: () => State) =
         );
     });
     setTimeout(() => {
+        dispatch(layoutActions.setIsSidebarOpen(true));
+        dispatch(trackMergeActions.setDefaultArrivalDateTime());
         dispatch(calculateMerge).then(() => dispatch(resolvePositions));
         dispatch(layoutActions.setShowDashboard(true));
         dispatch(layoutActions.selectSection('streets'));

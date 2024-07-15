@@ -51,6 +51,7 @@ export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
     arrivalDateTime?: string;
+    hasDefaultArrivalDate?: boolean;
     planningLabel?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;

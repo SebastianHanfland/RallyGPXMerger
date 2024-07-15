@@ -8,6 +8,7 @@ import { simpleRallyThunk } from './simpleRallyThunk.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from '../layout/WizardCard.tsx';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -16,6 +17,8 @@ export const WizardsComplexity = () => {
         dispatch(layoutActions.setHasSingleTrack(true));
     };
     const continueAsComplexRally = () => {
+        dispatch(trackMergeActions.setDefaultArrivalDateTime());
+        dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(layoutActions.setHasSingleTrack(false));
         dispatch(layoutActions.selectSection('gps'));
     };

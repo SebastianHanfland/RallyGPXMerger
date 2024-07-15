@@ -78,6 +78,7 @@ const trackMergeSlice = createSlice({
             }));
         },
         setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.hasDefaultArrivalDate = false;
             state.arrivalDateTime = action.payload;
         },
         setPlanningLabel: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
@@ -98,6 +99,10 @@ const trackMergeSlice = createSlice({
         setTrackCompositionFilterTerm: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.filterTerm = action.payload;
         },
+        setDefaultArrivalDateTime: (state: TrackMergeState) => {
+            state.hasDefaultArrivalDate = true;
+            state.arrivalDateTime = new Date().toISOString();
+        },
         clear: () => initialState,
     },
 });
@@ -108,6 +113,7 @@ const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
+export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
 export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
