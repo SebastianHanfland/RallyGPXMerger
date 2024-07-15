@@ -220,5 +220,6 @@
     "msg.setArrivalDateTime": "Jetzt die Ankunftszeit setzen",
     "msg.splitSegment": "Abschnitt hier aufteilen",
     "msg.onTheFly": "Automatisch",
-    "msg.calculate": "Berechnen"
+    "msg.calculate": "Berechnen",
+    "msg.pause": "Pause hinzufügen"
 }

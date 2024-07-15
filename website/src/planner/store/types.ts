@@ -67,6 +67,7 @@ export interface TrackMergeState {
     averageSpeedInKmH?: number;
     gapToleranceInKm?: number;
     segmentIdClipboard?: string[];
+    trackIdForAddingABreak?: string;
     isCalculationRunning?: boolean;
     isCalculationOnTheFly?: boolean;
 }

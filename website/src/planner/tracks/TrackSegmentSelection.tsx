@@ -101,6 +101,10 @@ export function TrackSegmentSelection({ track }: Props) {
     };
 
     const addSegmentToTrack = (newValue: SingleValue<{ value: string }>) => {
+        if (newValue?.value.includes(BREAK_IDENTIFIER)) {
+            dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id));
+            return;
+        }
         if (newValue) {
             const segments = [...segmentIds, newValue.value];
             dispatch(trackMergeActions.setSegments({ id, segments: segments }));

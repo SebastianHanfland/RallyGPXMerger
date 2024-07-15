@@ -17,6 +17,7 @@ import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
 import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook.ts';
 import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
+import { PauseDialog } from './PauseDialog.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -85,6 +86,7 @@ export const InteractionMap = () => {
             <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
             <PointsOfInterestModal />
             <GpxSegmentDialog />
+            <PauseDialog />
         </div>
     );
 };

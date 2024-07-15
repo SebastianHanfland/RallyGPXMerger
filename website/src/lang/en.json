@@ -220,5 +220,6 @@
     "msg.setArrivalDateTime": "Set now the arrival time",
     "msg.splitSegment": "Split segment here",
     "msg.onTheFly": "Automatic",
-    "msg.calculate": "Calculate"
+    "msg.calculate": "Calculate",
+    "msg.pause": "Add a Pause"
 }

@@ -103,6 +103,9 @@ const trackMergeSlice = createSlice({
             state.hasDefaultArrivalDate = true;
             state.arrivalDateTime = new Date().toISOString();
         },
+        setTrackIdForAddingABreak: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.trackIdForAddingABreak = action.payload;
+        },
         setIsCalculationRunning: (state: TrackMergeState, action: PayloadAction<boolean | undefined>) => {
             state.isCalculationRunning = action.payload;
         },
@@ -125,6 +128,7 @@ export const getParticipantsDelay = (state: State) => getBase(state).participant
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
 export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
+export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
 export const getIsCalculationOnTheFly = (state: State) => getBase(state).isCalculationOnTheFly;
 
