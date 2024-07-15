@@ -14,8 +14,9 @@
 
 ### Improvement
 
--[x].... Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
+-[x] .... Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
 -[ ] Map interactions, via floating buttons
+- [ ] Being able to change the color (by randomly clicking?)
 -[ ] Having an icon which signals that some background processes are working
 -[ ] break management
     -[ ] It should be possible to assign a toilet icon and location

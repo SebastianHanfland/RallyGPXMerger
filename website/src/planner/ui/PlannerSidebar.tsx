@@ -16,7 +16,8 @@ const getStyle = (showSidebar: boolean): CSSProperties => ({
     top: 0,
     zIndex: 10,
     backgroundColor: 'white',
-    overflow: 'hidden',
+    overflowX: 'hidden',
+    overflowY: 'scroll',
     cursor: showSidebar ? undefined : 'pointer',
 });
 
