@@ -9,6 +9,13 @@ import { AppDispatch } from '../store/store.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
+function debounceConstructionOfTracks(dispatch: AppDispatch) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(mergeAndGroupAndResolve);
+    }, 500);
+}
+
 export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
@@ -41,10 +48,7 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                             value={peopleCount?.toString() ?? ''}
                             onChange={(value) => {
                                 dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }));
-                                clearTimeout(constructTimeout);
-                                constructTimeout = setTimeout(() => {
-                                    dispatch(mergeAndGroupAndResolve);
-                                }, 500);
+                                debounceConstructionOfTracks(dispatch);
                             }}
                         />
                     </Col>
@@ -58,10 +62,7 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                             value={priority?.toString() ?? ''}
                             onChange={(value) => {
                                 dispatch(trackMergeActions.setTrackPriority({ id, priority: getCount(value) }));
-                                clearTimeout(constructTimeout);
-                                constructTimeout = setTimeout(() => {
-                                    dispatch(mergeAndGroupAndResolve);
-                                }, 500);
+                                debounceConstructionOfTracks(dispatch);
                             }}
                         />
                     </Col>
