@@ -1,11 +1,16 @@
-import { CSSProperties, useState } from 'react';
+import { CSSProperties } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { PlannerSidebarContent } from './PlannerSidebarContent.tsx';
 import { PlannerSidebarNavigation } from './PlannerSidebarNavigation.tsx';
 import { PlannerSidebarSimpleContent } from './PlannerSidebarSimpleContent.tsx';
 import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
+import {
+    getHasSingleTrack,
+    getIsSidebarOpen,
+    getSelectedSidebarSection,
+    layoutActions,
+} from '../store/layout.reducer.ts';
 import { ClosePlannerSidebar } from './ClosePlannerSidebar.tsx';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
@@ -57,9 +62,10 @@ function Content(props: { setSelectedSection: (value: SidebarSections) => void; 
 }
 
 export function PlannerSidebar() {
-    const [selectedSection, setSelectedSection] = useState<SidebarSections>('segments');
     const showSidebar = useSelector(getIsSidebarOpen);
     const dispatch = useDispatch();
+    const selectedSection = useSelector(getSelectedSidebarSection);
+    const setSelectedSection = (section: SidebarSections) => dispatch(layoutActions.setSelectedSidebarSection(section));
 
     return (
         <>

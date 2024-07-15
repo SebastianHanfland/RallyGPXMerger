@@ -3,6 +3,7 @@ import { LayoutState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { Sections } from '../layout/types.ts';
 import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../language.ts';
+import { SidebarSections } from '../ui/PlannerSidebar.tsx';
 
 const initialState: LayoutState = {
     selectedSection: 'menu',
@@ -10,6 +11,7 @@ const initialState: LayoutState = {
     hasSingleTrack: false,
     language: getInitialLanguage(),
     isSidebarOpen: true,
+    selectedSidebarSection: 'segments',
 };
 
 const layoutSlice = createSlice({
@@ -32,6 +34,9 @@ const layoutSlice = createSlice({
         setIsSidebarOpen: (state: LayoutState, action: PayloadAction<boolean>) => {
             state.isSidebarOpen = action.payload;
         },
+        setSelectedSidebarSection: (state: LayoutState, action: PayloadAction<SidebarSections>) => {
+            state.selectedSidebarSection = action.payload;
+        },
     },
 });
 
@@ -44,3 +49,4 @@ export const getShowDashboard = (state: State) => getBase(state).showDashboard;
 export const getDisplayLanguage = (state: State) => getBase(state).language;
 export const getHasSingleTrack = (state: State) => getBase(state).hasSingleTrack;
 export const getIsSidebarOpen = (state: State) => getBase(state).isSidebarOpen;
+export const getSelectedSidebarSection = (state: State) => getBase(state).selectedSidebarSection;
