@@ -2,7 +2,7 @@ import { Form } from 'react-bootstrap';
 import { TrackPause } from '../store/types.ts';
 import wc from '../../assets/wc.svg';
 import Select, { SingleValue } from 'react-select';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
     values: Partial<TrackPause>;
@@ -38,7 +38,7 @@ export const PauseDialogContent = ({ values, setValues }: Props) => {
                 <Select
                     name="segmentSelect"
                     value={breaks.find((option) => option.value === values.minutes)}
-                    placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
+                    placeholder={intl.formatMessage({ id: 'msg.minutes.details' })}
                     options={breaks}
                     className="basic-multi-select"
                     classNamePrefix="select"
@@ -57,7 +57,9 @@ export const PauseDialogContent = ({ values, setValues }: Props) => {
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Radius in m</Form.Label>
+                <Form.Label>
+                    <FormattedMessage id={'msg.toiletAtPause'} />
+                </Form.Label>
                 <Form.Check
                     type={'checkbox'}
                     label={
@@ -66,7 +68,7 @@ export const PauseDialogContent = ({ values, setValues }: Props) => {
                             <img className={'mx-1'} src={wc} alt={'wc'} />
                         </span>
                     }
-                    placeholder="Radius in m"
+                    placeholder={intl.formatMessage({ id: 'msg.toiletAtPause' })}
                     checked={values.hasToilet}
                     onClick={() => setValues({ ...values, hasToilet: !values.hasToilet })}
                 ></Form.Check>

@@ -222,5 +222,7 @@
     "msg.onTheFly": "Automatic",
     "msg.calculate": "Calculate",
     "msg.pause": "Add a Pause",
-    "msg.add": "Add"
+    "msg.add": "Add",
+    "msg.minutes.details": "Select the minutes for the pause",
+    "msg.toiletAtPause": "Toilets at pause place"
 }

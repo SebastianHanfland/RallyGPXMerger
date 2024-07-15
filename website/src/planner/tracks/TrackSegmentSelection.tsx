@@ -4,7 +4,6 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
-import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { GpxSegment } from '../../common/types.ts';
@@ -24,71 +23,12 @@ function toOption(gpxSegment: GpxSegment): { value: string; label: string } {
     };
 }
 
-const breaks = [
-    { value: `01${BREAK_IDENTIFIER}1`, label: '+ 01 min' },
-    { value: `01${BREAK_IDENTIFIER}2`, label: '+ 01 min' },
-    { value: `01${BREAK_IDENTIFIER}3`, label: '+ 01 min' },
-    { value: `01${BREAK_IDENTIFIER}4`, label: '+ 01 min' },
-    { value: `02${BREAK_IDENTIFIER}1`, label: '+ 02 min' },
-    { value: `02${BREAK_IDENTIFIER}2`, label: '+ 02 min' },
-    { value: `02${BREAK_IDENTIFIER}3`, label: '+ 02 min' },
-    { value: `02${BREAK_IDENTIFIER}4`, label: '+ 02 min' },
-    { value: `05${BREAK_IDENTIFIER}1`, label: '+ 05 min' },
-    { value: `05${BREAK_IDENTIFIER}2`, label: '+ 05 min' },
-    { value: `05${BREAK_IDENTIFIER}3`, label: '+ 05 min' },
-    { value: `05${BREAK_IDENTIFIER}4`, label: '+ 05 min' },
-    { value: `10${BREAK_IDENTIFIER}1`, label: '+ 10 min' },
-    { value: `10${BREAK_IDENTIFIER}2`, label: '+ 10 min' },
-    { value: `10${BREAK_IDENTIFIER}3`, label: '+ 10 min' },
-    { value: `10${BREAK_IDENTIFIER}4`, label: '+ 10 min' },
-    { value: `15${BREAK_IDENTIFIER}1`, label: '+ 15 min' },
-    { value: `15${BREAK_IDENTIFIER}2`, label: '+ 15 min' },
-    { value: `15${BREAK_IDENTIFIER}3`, label: '+ 15 min' },
-    { value: `15${BREAK_IDENTIFIER}4`, label: '+ 15 min' },
-    { value: `20${BREAK_IDENTIFIER}1`, label: '+ 20 min' },
-    { value: `20${BREAK_IDENTIFIER}2`, label: '+ 20 min' },
-    { value: `20${BREAK_IDENTIFIER}3`, label: '+ 20 min' },
-    { value: `20${BREAK_IDENTIFIER}4`, label: '+ 20 min' },
-    { value: `25${BREAK_IDENTIFIER}1`, label: '+ 25 min' },
-    { value: `25${BREAK_IDENTIFIER}2`, label: '+ 25 min' },
-    { value: `25${BREAK_IDENTIFIER}3`, label: '+ 25 min' },
-    { value: `25${BREAK_IDENTIFIER}4`, label: '+ 25 min' },
-    { value: `30${BREAK_IDENTIFIER}1`, label: '+ 30 min' },
-    { value: `30${BREAK_IDENTIFIER}2`, label: '+ 30 min' },
-    { value: `30${BREAK_IDENTIFIER}3`, label: '+ 30 min' },
-    { value: `30${BREAK_IDENTIFIER}4`, label: '+ 30 min' },
-    { value: `-01${BREAK_IDENTIFIER}1`, label: '- 01 min' },
-    { value: `-01${BREAK_IDENTIFIER}2`, label: '- 01 min' },
-    { value: `-01${BREAK_IDENTIFIER}3`, label: '- 01 min' },
-    { value: `-01${BREAK_IDENTIFIER}4`, label: '- 01 min' },
-    { value: `-02${BREAK_IDENTIFIER}1`, label: '- 02 min' },
-    { value: `-02${BREAK_IDENTIFIER}2`, label: '- 02 min' },
-    { value: `-02${BREAK_IDENTIFIER}3`, label: '- 02 min' },
-    { value: `-02${BREAK_IDENTIFIER}4`, label: '- 02 min' },
-    { value: `-03${BREAK_IDENTIFIER}1`, label: '- 03 min' },
-    { value: `-03${BREAK_IDENTIFIER}2`, label: '- 03 min' },
-    { value: `-03${BREAK_IDENTIFIER}3`, label: '- 03 min' },
-    { value: `-03${BREAK_IDENTIFIER}4`, label: '- 03 min' },
-    { value: `-04${BREAK_IDENTIFIER}1`, label: '- 04 min' },
-    { value: `-04${BREAK_IDENTIFIER}2`, label: '- 04 min' },
-    { value: `-04${BREAK_IDENTIFIER}3`, label: '- 04 min' },
-    { value: `-04${BREAK_IDENTIFIER}4`, label: '- 04 min' },
-    { value: `-05${BREAK_IDENTIFIER}1`, label: '- 05 min' },
-    { value: `-05${BREAK_IDENTIFIER}2`, label: '- 05 min' },
-    { value: `-05${BREAK_IDENTIFIER}3`, label: '- 05 min' },
-    { value: `-05${BREAK_IDENTIFIER}4`, label: '- 05 min' },
-    { value: `-10${BREAK_IDENTIFIER}1`, label: '- 10 min' },
-    { value: `-10${BREAK_IDENTIFIER}2`, label: '- 10 min' },
-    { value: `-10${BREAK_IDENTIFIER}3`, label: '- 10 min' },
-    { value: `-10${BREAK_IDENTIFIER}4`, label: '- 10 min' },
-];
-
 export function TrackSegmentSelection({ track }: Props) {
     const intl = useIntl();
     const { id, segmentIds } = track;
     const dispatch: AppDispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
-    const options = [...gpxSegments.map(toOption), ...breaks];
+    const options = [...gpxSegments.map(toOption)];
 
     console.log({ segmentIds });
 
@@ -102,10 +42,6 @@ export function TrackSegmentSelection({ track }: Props) {
     };
 
     const addSegmentToTrack = (newValue: SingleValue<{ value: string }>) => {
-        if (newValue?.value.includes(BREAK_IDENTIFIER)) {
-            dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id));
-            return;
-        }
         if (newValue) {
             const segments = [...segmentIds, newValue.value];
             dispatch(trackMergeActions.setSegments({ id, segments: segments }));
