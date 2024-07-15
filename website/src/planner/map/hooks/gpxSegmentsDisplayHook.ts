@@ -4,6 +4,7 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../../common/map/addTrackToMap.ts';
 import { getHighlightedSegmentId, getShowGpxSegments, getShowMapMarker, mapActions } from '../../store/map.reducer.ts';
+import { splitGpx } from '../../../utils/gpxSplitUtil.ts';
 
 export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const filteredGpxSegments = useSelector(getFilteredGpxSegments);
@@ -28,6 +29,11 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
             },
             mouseOutCallBack: () => {
                 dispatch(mapActions.setHighlightedSegmentId());
+            },
+            clickCallBack: (gpxSegment, event) => {
+                if (event) {
+                    splitGpx(gpxSegment.content, event.latlng);
+                }
             },
         });
     }, [filteredGpxSegments, filteredGpxSegments.length, showSegments, showMarker, highlightedSegmentId]);
