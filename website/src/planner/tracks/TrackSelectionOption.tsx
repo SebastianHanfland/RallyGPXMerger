@@ -1,9 +1,15 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonGroup, DropdownButton } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
+import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
+import { FileChangeButton } from '../segments/FileChangeButton.tsx';
+import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
+import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
+import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
+import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
 interface Props {
     trackId: string;
@@ -14,6 +20,11 @@ interface Props {
 export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props) {
     const intl = useIntl();
     const dispatch = useDispatch();
+    const gpxSegment = useSelector(getGpxSegments).find((segment) => segment.id === segmentId);
+    if (!gpxSegment) {
+        return null;
+    }
+    const { id, filename, content, flipped, streetsResolved } = gpxSegment;
 
     return (
         <div
@@ -34,14 +45,31 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                 <div className={'m-1'} title={segmentName}>
                     {segmentName}
                 </div>
-                <Button
-                    variant="danger"
-                    size={'sm'}
-                    onClick={() => dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }))}
-                    title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
-                >
-                    X
-                </Button>
+                <div>
+                    <Button
+                        variant="danger"
+                        size={'sm'}
+                        className={'mx-1'}
+                        onClick={() => dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }))}
+                        title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
+                    >
+                        X
+                    </Button>
+                    <DropdownButton
+                        as={ButtonGroup}
+                        key={'primary'}
+                        id={`dropdown-variants-${'primary'}`}
+                        variant={'primary'}
+                        title={''}
+                    >
+                        <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
+
+                        <FileChangeButton id={id} name={filename} />
+                        <RemoveFileButton id={id} name={filename} />
+                        <FlipGpxButton id={id} name={filename} flipped={flipped} />
+                        <ResetResolvedStreetsButton id={id} name={filename} streetsResolved={streetsResolved} />
+                    </DropdownButton>
+                </div>
             </div>
         </div>
     );
