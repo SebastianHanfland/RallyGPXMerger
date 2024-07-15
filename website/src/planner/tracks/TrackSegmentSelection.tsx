@@ -8,9 +8,10 @@ import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { GpxSegment } from '../../common/types.ts';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
+import Button from 'react-bootstrap/Button';
 
 interface Props {
     track: TrackComposition;
@@ -131,16 +132,25 @@ export function TrackSegmentSelection({ track }: Props) {
                     );
                 })}
             </ReactSortable>
-            <Select
-                name="segmentSelect"
-                value={null}
-                menuPlacement={'top'}
-                placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
-                options={options.filter((option) => !segmentIds.includes(option.value))}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                onChange={addSegmentToTrack}
-            />
+            <div className={'d-flex'}>
+                <div className={'flex-grow-1'}>
+                    <Select
+                        name="segmentSelect"
+                        value={null}
+                        menuPlacement={'top'}
+                        placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
+                        options={options.filter((option) => !segmentIds.includes(option.value))}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={addSegmentToTrack}
+                    />
+                </div>
+                <div style={{ marginLeft: '10px' }}>
+                    <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>
+                        <FormattedMessage id={'msg.pause'} />
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 }
