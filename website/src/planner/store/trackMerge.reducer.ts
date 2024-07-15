@@ -103,6 +103,9 @@ const trackMergeSlice = createSlice({
             state.hasDefaultArrivalDate = true;
             state.arrivalDateTime = new Date().toISOString();
         },
+        setIsCalculationRunning: (state: TrackMergeState, action: PayloadAction<boolean | undefined>) => {
+            state.isCalculationRunning = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -119,6 +122,7 @@ export const getParticipantsDelay = (state: State) => getBase(state).participant
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
 export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
+export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

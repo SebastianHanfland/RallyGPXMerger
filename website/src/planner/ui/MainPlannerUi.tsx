@@ -5,6 +5,7 @@ import { MapContentSelection } from '../map/MapContentSelection.tsx';
 import { PlannerHomeButton } from './PlannerHomeButton.tsx';
 import { TimeSlider } from '../map/TimeSlider.tsx';
 import { DefaultArrivalDateWarning } from './DefaultArrivalDateWarning.tsx';
+import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -14,6 +15,7 @@ export const MainPlannerUi = () => {
                     <InteractionMap />
                 </Container>
                 <DefaultArrivalDateWarning />
+                <CalculationIsRunning />
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />
