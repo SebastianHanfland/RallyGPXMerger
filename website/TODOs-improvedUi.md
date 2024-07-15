@@ -75,3 +75,5 @@
     -[ ] Links
     -[ ] As Table or as Cards on map
 -[ ] Allowing to compare between multiple plannings easily
+- [ ] Open file directly in gpx.studio via the url attribute:
+  - [ ] requires hosting of gpx files, but if we have an endpoint it should be working then :)
