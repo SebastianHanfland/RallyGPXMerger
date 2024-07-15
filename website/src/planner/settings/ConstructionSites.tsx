@@ -30,10 +30,7 @@ export function ConstructionSites() {
         );
     };
     return (
-        <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
-            <h3>
-                <FormattedMessage id={'msg.constructions.title'} />
-            </h3>
+        <div style={{ height: '95%', overflow: 'auto' }}>
             {constructionSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }}>
                     <thead>
