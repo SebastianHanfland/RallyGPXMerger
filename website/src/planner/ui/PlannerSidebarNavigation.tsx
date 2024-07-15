@@ -1,8 +1,8 @@
 import { Nav } from 'react-bootstrap';
 import { SidebarSections } from './PlannerSidebar.tsx';
 import { FormattedMessage } from 'react-intl';
-import { useDispatch } from 'react-redux';
-import { layoutActions } from '../store/layout.reducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSelectedSidebarSection, layoutActions } from '../store/layout.reducer.ts';
 
 interface ItemProps {
     section: SidebarSections;
@@ -21,8 +21,9 @@ function NavItem({ section }: ItemProps) {
 }
 
 export const PlannerSidebarNavigation = () => {
+    const selectedSection = useSelector(getSelectedSidebarSection);
     return (
-        <Nav fill variant="tabs">
+        <Nav fill variant="tabs" activeKey={selectedSection}>
             <NavItem section={'segments'} />
             <NavItem section={'tracks'} />
             <NavItem section={'settings'} />
