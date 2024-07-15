@@ -57,7 +57,7 @@ export function PlannerSidebar() {
                 style={getStyle(showSidebar)}
                 className={'shadow'}
                 onClick={() => dispatch(layoutActions.setIsSidebarOpen(true))}
-                title={'See overview'}
+                title={showSidebar ? undefined : 'See overview'}
             >
                 {showSidebar ? (
                     <Content />
