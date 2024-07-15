@@ -36,8 +36,12 @@ export const WizardStartPage = () => {
                     <WizardCard
                         icon={stars}
                         onClick={() => {
-                            setShowModal(true);
-                            setNextSection('wizard-complexity');
+                            if (planningInProgress) {
+                                setShowModal(true);
+                                setNextSection('wizard-complexity');
+                            } else {
+                                setSelectedSection('wizard-complexity');
+                            }
                         }}
                         title={<FormattedMessage id={'msg.startPlan'} />}
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}
