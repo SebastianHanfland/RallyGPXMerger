@@ -106,6 +106,9 @@ const trackMergeSlice = createSlice({
         setIsCalculationRunning: (state: TrackMergeState, action: PayloadAction<boolean | undefined>) => {
             state.isCalculationRunning = action.payload;
         },
+        setIsCalculationOnTheFly: (state: TrackMergeState, action: PayloadAction<boolean>) => {
+            state.isCalculationOnTheFly = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -123,6 +126,7 @@ export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpee
 export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
+export const getIsCalculationOnTheFly = (state: State) => getBase(state).isCalculationOnTheFly;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

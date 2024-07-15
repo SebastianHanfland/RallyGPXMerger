@@ -68,6 +68,7 @@ export interface TrackMergeState {
     gapToleranceInKm?: number;
     segmentIdClipboard?: string[];
     isCalculationRunning?: boolean;
+    isCalculationOnTheFly?: boolean;
 }
 
 export interface MapState {

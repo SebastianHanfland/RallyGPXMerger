@@ -218,5 +218,7 @@
     "msg.gapTolerance.hint": "Lücken Grenzwert zwischen Abschnitten (in km)",
     "msg.defaultArrivalTime": "Es wurde noch keine Ankunftszeit gesetzt. Aktueller Wert",
     "msg.setArrivalDateTime": "Jetzt die Ankunftszeit setzen",
-    "msg.splitSegment": "Abschnitt hier aufteilen"
+    "msg.splitSegment": "Abschnitt hier aufteilen",
+    "msg.onTheFly": "Automatisch",
+    "msg.calculate": "Berechnen"
 }

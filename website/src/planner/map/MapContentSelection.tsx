@@ -20,7 +20,7 @@ const mapContentStyle: CSSProperties = {
     height: '275px',
     borderRadius: '2px',
     left: 10,
-    top: 80,
+    top: 130,
     zIndex: 10,
     backgroundColor: 'transparent',
     overflow: 'hidden',

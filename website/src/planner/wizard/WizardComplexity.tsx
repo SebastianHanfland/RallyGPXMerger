@@ -18,6 +18,7 @@ export const WizardsComplexity = () => {
     };
     const continueAsComplexRally = () => {
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
+        dispatch(trackMergeActions.setIsCalculationOnTheFly(false));
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(layoutActions.setHasSingleTrack(false));
         dispatch(layoutActions.selectSection('gps'));
