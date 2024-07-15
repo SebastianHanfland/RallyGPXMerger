@@ -11,20 +11,25 @@
 -[ ] Points maybe via dialog or extra tab, or accordion?
 -[x] Construction sites and others
 -[x] Track name (and ensured creation) for single track
+- [ ] Doing the magic only for small demonstrations and turning it of.
+  - [ ] Still having one "Do the magic" button available
+  - [ ] Optimizing the magic
+    - [ ] It should be way faster.
 
 ### Improvement
-
+- [ ] Overall styling, making it beautiful, Maybe asking Dennis about it
+- [ ]
 -[x] .... Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
 -[ ] Map interactions, via floating buttons
 - [ ] Being able to change the color (by randomly clicking?)
--[ ] Having an icon which signals that some background processes are working
+-[x] Having an icon which signals that some background processes are working
 -[ ] break management
     -[ ] It should be possible to assign a toilet icon and location
     - [ ] adding a break comes with the question for further information
 -[x] Warning section or Toast due to missing things
 -[ ] More interaction on the map,
     -[ ] e.g. right click on segment to add it to a route or so
-    -[ ] Splitting a route into two parts via the Map, with a right click
+    -[x] Splitting a route into two parts via the Map, with a right click
     -[ ] Other feedback from Leo
 -[x] Having a mode for only a simple demonstration
     -[ ] No tracks
