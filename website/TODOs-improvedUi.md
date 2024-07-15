@@ -14,18 +14,18 @@
 
 ### Improvement
 
--[ ] Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
+-[x].... Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
 -[ ] Map interactions, via floating buttons
 -[ ] Having an icon which signals that some background processes are working
 -[ ] break management
     -[ ] It should be possible to assign a toilet icon and location
     - [ ] adding a break comes with the question for further information
--[ ] Warning section or Toast due to missing things
+-[x] Warning section or Toast due to missing things
 -[ ] More interaction on the map,
     -[ ] e.g. right click on segment to add it to a route or so
     -[ ] Splitting a route into two parts via the Map, with a right click
     -[ ] Other feedback from Leo
--[ ] Having a mode for only a simple demonstration
+-[x] Having a mode for only a simple demonstration
     -[ ] No tracks
     -[ ] segments can be reordered and breaks added
 -[ ] More permanent overwrite of streetnames oder modification
