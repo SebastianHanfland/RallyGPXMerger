@@ -4,7 +4,7 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
-import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
@@ -12,7 +12,7 @@ let constructTimeout: undefined | NodeJS.Timeout;
 function debounceConstructionOfTracks(dispatch: AppDispatch) {
     clearTimeout(constructTimeout);
     constructTimeout = setTimeout(() => {
-        dispatch(mergeAndGroupAndResolve);
+        dispatch(triggerAutomaticCalculation);
     }, 500);
 }
 

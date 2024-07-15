@@ -3,7 +3,7 @@ import { getIsCalculationOnTheFly, getIsCalculationRunning, trackMergeActions } 
 import { CSSProperties } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { calculateTracks } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 
 const calculationIsRunningStyle: CSSProperties = {
@@ -36,13 +36,13 @@ export const CalculationOnTheFly = () => {
             >
                 <FormattedMessage id={'msg.onTheFly'} />
             </Button>
-            {isCalculationOnTheFly && (
+            {!isCalculationOnTheFly && (
                 <Button
                     id={'tracks'}
                     title={'Calculate tracks'}
                     variant={'light'}
                     className={'shadow my-1 mx-1'}
-                    onClick={() => dispatch(mergeAndGroupAndResolve)}
+                    onClick={() => dispatch(calculateTracks)}
                     disabled={isRunning}
                 >
                     <FormattedMessage id={'msg.calculate'} />

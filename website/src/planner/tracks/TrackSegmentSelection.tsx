@@ -9,7 +9,7 @@ import { ReactSortable } from 'react-sortablejs';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
-import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 
 interface Props {
@@ -96,7 +96,7 @@ export function TrackSegmentSelection({ track }: Props) {
         if (mappedIds !== segmentIds.join()) {
             const newSegments = items.map((segmentOption) => segmentOption.id);
             dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
-            dispatch(mergeAndGroupAndResolve);
+            dispatch(triggerAutomaticCalculation);
         }
     };
 
@@ -104,7 +104,7 @@ export function TrackSegmentSelection({ track }: Props) {
         if (newValue) {
             const segments = [...segmentIds, newValue.value];
             dispatch(trackMergeActions.setSegments({ id, segments: segments }));
-            dispatch(mergeAndGroupAndResolve);
+            dispatch(triggerAutomaticCalculation);
         }
     };
 

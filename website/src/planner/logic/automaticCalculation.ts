@@ -2,7 +2,8 @@ import { calculateMerge } from './merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { calculateTrackStreetInfos } from './resolving/aggregate/calculateTrackStreetInfos.ts';
 import { addPostCodeToStreetInfos } from './resolving/postcode/postCodeResolver.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getIsCalculationOnTheFly, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { State } from '../store/types.ts';
 
 const calculationThunk =
     (value: boolean) =>
@@ -11,8 +12,7 @@ const calculationThunk =
         return Promise.resolve();
     };
 
-export const mergeAndGroupAndResolve = (dispatch: AppDispatch) => {
-    console.log('magic happens');
+export const calculateTracks = (dispatch: AppDispatch) => {
     dispatch(calculationThunk(true)).then(() =>
         setTimeout(() => {
             dispatch(calculateMerge).then(() =>
@@ -22,4 +22,11 @@ export const mergeAndGroupAndResolve = (dispatch: AppDispatch) => {
             );
         }, 10)
     );
+};
+
+export const triggerAutomaticCalculation = (dispatch: AppDispatch, getState: () => State) => {
+    const isCalculationOnTheFly = getIsCalculationOnTheFly(getState());
+    if (isCalculationOnTheFly) {
+        dispatch(calculateTracks);
+    }
 };

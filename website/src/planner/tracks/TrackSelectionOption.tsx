@@ -10,7 +10,7 @@ import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import flip from '../../assets/flip.svg';
@@ -53,7 +53,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                             className={'mx-1'}
                             onClick={() => {
                                 dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
-                                dispatch(mergeAndGroupAndResolve);
+                                dispatch(triggerAutomaticCalculation);
                             }}
                             title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
                         >
@@ -98,7 +98,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                         className={'mx-1'}
                         onClick={() => {
                             dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
-                            dispatch(mergeAndGroupAndResolve);
+                            dispatch(triggerAutomaticCalculation);
                         }}
                         title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
                     >
