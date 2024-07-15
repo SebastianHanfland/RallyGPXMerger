@@ -6,10 +6,11 @@ import { PlannerSidebarSimpleContent } from './PlannerSidebarSimpleContent.tsx';
 import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
+import { ClosePlannerSidebar } from './ClosePlannerSidebar.tsx';
 
-const getStyle = (width: number): CSSProperties => ({
+const getStyle = (showSidebar: boolean): CSSProperties => ({
     position: 'fixed',
-    width: `${width}px`,
+    width: `${showSidebar ? 900 : 30}px`,
     height: '100vh',
     right: 0,
     overflowY: 'scroll',
@@ -17,6 +18,7 @@ const getStyle = (width: number): CSSProperties => ({
     zIndex: 10,
     backgroundColor: 'white',
     overflow: 'hidden',
+    cursor: showSidebar ? undefined : 'pointer',
 });
 
 export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings';
@@ -60,19 +62,22 @@ export function PlannerSidebar() {
     const dispatch = useDispatch();
 
     return (
-        <div
-            style={getStyle(showSidebar ? 900 : 30)}
-            className={'shadow'}
-            onClick={() => dispatch(layoutActions.setIsSidebarOpen(true))}
-            title={'See overview'}
-        >
-            {showSidebar ? (
-                <Content setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
-            ) : (
-                <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
-                    <FormattedMessage id={'msg.dashboard'} />
-                </span>
-            )}
-        </div>
+        <>
+            <ClosePlannerSidebar />
+            <div
+                style={getStyle(showSidebar)}
+                className={'shadow'}
+                onClick={() => dispatch(layoutActions.setIsSidebarOpen(true))}
+                title={'See overview'}
+            >
+                {showSidebar ? (
+                    <Content setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
+                ) : (
+                    <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
+                        <FormattedMessage id={'msg.dashboard'} />
+                    </span>
+                )}
+            </div>
+        </>
     );
 }
