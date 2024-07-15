@@ -13,7 +13,6 @@ const getStyle = (showSidebar: boolean): CSSProperties => ({
     width: `${showSidebar ? 900 : 30}px`,
     height: '100vh',
     right: 0,
-    overflowY: 'scroll',
     top: 0,
     zIndex: 10,
     backgroundColor: 'white',
@@ -60,7 +59,9 @@ export function PlannerSidebar() {
                 title={showSidebar ? undefined : 'See overview'}
             >
                 {showSidebar ? (
-                    <Content />
+                    <div className={'mb-5'}>
+                        <Content />
+                    </div>
                 ) : (
                     <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
                         <FormattedMessage id={'msg.dashboard'} />
