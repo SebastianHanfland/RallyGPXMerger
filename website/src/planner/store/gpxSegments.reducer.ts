@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GpxSegmentsState, State } from './types.ts';
+import { ClickOnSegment, GpxSegmentsState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { optionallyDecompress } from './compressHelper.ts';
@@ -73,6 +73,9 @@ const gpxSegmentsSlice = createSlice({
         setAllSegmentsToUnresolved: (state: GpxSegmentsState) => {
             state.segments = state.segments.map((segment) => ({ ...segment, streetsResolved: undefined }));
         },
+        setClickOnSegment: (state: GpxSegmentsState, action: PayloadAction<ClickOnSegment | undefined>) => {
+            state.clickOnSegment = action.payload;
+        },
         clearGpxSegments: () => initialState,
     },
 });
@@ -92,6 +95,7 @@ export const getConstructionSegments = (state: State) => getBase(state).construc
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
+export const getClickOnSegment = (state: State) => getBase(state).clickOnSegment;
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
     return filterItems(filterTerm, segments, (track: GpxSegment) => track.filename);

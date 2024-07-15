@@ -3,12 +3,19 @@ import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
 
+export interface ClickOnSegment {
+    lat: number;
+    lng: number;
+    segmentId: string;
+}
+
 export interface GpxSegmentsState {
     segments: GpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds?: Record<string, number | undefined>;
     constructionSegments?: GpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: GpxSegment[] };
+    clickOnSegment?: ClickOnSegment;
 }
 
 export interface CalculatedTracksState {
