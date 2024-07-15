@@ -8,11 +8,13 @@ import { useEffect, useState } from 'react';
 import { TrackPause } from '../store/types.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import { v4 as uuidv4 } from 'uuid';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
+import { AppDispatch } from '../store/store.ts';
 
 export const PauseDialog = () => {
     const trackIdForBreak = useSelector(getTrackIdForAddingABreak);
     const track = useSelector(getTrackCompositions).find(({ id }) => id === trackIdForBreak);
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const [values, setValues] = useState<Partial<TrackPause>>({});
 
     const closeModal = () => {
@@ -25,6 +27,7 @@ export const PauseDialog = () => {
         }
         const segments = [...track.segmentIds, `${values.minutes}${BREAK_IDENTIFIER}${uuidv4()}`];
         dispatch(trackMergeActions.setSegments({ id: track.id, segments: segments }));
+        dispatch(triggerAutomaticCalculation);
         closeModal();
     };
 
