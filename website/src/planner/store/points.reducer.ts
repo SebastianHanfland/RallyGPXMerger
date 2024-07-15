@@ -34,6 +34,9 @@ const pointSlice = createSlice({
                 );
             }
         },
+        removeAllGapPoint: (state: PointsState) => {
+            state.points = state.points.filter(({ type }) => type !== PointOfInterestType.GAP);
+        },
         updatePoint: (state: PointsState, action: PayloadAction<PointOfInterest>) => {
             const updatedPoint = action.payload;
             state.points = state.points.map((point) => (point.id !== updatedPoint.id ? point : updatedPoint));
