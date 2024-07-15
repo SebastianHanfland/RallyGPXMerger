@@ -65,6 +65,12 @@ export function GpxSegments({ noFilter }: Props) {
                             <th style={{ width: '100%' }}>
                                 <FormattedMessage id={'msg.file'} />
                             </th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>
+                                <FormattedMessage id={'msg.globalSpeed'} />
+                            </th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>
+                                <FormattedMessage id={'msg.customSpeed'} />
+                            </th>
                             <th style={{ width: '70px', minWidth: '70px' }}>
                                 <FormattedMessage id={'msg.actions'} />
                             </th>
