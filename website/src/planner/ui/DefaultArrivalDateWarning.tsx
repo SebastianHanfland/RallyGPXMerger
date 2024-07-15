@@ -4,6 +4,7 @@ import { getArrivalDateTime, getHasDefaultArrivalDateTime } from '../store/track
 import { CSSProperties } from 'react';
 import { formatDate } from '../../utils/dateUtil.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
+import { Warning } from '../layout/dashboard/Warning.tsx';
 
 const defaultTimeWarning: CSSProperties = {
     position: 'fixed',
@@ -35,10 +36,12 @@ export function DefaultArrivalDateWarning() {
             className={'shadow'}
             onClick={() => {
                 dispatch(layoutActions.setIsSidebarOpen(true));
+                dispatch(layoutActions.setSelectedSidebarSection('settings'));
             }}
             title={intl.formatMessage({ id: 'msg.setArrivalDateTime' })}
         >
-            {`(!) ${intl.formatMessage({ id: 'msg.defaultArrivalTime' })}: ${formatDate(arrivalDateTime)}`}
+            <Warning />
+            {` ${intl.formatMessage({ id: 'msg.defaultArrivalTime' })}: ${formatDate(arrivalDateTime)}`}
         </div>
     );
 }
