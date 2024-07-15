@@ -221,5 +221,6 @@
     "msg.splitSegment": "Split segment here",
     "msg.onTheFly": "Automatic",
     "msg.calculate": "Calculate",
-    "msg.pause": "Add a Pause"
+    "msg.pause": "Add a Pause",
+    "msg.add": "Add"
 }

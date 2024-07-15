@@ -97,6 +97,12 @@ export interface PointOfInterest {
     radiusInM: number;
 }
 
+export interface TrackPause {
+    minutes: number;
+    description: string;
+    hasToilet: boolean;
+}
+
 export enum PointOfInterestType {
     TOILET = 'TOILET',
     IMPEDIMENT = 'IMPEDIMENT',
