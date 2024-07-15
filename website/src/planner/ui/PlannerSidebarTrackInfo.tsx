@@ -24,7 +24,7 @@ export const PlannerSidebarTrackInfo = ({ trackInfo }: { trackInfo: TrackStreetI
                     {intl.formatMessage({ id: 'msg.end' })}: {formatTimeOnly(arrivalBack)}
                 </Col>
                 <Col>
-                    {intl.formatMessage({ id: 'msg.averageSpeed' })}: ${average.toFixed(1)} km/h
+                    {intl.formatMessage({ id: 'msg.averageSpeed' })}: {average.toFixed(1)} km/h
                 </Col>
             </Row>
         </div>
