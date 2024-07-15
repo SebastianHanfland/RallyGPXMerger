@@ -13,6 +13,7 @@ import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
 import { AppDispatch } from '../store/store.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
+import flip from '../../assets/flip.svg';
 
 interface Props {
     trackId: string;
@@ -90,6 +91,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                     {segmentName}
                 </div>
                 <div>
+                    {flipped && <img src={flip} className="m-1" alt="flip" />}
                     <Button
                         variant="danger"
                         size={'sm'}
