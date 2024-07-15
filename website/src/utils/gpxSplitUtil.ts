@@ -1,6 +1,7 @@
 import { SimpleGPX } from './SimpleGPX.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from './pointUtil.ts';
+import { Track } from 'gpxparser';
 
 export const splitGpx = (content: string, splitPoint: { lat: number; lng: number }): [string, string] => {
     let pointWithMinimalDistance: { lat: number; lon: number } | undefined = undefined;
@@ -16,5 +17,33 @@ export const splitGpx = (content: string, splitPoint: { lat: number; lng: number
         });
     });
     console.log(pointWithMinimalDistance, splitPoint, minimalDistance);
-    return [content, content];
+
+    const tracksBefore: Track[] = [];
+    const tracksAfter: Track[] = [];
+
+    let splitPointReached = false;
+
+    simpleGPX.tracks.forEach((track) => {
+        if (!splitPointReached) {
+            tracksBefore.push({ ...track, points: [] });
+        } else {
+            tracksAfter.push({ ...track, points: [] });
+        }
+        track.points.forEach((point) => {
+            if (point === pointWithMinimalDistance) {
+                splitPointReached = true;
+                tracksBefore[tracksBefore.length - 1].points.push(point);
+                tracksAfter.push({ ...track, points: [] });
+            }
+            if (!splitPointReached) {
+                tracksBefore[tracksBefore.length - 1].points.push(point);
+            } else {
+                tracksAfter[tracksAfter.length - 1].points.push(point);
+            }
+        });
+    });
+    const gpxBefore = simpleGPX.duplicate(tracksBefore).toString();
+    const gpxAfter = simpleGPX.duplicate(tracksAfter).toString();
+
+    return [gpxBefore, gpxAfter];
 };

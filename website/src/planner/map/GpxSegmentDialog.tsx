@@ -3,6 +3,7 @@ import { getClickOnSegment, gpxSegmentsActions } from '../store/gpxSegments.redu
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
+import { GpxSegmentContent } from './GpxSegmentContent.tsx';
 
 export const GpxSegmentDialog = () => {
     const clickOnSegment = useSelector(getClickOnSegment);
@@ -23,7 +24,9 @@ export const GpxSegmentDialog = () => {
                     <FormattedMessage id={'msg.pointOfInterest'} />
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>Hello</Modal.Body>
+            <Modal.Body>
+                <GpxSegmentContent />
+            </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
