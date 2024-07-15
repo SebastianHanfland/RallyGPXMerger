@@ -112,6 +112,9 @@ const trackMergeSlice = createSlice({
         setIsCalculationOnTheFly: (state: TrackMergeState, action: PayloadAction<boolean>) => {
             state.isCalculationOnTheFly = action.payload;
         },
+        setHasChangesSinceLastCalculation: (state: TrackMergeState, action: PayloadAction<boolean>) => {
+            state.changesSinceLastCalculation = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -131,6 +134,7 @@ export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdC
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
 export const getIsCalculationOnTheFly = (state: State) => getBase(state).isCalculationOnTheFly;
+export const getHasChangesSinceLastCalculation = (state: State) => getBase(state).changesSinceLastCalculation;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

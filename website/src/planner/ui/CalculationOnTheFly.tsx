@@ -1,14 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsCalculationOnTheFly, getIsCalculationRunning, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import {
+    getHasChangesSinceLastCalculation,
+    getIsCalculationOnTheFly,
+    getIsCalculationRunning,
+    trackMergeActions,
+} from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { calculateTracks } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
+import { Warning } from '../layout/dashboard/Warning.tsx';
 
 const calculationIsRunningStyle: CSSProperties = {
     position: 'fixed',
-    width: '220px',
+    width: '240px',
     height: '45px',
     borderRadius: '2px',
     left: 10,
@@ -23,6 +29,7 @@ const calculationIsRunningStyle: CSSProperties = {
 export const CalculationOnTheFly = () => {
     const isCalculationOnTheFly = useSelector(getIsCalculationOnTheFly);
     const isRunning = useSelector(getIsCalculationRunning);
+    const hasChanges = useSelector(getHasChangesSinceLastCalculation);
     const dispatch: AppDispatch = useDispatch();
 
     return (
@@ -40,11 +47,12 @@ export const CalculationOnTheFly = () => {
                 <Button
                     id={'tracks'}
                     title={'Calculate tracks'}
-                    variant={'light'}
+                    variant={hasChanges ? 'warning' : 'light'}
                     className={'shadow my-1 mx-1'}
                     onClick={() => dispatch(calculateTracks)}
                     disabled={isRunning}
                 >
+                    {hasChanges && <Warning size={13} />}
                     <FormattedMessage id={'msg.calculate'} />
                 </Button>
             )}

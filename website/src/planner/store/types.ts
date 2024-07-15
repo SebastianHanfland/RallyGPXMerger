@@ -70,6 +70,7 @@ export interface TrackMergeState {
     trackIdForAddingABreak?: string;
     isCalculationRunning?: boolean;
     isCalculationOnTheFly?: boolean;
+    changesSinceLastCalculation?: boolean;
 }
 
 export interface MapState {

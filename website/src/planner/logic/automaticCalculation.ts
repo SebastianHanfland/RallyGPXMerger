@@ -13,6 +13,7 @@ const calculationThunk =
     };
 
 export const calculateTracks = (dispatch: AppDispatch) => {
+    dispatch(trackMergeActions.setHasChangesSinceLastCalculation(false));
     dispatch(calculationThunk(true)).then(() =>
         setTimeout(() => {
             dispatch(calculateMerge).then(() =>
@@ -28,5 +29,7 @@ export const triggerAutomaticCalculation = (dispatch: AppDispatch, getState: () 
     const isCalculationOnTheFly = getIsCalculationOnTheFly(getState());
     if (isCalculationOnTheFly) {
         dispatch(calculateTracks);
+    } else {
+        dispatch(trackMergeActions.setHasChangesSinceLastCalculation(true));
     }
 };
