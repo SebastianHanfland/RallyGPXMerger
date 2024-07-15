@@ -13,9 +13,12 @@ export const setParticipantsDelay = (delay: number) => {
 
 export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
 
+const DEFAULT_GAP_TOLERANCE = 0.01;
+
 const initialState: TrackMergeState = {
     trackCompositions: [],
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,
+    gapToleranceInKm: DEFAULT_GAP_TOLERANCE,
 };
 
 const trackMergeSlice = createSlice({
@@ -86,6 +89,9 @@ const trackMergeSlice = createSlice({
         setAverageSpeed: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.averageSpeedInKmH = action.payload;
         },
+        setGapToleranceInKm: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
+            state.gapToleranceInKm = action.payload;
+        },
         setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | string[]>) => {
             state.segmentIdClipboard = action.payload;
         },
@@ -105,6 +111,7 @@ export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTi
 export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
+export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 
 export const getFilteredTrackCompositions = createSelector(

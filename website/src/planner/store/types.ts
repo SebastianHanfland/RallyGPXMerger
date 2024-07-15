@@ -53,6 +53,7 @@ export interface TrackMergeState {
     planningLabel?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;
+    gapToleranceInKm?: number;
     segmentIdClipboard?: string[];
 }
 
