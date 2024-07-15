@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackIdForAddingABreak, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { PauseDialogContent } from './PauseDialogContent.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TrackPause } from '../store/types.ts';
 
 export const PauseDialog = () => {
@@ -15,6 +15,10 @@ export const PauseDialog = () => {
     const closeModal = () => {
         dispatch(trackMergeActions.setTrackIdForAddingABreak(undefined));
     };
+
+    useEffect(() => {
+        setValues({});
+    }, [trackIdForBreak]);
 
     if (!trackIdForBreak) {
         return null;
@@ -34,7 +38,7 @@ export const PauseDialog = () => {
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
                 </Button>
-                <Button variant="primary" onClick={closeModal}>
+                <Button variant="primary" onClick={closeModal} disabled={!values.minutes}>
                     <FormattedMessage id={'msg.add'} />
                 </Button>
             </Modal.Footer>
