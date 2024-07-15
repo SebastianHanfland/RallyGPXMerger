@@ -216,5 +216,6 @@
     "msg.trackSettings": "Track Settings",
     "msg.gapSetting": "Gap Finder",
     "msg.gapTolerance.hint": "Gap tolerance between segments (in km)",
-    "msg.defaultArrivalTime": "You have not yet set an arrival time. Current value"
+    "msg.defaultArrivalTime": "You have not yet set an arrival time. Current value",
+    "msg.setArrivalDateTime": "Set now the arrival time"
 }
