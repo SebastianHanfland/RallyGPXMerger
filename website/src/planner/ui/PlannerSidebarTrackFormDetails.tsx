@@ -4,10 +4,14 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
+import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
+import { AppDispatch } from '../store/store.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
 
 export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const { name, id, peopleCount, priority } = track;
     return (
@@ -35,9 +39,13 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                             type="text"
                             placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
                             value={peopleCount?.toString() ?? ''}
-                            onChange={(value) =>
-                                dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }))
-                            }
+                            onChange={(value) => {
+                                dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }));
+                                clearTimeout(constructTimeout);
+                                constructTimeout = setTimeout(() => {
+                                    dispatch(mergeAndGroupAndResolve);
+                                }, 500);
+                            }}
                         />
                     </Col>
                     <Col>
@@ -48,9 +56,13 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                             type="text"
                             placeholder={intl.formatMessage({ id: 'msg.priority' })}
                             value={priority?.toString() ?? ''}
-                            onChange={(value) =>
-                                dispatch(trackMergeActions.setTrackPriority({ id, priority: getCount(value) }))
-                            }
+                            onChange={(value) => {
+                                dispatch(trackMergeActions.setTrackPriority({ id, priority: getCount(value) }));
+                                clearTimeout(constructTimeout);
+                                constructTimeout = setTimeout(() => {
+                                    dispatch(mergeAndGroupAndResolve);
+                                }, 500);
+                            }}
                         />
                     </Col>
                 </Row>
