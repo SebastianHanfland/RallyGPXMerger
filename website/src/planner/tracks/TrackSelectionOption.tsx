@@ -25,6 +25,11 @@ function isABreak(segmentId: string) {
     return segmentId.includes(BREAK_IDENTIFIER);
 }
 
+function getPauseLabel(segmentId: string) {
+    const minutesBreak = Number(segmentId.split(BREAK_IDENTIFIER)[0]);
+    return `${minutesBreak > 0 ? '+' : '-'} ${minutesBreak > 0 ? minutesBreak : -1 * minutesBreak} min`;
+}
+
 export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
@@ -44,7 +49,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                     key={segmentId}
                 >
                     <div className={'m-1'} title={segmentName}>
-                        {segmentName}
+                        {getPauseLabel(segmentId)}
                     </div>
                     <div>
                         <Button
