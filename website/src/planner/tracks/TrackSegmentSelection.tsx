@@ -90,9 +90,12 @@ export function TrackSegmentSelection({ track }: Props) {
     const options = [...gpxSegments.map(toOption), ...breaks];
 
     const setSegmentIds = (items: { id: string }[]) => {
-        const newSegments = items.map((segmentOption) => segmentOption.id);
-        dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
-        dispatch(mergeAndGroupAndResolve);
+        const mappedIds = items.map((item) => item.id).join();
+        if (mappedIds !== segmentIds.join()) {
+            const newSegments = items.map((segmentOption) => segmentOption.id);
+            dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
+            dispatch(mergeAndGroupAndResolve);
+        }
     };
 
     const addSegmentToTrack = (newValue: SingleValue<{ value: string }>) => {

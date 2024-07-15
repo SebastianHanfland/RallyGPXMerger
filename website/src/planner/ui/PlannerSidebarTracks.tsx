@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFilteredTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
 import { PageItem, Pagination } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,6 +12,13 @@ export const PlannerSidebarTracks = () => {
 
     const [selectedTrackId, setSelectedTrackId] = useState<string | undefined>();
     const selectedTrack = trackCompositions.find((track) => track.id === selectedTrackId);
+
+    useEffect(() => {
+        if (trackCompositions.length > 0) {
+            setSelectedTrackId(trackCompositions[0].id);
+        }
+    }, []);
+
     return (
         <div>
             <div>{'TODO: Maybe a filter here'}</div>
