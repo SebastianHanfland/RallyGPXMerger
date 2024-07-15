@@ -5,12 +5,7 @@ import { PlannerSidebarNavigation } from './PlannerSidebarNavigation.tsx';
 import { PlannerSidebarSimpleContent } from './PlannerSidebarSimpleContent.tsx';
 import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getHasSingleTrack,
-    getIsSidebarOpen,
-    getSelectedSidebarSection,
-    layoutActions,
-} from '../store/layout.reducer.ts';
+import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
 import { ClosePlannerSidebar } from './ClosePlannerSidebar.tsx';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
@@ -28,44 +23,32 @@ const getStyle = (showSidebar: boolean): CSSProperties => ({
 
 export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings';
 
-function ComplexContent(props: {
-    setSelectedSection: (value: SidebarSections) => void;
-    selectedSection: SidebarSections;
-}) {
+function ComplexContent() {
     return (
         <div>
-            <PlannerSidebarNavigation setSelectedSection={props.setSelectedSection} />
-            <PlannerSidebarContent selectedSection={props.selectedSection} />
+            <PlannerSidebarNavigation />
+            <PlannerSidebarContent />
         </div>
     );
 }
 
-function SimpleContent(props: {
-    setSelectedSection: (value: SidebarSections) => void;
-    selectedSection: SidebarSections;
-}) {
+function SimpleContent() {
     return (
         <div>
-            <PlannerSidebarSimpleNavigation setSelectedSection={props.setSelectedSection} />
-            <PlannerSidebarSimpleContent selectedSection={props.selectedSection} />
+            <PlannerSidebarSimpleNavigation />
+            <PlannerSidebarSimpleContent />
         </div>
     );
 }
 
-function Content(props: { setSelectedSection: (value: SidebarSections) => void; selectedSection: SidebarSections }) {
+function Content() {
     const hasSingleTrack = useSelector(getHasSingleTrack);
-    return hasSingleTrack ? (
-        <SimpleContent setSelectedSection={props.setSelectedSection} selectedSection={props.selectedSection} />
-    ) : (
-        <ComplexContent setSelectedSection={props.setSelectedSection} selectedSection={props.selectedSection} />
-    );
+    return hasSingleTrack ? <SimpleContent /> : <ComplexContent />;
 }
 
 export function PlannerSidebar() {
     const showSidebar = useSelector(getIsSidebarOpen);
     const dispatch = useDispatch();
-    const selectedSection = useSelector(getSelectedSidebarSection);
-    const setSelectedSection = (section: SidebarSections) => dispatch(layoutActions.setSelectedSidebarSection(section));
 
     return (
         <>
@@ -77,7 +60,7 @@ export function PlannerSidebar() {
                 title={'See overview'}
             >
                 {showSidebar ? (
-                    <Content setSelectedSection={setSelectedSection} selectedSection={selectedSection} />
+                    <Content />
                 ) : (
                     <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
                         <FormattedMessage id={'msg.dashboard'} />

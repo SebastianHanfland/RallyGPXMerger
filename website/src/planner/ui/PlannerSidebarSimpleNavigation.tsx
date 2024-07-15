@@ -1,17 +1,16 @@
 import { Nav } from 'react-bootstrap';
 import { SidebarSections } from './PlannerSidebar.tsx';
 import { FormattedMessage } from 'react-intl';
-
-interface Props {
-    setSelectedSection: (section: SidebarSections) => void;
-}
+import { useDispatch } from 'react-redux';
+import { layoutActions } from '../store/layout.reducer.ts';
 
 interface ItemProps {
     section: SidebarSections;
-    setSelectedSection: (section: SidebarSections) => void;
 }
 
-function NavItem({ section, setSelectedSection }: ItemProps) {
+function NavItem({ section }: ItemProps) {
+    const dispatch = useDispatch();
+    const setSelectedSection = (section: SidebarSections) => dispatch(layoutActions.setSelectedSidebarSection(section));
     return (
         <Nav.Item onClick={() => setSelectedSection(section)}>
             <Nav.Link eventKey={section}>
@@ -21,12 +20,12 @@ function NavItem({ section, setSelectedSection }: ItemProps) {
     );
 }
 
-export const PlannerSidebarSimpleNavigation = ({ setSelectedSection }: Props) => {
+export const PlannerSidebarSimpleNavigation = () => {
     return (
         <Nav fill variant="tabs">
-            <NavItem section={'segments'} setSelectedSection={setSelectedSection} />
-            <NavItem section={'settings'} setSelectedSection={setSelectedSection} />
-            <NavItem section={'documents'} setSelectedSection={setSelectedSection} />
+            <NavItem section={'segments'} />
+            <NavItem section={'settings'} />
+            <NavItem section={'documents'} />
         </Nav>
     );
 };
