@@ -1,4 +1,4 @@
-import { Form } from 'react-bootstrap';
+import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getShowBlockStreets,
@@ -9,11 +9,23 @@ import {
     getShowPointsOfInterest,
     mapActions,
 } from '../store/map.reducer.ts';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
-import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getConstructionSegments, getFilteredGpxSegments, getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { useIntl } from 'react-intl';
 import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { CSSProperties } from 'react';
+
+const mapContentStyle: CSSProperties = {
+    position: 'fixed',
+    width: '100px',
+    height: '255px',
+    borderRadius: '2px',
+    left: 10,
+    top: 80,
+    zIndex: 10,
+    backgroundColor: 'transparent',
+    overflow: 'hidden',
+    cursor: 'pointer',
+};
 
 export function MapContentSelection() {
     const intl = useIntl();
@@ -25,8 +37,6 @@ export function MapContentSelection() {
     const showCalculatedTracks = useSelector(getShowCalculatedTracks);
     const showGpxSegments = useSelector(getShowGpxSegments);
     const dispatch = useDispatch();
-    const calculatedTracks = useSelector(getCalculatedTracks);
-    const blockedStreetInfos = useSelector(getBlockedStreetInfo);
 
     const numberOfFilteredSections = useSelector(getFilteredGpxSegments).length;
     const numberOfAllSections = useSelector(getGpxSegments).length;
@@ -42,76 +52,69 @@ export function MapContentSelection() {
         intl.formatMessage({ id: 'msg.tracks' }) +
         (showTrackExtra ? ` (${numberOfFilteredTracks}/${numberOfAllTracks})` : '');
 
+    const className = 'shadow my-1';
     return (
-        <Form.Group>
-            <Form className={'d-flex'}>
-                <Form.Check
-                    type={'checkbox'}
-                    id={'segments'}
-                    className={'m-2'}
-                    label={sectionLabel}
-                    title={'GPX Segments'}
-                    checked={showGpxSegments}
-                    readOnly
-                    onClick={() => dispatch(mapActions.setShowGpxSegments(!showGpxSegments))}
-                ></Form.Check>
-                <Form.Check
-                    type={'checkbox'}
-                    id={'tracks'}
-                    className={'m-2'}
-                    label={trackLabel}
-                    title={'Calculated Tracks'}
-                    checked={showCalculatedTracks}
-                    disabled={calculatedTracks.length === 0}
-                    readOnly
-                    onClick={() => dispatch(mapActions.setShowCalculatedTracks(!showCalculatedTracks))}
-                ></Form.Check>
-            </Form>
-            <Form className={'d-flex'}>
-                <Form.Check
-                    type={'checkbox'}
-                    id={'blocked streets'}
-                    className={'m-2'}
-                    label={intl.formatMessage({ id: 'msg.streets' })}
-                    title={'Blocked Streets'}
-                    checked={showBlockStreets}
-                    disabled={blockedStreetInfos.length === 0}
-                    readOnly
-                    onClick={() => dispatch(mapActions.setShowBlockStreets(!showBlockStreets))}
-                ></Form.Check>
-                <Form.Check
-                    type={'checkbox'}
-                    id={'marker'}
-                    className={'m-2'}
-                    label={intl.formatMessage({ id: 'msg.marker' })}
-                    title={showMapMarker ? 'Hide marker' : 'Show marker'}
-                    checked={showMapMarker}
-                    readOnly
-                    onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
-                ></Form.Check>
-                <Form.Check
-                    type={'checkbox'}
-                    id={'points'}
-                    className={'m-2'}
-                    label={intl.formatMessage({ id: 'msg.points' })}
-                    title={showPointsOfInterest ? 'Hide Points' : 'Show Points'}
-                    checked={showPointsOfInterest}
-                    readOnly
-                    onClick={() => dispatch(mapActions.setShowPointsOfInterest(!showPointsOfInterest))}
-                ></Form.Check>
-                {hasConstructions && (
-                    <Form.Check
-                        type={'checkbox'}
+        <div style={mapContentStyle}>
+            <ButtonGroup>
+                <Form className={'d-flex flex-column'}>
+                    <Button
+                        id={'segments'}
+                        title={'GPX Segments'}
+                        variant={showGpxSegments ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowGpxSegments(!showGpxSegments))}
+                    >
+                        {sectionLabel}
+                    </Button>
+                    <Button
+                        id={'tracks'}
+                        title={'Calculated Tracks'}
+                        variant={showCalculatedTracks ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowCalculatedTracks(!showCalculatedTracks))}
+                    >
+                        {trackLabel}
+                    </Button>
+                    <Button
+                        id={'blocked streets'}
+                        title={'Blocked Streets'}
+                        variant={showBlockStreets ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowBlockStreets(!showBlockStreets))}
+                    >
+                        {intl.formatMessage({ id: 'msg.streets' })}
+                    </Button>
+                    <Button
                         id={'marker'}
-                        className={'m-2'}
-                        label={intl.formatMessage({ id: 'msg.constructions' })}
-                        title={'Constructions'}
-                        checked={showConstructions}
-                        readOnly
-                        onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
-                    ></Form.Check>
-                )}
-            </Form>
-        </Form.Group>
+                        title={showMapMarker ? 'Hide marker' : 'Show marker'}
+                        variant={showMapMarker ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
+                    >
+                        {intl.formatMessage({ id: 'msg.marker' })}
+                    </Button>
+                    <Button
+                        id={'points'}
+                        title={showPointsOfInterest ? 'Hide Points' : 'Show Points'}
+                        variant={showPointsOfInterest ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowPointsOfInterest(!showPointsOfInterest))}
+                    >
+                        {intl.formatMessage({ id: 'msg.points' })}
+                    </Button>
+                    {hasConstructions && (
+                        <Button
+                            id={'marker'}
+                            title={'Constructions'}
+                            variant={showConstructions ? 'info' : 'light'}
+                            className={className}
+                            onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
+                        >
+                            {intl.formatMessage({ id: 'msg.constructions' })}
+                        </Button>
+                    )}
+                </Form>
+            </ButtonGroup>
+        </div>
     );
 }
