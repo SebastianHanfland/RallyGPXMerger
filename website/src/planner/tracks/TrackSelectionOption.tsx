@@ -12,6 +12,7 @@ import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButt
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { mergeAndGroupAndResolve } from '../logic/doTheMagic.ts';
 import { AppDispatch } from '../store/store.ts';
+import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 
 interface Props {
     trackId: string;
@@ -19,9 +20,50 @@ interface Props {
     segmentName: string;
 }
 
+function isABreak(segmentId: string) {
+    return segmentId.includes(BREAK_IDENTIFIER);
+}
+
 export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
+
+    if (isABreak(segmentId)) {
+        return (
+            <div>
+                <div
+                    className={'d-flex justify-content-between'}
+                    style={{
+                        border: '1px solid transparent',
+                        borderColor: 'black',
+                        cursor: 'pointer',
+                        margin: '1px',
+                        backgroundColor: getColorFromUuid(segmentId),
+                    }}
+                    key={segmentId}
+                >
+                    <div className={'m-1'} title={segmentName}>
+                        {segmentName}
+                    </div>
+                    <div>
+                        <Button
+                            variant="danger"
+                            size={'sm'}
+                            className={'mx-1'}
+                            onClick={() => {
+                                dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
+                                dispatch(mergeAndGroupAndResolve);
+                            }}
+                            title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
+                        >
+                            X
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     const gpxSegment = useSelector(getGpxSegments).find((segment) => segment.id === segmentId);
     if (!gpxSegment) {
         return null;

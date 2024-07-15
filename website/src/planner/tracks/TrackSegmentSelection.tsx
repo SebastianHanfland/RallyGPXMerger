@@ -89,6 +89,8 @@ export function TrackSegmentSelection({ track }: Props) {
     const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption), ...breaks];
 
+    console.log({ segmentIds });
+
     const setSegmentIds = (items: { id: string }[]) => {
         const mappedIds = items.map((item) => item.id).join();
         if (mappedIds !== segmentIds.join()) {
