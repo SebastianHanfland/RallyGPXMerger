@@ -24,59 +24,57 @@ export function TrackButtonsCell({ track }: Props) {
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
 
     return (
-        <td>
-            <DropdownButton
-                as={ButtonGroup}
-                key={'primary'}
-                id={`dropdown-variants-${'primary'}`}
-                variant={'primary'.toLowerCase()}
-                title={''}
+        <DropdownButton
+            as={ButtonGroup}
+            key={'primary'}
+            id={`dropdown-variants-${'primary'}`}
+            variant={'primary'.toLowerCase()}
+            title={''}
+        >
+            <Dropdown.Item
+                onClick={() => setShowModal(true)}
+                title={intl.formatMessage({ id: 'msg.removeTrack.hint' }, { name: track.name ?? '' })}
             >
-                <Dropdown.Item
-                    onClick={() => setShowModal(true)}
-                    title={intl.formatMessage({ id: 'msg.removeTrack.hint' }, { name: track.name ?? '' })}
-                >
-                    <img src={trash} className="m-1" alt="trash" />
-                    <span>
-                        <FormattedMessage id={'msg.removeTrack'} />
-                    </span>
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}>
-                    <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} className="m-1" />
-                    <span>
-                        <FormattedMessage id={'msg.copySegments'} />
-                    </span>
-                </Dropdown.Item>
-                <Dropdown.Item
-                    onClick={() => {
-                        dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
-                        dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
+                <img src={trash} className="m-1" alt="trash" />
+                <span>
+                    <FormattedMessage id={'msg.removeTrack'} />
+                </span>
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}>
+                <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} className="m-1" />
+                <span>
+                    <FormattedMessage id={'msg.copySegments'} />
+                </span>
+            </Dropdown.Item>
+            <Dropdown.Item
+                onClick={() => {
+                    dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
+                    dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
+                }}
+                disabled={!segmentIdClipboard}
+            >
+                <img src={inputFromClipboard} alt="input from clipboard" color={'#ffffff'} className={'m-1'} />
+                <span>
+                    <FormattedMessage id={'msg.pasteSegments'} />
+                </span>
+            </Dropdown.Item>
+            {showModal && (
+                <ConfirmationModal
+                    onConfirm={() => {
+                        dispatch(calculatedTracksActions.removeSingleCalculatedTrack(id));
+                        dispatch(trackMergeActions.removeTrackComposition(id));
                     }}
-                    disabled={!segmentIdClipboard}
-                >
-                    <img src={inputFromClipboard} alt="input from clipboard" color={'#ffffff'} className={'m-1'} />
-                    <span>
-                        <FormattedMessage id={'msg.pasteSegments'} />
-                    </span>
-                </Dropdown.Item>
-                {showModal && (
-                    <ConfirmationModal
-                        onConfirm={() => {
-                            dispatch(calculatedTracksActions.removeSingleCalculatedTrack(id));
-                            dispatch(trackMergeActions.removeTrackComposition(id));
-                        }}
-                        closeModal={() => setShowModal(false)}
-                        title={`Removing track ${track.name ?? ''}`}
-                        body={`Do you really want to remove the track ${track.name ?? ''}?`}
-                    />
-                )}
-                {calculatedTrack && (
-                    <FileDownloaderDropdownItem
-                        content={calculatedTrack.content}
-                        name={calculatedTrack.filename + '.gpx'}
-                    />
-                )}
-            </DropdownButton>
-        </td>
+                    closeModal={() => setShowModal(false)}
+                    title={`Removing track ${track.name ?? ''}`}
+                    body={`Do you really want to remove the track ${track.name ?? ''}?`}
+                />
+            )}
+            {calculatedTrack && (
+                <FileDownloaderDropdownItem
+                    content={calculatedTrack.content}
+                    name={calculatedTrack.filename + '.gpx'}
+                />
+            )}
+        </DropdownButton>
     );
 }

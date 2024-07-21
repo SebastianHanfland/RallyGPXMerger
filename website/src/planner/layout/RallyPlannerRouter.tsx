@@ -7,7 +7,9 @@ import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
 import { WizardTracks } from '../wizard/WizardTracks.tsx';
 import { WizardVersions } from '../wizard/WizardVersions.tsx';
 import { PlannerWrapper } from './PlannerWrapper.tsx';
+import { MainPlannerUi } from '../ui/MainPlannerUi.tsx';
 
+const oldUi = false;
 export const RallyPlannerRouter = () => {
     const selectedSection = useSelector(getSelectionSection);
 
@@ -25,6 +27,6 @@ export const RallyPlannerRouter = () => {
         case 'wizard-versions':
             return <WizardVersions />;
         default:
-            return <PlannerWrapper />;
+            return oldUi ? <PlannerWrapper /> : <MainPlannerUi />;
     }
 };

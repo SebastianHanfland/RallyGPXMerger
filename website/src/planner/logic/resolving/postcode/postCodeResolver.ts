@@ -55,19 +55,20 @@ async function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCod
     });
 }
 
-export const addPostCodeToStreetInfos = (dispatch: Dispatch, getState: () => State) => {
+export const addPostCodeToStreetInfos = async (dispatch: Dispatch, getState: () => State) => {
     const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
     if (!bigDataCloudKey) {
-        return;
+        return Promise.resolve();
     }
-    setTimeout(() => {
-        dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
-    }, 10);
+    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
 
     const unresolvedPostCodeKeys = getUnresolvedPostCodeEntries(getState());
-    unresolvedPostCodeKeys.forEach(async (postCodeKey) => {
-        await fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch);
-    });
+    const postCodeRequests = unresolvedPostCodeKeys.map((postCodeKey) =>
+        fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch)
+    );
+    return Promise.all(postCodeRequests)
+        .then(() => dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false)))
+        .then();
 };
 
 export const getPostCodeRequestProgress = createSelector(

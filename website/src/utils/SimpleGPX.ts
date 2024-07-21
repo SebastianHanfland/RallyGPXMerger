@@ -34,8 +34,12 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         return new SimpleGPX(metadata, waypoints, tracks, routes);
     }
 
-    public duplicate() {
-        return SimpleGPX.fromString(this.toString());
+    public duplicate(tracks?: Track[]) {
+        const copy = SimpleGPX.fromString(this.toString());
+        if (tracks) {
+            copy.tracks = tracks;
+        }
+        return copy;
     }
 
     public constructor(

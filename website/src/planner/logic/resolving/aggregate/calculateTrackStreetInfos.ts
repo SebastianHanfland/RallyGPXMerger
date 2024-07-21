@@ -56,12 +56,9 @@ const enrichWithStreetsAndAggregate =
 
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
     dispatch(geoCodingRequestsActions.setIsAggregating(true));
-    setTimeout(() => {
-        const calculatedTracks = getCalculatedTracks(getState());
-        const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
-        dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
-    }, 10);
-    setTimeout(() => {
-        dispatch(geoCodingRequestsActions.setIsAggregating(false));
-    }, 1000);
+    const calculatedTracks = getCalculatedTracks(getState());
+    const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
+    dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
+    dispatch(geoCodingRequestsActions.setIsAggregating(false));
+    return Promise.resolve();
 }

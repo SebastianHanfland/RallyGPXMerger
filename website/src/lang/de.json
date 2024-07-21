@@ -212,5 +212,17 @@
     "msg.continuePlan.hint": "Öffnet den Planer für die letzte Planung",
     "msg.startWizard": "Assistent starten",
     "msg.startWizard.hint": "Schrittweise eine Sternfahrt erstellen",
-    "msg.loadingStreetNames": "...lädt Straßennamen"
+    "msg.loadingStreetNames": "...lädt Straßennamen",
+    "msg.trackSettings": "Routeneinstellungen",
+    "msg.gapSetting": "Lückenfinder",
+    "msg.gapTolerance.hint": "Lücken Grenzwert zwischen Abschnitten (in km)",
+    "msg.defaultArrivalTime": "Es wurde noch keine Ankunftszeit gesetzt. Aktueller Wert",
+    "msg.setArrivalDateTime": "Jetzt die Ankunftszeit setzen",
+    "msg.splitSegment": "Abschnitt hier aufteilen",
+    "msg.onTheFly": "Automatisch",
+    "msg.calculate": "Berechnen",
+    "msg.pause": "Pause hinzufügen",
+    "msg.add": "Hinzufügen",
+    "msg.minutes.details": "Minuten für die Pause auswählen",
+    "msg.toiletAtPause": "Toiletten am Pausenplatz"
 }

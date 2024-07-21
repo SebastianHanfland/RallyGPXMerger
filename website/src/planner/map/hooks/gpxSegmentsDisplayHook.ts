@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredGpxSegments, getGpxSegments } from '../../store/gpxSegments.reducer.ts';
+import { getFilteredGpxSegments, getGpxSegments, gpxSegmentsActions } from '../../store/gpxSegments.reducer.ts';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../../common/map/addTrackToMap.ts';
@@ -28,6 +28,11 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
             },
             mouseOutCallBack: () => {
                 dispatch(mapActions.setHighlightedSegmentId());
+            },
+            clickCallBack: (gpxSegment, event) => {
+                if (event) {
+                    dispatch(gpxSegmentsActions.setClickOnSegment({ ...event.latlng, segmentId: gpxSegment.id }));
+                }
             },
         });
     }, [filteredGpxSegments, filteredGpxSegments.length, showSegments, showMarker, highlightedSegmentId]);

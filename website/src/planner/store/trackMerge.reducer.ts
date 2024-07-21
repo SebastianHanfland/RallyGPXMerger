@@ -13,9 +13,12 @@ export const setParticipantsDelay = (delay: number) => {
 
 export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
 
+const DEFAULT_GAP_TOLERANCE = 0.01;
+
 const initialState: TrackMergeState = {
     trackCompositions: [],
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,
+    gapToleranceInKm: DEFAULT_GAP_TOLERANCE,
 };
 
 const trackMergeSlice = createSlice({
@@ -75,6 +78,7 @@ const trackMergeSlice = createSlice({
             }));
         },
         setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.hasDefaultArrivalDate = false;
             state.arrivalDateTime = action.payload;
         },
         setPlanningLabel: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
@@ -86,11 +90,30 @@ const trackMergeSlice = createSlice({
         setAverageSpeed: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.averageSpeedInKmH = action.payload;
         },
+        setGapToleranceInKm: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
+            state.gapToleranceInKm = action.payload;
+        },
         setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | string[]>) => {
             state.segmentIdClipboard = action.payload;
         },
         setTrackCompositionFilterTerm: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.filterTerm = action.payload;
+        },
+        setDefaultArrivalDateTime: (state: TrackMergeState) => {
+            state.hasDefaultArrivalDate = true;
+            state.arrivalDateTime = new Date().toISOString();
+        },
+        setTrackIdForAddingABreak: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.trackIdForAddingABreak = action.payload;
+        },
+        setIsCalculationRunning: (state: TrackMergeState, action: PayloadAction<boolean | undefined>) => {
+            state.isCalculationRunning = action.payload;
+        },
+        setIsCalculationOnTheFly: (state: TrackMergeState, action: PayloadAction<boolean>) => {
+            state.isCalculationOnTheFly = action.payload;
+        },
+        setHasChangesSinceLastCalculation: (state: TrackMergeState, action: PayloadAction<boolean>) => {
+            state.changesSinceLastCalculation = action.payload;
         },
         clear: () => initialState,
     },
@@ -102,10 +125,16 @@ const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
+export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
 export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
+export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
+export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
+export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
+export const getIsCalculationOnTheFly = (state: State) => getBase(state).isCalculationOnTheFly;
+export const getHasChangesSinceLastCalculation = (state: State) => getBase(state).changesSinceLastCalculation;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

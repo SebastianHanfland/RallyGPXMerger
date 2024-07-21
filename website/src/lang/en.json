@@ -212,5 +212,17 @@
     "msg.continuePlan.hint": "Opens last planning in planner",
     "msg.startWizard": "Start Wizard",
     "msg.startWizard.hint": "Create a rally step by step",
-    "msg.loadingStreetNames": "...is loading street data"
+    "msg.loadingStreetNames": "...is loading street data",
+    "msg.trackSettings": "Track Settings",
+    "msg.gapSetting": "Gap Finder",
+    "msg.gapTolerance.hint": "Gap tolerance between segments (in km)",
+    "msg.defaultArrivalTime": "You have not yet set an arrival time. Current value",
+    "msg.setArrivalDateTime": "Set now the arrival time",
+    "msg.splitSegment": "Split segment here",
+    "msg.onTheFly": "Automatic",
+    "msg.calculate": "Calculate",
+    "msg.pause": "Add a Pause",
+    "msg.add": "Add",
+    "msg.minutes.details": "Select the minutes for the pause",
+    "msg.toiletAtPause": "Toilets at pause place"
 }

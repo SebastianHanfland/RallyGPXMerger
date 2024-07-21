@@ -2,14 +2,11 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Sections } from './types.ts';
 import stars from '../../assets/stars.svg';
 import fileUp from '../../assets/file-up.svg';
-import info from '../../assets/info.svg';
 import versionSvg from '../../assets/version.svg';
 import pencil from '../../assets/pencil.svg';
-import magic from '../../assets/magic_b.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
-import { loadSampleData } from '../io/loadSampleData.ts';
 import { importHook } from '../io/importHook.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
@@ -23,7 +20,7 @@ export const WizardStartPage = () => {
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
-    const [nextSection, setNextSection] = useState<'gps' | 'wizard-parameters' | undefined>();
+    const [nextSection, setNextSection] = useState<'gps' | 'wizard-parameters' | 'wizard-complexity' | undefined>();
 
     return (
         <Container fluid className={'m-0'}>
@@ -39,8 +36,12 @@ export const WizardStartPage = () => {
                     <WizardCard
                         icon={stars}
                         onClick={() => {
-                            setShowModal(true);
-                            setNextSection('gps');
+                            if (planningInProgress) {
+                                setShowModal(true);
+                                setNextSection('wizard-complexity');
+                            } else {
+                                setSelectedSection('wizard-complexity');
+                            }
                         }}
                         title={<FormattedMessage id={'msg.startPlan'} />}
                         text={<FormattedMessage id={'msg.startPlan.hint'} />}
@@ -56,17 +57,17 @@ export const WizardStartPage = () => {
                         />
                     </Col>
                 )}
-                <Col>
-                    <WizardCard
-                        icon={magic}
-                        onClick={() => {
-                            setShowModal(true);
-                            setNextSection('wizard-parameters');
-                        }}
-                        title={<FormattedMessage id={'msg.startWizard'} />}
-                        text={<FormattedMessage id={'msg.startWizard.hint'} />}
-                    />
-                </Col>
+                {/*<Col>*/}
+                {/*    <WizardCard*/}
+                {/*        icon={magic}*/}
+                {/*        onClick={() => {*/}
+                {/*            setShowModal(true);*/}
+                {/*            setNextSection('wizard-parameters');*/}
+                {/*        }}*/}
+                {/*        title={<FormattedMessage id={'msg.startWizard'} />}*/}
+                {/*        text={<FormattedMessage id={'msg.startWizard.hint'} />}*/}
+                {/*    />*/}
+                {/*</Col>*/}
                 <Col>
                     <WizardCard
                         icon={fileUp}
@@ -83,18 +84,18 @@ export const WizardStartPage = () => {
                         accept={'application/json'}
                     />
                 </Col>
-                <Col>
-                    <WizardCard
-                        icon={info}
-                        onClick={() => {
-                            loadSampleData(dispatch);
-                            dispatch(layoutActions.setShowDashboard(true));
-                            setSelectedSection('gps');
-                        }}
-                        title={<FormattedMessage id={'msg.loadSample'} />}
-                        text={<FormattedMessage id={'msg.loadSample.hint'} />}
-                    />
-                </Col>
+                {/*<Col>*/}
+                {/*    <WizardCard*/}
+                {/*        icon={info}*/}
+                {/*        onClick={() => {*/}
+                {/*            loadSampleData(dispatch);*/}
+                {/*            dispatch(layoutActions.setShowDashboard(true));*/}
+                {/*            setSelectedSection('gps');*/}
+                {/*        }}*/}
+                {/*        title={<FormattedMessage id={'msg.loadSample'} />}*/}
+                {/*        text={<FormattedMessage id={'msg.loadSample.hint'} />}*/}
+                {/*    />*/}
+                {/*</Col>*/}
                 <Col>
                     <WizardCard
                         icon={versionSvg}

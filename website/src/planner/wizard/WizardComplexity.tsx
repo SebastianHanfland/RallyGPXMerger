@@ -4,21 +4,24 @@ import mergeTracks from '../../assets/mergeTracks.svg';
 import { WizardHeader } from './WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
-import { Sections } from '../layout/types.ts';
-import { DirectlyToPlannerButton } from './DirectlyToPlannerButton.tsx';
 import { simpleRallyThunk } from './simpleRallyThunk.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from '../layout/WizardCard.tsx';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();
-    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const continueAsSimpleRally = () => {
         dispatch(simpleRallyThunk);
+        dispatch(layoutActions.setHasSingleTrack(true));
     };
     const continueAsComplexRally = () => {
-        setSelectedSection('wizard-tracks');
+        dispatch(trackMergeActions.setDefaultArrivalDateTime());
+        dispatch(trackMergeActions.setIsCalculationOnTheFly(false));
+        dispatch(layoutActions.setIsSidebarOpen(true));
+        dispatch(layoutActions.setHasSingleTrack(false));
+        dispatch(layoutActions.selectSection('gps'));
     };
 
     return (
@@ -43,11 +46,6 @@ export const WizardsComplexity = () => {
                         text={<FormattedMessage id={'msg.complex.hint'} />}
                         icon={mergeTracks}
                     />
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <DirectlyToPlannerButton />
                 </Col>
             </Row>
         </Container>
