@@ -65,7 +65,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     // TODO: 161 This part, creating a string out of it again takes, quite some time...
     // If we manage to bring this into another process or debounce it, we could easily use the logic and have an update within a second
-    const speedUp = true;
+    const speedUp = false;
     if (!speedUp) {
         dispatch(
             calculatedTracksActions.setCalculatedTracks(
@@ -75,11 +75,9 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
         dispatch(mapActions.setShowCalculatedTracks(true));
     }
 
-    const readableTracks = getReadableTracks();
-    if (!readableTracks) {
-        setReadableTracks(calculatedTracks.map((track) => ({ id: track.id, gpx: track.content })));
-        initializeResolvedPositions(dispatch);
-    }
+    setReadableTracks(calculatedTracks.map((track) => ({ id: track.id, gpx: track.content })));
+    initializeResolvedPositions(dispatch);
+
     calculateAndStoreStartAndEndOfSimulation(dispatch, getState());
     return Promise.resolve();
 }
