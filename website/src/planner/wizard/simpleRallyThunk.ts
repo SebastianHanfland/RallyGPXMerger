@@ -3,9 +3,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
-import { resolvePositions } from '../logic/resolving/resolveStreetAndPostcodeInfo.ts';
 
 export const simpleRallyThunk = (dispatch: AppDispatch, getState: () => State) => {
     const gpxSegments = getGpxSegments(getState());
@@ -18,7 +16,6 @@ export const simpleRallyThunk = (dispatch: AppDispatch, getState: () => State) =
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
         dispatch(trackMergeActions.setIsCalculationOnTheFly(true));
-        dispatch(calculateMerge).then(() => dispatch(resolvePositions));
         dispatch(layoutActions.setShowDashboard(true));
         dispatch(layoutActions.selectSection('gps'));
     }, 10);
