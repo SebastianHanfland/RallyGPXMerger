@@ -1,14 +1,1 @@
-export type Sections =
-    | 'menu'
-    | 'streets'
-    | 'gps'
-    | 'importExport'
-    | 'settings'
-    | 'tracks'
-    | 'points'
-    | 'nodePoints'
-    | 'wizard-parameters'
-    | 'wizard-segments'
-    | 'wizard-complexity'
-    | 'wizard-tracks'
-    | 'wizard-versions';
+export type Sections = 'menu' | 'gps' | 'wizard-complexity' | 'wizard-versions';

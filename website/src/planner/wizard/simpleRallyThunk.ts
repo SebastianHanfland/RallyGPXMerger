@@ -20,6 +20,6 @@ export const simpleRallyThunk = (dispatch: AppDispatch, getState: () => State) =
         dispatch(trackMergeActions.setIsCalculationOnTheFly(true));
         dispatch(calculateMerge).then(() => dispatch(resolvePositions));
         dispatch(layoutActions.setShowDashboard(true));
-        dispatch(layoutActions.selectSection('streets'));
+        dispatch(layoutActions.selectSection('gps'));
     }, 10);
 };

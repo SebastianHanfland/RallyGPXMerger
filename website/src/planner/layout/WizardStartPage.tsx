@@ -20,7 +20,7 @@ export const WizardStartPage = () => {
     const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
-    const [nextSection, setNextSection] = useState<'gps' | 'wizard-parameters' | 'wizard-complexity' | undefined>();
+    const [nextSection, setNextSection] = useState<'gps' | 'wizard-complexity' | undefined>();
 
     return (
         <Container fluid className={'m-0'}>
@@ -84,18 +84,6 @@ export const WizardStartPage = () => {
                         accept={'application/json'}
                     />
                 </Col>
-                {/*<Col>*/}
-                {/*    <WizardCard*/}
-                {/*        icon={info}*/}
-                {/*        onClick={() => {*/}
-                {/*            loadSampleData(dispatch);*/}
-                {/*            dispatch(layoutActions.setShowDashboard(true));*/}
-                {/*            setSelectedSection('gps');*/}
-                {/*        }}*/}
-                {/*        title={<FormattedMessage id={'msg.loadSample'} />}*/}
-                {/*        text={<FormattedMessage id={'msg.loadSample.hint'} />}*/}
-                {/*    />*/}
-                {/*</Col>*/}
                 <Col>
                     <WizardCard
                         icon={versionSvg}
