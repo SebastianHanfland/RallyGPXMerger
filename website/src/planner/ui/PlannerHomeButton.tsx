@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
+import house from '../../assets/house.svg';
 
 const homeStyle: CSSProperties = {
     position: 'fixed',
@@ -29,7 +30,7 @@ export function PlannerHomeButton() {
             className={'shadow'}
             title={intl.formatMessage({ id: 'msg.menu' })}
         >
-            H
+            <img src={house} alt={'house'} style={{ width: '40px', height: '40px' }} />
         </div>
     );
 }
