@@ -162,6 +162,14 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         return buildGPX(builder.toObject());
     }
 
+    setStart(start: string): void {
+        this.start = new Date(start);
+    }
+
+    setEnd(end: string): void {
+        this.end = new Date(end);
+    }
+
     getStart(): string {
         return this.start.toISOString();
     }

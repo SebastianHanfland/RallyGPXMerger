@@ -11,13 +11,17 @@ export function enrichGpxSegmentsWithTimeStamps(
     return gpxSegments.map((segment) => {
         const gpxContent = getGpx(segment);
         let nextStartDate = '2020-10-10T10:00:00.000Z';
+        gpxContent.setStart(nextStartDate);
         gpxContent.tracks.forEach((track) => {
             const usedSpeed = (segmentSpeeds[segment.id] ?? 0) > 0 ? segmentSpeeds[segment.id]! : averageSpeed;
-            track.points = generateTimeData(
+            const generatedPoints = generateTimeData(
                 nextStartDate,
                 usedSpeed,
                 segment.flipped ? track.points.reverse() : track.points
             );
+            track.points = generatedPoints;
+            const end = generatedPoints[generatedPoints.length - 1].time.toISOString();
+            gpxContent.setEnd(end);
             nextStartDate = track.points[track.points.length - 1].time.toISOString();
         });
         return {
