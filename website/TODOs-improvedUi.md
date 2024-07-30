@@ -11,8 +11,8 @@
 -[ ] Points maybe via dialog or extra tab, or accordion?
 -[x] Construction sites and others
 -[x] Track name (and ensured creation) for single track
-- [ ] Doing the magic only for small demonstrations and turning it of.
-  - [ ] Still having one "Do the magic" button available
+- [x] Doing the magic only for small demonstrations and turning it of.
+  - [x] Still having one "Do the magic" button available
   - [ ] Optimizing the magic
     - [ ] It should be way faster.
 
@@ -21,7 +21,7 @@
 - [ ] Edit of Breaks, changing time or text or whatever
   - [ ] Text etc as title when hovering over it
 -[x] .... Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
--[ ] Map interactions, via floating buttons
+-[x] Map interactions, via floating buttons
 - [ ] Being able to change the color (by randomly clicking?)
 -[x] Having an icon which signals that some background processes are working
 -[ ] break management
@@ -39,7 +39,7 @@
 -[ ] Validation for the document creation
 -[ ] Initial map location via ip address or such
 -[ ] Having a smooth user experience when using the tool
--[ ] Maybe one button to trigger a clean creation
+-[x] Maybe one button to trigger a clean creation
 -[ ] Maybe improve handling on the nodes
 -[ ] Settings for start time communication or such not having it in code
   - [ ] As additional parameters for each track
@@ -53,8 +53,8 @@
 -[ ] Smooth the starting way and maybe rework the menu and the way to it
 -[ ] A list of warnings per track, or also one to display that the arrival date was not yet set
     - [ ] Either on the map or as bubbles
-- [ ] a proper context menu on the tracks,
-    - [ ] split in dialog
+- [x] a proper context menu on the tracks,
+    - [x] split in dialog
     - [ ] gpx segment, add to track X
     - [ ] all the other ones from the list as well
       - [ ] delete
