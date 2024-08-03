@@ -4,7 +4,7 @@ import { GpxCreationHint } from './GpxCreationHint.tsx';
 
 export function FileUploadSection() {
     return (
-        <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+        <div className={'p-2 shadow'} style={{ height: '100vh', overflow: 'auto' }}>
             <h4>
                 <FormattedMessage id={'msg.uploadGpx.title'} />
             </h4>
