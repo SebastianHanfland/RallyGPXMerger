@@ -7,6 +7,7 @@ import { TimeSlider } from '../map/TimeSlider.tsx';
 import { DefaultArrivalDateWarning } from './DefaultArrivalDateWarning.tsx';
 import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
+import { LanguageSelection } from '../layout/LanguageSelection.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -21,6 +22,7 @@ export const MainPlannerUi = () => {
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />
+                <LanguageSelection />
             </div>
             <PlannerSidebar />
         </>
