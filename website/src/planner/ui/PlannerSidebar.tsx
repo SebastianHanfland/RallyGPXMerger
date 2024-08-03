@@ -10,7 +10,7 @@ import { ClosePlannerSidebar } from './ClosePlannerSidebar.tsx';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
     position: 'fixed',
-    width: `${showSidebar ? 900 : 30}px`,
+    width: `${showSidebar ? '50vw' : '30px'}`,
     height: '100vh',
     right: 0,
     top: 0,

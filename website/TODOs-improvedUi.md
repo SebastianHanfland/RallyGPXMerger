@@ -3,18 +3,18 @@
 - [x] No segment select for simple track
 - [x] Track info for simple track
 - [x] Bug when uploading?
-- [ ] Width of sidebar
-- [ ] Map Focus when entering page
+- [x] Width of sidebar
+- [x] Map Focus when entering page
 - [ ] Directly create a break somewhere
 - [ ] Integrate toilet display
 - [ ] Aborting/Deleting a planning
-- [ ] Maybe renaming segments for simple track?
+- [x] Maybe renaming segments for simple track? -> No
 - [x] Space to the bottom so that the dropdown looks fine
 - [x] When initally starting, having a sidebartab selected
 - [x] Calculate when speed changes
 - [x] Calculate when expansion changes
 - [x] Download only a single pdf/gpx
-- [ ] No N.N., maybe allow to name the track anyways -> title on display later
+- [x] No N.N., maybe allow to name the track anyways -> title on display later
 
 ### Optional
 - [ ] Display height profile

@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
 import { CSSProperties } from 'react';
 
-const getStyle = (width: number): CSSProperties => ({
+const getStyle = (width: string): CSSProperties => ({
     position: 'fixed',
     width: '40px',
     height: '40px',
-    right: `${width}px`,
+    right: width,
     overflowY: 'scroll',
     top: 0,
     zIndex: 10,
@@ -25,7 +25,7 @@ export function ClosePlannerSidebar() {
                 event.stopPropagation();
                 dispatch(layoutActions.setIsSidebarOpen(!isSidebarOpen));
             }}
-            style={getStyle(isSidebarOpen ? 900 : 30)}
+            style={getStyle(isSidebarOpen ? '50vw' : '30px')}
         >
             {isSidebarOpen ? '>>' : '<<'}
         </div>
