@@ -1,19 +1,19 @@
 ### Fix List
 - [x] Upload of Segment(s) triggers calculation
 - [x] No segment select for simple track
-- [ ] Track info for simple track
-- [ ] Bug when uploading?
+- [x] Track info for simple track
+- [x] Bug when uploading?
 - [ ] Width of sidebar
-- [ ] Focus when entering page
+- [ ] Map Focus when entering page
 - [ ] Directly create a break somewhere
 - [ ] Integrate toilet display
 - [ ] Aborting/Deleting a planning
 - [ ] Maybe renaming segments for simple track?
-- [ ] Space to the bottom so that the dropdown looks fine
-- [ ] When initally starting, having a sidebartab selected
-- [ ] Calculate when speed changes
-- [ ] Calculate when expansion changes
-- [ ] Download only a single pdf/gpx
+- [x] Space to the bottom so that the dropdown looks fine
+- [x] When initally starting, having a sidebartab selected
+- [x] Calculate when speed changes
+- [x] Calculate when expansion changes
+- [x] Download only a single pdf/gpx
 - [ ] No N.N., maybe allow to name the track anyways -> title on display later
 
 ### Optional

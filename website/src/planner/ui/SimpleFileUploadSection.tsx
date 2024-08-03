@@ -21,7 +21,7 @@ export function SimpleFileUploadSection() {
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
     return (
-        <div className={'p-2 shadow'} style={{ overflow: 'auto' }}>
+        <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
             <h4>
                 <Row>
                     <h5>Route</h5>
