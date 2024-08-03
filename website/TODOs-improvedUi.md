@@ -15,8 +15,8 @@
 - [x] Calculate when expansion changes
 - [x] Download only a single pdf/gpx
 - [x] No N.N., maybe allow to name the track anyways -> title on display later
-- [ ] Labels on text fields for simple track
-- [ ] Linking to setting date -> being adjusted
+- [x] Labels on text fields for simple track
+- [x] Linking to setting date -> being adjusted
 
 ### Optional
 - [ ] Display height profile of track
