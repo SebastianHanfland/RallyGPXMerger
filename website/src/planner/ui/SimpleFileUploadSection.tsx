@@ -58,7 +58,6 @@ export function SimpleFileUploadSection() {
             </Row>
             <hr />
             <TrackInfoDownloadButtons />
-            <hr />
             <SimpleGpxSegments />
             <div style={{ height: '250px' }} />
         </div>

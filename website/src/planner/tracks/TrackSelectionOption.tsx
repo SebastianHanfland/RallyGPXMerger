@@ -9,7 +9,7 @@ import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { getGpxSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
@@ -19,6 +19,7 @@ interface Props {
     trackId: string;
     segmentId: string;
     segmentName: string;
+    fullGpxDelete: boolean;
 }
 
 function isABreak(segmentId: string) {
@@ -30,7 +31,7 @@ function getPauseLabel(segmentId: string) {
     return `${minutesBreak > 0 ? '+' : '-'} ${minutesBreak > 0 ? minutesBreak : -1 * minutesBreak} min`;
 }
 
-export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props) {
+export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
 
@@ -101,6 +102,9 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId }: Props)
                         className={'mx-1'}
                         onClick={() => {
                             dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
+                            if (fullGpxDelete) {
+                                dispatch(gpxSegmentsActions.removeGpxSegment(segmentId));
+                            }
                             dispatch(triggerAutomaticCalculation);
                         }}
                         title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}

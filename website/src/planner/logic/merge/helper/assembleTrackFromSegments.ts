@@ -43,7 +43,7 @@ export function assembleTrackFromSegments(
     track: TrackComposition,
     gpxSegments: ResolvedGpxSegment[],
     initialEndDate: string
-): ResolvedCalculatedTrack {
+): ResolvedCalculatedTrack | null {
     let arrivalTimeForPreviousSegment = initialEndDate;
     let shiftedGpxContents: SimpleGPX[] = [];
     clearAllGaps();
@@ -68,6 +68,9 @@ export function assembleTrackFromSegments(
         }
     });
 
+    if (shiftedGpxContents.length === 0) {
+        return null;
+    }
     const trackContent = mergeSimpleGPXs(shiftedGpxContents);
 
     return { id: track.id, content: trackContent, filename: track.name!, peopleCount: track.peopleCount ?? 0 };

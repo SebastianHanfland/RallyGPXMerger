@@ -16,6 +16,7 @@ import { GpxSegmentsUpload } from '../ui/GpxSegmentsUpload.tsx';
 interface Props {
     track: TrackComposition;
     hideSelect?: boolean;
+    fullGpxDelete?: boolean;
 }
 
 function toOption(gpxSegment: GpxSegment): { value: string; label: string } {
@@ -25,7 +26,7 @@ function toOption(gpxSegment: GpxSegment): { value: string; label: string } {
     };
 }
 
-export function TrackSegmentSelection({ track, hideSelect }: Props) {
+export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Props) {
     const intl = useIntl();
     const { id, segmentIds } = track;
     const dispatch: AppDispatch = useDispatch();
@@ -66,6 +67,7 @@ export function TrackSegmentSelection({ track, hideSelect }: Props) {
                             segmentId={segmentId}
                             trackId={id}
                             segmentName={segmentName ?? 'Currently blank'}
+                            fullGpxDelete={!!fullGpxDelete}
                         />
                     );
                 })}
