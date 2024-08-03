@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { getArrivalDateTime, getHasDefaultArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
 import { formatDate } from '../../utils/dateUtil.ts';
-import { layoutActions } from '../store/layout.reducer.ts';
+import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
 
 const defaultTimeWarning: CSSProperties = {
@@ -24,6 +24,7 @@ export function DefaultArrivalDateWarning() {
     const intl = useIntl();
     const hasDefaultTime = useSelector(getHasDefaultArrivalDateTime);
     const arrivalDateTime = useSelector(getArrivalDateTime);
+    const hasOnlySingleTrack = useSelector(getHasSingleTrack);
     const dispatch = useDispatch();
 
     if (!hasDefaultTime || !arrivalDateTime) {
@@ -36,7 +37,9 @@ export function DefaultArrivalDateWarning() {
             className={'shadow'}
             onClick={() => {
                 dispatch(layoutActions.setIsSidebarOpen(true));
-                dispatch(layoutActions.setSelectedSidebarSection('settings'));
+                if (!hasOnlySingleTrack) {
+                    dispatch(layoutActions.setSelectedSidebarSection('settings'));
+                }
             }}
             title={intl.formatMessage({ id: 'msg.setArrivalDateTime' })}
         >
