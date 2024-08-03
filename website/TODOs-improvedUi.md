@@ -1,10 +1,10 @@
 ### Fix List
 - [x] Upload of Segment(s) triggers calculation
+- [x] No segment select for simple track
 - [ ] Bug when uploading?
 - [ ] Width of sidebar
 - [ ] Focus when entering page
 - [ ] Track info for simple track
-- [ ] No segment select for simple track
 - [ ] Directly create a break somewhere
 - [ ] Integrate toilet display
 - [ ] Aborting/Deleting a planning

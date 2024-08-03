@@ -14,6 +14,7 @@ import Button from 'react-bootstrap/Button';
 
 interface Props {
     track: TrackComposition;
+    hideSelect?: boolean;
 }
 
 function toOption(gpxSegment: GpxSegment): { value: string; label: string } {
@@ -23,7 +24,7 @@ function toOption(gpxSegment: GpxSegment): { value: string; label: string } {
     };
 }
 
-export function TrackSegmentSelection({ track }: Props) {
+export function TrackSegmentSelection({ track, hideSelect }: Props) {
     const intl = useIntl();
     const { id, segmentIds } = track;
     const dispatch: AppDispatch = useDispatch();
@@ -69,23 +70,25 @@ export function TrackSegmentSelection({ track }: Props) {
                 })}
             </ReactSortable>
             <div className={'d-flex'}>
-                <div className={'flex-grow-1'}>
-                    <Select
-                        name="segmentSelect"
-                        value={null}
-                        menuPlacement={'top'}
-                        placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
-                        options={options.filter((option) => !segmentIds.includes(option.value))}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={addSegmentToTrack}
-                    />
-                </div>
                 <div style={{ marginLeft: '10px' }}>
                     <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>
                         <FormattedMessage id={'msg.pause'} />
                     </Button>
                 </div>
+                {!hideSelect && (
+                    <div className={'flex-grow-1'}>
+                        <Select
+                            name="segmentSelect"
+                            value={null}
+                            menuPlacement={'top'}
+                            placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
+                            options={options.filter((option) => !segmentIds.includes(option.value))}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={addSegmentToTrack}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

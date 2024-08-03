@@ -48,7 +48,7 @@ export function SimpleGpxSegments() {
     };
     return (
         <div>
-            <TrackSegmentSelection track={track} />
+            <TrackSegmentSelection track={track} hideSelect={true} />
             <FileUploader
                 handleChange={handleChange}
                 name="file"
