@@ -1,0 +1,49 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { Button, Col, Row } from 'react-bootstrap';
+import { downloadSinglePdfFiles } from '../streets/StreetFilesPdfMakeDownloader.tsx';
+import download from '../../assets/file-down.svg';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { AppDispatch } from '../store/store.ts';
+import { FileDownloader } from '../segments/FileDownloader.tsx';
+import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import { ExportStateJson } from '../io/ExportStateJson.tsx';
+
+export function TrackInfoDownloadButtons() {
+    const intl = useIntl();
+    const dispatch: AppDispatch = useDispatch();
+    const trackCompositions = useSelector(getTrackCompositions);
+    const calculatedTracks = useSelector(getCalculatedTracks);
+    if (trackCompositions.length === 0) {
+        return null;
+    }
+    const track = trackCompositions[0];
+    return (
+        <Row>
+            <h5>
+                <FormattedMessage id={'msg.documents'} />
+            </h5>
+            <Col>
+                <Button size={'sm'} className={'m-1'} onClick={() => dispatch(downloadSinglePdfFiles(intl, track.id))}>
+                    <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
+                    PDF
+                </Button>
+            </Col>
+            {calculatedTracks.length > 0 && (
+                <Col>
+                    <FileDownloader
+                        name={`${calculatedTracks[0].filename}.gpx`}
+                        content={calculatedTracks[0].content}
+                        id={calculatedTracks[0].id}
+                        label={'GPX'}
+                        onlyIcon={true}
+                        size={'sm'}
+                    />
+                </Col>
+            )}
+            <Col>
+                <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
+            </Col>
+        </Row>
+    );
+}

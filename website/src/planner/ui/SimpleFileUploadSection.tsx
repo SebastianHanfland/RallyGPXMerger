@@ -1,27 +1,18 @@
 import { SimpleGpxSegments } from './SimpleGpxSegments.tsx';
 import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo.tsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import { Button, Col, Row } from 'react-bootstrap';
-import { downloadSinglePdfFiles } from '../streets/StreetFilesPdfMakeDownloader.tsx';
-import download from '../../assets/file-down.svg';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/store.ts';
-import { FileDownloader } from '../segments/FileDownloader.tsx';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
-import { ExportStateJson } from '../io/ExportStateJson.tsx';
+import { Col, Row } from 'react-bootstrap';
 import { TrackName } from './TrackName.tsx';
 import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
 import { TrackPeople } from './TrackPeople.tsx';
 import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
+import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 
 export function SimpleFileUploadSection() {
-    const intl = useIntl();
-    const dispatch: AppDispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
-    const calculatedTracks = useSelector(getCalculatedTracks);
     const trackInfos = useSelector(getEnrichedTrackStreetInfos);
     if (trackCompositions.length === 0) {
         return null;
@@ -66,36 +57,7 @@ export function SimpleFileUploadSection() {
                 </Col>
             </Row>
             <hr />
-            <Row>
-                <h5>
-                    <FormattedMessage id={'msg.documents'} />
-                </h5>
-                <Col>
-                    <Button
-                        size={'sm'}
-                        className={'m-1'}
-                        onClick={() => dispatch(downloadSinglePdfFiles(intl, track.id))}
-                    >
-                        <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
-                        PDF
-                    </Button>
-                </Col>
-                {calculatedTracks.length > 0 && (
-                    <Col>
-                        <FileDownloader
-                            name={`${calculatedTracks[0].filename}.gpx`}
-                            content={calculatedTracks[0].content}
-                            id={calculatedTracks[0].id}
-                            label={'GPX'}
-                            onlyIcon={true}
-                            size={'sm'}
-                        />
-                    </Col>
-                )}
-                <Col>
-                    <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
-                </Col>
-            </Row>
+            <TrackInfoDownloadButtons />
             <hr />
             <SimpleGpxSegments />
             <div style={{ height: '250px' }} />
