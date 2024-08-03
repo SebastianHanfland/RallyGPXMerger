@@ -10,6 +10,7 @@ import { TrackPeople } from './TrackPeople.tsx';
 import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
 import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -24,7 +25,9 @@ export function SimpleFileUploadSection() {
         <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
             <h4>
                 <Row>
-                    <h5>Route</h5>
+                    <h5>
+                        <FormattedMessage id={'msg.track'} />
+                    </h5>
                     <Col>
                         <span style={{ width: '300px' }}>
                             <TrackName track={track} />
@@ -57,7 +60,7 @@ export function SimpleFileUploadSection() {
                 </Col>
             </Row>
             <hr />
-            <TrackInfoDownloadButtons />
+            <TrackInfoDownloadButtons matchedTrackInfo={matchedTrackInfo} />
             <SimpleGpxSegments />
             <div style={{ height: '250px' }} />
         </div>
