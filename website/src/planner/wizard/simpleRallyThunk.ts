@@ -10,5 +10,6 @@ export const simpleRallyThunk = (dispatch: AppDispatch) => {
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
         dispatch(trackMergeActions.setIsCalculationOnTheFly(true));
         dispatch(layoutActions.selectSection('gps'));
+        dispatch(layoutActions.setSelectedSidebarSection('simpleTrack'));
     }, 10);
 };
