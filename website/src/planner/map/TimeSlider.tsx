@@ -18,7 +18,7 @@ const sliderStyle: CSSProperties = {
     position: 'fixed',
     width: '350px',
     height: '45px',
-    borderRadius: '2px',
+    borderRadius: '10px',
     left: 60,
     bottom: 50,
     zIndex: 10,

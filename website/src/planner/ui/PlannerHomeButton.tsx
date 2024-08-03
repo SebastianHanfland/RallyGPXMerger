@@ -9,7 +9,7 @@ const homeStyle: CSSProperties = {
     position: 'fixed',
     width: '45px',
     height: '45px',
-    borderRadius: '2px',
+    borderRadius: '10px',
     left: 10,
     bottom: 50,
     zIndex: 10,

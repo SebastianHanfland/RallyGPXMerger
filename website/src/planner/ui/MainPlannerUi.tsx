@@ -8,6 +8,7 @@ import { DefaultArrivalDateWarning } from './DefaultArrivalDateWarning.tsx';
 import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
 import { LanguageSelection } from '../layout/LanguageSelection.tsx';
+import { RemoveDataButton } from '../layout/RemoveDataButton.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -23,6 +24,7 @@ export const MainPlannerUi = () => {
                 <PlannerHomeButton />
                 <TimeSlider />
                 <LanguageSelection />
+                <RemoveDataButton />
             </div>
             <PlannerSidebar />
         </>

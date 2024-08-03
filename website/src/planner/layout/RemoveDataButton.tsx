@@ -1,10 +1,22 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { useState } from 'react';
+import { CSSProperties, useState } from 'react';
 import trash from '../../assets/trash.svg';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { resetData } from '../io/resetData.ts';
+
+const removeDataStyle: CSSProperties = {
+    position: 'fixed',
+    width: '45px',
+    height: '45px',
+    borderRadius: '10px',
+    left: 10,
+    bottom: 110,
+    zIndex: 10,
+    overflow: 'hidden',
+    cursor: 'pointer',
+};
 
 export function RemoveDataButton() {
     const dispatch = useDispatch();
@@ -18,14 +30,13 @@ export function RemoveDataButton() {
     return (
         <>
             <Button
+                style={removeDataStyle}
+                className={'m-0 p-0'}
                 variant="danger"
                 title={intl.formatMessage({ id: 'msg.removeAllData.hint' })}
                 onClick={() => setShowModal(true)}
             >
-                <img src={trash} className="m-1" alt="trash" />
-                <span className={'d-none d-lg-block'}>
-                    <FormattedMessage id={'msg.removeAllData'} />
-                </span>
+                <img src={trash} className="m-1" alt="trash" style={{ height: '30px', width: '30px' }} />
             </Button>
             {showModal && (
                 <ConfirmationModal
