@@ -21,8 +21,6 @@ const getStyle = (showSidebar: boolean): CSSProperties => ({
     cursor: showSidebar ? undefined : 'pointer',
 });
 
-export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings';
-
 function ComplexContent() {
     return (
         <div>

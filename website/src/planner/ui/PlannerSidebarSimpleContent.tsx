@@ -6,7 +6,7 @@ import { getSelectedSidebarSection } from '../store/layout.reducer.ts';
 export const PlannerSidebarSimpleContent = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
     switch (selectedSection) {
-        case 'segments':
+        case 'simpleTrack':
             return <SimpleFileUploadSection />;
         case 'settings':
             return <PlannerSidebarSettings />;

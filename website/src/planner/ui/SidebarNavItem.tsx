@@ -1,8 +1,8 @@
-import { SidebarSections } from './PlannerSidebar.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Nav } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import { SidebarSections } from '../store/types.ts';
 
 interface Props {
     section: SidebarSections;

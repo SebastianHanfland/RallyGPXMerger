@@ -224,5 +224,6 @@
     "msg.pause": "Add a Pause",
     "msg.add": "Add",
     "msg.minutes.details": "Select the minutes for the pause",
-    "msg.toiletAtPause": "Toilets at pause place"
+    "msg.toiletAtPause": "Toilets at pause place",
+    "msg.simpleTrack": "Track planning"
 }

@@ -22,7 +22,7 @@ export interface CalculatedTracksState {
     tracks: CalculatedTrack[];
 }
 
-export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings';
+export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
 
 export interface LayoutState {
     selectedSection: Sections;

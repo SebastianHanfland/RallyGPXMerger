@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { LayoutState, State } from './types.ts';
+import { LayoutState, SidebarSections, State } from './types.ts';
 import { storage } from './storage.ts';
 import { Sections } from '../layout/types.ts';
 import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../language.ts';
-import { SidebarSections } from '../ui/PlannerSidebar.tsx';
 
 const initialState: LayoutState = {
     selectedSection: 'menu',
