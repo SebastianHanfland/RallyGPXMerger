@@ -26,7 +26,6 @@ export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings';
 
 export interface LayoutState {
     selectedSection: Sections;
-    showDashboard: boolean;
     language: SupportedLanguages;
     hasSingleTrack: boolean;
     isSidebarOpen: boolean;

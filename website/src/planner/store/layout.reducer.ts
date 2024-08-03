@@ -7,7 +7,6 @@ import { SidebarSections } from '../ui/PlannerSidebar.tsx';
 
 const initialState: LayoutState = {
     selectedSection: 'menu',
-    showDashboard: false,
     hasSingleTrack: false,
     language: getInitialLanguage(),
     isSidebarOpen: true,
@@ -20,9 +19,6 @@ const layoutSlice = createSlice({
     reducers: {
         selectSection: (state: LayoutState, action: PayloadAction<Sections>) => {
             state.selectedSection = action.payload;
-        },
-        setShowDashboard: (state: LayoutState, action: PayloadAction<boolean>) => {
-            state.showDashboard = action.payload;
         },
         setLanguage: (state: LayoutState, action: PayloadAction<SupportedLanguages>) => {
             state.language = action.payload;
@@ -45,7 +41,6 @@ export const layoutReducer: Reducer<LayoutState> = layoutSlice.reducer;
 const getBase = (state: State) => state.layout;
 
 export const getSelectionSection = (state: State) => getBase(state).selectedSection;
-export const getShowDashboard = (state: State) => getBase(state).showDashboard;
 export const getDisplayLanguage = (state: State) => getBase(state).language;
 export const getHasSingleTrack = (state: State) => getBase(state).hasSingleTrack;
 export const getIsSidebarOpen = (state: State) => getBase(state).isSidebarOpen;
