@@ -1,11 +1,8 @@
 import { useSelector } from 'react-redux';
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { SingleTrackStreetInfo } from '../streets/SingleTrackStreetInfo.tsx';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { StreetInfoModal } from './StreetInfoModal.tsx';
 
 export const PlannerSidebarStreetInfos = () => {
     const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
@@ -26,21 +23,7 @@ export const PlannerSidebarStreetInfos = () => {
                     </PageItem>
                 ))}
             </Pagination>
-            {selectedTrack && (
-                <Modal show={true} onHide={onHide} backdrop="static" keyboard={false} size={'xl'}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{selectedTrack.name}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <SingleTrackStreetInfo trackStreetInfo={selectedTrack} />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={onHide}>
-                            <FormattedMessage id={'msg.close'} />
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            )}
+            {selectedTrack && <StreetInfoModal selectedTrack={selectedTrack} onHide={onHide} />}
         </div>
     );
 };
