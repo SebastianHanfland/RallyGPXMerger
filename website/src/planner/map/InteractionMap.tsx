@@ -11,23 +11,39 @@ import { centerPointHook } from './hooks/centerPointHook.tsx';
 import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { pointsActions } from '../store/points.reducer.ts';
 import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
 import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook.ts';
 import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
 import { PauseDialog } from './PauseDialog.tsx';
+import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { toLatLng } from '../../utils/pointUtil.ts';
 
 let myMap: L.Map | undefined;
 
 export const InteractionMap = () => {
     const dispatch = useDispatch();
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
+    const gpxSegments = useSelector(getGpxSegments);
+
+    useEffect(() => {
+        if (gpxSegments.length > 0 && myMap) {
+            const simpleGPX = SimpleGPX.fromString(gpxSegments[gpxSegments.length - 1].content);
+            const startPoint = simpleGPX.getStartPoint();
+            myMap.setView(toLatLng(startPoint), startZoom);
+        }
+    }, [gpxSegments.length]);
 
     useEffect(() => {
         if (!myMap) {
-            myMap = L.map('mapid').setView(Munich, startZoom);
+            const startPoint =
+                gpxSegments.length > 0
+                    ? toLatLng(SimpleGPX.fromString(gpxSegments[0].content).getStartPoint())
+                    : Munich;
+            myMap = L.map('mapid').setView(startPoint, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             myMap.on('contextmenu', (event: LeafletMouseEvent) => {
                 dispatch(pointsActions.setContextMenuPoint({ lat: event.latlng.lat, lng: event.latlng.lng }));
