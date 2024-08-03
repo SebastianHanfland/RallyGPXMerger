@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import Button from 'react-bootstrap/Button';
+import { GpxSegmentsUpload } from '../ui/GpxSegmentsUpload.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -69,13 +70,8 @@ export function TrackSegmentSelection({ track, hideSelect }: Props) {
                     );
                 })}
             </ReactSortable>
-            <div className={'d-flex'}>
-                <div style={{ marginLeft: '10px' }}>
-                    <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>
-                        <FormattedMessage id={'msg.pause'} />
-                    </Button>
-                </div>
-                {!hideSelect && (
+            <div className={'d-flex my-4'}>
+                {!hideSelect ? (
                     <div className={'flex-grow-1'}>
                         <Select
                             name="segmentSelect"
@@ -88,7 +84,16 @@ export function TrackSegmentSelection({ track, hideSelect }: Props) {
                             onChange={addSegmentToTrack}
                         />
                     </div>
+                ) : (
+                    <div className={'flex-grow-1'}>
+                        <GpxSegmentsUpload />
+                    </div>
                 )}
+                <div style={{ marginLeft: '10px' }}>
+                    <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>
+                        <FormattedMessage id={'msg.pause'} />
+                    </Button>
+                </div>
             </div>
         </div>
     );
