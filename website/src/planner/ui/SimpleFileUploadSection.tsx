@@ -27,26 +27,27 @@ export function SimpleFileUploadSection() {
                 <Row>
                     <h5>
                         <FormattedMessage id={'msg.track'} />
+                        {distanceInfo && <span>{distanceInfo}</span>}
                     </h5>
                     <Col>
-                        <span style={{ width: '300px' }}>
-                            <TrackName track={track} />
-                        </span>
+                        <h6>
+                            <FormattedMessage id={'msg.trackName'} />
+                        </h6>
+                        <TrackName track={track} />
                     </Col>
                     <Col>
-                        <span className={'mx-2'}>{`${distanceInfo}`}</span>
+                        <h6>
+                            <FormattedMessage id={'msg.trackPeople'} />
+                        </h6>
+                        <TrackPeople track={track} />
+                    </Col>
+                    <Col>
+                        <ArrivalDateTimePicker />
                     </Col>
                 </Row>
             </h4>
 
-            <Row>
-                <Col>
-                    <TrackPeople track={track} />
-                </Col>
-                <Col>
-                    <ArrivalDateTimePicker noHeader={true} />
-                </Col>
-            </Row>
+            <Row></Row>
 
             <div className={'my-3'}>
                 <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />

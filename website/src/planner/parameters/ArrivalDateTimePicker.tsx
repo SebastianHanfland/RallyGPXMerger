@@ -13,9 +13,9 @@ export function ArrivalDateTimePicker({ noHeader }: { noHeader?: boolean }) {
     return (
         <div className={'d-inline-block'}>
             {!noHeader && (
-                <h5 className="form-label m-3">
+                <h6 className="form-label">
                     <FormattedMessage id={'msg.arrivalDate.title'} />
-                </h5>
+                </h6>
             )}
             <DatePicker
                 className={'form-control'}

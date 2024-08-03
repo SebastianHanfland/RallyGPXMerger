@@ -3,7 +3,11 @@ import { Col, Row } from 'react-bootstrap';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { useIntl } from 'react-intl';
 
-export const PlannerSidebarTrackInfo = ({ trackInfo }: { trackInfo: TrackStreetInfo | undefined }) => {
+interface Props {
+    trackInfo: TrackStreetInfo | undefined;
+}
+
+export const PlannerSidebarTrackInfo = ({ trackInfo }: Props) => {
     const intl = useIntl();
     if (!trackInfo) {
         return null;
@@ -11,6 +15,7 @@ export const PlannerSidebarTrackInfo = ({ trackInfo }: { trackInfo: TrackStreetI
     const { distanceInKm, startFront, arrivalBack, arrivalFront } = trackInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
 
+    const duration = (getTimeDifferenceInSeconds(arrivalBack, startFront) / 60 / 60).toFixed(1) + ' h';
     return (
         <div className={'mb-3'}>
             <Row>
@@ -22,6 +27,9 @@ export const PlannerSidebarTrackInfo = ({ trackInfo }: { trackInfo: TrackStreetI
                 </Col>
                 <Col>
                     {intl.formatMessage({ id: 'msg.end' })}: {formatTimeOnly(arrivalBack)}
+                </Col>
+                <Col>
+                    {intl.formatMessage({ id: 'msg.duration' })}: {duration}
                 </Col>
                 <Col>
                     {intl.formatMessage({ id: 'msg.averageSpeed' })}: {average.toFixed(1)} km/h
