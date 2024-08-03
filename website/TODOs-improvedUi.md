@@ -1,3 +1,25 @@
+### Fix List
+- [x] Upload of Segment(s) triggers calculation
+- [ ] Bug when uploading?
+- [ ] Width of sidebar
+- [ ] Focus when entering page
+- [ ] Track info for simple track
+- [ ] No segment select for simple track
+- [ ] Directly create a break somewhere
+- [ ] Integrate toilet display
+- [ ] Aborting/Deleting a planning
+- [ ] Maybe renaming segments for simple track?
+- [ ] Space to the bottom so that the dropdown looks fine
+- [ ] When initally starting, having a sidebartab selected
+- [ ] Calculate when speed changes
+- [ ] Calculate when expansion changes
+- [ ] Download only a single pdf/gpx
+- [ ] No N.N., maybe allow to name the track anyways -> title on display later
+
+### Optional
+- [ ] Display height profile
+
+
 ### Things to integrate
 
 -[x] speed settings for single gpx file on the dropdown on the gpx tab

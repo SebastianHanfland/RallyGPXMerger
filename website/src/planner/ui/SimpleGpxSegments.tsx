@@ -9,6 +9,7 @@ import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreet
 import { AppDispatch } from '../store/store.ts';
 import { TrackSegmentSelection } from '../tracks/TrackSegmentSelection.tsx';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 
 const fileTypes = ['GPX'];
 
@@ -41,6 +42,7 @@ export function SimpleGpxSegments() {
                         segments: [...track.segmentIds, ...newGpxSegments.map((segment) => segment.id)],
                     })
                 );
+                dispatch(triggerAutomaticCalculation);
             })
             .then(() => dispatch(resolveStreetNames));
     };
