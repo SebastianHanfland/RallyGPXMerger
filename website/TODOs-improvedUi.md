@@ -17,7 +17,7 @@
 - [x] No N.N., maybe allow to name the track anyways -> title on display later
 
 ### Optional
-- [ ] Display height profile
+- [ ] Display height profile of track
 
 
 ### Things to integrate

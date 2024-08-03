@@ -51,12 +51,13 @@ export function SimpleFileUploadSection() {
             <div className={'my-3'}>
                 <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
             </div>
+            <hr />
             <Row>
                 <Col>
-                    <AverageSpeedSetter />
+                    <AverageSpeedSetter slim={true} />
                 </Col>
                 <Col>
-                    <ParticipantsDelaySetter />
+                    <ParticipantsDelaySetter slim={true} />
                 </Col>
             </Row>
             <hr />
