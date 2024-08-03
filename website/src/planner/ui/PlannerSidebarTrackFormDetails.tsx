@@ -33,9 +33,10 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                             type="text"
                             placeholder={intl.formatMessage({ id: 'msg.trackName' })}
                             value={name}
-                            onChange={(value) =>
-                                dispatch(trackMergeActions.setTrackName({ id, trackName: value.target.value }))
-                            }
+                            onChange={(value) => {
+                                dispatch(trackMergeActions.setTrackName({ id, trackName: value.target.value }));
+                                debounceConstructionOfTracks(dispatch);
+                            }}
                         />
                     </Col>
                     <Col>
