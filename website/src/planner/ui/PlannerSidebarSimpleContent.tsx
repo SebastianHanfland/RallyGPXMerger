@@ -1,4 +1,3 @@
-import { PlannerSidebarDocuments } from './PlannerSidebarDocuments.tsx';
 import { PlannerSidebarSettings } from './PlannerSidebarSettings.tsx';
 import { SimpleFileUploadSection } from './SimpleFileUploadSection.tsx';
 import { useSelector } from 'react-redux';
@@ -9,8 +8,6 @@ export const PlannerSidebarSimpleContent = () => {
     switch (selectedSection) {
         case 'segments':
             return <SimpleFileUploadSection />;
-        case 'documents':
-            return <PlannerSidebarDocuments />;
         case 'settings':
             return <PlannerSidebarSettings />;
     }

@@ -49,6 +49,9 @@ export function SimpleGpxSegments() {
     };
     return (
         <div>
+            <h5>
+                <FormattedMessage id={'msg.segments'} />
+            </h5>
             <TrackSegmentSelection track={track} hideSelect={true} />
             <h4>
                 <FormattedMessage id={'msg.uploadGpx.title'} />

@@ -11,7 +11,6 @@ export const PlannerSidebarSimpleNavigation = () => {
         <Nav fill variant="tabs" activeKey={selectedSection}>
             <SidebarNavItem section={'segments'} count={segmentsCount} />
             <SidebarNavItem section={'settings'} />
-            <SidebarNavItem section={'documents'} />
         </Nav>
     );
 };

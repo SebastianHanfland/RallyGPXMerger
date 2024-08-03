@@ -60,7 +60,7 @@ export function PlannerSidebar() {
                 title={showSidebar ? undefined : 'See overview'}
             >
                 {showSidebar ? (
-                    <div className={'mb-5'}>
+                    <div className={'mb-5'} style={{ height: '100vh' }}>
                         <Content />
                     </div>
                 ) : (

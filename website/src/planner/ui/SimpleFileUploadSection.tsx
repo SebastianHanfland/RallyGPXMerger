@@ -6,7 +6,7 @@ import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnr
 import { Button, Col, Row } from 'react-bootstrap';
 import { downloadSinglePdfFiles } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import download from '../../assets/file-down.svg';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/store.ts';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
@@ -28,9 +28,10 @@ export function SimpleFileUploadSection() {
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
     return (
-        <div className={'p-2 shadow'} style={{ height: '95%', overflow: 'auto' }}>
+        <div className={'p-2 shadow'} style={{ overflow: 'auto' }}>
             <h4>
                 <Row>
+                    <h5>Route</h5>
                     <Col>
                         <span style={{ width: '300px' }}>
                             <TrackName track={track} />
@@ -41,7 +42,22 @@ export function SimpleFileUploadSection() {
                     </Col>
                 </Row>
             </h4>
+
             <Row>
+                <Col>
+                    <TrackPeople track={track} />
+                </Col>
+                <Col>
+                    <ArrivalDateTimePicker noHeader={true} />
+                </Col>
+            </Row>
+            <div className={'my-3'}>
+                <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
+            </div>
+            <Row>
+                <h5>
+                    <FormattedMessage id={'msg.documents'} />
+                </h5>
                 <Col>
                     <Button
                         size={'sm'}
@@ -68,16 +84,8 @@ export function SimpleFileUploadSection() {
                     <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <TrackPeople track={track} />
-                </Col>
-                <Col>
-                    <ArrivalDateTimePicker noHeader={true} />
-                </Col>
-            </Row>
-            <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
             <SimpleGpxSegments />
+            <div style={{ height: '250px' }} />
         </div>
     );
 }
