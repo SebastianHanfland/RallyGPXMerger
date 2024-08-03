@@ -33,3 +33,11 @@ export const triggerAutomaticCalculation = (dispatch: AppDispatch, getState: () 
         dispatch(trackMergeActions.setHasChangesSinceLastCalculation(true));
     }
 };
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceConstructionOfTracks(dispatch: AppDispatch) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(triggerAutomaticCalculation);
+    }, 500);
+}
