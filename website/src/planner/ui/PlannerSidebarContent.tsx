@@ -15,6 +15,6 @@ export const PlannerSidebarContent = () => {
         case 'documents':
             return <PlannerSidebarDocuments />;
         case 'settings':
-            return <PlannerSidebarSettings />;
+            return <PlannerSidebarSettings all={true} />;
     }
 };

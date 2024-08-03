@@ -6,6 +6,7 @@ import { PlannerSidebarTrackFormDetails } from './PlannerSidebarTrackFormDetails
 import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
+import { TrackDocuments } from './TrackDocuments.tsx';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
@@ -14,9 +15,12 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
     return (
         <div className={'m-2'}>
-            <h4>
-                <span className={'mx-2'}>{`${name}${distanceInfo}`}</span>
-                <TrackButtonsCell track={track} />
+            <h4 className={'d-flex justify-content-around'}>
+                <div>
+                    <span className={'mx-2'}>{`${name}${distanceInfo}`}</span>
+                    <TrackButtonsCell track={track} />
+                </div>
+                <TrackDocuments matchedTrackInfo={matchedTrackInfo} />
             </h4>
             <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
             <PlannerSidebarTrackFormDetails track={track} />

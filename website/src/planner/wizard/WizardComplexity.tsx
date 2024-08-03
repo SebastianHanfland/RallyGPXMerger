@@ -22,6 +22,7 @@ export const WizardsComplexity = () => {
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(layoutActions.setHasSingleTrack(false));
         dispatch(layoutActions.selectSection('gps'));
+        dispatch(layoutActions.setSelectedSidebarSection('segments'));
     };
 
     return (
