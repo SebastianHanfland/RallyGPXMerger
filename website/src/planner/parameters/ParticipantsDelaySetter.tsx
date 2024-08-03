@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAverageSpeedInKmH, getParticipantsDelay, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
 
 export function ParticipantsDelaySetter() {
     const dispatch = useDispatch();
@@ -21,7 +22,10 @@ export function ParticipantsDelaySetter() {
                     max={1.0}
                     step={0.01}
                     value={participantsDelay}
-                    onChange={(event) => dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)))}
+                    onChange={(event) => {
+                        dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)));
+                        debounceConstructionOfTracks(dispatch);
+                    }}
                 />
                 <span className={'mx-4'} style={{ whiteSpace: 'nowrap' }}>
                     <FormattedMessage id={'msg.aLot'} />

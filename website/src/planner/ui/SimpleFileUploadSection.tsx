@@ -14,6 +14,8 @@ import { ExportStateJson } from '../io/ExportStateJson.tsx';
 import { TrackName } from './TrackName.tsx';
 import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
 import { TrackPeople } from './TrackPeople.tsx';
+import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
+import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
 
 export function SimpleFileUploadSection() {
     const intl = useIntl();
@@ -51,9 +53,19 @@ export function SimpleFileUploadSection() {
                     <ArrivalDateTimePicker noHeader={true} />
                 </Col>
             </Row>
+
             <div className={'my-3'}>
                 <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
             </div>
+            <Row>
+                <Col>
+                    <AverageSpeedSetter />
+                </Col>
+                <Col>
+                    <ParticipantsDelaySetter />
+                </Col>
+            </Row>
+            <hr />
             <Row>
                 <h5>
                     <FormattedMessage id={'msg.documents'} />
@@ -84,6 +96,7 @@ export function SimpleFileUploadSection() {
                     <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
                 </Col>
             </Row>
+            <hr />
             <SimpleGpxSegments />
             <div style={{ height: '250px' }} />
         </div>

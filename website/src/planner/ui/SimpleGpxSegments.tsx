@@ -20,8 +20,8 @@ export function SimpleGpxSegments() {
             <h5>
                 <FormattedMessage id={'msg.segments'} />
             </h5>
-            <GpxCreationHint />
             <TrackSegmentSelection track={track} hideSelect={true} />
+            <GpxCreationHint />
         </div>
     );
 }

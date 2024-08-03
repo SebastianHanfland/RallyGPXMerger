@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
 
 export function AverageSpeedSetter() {
     const dispatch = useDispatch();
@@ -18,7 +19,10 @@ export function AverageSpeedSetter() {
                     max={20}
                     step={0.1}
                     value={averageSpeed}
-                    onChange={(event) => dispatch(trackMergeActions.setAverageSpeed(Number(event.target.value)))}
+                    onChange={(event) => {
+                        dispatch(trackMergeActions.setAverageSpeed(Number(event.target.value)));
+                        debounceConstructionOfTracks(dispatch);
+                    }}
                 />
                 <span className={'mx-4'}>20&nbsp;km/h</span>
             </div>
