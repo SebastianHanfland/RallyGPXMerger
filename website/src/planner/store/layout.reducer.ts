@@ -12,9 +12,18 @@ const initialState: LayoutState = {
     selectedSidebarSection: 'segments',
 };
 
+function loadLayoutState() {
+    const layoutState = storage.load()?.layout;
+    const storedLanguage = layoutState?.language;
+    if (storedLanguage) {
+        setLanguage(storedLanguage);
+    }
+    return layoutState;
+}
+
 const layoutSlice = createSlice({
     name: 'calculatedTracks',
-    initialState: storage.load()?.layout ?? initialState,
+    initialState: loadLayoutState() ?? initialState,
     reducers: {
         selectSection: (state: LayoutState, action: PayloadAction<Sections>) => {
             state.selectedSection = action.payload;
