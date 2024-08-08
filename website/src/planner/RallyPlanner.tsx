@@ -11,7 +11,7 @@ import { AppFooter } from './layout/Footer.tsx';
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);
     return (
-        <IntlProvider locale={language ?? getLanguage()} messages={getMessages()}>
+        <IntlProvider locale={language ?? getLanguage()} messages={getMessages(language)}>
             <RallyPlannerRouter />
             <AppFooter />
         </IntlProvider>
