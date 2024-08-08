@@ -11,7 +11,7 @@ export const PlannerSidebarDocuments = () => {
     const intl = useIntl();
     return (
         <div>
-            <div>
+            <div className={'m-2'}>
                 <h3>
                     <FormattedMessage id={'msg.street'} />
                 </h3>

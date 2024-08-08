@@ -29,7 +29,7 @@ const shiftStartPoint = (point: { lat: number; lng: number }, sideBarOpen: boole
     if (!sideBarOpen) {
         return point;
     }
-    return { ...point, lng: point.lng + 0.85 };
+    return { ...point, lng: point.lng + 0.25 };
 };
 
 export const InteractionMap = () => {
@@ -39,12 +39,12 @@ export const InteractionMap = () => {
     const isSidebarOpen = useSelector(getIsSidebarOpen);
 
     useEffect(() => {
-        if (gpxSegments.length > 0 && myMap) {
+        if (gpxSegments.length > 1 && myMap) {
             const simpleGPX = SimpleGPX.fromString(gpxSegments[gpxSegments.length - 1].content);
             const startPoint = toLatLng(simpleGPX.getStartPoint());
             myMap.setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
         }
-    }, [gpxSegments.length]);
+    }, []);
 
     useEffect(() => {
         if (!myMap) {
