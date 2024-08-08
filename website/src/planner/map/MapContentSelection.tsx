@@ -16,7 +16,7 @@ import { CSSProperties } from 'react';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
-    width: '130px',
+    width: '105px',
     height: '275px',
     borderRadius: '2px',
     left: 10,

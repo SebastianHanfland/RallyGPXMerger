@@ -14,7 +14,7 @@ import { Warning } from '../layout/dashboard/Warning.tsx';
 
 const calculationIsRunningStyle: CSSProperties = {
     position: 'fixed',
-    width: '240px',
+    width: '230px',
     height: '45px',
     borderRadius: '2px',
     left: 10,
@@ -24,6 +24,8 @@ const calculationIsRunningStyle: CSSProperties = {
     overflow: 'hidden',
     cursor: 'pointer',
     color: 'red',
+    display: 'flex',
+    justifyContent: 'space-between',
 };
 
 export const CalculationOnTheFly = () => {
@@ -43,7 +45,7 @@ export const CalculationOnTheFly = () => {
             >
                 <FormattedMessage id={'msg.onTheFly'} />
             </Button>
-            {!isCalculationOnTheFly && (
+            {!isCalculationOnTheFly ? (
                 <Button
                     id={'tracks'}
                     title={'Calculate tracks'}
@@ -55,6 +57,8 @@ export const CalculationOnTheFly = () => {
                     {hasChanges && <Warning size={13} />}
                     <FormattedMessage id={'msg.calculate'} />
                 </Button>
+            ) : (
+                <div></div>
             )}
         </div>
     );
