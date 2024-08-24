@@ -20,6 +20,10 @@
 
 ### Optional
 - [ ] Display height profile of track
+- [ ] Hovering on track highlights track
+- [ ] More help texts
+- [ ] Break handling to also create points of interest, customized breaks
+- [ ] Start time communication
 
 
 ### Things to integrate
@@ -57,11 +61,12 @@
     -[x] Splitting a route into two parts via the Map, with a right click
     -[ ] Other feedback from Leo
 -[x] Having a mode for only a simple demonstration
-    -[ ] No tracks
-    -[ ] segments can be reordered and breaks added
+    -[x] No tracks
+    -[x] segments can be reordered and breaks added
 -[ ] More permanent overwrite of streetnames oder modification
 -[ ] Validation for the document creation
--[ ] Initial map location via ip address or such
+-[x] Initial map location via ip address or such
+  - [ ] Happens now via one of the gpx tracks
 -[ ] Having a smooth user experience when using the tool
 -[x] Maybe one button to trigger a clean creation
 -[ ] Maybe improve handling on the nodes
@@ -101,3 +106,33 @@
 -[ ] Allowing to compare between multiple plannings easily
 - [ ] Open file directly in gpx.studio via the url attribute:
   - [ ] requires hosting of gpx files, but if we have an endpoint it should be working then :)
+
+#### Integration of the Backend into the FE:
+
+I need: a button to save/update a planning
+* There a password needs to be entered
+* It is possible to copy a piece of information to have the edit link and the publish link there
+* Save and update should go hand in hand
+* You get the prompt for the password when you enter it first
+A way to display that the person is allowed to edit the planning.
+
+A good way to open a planning and still have the possibility to edit and publish it:
+
+Opening the link -> leads to the display map
+* If the password is stored in the localstorage
+** Edit Mode is available
+* If the password is not stored
+  * There is a way to open it in edit mode:
+    * Entering password
+    * Putting it in the URL
+
+AC:
+It is possible to share the published link
+It is possible to share the editable link
+It is possible to do a copy of something
+It is possible to delete the planning, when it is editable -> promp, you really want it?
+
+Is it good to have an end date
+
+2mb -> 100 000
+I do not need too much of a limitation there
