@@ -226,5 +226,8 @@
     "msg.add": "Hinzufügen",
     "msg.minutes.details": "Minuten für die Pause auswählen",
     "msg.toiletAtPause": "Toiletten am Pausenplatz",
-    "msg.simpleTrack": "Streckenplanung"
+    "msg.simpleTrack": "Streckenplanung",
+    "msg.uploadCurrentPlanning": "Aktuelle Planung hochladen",
+    "msg.uploadCurrentPlanning.modalTitle": "Aktuelle Planung hochladen",
+    "msg.uploadCurrentPlanning.modalBody": "Soll die aktuelle Planung wirklich hochgeladen und veröffentlicht werden?"
 }

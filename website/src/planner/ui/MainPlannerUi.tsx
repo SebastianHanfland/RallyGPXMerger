@@ -9,6 +9,7 @@ import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
 import { LanguageSelection } from '../layout/LanguageSelection.tsx';
 import { RemoveDataButton } from '../layout/RemoveDataButton.tsx';
+import { UploadDataButton } from '../layout/UploadDataButton.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -25,6 +26,7 @@ export const MainPlannerUi = () => {
                 <TimeSlider />
                 <LanguageSelection />
                 <RemoveDataButton />
+                <UploadDataButton />
             </div>
             <PlannerSidebar />
         </>

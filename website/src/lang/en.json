@@ -226,5 +226,8 @@
     "msg.add": "Add",
     "msg.minutes.details": "Select the minutes for the pause",
     "msg.toiletAtPause": "Toilets at pause place",
-    "msg.simpleTrack": "Track planning"
+    "msg.simpleTrack": "Track planning",
+    "msg.uploadCurrentPlanning": "Upload current planning",
+    "msg.uploadCurrentPlanning.modalTitle": "Upload current planning",
+    "msg.uploadCurrentPlanning.modalBody": "Do you really want to upload the current planning and publish it?"
 }
