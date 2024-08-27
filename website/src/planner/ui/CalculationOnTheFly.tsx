@@ -14,7 +14,7 @@ import { Warning } from '../layout/dashboard/Warning.tsx';
 
 const calculationIsRunningStyle: CSSProperties = {
     position: 'fixed',
-    width: '230px',
+    width: '260px',
     height: '45px',
     borderRadius: '2px',
     left: 10,
@@ -25,7 +25,6 @@ const calculationIsRunningStyle: CSSProperties = {
     cursor: 'pointer',
     color: 'red',
     display: 'flex',
-    justifyContent: 'space-between',
 };
 
 export const CalculationOnTheFly = () => {
