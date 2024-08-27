@@ -5,7 +5,7 @@ import { CSSProperties, useState } from 'react';
 import deleteCloud from '../../assets/deleteCloud.svg';
 import { useIntl } from 'react-intl';
 import { resetData } from '../io/resetData.ts';
-import { getIsPlanningAlreadySaved, getPlanningId } from '../store/backend.reducer.ts';
+import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
 import { deletePlanning } from '../../api/api.ts';
 
 const removeDataStyle: CSSProperties = {
@@ -24,6 +24,7 @@ export function RemoveUploadedDataButton() {
     const dispatch = useDispatch();
     const isPlanningAlreadySaved = useSelector(getIsPlanningAlreadySaved);
     const planningId = useSelector(getPlanningId);
+    const password = useSelector(getPlanningPassword);
     const [showModal, setShowModal] = useState(false);
     const intl = useIntl();
 
@@ -32,9 +33,11 @@ export function RemoveUploadedDataButton() {
     }
 
     const removeAllData = () => {
-        deletePlanning(planningId);
-        resetData(dispatch);
-        setShowModal(false);
+        if (password) {
+            deletePlanning(planningId, password);
+            resetData(dispatch);
+            setShowModal(false);
+        }
     };
     return (
         <>
