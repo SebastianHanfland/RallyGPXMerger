@@ -5,7 +5,6 @@ import fileUp from '../../assets/file-up.svg';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { backendActions, getIsPlanningAlreadySaved, getPlanningId } from '../store/backend.reducer.ts';
-import { v4 as uuidv4 } from 'uuid';
 import { createPlanning, updatePlanning } from '../../api/api.ts';
 import { State } from '../store/types.ts';
 
@@ -31,9 +30,10 @@ export function UploadDataButton() {
 
     const uploadAllData = () => {
         if (!isPlanningAlreadySaved || !planningId) {
-            const newPlanningId = uuidv4();
-            dispatch(backendActions.setPlanningId(newPlanningId));
-            createPlanning(newPlanningId, planningState);
+            // TODO remove backend session or at least password here from state
+            createPlanning(planningState).then((newPlanningId) =>
+                dispatch(backendActions.setPlanningId(newPlanningId))
+            );
         } else {
             updatePlanning(planningId, planningState);
         }

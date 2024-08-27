@@ -7,14 +7,16 @@ const pw = 'pw';
 // TODO bcrypt
 const hash = (a: string, seed: string) => a + seed;
 
-export const createPlanning = (id: string, data: State) => {
-    pb.collection('planning')
-        .create({ id, data })
+export const createPlanning = (data: State): Promise<string> => {
+    return pb
+        .collection('planning')
+        .create({ data })
         .then((planning) => {
             pb.collection('permissions').create({
                 planning_id: planning.id,
                 password_hash: hash(pw, planning.id),
             });
+            return planning.id;
         });
 };
 export const updatePlanning = (id: string, data: State) => {
