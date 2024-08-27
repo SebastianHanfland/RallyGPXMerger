@@ -11,16 +11,28 @@ import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
 import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
+import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
     const trackInfos = useSelector(getEnrichedTrackStreetInfos);
+    const gpxSegments = useSelector(getGpxSegments);
     if (trackCompositions.length === 0) {
         return null;
     }
     const track = trackCompositions[0];
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
+
+    if (gpxSegments.length === 0) {
+        return (
+            <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
+                <SimpleGpxSegments />
+                <div style={{ height: '250px' }} />
+            </div>
+        );
+    }
+
     return (
         <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
             <h4>
