@@ -30,7 +30,7 @@ export function UploadDataButton() {
                 style={removeDataStyle}
                 className={'m-0 p-0'}
                 variant="success"
-                title={intl.formatMessage({ id: 'msg.removeAllData.hint' })}
+                title={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.hint' })}
                 onClick={() => setShowModal(true)}
             >
                 <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '30px', width: '30px' }} />

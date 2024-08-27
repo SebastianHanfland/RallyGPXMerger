@@ -228,6 +228,7 @@
     "msg.toiletAtPause": "Toiletten am Pausenplatz",
     "msg.simpleTrack": "Streckenplanung",
     "msg.uploadCurrentPlanning": "Aktuelle Planung hochladen",
+    "msg.uploadCurrentPlanning.hint": "Aktuelle Planung hochladen und damit öffentlich verfügbar machen",
     "msg.uploadCurrentPlanning.modalTitle": "Aktuelle Planung hochladen",
     "msg.uploadCurrentPlanning.modalBody": "Soll die aktuelle Planung wirklich hochgeladen und veröffentlicht werden?"
 }
