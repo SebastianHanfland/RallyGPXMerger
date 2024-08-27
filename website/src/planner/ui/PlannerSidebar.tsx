@@ -7,7 +7,6 @@ import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation
 import { useDispatch, useSelector } from 'react-redux';
 import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
 import { ClosePlannerSidebar } from './ClosePlannerSidebar.tsx';
-import { deleteData, getData, saveData, updateData } from '../../api/api.ts';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
     position: 'fixed',
@@ -59,10 +58,6 @@ export function PlannerSidebar() {
                 onClick={() => dispatch(layoutActions.setIsSidebarOpen(true))}
                 title={showSidebar ? undefined : 'See overview'}
             >
-                <button onClick={saveData}>Save</button>
-                <button onClick={updateData}>update</button>
-                <button onClick={deleteData}>delete</button>
-                <button onClick={getData}>get</button>
                 {showSidebar ? (
                     <div className={'mb-5'} style={{ height: '100vh' }}>
                         <Content />

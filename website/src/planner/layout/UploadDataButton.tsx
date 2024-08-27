@@ -3,8 +3,11 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import fileUp from '../../assets/file-up.svg';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
-import { backendActions } from '../store/backend.reducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { backendActions, getIsPlanningAlreadySaved, getPlanningId } from '../store/backend.reducer.ts';
+import { v4 as uuidv4 } from 'uuid';
+import { createPlanning, updatePlanning } from '../../api/api.ts';
+import { State } from '../store/types.ts';
 
 const removeDataStyle: CSSProperties = {
     position: 'fixed',
@@ -21,10 +24,19 @@ const removeDataStyle: CSSProperties = {
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);
     const dispatch = useDispatch();
+    const isPlanningAlreadySaved = useSelector(getIsPlanningAlreadySaved);
+    const planningId = useSelector(getPlanningId);
+    const planningState = useSelector((state: State) => state);
     const intl = useIntl();
 
     const uploadAllData = () => {
-        // TODO: Upload current planning here
+        if (!isPlanningAlreadySaved || !planningId) {
+            const newPlanningId = uuidv4();
+            dispatch(backendActions.setPlanningId(newPlanningId));
+            createPlanning(newPlanningId, planningState);
+        } else {
+            updatePlanning(planningId, planningState);
+        }
         setShowModal(false);
         dispatch(backendActions.setIsPlanningSaved(true));
     };
