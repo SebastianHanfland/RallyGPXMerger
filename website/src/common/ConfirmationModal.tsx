@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface Props {
-    onConfirm: () => void;
+    onConfirm?: () => void;
     closeModal: () => void;
     title: string;
     body: string | ReactNode;
@@ -22,9 +22,11 @@ export function ConfirmationModal({ onConfirm, closeModal, title, body, confirmD
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
                 </Button>
-                <Button variant="primary" onClick={onConfirm} disabled={confirmDisabled}>
-                    <FormattedMessage id={'msg.confirm'} />
-                </Button>
+                {onConfirm && (
+                    <Button variant="primary" onClick={onConfirm} disabled={confirmDisabled}>
+                        <FormattedMessage id={'msg.confirm'} />
+                    </Button>
+                )}
             </Modal.Footer>
         </Modal>
     );

@@ -20,10 +20,6 @@ export function SharePlanningButton() {
     const [showModal, setShowModal] = useState(false);
     const intl = useIntl();
 
-    const uploadAllData = () => {
-        // TODO: Upload current planning here
-        setShowModal(false);
-    };
     return (
         <>
             <Button
@@ -37,12 +33,21 @@ export function SharePlanningButton() {
             </Button>
             {showModal && (
                 <ConfirmationModal
-                    onConfirm={uploadAllData}
                     closeModal={() => setShowModal(false)}
                     title={intl.formatMessage({ id: 'msg.sharingLink.modalTitle' })}
-                    body={intl.formatMessage({ id: 'msg.sharingLink.modalBody' })}
+                    body={<SharingModalBody />}
                 />
             )}
         </>
     );
 }
+
+const SharingModalBody = () => {
+    return (
+        <div>
+            <div>Öffentlicher Link:</div>
+            <div>Planungslink:</div>
+            <div>Passwort für den Planungslink:</div>
+        </div>
+    );
+};
