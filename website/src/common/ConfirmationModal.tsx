@@ -9,11 +9,12 @@ interface Props {
     title: string;
     body: string | ReactNode;
     confirmDisabled?: boolean;
+    size?: 'sm' | 'lg' | 'xl';
 }
 
-export function ConfirmationModal({ onConfirm, closeModal, title, body, confirmDisabled }: Props) {
+export function ConfirmationModal({ onConfirm, closeModal, title, body, confirmDisabled, size }: Props) {
     return (
-        <Modal show={true} onHide={closeModal} backdrop="static" keyboard={false}>
+        <Modal show={true} onHide={closeModal} backdrop="static" keyboard={false} size={size}>
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>

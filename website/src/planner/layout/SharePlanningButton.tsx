@@ -4,7 +4,7 @@ import { CSSProperties, useState } from 'react';
 import shareIcon from '../../assets/share.svg';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { getIsPlanningAlreadySaved } from '../store/backend.reducer.ts';
+import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
 
 const sharePlanningStyle: CSSProperties = {
     position: 'fixed',
@@ -40,6 +40,7 @@ export function SharePlanningButton() {
             </Button>
             {showModal && (
                 <ConfirmationModal
+                    size={'xl'}
                     closeModal={() => setShowModal(false)}
                     title={intl.formatMessage({ id: 'msg.sharingLink.modalTitle' })}
                     body={<SharingModalBody />}
@@ -50,11 +51,19 @@ export function SharePlanningButton() {
 }
 
 const SharingModalBody = () => {
+    const password = useSelector(getPlanningPassword);
+    const planningId = useSelector(getPlanningId);
     return (
         <div>
-            <div>Öffentlicher Link:</div>
-            <div>Planungslink:</div>
-            <div>Passwort für den Planungslink:</div>
+            <div>
+                Öffentlicher Link: <b>{`${window.location.href}?planning=${planningId}`}</b>
+            </div>
+            <div>
+                Planungslink: <b>{`${window.location.href}?planning=${planningId}`}</b>
+            </div>
+            <div>
+                Passwort für den Planungslink: <b>{password}</b>
+            </div>
         </div>
     );
 };
