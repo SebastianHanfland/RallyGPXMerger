@@ -1,10 +1,15 @@
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import fileUp from '../../assets/file-up.svg';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { backendActions, getIsPlanningAlreadySaved, getPlanningId } from '../store/backend.reducer.ts';
+import {
+    backendActions,
+    getIsPlanningAlreadySaved,
+    getPlanningId,
+    getPlanningPassword,
+} from '../store/backend.reducer.ts';
 import { createPlanning, updatePlanning } from '../../api/api.ts';
 import { State } from '../store/types.ts';
 
@@ -25,6 +30,7 @@ export function UploadDataButton() {
     const dispatch = useDispatch();
     const isPlanningAlreadySaved = useSelector(getIsPlanningAlreadySaved);
     const planningId = useSelector(getPlanningId);
+    const planningPassword = useSelector(getPlanningPassword);
     const planningState = useSelector((state: State) => state);
     const intl = useIntl();
 
@@ -54,11 +60,31 @@ export function UploadDataButton() {
             {showModal && (
                 <ConfirmationModal
                     onConfirm={uploadAllData}
+                    confirmDisabled={!planningPassword}
                     closeModal={() => setShowModal(false)}
                     title={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.modalTitle' })}
-                    body={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.modalBody' })}
+                    body={<UploadModalBody />}
                 />
             )}
         </>
     );
 }
+
+const UploadModalBody = () => {
+    const planningPassword = useSelector(getPlanningPassword);
+    const dispatch = useDispatch();
+    const intl = useIntl();
+    return (
+        <div>
+            <div>{intl.formatMessage({ id: 'msg.uploadCurrentPlanning.modalBody' })}</div>
+            <div>
+                <Form.Control
+                    type="text"
+                    placeholder={intl.formatMessage({ id: 'msg.password' })}
+                    value={planningPassword ?? ''}
+                    onChange={(value) => dispatch(backendActions.setPlanningPassword(value.target.value))}
+                />
+            </div>
+        </div>
+    );
+};
