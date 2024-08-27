@@ -18,7 +18,7 @@ const removeDataStyle: CSSProperties = {
     cursor: 'pointer',
 };
 
-export function RemoveDataButton() {
+export function CleanDataButton() {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const intl = useIntl();
