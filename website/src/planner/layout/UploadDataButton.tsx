@@ -3,6 +3,8 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import fileUp from '../../assets/file-up.svg';
 import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import { backendActions } from '../store/backend.reducer.ts';
 
 const removeDataStyle: CSSProperties = {
     position: 'fixed',
@@ -18,11 +20,13 @@ const removeDataStyle: CSSProperties = {
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch();
     const intl = useIntl();
 
     const uploadAllData = () => {
         // TODO: Upload current planning here
         setShowModal(false);
+        dispatch(backendActions.setIsPlanningSaved(true));
     };
     return (
         <>

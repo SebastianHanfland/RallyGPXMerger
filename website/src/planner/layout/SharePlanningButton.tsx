@@ -3,6 +3,8 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import shareIcon from '../../assets/share.svg';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { getIsPlanningAlreadySaved } from '../store/backend.reducer.ts';
 
 const sharePlanningStyle: CSSProperties = {
     position: 'fixed',
@@ -18,7 +20,12 @@ const sharePlanningStyle: CSSProperties = {
 
 export function SharePlanningButton() {
     const [showModal, setShowModal] = useState(false);
+    const isPlanningAlreadySaved = useSelector(getIsPlanningAlreadySaved);
     const intl = useIntl();
+
+    if (!isPlanningAlreadySaved) {
+        return null;
+    }
 
     return (
         <>
