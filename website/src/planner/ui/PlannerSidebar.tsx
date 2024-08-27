@@ -7,7 +7,7 @@ import { PlannerSidebarSimpleNavigation } from './PlannerSidebarSimpleNavigation
 import { useDispatch, useSelector } from 'react-redux';
 import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
 import { ClosePlannerSidebar } from './ClosePlannerSidebar.tsx';
-import PocketBase from 'pocketbase';
+import { deleteData, getData, saveData, updateData } from '../../api/api.ts';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
     position: 'fixed',
@@ -44,37 +44,11 @@ function Content() {
     const hasSingleTrack = useSelector(getHasSingleTrack);
     return hasSingleTrack ? <SimpleContent /> : <ComplexContent />;
 }
-const pb = new PocketBase('http://127.0.0.1:8090');
 
 export function PlannerSidebar() {
     const showSidebar = useSelector(getIsSidebarOpen);
     const dispatch = useDispatch();
-    // const [password, setPassword] = useState('');
 
-    const id = 'abcabcabcabcabc';
-    const pw = 'pw';
-
-    const hash = (a: string, seed: string) => a;
-
-    const saveData = () => {
-        pb.collection('planning')
-            .create({ id, data: { a: 'a' } })
-            .then((planning) => {
-                pb.collection('permissions').create({
-                    planning_id: planning.id,
-                    password_hash: hash(pw, planning.id),
-                });
-            });
-    };
-    const updateData = () => {
-        pb.collection('planning').update(id, { data: { b: 'b' }, password_hash: hash(pw, id) });
-    };
-    const deleteData = () => {
-        pb.collection('planning').delete(id, { password_hash: hash(pw, id) });
-    };
-    const getData = () => {
-        pb.collection('planning').getOne(id);
-    };
     return (
         <>
             <ClosePlannerSidebar />
