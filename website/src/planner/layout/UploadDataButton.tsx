@@ -35,13 +35,16 @@ export function UploadDataButton() {
     const intl = useIntl();
 
     const uploadAllData = () => {
+        if (!planningPassword) {
+            return;
+        }
         if (!isPlanningAlreadySaved || !planningId) {
             // TODO remove backend session or at least password here from state
-            createPlanning(planningState).then((newPlanningId) =>
+            createPlanning(planningState, planningPassword).then((newPlanningId) =>
                 dispatch(backendActions.setPlanningId(newPlanningId))
             );
         } else {
-            updatePlanning(planningId, planningState);
+            updatePlanning(planningId, planningState, planningPassword);
         }
         setShowModal(false);
         dispatch(backendActions.setIsPlanningSaved(true));
@@ -53,7 +56,13 @@ export function UploadDataButton() {
                 className={'m-0 p-0'}
                 variant="success"
                 title={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.hint' })}
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                    if (!isPlanningAlreadySaved || !planningId || !planningPassword) {
+                        setShowModal(true);
+                    } else {
+                        updatePlanning(planningId, planningState, planningPassword);
+                    }
+                }}
             >
                 <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '30px', width: '30px' }} />
             </Button>
