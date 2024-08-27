@@ -230,5 +230,8 @@
     "msg.uploadCurrentPlanning": "Aktuelle Planung hochladen",
     "msg.uploadCurrentPlanning.hint": "Aktuelle Planung hochladen und damit öffentlich verfügbar machen",
     "msg.uploadCurrentPlanning.modalTitle": "Aktuelle Planung hochladen",
-    "msg.uploadCurrentPlanning.modalBody": "Soll die aktuelle Planung wirklich hochgeladen und veröffentlicht werden?"
+    "msg.uploadCurrentPlanning.modalBody": "Soll die aktuelle Planung wirklich hochgeladen und veröffentlicht werden?",
+    "msg.sharingLink.hint": "Öffentlicher Link",
+    "msg.sharingLink.modalTitle": "Die Planung teilen",
+    "msg.sharingLink.modalBody": "Hier ist eine öffentlicher Link und ein Link für die Planung, dafür braucht man aber ein Passwort..."
 }

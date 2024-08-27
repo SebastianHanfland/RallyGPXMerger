@@ -230,5 +230,8 @@
     "msg.uploadCurrentPlanning.hint": "Upload current planning and thus make it publicly available",
     "msg.uploadCurrentPlanning": "Upload current planning",
     "msg.uploadCurrentPlanning.modalTitle": "Upload current planning",
-    "msg.uploadCurrentPlanning.modalBody": "Do you really want to upload the current planning and publish it?"
+    "msg.uploadCurrentPlanning.modalBody": "Do you really want to upload the current planning and publish it?",
+    "msg.sharingLink.hint": "Public link",
+    "msg.sharingLink.modalTitle": "Sharing the planning",
+    "msg.sharingLink.modalBody": "Here is a public link and a planning link, and you need the password for it..."
 }

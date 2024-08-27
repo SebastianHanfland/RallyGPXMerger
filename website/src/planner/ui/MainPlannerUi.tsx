@@ -10,6 +10,7 @@ import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
 import { LanguageSelection } from '../layout/LanguageSelection.tsx';
 import { RemoveDataButton } from '../layout/RemoveDataButton.tsx';
 import { UploadDataButton } from '../layout/UploadDataButton.tsx';
+import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -25,6 +26,7 @@ export const MainPlannerUi = () => {
                 <PlannerHomeButton />
                 <TimeSlider />
                 <LanguageSelection />
+                <SharePlanningButton />
                 <RemoveDataButton />
                 <UploadDataButton />
             </div>
