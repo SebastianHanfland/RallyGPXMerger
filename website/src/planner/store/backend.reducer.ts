@@ -18,6 +18,7 @@ const backendSlice = createSlice({
         setIsPlanningSaved: (state: BackendState, action: PayloadAction<boolean>) => {
             state.isPlanningAlreadySaved = action.payload;
         },
+        clear: () => initialState,
     },
 });
 

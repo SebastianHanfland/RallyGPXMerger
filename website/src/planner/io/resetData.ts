@@ -9,6 +9,7 @@ import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts'
 import { Dispatch } from '@reduxjs/toolkit';
 import { pointsActions } from '../store/points.reducer.ts';
 import { clearGpxCache } from '../../common/cache/gpxCache.ts';
+import { backendActions } from '../store/backend.reducer.ts';
 
 export function resetData(dispatch: Dispatch) {
     clearReadableTracks();
@@ -22,6 +23,7 @@ export function resetData(dispatch: Dispatch) {
     dispatch(layoutActions.selectSection('menu'));
     dispatch(geoCodingRequestsActions.clear());
     dispatch(pointsActions.clear());
+    dispatch(backendActions.clear());
     clearGpxCache();
     localStorage.clear();
 }

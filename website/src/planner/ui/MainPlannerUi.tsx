@@ -11,6 +11,7 @@ import { LanguageSelection } from '../layout/LanguageSelection.tsx';
 import { CleanDataButton } from '../layout/CleanDataButton.tsx';
 import { UploadDataButton } from '../layout/UploadDataButton.tsx';
 import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
+import { RemoveUploadedDataButton } from '../layout/RemoveUploadedDataButton.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -27,6 +28,7 @@ export const MainPlannerUi = () => {
                 <TimeSlider />
                 <LanguageSelection />
                 <SharePlanningButton />
+                <RemoveUploadedDataButton />
                 <CleanDataButton />
                 <UploadDataButton />
             </div>

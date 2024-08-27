@@ -20,7 +20,7 @@ export const createPlanning = (id: string, data: State) => {
 export const updatePlanning = (id: string, data: State) => {
     pb.collection('planning').update(id, { data, password_hash: hash(pw, id) });
 };
-export const deleteData = (id: string) => {
+export const deletePlanning = (id: string) => {
     pb.collection('planning').delete(id, { password_hash: hash(pw, id) });
 };
 export const getData = (id: string) => {
