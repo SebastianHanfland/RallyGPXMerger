@@ -31,6 +31,11 @@ export interface LayoutState {
     isSidebarOpen: boolean;
     selectedSidebarSection: SidebarSections;
 }
+export interface BackendState {
+    planningId?: string;
+    planningPassword?: string;
+    isPlanningAlreadySaved: boolean;
+}
 
 export interface TrackComposition {
     id: string;
@@ -119,6 +124,7 @@ export interface PointsState {
 
 export interface State {
     layout: LayoutState;
+    backend: BackendState;
     gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;

@@ -22,7 +22,7 @@ function loadLayoutState() {
 }
 
 const layoutSlice = createSlice({
-    name: 'calculatedTracks',
+    name: 'layout',
     initialState: loadLayoutState() ?? initialState,
     reducers: {
         selectSection: (state: LayoutState, action: PayloadAction<Sections>) => {
