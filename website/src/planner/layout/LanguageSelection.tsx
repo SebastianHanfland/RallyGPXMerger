@@ -9,7 +9,7 @@ const languageStyle: CSSProperties = {
     position: 'fixed',
     height: '45px',
     borderRadius: '2px',
-    left: 440,
+    left: 70,
     bottom: 50,
     zIndex: 10,
     backgroundColor: 'transparent',

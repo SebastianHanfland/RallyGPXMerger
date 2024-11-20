@@ -10,13 +10,16 @@ import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 
 export let storedState: State | undefined;
+export const setStoredState = (state: State | undefined) => {
+    storedState = state;
+};
 
 export async function loadJsonFileOfVersion(version: Variant, dispatch: Dispatch) {
     return fetch(version.url)
         .then((res) => res.json())
         .then((planning: State) => {
             // TODO: fix this, when there are multiple json uploads...
-            storedState = planning;
+            setStoredState(planning);
             const calculatedTracks: ZipTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 version: version.name,

@@ -3,6 +3,8 @@ import { CSSProperties } from 'react';
 import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
 import { LoadStateButton, showTimes } from '../store/LoadStateButton.tsx';
 import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton.tsx';
+import { getPlanningTitle } from '../../planner/store/trackMerge.reducer.ts';
+import { storedState } from '../data/loadJsonFile.ts';
 
 const style: CSSProperties = {
     paddingLeft: '15px',
@@ -23,11 +25,12 @@ const style: CSSProperties = {
 };
 
 export function PresentationMenu() {
+    const title = (storedState && getPlanningTitle(storedState)) ?? 'Demonstration';
     return (
         <>
             <TrackInformationModal />
             <div style={style} className={'shadow d-sm-block'}>
-                <h5 className={'mt-2'}>Ride of Silence MUC 2024</h5>
+                <h5 className={'mt-2'}>{title}</h5>
                 <ZipTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
                 <LoadStateButton />
                 <div>
@@ -35,7 +38,7 @@ export function PresentationMenu() {
                 </div>
             </div>
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
-                <h5 className={'mt-2'}>Ride of Silence MUC 2024</h5>
+                <h5 className={'mt-2'}>{title}</h5>
                 <ZipTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
                 <LoadStateButton />
                 <div>

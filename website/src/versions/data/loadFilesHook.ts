@@ -8,7 +8,7 @@ import { mapActions } from '../store/map.reducer.ts';
 import { loadZipFileOfVersion } from './loadZipFile.ts';
 import { loadJsonFileOfVersion } from './loadJsonFile.ts';
 
-function setStartAndEndTime(dispatch: Dispatch) {
+export function setStartAndEndTime(dispatch: Dispatch) {
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 

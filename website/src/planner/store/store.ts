@@ -1,4 +1,4 @@
-import { Action, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
+import { Action, AnyAction, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
 import reduceReducer from 'reduce-reducers';
 import { State } from './types.ts';
 import { gpxSegmentsReducer } from './gpxSegments.reducer.ts';
@@ -11,6 +11,7 @@ import { storage } from './storage.ts';
 import { layoutReducer } from './layout.reducer.ts';
 import { pointsReducer } from './points.reducer.ts';
 import { backendReducer } from './backend.reducer.ts';
+import { toastsReducer } from './toast.reducer.ts';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,
@@ -22,6 +23,7 @@ const rootReducer: Reducer = combineReducers({
     points: pointsReducer,
     geoCoding: geoCodingReducer,
     geoCodingRequests: geoCodingRequestsReducer,
+    toasts: toastsReducer,
 });
 const storingReducer: Reducer = (state: State) => {
     if (state) {
@@ -29,9 +31,17 @@ const storingReducer: Reducer = (state: State) => {
     }
     return state;
 };
+
+const stateSettingReducer: Reducer = (state: State, action: AnyAction) => {
+    if (action.type === 'wholeState') {
+        return action.payload;
+    }
+    return state;
+};
+
 export const createStore = () =>
     configureStore({
-        reducer: reduceReducer(rootReducer, storingReducer),
+        reducer: reduceReducer(...[rootReducer, storingReducer, stateSettingReducer]),
     });
 
 export const store = createStore();

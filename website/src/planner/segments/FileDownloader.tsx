@@ -19,7 +19,7 @@ interface DropdownProps {
     name: string;
 }
 
-const downloadFile = (name: string, content: string) => {
+export const downloadFile = (name: string, content: string) => {
     const blob = new Blob([content], { type: name.includes('.gpx') ? 'application/gpx+xml' : 'application/json' });
     FileSaver.saveAs(blob, name);
 };

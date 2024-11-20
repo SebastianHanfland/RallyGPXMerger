@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { BackendState, State } from './types.ts';
+import { storage } from './storage.ts';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 const initialState: BackendState = {
     isPlanningAlreadySaved: false,
@@ -7,10 +9,12 @@ const initialState: BackendState = {
 
 const backendSlice = createSlice({
     name: 'backend',
-    initialState: initialState,
+    initialState: storage.load()?.backend ?? initialState,
     reducers: {
         setPlanningId: (state: BackendState, action: PayloadAction<string>) => {
             state.planningId = action.payload;
+            const newSearch = `?planning=${action.payload}`;
+            history.replaceState(null, '', `${getBaseUrl()}${newSearch}`);
         },
         setPlanningPassword: (state: BackendState, action: PayloadAction<string>) => {
             state.planningPassword = action.payload;

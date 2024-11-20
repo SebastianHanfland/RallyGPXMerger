@@ -9,6 +9,7 @@ import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreet
 import { AppDispatch } from '../store/store.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
+import { optionallyCompress } from '../store/compressHelper.ts';
 
 const fileTypes = ['GPX'];
 
@@ -16,7 +17,7 @@ export async function toGpxSegment(file: File): Promise<GpxSegment> {
     return file.arrayBuffer().then((buffer) => ({
         id: uuidv4(),
         filename: file.name.replace('.gpx', ''),
-        content: gpxShortener(new TextDecoder().decode(buffer)),
+        content: optionallyCompress(gpxShortener(new TextDecoder().decode(buffer))),
     }));
 }
 

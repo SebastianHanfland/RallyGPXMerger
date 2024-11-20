@@ -4,9 +4,15 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import deleteCloud from '../../assets/deleteCloud.svg';
 import { useIntl } from 'react-intl';
-import { resetData } from '../io/resetData.ts';
-import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
+import {
+    backendActions,
+    getIsPlanningAlreadySaved,
+    getPlanningId,
+    getPlanningPassword,
+} from '../store/backend.reducer.ts';
 import { deletePlanning } from '../../api/api.ts';
+import { errorNotification, successNotification } from '../store/toast.reducer.ts';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 const removeDataStyle: CSSProperties = {
     position: 'fixed',
@@ -28,15 +34,32 @@ export function RemoveUploadedDataButton() {
     const [showModal, setShowModal] = useState(false);
     const intl = useIntl();
 
-    if (!isPlanningAlreadySaved || !planningId) {
+    if (!isPlanningAlreadySaved || !planningId || !password) {
         return null;
     }
 
     const removeAllData = () => {
         if (password) {
-            deletePlanning(planningId, password);
-            resetData(dispatch);
-            setShowModal(false);
+            deletePlanning(planningId, password)
+                .then(() => {
+                    dispatch(backendActions.setIsPlanningSaved(false));
+                    history.replaceState(null, '', `${getBaseUrl()}`);
+                    setShowModal(false);
+                })
+                .then(() =>
+                    successNotification(
+                        dispatch,
+                        intl.formatMessage({ id: 'msg.dataRemoved.success.title' }),
+                        intl.formatMessage({ id: 'msg.dataRemoved.success.message' })
+                    )
+                )
+                .catch(() =>
+                    errorNotification(
+                        dispatch,
+                        intl.formatMessage({ id: 'msg.dataRemoved.error.title' }),
+                        intl.formatMessage({ id: 'msg.dataRemoved.error.message' })
+                    )
+                );
         }
     };
     return (
@@ -54,8 +77,8 @@ export function RemoveUploadedDataButton() {
                 <ConfirmationModal
                     onConfirm={removeAllData}
                     closeModal={() => setShowModal(false)}
-                    title={intl.formatMessage({ id: 'msg.removeAllData.modalTitle' })}
-                    body={intl.formatMessage({ id: 'msg.removeAllData.modalBody' })}
+                    title={intl.formatMessage({ id: 'msg.removeAllServerData.modalTitle' })}
+                    body={intl.formatMessage({ id: 'msg.removeAllServerData.modalBody' })}
                 />
             )}
         </>

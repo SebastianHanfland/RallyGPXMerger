@@ -19,7 +19,7 @@ const sliderStyle: CSSProperties = {
     width: '350px',
     height: '45px',
     borderRadius: '10px',
-    left: 60,
+    left: 185,
     bottom: 50,
     zIndex: 10,
     backgroundColor: 'white',
@@ -54,6 +54,10 @@ export function TimeSlider() {
             );
         }
     }, [playSpeed]);
+
+    if (!dateValue) {
+        return null;
+    }
 
     return (
         <div style={sliderStyle}>

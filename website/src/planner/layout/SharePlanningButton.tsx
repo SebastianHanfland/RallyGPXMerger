@@ -2,9 +2,11 @@ import { Button } from 'react-bootstrap';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import shareIcon from '../../assets/share.svg';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
+import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 const sharePlanningStyle: CSSProperties = {
     position: 'fixed',
@@ -50,20 +52,43 @@ export function SharePlanningButton() {
     );
 }
 
+const entryStyle = { display: 'flex', justifyContent: 'space-between', margin: '10px' };
 const SharingModalBody = () => {
     const password = useSelector(getPlanningPassword);
     const planningId = useSelector(getPlanningId);
+    const displayLink = `${getBaseUrl()}?display=${planningId}`;
+    const planningLink = `${getBaseUrl()}?planning=${planningId}`;
+    const planningLinkWithAdmin = `${getBaseUrl()}?planning=${planningId}&admin=${password}`;
     return (
         <div>
-            <div>
-                Öffentlicher Link: <b>{`${window.location.href}?planning=${planningId}`}</b>
+            <div style={entryStyle}>
+                <span>
+                    <FormattedMessage id={'msg.publicLink'} />: <b>{displayLink}</b>
+                </span>
+                <CopyToClipboardButton text={displayLink} />
             </div>
-            <div>
-                Planungslink: <b>{`${window.location.href}?planning=${planningId}`}</b>
+            <div style={entryStyle}>
+                <span>
+                    <FormattedMessage id={'msg.planningLink'} />: <b>{planningLink}</b>
+                </span>
+                <CopyToClipboardButton text={planningLink} />
             </div>
-            <div>
-                Passwort für den Planungslink: <b>{password}</b>
-            </div>
+            {password && (
+                <div style={entryStyle}>
+                    <span>
+                        <FormattedMessage id={'msg.planningLinkWithAdmin'} />: <b>{planningLinkWithAdmin}</b>
+                    </span>
+                    <CopyToClipboardButton text={planningLinkWithAdmin} />
+                </div>
+            )}
+            {password && (
+                <div style={entryStyle}>
+                    <span>
+                        <FormattedMessage id={'msg.planningPassword'} />: <b>{password}</b>
+                    </span>
+                    <CopyToClipboardButton text={password} />
+                </div>
+            )}
         </div>
     );
 };

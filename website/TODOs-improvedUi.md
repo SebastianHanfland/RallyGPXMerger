@@ -136,3 +136,35 @@ Is it good to have an end date
 
 2mb -> 100 000
 I do not need too much of a limitation there
+
+I need help.
+I do not know what is not working. The request things are right but the construction we have for the other side to check, they are wrong
+I do not know how to debug or what it means...
+Here I have to continue.
+
+Also:
+* Loading a planning via its id
+* make it editable etc
+* Keep the current version thing and still allow to store also in the cloud
+
+## New idea
+Having a simple node express backend, which takes the json and stores it on the disk
+* loading the json from the backend when opening the url
+  * in planning mode
+  * in display mode
+  * comparisons
+* Cleanup and sanity check
+### Still to do
+* [x] Ensure that the password is not within the backend which is stored
+* [ ] Title of the planning
+* [ ] Deployment
+* [ ] Clean up and sanity check, maybe basic ui tests
+* [ ] Notifications Feedback
+* [ ] Possible to enter password or have it in the URL to allow editing, or prefilling password
+  * [ ] It is also possible to not make it manually possible to enter a password, but it is a uuid
+  * [ ] Then having a second link, with editable rights which can be shared
+* [ ] Hide UI for editing when the password is not set and it was loaded from the server
+* [ ] Resolving the elements even on the initial upload or so
+* [x] Fix delete buttons
+* [x] add a simple json download button
+* [x] Continue planning 

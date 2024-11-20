@@ -8,7 +8,7 @@ export function PlanningLabel() {
     const dispatch = useDispatch();
     const planningLabel = useSelector(getPlanningLabel);
     return (
-        <div className={'d-inline-block'}>
+        <div className={'d-inline-block m-3'}>
             <h5 className="form-label m-3">
                 <FormattedMessage id={'msg.label.title'} />
             </h5>
@@ -18,6 +18,8 @@ export function PlanningLabel() {
             <Form.Control
                 type="text"
                 placeholder={intl.formatMessage({ id: 'msg.label.title' })}
+                as="textarea"
+                rows={5}
                 value={planningLabel}
                 onChange={(value) => dispatch(trackMergeActions.setPlanningLabel(value.target.value))}
             />

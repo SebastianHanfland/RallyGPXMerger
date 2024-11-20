@@ -13,7 +13,7 @@ export const setParticipantsDelay = (delay: number) => {
 
 export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
 
-const DEFAULT_GAP_TOLERANCE = 0.01;
+export const DEFAULT_GAP_TOLERANCE = 0.01;
 
 const initialState: TrackMergeState = {
     trackCompositions: [],
@@ -84,6 +84,9 @@ const trackMergeSlice = createSlice({
         setPlanningLabel: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.planningLabel = action.payload;
         },
+        setPlanningTitle: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.planningTitle = action.payload;
+        },
         setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
         },
@@ -127,9 +130,10 @@ export const getTrackCompositionFilterTerm = (state: State) => getBase(state).fi
 export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
 export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
 export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
+export const getPlanningTitle = (state: State) => getBase(state).planningTitle;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
-export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
+export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;

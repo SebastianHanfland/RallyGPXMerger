@@ -6,3 +6,16 @@ export function getLink(waypoint: { pointFrom: { lat: number; lon: number }; poi
     }
     return `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${waypoint.pointFrom.lat}%2C${waypoint.pointFrom.lon}%3B${waypoint.pointTo.lat}%2C${waypoint.pointTo.lon}`;
 }
+
+export function getUrlParam(paramArg: string): string | undefined {
+    const urlParams = window.location.search;
+    return urlParams
+        .replace('?', '')
+        .split('&')
+        .find((param) => param.startsWith(paramArg))
+        ?.replace(paramArg, '');
+}
+
+export function getBaseUrl() {
+    return window.location.origin + window.location.pathname;
+}

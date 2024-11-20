@@ -1,29 +1,27 @@
-import PocketBase from 'pocketbase';
 import { State } from '../planner/store/types.ts';
-import { sha256 } from 'js-sha256';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const baseUrl = 'http://localhost:3000';
 
-const applySimpleHash = (a: string, salt: string) => sha256(salt + a);
+export const createPlanning = (data: State, adminToken: string): Promise<string> => {
+    return fetch(`${baseUrl}/plan/`, {
+        method: 'post',
+        body: JSON.stringify({ data, adminToken }),
+        headers: { 'Content-Type': 'application/json' },
+    }).then((res) => (res.ok ? res.json() : 'nicht ok'));
+};
 
-export const createPlanning = (data: State, password: string): Promise<string> => {
-    return pb
-        .collection('planning')
-        .create({ data })
-        .then((planning) => {
-            pb.collection('permissions').create({
-                planning_id: planning.id,
-                password_hash: applySimpleHash(password, planning.id),
-            });
-            return planning.id;
-        });
+export const updatePlanning = (id: string, data: State, adminToken: string) => {
+    return fetch(`${baseUrl}/plan/${id}`, {
+        method: 'put',
+        body: JSON.stringify({ data, adminToken }),
+        headers: { 'Content-Type': 'application/json' },
+    });
 };
-export const updatePlanning = (id: string, data: State, password: string) => {
-    pb.collection('planning').update(id, { data, password_hash: applySimpleHash(password, id) });
+
+export const deletePlanning = (id: string, adminToken: string) => {
+    return fetch(`${baseUrl}/plan/${id}/${adminToken}`, { method: 'delete' });
 };
-export const deletePlanning = (id: string, password: string) => {
-    pb.collection('planning').delete(id, { password_hash: applySimpleHash(password, id) });
-};
+
 export const getData = (id: string) => {
-    return pb.collection('planning').getOne(id);
+    return fetch(`${baseUrl}/plan/${id}`, { method: 'get' }).then((res) => res.json());
 };

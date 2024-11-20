@@ -13,6 +13,7 @@ import { WizardCard } from './WizardCard.tsx';
 import { BackToStartDialog } from './BackToStartDialog.tsx';
 import { useState } from 'react';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
@@ -27,7 +28,10 @@ export const WizardStartPage = () => {
             {showModal && (
                 <BackToStartDialog
                     closeModal={() => setShowModal(false)}
-                    onConfirm={() => nextSection && setSelectedSection(nextSection)}
+                    onConfirm={() => {
+                        nextSection && setSelectedSection(nextSection);
+                        history.replaceState(null, '', `${getBaseUrl()}`);
+                    }}
                 />
             )}
             <WizardHeader />

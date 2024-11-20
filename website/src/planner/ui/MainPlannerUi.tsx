@@ -12,8 +12,24 @@ import { CleanDataButton } from '../layout/CleanDataButton.tsx';
 import { UploadDataButton } from '../layout/UploadDataButton.tsx';
 import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
 import { RemoveUploadedDataButton } from '../layout/RemoveUploadedDataButton.tsx';
+import { useEffect } from 'react';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { useSelector } from 'react-redux';
+import { isPlanningInProgress } from '../store/planner.selector.ts';
+import { DownloadDataButton } from '../layout/DownloadDataButton.tsx';
+import { PasswordButton } from '../layout/PasswordButton.tsx';
+import { NoTitleWarning } from './NoTitleWarning.tsx';
 
 export const MainPlannerUi = () => {
+    const planningInProgress = useSelector(isPlanningInProgress);
+
+    useEffect(() => {
+        return () => {
+            if (!planningInProgress) {
+                history.replaceState(null, '', `${getBaseUrl()}`);
+            }
+        };
+    }, []);
     return (
         <>
             <div className={'canvas-wrapper'} style={{ left: 0, position: 'fixed', overflow: 'auto' }}>
@@ -21,6 +37,7 @@ export const MainPlannerUi = () => {
                     <InteractionMap />
                 </Container>
                 <DefaultArrivalDateWarning />
+                <NoTitleWarning />
                 <CalculationIsRunning />
                 <CalculationOnTheFly />
                 <MapContentSelection />
@@ -28,8 +45,10 @@ export const MainPlannerUi = () => {
                 <TimeSlider />
                 <LanguageSelection />
                 <SharePlanningButton />
+                <PasswordButton />
                 <RemoveUploadedDataButton />
                 <CleanDataButton />
+                <DownloadDataButton />
                 <UploadDataButton />
             </div>
             <PlannerSidebar />

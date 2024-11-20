@@ -4,10 +4,12 @@ import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { ConstructionSites } from '../settings/ConstructionSites.tsx';
 import { GapFinderParameters } from '../parameters/GapFinderParameters.tsx';
+import { PlanningTitle } from '../parameters/PlanningTitle.tsx';
 
 export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
     return (
         <div className={'m-2'}>
+            <PlanningTitle />
             <Accordion defaultActiveKey={all ? '0' : '1'}>
                 {all && (
                     <Accordion.Item eventKey="0">

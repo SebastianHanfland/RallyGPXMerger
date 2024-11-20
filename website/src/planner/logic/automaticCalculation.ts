@@ -4,6 +4,8 @@ import { calculateTrackStreetInfos } from './resolving/aggregate/calculateTrackS
 import { addPostCodeToStreetInfos } from './resolving/postcode/postCodeResolver.ts';
 import { getIsCalculationOnTheFly, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { State } from '../store/types.ts';
+import { successNotification } from '../store/toast.reducer.ts';
+import { getMessages } from '../../lang/getMessages.ts';
 
 const calculationThunk =
     (value: boolean) =>
@@ -18,7 +20,15 @@ export const calculateTracks = (dispatch: AppDispatch) => {
         setTimeout(() => {
             dispatch(calculateMerge).then(() =>
                 dispatch(calculateTrackStreetInfos).then(() =>
-                    dispatch(addPostCodeToStreetInfos).then(() => dispatch(calculationThunk(false)))
+                    dispatch(addPostCodeToStreetInfos)
+                        .then(() => dispatch(calculationThunk(false)))
+                        .then(() =>
+                            successNotification(
+                                dispatch,
+                                getMessages()['msg.calculation.success.title'],
+                                getMessages()['msg.calculation.success.message']
+                            )
+                        )
                 )
             );
         }, 10)

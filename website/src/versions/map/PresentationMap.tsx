@@ -8,11 +8,14 @@ import L, { LayerGroup } from 'leaflet';
 import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
 import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
-import { Munich } from '../../common/locations.ts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
 import { isLive } from '../ZipTimeSlider.tsx';
+import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getGpx } from '../../common/cache/gpxCache.ts';
+import { toLatLng } from '../../utils/pointUtil.ts';
+import { Munich } from '../../common/locations.ts';
 
 let myMap: L.Map;
 
@@ -21,11 +24,15 @@ export const isInIframe = window.location.search.includes('&iframe');
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
+    const zipTracks = useSelector(getZipTracks);
+    const currentZipTracks = zipTracks ? Object.values(zipTracks)[0] : undefined;
+    const centerPoint =
+        currentZipTracks && currentZipTracks[0] ? toLatLng(getGpx(currentZipTracks[0]).tracks[0].points[0]) : Munich;
 
     useEffect(() => {
         if (!myMap) {
             const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
-            myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined).setView(Munich, 12);
+            myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             if (isLive && L.Browser.mobile && !isInIframe) {
                 const locate = L.control.locate({ initialZoomLevel: 12 });
@@ -34,6 +41,12 @@ export const PresentationMap = () => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (myMap && centerPoint) {
+            myMap.setView(centerPoint, 12);
+        }
+    }, [centerPoint]);
 
     const zipTracksLayer = useRef<LayerGroup>(null);
     const tracksLayer = useRef<LayerGroup>(null);

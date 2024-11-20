@@ -12,11 +12,12 @@ import { pointsActions } from '../../../store/points.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
+import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
 
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
     const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
     const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(endOfNextSegment)) as number;
-    const gapToleranceInKm = 0.01;
+    const gapToleranceInKm = getGapToleranceInKm(store.getState()) ?? DEFAULT_GAP_TOLERANCE;
     if (distanceBetweenSegments > gapToleranceInKm) {
         const message = `Here is something too far away: track ${track.name}, between '${
             gpxOrBreak.name

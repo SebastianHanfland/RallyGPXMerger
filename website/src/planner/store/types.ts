@@ -37,6 +37,17 @@ export interface BackendState {
     isPlanningAlreadySaved: boolean;
 }
 
+export interface Toast {
+    id: string;
+    title: string;
+    message?: string;
+    type: 'success' | 'danger';
+}
+
+export interface ToastsState {
+    toasts: Toast[];
+}
+
 export interface TrackComposition {
     id: string;
     name?: string;
@@ -67,6 +78,7 @@ export interface TrackMergeState {
     arrivalDateTime?: string;
     hasDefaultArrivalDate?: boolean;
     planningLabel?: string;
+    planningTitle?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;
     gapToleranceInKm?: number;
@@ -132,6 +144,7 @@ export interface State {
     points: PointsState;
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
+    toasts: ToastsState;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

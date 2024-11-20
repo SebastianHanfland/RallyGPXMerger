@@ -4,8 +4,10 @@ import { getSelectionSection } from '../store/layout.reducer.ts';
 import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
 import { WizardVersions } from '../wizard/WizardVersions.tsx';
 import { MainPlannerUi } from '../ui/MainPlannerUi.tsx';
+import { useLoadPlanningFromServer } from '../useLoadPlanningFromServer.tsx';
 
 export const RallyPlannerRouter = () => {
+    useLoadPlanningFromServer();
     const selectedSection = useSelector(getSelectionSection);
 
     switch (selectedSection) {

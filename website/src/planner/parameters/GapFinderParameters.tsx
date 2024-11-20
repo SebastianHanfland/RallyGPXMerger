@@ -16,9 +16,9 @@ export const GapFinderParameters = () => {
                     <FormattedMessage id={'msg.gapTolerance.hint'} />
                 </Form.Label>
                 <Form.Control
-                    type="text"
-                    placeholder={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
-                    title={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
+                    type="number"
+                    step={0.01}
+                    title={intl.formatMessage({ id: 'msg.gapTolerance.hint' })}
                     value={gapToleranceInKm?.toString() ?? ''}
                     onChange={(value) => dispatch(trackMergeActions.setGapToleranceInKm(getCount(value)))}
                 />
