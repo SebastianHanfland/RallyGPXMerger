@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { getArrivalDateTime, getHasDefaultArrivalDateTime } from '../store/trackMerge.reducer.ts';
+import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
@@ -22,11 +22,10 @@ const noTileWarningStyle: CSSProperties = {
 
 export function NoTitleWarning() {
     const intl = useIntl();
-    const hasDefaultTime = useSelector(getHasDefaultArrivalDateTime);
-    const arrivalDateTime = useSelector(getArrivalDateTime);
+    const planningTitle = useSelector(getPlanningTitle);
     const dispatch = useDispatch();
 
-    if (!hasDefaultTime || !arrivalDateTime) {
+    if (!planningTitle) {
         return null;
     }
 
