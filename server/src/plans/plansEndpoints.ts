@@ -3,12 +3,6 @@ import { createFile, deleteFile, readFile, readFileWithoutAdminToken, updateFile
 import { v4 as uuidv4, validate as isValidUUID } from 'uuid';
 import { RallyPlan } from '../types';
 
-function setHeaders(res: any) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', '*');
-    res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
-}
-
 function getPlanId(req: any) {
     const planId = req.params.id;
     if (isValidUUID(planId)) {
@@ -29,7 +23,9 @@ export const configurePlanEndpoints = (app: Express) => {
     app.use(urlencoded({ extended: true, limit: '50mb' }));
 
     app.use((_, res, next) => {
-        setHeaders(res);
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', '*');
+        res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
         next();
     });
 
@@ -43,13 +39,15 @@ export const configurePlanEndpoints = (app: Express) => {
     //         console.log('Get request triggered');
     //     } catch (error) {
     //         console.error(error);
-    //         return res.status(500).end();
+    //         return res.statusvi(500).end();
     //     }
     // });
 
-    app.get('/plan/:id', async (req: any, res) => {
+    app.get('/bike/:id', async (req: any, res) => {
         try {
-            setHeaders(res);
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', '*');
+            res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
 
             const plan = readFileWithoutAdminToken(getPlanId(req));
             if (!plan) {
@@ -62,9 +60,11 @@ export const configurePlanEndpoints = (app: Express) => {
         }
     });
 
-    app.post('/plan', async (req: any, res) => {
+    app.post('/bike/', async (req: any, res) => {
         try {
-            setHeaders(res);
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', '*');
+            res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
 
             const planId = uuidv4();
             const plan = req.body;
@@ -76,9 +76,11 @@ export const configurePlanEndpoints = (app: Express) => {
         }
     });
 
-    app.put('/plan/:id', async (req: any, res) => {
+    app.put('/bike/:id', async (req: any, res) => {
         try {
-            setHeaders(res);
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', '*');
+            res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
             updateFile(getPlanId(req), req.body);
             return res.status(201).end();
         } catch (error) {
@@ -87,9 +89,11 @@ export const configurePlanEndpoints = (app: Express) => {
         }
     });
 
-    app.delete('/plan/:id/:adminToken', async (req: any, res) => {
+    app.delete('/bike/:id/:adminToken', async (req: any, res) => {
         try {
-            setHeaders(res);
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', '*');
+            res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
             const planId = getPlanId(req);
             const rallyPlan = readFile(planId);
             if (
@@ -110,20 +114,24 @@ export const configurePlanEndpoints = (app: Express) => {
     });
 
     app.options('*', async (_, res) => {
-        setHeaders(res);
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', '*');
+        res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
         res.status(200).end();
     });
 
     // Catch all handler for all other request.
     app.use('*', async (req, res) => {
-        setHeaders(res);
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', '*');
+        res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
 
         res.status(404);
         res.json({ msg: `no route handler found, ${req.baseUrl}` }).end();
     });
 
     // Start the server
-    const port = process.env.PORT || 3000;
+    const port = 3004;
     app.listen(port, () => {
         console.log(`index.js listening on ${port}`);
     });

@@ -1,9 +1,10 @@
 import { State } from '../planner/store/types.ts';
 
-const baseUrl = 'http://localhost:3000';
+// const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://hase.uber.space/bike';
 
 export const createPlanning = (data: State, adminToken: string): Promise<string> => {
-    return fetch(`${baseUrl}/plan/`, {
+    return fetch(`${baseUrl}/`, {
         method: 'post',
         body: JSON.stringify({ data, adminToken }),
         headers: { 'Content-Type': 'application/json' },
@@ -11,7 +12,7 @@ export const createPlanning = (data: State, adminToken: string): Promise<string>
 };
 
 export const updatePlanning = (id: string, data: State, adminToken: string) => {
-    return fetch(`${baseUrl}/plan/${id}`, {
+    return fetch(`${baseUrl}/${id}`, {
         method: 'put',
         body: JSON.stringify({ data, adminToken }),
         headers: { 'Content-Type': 'application/json' },
@@ -19,9 +20,9 @@ export const updatePlanning = (id: string, data: State, adminToken: string) => {
 };
 
 export const deletePlanning = (id: string, adminToken: string) => {
-    return fetch(`${baseUrl}/plan/${id}/${adminToken}`, { method: 'delete' });
+    return fetch(`${baseUrl}/${id}/${adminToken}`, { method: 'delete' });
 };
 
 export const getData = (id: string) => {
-    return fetch(`${baseUrl}/plan/${id}`, { method: 'get' }).then((res) => res.json());
+    return fetch(`${baseUrl}/${id}`, { method: 'get' }).then((res) => res.json());
 };

@@ -49,6 +49,7 @@ export function UploadDataButton() {
             return;
         }
         if (!isPlanningAlreadySaved || !planningId) {
+            setShowModal(false);
             setIsLoading(true);
             createPlanning(planningState, planningPassword)
                 .then((newPlanningId) => {
@@ -83,6 +84,7 @@ export function UploadDataButton() {
                 )
                 .finally(() => setIsLoading(false));
         } else {
+            setShowModal(false);
             setIsLoading(true);
             updatePlanning(planningId, planningState, planningPassword)
                 .then(() => {
