@@ -16,18 +16,26 @@ import { getZipTracks } from '../store/zipTracks.reducer.ts';
 import { getGpx } from '../../common/cache/gpxCache.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
 import { Munich } from '../../common/locations.ts';
+import { ZipTrack } from '../../common/types.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
+
+function getCenterPoint(currentZipTracks: ZipTrack[] | undefined) {
+    if (!currentZipTracks || !currentZipTracks[0]) {
+        return Munich;
+    }
+    const gpx = getGpx(currentZipTracks[0]);
+    const point = gpx.tracks[gpx.tracks.length - 1].points[gpx.tracks[gpx.tracks.length - 1].points.length - 1];
+    return toLatLng(point);
+}
 
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
     const zipTracks = useSelector(getZipTracks);
     const currentZipTracks = zipTracks ? Object.values(zipTracks)[0] : undefined;
-    const centerPoint =
-        currentZipTracks && currentZipTracks[0] ? toLatLng(getGpx(currentZipTracks[0]).tracks[0].points[0]) : Munich;
 
     useEffect(() => {
         if (!myMap) {
@@ -39,14 +47,10 @@ export const PresentationMap = () => {
                 locate.addTo(myMap);
                 locate.start();
             }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (myMap && centerPoint) {
+            const centerPoint = getCenterPoint(currentZipTracks);
             myMap.setView(centerPoint, 12);
         }
-    }, [centerPoint]);
+    }, []);
 
     const zipTracksLayer = useRef<LayerGroup>(null);
     const tracksLayer = useRef<LayerGroup>(null);
