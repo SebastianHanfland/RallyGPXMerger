@@ -53,3 +53,9 @@ See here: https://manual.uberspace.de/daemons-supervisord/
 https://manual.uberspace.de/web-backends/#debugging
 
 uberspace web backend list
+
+supervisorctl start biked-daemon
+supervisorctl stop biked-daemon
+
+# Logs
+cat ~/logs/....
