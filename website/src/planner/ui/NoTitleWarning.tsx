@@ -25,7 +25,7 @@ export function NoTitleWarning() {
     const planningTitle = useSelector(getPlanningTitle);
     const dispatch = useDispatch();
 
-    if (!planningTitle) {
+    if (planningTitle) {
         return null;
     }
 
