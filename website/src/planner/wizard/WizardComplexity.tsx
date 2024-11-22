@@ -9,6 +9,7 @@ import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from '../layout/WizardCard.tsx';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { HelpButtonLight } from '../layout/HelpButton.tsx';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -49,6 +50,12 @@ export const WizardsComplexity = () => {
                     />
                 </Col>
             </Row>
+            <h5 className={'mt-5'}>
+                <FormattedMessage id={'msg.helpButton.hint'} />:
+            </h5>
+            <h5 className={'mb-5'}>
+                <HelpButtonLight />
+            </h5>
         </Container>
     );
 };

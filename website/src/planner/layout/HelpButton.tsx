@@ -147,3 +147,17 @@ export const HelpButton = () => {
         </Button>
     );
 };
+
+export const HelpButtonLight = () => {
+    const intl = useIntl();
+    return (
+        <Button
+            style={{ width: '45px', height: '45px' }}
+            className={'m-0 p-0'}
+            variant="info"
+            title={intl.formatMessage({ id: 'msg.helpButton.hint' })}
+        >
+            <img src={info} className="m-1" alt="trash" style={{ height: '30px', width: '30px' }} />
+        </Button>
+    );
+};

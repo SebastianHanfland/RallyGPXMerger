@@ -273,5 +273,5 @@
     "msg.calculation.success.message": "Die Planung wurde nach den Änderungen aktualisiert",
     "msg.noTitle.error.title": "Noch keinen Titel",
     "msg.noTitle.error.message": "Bitte setzen Sie einen Title für die Planung unter den Einstellungen",
-    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen"
+    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen finden Sie hinter diesem Button"
 }
