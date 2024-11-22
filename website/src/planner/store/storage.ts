@@ -23,6 +23,10 @@ const save = (value: State) => {
     }
 };
 
+function isDefined(statePart: string | null): statePart is string {
+    return !!statePart && statePart !== 'undefined';
+}
+
 const load = (): State | undefined => {
     try {
         let layout = undefined;
@@ -35,11 +39,11 @@ const load = (): State | undefined => {
         let backend = undefined;
 
         const layoutString = localStorage.getItem(stateKey + '.layout');
-        if (layoutString && layoutString !== 'undefined') {
+        if (isDefined(layoutString)) {
             layout = JSON.parse(layoutString);
         }
         const gpxSegmentsStringified = localStorage.getItem(stateKey + '.gpxSegments');
-        if (gpxSegmentsStringified) {
+        if (isDefined(gpxSegmentsStringified)) {
             const parsedSegments = JSON.parse(gpxSegmentsStringified);
             const compressedSegments =
                 parsedSegments.segments?.map((segment: GpxSegment) => ({
@@ -49,27 +53,27 @@ const load = (): State | undefined => {
             gpxSegments = { ...parsedSegments, segments: compressedSegments };
         }
         const mapStringified = localStorage.getItem(stateKey + '.map');
-        if (mapStringified) {
+        if (isDefined(mapStringified)) {
             map = JSON.parse(mapStringified);
         }
         const pointsStringified = localStorage.getItem(stateKey + '.points');
-        if (pointsStringified && pointsStringified !== 'undefined') {
+        if (isDefined(pointsStringified)) {
             points = JSON.parse(pointsStringified);
         }
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');
-        if (trackMergeStringified) {
+        if (isDefined(trackMergeStringified)) {
             trackMerge = JSON.parse(trackMergeStringified);
         }
         const geoCodingStringified = localStorage.getItem(stateKey + '.geoCoding');
-        if (geoCodingStringified) {
+        if (isDefined(geoCodingStringified)) {
             geoCoding = JSON.parse(geoCodingStringified);
         }
         const backendStringified = localStorage.getItem(stateKey + '.backend');
-        if (backendStringified) {
+        if (isDefined(backendStringified)) {
             backend = JSON.parse(backendStringified);
         }
         const calculatedTracksStringified = localStorage.getItem(stateKey + '.calculatedTracks');
-        if (calculatedTracksStringified) {
+        if (isDefined(calculatedTracksStringified)) {
             const parsedTracks = JSON.parse(calculatedTracksStringified);
             const compressedTracks =
                 parsedTracks.tracks?.map((segment: CalculatedTrack) => ({
