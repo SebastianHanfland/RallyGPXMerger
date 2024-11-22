@@ -168,3 +168,10 @@ Having a simple node express backend, which takes the json and stores it on the 
 * [x] Fix delete buttons
 * [x] add a simple json download button
 * [x] Continue planning 
+
+
+### Next
+* [ ] Translate hints to english
+* [ ] UI to add breaks via left click
+* [ ] Testing for bugs
+* [ ] Add a simple gif for simple and complex each

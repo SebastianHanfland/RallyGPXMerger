@@ -1,5 +1,5 @@
 import { Dropdown } from 'react-bootstrap';
-import downloadB from '../../assets/file-downB.svg';
+import scissors from '../../assets/scissors.svg';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClickOnSegment, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
@@ -19,7 +19,7 @@ export const SplitSegmentDropdownItem = () => {
                 dispatch(gpxSegmentsActions.setClickOnSegment(undefined));
             }}
         >
-            <img src={downloadB} alt="download file" color={'#ffffff'} className="m-1" />
+            <img src={scissors} alt="split segment" color={'#ffffff'} className="m-1" />
             <span>
                 <FormattedMessage id={'msg.splitSegment'} />
             </span>
