@@ -34,7 +34,7 @@ export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () 
         )(track).getBlob((blob) => zip.file(`${track.name}-${track.distanceInKm.toFixed(2)}km.pdf`, blob));
     });
     createBlockedStreetsPdf(blockedStreetInfos, planningLabel, intl).getBlob((blob) =>
-        zip.file(`Blockierte-Strassen.pdf`, blob)
+        zip.file(`${intl.formatMessage({ id: 'msg.blockedStreets' }).replace('ß', 'ss')}.pdf`, blob)
     );
     setTimeout(() => {
         zip.generateAsync({ type: 'blob' }).then(function (content) {
