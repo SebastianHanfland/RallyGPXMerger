@@ -12,7 +12,6 @@ import {
 } from '../store/backend.reducer.ts';
 import { deletePlanning } from '../../api/api.ts';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 const removeDataStyle: CSSProperties = {
     position: 'fixed',
@@ -43,7 +42,6 @@ export function RemoveUploadedDataButton() {
             deletePlanning(planningId, password)
                 .then(() => {
                     dispatch(backendActions.setIsPlanningSaved(false));
-                    history.replaceState(null, '', `${getBaseUrl()}`);
                     setShowModal(false);
                 })
                 .then(() =>

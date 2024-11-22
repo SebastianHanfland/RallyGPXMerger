@@ -41,7 +41,7 @@ export interface Toast {
     id: string;
     title: string;
     message?: string;
-    type: 'success' | 'danger';
+    type: 'success' | 'danger' | 'info';
 }
 
 export interface ToastsState {

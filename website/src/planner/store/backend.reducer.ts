@@ -21,6 +21,10 @@ const backendSlice = createSlice({
         },
         setIsPlanningSaved: (state: BackendState, action: PayloadAction<boolean>) => {
             state.isPlanningAlreadySaved = action.payload;
+            if (!action.payload) {
+                state.planningId = undefined;
+                history.replaceState(null, '', `${getBaseUrl()}`);
+            }
         },
         clear: () => initialState,
     },

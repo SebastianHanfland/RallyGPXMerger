@@ -23,7 +23,7 @@ const toastsSlice = createSlice({
     },
 });
 
-function addToast(dispatch: Dispatch, toastInfo: ToastInfo, type: 'success' | 'danger') {
+function addToast(dispatch: Dispatch, toastInfo: ToastInfo, type: 'success' | 'danger' | 'info') {
     const toast: Toast = {
         id: uuidv4(),
         title: toastInfo.title,
@@ -35,6 +35,10 @@ function addToast(dispatch: Dispatch, toastInfo: ToastInfo, type: 'success' | 'd
         dispatch(toastsSlice.actions.closeToast(toast.id));
     }, 5000);
 }
+
+export const infoNotification = (dispatch: Dispatch, title: string, message?: string) => {
+    addToast(dispatch, { title, message }, 'info');
+};
 
 export const successNotification = (dispatch: Dispatch, title: string, message?: string) => {
     addToast(dispatch, { title, message }, 'success');
