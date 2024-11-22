@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { getArrivalDateTime, getHasDefaultArrivalDateTime } from '../store/trackMerge.reducer.ts';
+import { getArrivalDateTime } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
 import { formatDate } from '../../utils/dateUtil.ts';
 import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
@@ -23,12 +23,11 @@ const defaultTimeWarning: CSSProperties = {
 
 export function DefaultArrivalDateWarning() {
     const intl = useIntl();
-    const hasDefaultTime = useSelector(getHasDefaultArrivalDateTime);
     const arrivalDateTime = useSelector(getArrivalDateTime);
     const hasOnlySingleTrack = useSelector(getHasSingleTrack);
     const dispatch = useDispatch();
 
-    if (!hasDefaultTime || !arrivalDateTime) {
+    if (arrivalDateTime) {
         return null;
     }
 
@@ -45,7 +44,9 @@ export function DefaultArrivalDateWarning() {
             title={intl.formatMessage({ id: 'msg.setArrivalDateTime' })}
         >
             <Warning />
-            {` ${intl.formatMessage({ id: 'msg.defaultArrivalTime' })}: ${formatDate(arrivalDateTime)}`}
+            {` ${intl.formatMessage({ id: 'msg.defaultArrivalTime' })}: ${
+                arrivalDateTime ? formatDate(arrivalDateTime) : '---'
+            }`}
         </div>
     );
 }
