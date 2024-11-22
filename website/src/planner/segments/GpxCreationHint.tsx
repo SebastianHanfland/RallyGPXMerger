@@ -1,6 +1,10 @@
 import { FormattedMessage } from 'react-intl';
+import { getLanguage } from '../../language.ts';
 
 export function GpxCreationHint() {
+    const language = getLanguage();
+    const link = language === 'de' ? 'https://gpx.studio/de' : 'https://gpx.studio/';
+
     return (
         <p>
             <FormattedMessage id={'msg.createGpx.part1'} />{' '}
@@ -10,7 +14,7 @@ export function GpxCreationHint() {
             <span>
                 <FormattedMessage id={'msg.createGpx.part2'} />
             </span>
-            <a href={'https://gpx.studio/'} target={'_blank'} referrerPolicy={'no-referrer'}>
+            <a href={link} target={'_blank'} referrerPolicy={'no-referrer'}>
                 Gpx Studio
             </a>
         </p>
