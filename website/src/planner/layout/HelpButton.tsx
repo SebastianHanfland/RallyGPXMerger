@@ -5,9 +5,15 @@ import info from '../../assets/info.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { infoNotification } from '../store/toast.reducer.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../store/trackMerge.reducer.ts';
+import {
+    getArrivalDateTime,
+    getHasChangesSinceLastCalculation,
+    getHasDefaultArrivalDateTime,
+    getPlanningTitle,
+    getTrackCompositions,
+} from '../store/trackMerge.reducer.ts';
 import { getPlanningId } from '../store/backend.reducer.ts';
-import { getHasSingleTrack } from '../store/layout.reducer.ts';
+import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
 
 const infoButtonStyle: CSSProperties = {
     position: 'fixed',
@@ -25,11 +31,13 @@ export const HelpButton = () => {
     const intl = useIntl();
     const dispatch = useDispatch();
     const gpxSegments = useSelector(getGpxSegments);
+    const tracks = useSelector(getTrackCompositions);
     const arrivalDateTime = useSelector(getArrivalDateTime);
     const hasDefaultArrivalTime = useSelector(getHasDefaultArrivalDateTime);
     const planningTitle = useSelector(getPlanningTitle);
     const planningId = useSelector(getPlanningId);
     const hasSingleTrack = useSelector(getHasSingleTrack);
+    const hasChanges = useSelector(getHasChangesSinceLastCalculation);
 
     const helpWithNotificationSimple = () => {
         if (gpxSegments.length === 0) {
@@ -50,6 +58,7 @@ export const HelpButton = () => {
         }
         if (!planningTitle) {
             infoNotification(dispatch, 'Namen bestimmen', 'Wählen Sie unter Einstellungen einen Namen für die Planung');
+            dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningId) {
@@ -91,16 +100,46 @@ export const HelpButton = () => {
             );
             return;
         }
+        if (tracks.length === 0) {
+            infoNotification(
+                dispatch,
+                'Routen erstellen und GPX zuweisen',
+                'Erstellen Sie eine Route, benennen Sie sie, und weisen Sie GPX Abschnitte hinzu'
+            );
+            dispatch(layoutActions.setSelectedSidebarSection('tracks'));
+            return;
+        }
+        if (!tracks[0].name) {
+            infoNotification(dispatch, 'Route benennen', 'Benennen Sie die Route');
+            dispatch(layoutActions.setSelectedSidebarSection('tracks'));
+            return;
+        }
+        if (tracks[0].segmentIds.length === 0) {
+            infoNotification(dispatch, 'GPX zuweisen', 'Weisen Sie GPX Abschnitte der Route hinzu');
+            dispatch(layoutActions.setSelectedSidebarSection('tracks'));
+            return;
+        }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
             infoNotification(
                 dispatch,
                 'Ankunftszeit auswählen',
                 'Wählen Sie unter Streckenplanung die Ankunftszeit aus'
             );
+            dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningTitle) {
             infoNotification(dispatch, 'Namen bestimmen', 'Wählen Sie unter Einstellungen einen Namen für die Planung');
+            dispatch(layoutActions.setSelectedSidebarSection('settings'));
+            return;
+        }
+        if (hasChanges) {
+            infoNotification(
+                dispatch,
+                'Routen berechnen',
+                'Klicken Sie oben links auf den orangenen Berechnen Button, um die Planung zu berechnen. Wenn die Route nicht zu groß ist, können Sie auch auf Automatische Berechnung umstellen'
+            );
+            dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningId) {
