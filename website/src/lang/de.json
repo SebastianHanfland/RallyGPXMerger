@@ -270,7 +270,8 @@
     "msg.planningLinkWithAdmin": "Planungslink zum Editieren",
     "msg.planningPassword": "Passwort für den Planungslink",
     "msg.calculation.success.title": "Daten aktualisiert",
-    "msg.calculation.success.message": "Die Planung wurde nach den Änderungen aktualsiert",
+    "msg.calculation.success.message": "Die Planung wurde nach den Änderungen aktualisiert",
     "msg.noTitle.error.title": "Noch keinen Titel",
-    "msg.noTitle.error.message": "Bitte setzen Sie einen Title für die Planung unter den Einstellungen"
+    "msg.noTitle.error.message": "Bitte setzen Sie einen Title für die Planung unter den Einstellungen",
+    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen"
 }

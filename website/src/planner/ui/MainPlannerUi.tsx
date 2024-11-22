@@ -19,6 +19,7 @@ import { isPlanningInProgress } from '../store/planner.selector.ts';
 import { DownloadDataButton } from '../layout/DownloadDataButton.tsx';
 import { PasswordButton } from '../layout/PasswordButton.tsx';
 import { NoTitleWarning } from './NoTitleWarning.tsx';
+import { HelpButton } from '../layout/HelpButton.tsx';
 
 export const MainPlannerUi = () => {
     const planningInProgress = useSelector(isPlanningInProgress);
@@ -50,6 +51,7 @@ export const MainPlannerUi = () => {
                 <CleanDataButton />
                 <DownloadDataButton />
                 <UploadDataButton />
+                <HelpButton />
             </div>
             <PlannerSidebar />
         </>

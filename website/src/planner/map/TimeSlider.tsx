@@ -19,7 +19,7 @@ const sliderStyle: CSSProperties = {
     width: '350px',
     height: '45px',
     borderRadius: '10px',
-    left: 185,
+    left: 245,
     bottom: 50,
     zIndex: 10,
     backgroundColor: 'white',
