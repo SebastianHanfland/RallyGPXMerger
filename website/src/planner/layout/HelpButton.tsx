@@ -39,60 +39,36 @@ export const HelpButton = () => {
     const hasSingleTrack = useSelector(getHasSingleTrack);
     const hasChanges = useSelector(getHasChangesSinceLastCalculation);
 
+    function inform(topic: string) {
+        infoNotification(
+            dispatch,
+            intl.formatMessage({ id: `msg.help.${topic}.title` }),
+            intl.formatMessage({ id: `msg.help.${topic}.message` })
+        );
+    }
+
     const helpWithNotificationSimple = () => {
         if (gpxSegments.length === 0) {
-            infoNotification(
-                dispatch,
-                intl.formatMessage({ id: 'msg.help.gpx.title' }),
-                intl.formatMessage({ id: 'msg.help.gpx.message' })
-            );
+            inform('gpx');
             return;
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
-            infoNotification(
-                dispatch,
-                intl.formatMessage({ id: 'msg.help.time.title' }),
-                intl.formatMessage({ id: 'msg.help.time.message' })
-            );
+            inform('time');
             return;
         }
         if (!planningTitle) {
-            infoNotification(
-                dispatch,
-                intl.formatMessage({ id: 'msg.help.name.title' }),
-                intl.formatMessage({ id: 'msg.help.name.message' })
-            );
+            inform('name');
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningId) {
-            infoNotification(
-                dispatch,
-                intl.formatMessage({ id: 'msg.help.upload.title' }),
-                intl.formatMessage({ id: 'msg.help.upload.message' })
-            );
+            inform('upload');
             return;
         }
-        infoNotification(
-            dispatch,
-            intl.formatMessage({ id: 'msg.help.share.title' }),
-            intl.formatMessage({ id: 'msg.help.share.message' })
-        );
-        infoNotification(
-            dispatch,
-            intl.formatMessage({ id: 'msg.help.edit.title' }),
-            intl.formatMessage({ id: 'msg.help.edit.message' })
-        );
-        infoNotification(
-            dispatch,
-            intl.formatMessage({ id: 'msg.help.download.title' }),
-            intl.formatMessage({ id: 'msg.help.download.message' })
-        );
-        infoNotification(
-            dispatch,
-            intl.formatMessage({ id: 'msg.help.delete.title' }),
-            intl.formatMessage({ id: 'msg.help.delete.message' })
-        );
+        inform('share');
+        inform('edit');
+        inform('download');
+        inform('delete');
     };
 
     const helpWithNotificationComplex = () => {
