@@ -33,8 +33,6 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
     const gpxSegments = useSelector(getGpxSegments);
     const options = [...gpxSegments.map(toOption)];
 
-    console.log({ segmentIds });
-
     const setSegmentIds = (items: { id: string }[]) => {
         const mappedIds = items.map((item) => item.id).join();
         if (mappedIds !== segmentIds.join()) {

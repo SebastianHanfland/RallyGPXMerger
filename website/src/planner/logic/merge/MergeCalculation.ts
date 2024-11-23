@@ -13,10 +13,10 @@ import { calculatedTracksActions } from '../../store/calculatedTracks.reducer.ts
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../../store/map.reducer.ts';
 import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
-import { initializeResolvedPositions } from '../resolving/streets/initializeResolvedPositions.ts';
 import date from 'date-and-time';
 import { clearReadableTracks, getReadableTracks, setReadableTracks } from '../../cache/readableTracks.ts';
 import { clearGpxCache } from '../../../common/cache/gpxCache.ts';
+import { initializeResolvedPositions } from '../resolving/streets/initializeResolvedPositions.ts';
 
 export function calculateAndStoreStartAndEndOfSimulation(dispatch: AppDispatch, state: State) {
     const trackParticipants = getTrackCompositions(state).map((track) => track.peopleCount ?? 0);

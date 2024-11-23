@@ -8,6 +8,7 @@ import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { AppDispatch } from '../../../store/store.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
+import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -50,6 +51,6 @@ export async function resolveStreetNames(dispatch: AppDispatch, getState: () => 
             'Please read the FAQ and create an own free account at geoapify and enter the API Key under Settings'
         );
     }
-
+    dispatch(triggerAutomaticCalculation);
     return dispatch(geoCodingRequestsActions.setIsLoadingStreetData(false));
 }
