@@ -303,5 +303,7 @@
     "msg.help.calculate.title": "Calculate tracks",
     "msg.help.calculate.message": "Click the orange Calculate button on the top left to calculate all tracks and documents. If the planning is not too big you can switch to automatic calculation",
     "msg.showLive": "Live",
-    "msg.showPlan": "Plan"
+    "msg.showPlan": "Plan",
+    "msg.publicTableLink": "Public link with table",
+    "msg.iframeTableExample": "Public link with table in iframe"
 }

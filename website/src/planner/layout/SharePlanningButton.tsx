@@ -54,21 +54,29 @@ export function SharePlanningButton() {
 }
 
 const entryStyle = { display: 'flex', justifyContent: 'space-between', margin: '10px' };
+
+function getIframeExample(displayLink: string, planningTitle: string | undefined) {
+    const iframeExample = `
+        <iframe
+            src='${displayLink}'
+            title='${planningTitle ?? 'Demonstration'}'
+            height='1000px'
+            width='1000px'
+        ></iframe>
+    `;
+    return iframeExample;
+}
+
 const SharingModalBody = () => {
     const password = useSelector(getPlanningPassword);
     const planningId = useSelector(getPlanningId);
     const planningTitle = useSelector(getPlanningTitle);
     const displayLink = `${getBaseUrl()}?display=${planningId}`;
+    const tableLink = `${getBaseUrl()}?table=${planningId}`;
     const planningLink = `${getBaseUrl()}?planning=${planningId}`;
     const planningLinkWithAdmin = `${getBaseUrl()}?planning=${planningId}&admin=${password}`;
-    const iframeExample = `
-        <iframe
-            src="${displayLink}"
-            title="${planningTitle}"
-            height="1000px"
-            width="1000px"
-        ></iframe>
-    `;
+    const iframeExample = getIframeExample(displayLink, planningTitle);
+    const iframeTableExample = getIframeExample(tableLink, planningTitle);
     return (
         <div>
             <div style={entryStyle}>
@@ -76,6 +84,12 @@ const SharingModalBody = () => {
                     <FormattedMessage id={'msg.publicLink'} />: <b>{displayLink}</b>
                 </span>
                 <CopyToClipboardButton text={displayLink} />
+            </div>
+            <div style={entryStyle}>
+                <span>
+                    <FormattedMessage id={'msg.publicTableLink'} />: <b>{tableLink}</b>
+                </span>
+                <CopyToClipboardButton text={tableLink} />
             </div>
             <div style={entryStyle}>
                 <span>
@@ -88,6 +102,12 @@ const SharingModalBody = () => {
                     <FormattedMessage id={'msg.iframeExample'} />: <b>{iframeExample}</b>
                 </span>
                 <CopyToClipboardButton text={iframeExample} />
+            </div>
+            <div style={entryStyle}>
+                <span>
+                    <FormattedMessage id={'msg.iframeTableExample'} />: <b>{iframeTableExample}</b>
+                </span>
+                <CopyToClipboardButton text={iframeTableExample} />
             </div>
             {password && (
                 <div style={entryStyle}>
