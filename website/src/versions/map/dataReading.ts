@@ -6,6 +6,7 @@ import {
     getCurrenMapTime as zipGetCurrenMapTime,
     getCurrentRealTime,
     getEndMapTime as zipGetEndMapTime,
+    getIsLive,
     getStartMapTime as zipGetStartMapTime,
 } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
@@ -59,7 +60,8 @@ export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined
 export const getDisplayTimeStamp = (state: VersionsState): string | undefined => {
     const sliderTimeStamp = getZipCurrentTimeStamp(state);
     const currentRealTime = getCurrentRealTime(state);
-    return currentRealTime ?? sliderTimeStamp;
+    const isLive = getIsLive(state);
+    return isLive ? currentRealTime : sliderTimeStamp;
 };
 
 function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, selectedTrackIds: string[]) {
