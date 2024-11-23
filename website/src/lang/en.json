@@ -191,6 +191,7 @@
     "msg.segmentUsed.hint": "This segment is used in {counter} tracks:\n{tracks}",
     "msg.menu": "Menu",
     "msg.pointOfInterest": "Point of interest",
+    "msg.actionOnSegmentClick": "Actions on this GPX segment",
     "msg.delete": "Delete",
     "msg.save": "Save",
     "msg.points": "Points",

@@ -191,6 +191,7 @@
     "msg.segmentUsed.hint": "Dieser Abschnitt wird in {counter} Routen verwendet:\n{tracks}",
     "msg.menu": "Menü",
     "msg.pointOfInterest": "Wichtiger Punkt",
+    "msg.actionOnSegmentClick": "Aktionen mit diesem Abschnitt",
     "msg.delete": "Löschen",
     "msg.save": "Speichern",
     "msg.points": "Punkte",

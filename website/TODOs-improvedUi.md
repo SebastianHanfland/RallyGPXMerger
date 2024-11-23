@@ -45,7 +45,7 @@
     - [ ] It should be way faster.
 
 ### Improvement
-- [ ] Overall styling, making it beautiful, Maybe asking Dennis about it
+- [x] Overall styling, making it beautiful, Maybe asking Dennis about it
 - [ ] Edit of Breaks, changing time or text or whatever
   - [ ] Text etc as title when hovering over it
 -[x] .... Having numbers and (/) etc in the tab name to give the user a better feeling for what happens
