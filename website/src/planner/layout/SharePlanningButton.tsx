@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
 import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 
 const sharePlanningStyle: CSSProperties = {
     position: 'fixed',
@@ -56,9 +57,18 @@ const entryStyle = { display: 'flex', justifyContent: 'space-between', margin: '
 const SharingModalBody = () => {
     const password = useSelector(getPlanningPassword);
     const planningId = useSelector(getPlanningId);
+    const planningTitle = useSelector(getPlanningTitle);
     const displayLink = `${getBaseUrl()}?display=${planningId}`;
     const planningLink = `${getBaseUrl()}?planning=${planningId}`;
     const planningLinkWithAdmin = `${getBaseUrl()}?planning=${planningId}&admin=${password}`;
+    const iframeExample = `
+        <iframe
+            src="${displayLink}"
+            title="${planningTitle}"
+            height="1000px"
+            width="1000px"
+        ></iframe>
+    `;
     return (
         <div>
             <div style={entryStyle}>
@@ -72,6 +82,12 @@ const SharingModalBody = () => {
                     <FormattedMessage id={'msg.planningLink'} />: <b>{planningLink}</b>
                 </span>
                 <CopyToClipboardButton text={planningLink} />
+            </div>
+            <div style={entryStyle}>
+                <span>
+                    <FormattedMessage id={'msg.iframeExample'} />: <b>{iframeExample}</b>
+                </span>
+                <CopyToClipboardButton text={iframeExample} />
             </div>
             {password && (
                 <div style={entryStyle}>
