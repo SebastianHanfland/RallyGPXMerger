@@ -41,8 +41,8 @@
 -[x] Track name (and ensured creation) for single track
 - [x] Doing the magic only for small demonstrations and turning it of.
   - [x] Still having one "Do the magic" button available
-  - [ ] Optimizing the magic
-    - [ ] It should be way faster.
+  - [x] Optimizing the magic
+    - [x] It should be way faster.
 
 ### Improvement
 - [x] Overall styling, making it beautiful, Maybe asking Dennis about it
@@ -167,7 +167,7 @@ Having a simple node express backend, which takes the json and stores it on the 
 
 
 ### Next
-* [ ] Translate hints to english
+* [x] Translate hints to english
 * [ ] UI to add breaks via left click
 * [ ] Testing for bugs
 * [ ] Add a simple gif for simple and complex each

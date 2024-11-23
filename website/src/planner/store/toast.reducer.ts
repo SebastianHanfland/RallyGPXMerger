@@ -42,7 +42,7 @@ function addToast(
 }
 
 export const infoNotification = (dispatch: Dispatch, title: string, message?: string) => {
-    addToast(dispatch, { title, message }, 'info');
+    addToast(dispatch, { title, message }, 'info', 10);
 };
 
 export const successNotification = (dispatch: Dispatch, title: string, message?: string) => {
