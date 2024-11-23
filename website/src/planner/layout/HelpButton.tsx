@@ -43,51 +43,55 @@ export const HelpButton = () => {
         if (gpxSegments.length === 0) {
             infoNotification(
                 dispatch,
-                'GPX Hochladen',
-                'Erstellen Sie eine GPX Datei und laden Sie sie hoch. Z.B. mit GPX Studio'
+                intl.formatMessage({ id: 'msg.help.gpx.title' }),
+                intl.formatMessage({ id: 'msg.help.gpx.message' })
             );
             return;
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
             infoNotification(
                 dispatch,
-                'Ankunftszeit auswählen',
-                'Wählen Sie unter Streckenplanung die Ankunftszeit aus'
+                intl.formatMessage({ id: 'msg.help.time.title' }),
+                intl.formatMessage({ id: 'msg.help.time.message' })
             );
             return;
         }
         if (!planningTitle) {
-            infoNotification(dispatch, 'Namen bestimmen', 'Wählen Sie unter Einstellungen einen Namen für die Planung');
+            infoNotification(
+                dispatch,
+                intl.formatMessage({ id: 'msg.help.name.title' }),
+                intl.formatMessage({ id: 'msg.help.name.message' })
+            );
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningId) {
             infoNotification(
                 dispatch,
-                'Planung hochladen',
-                'Laden Sie über den grünen Button mit Datei und Pfeil nach oben die Planung hoch'
+                intl.formatMessage({ id: 'msg.help.upload.title' }),
+                intl.formatMessage({ id: 'msg.help.upload.message' })
             );
             return;
         }
         infoNotification(
             dispatch,
-            'Planung teilen',
-            'Über den Teilen button oder die heruntergeladene Datei können Sie die Planung mit anderen teilen'
+            intl.formatMessage({ id: 'msg.help.share.title' }),
+            intl.formatMessage({ id: 'msg.help.share.message' })
         );
         infoNotification(
             dispatch,
-            'Planung anpassen',
-            'Passen Sie die Planung an, und aktualisieren Sie die hochgeladene Version über den grünen Button mit Datei und Pfeil nach oben'
+            intl.formatMessage({ id: 'msg.help.edit.title' }),
+            intl.formatMessage({ id: 'msg.help.edit.message' })
         );
         infoNotification(
             dispatch,
-            'Planung herunterladen',
-            'Speichern Sie die aktuelle Version über den blauen Button mit Datei und Pfeil nach unten als json Datei'
+            intl.formatMessage({ id: 'msg.help.download.title' }),
+            intl.formatMessage({ id: 'msg.help.download.message' })
         );
         infoNotification(
             dispatch,
-            'Planung löschen',
-            'Löschen Sie die hochgeladene Version über den roten Button mit Datei und x'
+            intl.formatMessage({ id: 'msg.help.delete.title' }),
+            intl.formatMessage({ id: 'msg.help.delete.message' })
         );
     };
 

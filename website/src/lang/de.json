@@ -274,5 +274,21 @@
     "msg.calculation.success.message": "Die Planung wurde nach den Änderungen aktualisiert",
     "msg.noTitle.error.title": "Noch keinen Titel",
     "msg.noTitle.error.message": "Bitte setzen Sie einen Title für die Planung unter den Einstellungen",
-    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen finden Sie hinter diesem Button"
+    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen finden Sie hinter diesem Button",
+    "msg.help.gpx.title": "GPX Hochladen",
+    "msg.help.gpx.message": "Erstellen Sie eine GPX Datei und laden Sie sie hoch. Z.B. mit GPX Studio",
+    "msg.help.time.title": "Ankunftszeit auswählen",
+    "msg.help.time.message": "Wählen Sie unter Streckenplanung die Ankunftszeit aus",
+    "msg.help.name.title": "Namen bestimmen",
+    "msg.help.name.message": "Wählen Sie unter Einstellungen einen Namen für die Planung",
+    "msg.help.upload.title": "Planung hochladen",
+    "msg.help.upload.message": "Laden Sie über den grünen Button mit Datei und Pfeil nach oben die Planung hoch",
+    "msg.help.share.title": "Planung teilen",
+    "msg.help.share.message": "Über den Teilen Button oder die heruntergeladene Datei können Sie die Planung mit anderen teilen",
+    "msg.help.edit.title": "Planung anpassen",
+    "msg.help.edit.message": "Passen Sie die Planung an, und aktualisieren Sie die hochgeladene Version über den grünen Button mit Datei und Pfeil nach oben",
+    "msg.help.download.title": "Planung herunterladen",
+    "msg.help.download.message": "Speichern Sie die aktuelle Version über den blauen Button mit Datei und Pfeil nach unten als json Datei",
+    "msg.help.delete.title": "Planung löschen",
+    "msg.help.delete.message": "Löschen Sie die hochgeladene Version über den roten Button mit Datei und x"
 }
