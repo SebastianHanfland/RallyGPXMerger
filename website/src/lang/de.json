@@ -290,5 +290,13 @@
     "msg.help.download.title": "Planung herunterladen",
     "msg.help.download.message": "Speichern Sie die aktuelle Version über den blauen Button mit Datei und Pfeil nach unten als json Datei",
     "msg.help.delete.title": "Planung löschen",
-    "msg.help.delete.message": "Löschen Sie die hochgeladene Version über den roten Button mit Datei und x"
+    "msg.help.delete.message": "Löschen Sie die hochgeladene Version über den roten Button mit Datei und x",
+    "msg.help.track.title": "Routen erstellen und GPX zuweisen",
+    "msg.help.track.message": "Erstellen Sie eine Route, benennen Sie sie, und weisen Sie GPX Abschnitte hinzu",
+    "msg.help.trackName.title": "Route benennen",
+    "msg.help.trackName.message": "Benennen Sie die Route",
+    "msg.help.trackSegments.title": "GPX zuweisen",
+    "msg.help.trackSegments.message": "Weisen Sie GPX Abschnitte der Route hinzu",
+    "msg.help.calculate.title": "Routen berechnen",
+    "msg.help.calculate.message": "Klicken Sie oben links auf den orangenen Berechnen Button, um die Planung zu berechnen. Wenn die Route nicht zu groß ist, können Sie auch auf Automatische Berechnung umstellen"
 }

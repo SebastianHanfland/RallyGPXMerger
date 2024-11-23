@@ -73,83 +73,47 @@ export const HelpButton = () => {
 
     const helpWithNotificationComplex = () => {
         if (gpxSegments.length === 0) {
-            infoNotification(
-                dispatch,
-                'GPX Hochladen',
-                'Erstellen Sie eine GPX Datei und laden Sie sie hoch. Z.B. mit GPX Studio'
-            );
+            inform('gpx');
             return;
         }
         if (tracks.length === 0) {
-            infoNotification(
-                dispatch,
-                'Routen erstellen und GPX zuweisen',
-                'Erstellen Sie eine Route, benennen Sie sie, und weisen Sie GPX Abschnitte hinzu'
-            );
+            inform('track');
             dispatch(layoutActions.setSelectedSidebarSection('tracks'));
             return;
         }
         if (!tracks[0].name) {
-            infoNotification(dispatch, 'Route benennen', 'Benennen Sie die Route');
+            inform('trackName');
             dispatch(layoutActions.setSelectedSidebarSection('tracks'));
             return;
         }
         if (tracks[0].segmentIds.length === 0) {
-            infoNotification(dispatch, 'GPX zuweisen', 'Weisen Sie GPX Abschnitte der Route hinzu');
+            inform('trackSegments');
             dispatch(layoutActions.setSelectedSidebarSection('tracks'));
             return;
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
-            infoNotification(
-                dispatch,
-                'Ankunftszeit auswählen',
-                'Wählen Sie unter Streckenplanung die Ankunftszeit aus'
-            );
+            inform('time');
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningTitle) {
-            infoNotification(dispatch, 'Namen bestimmen', 'Wählen Sie unter Einstellungen einen Namen für die Planung');
+            inform('name');
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (hasChanges) {
-            infoNotification(
-                dispatch,
-                'Routen berechnen',
-                'Klicken Sie oben links auf den orangenen Berechnen Button, um die Planung zu berechnen. Wenn die Route nicht zu groß ist, können Sie auch auf Automatische Berechnung umstellen'
-            );
+            inform('calculate');
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
         if (!planningId) {
-            infoNotification(
-                dispatch,
-                'Planung hochladen',
-                'Laden Sie über den grünen Button mit Datei und Pfeil nach oben die Planung hoch'
-            );
+            inform('upload');
             return;
         }
-        infoNotification(
-            dispatch,
-            'Planung teilen',
-            'Über den Teilen button oder die heruntergeladene Datei können Sie die Planung mit anderen teilen'
-        );
-        infoNotification(
-            dispatch,
-            'Planung anpassen',
-            'Passen Sie die Planung an, und aktualisieren Sie die hochgeladene Version über den grünen Button mit Datei und Pfeil nach oben'
-        );
-        infoNotification(
-            dispatch,
-            'Planung herunterladen',
-            'Speichern Sie die aktuelle Version über den blauen Button mit Datei und Pfeil nach unten als json Datei'
-        );
-        infoNotification(
-            dispatch,
-            'Planung löschen',
-            'Löschen Sie die hochgeladene Version über den roten Button mit Datei und x'
-        );
+        inform('share');
+        inform('edit');
+        inform('download');
+        inform('delete');
     };
 
     const helpWithNotification = hasSingleTrack ? helpWithNotificationSimple : helpWithNotificationComplex;
