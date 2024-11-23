@@ -16,6 +16,7 @@ export interface MapState {
     showTrackInfo?: boolean;
     showSingleTrackInfo?: string;
     highlightedTrack?: string;
+    isLive: boolean;
 }
 
 export interface VersionsState {

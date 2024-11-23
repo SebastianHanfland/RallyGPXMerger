@@ -3,6 +3,7 @@ import { VersionsState, MapState } from './types';
 
 const initialState: MapState = {
     currentTime: 0,
+    isLive: window.location.search.includes('&live'),
 };
 
 const mapSlice = createSlice({
@@ -31,6 +32,9 @@ const mapSlice = createSlice({
         setHighlightedTrack: (state: MapState, action: PayloadAction<string | undefined>) => {
             state.highlightedTrack = action.payload;
         },
+        setIsLive: (state: MapState, action: PayloadAction<boolean>) => {
+            state.isLive = action.payload;
+        },
     },
 });
 
@@ -45,3 +49,4 @@ export const getShowMapMarker = (state: VersionsState) => getBase(state).showMap
 export const getShowTrackInfo = (state: VersionsState) => getBase(state).showTrackInfo ?? false;
 export const getShowSingleTrackInfo = (state: VersionsState) => getBase(state).showSingleTrackInfo;
 export const getHighlightedTrack = (state: VersionsState) => getBase(state).highlightedTrack;
+export const getIsLive = (state: VersionsState) => getBase(state).isLive;

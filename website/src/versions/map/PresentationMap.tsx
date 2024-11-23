@@ -9,9 +9,8 @@ import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
 import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { mapActions } from '../store/map.reducer.ts';
+import { getIsLive, mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { isLive } from '../ZipTimeSlider.tsx';
 import { getZipTracks } from '../store/zipTracks.reducer.ts';
 import { getGpx } from '../../common/cache/gpxCache.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
@@ -35,6 +34,7 @@ export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
     const zipTracks = useSelector(getZipTracks);
+    const isLive = useSelector(getIsLive);
     const currentZipTracks = zipTracks ? Object.values(zipTracks)[0] : undefined;
 
     useEffect(() => {
