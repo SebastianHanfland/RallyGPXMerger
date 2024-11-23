@@ -53,7 +53,7 @@ export const HelpButton = () => {
             return;
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
-            inform('time');
+            inform('timeSimple');
             return;
         }
         if (!planningTitle) {
@@ -92,7 +92,7 @@ export const HelpButton = () => {
             return;
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
-            inform('time');
+            inform('timeComplex');
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
             return;
         }
