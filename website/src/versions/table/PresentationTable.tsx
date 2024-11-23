@@ -8,10 +8,11 @@ import { showTimes } from '../store/LoadStateButton.tsx';
 import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
-import { Button } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { downloadSinglePdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
 import { State } from '../../planner/store/types.ts';
 import download from '../../assets/file-down.svg';
+import { getLink } from '../../utils/linkUtil.ts';
 
 export const isInIframe = window.location.search.includes('&iframe');
 
@@ -24,14 +25,14 @@ export const PresentationTable = () => {
 
     return (
         <div>
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Start</th>
                         <th>Ziel</th>
-                        <th>GPX</th>
-                        <th>PDF</th>
+                        <th>Länge in km</th>
+                        <th>Dateien</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +40,7 @@ export const PresentationTable = () => {
                         <TrackInfoRow track={track} key={track.id} />
                     ))}
                 </tbody>
-            </table>
+            </Table>
         </div>
     );
 };
@@ -54,12 +55,32 @@ function TrackInfoRow({ track }: { track: ZipTrack }) {
         return <div>Info not found</div>;
     }
     const intl = useIntl();
+
+    const { pointFrom: startPoint, streetName: startStreetName } = foundInfo.wayPoints[0];
+    const startLink = getLink({ pointFrom: startPoint, pointTo: startPoint });
+
+    const { pointFrom: endPoint, streetName: endStreetName } = foundInfo.wayPoints[foundInfo.wayPoints.length - 1];
+    const endLink = getLink({ pointFrom: endPoint, pointTo: endPoint });
     return (
         <tr>
             <td>{track.filename}</td>
-            <td>{formatTimeOnly(roundStartTimes(foundInfo.startFront, track.filename))}</td>
-            <td>{formatTimeOnly(foundInfo.arrivalFront)}</td>
-            <td>{formatTimeOnly(formatNumber(foundInfo.distanceInKm))}</td>
+            <td>
+                {formatTimeOnly(roundStartTimes(foundInfo.startFront, track.filename))}{' '}
+                <div>
+                    <a href={startLink} target={'_blank'} referrerPolicy={'no-referrer'}>
+                        {startStreetName}
+                    </a>
+                </div>
+            </td>
+            <td>
+                {formatTimeOnly(foundInfo.arrivalFront)}
+                <div>
+                    <a href={endLink} target={'_blank'} referrerPolicy={'no-referrer'}>
+                        {endStreetName}
+                    </a>
+                </div>
+            </td>
+            <td>{formatNumber(foundInfo.distanceInKm)}</td>
             <td>
                 <FileDownloader
                     name={`${track.filename}.gpx`}
@@ -69,8 +90,6 @@ function TrackInfoRow({ track }: { track: ZipTrack }) {
                     onlyIcon={true}
                     size={'sm'}
                 />
-            </td>
-            <td>
                 {storedState && showTimes && (
                     <Button
                         size={'sm'}
