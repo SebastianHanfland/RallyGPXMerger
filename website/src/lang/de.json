@@ -300,5 +300,7 @@
     "msg.help.trackSegments.title": "GPX zuweisen",
     "msg.help.trackSegments.message": "Weisen Sie GPX Abschnitte der Route hinzu",
     "msg.help.calculate.title": "Routen berechnen",
-    "msg.help.calculate.message": "Klicken Sie oben links auf den orangenen Berechnen Button, um die Planung zu berechnen. Wenn die Route nicht zu groß ist, können Sie auch auf Automatische Berechnung umstellen"
+    "msg.help.calculate.message": "Klicken Sie oben links auf den orangenen Berechnen Button, um die Planung zu berechnen. Wenn die Route nicht zu groß ist, können Sie auch auf Automatische Berechnung umstellen",
+    "msg.showLive": "Live",
+    "msg.showPlan": "Plan"
 }
