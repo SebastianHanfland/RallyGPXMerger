@@ -26,6 +26,12 @@ export function setStartAndEndTime(dispatch: Dispatch) {
         start: startDate,
         end: endDate,
     };
+    if (
+        endDate.startsWith(new Date().toISOString().substring(0, 10)) ||
+        startDate.startsWith(new Date().toISOString().substring(0, 10))
+    ) {
+        dispatch(mapActions.setIsLive(true));
+    }
     dispatch(mapActions.setStartAndEndTime(payload));
 }
 
