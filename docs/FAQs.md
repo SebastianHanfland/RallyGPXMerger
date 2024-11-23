@@ -32,3 +32,7 @@
 * GPX segments can be shared, to construct a star formed demonstration
 * Priority of tracks that join can be adjusted
 
+## Possible Problems
+This website uses two external services [GeoApify](https://www.geoapify.com/) and [BigDataCloud](https://www.bigdatacloud.com/) to resolve the street information.
+It is possible that the quota for the requests is exceeded.
+Then one can create own free accounts there and use the API Keys on the settings tab.

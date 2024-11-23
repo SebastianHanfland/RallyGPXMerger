@@ -7,7 +7,7 @@
 - [x] Map Focus when entering page
 - [ ] Directly create a break somewhere
 - [ ] Integrate toilet display
-- [ ] Aborting/Deleting a planning
+- [x] Aborting/Deleting a planning
 - [x] Maybe renaming segments for simple track? -> No
 - [x] Space to the bottom so that the dropdown looks fine
 - [x] When initally starting, having a sidebartab selected
@@ -20,10 +20,10 @@
 
 ### Optional
 - [ ] Display height profile of track
-- [ ] Hovering on track highlights track
-- [ ] More help texts
+- [x] Hovering on track highlights track
+- [x] More help texts
 - [ ] Break handling to also create points of interest, customized breaks
-- [ ] Start time communication
+- [x] Start time communication -> Ticket
 
 
 ### Things to integrate
@@ -52,7 +52,7 @@
 -[x] Map interactions, via floating buttons
 - [ ] Being able to change the color (by randomly clicking?)
 -[x] Having an icon which signals that some background processes are working
--[ ] break management
+-[x] break management
     -[ ] It should be possible to assign a toilet icon and location
     - [ ] adding a break comes with the question for further information
 -[x] Warning section or Toast due to missing things
@@ -63,24 +63,25 @@
 -[x] Having a mode for only a simple demonstration
     -[x] No tracks
     -[x] segments can be reordered and breaks added
--[ ] More permanent overwrite of streetnames oder modification
+-[x] More permanent overwrite of streetnames oder modification -> Ticket
 -[ ] Validation for the document creation
 -[x] Initial map location via ip address or such
-  - [ ] Happens now via one of the gpx tracks
--[ ] Having a smooth user experience when using the tool
+  - [x] Happens now via one of the gpx tracks
+-[x] Having a smooth user experience when using the tool
 -[x] Maybe one button to trigger a clean creation
 -[ ] Maybe improve handling on the nodes
 -[ ] Settings for start time communication or such not having it in code
   - [ ] As additional parameters for each track
   - [ ] An overview of the start times is missing
     - [ ] Use the iframe solution (Table and Map)
-    - [ ] They should easily be able to link from the current planner view
+    - [x] They should easily be able to link from the current planner view
     - [ ] I want direct feedback to what I would be publishing etc
 -[ ] Button or example on copying something for an iframe
 -[ ] Having ::: left of line that can be shifted
--[ ] ? Adding Toasts once the needed actions is done
--[ ] Smooth the starting way and maybe rework the menu and the way to it
--[ ] A list of warnings per track, or also one to display that the arrival date was not yet set
+-[x] ? Adding Toasts once the needed actions is done
+-[x] Smooth the starting way and maybe rework the menu and the way to it
+-[ ] A list of warnings per track, 
+-[x] or also one to display that the arrival date was not yet set
     - [ ] Either on the map or as bubbles
 - [x] a proper context menu on the tracks,
     - [x] split in dialog
@@ -137,11 +138,6 @@ Is it good to have an end date
 2mb -> 100 000
 I do not need too much of a limitation there
 
-I need help.
-I do not know what is not working. The request things are right but the construction we have for the other side to check, they are wrong
-I do not know how to debug or what it means...
-Here I have to continue.
-
 Also:
 * Loading a planning via its id
 * make it editable etc
@@ -156,15 +152,15 @@ Having a simple node express backend, which takes the json and stores it on the 
 * Cleanup and sanity check
 ### Still to do
 * [x] Ensure that the password is not within the backend which is stored
-* [ ] Title of the planning
-* [ ] Deployment
+* [x] Title of the planning
+* [x] Deployment
 * [ ] Clean up and sanity check, maybe basic ui tests
-* [ ] Notifications Feedback
-* [ ] Possible to enter password or have it in the URL to allow editing, or prefilling password
-  * [ ] It is also possible to not make it manually possible to enter a password, but it is a uuid
-  * [ ] Then having a second link, with editable rights which can be shared
-* [ ] Hide UI for editing when the password is not set and it was loaded from the server
-* [ ] Resolving the elements even on the initial upload or so
+* [x] Notifications Feedback
+* [x] Possible to enter password or have it in the URL to allow editing, or prefilling password
+  * [x] It is also possible to not make it manually possible to enter a password,// but it is a uuid
+  * [x] Then having a second link, with editable rights which can be shared
+* [x] Hide UI for editing when the password is not set and it was loaded from the server
+* [x] Resolving the elements even on the initial upload or so
 * [x] Fix delete buttons
 * [x] add a simple json download button
 * [x] Continue planning 
