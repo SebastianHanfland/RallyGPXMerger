@@ -7,7 +7,6 @@ import { TimeSlider } from '../map/TimeSlider.tsx';
 import { DefaultArrivalDateWarning } from './DefaultArrivalDateWarning.tsx';
 import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
-import { LanguageSelection } from '../layout/LanguageSelection.tsx';
 import { CleanDataButton } from '../layout/CleanDataButton.tsx';
 import { UploadDataButton } from '../layout/UploadDataButton.tsx';
 import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
@@ -44,7 +43,6 @@ export const MainPlannerUi = () => {
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />
-                <LanguageSelection />
                 <SharePlanningButton />
                 <PasswordButton />
                 <RemoveUploadedDataButton />

@@ -14,6 +14,7 @@ import { BackToStartDialog } from './BackToStartDialog.tsx';
 import { useState } from 'react';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { LanguageSelection } from './LanguageSelection.tsx';
 
 export const WizardStartPage = () => {
     const dispatch = useDispatch();
@@ -97,6 +98,7 @@ export const WizardStartPage = () => {
                     />
                 </Col>
             </Row>
+            <LanguageSelection />
         </Container>
     );
 };
