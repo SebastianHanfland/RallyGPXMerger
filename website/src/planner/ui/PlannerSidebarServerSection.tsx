@@ -11,27 +11,25 @@ import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 
 export const PlannerSidebarServerSection = () => {
+    const className = 'm-1';
     return (
         <div>
             <Row>
-                <Col></Col>
-            </Row>
-            <Row>
-                <Col>
+                <Col className={className}>
                     <Row>
                         <h5>Daten auf dem Server</h5>
                     </Row>
 
-                    <Row>
+                    <Row className={className}>
                         <UploadDataButton />
                     </Row>
-                    <Row>
-                        <PasswordButton />
-                    </Row>
-                    <Row>
+                    <Row className={className}>
                         <RemoveUploadedDataButton />
                     </Row>
-                    <Row>
+                    <Row className={className}>
+                        <PasswordButton />
+                    </Row>
+                    <Row className={className}>
                         <SharePlanningButton />
                     </Row>
                 </Col>
@@ -39,32 +37,32 @@ export const PlannerSidebarServerSection = () => {
                     <Row>
                         <h5>Lokale Daten</h5>
                     </Row>
-                    <Row>
+                    <Row className={className}>
                         <DownloadDataButton />
                     </Row>
-                    <Row>
+                    <Row className={className}>
                         <CleanDataButton />
                     </Row>
-                    <Row>
+                    <Row className={className}>
                         <Col>
-                            <Row>
+                            <Row style={{ marginRight: '1px' }}>
                                 <SegmentFilesDownloader />
                             </Row>
                         </Col>
                         <Col>
-                            <Row>
+                            <Row style={{ marginLeft: '1px' }}>
                                 <CalculatedFilesDownloader />
                             </Row>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className={className}>
                         <Col>
-                            <Row>
+                            <Row style={{ marginRight: '1px' }}>
                                 <StreetFilesDownloader />
                             </Row>
                         </Col>
                         <Col>
-                            <Row>
+                            <Row style={{ marginLeft: '1px' }}>
                                 <StreetFilesPdfMakeDownloader />
                             </Row>
                         </Col>
