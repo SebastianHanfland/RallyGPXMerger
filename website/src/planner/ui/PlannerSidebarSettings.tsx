@@ -5,10 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { ConstructionSites } from '../settings/ConstructionSites.tsx';
 import { GapFinderParameters } from '../parameters/GapFinderParameters.tsx';
 import { PlanningTitle } from '../parameters/PlanningTitle.tsx';
+import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
 
 export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
     return (
         <div className={'m-2'}>
+            {!all && <PlannerSidebarServerSection />}
             <PlanningTitle />
             <Accordion defaultActiveKey={all ? '0' : '1'}>
                 {all && (
