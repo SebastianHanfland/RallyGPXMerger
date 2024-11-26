@@ -32,6 +32,8 @@ export const AppFooter = () => {
                         <a
                             href="https://github.com/SebastianHanfland/RallyGPXMerger"
                             className="nav-link px-2 text-muted"
+                            target={'_blank'}
+                            referrerPolicy={'no-referrer'}
                         >
                             github
                         </a>
