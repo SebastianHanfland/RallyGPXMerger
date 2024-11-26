@@ -133,7 +133,7 @@ export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getPlanningTitle = (state: State) => getBase(state).planningTitle;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
-export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm;
+export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
