@@ -4,7 +4,6 @@ import { PlannerSidebar } from './PlannerSidebar.tsx';
 import { MapContentSelection } from '../map/MapContentSelection.tsx';
 import { PlannerHomeButton } from './PlannerHomeButton.tsx';
 import { TimeSlider } from '../map/TimeSlider.tsx';
-import { DefaultArrivalDateWarning } from './DefaultArrivalDateWarning.tsx';
 import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
 import { useEffect } from 'react';
@@ -13,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
 import { NoTitleWarning } from './NoTitleWarning.tsx';
 import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
-import { HelpButton } from '../layout/HelpButton.tsx';
+import { HelpingTip } from './HelpingTip.tsx';
 
 export const MainPlannerUi = () => {
     const planningInProgress = useSelector(isPlanningInProgress);
@@ -31,7 +30,7 @@ export const MainPlannerUi = () => {
                 <Container fluid className={'m-0 p-0'}>
                     <InteractionMap />
                 </Container>
-                <DefaultArrivalDateWarning />
+                <HelpingTip />
                 <NoTitleWarning />
                 <CalculationIsRunning />
                 <CalculationOnTheFly />
@@ -39,7 +38,6 @@ export const MainPlannerUi = () => {
                 <PlannerHomeButton />
                 <TimeSlider />
                 <SharePlanningButton onMap={true} />
-                <HelpButton />
             </div>
             <PlannerSidebar />
         </>

@@ -8,10 +8,10 @@ import { Warning } from '../layout/dashboard/Warning.tsx';
 const noTileWarningStyle: CSSProperties = {
     position: 'fixed',
     width: '650px',
-    height: '35px',
+    height: '70px',
     borderRadius: '2px',
     left: 80,
-    top: 45,
+    top: 10,
     zIndex: 10,
     backgroundColor: 'white',
     paddingTop: '5px',
