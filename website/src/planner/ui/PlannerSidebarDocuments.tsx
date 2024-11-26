@@ -19,7 +19,7 @@ export const PlannerSidebarDocuments = () => {
             </div>
             <div>
                 <h3>
-                    <FormattedMessage id={'msg.documents'} />
+                    <FormattedMessage id={'msg.documents.plain'} />
                 </h3>
                 <PlanningLabel />
                 <h4>
@@ -31,7 +31,7 @@ export const PlannerSidebarDocuments = () => {
                 </h4>
                 <CalculatedFilesDownloader />
                 <h4>
-                    <FormattedMessage id={'msg.documents'} />
+                    <FormattedMessage id={'msg.documents.plain'} />
                 </h4>
                 <div className={'m-2'}>
                     <StreetFilesDownloader /> <StreetFilesPdfMakeDownloader />

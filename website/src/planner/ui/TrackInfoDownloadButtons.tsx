@@ -28,7 +28,7 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
         <>
             <Row>
                 <h5>
-                    <FormattedMessage id={'msg.documents'} />
+                    <FormattedMessage id={'msg.documents.plain'} />
                 </h5>
                 <Col>
                     <Button
