@@ -36,7 +36,7 @@ export const WizardStartPage = () => {
                 />
             )}
             <WizardHeader />
-            <Row>
+            <Row className={'mb-5'}>
                 <Col>
                     <WizardCard
                         icon={stars}
