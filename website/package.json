@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "echo 'www.sternfahrtplaner.de' > ./dist/CNAME gh-pages -d dist",
     "dev": "vite",
     "build": "tsc && vite build",
     "test": "tsc && TZ=1Z vitest run",
