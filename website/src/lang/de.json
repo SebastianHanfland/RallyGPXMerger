@@ -276,7 +276,7 @@
     "msg.calculation.success.message": "Die Planung wurde nach den Änderungen aktualisiert",
     "msg.noTitle.error.title": "Noch keinen Titel",
     "msg.noTitle.error.message": "Bitte setzen Sie einen Title für die Planung unter den Einstellungen",
-    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen finden Sie hinter diesem Button",
+    "msg.helpButton.hint": "Eine Kurzanleitung um das Tool zu benutzen finden Sie im Planer oben",
     "msg.help.gpx.title": "GPX Hochladen",
     "msg.help.gpx.message": "Erstellen Sie eine GPX Datei und laden Sie sie hoch. Z.B. mit GPX Studio",
     "msg.help.timeSimple.title": "Ankunftszeit auswählen",
