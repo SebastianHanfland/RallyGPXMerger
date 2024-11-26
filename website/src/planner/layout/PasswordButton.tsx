@@ -8,15 +8,9 @@ import { getIsPlanningAlreadySaved } from '../store/backend.reducer.ts';
 import { UploadModalBody } from './UploadModalBody.tsx';
 
 const passwordStyle: CSSProperties = {
-    position: 'fixed',
     width: '45px',
     height: '45px',
     borderRadius: '10px',
-    left: 10,
-    bottom: 290,
-    zIndex: 10,
-    overflow: 'hidden',
-    cursor: 'pointer',
 };
 
 export function PasswordButton() {

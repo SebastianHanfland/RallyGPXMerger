@@ -6,11 +6,18 @@ import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { ExportStateJson } from '../io/ExportStateJson.tsx';
 import { PlanningLabel } from '../parameters/PlanningLabel.tsx';
+import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
 
 export const PlannerSidebarDocuments = () => {
     const intl = useIntl();
     return (
         <div>
+            <div className={'m-2'}>
+                <h3>
+                    <FormattedMessage id={'msg.gps'} />
+                </h3>
+                <PlannerSidebarServerSection />
+            </div>
             <div className={'m-2'}>
                 <h3>
                     <FormattedMessage id={'msg.street'} />

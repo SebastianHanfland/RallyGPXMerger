@@ -7,18 +7,11 @@ import { TimeSlider } from '../map/TimeSlider.tsx';
 import { DefaultArrivalDateWarning } from './DefaultArrivalDateWarning.tsx';
 import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
-import { CleanDataButton } from '../layout/CleanDataButton.tsx';
-import { UploadDataButton } from '../layout/UploadDataButton.tsx';
-import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
-import { RemoveUploadedDataButton } from '../layout/RemoveUploadedDataButton.tsx';
 import { useEffect } from 'react';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { useSelector } from 'react-redux';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
-import { DownloadDataButton } from '../layout/DownloadDataButton.tsx';
-import { PasswordButton } from '../layout/PasswordButton.tsx';
 import { NoTitleWarning } from './NoTitleWarning.tsx';
-import { HelpButton } from '../layout/HelpButton.tsx';
 
 export const MainPlannerUi = () => {
     const planningInProgress = useSelector(isPlanningInProgress);
@@ -43,13 +36,6 @@ export const MainPlannerUi = () => {
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />
-                <SharePlanningButton />
-                <PasswordButton />
-                <RemoveUploadedDataButton />
-                <CleanDataButton />
-                <DownloadDataButton />
-                <UploadDataButton />
-                <HelpButton />
             </div>
             <PlannerSidebar />
         </>

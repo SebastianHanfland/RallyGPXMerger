@@ -6,15 +6,9 @@ import { useIntl } from 'react-intl';
 import { downloadFile } from '../segments/FileDownloader.tsx';
 
 const removeDataStyle: CSSProperties = {
-    position: 'fixed',
     width: '45px',
     height: '45px',
     borderRadius: '10px',
-    left: 70,
-    bottom: 110,
-    zIndex: 10,
-    overflow: 'hidden',
-    cursor: 'pointer',
 };
 
 export function DownloadDataButton() {

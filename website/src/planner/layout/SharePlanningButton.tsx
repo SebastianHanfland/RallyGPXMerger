@@ -9,7 +9,7 @@ import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 
-const sharePlanningStyle: CSSProperties = {
+const sharePlanningStyle1: CSSProperties = {
     position: 'fixed',
     width: '45px',
     height: '45px',
@@ -21,7 +21,13 @@ const sharePlanningStyle: CSSProperties = {
     cursor: 'pointer',
 };
 
-export function SharePlanningButton() {
+const sharePlanningStyle2: CSSProperties = {
+    width: '45px',
+    height: '45px',
+    borderRadius: '10px',
+};
+
+export function SharePlanningButton({ onMap }: { onMap?: boolean }) {
     const [showModal, setShowModal] = useState(false);
     const isPlanningAlreadySaved = useSelector(getIsPlanningAlreadySaved);
     const intl = useIntl();
@@ -33,7 +39,7 @@ export function SharePlanningButton() {
     return (
         <>
             <Button
-                style={sharePlanningStyle}
+                style={onMap ? sharePlanningStyle1 : sharePlanningStyle2}
                 className={'m-0 p-0'}
                 variant="info"
                 title={intl.formatMessage({ id: 'msg.sharingLink.hint' })}

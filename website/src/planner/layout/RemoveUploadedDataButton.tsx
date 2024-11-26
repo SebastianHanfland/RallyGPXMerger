@@ -14,15 +14,9 @@ import { deletePlanning } from '../../api/api.ts';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
 
 const removeDataStyle: CSSProperties = {
-    position: 'fixed',
     width: '45px',
     height: '45px',
     borderRadius: '10px',
-    left: 70,
-    bottom: 170,
-    zIndex: 10,
-    overflow: 'hidden',
-    cursor: 'pointer',
 };
 
 export function RemoveUploadedDataButton() {

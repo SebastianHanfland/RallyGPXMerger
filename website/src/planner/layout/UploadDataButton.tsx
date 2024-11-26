@@ -21,15 +21,9 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
 
 const removeDataStyle: CSSProperties = {
-    position: 'fixed',
     width: '45px',
     height: '45px',
     borderRadius: '10px',
-    left: 10,
-    bottom: 170,
-    zIndex: 10,
-    overflow: 'hidden',
-    cursor: 'pointer',
 };
 
 export function UploadDataButton() {
