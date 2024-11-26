@@ -12,6 +12,7 @@ import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { useSelector } from 'react-redux';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
 import { NoTitleWarning } from './NoTitleWarning.tsx';
+import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
 
 export const MainPlannerUi = () => {
     const planningInProgress = useSelector(isPlanningInProgress);
@@ -36,6 +37,7 @@ export const MainPlannerUi = () => {
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />
+                <SharePlanningButton onMap={true} />
             </div>
             <PlannerSidebar />
         </>

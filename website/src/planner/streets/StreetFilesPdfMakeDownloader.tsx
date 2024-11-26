@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import download from '../../assets/file-down.svg';
+import download from '../../assets/file-downB.svg';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { createBlockedStreetsPdf } from '../download/pdf/blockedStreetsPdf.ts';
@@ -56,6 +56,7 @@ export const StreetFilesPdfMakeDownloader = () => {
                 event.stopPropagation();
                 dispatch(downloadPdfFiles(intl));
             }}
+            variant={'info'}
             disabled={trackStreetInfos.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadPdf' })}
         >

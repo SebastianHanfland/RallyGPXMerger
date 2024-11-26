@@ -2,7 +2,6 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
-import deleteCloud from '../../assets/deleteCloud.svg';
 import { useIntl } from 'react-intl';
 import {
     backendActions,
@@ -12,6 +11,7 @@ import {
 } from '../store/backend.reducer.ts';
 import { deletePlanning } from '../../api/api.ts';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
+import trash from '../../assets/trash.svg';
 
 export function RemoveUploadedDataButton() {
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export function RemoveUploadedDataButton() {
                 title={intl.formatMessage({ id: 'msg.removeAllData.hint' })}
                 onClick={() => setShowModal(true)}
             >
-                <img src={deleteCloud} className="m-1" alt="trash" style={{ height: '20px', width: '20px' }} />
+                <img src={trash} className="m-1" alt="trash" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.removeAllData' })}
             </Button>
             {showModal && (

@@ -2,7 +2,7 @@ import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import download from '../../assets/file-down.svg';
+import download from '../../assets/file-downB.svg';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
@@ -40,6 +40,7 @@ export const StreetFilesDownloader = () => {
         <Button
             onClick={() => downloadFiles(trackStreetInfos, blockedStreetInfos, intl)}
             disabled={trackStreetInfos.length === 0}
+            variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadCsv' })}
         >
             <img

@@ -23,14 +23,15 @@ export const PlannerSidebarServerSection = () => {
                     <Row className={className}>
                         <UploadDataButton />
                     </Row>
-                    <Row className={className}>
-                        <RemoveUploadedDataButton />
-                    </Row>
+
                     <Row className={className}>
                         <PasswordButton />
                     </Row>
                     <Row className={className}>
                         <SharePlanningButton />
+                    </Row>
+                    <Row className={className}>
+                        <RemoveUploadedDataButton />
                     </Row>
                 </Col>
                 <Col>
@@ -40,9 +41,7 @@ export const PlannerSidebarServerSection = () => {
                     <Row className={className}>
                         <DownloadDataButton />
                     </Row>
-                    <Row className={className}>
-                        <CleanDataButton />
-                    </Row>
+
                     <Row className={className}>
                         <Col>
                             <Row style={{ marginRight: '1px' }}>
@@ -66,6 +65,9 @@ export const PlannerSidebarServerSection = () => {
                                 <StreetFilesPdfMakeDownloader />
                             </Row>
                         </Col>
+                    </Row>
+                    <Row className={className}>
+                        <CleanDataButton />
                     </Row>
                 </Col>
             </Row>

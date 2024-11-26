@@ -15,7 +15,7 @@ const sharePlanningStyle1: CSSProperties = {
     height: '45px',
     borderRadius: '10px',
     left: 10,
-    bottom: 230,
+    bottom: 60,
     zIndex: 10,
     overflow: 'hidden',
     cursor: 'pointer',

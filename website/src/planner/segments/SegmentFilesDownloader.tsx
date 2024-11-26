@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import download from '../../assets/file-down.svg';
+import download from '../../assets/file-downB.svg';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { downloadFilesInZip } from '../tracks/CalculatedFilesDownloader.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -12,6 +12,7 @@ export const SegmentFilesDownloader = () => {
         <Button
             onClick={() => downloadFilesInZip(segments, 'Segments')}
             disabled={segments.length === 0}
+            variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadSegments.hint' })}
         >
             <img

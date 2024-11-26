@@ -1,7 +1,7 @@
 import { Button, Spinner } from 'react-bootstrap';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
-import fileUp from '../../assets/file-up.svg';
+import fileUp from '../../assets/file-upW.svg';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {

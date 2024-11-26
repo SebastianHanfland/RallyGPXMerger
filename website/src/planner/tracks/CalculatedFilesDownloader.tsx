@@ -3,7 +3,7 @@ import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
-import download from '../../assets/file-down.svg';
+import download from '../../assets/file-downB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
@@ -30,6 +30,7 @@ export const CalculatedFilesDownloader = () => {
         <Button
             onClick={() => downloadFilesInZip(calculatedTracks, 'RallySimulation')}
             disabled={calculatedTracks.length === 0}
+            variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadTracks.hint' })}
         >
             <img

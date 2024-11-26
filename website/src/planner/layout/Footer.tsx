@@ -1,5 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { CSSProperties } from 'react';
+import { getSelectionSection } from '../store/layout.reducer.ts';
+import { useSelector } from 'react-redux';
 
 const style: CSSProperties = {
     position: 'fixed',
@@ -15,6 +17,10 @@ const style: CSSProperties = {
 };
 
 export const AppFooter = () => {
+    const selectedSection = useSelector(getSelectionSection);
+    if (selectedSection === 'gps') {
+        return null;
+    }
     return (
         <Row
             className="footer-copyright text-center py-1 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"

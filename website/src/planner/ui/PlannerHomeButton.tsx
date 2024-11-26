@@ -11,7 +11,7 @@ const homeStyle: CSSProperties = {
     height: '45px',
     borderRadius: '10px',
     left: 10,
-    bottom: 50,
+    bottom: 10,
     zIndex: 10,
     backgroundColor: 'white',
     overflow: 'hidden',
