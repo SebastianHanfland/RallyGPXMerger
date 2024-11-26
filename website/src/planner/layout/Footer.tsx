@@ -18,7 +18,7 @@ const style: CSSProperties = {
 
 export const AppFooter = () => {
     const selectedSection = useSelector(getSelectionSection);
-    if (selectedSection === 'gps') {
+    if (!['menu', 'wizard-complexity', 'wizard-versions'].includes(selectedSection)) {
         return null;
     }
     return (
