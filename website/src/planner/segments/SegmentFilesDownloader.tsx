@@ -14,7 +14,13 @@ export const SegmentFilesDownloader = () => {
             disabled={segments.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadSegments.hint' })}
         >
-            <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
+            <img
+                src={download}
+                className="m-1"
+                alt="download file"
+                color={'#ffffff'}
+                style={{ height: '20px', width: '20px' }}
+            />
             <FormattedMessage id={'msg.downloadSegments'} />
         </Button>
     );

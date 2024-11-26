@@ -14,46 +14,61 @@ export const PlannerSidebarServerSection = () => {
     return (
         <div>
             <Row>
+                <Col></Col>
+            </Row>
+            <Row>
                 <Col>
-                    <h5>
-                        Daten auf dem Server
+                    <Row>
+                        <h5>Daten auf dem Server</h5>
+                    </Row>
+
+                    <Row>
+                        <UploadDataButton />
+                    </Row>
+                    <Row>
                         <PasswordButton />
-                    </h5>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <UploadDataButton />
-                </Col>
-                <Col>
-                    <RemoveUploadedDataButton />
+                    </Row>
+                    <Row>
+                        <RemoveUploadedDataButton />
+                    </Row>
+                    <Row>
+                        <SharePlanningButton />
+                    </Row>
                 </Col>
                 <Col>
-                    <SharePlanningButton />
-                </Col>
-            </Row>
-            <Row>
-                <h5>Lokale Daten</h5>
-            </Row>
-            <Row>
-                <Col>
-                    <DownloadDataButton />
-                </Col>
-                <Col>
-                    <CleanDataButton />
-                </Col>
-            </Row>
-            <Row className={'mt-3'}>
-                <Col>
-                    <SegmentFilesDownloader />
-                </Col>
-                <Col>
-                    <CalculatedFilesDownloader />
-                </Col>
-                <Col>
-                    <div>
-                        <StreetFilesDownloader /> <StreetFilesPdfMakeDownloader />
-                    </div>
+                    <Row>
+                        <h5>Lokale Daten</h5>
+                    </Row>
+                    <Row>
+                        <DownloadDataButton />
+                    </Row>
+                    <Row>
+                        <CleanDataButton />
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Row>
+                                <SegmentFilesDownloader />
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row>
+                                <CalculatedFilesDownloader />
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Row>
+                                <StreetFilesDownloader />
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row>
+                                <StreetFilesPdfMakeDownloader />
+                            </Row>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         </div>

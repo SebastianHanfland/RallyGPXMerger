@@ -42,7 +42,13 @@ export const StreetFilesDownloader = () => {
             disabled={trackStreetInfos.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadCsv' })}
         >
-            <img src={download} className="m-1" alt="download file" color={'#ffffff'} />
+            <img
+                src={download}
+                className="m-1"
+                alt="download file"
+                color={'#ffffff'}
+                style={{ height: '20px', width: '20px' }}
+            />
             CSV
         </Button>
     );
