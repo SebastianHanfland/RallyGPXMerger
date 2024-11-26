@@ -41,6 +41,7 @@ export const AppFooter = () => {
                             href="https://github.com/SebastianHanfland/RallyGPXMerger/tree/main/docs"
                             className="nav-link px-2 text-muted"
                             target={'_blank'}
+                            referrerPolicy={'no-referrer'}
                         >
                             Docs
                         </a>
@@ -49,6 +50,8 @@ export const AppFooter = () => {
                         <a
                             href="https://github.com/SebastianHanfland/RallyGPXMerger/blob/main/docs/Privacy.md"
                             className="nav-link px-2 text-muted"
+                            target={'_blank'}
+                            referrerPolicy={'no-referrer'}
                         >
                             Privacy
                         </a>
@@ -57,6 +60,8 @@ export const AppFooter = () => {
                         <a
                             href="https://github.com/SebastianHanfland/RallyGPXMerger/blob/main/docs/FAQs.md"
                             className="nav-link px-2 text-muted"
+                            target={'_blank'}
+                            referrerPolicy={'no-referrer'}
                         >
                             FAQs
                         </a>
@@ -65,6 +70,8 @@ export const AppFooter = () => {
                         <a
                             href="https://github.com/SebastianHanfland/RallyGPXMerger/blob/main/docs/About.md"
                             className="nav-link px-2 text-muted"
+                            target={'_blank'}
+                            referrerPolicy={'no-referrer'}
                         >
                             About
                         </a>
