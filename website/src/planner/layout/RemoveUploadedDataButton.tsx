@@ -51,12 +51,11 @@ export function RemoveUploadedDataButton() {
     return (
         <>
             <Button
-                className={'m-0 p-0'}
                 variant="danger"
                 title={intl.formatMessage({ id: 'msg.removeAllData.hint' })}
                 onClick={() => setShowModal(true)}
             >
-                <img src={deleteCloud} className="m-1" alt="trash" style={{ height: '30px', width: '30px' }} />
+                <img src={deleteCloud} className="m-1" alt="trash" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.removeAllData' })}
             </Button>
             {showModal && (

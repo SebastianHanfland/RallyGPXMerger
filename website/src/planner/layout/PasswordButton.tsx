@@ -19,12 +19,11 @@ export function PasswordButton() {
     return (
         <>
             <Button
-                className={'m-0 p-0'}
                 variant="success"
                 title={intl.formatMessage({ id: 'msg.password.hint' })}
                 onClick={() => setShowModal(true)}
             >
-                <img src={keyIcon} className="m-1" alt="password" style={{ height: '30px', width: '30px' }} />
+                <img src={keyIcon} className="m-1" alt="password" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.password' })}
             </Button>
             {showModal && (

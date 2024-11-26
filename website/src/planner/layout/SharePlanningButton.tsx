@@ -30,16 +30,17 @@ export function SharePlanningButton({ onMap }: { onMap?: boolean }) {
         return null;
     }
 
+    const buttonSize = onMap ? '30px' : '20px';
     return (
         <>
             <Button
                 style={onMap ? sharePlanningStyle1 : undefined}
-                className={'m-0 p-0'}
+                className={onMap ? 'm-0 p-0' : undefined}
                 variant="info"
                 title={intl.formatMessage({ id: 'msg.sharingLink.hint' })}
                 onClick={() => setShowModal(true)}
             >
-                <img src={shareIcon} className="m-1" alt="fileUp" style={{ height: '30px', width: '30px' }} />
+                <img src={shareIcon} className="m-1" alt="fileUp" style={{ height: buttonSize, width: buttonSize }} />
                 {!onMap && intl.formatMessage({ id: 'msg.sharingLink.hint' })}
             </Button>
             {showModal && (

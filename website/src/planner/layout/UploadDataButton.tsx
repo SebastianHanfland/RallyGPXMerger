@@ -106,7 +106,6 @@ export function UploadDataButton() {
                 </div>
             </Modal>
             <Button
-                className={'m-0 p-0'}
                 variant="success"
                 disabled={isLoading}
                 title={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.hint' })}
@@ -144,7 +143,7 @@ export function UploadDataButton() {
                     }
                 }}
             >
-                <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '30px', width: '30px' }} />
+                <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.uploadCurrentPlanning' })}
             </Button>
             {showModal && (
