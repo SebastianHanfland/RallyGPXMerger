@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { CSSProperties, useState } from 'react';
+import { useState } from 'react';
 import deleteCloud from '../../assets/deleteCloud.svg';
 import { useIntl } from 'react-intl';
 import {
@@ -12,12 +12,6 @@ import {
 } from '../store/backend.reducer.ts';
 import { deletePlanning } from '../../api/api.ts';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
-
-const removeDataStyle: CSSProperties = {
-    width: '45px',
-    height: '45px',
-    borderRadius: '10px',
-};
 
 export function RemoveUploadedDataButton() {
     const dispatch = useDispatch();
@@ -57,13 +51,13 @@ export function RemoveUploadedDataButton() {
     return (
         <>
             <Button
-                style={removeDataStyle}
                 className={'m-0 p-0'}
                 variant="danger"
                 title={intl.formatMessage({ id: 'msg.removeAllData.hint' })}
                 onClick={() => setShowModal(true)}
             >
                 <img src={deleteCloud} className="m-1" alt="trash" style={{ height: '30px', width: '30px' }} />
+                {intl.formatMessage({ id: 'msg.removeAllData' })}
             </Button>
             {showModal && (
                 <ConfirmationModal

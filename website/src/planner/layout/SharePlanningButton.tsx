@@ -21,12 +21,6 @@ const sharePlanningStyle1: CSSProperties = {
     cursor: 'pointer',
 };
 
-const sharePlanningStyle2: CSSProperties = {
-    width: '45px',
-    height: '45px',
-    borderRadius: '10px',
-};
-
 export function SharePlanningButton({ onMap }: { onMap?: boolean }) {
     const [showModal, setShowModal] = useState(false);
     const isPlanningAlreadySaved = useSelector(getIsPlanningAlreadySaved);
@@ -39,13 +33,14 @@ export function SharePlanningButton({ onMap }: { onMap?: boolean }) {
     return (
         <>
             <Button
-                style={onMap ? sharePlanningStyle1 : sharePlanningStyle2}
+                style={onMap ? sharePlanningStyle1 : undefined}
                 className={'m-0 p-0'}
                 variant="info"
                 title={intl.formatMessage({ id: 'msg.sharingLink.hint' })}
                 onClick={() => setShowModal(true)}
             >
                 <img src={shareIcon} className="m-1" alt="fileUp" style={{ height: '30px', width: '30px' }} />
+                {!onMap && intl.formatMessage({ id: 'msg.sharingLink.hint' })}
             </Button>
             {showModal && (
                 <ConfirmationModal

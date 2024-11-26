@@ -1,6 +1,6 @@
 import { Button, Spinner } from 'react-bootstrap';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { CSSProperties, useState } from 'react';
+import { useState } from 'react';
 import fileUp from '../../assets/file-up.svg';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,12 +19,6 @@ import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
-
-const removeDataStyle: CSSProperties = {
-    width: '45px',
-    height: '45px',
-    borderRadius: '10px',
-};
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);
@@ -112,7 +106,6 @@ export function UploadDataButton() {
                 </div>
             </Modal>
             <Button
-                style={removeDataStyle}
                 className={'m-0 p-0'}
                 variant="success"
                 disabled={isLoading}
@@ -152,6 +145,7 @@ export function UploadDataButton() {
                 }}
             >
                 <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '30px', width: '30px' }} />
+                {intl.formatMessage({ id: 'msg.uploadCurrentPlanning' })}
             </Button>
             {showModal && (
                 <ConfirmationModal

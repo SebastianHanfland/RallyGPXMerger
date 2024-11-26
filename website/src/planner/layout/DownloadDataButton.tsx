@@ -6,8 +6,6 @@ import { useIntl } from 'react-intl';
 import { downloadFile } from '../segments/FileDownloader.tsx';
 
 const removeDataStyle: CSSProperties = {
-    width: '45px',
-    height: '45px',
     borderRadius: '10px',
 };
 
@@ -27,6 +25,7 @@ export function DownloadDataButton() {
                 }
             >
                 <img src={download} className="m-1" alt="trash" style={{ height: '30px', width: '30px' }} />
+                {intl.formatMessage({ id: 'msg.downloadPlanning' })}
             </Button>
         </>
     );
