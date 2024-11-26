@@ -7,7 +7,7 @@
     "msg.onlyDisplaySingle": "Nur einzelne Routen der {versionName} anzeigen",
     "msg.downloadVersionGpx": "GPX für {versionName} herunterladen",
     "msg.downloadPlanning": "Planung herunterladen",
-    "msg.dashboard": "Übersicht",
+    "msg.dashboard": "Planung",
     "msg.settings": "Einstellungen",
     "msg.segments": "Abschnitte",
     "msg.segment": "Abschnitt",
