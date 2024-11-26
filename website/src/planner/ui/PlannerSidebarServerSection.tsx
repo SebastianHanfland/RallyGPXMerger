@@ -34,7 +34,7 @@ export const PlannerSidebarServerSection = () => {
                         <RemoveUploadedDataButton />
                     </Row>
                 </Col>
-                <Col>
+                <Col className={className}>
                     <Row>
                         <h5>Lokale Daten</h5>
                     </Row>

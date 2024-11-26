@@ -15,21 +15,25 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
     return (
         <div className={'m-2'}>
-            <h4 className={'d-flex justify-content-around'}>
-                <div>
-                    <span className={'mx-2'}>{`${name}${distanceInfo}`}</span>
-                    <TrackButtonsCell track={track} />
-                </div>
-                <TrackDocuments matchedTrackInfo={matchedTrackInfo} />
-            </h4>
-            <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
-            <PlannerSidebarTrackFormDetails track={track} />
+            <div className={'m-3'}>
+                <h4 className={'d-flex justify-content-around'}>
+                    <div>
+                        <span className={'mx-2'}>{`${name}${distanceInfo}`}</span>
+                        <TrackButtonsCell track={track} />
+                    </div>
+                    <TrackDocuments matchedTrackInfo={matchedTrackInfo} />
+                </h4>
+                <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
+                <PlannerSidebarTrackFormDetails track={track} />
+            </div>
 
             <div style={{ width: '100%' }} className={'my-2'}>
                 <h4>
                     <FormattedMessage id={'msg.segments'} />
                 </h4>
-                <TrackSegmentSelection track={track} />
+                <div className={'m-3'}>
+                    <TrackSegmentSelection track={track} />
+                </div>
             </div>
             <div></div>
         </div>
