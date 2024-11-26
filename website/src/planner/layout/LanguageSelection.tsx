@@ -10,7 +10,7 @@ const languageStyle: CSSProperties = {
     height: '45px',
     borderRadius: '2px',
     right: 10,
-    bottom: 10,
+    bottom: 50,
     zIndex: 10,
     backgroundColor: 'transparent',
     overflow: 'hidden',
