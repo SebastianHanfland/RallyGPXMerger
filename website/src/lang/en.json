@@ -306,5 +306,6 @@
     "msg.showLive": "Live",
     "msg.showPlan": "Plan",
     "msg.publicTableLink": "Public link with table",
-    "msg.iframeTableExample": "Public link with table in iframe"
+    "msg.iframeTableExample": "Public link with table in iframe",
+    "msg.nn": "not named"
 }

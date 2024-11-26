@@ -3,12 +3,13 @@ import { getFilteredTrackCompositions, trackMergeActions } from '../store/trackM
 import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getFilteredTrackCompositions);
     const dispatch = useDispatch();
+    const intl = useIntl();
 
     const [selectedTrackId, setSelectedTrackId] = useState<string | undefined>();
     const selectedTrack = trackCompositions.find((track) => track.id === selectedTrackId);
@@ -28,14 +29,20 @@ export const PlannerSidebarTracks = () => {
                         active={selectedTrackId === track.id}
                         onClick={() => setSelectedTrackId(track.id)}
                     >
-                        {track.name || 'N.N.'}
+                        {track.name || '---'}
                     </PageItem>
                 ))}
                 <PageItem
                     key={'new track'}
                     onClick={() => {
                         const newTrackId = uuidv4();
-                        dispatch(trackMergeActions.addTrackComposition({ id: newTrackId, segmentIds: [], name: '' }));
+                        dispatch(
+                            trackMergeActions.addTrackComposition({
+                                id: newTrackId,
+                                segmentIds: [],
+                                name: intl.formatMessage({ id: 'msg.nn' }),
+                            })
+                        );
                         setSelectedTrackId(newTrackId);
                     }}
                 >
