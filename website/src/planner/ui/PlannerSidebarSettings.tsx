@@ -7,6 +7,7 @@ import { GapFinderParameters } from '../parameters/GapFinderParameters.tsx';
 import { PlanningTitle } from '../parameters/PlanningTitle.tsx';
 import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
 import { TrackPriorityTable } from '../parameters/TrackPriorityTable.tsx';
+import { StartTimeTable } from '../parameters/StartTimeTable.tsx';
 
 export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
     return (
@@ -32,15 +33,27 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                         <GapFinderParameters />
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.prio'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <TrackPriorityTable />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="3">
+                {all && (
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header>
+                            <FormattedMessage id={'msg.prio'} />
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            <TrackPriorityTable />
+                        </Accordion.Body>
+                    </Accordion.Item>
+                )}
+                {all && (
+                    <Accordion.Item eventKey="3">
+                        <Accordion.Header>
+                            <FormattedMessage id={'msg.communicatedStart'} />
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            <StartTimeTable />
+                        </Accordion.Body>
+                    </Accordion.Item>
+                )}
+                <Accordion.Item eventKey="4">
                     <Accordion.Header>
                         <FormattedMessage id={'msg.ownApiKey'} />
                     </Accordion.Header>

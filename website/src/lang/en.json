@@ -308,5 +308,7 @@
     "msg.publicTableLink": "Public link with table",
     "msg.iframeTableExample": "Public link with table in iframe",
     "msg.nn": "not named",
-    "msg.prio": "Priority of tracks at nodes"
+    "msg.prio": "Priority of tracks at nodes",
+    "msg.buffer": "Start buffer",
+    "msg.rounding": "Rounding to"
 }

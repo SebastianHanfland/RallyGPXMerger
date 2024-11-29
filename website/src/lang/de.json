@@ -308,5 +308,7 @@
     "msg.publicTableLink": "Öffentlicher Link mit Tabelle",
     "msg.iframeTableExample": "Öffentlicher Link mit Tabelle im iframe",
     "msg.nn": "nicht benannt",
-    "msg.prio": "Priorität der Routen an Knoten"
+    "msg.prio": "Priorität der Routen an Knoten",
+    "msg.buffer": "Startpuffer",
+    "msg.rounding": "Runden auf"
 }
