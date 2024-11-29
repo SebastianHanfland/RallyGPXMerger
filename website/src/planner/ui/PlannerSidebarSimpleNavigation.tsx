@@ -17,7 +17,8 @@ export const PlannerSidebarSimpleNavigation = () => {
             </SidebarNavItem>
             <SidebarNavItem section={'settings'}>
                 {hasChangesSinceLastUpload && <Warning />}
-                <FormattedMessage id={'msg.settings'} />
+                <FormattedMessage id={'msg.settings'} />/
+                <FormattedMessage id={'msg.documents'} />
             </SidebarNavItem>
         </Nav>
     );

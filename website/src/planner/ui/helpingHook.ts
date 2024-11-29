@@ -8,7 +8,7 @@ import {
     getPlanningTitle,
     getTrackCompositions,
 } from '../store/trackMerge.reducer.ts';
-import { getPlanningId } from '../store/backend.reducer.ts';
+import { getHasChangesSinceLastUpload, getPlanningId } from '../store/backend.reducer.ts';
 import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
 
 export const useHelpingHook = (): [string, string, () => void] => {
@@ -22,6 +22,7 @@ export const useHelpingHook = (): [string, string, () => void] => {
     const planningId = useSelector(getPlanningId);
     const hasSingleTrack = useSelector(getHasSingleTrack);
     const hasChanges = useSelector(getHasChangesSinceLastCalculation);
+    const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     function inform(topic: string, callBack: () => void = () => {}): [string, string, () => void] {
         return [
@@ -44,7 +45,10 @@ export const useHelpingHook = (): [string, string, () => void] => {
         if (!planningId) {
             return inform('upload', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
         }
-        return inform('share');
+        if (hasChangesSinceLastUpload) {
+            return inform('changes', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
+        }
+        return inform('share', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
     };
 
     const helpWithNotificationComplex = () => {
@@ -72,7 +76,10 @@ export const useHelpingHook = (): [string, string, () => void] => {
         if (!planningId) {
             return inform('upload', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
         }
-        return inform('share');
+        if (hasChangesSinceLastUpload) {
+            return inform('changes', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
+        }
+        return inform('share', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
     };
 
     return hasSingleTrack ? helpWithNotificationSimple() : helpWithNotificationComplex();

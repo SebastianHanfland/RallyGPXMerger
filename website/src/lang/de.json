@@ -303,6 +303,8 @@
     "msg.help.trackSegments.message": "Weisen Sie GPX Abschnitte der Route hinzu",
     "msg.help.calculate.title": "Routen berechnen",
     "msg.help.calculate.message": "Klicken Sie oben links auf den orangenen Berechnen Button, um die Planung zu berechnen. Wenn die Route nicht zu groß ist, können Sie auch auf Automatische Berechnung umstellen",
+    "msg.help.changes.title": "Änderungen nicht hochgeladen",
+    "msg.help.changes.message": "Es gibt noch Änderungen, die noch nicht hochgeladen sind",
     "msg.showLive": "Live",
     "msg.showPlan": "Plan",
     "msg.publicTableLink": "Öffentlicher Link mit Tabelle",
