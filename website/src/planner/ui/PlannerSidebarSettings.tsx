@@ -8,6 +8,7 @@ import { PlanningTitle } from '../parameters/PlanningTitle.tsx';
 import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
 import { TrackPriorityTable } from '../parameters/TrackPriorityTable.tsx';
 import { StartTimeTable } from '../parameters/StartTimeTable.tsx';
+import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
 
 export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
     return (
@@ -19,6 +20,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                         <FormattedMessage id={'msg.titleOfPlanning'} />
                     </h5>
                     <PlanningTitle />
+                    <ArrivalDateTimePicker />
                 </div>
             )}
             <Accordion defaultActiveKey={all ? '0' : '2'}>
@@ -29,6 +31,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                         </Accordion.Header>
                         <Accordion.Body>
                             <PlanningTitle />
+                            <ArrivalDateTimePicker />
                         </Accordion.Body>
                     </Accordion.Item>
                 )}

@@ -49,7 +49,7 @@ export const useHelpingHook = (): [string, string, () => void] => {
 
     const helpWithNotificationComplex = () => {
         if (gpxSegments.length === 0) {
-            return inform('gpx');
+            return inform('gpx', () => dispatch(layoutActions.setSelectedSidebarSection('segments')));
         }
         if (tracks.length === 0) {
             return inform('track', () => dispatch(layoutActions.setSelectedSidebarSection('tracks')));

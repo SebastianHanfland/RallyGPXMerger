@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { useSelector } from 'react-redux';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
-import { NoTitleWarning } from './NoTitleWarning.tsx';
 import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
 import { HelpingTip } from './HelpingTip.tsx';
 
@@ -31,7 +30,6 @@ export const MainPlannerUi = () => {
                     <InteractionMap />
                 </Container>
                 <HelpingTip />
-                <NoTitleWarning />
                 <CalculationIsRunning />
                 <CalculationOnTheFly />
                 <MapContentSelection />
