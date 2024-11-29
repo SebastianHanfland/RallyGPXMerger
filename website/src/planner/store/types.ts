@@ -54,6 +54,8 @@ export interface TrackComposition {
     segmentIds: string[];
     peopleCount?: number;
     priority?: number;
+    buffer?: number;
+    rounding?: number;
 }
 
 export interface GeoCodingState {

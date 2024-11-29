@@ -2,9 +2,10 @@ import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useSelector } from 'react-redux';
-import { TrackPrio } from '../ui/TrackPrio.tsx';
 import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { TrackBuffer } from '../ui/TrackBuffer.tsx';
+import { TrackRounding } from '../ui/TrackRounding.tsx';
 
 export const StartTimeTable = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -27,6 +28,9 @@ export const StartTimeTable = () => {
                         <th>
                             <FormattedMessage id={'msg.rounding'} />
                         </th>
+                        <th>
+                            <FormattedMessage id={'msg.publicStart'} />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,10 +43,13 @@ export const StartTimeTable = () => {
                                     {matchedTrackInfo?.startFront ? formatTimeOnly(matchedTrackInfo?.startFront) : ''}
                                 </td>
                                 <td>
-                                    <TrackPrio track={track} />
+                                    <TrackBuffer track={track} />
                                 </td>
                                 <td>
-                                    <TrackPrio track={track} />
+                                    <TrackRounding track={track} />
+                                </td>
+                                <td>
+                                    {matchedTrackInfo?.publicStart ? formatTimeOnly(matchedTrackInfo?.publicStart) : ''}
                                 </td>
                             </tr>
                         );

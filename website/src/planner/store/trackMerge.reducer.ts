@@ -71,6 +71,19 @@ const trackMergeSlice = createSlice({
                 track.id === action.payload.id ? { ...track, priority: action.payload.priority } : track
             );
         },
+        setTrackRounding: (
+            state: TrackMergeState,
+            action: PayloadAction<{ id: string; rounding: number | undefined }>
+        ) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, rounding: action.payload.rounding } : track
+            );
+        },
+        setTrackBuffer: (state: TrackMergeState, action: PayloadAction<{ id: string; buffer: number | undefined }>) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, buffer: action.payload.buffer } : track
+            );
+        },
         removeGpxSegment: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.map((track) => ({
                 ...track,

@@ -76,6 +76,7 @@ export interface TrackStreetInfo {
     id: string;
     name: string;
     startFront: string;
+    publicStart?: string;
     arrivalBack: string;
     arrivalFront: string;
     distanceInKm: number;
