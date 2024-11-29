@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { BackendState, State } from './types.ts';
 import { storage } from './storage.ts';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 const initialState: BackendState = {
     isPlanningAlreadySaved: false,
@@ -15,7 +14,7 @@ const backendSlice = createSlice({
         setPlanningId: (state: BackendState, action: PayloadAction<string>) => {
             state.planningId = action.payload;
             const newSearch = `?planning=${action.payload}`;
-            history.replaceState(null, '', `${getBaseUrl()}${newSearch}`);
+            console.log('TODO', newSearch);
         },
         setPlanningPassword: (state: BackendState, action: PayloadAction<string>) => {
             state.planningPassword = action.payload;
@@ -27,7 +26,6 @@ const backendSlice = createSlice({
             state.isPlanningAlreadySaved = action.payload;
             if (!action.payload) {
                 state.planningId = undefined;
-                history.replaceState(null, '', `${getBaseUrl()}`);
             }
         },
         clear: () => initialState,

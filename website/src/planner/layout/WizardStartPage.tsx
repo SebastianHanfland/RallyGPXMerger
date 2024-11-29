@@ -13,13 +13,17 @@ import { WizardCard } from './WizardCard.tsx';
 import { BackToStartDialog } from './BackToStartDialog.tsx';
 import { useState } from 'react';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { LanguageSelection } from './LanguageSelection.tsx';
+import { useNavigate } from 'react-router';
 
 export const WizardStartPage = () => {
+    const navigateTo = useNavigate();
     const dispatch = useDispatch();
     const planningInProgress = useSelector(isPlanningInProgress);
-    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
+    const setSelectedSection = (section: Sections) => {
+        dispatch(layoutActions.selectSection(section));
+        navigateTo('?' + 'section=' + section);
+    };
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
     const [nextSection, setNextSection] = useState<'gps' | 'wizard-complexity' | undefined>();
@@ -31,7 +35,6 @@ export const WizardStartPage = () => {
                     closeModal={() => setShowModal(false)}
                     onConfirm={() => {
                         nextSection && setSelectedSection(nextSection);
-                        history.replaceState(null, '', `${getBaseUrl()}`);
                     }}
                 />
             )}

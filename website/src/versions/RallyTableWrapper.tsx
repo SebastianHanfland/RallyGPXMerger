@@ -5,14 +5,14 @@ import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
-import { getUrlParam } from '../utils/linkUtil.ts';
+import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useEffect } from 'react';
 import { setStartAndEndTime } from './data/loadFilesHook.ts';
 import { loadServerFile } from './data/loadServerFile.ts';
 import { PresentationTable } from './table/PresentationTable.tsx';
 
 function RallyTable() {
-    const planningId = getUrlParam('table=');
+    const planningId = useGetUrlParam('table=');
     const dispatch = useDispatch();
 
     console.log(planningId);

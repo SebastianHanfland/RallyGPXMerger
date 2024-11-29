@@ -1,4 +1,4 @@
-import { getUrlParam } from '../utils/linkUtil.ts';
+import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
@@ -7,8 +7,8 @@ import { backendActions, getPlanningPassword } from './store/backend.reducer.ts'
 import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
 
 export function useLoadPlanningFromServer() {
-    const planningId = getUrlParam('planning=');
-    const adminToken = getUrlParam('admin=');
+    const planningId = useGetUrlParam('planning=');
+    const adminToken = useGetUrlParam('admin=');
     const planningPassword = useSelector(getPlanningPassword);
     const dispatch = useDispatch();
     const intl = useIntl();

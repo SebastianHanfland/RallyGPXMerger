@@ -1,16 +1,17 @@
 import { WizardStartPage } from './WizardStartPage.tsx';
-import { useSelector } from 'react-redux';
-import { getSelectionSection } from '../store/layout.reducer.ts';
 import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
 import { WizardVersions } from '../wizard/WizardVersions.tsx';
 import { MainPlannerUi } from '../ui/MainPlannerUi.tsx';
 import { useLoadPlanningFromServer } from '../useLoadPlanningFromServer.tsx';
+import { useGetUrlParam } from '../../utils/linkUtil.ts';
 
 export const RallyPlannerRouter = () => {
     useLoadPlanningFromServer();
-    const selectedSection = useSelector(getSelectionSection);
+    const section = useGetUrlParam('section=');
 
-    switch (selectedSection) {
+    console.log(section);
+
+    switch (section) {
         case 'menu':
             return <WizardStartPage />;
         case 'wizard-complexity':

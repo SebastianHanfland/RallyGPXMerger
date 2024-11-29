@@ -7,13 +7,13 @@ import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { PresentationMap } from './map/PresentationMap.tsx';
 import { PresentationMenu } from './menu/PresentationMenu.tsx';
-import { getUrlParam } from '../utils/linkUtil.ts';
+import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useEffect } from 'react';
 import { setStartAndEndTime } from './data/loadFilesHook.ts';
 import { loadServerFile } from './data/loadServerFile.ts';
 
 function RallyDisplay() {
-    const planningId = getUrlParam('display=');
+    const planningId = useGetUrlParam('display=');
     const dispatch = useDispatch();
 
     console.log(planningId);

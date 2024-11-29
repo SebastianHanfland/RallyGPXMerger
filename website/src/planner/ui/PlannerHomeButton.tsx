@@ -1,9 +1,7 @@
 import { CSSProperties } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
-import { layoutActions } from '../store/layout.reducer.ts';
-import { Sections } from '../layout/types.ts';
 import house from '../../assets/house.svg';
+import { useNavigate } from 'react-router';
 
 const homeStyle: CSSProperties = {
     position: 'fixed',
@@ -19,14 +17,15 @@ const homeStyle: CSSProperties = {
 };
 
 export function PlannerHomeButton() {
+    const navigateTo = useNavigate();
     const intl = useIntl();
-    const dispatch = useDispatch();
-    const setSelectedSection = (section: Sections) => dispatch(layoutActions.selectSection(section));
 
     return (
         <div
             style={homeStyle}
-            onClick={() => setSelectedSection('menu')}
+            onClick={() => {
+                navigateTo('?' + 'section=menu');
+            }}
             className={'shadow'}
             title={intl.formatMessage({ id: 'msg.menu' })}
         >

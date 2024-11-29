@@ -5,14 +5,17 @@ import { useState } from 'react';
 import trash from '../../assets/trash.svg';
 import { useIntl } from 'react-intl';
 import { resetData } from '../io/resetData.ts';
+import { useNavigate } from 'react-router';
 
 export function CleanDataButton() {
+    const navigateTo = useNavigate();
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const intl = useIntl();
 
     const removeAllData = () => {
         resetData(dispatch);
+        navigateTo('?section=menu');
         setShowModal(false);
     };
     return (

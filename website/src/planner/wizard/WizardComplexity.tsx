@@ -9,20 +9,23 @@ import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from '../layout/WizardCard.tsx';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { useNavigate } from 'react-router';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();
+    const navigateTo = useNavigate();
     const continueAsSimpleRally = () => {
         dispatch(simpleRallyThunk);
         dispatch(layoutActions.setHasSingleTrack(true));
+        navigateTo('?section=gps');
     };
     const continueAsComplexRally = () => {
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
         dispatch(trackMergeActions.setIsCalculationOnTheFly(false));
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(layoutActions.setHasSingleTrack(false));
-        dispatch(layoutActions.selectSection('gps'));
         dispatch(layoutActions.setSelectedSidebarSection('segments'));
+        navigateTo('?section=gps');
     };
 
     return (

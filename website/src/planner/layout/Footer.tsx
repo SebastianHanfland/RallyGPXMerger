@@ -1,7 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { CSSProperties } from 'react';
-import { getSelectionSection } from '../store/layout.reducer.ts';
-import { useSelector } from 'react-redux';
+import { useGetUrlParam } from '../../utils/linkUtil.ts';
 
 const style: CSSProperties = {
     position: 'fixed',
@@ -17,8 +16,8 @@ const style: CSSProperties = {
 };
 
 export const AppFooter = () => {
-    const selectedSection = useSelector(getSelectionSection);
-    if (!['menu', 'wizard-complexity', 'wizard-versions'].includes(selectedSection)) {
+    const section = useGetUrlParam('section=');
+    if (section && !['menu', 'wizard-complexity', 'wizard-versions'].includes(section)) {
         return null;
     }
     return (
