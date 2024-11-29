@@ -11,7 +11,7 @@ import { State } from '../../planner/store/types.ts';
 import { useIntl } from 'react-intl';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
+import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { showTimes } from '../store/LoadStateButton.tsx';
 import L from 'leaflet';
 
@@ -34,9 +34,7 @@ function TrackInfo({ track }: { track: ZipTrack }) {
         <>
             <h6>{track.filename}</h6>
             {showTimes && (
-                <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(
-                    roundStartTimes(foundInfo.startFront, track.filename)
-                )}`}</p>
+                <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront)}`}</p>
             )}
             {showTimes && <p className={'p-0 m-0'}>{`Ziel: ${formatTimeOnly(foundInfo.arrivalFront)}`}</p>}
             <p className={'p-0 m-0'}>{`Länge: ${formatNumber(foundInfo.distanceInKm)} km`}</p>

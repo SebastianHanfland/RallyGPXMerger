@@ -5,7 +5,7 @@ import { storedState } from '../data/loadJsonFile.ts';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { useIntl } from 'react-intl';
 import { showTimes } from '../store/LoadStateButton.tsx';
-import { formatTimeOnly, roundStartTimes } from '../../utils/dateUtil.ts';
+import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 import { Button, Table } from 'react-bootstrap';
@@ -65,7 +65,7 @@ function TrackInfoRow({ track }: { track: ZipTrack }) {
         <tr>
             <td>{track.filename}</td>
             <td>
-                {formatTimeOnly(roundStartTimes(foundInfo.startFront, track.filename))}{' '}
+                {formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront)}{' '}
                 <div>
                     <a href={startLink} target={'_blank'} referrerPolicy={'no-referrer'}>
                         {startStreetName}

@@ -32,23 +32,6 @@ export const DateTimeFormat: FormatDateOptions = {
     day: 'numeric',
 };
 
-const A_ROUTE_MINUTES_TO_ROUND_TO = 5;
-const A_ROUTE_MINUTES_TO_SUBTRACT = 10;
-
-const M_ROUTE_MINUTES_TO_ROUND_TO = 15;
-const M_ROUTE_MINUTES_TO_SUBTRACT = 15;
-
-export function roundStartTimes(startFront: string, trackName: string) {
-    const isMRoute = trackName.startsWith('M');
-    const minutesToSubtract = isMRoute ? M_ROUTE_MINUTES_TO_SUBTRACT : A_ROUTE_MINUTES_TO_SUBTRACT;
-    const minutesToRoundTo = isMRoute ? M_ROUTE_MINUTES_TO_ROUND_TO : A_ROUTE_MINUTES_TO_ROUND_TO;
-
-    const timeMinus5Min = date.addSeconds(new Date(startFront), -minutesToSubtract * 60).toISOString();
-
-    const coeff = 1000 * 60 * minutesToRoundTo;
-    return new Date(Math.floor(new Date(timeMinus5Min).getTime() / coeff) * coeff).toISOString();
-}
-
 export function roundPublishedStartTimes(
     startFront: string,
     minutesToSubtract: number,
