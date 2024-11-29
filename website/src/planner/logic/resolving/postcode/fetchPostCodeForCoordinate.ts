@@ -28,9 +28,15 @@ export const fetchPostCodeForCoordinate =
                     postCode: result.postcode,
                     district:
                         result.localityInfo.administrative.find(descriptionIncludes('district'))?.name ??
+                        result.localityInfo.administrative.find(descriptionIncludes('Kreis'))?.name ??
+                        result.localityInfo.administrative.find(descriptionIncludes('Landkreis'))?.name ??
                         result.localityInfo.administrative.find(descriptionIncludes('capital'))?.name ??
+                        result.localityInfo.administrative.find(descriptionIncludes('auptstadt'))?.name ??
                         result.localityInfo.informative.find(descriptionIncludes('district'))?.name ??
+                        result.localityInfo.informative.find(descriptionIncludes('Kreis'))?.name ??
+                        result.localityInfo.informative.find(descriptionIncludes('Landkreis'))?.name ??
                         result.localityInfo.informative.find(descriptionIncludes('capital'))?.name ??
+                        result.localityInfo.informative.find(descriptionIncludes('auptstadt'))?.name ??
                         result.city,
                 };
             })
