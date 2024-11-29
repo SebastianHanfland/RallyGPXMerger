@@ -12,6 +12,7 @@ import {
 import { deletePlanning } from '../../api/api.ts';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
 import trash from '../../assets/trash.svg';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 export function RemoveUploadedDataButton() {
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export function RemoveUploadedDataButton() {
                 .then(() => {
                     dispatch(backendActions.setIsPlanningSaved(false));
                     setShowModal(false);
+                    history.replaceState('', '', `${getBaseUrl()}?section=gps`);
                 })
                 .then(() =>
                     successNotification(

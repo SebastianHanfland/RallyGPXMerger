@@ -13,7 +13,6 @@ import { HelpingTip } from './HelpingTip.tsx';
 
 export const MainPlannerUi = () => {
     const planningInProgress = useSelector(isPlanningInProgress);
-    console.log('TODO', planningInProgress);
     return (
         <>
             <div className={'canvas-wrapper'} style={{ left: 0, position: 'fixed', overflow: 'auto' }}>

@@ -18,7 +18,9 @@ export const RallyPlannerRouter = () => {
             return <WizardsComplexity />;
         case 'wizard-versions':
             return <WizardVersions />;
-        default:
+        case 'gps':
             return <MainPlannerUi />;
+        default:
+            return <WizardStartPage />;
     }
 };
