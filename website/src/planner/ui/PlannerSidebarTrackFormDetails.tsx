@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
 import { TrackName } from './TrackName.tsx';
 import { TrackPeople } from './TrackPeople.tsx';
-import { TrackPrio } from './TrackPrio.tsx';
 
 export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposition }) => {
     return (
@@ -21,12 +20,6 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                             <FormattedMessage id={'msg.trackPeople'} />
                         </Form.Label>
                         <TrackPeople track={track} />
-                    </Col>
-                    <Col>
-                        <Form.Label>
-                            <FormattedMessage id={'msg.priority'} />
-                        </Form.Label>
-                        <TrackPrio track={track} />
                     </Col>
                 </Row>
             </Form.Group>
