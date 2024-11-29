@@ -12,12 +12,16 @@ import { CalculatedTrack } from '../../../../common/types.ts';
 import { toKey } from '../helper/pointKeys.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
+import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
     (track: CalculatedTrack): TrackStreetInfo => {
         const resolvedPositions = getResolvedPositions(state);
+        const tracks = getTrackCompositions(state);
         const nodePositions = getNodePositions(state);
+        const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
 
         const gpx = SimpleGPX.fromString(track.content);
         const points = gpx.tracks.flatMap((track) => track.points);
@@ -42,11 +46,15 @@ const enrichWithStreetsAndAggregate =
 
         const wayPoints = aggregateEnrichedPoints(enrichedPoints, track.peopleCount ?? 0, nodePositions);
 
+        const startFront = wayPoints[0].frontArrival;
+        const publicStart = trackComposition
+            ? roundPublishedStartTimes(startFront, trackComposition.buffer ?? 0, trackComposition.rounding ?? 0)
+            : startFront;
         return {
             id: track.id,
             name: track.filename,
-            startFront: wayPoints[0].frontArrival,
-            publicStart: wayPoints[0].frontArrival,
+            startFront: startFront,
+            publicStart: publicStart,
             arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
             arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
             distanceInKm: distance,

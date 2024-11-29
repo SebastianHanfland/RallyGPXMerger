@@ -48,3 +48,14 @@ export function roundStartTimes(startFront: string, trackName: string) {
     const coeff = 1000 * 60 * minutesToRoundTo;
     return new Date(Math.floor(new Date(timeMinus5Min).getTime() / coeff) * coeff).toISOString();
 }
+
+export function roundPublishedStartTimes(
+    startFront: string,
+    minutesToSubtract: number,
+    minutesToRoundTo: number
+): string {
+    const timeMinusBuffer = date.addSeconds(new Date(startFront), -minutesToSubtract * 60).toISOString();
+
+    const coeff = 1000 * 60 * minutesToRoundTo;
+    return new Date(Math.floor(new Date(timeMinusBuffer).getTime() / coeff) * coeff).toISOString();
+}
