@@ -35,6 +35,7 @@ export interface BackendState {
     planningId?: string;
     planningPassword?: string;
     isPlanningAlreadySaved: boolean;
+    hasChangesSinceLastUpload?: boolean;
 }
 
 export interface Toast {

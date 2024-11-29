@@ -1,30 +1,22 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
+import { useDispatch } from 'react-redux';
+import { layoutActions } from '../store/layout.reducer.ts';
 import { Nav } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
 import { SidebarSections } from '../store/types.ts';
+import { ReactNode } from 'react';
 
 interface Props {
     section: SidebarSections;
     count?: number;
+    children: ReactNode;
 }
 
-export function SidebarNavItem({ section, count }: Props) {
+export function SidebarNavItem({ section, children }: Props) {
     const dispatch = useDispatch();
-    const isSimplePlanning = useSelector(getHasSingleTrack);
     const setSelectedSection = (section: SidebarSections) => dispatch(layoutActions.setSelectedSidebarSection(section));
+
     return (
         <Nav.Item onClick={() => setSelectedSection(section)}>
-            <Nav.Link eventKey={section}>
-                <FormattedMessage id={`msg.${section}`} />
-                {section === 'settings' && isSimplePlanning && (
-                    <span>
-                        {'/'}
-                        <FormattedMessage id={'msg.documents'} />
-                    </span>
-                )}
-                {count ? ` (${count})` : null}
-            </Nav.Link>
+            <Nav.Link eventKey={section}>{children}</Nav.Link>
         </Nav.Item>
     );
 }

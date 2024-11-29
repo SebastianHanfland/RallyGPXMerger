@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     backendActions,
+    getHasChangesSinceLastUpload,
     getIsPlanningAlreadySaved,
     getPlanningId,
     getPlanningPassword,
@@ -19,6 +20,7 @@ import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
+import { Warning } from './dashboard/Warning.tsx';
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);
@@ -28,6 +30,7 @@ export function UploadDataButton() {
     const planningId = useSelector(getPlanningId);
     const planningPassword = useSelector(getPlanningPassword);
     const planningTitle = useSelector(getPlanningTitle);
+    const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     const planningState = useSelector((state: State) => state);
     const intl = useIntl();
@@ -62,6 +65,7 @@ export function UploadDataButton() {
                         intl.formatMessage({ id: 'msg.fileSaved.success.title' }),
                         intl.formatMessage({ id: 'msg.fileSaved.success.message' })
                     );
+                    dispatch(backendActions.setHasChangesSinceLastUpload(false));
                 })
                 .catch(() =>
                     errorNotification(
@@ -81,6 +85,7 @@ export function UploadDataButton() {
                         intl.formatMessage({ id: 'msg.dataUpdated.success.title' }),
                         intl.formatMessage({ id: 'msg.dataUpdated.success.message' })
                     );
+                    dispatch(backendActions.setHasChangesSinceLastUpload(false));
                 })
                 .catch(() =>
                     errorNotification(
@@ -125,13 +130,14 @@ export function UploadDataButton() {
                     } else {
                         setIsLoading(true);
                         updatePlanning(planningId, planningState, planningPassword)
-                            .then(() =>
+                            .then(() => {
                                 successNotification(
                                     dispatch,
                                     intl.formatMessage({ id: 'msg.dataUpdated.success.title' }),
                                     intl.formatMessage({ id: 'msg.dataUpdated.success.message' })
-                                )
-                            )
+                                );
+                                dispatch(backendActions.setHasChangesSinceLastUpload(false));
+                            })
                             .catch(() =>
                                 errorNotification(
                                     dispatch,
@@ -143,6 +149,7 @@ export function UploadDataButton() {
                     }
                 }}
             >
+                {hasChangesSinceLastUpload && <Warning white={true} />}
                 <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.uploadCurrentPlanning' })}
             </Button>

@@ -6,6 +6,7 @@ import { getIsCalculationOnTheFly, trackMergeActions } from '../store/trackMerge
 import { State } from '../store/types.ts';
 import { successNotification } from '../store/toast.reducer.ts';
 import { getMessages } from '../../lang/getMessages.ts';
+import { backendActions } from '../store/backend.reducer.ts';
 
 const calculationThunk =
     (value: boolean) =>
@@ -33,6 +34,7 @@ export const calculateTracks = (dispatch: AppDispatch) => {
             );
         }, 10)
     );
+    dispatch(backendActions.setHasChangesSinceLastUpload(true));
 };
 
 export const triggerAutomaticCalculation = (dispatch: AppDispatch, getState: () => State) => {
