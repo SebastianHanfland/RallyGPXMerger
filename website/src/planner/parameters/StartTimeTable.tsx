@@ -16,19 +16,19 @@ export const StartTimeTable = () => {
             <Table striped bordered hover style={{ width: '100%' }} size="sm">
                 <thead>
                     <tr>
-                        <th>
+                        <th style={{ width: '30%' }}>
                             <FormattedMessage id={'msg.trackName'} />
                         </th>
-                        <th>
+                        <th style={{ width: '20%' }}>
                             <FormattedMessage id={'msg.start'} />
                         </th>
-                        <th>
+                        <th style={{ width: '15%' }}>
                             <FormattedMessage id={'msg.buffer'} />
                         </th>
-                        <th>
+                        <th style={{ width: '15%' }}>
                             <FormattedMessage id={'msg.rounding'} />
                         </th>
-                        <th>
+                        <th style={{ width: '20%' }}>
                             <FormattedMessage id={'msg.publicStart'} />
                         </th>
                     </tr>
