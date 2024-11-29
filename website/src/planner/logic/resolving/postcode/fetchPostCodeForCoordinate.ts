@@ -1,16 +1,18 @@
 import { getLanguage } from '../../../../language.ts';
 
+type LocalityInfo = { name: string; order: number; description?: string };
+
 interface BigDataCloudResponse {
     postcode: number;
     city?: string;
     localityInfo: {
-        informative: [
-            {
-                name: string;
-                order: number;
-            }
-        ];
+        informative: [LocalityInfo];
+        administrative: [LocalityInfo];
     };
+}
+
+function descriptionIncludes(district: string = 'district') {
+    return (entry: LocalityInfo) => entry.description?.includes(district);
 }
 
 export const fetchPostCodeForCoordinate =
@@ -18,16 +20,17 @@ export const fetchPostCodeForCoordinate =
     async (lat: number, lon: number): Promise<{ postCode: number; district?: string }> => {
         const language = getLanguage();
         return fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode?latitude=${lat}&longitude=${lon}&key=${apiKey}&localityLanguage=${language}`
+            `https://api-bdc.net/data/reverse-geocode?latitude=${lat}&longitude=${lon}&key=${apiKey}&localityLanguage=${language}`
         )
             .then((response) => response.json())
             .then((result: BigDataCloudResponse) => {
                 return {
                     postCode: result.postcode,
                     district:
-                        result.localityInfo.informative.find((entry) => entry.order === 6)?.name ??
-                        result.localityInfo.informative.find((entry) => entry.order === 7)?.name ??
-                        result.localityInfo.informative.find((entry) => entry.order === 8)?.name ??
+                        result.localityInfo.administrative.find(descriptionIncludes('district'))?.name ??
+                        result.localityInfo.administrative.find(descriptionIncludes('capital'))?.name ??
+                        result.localityInfo.informative.find(descriptionIncludes('district'))?.name ??
+                        result.localityInfo.informative.find(descriptionIncludes('capital'))?.name ??
                         result.city,
                 };
             })
