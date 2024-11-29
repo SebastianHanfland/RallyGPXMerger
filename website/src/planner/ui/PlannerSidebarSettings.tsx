@@ -13,10 +13,27 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
     return (
         <div className={'m-2'}>
             {!all && <PlannerSidebarServerSection />}
-            <PlanningTitle />
-            <Accordion defaultActiveKey={all ? '0' : '1'}>
+            {!all && (
+                <div className={'d-inline-block m-3'}>
+                    <h5 className="form-label m-3">
+                        <FormattedMessage id={'msg.titleOfPlanning'} />
+                    </h5>
+                    <PlanningTitle />
+                </div>
+            )}
+            <Accordion defaultActiveKey={all ? '0' : '2'}>
                 {all && (
                     <Accordion.Item eventKey="0">
+                        <Accordion.Header>
+                            <FormattedMessage id={'msg.titleOfPlanning'} />
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            <PlanningTitle />
+                        </Accordion.Body>
+                    </Accordion.Item>
+                )}
+                {all && (
+                    <Accordion.Item eventKey="1">
                         <Accordion.Header>
                             <FormattedMessage id={'msg.trackSettings'} />
                         </Accordion.Header>
@@ -25,7 +42,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                         </Accordion.Body>
                     </Accordion.Item>
                 )}
-                <Accordion.Item eventKey="1">
+                <Accordion.Item eventKey="2">
                     <Accordion.Header>
                         <FormattedMessage id={'msg.gapSetting'} />
                     </Accordion.Header>
@@ -34,7 +51,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                     </Accordion.Body>
                 </Accordion.Item>
                 {all && (
-                    <Accordion.Item eventKey="2">
+                    <Accordion.Item eventKey="3">
                         <Accordion.Header>
                             <FormattedMessage id={'msg.prio'} />
                         </Accordion.Header>
@@ -44,7 +61,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                     </Accordion.Item>
                 )}
                 {all && (
-                    <Accordion.Item eventKey="3">
+                    <Accordion.Item eventKey="4">
                         <Accordion.Header>
                             <FormattedMessage id={'msg.communicatedStart'} />
                         </Accordion.Header>
@@ -53,7 +70,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                         </Accordion.Body>
                     </Accordion.Item>
                 )}
-                <Accordion.Item eventKey="4">
+                <Accordion.Item eventKey="5">
                     <Accordion.Header>
                         <FormattedMessage id={'msg.ownApiKey'} />
                     </Accordion.Header>
@@ -62,7 +79,7 @@ export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
                     </Accordion.Body>
                 </Accordion.Item>
                 {all && (
-                    <Accordion.Item eventKey="4">
+                    <Accordion.Item eventKey="6">
                         <Accordion.Header>
                             <FormattedMessage id={'msg.constructions.title'} />
                         </Accordion.Header>

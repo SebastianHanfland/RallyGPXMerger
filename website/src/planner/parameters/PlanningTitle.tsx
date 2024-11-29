@@ -9,9 +9,6 @@ export function PlanningTitle() {
     const planningTitle = useSelector(getPlanningTitle);
     return (
         <div className={'d-inline-block m-3'}>
-            <h5 className="form-label m-3">
-                <FormattedMessage id={'msg.titleOfPlanning'} />
-            </h5>
             <p>
                 <FormattedMessage id={'msg.titleOfPlanning.hint'} />
             </p>
