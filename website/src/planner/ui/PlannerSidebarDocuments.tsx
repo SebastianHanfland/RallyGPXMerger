@@ -7,9 +7,6 @@ export const PlannerSidebarDocuments = () => {
     return (
         <div>
             <div className={'m-2'}>
-                <h3>
-                    <FormattedMessage id={'msg.gps'} />
-                </h3>
                 <PlannerSidebarServerSection />
             </div>
             <div className={'m-2'}>
@@ -19,9 +16,6 @@ export const PlannerSidebarDocuments = () => {
                 <PlannerSidebarStreetInfos />
             </div>
             <div>
-                <h3>
-                    <FormattedMessage id={'msg.documents.plain'} />
-                </h3>
                 <PlanningLabel />
             </div>
         </div>

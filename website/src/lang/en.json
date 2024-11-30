@@ -96,7 +96,7 @@
     "msg.rallyParameters.title": "Rally parameters",
     "msg.arrivalDate.title": "Arrival of tracks",
     "msg.arrivalDate.hint": "Time when the first people should arrive at the end of the track:",
-    "msg.label.title": "Additional information of current plan",
+    "msg.label.title": "Additional information of current planning",
     "msg.label.hint": "This can be a version string that appears in the file names and the documents",
     "msg.aLot": "A lot",
     "msg.none": "None",
@@ -315,6 +315,7 @@
     "msg.rounding": "Rounding to min",
     "msg.publicStart": "Published Start",
     "msg.description.segments": "Upload GPX files here. They are the base for combining them into tracks. A GPX segment can be used by multiple tracks.",
-    "msg.description.tracks": "Here new tracks can be created. The GPX segments can be selected below. You can also add breaks to a track. You can change the order by drag and drop. After calculation you can also download the documents and resulting GPX files."
-
+    "msg.description.tracks": "Here new tracks can be created. The GPX segments can be selected below. You can also add breaks to a track. You can change the order by drag and drop. After calculation you can also download the documents and resulting GPX files.",
+    "msg.serverData": "Data on server",
+    "msg.localData": "Local data"
 }

@@ -9,6 +9,7 @@ import { SegmentFilesDownloader } from '../segments/SegmentFilesDownloader.tsx';
 import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.tsx';
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
+import { FormattedMessage } from 'react-intl';
 
 export const PlannerSidebarServerSection = () => {
     const className = 'm-1';
@@ -17,7 +18,9 @@ export const PlannerSidebarServerSection = () => {
             <Row>
                 <Col className={className}>
                     <Row>
-                        <h5>Daten auf dem Server</h5>
+                        <h5>
+                            <FormattedMessage id={'msg.serverData'} />
+                        </h5>
                     </Row>
 
                     <Row className={className}>
@@ -36,7 +39,9 @@ export const PlannerSidebarServerSection = () => {
                 </Col>
                 <Col className={className}>
                     <Row>
-                        <h5>Lokale Daten</h5>
+                        <h5>
+                            <FormattedMessage id={'msg.localData'} />
+                        </h5>
                     </Row>
                     <Row className={className}>
                         <DownloadDataButton />

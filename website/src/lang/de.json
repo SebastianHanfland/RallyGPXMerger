@@ -315,5 +315,7 @@
     "msg.rounding": "Runden auf min",
     "msg.publicStart": "Veröffentlichter Start",
     "msg.description.segments": "Hier werden GPX Segmente hochgeladen, um sie zu Routen zusammen zu setzen. Ein GPX Abschnitt kann in mehreren Routen verwendet werden.",
-    "msg.description.tracks": "Hier werden neue Routen erstellt. Die Abschnitte können unten ausgewählt werden. Es können auch Pausen zu einer Route hinzugefügt werden. Die Reihenfolge der Segmente kann durch Verschieben geändert werden. Nach der Berechnung können hier die Dokumente und Routen-GPX-Dateien heruntergeladen werden."
+    "msg.description.tracks": "Hier werden neue Routen erstellt. Die Abschnitte können unten ausgewählt werden. Es können auch Pausen zu einer Route hinzugefügt werden. Die Reihenfolge der Segmente kann durch Verschieben geändert werden. Nach der Berechnung können hier die Dokumente und Routen-GPX-Dateien heruntergeladen werden.",
+    "msg.serverData": "Daten auf dem Server",
+    "msg.localData": "Lokale Daten"
 }

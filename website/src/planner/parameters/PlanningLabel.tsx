@@ -2,16 +2,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPlanningLabel, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
+import { AppDispatch } from '../store/store.ts';
 
 export function PlanningLabel() {
     const intl = useIntl();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const planningLabel = useSelector(getPlanningLabel);
     return (
         <div className={'d-inline-block m-3'}>
-            <h5 className="form-label m-3">
-                <FormattedMessage id={'msg.label.title'} />
-            </h5>
             <p>
                 <FormattedMessage id={'msg.label.hint'} />
             </p>
@@ -21,7 +20,10 @@ export function PlanningLabel() {
                 as="textarea"
                 rows={5}
                 value={planningLabel}
-                onChange={(value) => dispatch(trackMergeActions.setPlanningLabel(value.target.value))}
+                onChange={(value) => {
+                    dispatch(trackMergeActions.setPlanningLabel(value.target.value));
+                    dispatch(triggerAutomaticCalculation);
+                }}
             />
         </div>
     );
