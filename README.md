@@ -4,7 +4,7 @@ A web tool to merge GPX tracks for big bike rallies written in React and TypeScr
 ## Current deployment
 
 The current version of this tool is deployed here: 
-https://sternfahrtplaner.de/
+https://www.sternfahrtplaner.de/
 
 You can find an example of a more complicated planning here: 
 https://sternfahrtplaner.de/?section=gps&planning=ce4e62a5-3b73-4fa1-80e3-d66d687c2439
