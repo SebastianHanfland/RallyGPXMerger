@@ -9,5 +9,4 @@ To prevent jams in nodes where branches are joined a clever timing is required.
 
 ## Technical Context
 
-This is in most parts a standalone tool. When one also wants to resolve street names and post code external API are used.
-Nothing has to be installed.
+This is in most parts a standalone tool. It can be used for calculating the timing, but also to publish a rally.

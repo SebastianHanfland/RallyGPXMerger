@@ -15,3 +15,6 @@ Then the numbers are added up. With shifting the arrival of the tracks, we reach
 When adding a GPX Segment without times, the times can be calculated bases on an average speed and the slopes.
 This value can be set here.
 
+#### Priority at a node
+When two branches join, one has to go first. The default priority comes from the number of participants. The bigger group goes first.
+When this is not wanted, the priority can be overwritten in the settings

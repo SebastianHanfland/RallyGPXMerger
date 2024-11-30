@@ -13,10 +13,9 @@ Eventually a pdf with an overview of the tracks and blocked streets can be creat
 
 ## Requirements Overview
 
-
-While planning a rally, the route is something easy to plan, with tools like google or http://brouter.de/brouter-web.
-Time stamps can be added with tools like https://gotoes.org/strava/uploadProgress.php
-The problem this tool solves, is to calculate the times for a rally, when each branch should start.
+While planning a rally, the route is something easy to plan, with tools like google, https://gpx.studio or http://brouter.de/brouter-web.
+The problem this tool solves, is to calculate the times for a rally, e.g. when each branch should start.
+All related information should also be accessible without manual work.
 
 ## Quality Goals
 
