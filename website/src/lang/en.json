@@ -317,6 +317,8 @@
     "msg.description.segments": "Upload GPX files here. They are the base for combining them into tracks. A GPX segment can be used by multiple tracks.",
     "msg.description.tracks": "Here new tracks can be created. The GPX segments can be selected below. You can also add breaks to a track. You can change the order by drag and drop. After calculation you can also download the documents and resulting GPX files.",
     "msg.description.documents": "You can manage the planning here. Upload it to the server to be able to share or publish it. You can also download all the other documents here.",
+    "msg.description.simpleSegments": "Upload GPX files here. They are the combined into one track.",
+    "msg.description.simpleTracks": "Here, the values, like average speed, name of the track or arrival at the final point can be set. After the calculation you can download an overview document of the track and the resulting GPX file.",
     "msg.serverData": "Data on server",
     "msg.localData": "Local data"
 }

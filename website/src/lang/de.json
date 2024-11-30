@@ -317,6 +317,8 @@
     "msg.description.segments": "Hier werden GPX Segmente hochgeladen, um sie zu Routen zusammen zu setzen. Ein GPX Abschnitt kann in mehreren Routen verwendet werden.",
     "msg.description.tracks": "Hier werden neue Routen erstellt. Die Abschnitte können unten ausgewählt werden. Es können auch Pausen zu einer Route hinzugefügt werden. Die Reihenfolge der Segmente kann durch Verschieben geändert werden. Nach der Berechnung können hier die Dokumente und Routen-GPX-Dateien heruntergeladen werden.",
     "msg.description.documents": "Hier kann die Planung verwaltet werden. Sie kann auf den Server gespeichert werden um sie zu teilen oder zu veröffentlichen. Ebenso können alle Dokumente hier heruntergeladen werden.",
+    "msg.description.simpleSegments": "Hier werden GPX Segmente hochgeladen, um sie zu einer Routen zusammen zu setzen.",
+    "msg.description.simpleTracks": "Hier können Werte, wie Geschwindigkeit, Name für die Route oder die Ankunftszeit eingegeben werden. Nach der Berechnung stehen eine Streckenübersicht und die resultierte GPX Datei zum Download bereit.",
     "msg.serverData": "Daten auf dem Server",
     "msg.localData": "Lokale Daten"
 }

@@ -12,6 +12,7 @@ import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.t
 import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -35,12 +36,14 @@ export function SimpleFileUploadSection() {
 
     return (
         <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
-            <h4>
+            <div>
                 <Row>
                     <h5>
                         <FormattedMessage id={'msg.track'} />
                         {distanceInfo && <span>{distanceInfo}</span>}
                     </h5>
+                    <BlockTextDescription messageId={'msg.description.simpleTracks'} />
+
                     <Col>
                         <h6>
                             <FormattedMessage id={'msg.trackName'} />
@@ -57,7 +60,7 @@ export function SimpleFileUploadSection() {
                         <ArrivalDateTimePicker />
                     </Col>
                 </Row>
-            </h4>
+            </div>
 
             <Row></Row>
 

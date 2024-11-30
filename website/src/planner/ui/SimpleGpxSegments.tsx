@@ -4,6 +4,7 @@ import { AppDispatch } from '../store/store.ts';
 import { TrackSegmentSelection } from '../tracks/TrackSegmentSelection.tsx';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { GpxCreationHint } from '../segments/GpxCreationHint.tsx';
+import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 
 export function SimpleGpxSegments() {
     const dispatch: AppDispatch = useDispatch();
@@ -20,9 +21,10 @@ export function SimpleGpxSegments() {
             <h5>
                 <FormattedMessage id={'msg.segments'} />
             </h5>
+            <BlockTextDescription messageId={'msg.description.simpleSegments'} />
             <div className={'m-3'}>
-                <TrackSegmentSelection track={track} hideSelect={true} fullGpxDelete={true} />
                 <GpxCreationHint />
+                <TrackSegmentSelection track={track} hideSelect={true} fullGpxDelete={true} />
             </div>
         </div>
     );
