@@ -24,7 +24,7 @@ export const TrackPriorityTable = () => {
                 </thead>
                 <tbody>
                     {tracks.map((track) => (
-                        <tr>
+                        <tr key={track.id}>
                             <td>{track.name}</td>
                             <td>{track.peopleCount ?? 0}</td>
                             <td>

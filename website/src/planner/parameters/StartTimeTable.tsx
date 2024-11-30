@@ -37,7 +37,7 @@ export const StartTimeTable = () => {
                     {tracks.map((track) => {
                         const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
                         return (
-                            <tr>
+                            <tr key={track.id}>
                                 <td>{track.name}</td>
                                 <td>
                                     {matchedTrackInfo?.startFront ? formatTimeOnly(matchedTrackInfo?.startFront) : ''}
