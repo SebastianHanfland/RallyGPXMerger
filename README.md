@@ -81,3 +81,12 @@ The workflow for a complex demonstration
 ## German naming sketch
 
 ![Sketch](./docs/images/germanSketch.svg)
+
+## Acknowledgement
+
+This tool would not be possible without external services which ease the creation of GPX files or retrieval of geo-data.
+* [GPX Studio](https://www.gpx.studio/)
+* [brouter](http://brouter.de/brouter-web)
+* [GeoApify](https://www.geoapify.com/)
+* [BigDataCloud](https://www.bigdatacloud.com/)
+* [CriticalMaps](https://github.com/criticalmaps/)
