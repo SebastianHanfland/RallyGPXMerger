@@ -19,8 +19,18 @@ interface DropdownProps {
     name: string;
 }
 
+function getType(name: string) {
+    if (name.includes('.gpx')) {
+        return 'application/gpx+xml';
+    }
+    if (name.includes('.txt')) {
+        return 'text/plain';
+    }
+    return 'application/json';
+}
+
 export const downloadFile = (name: string, content: string) => {
-    const blob = new Blob([content], { type: name.includes('.gpx') ? 'application/gpx+xml' : 'application/json' });
+    const blob = new Blob([content], { type: getType(name) });
     FileSaver.saveAs(blob, name);
 };
 
