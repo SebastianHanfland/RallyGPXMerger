@@ -7,7 +7,7 @@ The current version of this tool is deployed here:
 https://www.sternfahrtplaner.de/
 
 You can find an example of a more complicated planning here: 
-https://sternfahrtplaner.de/?section=gps&planning=ce4e62a5-3b73-4fa1-80e3-d66d687c2439
+https://www.sternfahrtplaner.de/?section=gps&planning=ce4e62a5-3b73-4fa1-80e3-d66d687c2439
 ![Sketch](./docs/images/planner.png)
 
 
