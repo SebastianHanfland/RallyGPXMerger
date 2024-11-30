@@ -314,6 +314,7 @@
     "msg.buffer": "Start buffer in min",
     "msg.rounding": "Rounding to min",
     "msg.publicStart": "Published Start",
-    "msg.description.segments": "Upload GPX files here. They are the base for combining them into tracks. A GPX segment can be used by multiple tracks."
+    "msg.description.segments": "Upload GPX files here. They are the base for combining them into tracks. A GPX segment can be used by multiple tracks.",
+    "msg.description.tracks": "Here new tracks can be created. The GPX segments can be selected below. You can also add breaks to a track. You can change the order by drag and drop. After calculation you can also download the documents and resulting GPX files."
 
 }

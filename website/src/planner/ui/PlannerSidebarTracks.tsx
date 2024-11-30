@@ -10,6 +10,7 @@ import { PageItem, Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
+import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getFilteredTrackCompositions);
@@ -29,6 +30,9 @@ export const PlannerSidebarTracks = () => {
 
     return (
         <div>
+            <div className={'m-2'}>
+                <BlockTextDescription messageId={'msg.description.tracks'} />
+            </div>
             {trackCompositions.length > 0 && (
                 <div className={'m-2'}>
                     <Form.Control
