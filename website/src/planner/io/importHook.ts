@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { gpxShortener } from './gpxShortener.ts';
 import { storage } from '../store/storage.ts';
+import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 export function importHook() {
     const uploadInput = useRef<HTMLInputElement>(null);
@@ -20,6 +21,8 @@ export function importHook() {
                 .then((loadedState) => {
                     const shortenedLoadedState = gpxShortener(loadedState);
                     storage.save(JSON.parse(shortenedLoadedState));
+                    history.pushState('', '', getBaseUrl() + '?section=menu');
+                    history.pushState('', '', getBaseUrl() + '?section=gps');
                     window.location.reload();
                 })
                 .catch(console.error);
