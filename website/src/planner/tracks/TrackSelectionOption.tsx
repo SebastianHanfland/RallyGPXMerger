@@ -48,14 +48,14 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
                 }}
                 key={segmentId}
             >
-                <div className={'m-1'} title={segmentName}>
+                <div className={'m-2'} title={segmentName}>
                     {getPauseLabel(segmentId)}
                 </div>
                 <div>
                     <Button
                         variant="danger"
                         size={'sm'}
-                        className={'mx-1'}
+                        className={'m-1'}
                         onClick={() => {
                             dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
                             dispatch(triggerAutomaticCalculation);
@@ -91,7 +91,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
                 }}
                 key={segmentId}
             >
-                <div className={'m-1'} title={segmentName}>
+                <div className={'m-2'} title={segmentName}>
                     {segmentName}
                 </div>
                 <div>
@@ -99,7 +99,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
                     <Button
                         variant="danger"
                         size={'sm'}
-                        className={'mx-1'}
+                        className={'m-1'}
                         onClick={() => {
                             dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
                             if (fullGpxDelete) {
