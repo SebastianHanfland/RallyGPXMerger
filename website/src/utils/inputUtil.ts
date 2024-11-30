@@ -8,7 +8,6 @@ export function getCount(value: ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
     if (isNaN(number)) {
         return undefined;
     }
-    console.log(number);
     if (number < 0) {
         return 0;
     }

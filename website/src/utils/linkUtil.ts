@@ -11,7 +11,6 @@ export function getLink(waypoint: { pointFrom: { lat: number; lon: number }; poi
 
 export function useGetUrlParam(paramArg: string): string | undefined {
     const { search } = useLocation();
-    console.log(search);
     return search
         .replace('?', '')
         .split('&')

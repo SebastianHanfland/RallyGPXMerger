@@ -15,14 +15,19 @@ import { useState } from 'react';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
 import { LanguageSelection } from './LanguageSelection.tsx';
 import { useNavigate } from 'react-router';
+import { getPlanningId } from '../store/backend.reducer.ts';
 
 export const WizardStartPage = () => {
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
+    const planningId = useSelector(getPlanningId);
+
     const planningInProgress = useSelector(isPlanningInProgress);
     const setSelectedSection = (section: Sections) => {
         dispatch(layoutActions.selectSection(section));
-        navigateTo('?' + 'section=' + section);
+        navigateTo(
+            `?section=${section}${planningId && section !== 'wizard-complexity' ? `&planning=${planningId}` : ''}`
+        );
     };
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);

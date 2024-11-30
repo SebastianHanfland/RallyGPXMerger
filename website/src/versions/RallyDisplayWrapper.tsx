@@ -16,8 +16,6 @@ function RallyDisplay() {
     const planningId = useGetUrlParam('display=');
     const dispatch = useDispatch();
 
-    console.log(planningId);
-
     useEffect(() => {
         if (planningId) {
             dispatch(zipTracksActions.removeZipTracks());

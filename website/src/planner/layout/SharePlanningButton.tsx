@@ -75,8 +75,8 @@ const SharingModalBody = () => {
     const planningTitle = useSelector(getPlanningTitle);
     const displayLink = `${getBaseUrl()}?display=${planningId}`;
     const tableLink = `${getBaseUrl()}?table=${planningId}`;
-    const planningLink = `${getBaseUrl()}?planning=${planningId}`;
-    const planningLinkWithAdmin = `${getBaseUrl()}?planning=${planningId}&admin=${password}`;
+    const planningLink = `${getBaseUrl()}?section=gps&planning=${planningId}`;
+    const planningLinkWithAdmin = `${getBaseUrl()}?section=gps&planning=${planningId}&admin=${password}`;
     const iframeExample = getIframeExample(displayLink, planningTitle);
     const iframeTableExample = getIframeExample(tableLink, planningTitle);
     return (

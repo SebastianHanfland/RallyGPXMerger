@@ -15,8 +15,6 @@ function RallyTable() {
     const planningId = useGetUrlParam('table=');
     const dispatch = useDispatch();
 
-    console.log(planningId);
-
     useEffect(() => {
         if (planningId) {
             dispatch(zipTracksActions.removeZipTracks());

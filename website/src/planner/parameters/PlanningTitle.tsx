@@ -15,7 +15,7 @@ export function PlanningTitle() {
             <Form.Control
                 type="text"
                 placeholder={intl.formatMessage({ id: 'msg.titleOfPlanning' })}
-                value={planningTitle}
+                value={planningTitle ?? ''}
                 onChange={(value) => dispatch(trackMergeActions.setPlanningTitle(value.target.value))}
             />
         </div>

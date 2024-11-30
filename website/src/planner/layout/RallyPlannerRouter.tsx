@@ -8,8 +8,11 @@ import { useGetUrlParam } from '../../utils/linkUtil.ts';
 export const RallyPlannerRouter = () => {
     useLoadPlanningFromServer();
     const section = useGetUrlParam('section=');
+    const planningId = useGetUrlParam('planning=');
 
-    console.log(section);
+    if (!section && planningId) {
+        return <MainPlannerUi />;
+    }
 
     switch (section) {
         case 'menu':

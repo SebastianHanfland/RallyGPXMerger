@@ -77,7 +77,6 @@ export function MapVersionSelection() {
                                 classNamePrefix="select"
                                 // @ts-ignore
                                 onChange={(newValue: { value: string }) => {
-                                    console.log(newValue);
                                     dispatch(
                                         zipTracksActions.setDisplayTracks({
                                             version: versionName,

@@ -51,8 +51,8 @@ export function UploadDataButton() {
                         intl.formatMessage({ id: 'msg.dataAdded.success.message' })
                     );
                     const displayLink = `${getBaseUrl()}?display=${newPlanningId}`;
-                    const planningLink = `${getBaseUrl()}?planning=${newPlanningId}`;
-                    const planningLinkWithAdmin = `${getBaseUrl()}?planning=${newPlanningId}&admin=${planningPassword}`;
+                    const planningLink = `${getBaseUrl()}?section=gps&planning=${newPlanningId}`;
+                    const planningLinkWithAdmin = `${getBaseUrl()}?section=gps&planning=${newPlanningId}&admin=${planningPassword}`;
                     downloadFile(
                         `${newPlanningId}-Info.txt`,
                         `${intl.formatMessage({ id: 'msg.publicLink' })}: ${displayLink}\n` +

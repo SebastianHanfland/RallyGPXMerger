@@ -14,7 +14,6 @@ export function useLoadPlanningFromServer() {
     const intl = useIntl();
 
     useEffect(() => {
-        console.log('Use effect triggered with ', planningId);
         if (planningId) {
             getData(planningId)
                 .then((data) => {
