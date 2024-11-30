@@ -29,14 +29,16 @@ export const PlannerSidebarTracks = () => {
 
     return (
         <div>
-            <div className={'m-2'}>
-                <Form.Control
-                    type="text"
-                    placeholder="Filter tracks, separate term by ','"
-                    value={filterTerm ?? ''}
-                    onChange={(value) => setFilterTerm(value.target.value)}
-                />
-            </div>
+            {trackCompositions.length > 0 && (
+                <div className={'m-2'}>
+                    <Form.Control
+                        type="text"
+                        placeholder="Filter tracks, separate term by ','"
+                        value={filterTerm ?? ''}
+                        onChange={(value) => setFilterTerm(value.target.value)}
+                    />
+                </div>
+            )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>
                 {trackCompositions.map((track) => (
                     <PageItem
