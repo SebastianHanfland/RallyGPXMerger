@@ -39,6 +39,9 @@ export function roundPublishedStartTimes(
 ): string {
     const timeMinusBuffer = date.addSeconds(new Date(startFront), -minutesToSubtract * 60).toISOString();
 
+    if (minutesToRoundTo === 0) {
+        return timeMinusBuffer;
+    }
     const coeff = 1000 * 60 * minutesToRoundTo;
     return new Date(Math.floor(new Date(timeMinusBuffer).getTime() / coeff) * coeff).toISOString();
 }

@@ -58,6 +58,13 @@ describe('dateUtil', () => {
                 round: 5,
                 output: '2007-10-14T09:55:00.000Z',
             },
+            {
+                description: 'Should subtract 10 minutes and round down to full 5 minutes for A routes',
+                input: '2007-10-14T10:09:57.000Z',
+                buffer: 0,
+                round: 0,
+                output: '2007-10-14T10:09:57.000Z',
+            },
         ];
 
         testCases.forEach(({ output, input, round, buffer, description }) =>
