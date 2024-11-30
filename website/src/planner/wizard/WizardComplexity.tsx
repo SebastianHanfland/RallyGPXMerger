@@ -19,7 +19,7 @@ export const WizardsComplexity = () => {
         resetData(dispatch);
         dispatch(simpleRallyThunk);
         dispatch(layoutActions.setHasSingleTrack(true));
-        navigateTo('?section=gps');
+        navigateTo('?section=gps', { replace: true });
     };
     const continueAsComplexRally = () => {
         resetData(dispatch);
@@ -28,7 +28,7 @@ export const WizardsComplexity = () => {
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(layoutActions.setHasSingleTrack(false));
         dispatch(layoutActions.setSelectedSidebarSection('segments'));
-        navigateTo('?section=gps');
+        navigateTo('?section=gps', { replace: true });
     };
 
     return (

@@ -65,17 +65,6 @@ export const WizardStartPage = () => {
                         />
                     </Col>
                 )}
-                {/*<Col>*/}
-                {/*    <WizardCard*/}
-                {/*        icon={magic}*/}
-                {/*        onClick={() => {*/}
-                {/*            setShowModal(true);*/}
-                {/*            setNextSection('wizard-parameters');*/}
-                {/*        }}*/}
-                {/*        title={<FormattedMessage id={'msg.startWizard'} />}*/}
-                {/*        text={<FormattedMessage id={'msg.startWizard.hint'} />}*/}
-                {/*    />*/}
-                {/*</Col>*/}
                 <Col>
                     <WizardCard
                         icon={fileUp}
