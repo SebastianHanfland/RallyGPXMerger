@@ -12,10 +12,10 @@ export const PlannerSidebarSimpleNavigation = () => {
 
     return (
         <Nav fill variant="tabs" activeKey={selectedSection}>
-            <SidebarNavItem section={'simpleTrack'}>
+            <SidebarNavItem section={'simpleTrack'} tabIndex={0}>
                 <FormattedMessage id={'msg.simpleTrack'} />
             </SidebarNavItem>
-            <SidebarNavItem section={'settings'}>
+            <SidebarNavItem section={'settings'} tabIndex={1}>
                 {hasChangesSinceLastUpload && <Warning />}
                 <FormattedMessage id={'msg.settings'} />/
                 <FormattedMessage id={'msg.documents'} />
