@@ -313,5 +313,7 @@
     "msg.prio": "Priority of tracks at nodes",
     "msg.buffer": "Start buffer in min",
     "msg.rounding": "Rounding to min",
-    "msg.publicStart": "Published Start"
+    "msg.publicStart": "Published Start",
+    "msg.description.segments": "Upload GPX files here. They are the base for combining them into tracks. A GPX segment can be used by multiple tracks."
+
 }

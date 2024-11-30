@@ -313,5 +313,6 @@
     "msg.prio": "Priorität der Routen an Knoten",
     "msg.buffer": "Startpuffer in min",
     "msg.rounding": "Runden auf min",
-    "msg.publicStart": "Veröffentlichter Start"
+    "msg.publicStart": "Veröffentlichter Start",
+    "msg.description.segments": "Hier werden GPX Segmente hochgeladen, um sie zu Routen zusammen zu setzen. Ein GPX Abschnitt kann in mehreren Routen verwendet werden."
 }
