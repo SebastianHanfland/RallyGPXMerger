@@ -9,10 +9,12 @@ import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
 import { TrackPriorityTable } from '../parameters/TrackPriorityTable.tsx';
 import { StartTimeTable } from '../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
+import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 
 export const PlannerSidebarSettings = ({ all }: { all?: boolean }) => {
     return (
         <div className={'m-2'}>
+            {!all && <BlockTextDescription messageId={'msg.description.documents'} />}
             {!all && <PlannerSidebarServerSection />}
             {!all && (
                 <div className={'d-inline-block m-3'}>
