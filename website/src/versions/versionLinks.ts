@@ -437,11 +437,3 @@ export const versions: Record<string, Variant[]> = {
     ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
-
-export function getColorOfVersion(versionName: string) {
-    return versions[versionKey].find((version) => version.name === versionName)?.color;
-}
-
-export function getUrlOfVersion(versionName: string) {
-    return versions[versionKey].find((version) => version.name === versionName)?.url;
-}

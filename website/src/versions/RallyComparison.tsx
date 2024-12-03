@@ -7,7 +7,6 @@ import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
-import { versionKey, versions } from './versionLinks.ts';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useLoadPlannings } from './data/loadPlanningHook.ts';
 
@@ -16,7 +15,7 @@ function RallyDisplay() {
     useLoadPlannings(planningIds);
     const isLoading = useSelector(getIsZipLoading);
 
-    if (isLoading && !(versions[versionKey][0].mode === 'present')) {
+    if (isLoading) {
         return (
             <div>
                 <FormattedMessage id={'msg.loading'} />

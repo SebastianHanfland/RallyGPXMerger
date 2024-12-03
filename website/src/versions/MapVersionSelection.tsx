@@ -4,7 +4,6 @@ import { getShowMapMarker, mapActions } from './store/map.reducer.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from './store/zipTracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
-import { getColorOfVersion, getUrlOfVersion } from './versionLinks.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 export function MapVersionSelection() {
@@ -48,8 +47,8 @@ export function MapVersionSelection() {
                                     <span>
                                         <span
                                             style={{
-                                                background: getColorOfVersion(versionName),
-                                                color: getColorOfVersion(versionName),
+                                                background: 'red',
+                                                color: 'red',
                                                 width: '100px',
                                             }}
                                             className={'mx-3'}
@@ -85,7 +84,7 @@ export function MapVersionSelection() {
                                     );
                                 }}
                             />
-                            <a href={getUrlOfVersion(versionName)} target={'_blank'}>
+                            <a target={'_blank'}>
                                 <FormattedMessage id={'msg.downloadVersionGpx'} values={{ versionName }} />
                             </a>
                         </div>
