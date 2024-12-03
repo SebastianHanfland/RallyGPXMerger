@@ -1,4 +1,8 @@
-import { TrackStreetInfo } from '../logic/resolving/types.ts';
+import {
+    DistrictReplacementWayPoint,
+    StreetNameReplacementWayPoint,
+    TrackStreetInfo,
+} from '../logic/resolving/types.ts';
 import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
@@ -65,6 +69,8 @@ export interface GeoCodingState {
     resolvedPositions?: ResolvedPositions;
     resolvedPostCodes?: ResolvedPostCodes;
     resolvedDistricts?: ResolvedDistricts;
+    streetReplacementWayPoints?: StreetNameReplacementWayPoint[];
+    districtReplacementWayPoints?: DistrictReplacementWayPoint[];
     trackStreetInfos?: TrackStreetInfo[];
     onlyShowUnknown?: boolean;
 }

@@ -94,3 +94,30 @@ export interface BlockedStreetInfo {
     pointTo: { lat: number; lon: number };
     // Maybe also which tracks pass through here?
 }
+
+export interface AggregatedPoints {
+    streetName: string | null;
+    frontArrival: string;
+    frontPassage: string;
+    backArrival: string;
+    pointFrom: { lat: number; lon: number; time: string };
+    pointTo: { lat: number; lon: number; time: string };
+    speed?: number;
+    distanceInKm?: number;
+    type?: TrackWayPointType;
+    breakLength?: number;
+    nodeTracks?: string[];
+}
+
+export interface ReplacementWayPoint {
+    pointFrom: { lat: number; lon: number };
+    pointTo: { lat: number; lon: number };
+}
+
+export interface StreetNameReplacementWayPoint extends ReplacementWayPoint {
+    streetName: string;
+}
+
+export interface DistrictReplacementWayPoint extends ReplacementWayPoint {
+    district: string;
+}

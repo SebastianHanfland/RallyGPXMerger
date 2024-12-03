@@ -7,14 +7,15 @@ import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { geoCodingActions } from '../store/geoCoding.reducer.ts';
+import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
+import { AppDispatch } from '../store/store.ts';
 
 interface Props {
     waypoint: TrackWayPoint;
-    trackStreetInfoId: string;
 }
 
 export function EditStreetNameButton(props: Props) {
-    const { trackStreetInfoId, waypoint } = props;
+    const { waypoint } = props;
 
     const [showModal, setShowModal] = useState(false);
 
@@ -28,32 +29,21 @@ export function EditStreetNameButton(props: Props) {
                 alt="upload file"
                 color={'#ffffff'}
             />
-            {showModal && (
-                <EditStreetNameModal
-                    trackStreetInfoId={trackStreetInfoId}
-                    waypoint={waypoint}
-                    closeModal={() => setShowModal(false)}
-                />
-            )}
+            {showModal && <EditStreetNameModal waypoint={waypoint} closeModal={() => setShowModal(false)} />}
         </>
     );
 }
 
 export function EditStreetNameModal(props: Props & { closeModal: () => void }) {
     const intl = useIntl();
-    const dispatch = useDispatch();
-    const { trackStreetInfoId, waypoint, closeModal } = props;
+    const dispatch: AppDispatch = useDispatch();
+    const { waypoint, closeModal } = props;
 
-    const [streetName, setStreetName] = useState(waypoint.streetName);
+    const [streetName, setStreetName] = useState(waypoint.streetName ?? '');
 
     const onConfirm = () => {
-        dispatch(
-            geoCodingActions.changeTrackStreetInfoName({
-                trackInfoId: trackStreetInfoId,
-                previous: waypoint,
-                updated: { ...waypoint, streetName },
-            })
-        );
+        dispatch(geoCodingActions.setStreetNameReplacementWaypoint({ ...waypoint, streetName }));
+        dispatch(triggerAutomaticCalculation);
         closeModal();
     };
 

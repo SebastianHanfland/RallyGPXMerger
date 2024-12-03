@@ -5,7 +5,11 @@ import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
-import { geoCodingActions, getResolvedPositions } from '../../../store/geoCoding.reducer.ts';
+import {
+    geoCodingActions,
+    getStreetNameReplacementWayPoints,
+    getResolvedPositions,
+} from '../../../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
@@ -14,11 +18,13 @@ import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reduc
 import { toLatLng } from '../../../../utils/pointUtil.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { overwriteWayPoints } from './overwriteWayPoints.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
     (track: CalculatedTrack): TrackStreetInfo => {
         const resolvedPositions = getResolvedPositions(state);
+        const replacementWayPoints = getStreetNameReplacementWayPoints(state);
         const tracks = getTrackCompositions(state);
         const nodePositions = getNodePositions(state);
         const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
@@ -45,6 +51,7 @@ const enrichWithStreetsAndAggregate =
         });
 
         const wayPoints = aggregateEnrichedPoints(enrichedPoints, track.peopleCount ?? 0, nodePositions);
+        const overwrittenWayPoints = overwriteWayPoints(wayPoints, replacementWayPoints);
 
         const startFront = wayPoints[0].frontArrival;
         const publicStart = trackComposition
@@ -59,7 +66,7 @@ const enrichWithStreetsAndAggregate =
             arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
             distanceInKm: distance,
             peopleCount: track.peopleCount,
-            wayPoints,
+            wayPoints: overwrittenWayPoints,
         };
     };
 

@@ -1,7 +1,7 @@
 import { Point } from 'gpxparser';
 import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
-import { TrackWayPointType } from '../types.ts';
+import { AggregatedPoints, TrackWayPointType } from '../types.ts';
 import geoDistance from 'geo-distance-helper';
 import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 import { NodePosition } from '../selectors/getNodePositions.ts';
@@ -13,20 +13,6 @@ export interface EnrichedPoints extends PointS {
 
 export interface PointS extends Omit<Point, 'time'> {
     time: string;
-}
-
-interface AggregatedPoints {
-    streetName: string | null;
-    frontArrival: string;
-    frontPassage: string;
-    backArrival: string;
-    pointFrom: { lat: number; lon: number; time: string };
-    pointTo: { lat: number; lon: number; time: string };
-    speed?: number;
-    distanceInKm?: number;
-    type?: TrackWayPointType;
-    breakLength?: number;
-    nodeTracks?: string[];
 }
 
 export function anyStreetNameMatch(streetName: string | null, lastStreetName: string | null): boolean {

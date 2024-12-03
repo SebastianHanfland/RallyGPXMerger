@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { EditStreetNameButton } from './EditStreetNameButton.tsx';
+import { EditDistrictButton } from './EditDistrictButton.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -120,16 +121,14 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                                 ? `Knoten${nodeTracks ? ':  ' + nodeTracks.join(', ') : ''}`
                                                 : null}
                                         </b>
-                                        <EditStreetNameButton
-                                            waypoint={waypoint}
-                                            trackStreetInfoId={trackStreetInfo.id}
-                                        />
+                                        <EditStreetNameButton waypoint={waypoint} />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? unknown} />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={district?.toString() ?? unknown} />
+                                        <EditDistrictButton waypoint={waypoint} />
                                     </td>
                                     <td>{(distanceInKm ?? 0).toFixed(2)} km</td>
                                     <td>{(speed ?? 0).toFixed(1)} km/h</td>

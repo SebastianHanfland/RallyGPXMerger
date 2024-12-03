@@ -1,18 +1,21 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { GeoCodingState, ResolvedDistricts, ResolvedPositions, ResolvedPostCodes, State } from './types.ts';
 import { storage } from './storage.ts';
-import { TrackStreetInfo, TrackWayPoint } from '../logic/resolving/types.ts';
+import {
+    DistrictReplacementWayPoint,
+    ReplacementWayPoint,
+    StreetNameReplacementWayPoint,
+    TrackStreetInfo,
+} from '../logic/resolving/types.ts';
 
 const initialState: GeoCodingState = {};
 
-function sameWayPoint(wayPointA: TrackWayPoint, wayPointB: TrackWayPoint) {
+export function sameWayPoint(wayPointA: ReplacementWayPoint, wayPointB: ReplacementWayPoint) {
     return (
-        wayPointA.streetName === wayPointB.streetName &&
         wayPointA.pointTo.lat === wayPointB.pointTo.lat &&
         wayPointA.pointTo.lon === wayPointB.pointTo.lon &&
         wayPointA.pointFrom.lat === wayPointB.pointFrom.lat &&
-        wayPointA.pointFrom.lon === wayPointB.pointFrom.lon &&
-        wayPointA.backArrival === wayPointB.backArrival
+        wayPointA.pointFrom.lon === wayPointB.pointFrom.lon
     );
 }
 
@@ -75,23 +78,28 @@ const geoCodingSlice = createSlice({
         setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
             state.trackStreetInfos = action.payload;
         },
-        changeTrackStreetInfoName: (
+        setStreetNameReplacementWaypoint: (
             state: GeoCodingState,
-            action: PayloadAction<{ trackInfoId: string; previous: TrackWayPoint; updated: TrackWayPoint }>
+            action: PayloadAction<StreetNameReplacementWayPoint>
         ) => {
-            const { previous, updated, trackInfoId } = action.payload;
-            state.trackStreetInfos = state.trackStreetInfos?.map((info) => {
-                if (info.id === trackInfoId) {
-                    return {
-                        ...info,
-                        wayPoints: info.wayPoints.map((wayPoint) =>
-                            sameWayPoint(wayPoint, previous) ? updated : wayPoint
-                        ),
-                    };
-                } else {
-                    return info;
-                }
-            });
+            const updated = action.payload;
+            if (!state.streetReplacementWayPoints?.some((point) => sameWayPoint(point, updated))) {
+                state.streetReplacementWayPoints = [...(state.streetReplacementWayPoints ?? []), updated];
+            } else {
+                state.streetReplacementWayPoints = state.streetReplacementWayPoints?.map((point) =>
+                    sameWayPoint(point, updated) ? updated : point
+                );
+            }
+        },
+        setDistrictReplacementWaypoint: (state: GeoCodingState, action: PayloadAction<DistrictReplacementWayPoint>) => {
+            const updated = action.payload;
+            if (!state.districtReplacementWayPoints?.some((point) => sameWayPoint(point, updated))) {
+                state.districtReplacementWayPoints = [...(state.districtReplacementWayPoints ?? []), updated];
+            } else {
+                state.districtReplacementWayPoints = state.districtReplacementWayPoints?.map((point) =>
+                    sameWayPoint(point, updated) ? updated : point
+                );
+            }
         },
         toggleOnlyShowUnknown: (state: GeoCodingState) => {
             state.onlyShowUnknown = !state.onlyShowUnknown;
@@ -107,6 +115,8 @@ export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
 export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudKey;
 export const getResolvedPositions = (state: State) => getBase(state).resolvedPositions ?? {};
 export const getResolvedPostCodes = (state: State) => getBase(state).resolvedPostCodes ?? {};
+export const getStreetNameReplacementWayPoints = (state: State) => getBase(state).streetReplacementWayPoints ?? [];
+export const getDistrictReplacementWayPoints = (state: State) => getBase(state).districtReplacementWayPoints ?? [];
 export const getResolvedDistricts = (state: State) => getBase(state).resolvedDistricts ?? {};
 export const getTrackStreetInfos = (state: State) => getBase(state).trackStreetInfos ?? [];
 export const getOnlyShowUnknown = (state: State) => getBase(state).onlyShowUnknown ?? false;
