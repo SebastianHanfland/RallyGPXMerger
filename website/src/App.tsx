@@ -7,13 +7,13 @@ import { RallyPlannerWrapper } from './planner/RallyPlanner.tsx';
 import { RallyDisplayWrapper } from './versions/RallyDisplayWrapper.tsx';
 import { RallyTableWrapper } from './versions/RallyTableWrapper.tsx';
 import { RallyComparison } from './versions/RallyComparison.tsx';
+import { useGetUrlParam } from './utils/linkUtil.ts';
 
 export function App() {
-    const urlParams = window.location.search;
-    const hasExternalUrl = urlParams.includes('version=');
-    const hasComparisonUrl = urlParams.includes('comparison=');
-    const hasDisplayUrl = urlParams.includes('display=');
-    const hasTableUrl = urlParams.includes('table=');
+    const hasExternalUrl = useGetUrlParam('version=');
+    const hasComparisonUrl = useGetUrlParam('comparison=');
+    const hasDisplayUrl = useGetUrlParam('display=');
+    const hasTableUrl = useGetUrlParam('table=');
 
     if (hasExternalUrl) {
         return <ErrorBoundary>{<RallyVersionControl />}</ErrorBoundary>;
