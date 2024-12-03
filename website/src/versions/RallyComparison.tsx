@@ -1,5 +1,4 @@
 import { Provider, useSelector } from 'react-redux';
-import { loadFilesHook } from './data/loadFilesHook.ts';
 import { ComparisonMap } from './map/ComparisonMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
@@ -9,11 +8,12 @@ import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { versionKey, versions } from './versionLinks.ts';
-import { PresentationMap } from './map/PresentationMap.tsx';
-import { PresentationMenu } from './menu/PresentationMenu.tsx';
+import { useGetUrlParam } from '../utils/linkUtil.ts';
+import { useLoadPlannings } from './data/loadPlanningHook.ts';
 
 function RallyDisplay() {
-    loadFilesHook();
+    const planningIds = useGetUrlParam('comparison=')?.split(',') ?? [];
+    useLoadPlannings(planningIds);
     const isLoading = useSelector(getIsZipLoading);
 
     if (isLoading && !(versions[versionKey][0].mode === 'present')) {
@@ -24,12 +24,11 @@ function RallyDisplay() {
         );
     }
 
-    if (versions[versionKey].length === 1 && versions[versionKey][0].mode === 'present') {
+    if (planningIds.length < 2) {
         return (
-            <Container fluid className={'p-0'}>
-                <PresentationMap />
-                <PresentationMenu />
-            </Container>
+            <div>
+                <FormattedMessage id={'msg.moreIds'} />
+            </div>
         );
     }
 

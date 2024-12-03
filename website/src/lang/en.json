@@ -321,5 +321,6 @@
     "msg.description.simpleSegments": "Upload GPX files here. They are the combined into one track.",
     "msg.description.simpleTracks": "Here, the values, like average speed, name of the track or arrival at the final point can be set. After the calculation you can download an overview document of the track and the resulting GPX file.",
     "msg.serverData": "Data on server",
-    "msg.localData": "Local data"
+    "msg.localData": "Local data",
+    "msg.moreIds": "Please provide more planning ids for a proper comparison"
 }

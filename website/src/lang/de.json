@@ -321,5 +321,6 @@
     "msg.description.simpleSegments": "Hier werden GPX Segmente hochgeladen, um sie zu einer Routen zusammen zu setzen.",
     "msg.description.simpleTracks": "Hier können Werte, wie Geschwindigkeit, Name für die Route oder die Ankunftszeit eingegeben werden. Nach der Berechnung stehen eine Streckenübersicht und die resultierte GPX Datei zum Download bereit.",
     "msg.serverData": "Daten auf dem Server",
-    "msg.localData": "Lokale Daten"
+    "msg.localData": "Lokale Daten",
+    "msg.moreIds": "Bitte mindestens 2 Planungs Ids angeben, damit der Vergleich durchgeführt werden kann"
 }

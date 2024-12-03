@@ -19,3 +19,16 @@ export function useLoadPlanningById(planningId: string | undefined) {
         }
     }, [planningId]);
 }
+
+export function useLoadPlannings(planningIds: string[]) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(zipTracksActions.removeZipTracks());
+        dispatch(zipTracksActions.setIsLoading(true));
+        Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))]).then(() => {
+            setStartAndEndTime(dispatch);
+        });
+        dispatch(zipTracksActions.setIsLoading(false));
+    }, [planningIds]);
+}
