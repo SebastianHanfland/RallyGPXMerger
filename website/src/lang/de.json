@@ -5,6 +5,7 @@
     "msg.hideMarker": "Marker verstecken",
     "msg.time": "Zeit",
     "msg.onlyDisplaySingle": "Nur einzelne Routen der {versionName} anzeigen",
+    "msg.detailsVersionGpx": "Detailsansicht für {versionName}",
     "msg.downloadVersionGpx": "GPX für {versionName} herunterladen",
     "msg.downloadPlanning": "Planung herunterladen",
     "msg.dashboard": "Planung",

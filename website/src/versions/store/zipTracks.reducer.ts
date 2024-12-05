@@ -4,6 +4,7 @@ import { ZipTrack } from '../../common/types.ts';
 
 const initialState: ZipTracksState = {
     tracks: {},
+    trackInfo: {},
     selectedTracks: {},
     selectedVersions: [],
     isLoading: true,
@@ -41,6 +42,13 @@ const zipTracksSlice = createSlice({
             const { version, selectedTracks } = action.payload;
             state.selectedTracks[version] = selectedTracks;
         },
+        setDisplayInformation: (
+            state: ZipTracksState,
+            action: PayloadAction<{ version: string; versionTitle: string | undefined }>
+        ) => {
+            const { version, versionTitle } = action.payload;
+            state.trackInfo[version] = versionTitle;
+        },
     },
 });
 
@@ -53,3 +61,4 @@ export const getSingleZipTracks = (state: VersionsState) =>
 export const getIsZipLoading = (state: VersionsState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: VersionsState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: VersionsState) => getBase(state).selectedTracks;
+export const getTrackInfo = (state: VersionsState) => getBase(state).trackInfo;

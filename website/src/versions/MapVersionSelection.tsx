@@ -1,16 +1,24 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShowMapMarker, mapActions } from './store/map.reducer.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks, zipTracksActions } from './store/zipTracks.reducer.ts';
+import {
+    getSelectedTracks,
+    getSelectedVersions,
+    getTrackInfo,
+    getZipTracks,
+    zipTracksActions,
+} from './store/zipTracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { getBaseUrl } from '../utils/linkUtil.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
     const zipTracks = useSelector(getZipTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
+    const trackInfo = useSelector(getTrackInfo);
     const dispatch = useDispatch();
     const intl = useIntl();
 
@@ -33,44 +41,33 @@ export function MapVersionSelection() {
             <Form className={'d-flex'}>
                 {Object.keys(zipTracks)
                     .sort()
-                    .map((versionName) => (
+                    .map((versionId) => (
                         <div
-                            key={versionName}
+                            key={versionId}
                             className={'mx-3'}
                             style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}
                         >
                             <Form.Check
                                 type={'checkbox'}
-                                id={versionName}
+                                id={versionId}
                                 className={'m-3'}
-                                label={
-                                    <span>
-                                        <span
-                                            style={{
-                                                background: 'red',
-                                                color: 'red',
-                                                width: '100px',
-                                            }}
-                                            className={'mx-3'}
-                                        >
-                                            ________
-                                        </span>
-                                        {versionName}
-                                    </span>
-                                }
-                                title={versionName}
-                                checked={selectedVersions.includes(versionName)}
+                                label={<span>{versionId}</span>}
+                                title={trackInfo[versionId] ?? versionId}
+                                checked={selectedVersions.includes(versionId)}
                                 readOnly
-                                onClick={() => dispatch(zipTracksActions.selectVersion(versionName))}
+                                onClick={() => dispatch(zipTracksActions.selectVersion(versionId))}
                             ></Form.Check>
                             <Select
                                 name="version"
-                                value={optionsMap[versionName]?.find((opt) =>
-                                    selectedTracks[versionName]?.includes(opt.value)
+                                value={optionsMap[versionId]?.find((opt) =>
+                                    selectedTracks[versionId]?.includes(opt.value)
                                 )}
-                                placeholder={intl.formatMessage({ id: 'msg.onlyDisplaySingle' }, { versionName })}
+                                placeholder={intl.formatMessage(
+                                    { id: 'msg.onlyDisplaySingle' },
+                                    { versionName: versionId }
+                                )}
                                 // @ts-ignore
-                                options={optionsMap[versionName] ?? []}
+                                options={optionsMap[versionId] ?? []}
                                 className="basic-multi-select"
                                 isClearable={true}
                                 classNamePrefix="select"
@@ -78,14 +75,21 @@ export function MapVersionSelection() {
                                 onChange={(newValue: { value: string }) => {
                                     dispatch(
                                         zipTracksActions.setDisplayTracks({
-                                            version: versionName,
+                                            version: versionId,
                                             selectedTracks: newValue ? [newValue.value] : [],
                                         })
                                     );
                                 }}
                             />
-                            <a target={'_blank'}>
-                                <FormattedMessage id={'msg.downloadVersionGpx'} values={{ versionName }} />
+                            <a
+                                target={'_blank'}
+                                href={`${getBaseUrl()}?display=${versionId}`}
+                                referrerPolicy={'no-referrer'}
+                            >
+                                <FormattedMessage
+                                    id={'msg.detailsVersionGpx'}
+                                    values={{ versionName: trackInfo[versionId] ?? versionId }}
+                                />
                             </a>
                         </div>
                     ))}

@@ -6,6 +6,7 @@
     "msg.time": "Time",
     "msg.onlyDisplaySingle": "Display only single route of {versionName}",
     "msg.downloadVersionGpx": "Download GPX for {versionName}",
+    "msg.detailsVersionGpx": "Details view for {versionName}",
     "msg.downloadPlanning": "Download planning",
     "msg.dashboard": "Planning",
     "msg.settings": "Settings",

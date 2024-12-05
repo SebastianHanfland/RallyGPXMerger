@@ -2,6 +2,7 @@ import { ZipTrack } from '../../common/types.ts';
 
 export interface ZipTracksState {
     tracks: Record<string, ZipTrack[] | undefined>;
+    trackInfo: Record<string, string | undefined>;
     selectedTracks: Record<string, string[] | undefined>;
     selectedVersions: string[];
     isLoading: boolean;
