@@ -41,58 +41,61 @@ export function MapVersionSelection() {
             <Form className={'d-flex'}>
                 {Object.keys(zipTracks)
                     .sort()
-                    .map((versionId) => (
-                        <div
-                            key={versionId}
-                            className={'mx-3'}
-                            style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}
-                        >
-                            <Form.Check
-                                type={'checkbox'}
-                                id={versionId}
-                                className={'m-3'}
-                                label={<span>{versionId}</span>}
-                                title={trackInfo[versionId] ?? versionId}
-                                checked={selectedVersions.includes(versionId)}
-                                readOnly
-                                onClick={() => dispatch(zipTracksActions.selectVersion(versionId))}
-                            ></Form.Check>
-                            <Select
-                                name="version"
-                                value={optionsMap[versionId]?.find((opt) =>
-                                    selectedTracks[versionId]?.includes(opt.value)
-                                )}
-                                placeholder={intl.formatMessage(
-                                    { id: 'msg.onlyDisplaySingle' },
-                                    { versionName: versionId }
-                                )}
-                                // @ts-ignore
-                                options={optionsMap[versionId] ?? []}
-                                className="basic-multi-select"
-                                isClearable={true}
-                                classNamePrefix="select"
-                                // @ts-ignore
-                                onChange={(newValue: { value: string }) => {
-                                    dispatch(
-                                        zipTracksActions.setDisplayTracks({
-                                            version: versionId,
-                                            selectedTracks: newValue ? [newValue.value] : [],
-                                        })
-                                    );
-                                }}
-                            />
-                            <a
-                                target={'_blank'}
-                                href={`${getBaseUrl()}?display=${versionId}`}
-                                referrerPolicy={'no-referrer'}
+                    .map((versionId) => {
+                        const versionName = trackInfo[versionId] ?? versionId;
+                        return (
+                            <div
+                                key={versionId}
+                                className={'mx-3'}
+                                style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}
                             >
-                                <FormattedMessage
-                                    id={'msg.detailsVersionGpx'}
-                                    values={{ versionName: trackInfo[versionId] ?? versionId }}
+                                <Form.Check
+                                    type={'checkbox'}
+                                    id={versionId}
+                                    className={'m-3'}
+                                    label={<span>{versionName}</span>}
+                                    title={versionName}
+                                    checked={selectedVersions.includes(versionId)}
+                                    readOnly
+                                    onClick={() => dispatch(zipTracksActions.selectVersion(versionId))}
+                                ></Form.Check>
+                                <Select
+                                    name="version"
+                                    value={optionsMap[versionId]?.find((opt) =>
+                                        selectedTracks[versionId]?.includes(opt.value)
+                                    )}
+                                    placeholder={intl.formatMessage(
+                                        { id: 'msg.onlyDisplaySingle' },
+                                        { versionName: versionName }
+                                    )}
+                                    // @ts-ignore
+                                    options={optionsMap[versionId] ?? []}
+                                    className="basic-multi-select"
+                                    isClearable={true}
+                                    classNamePrefix="select"
+                                    // @ts-ignore
+                                    onChange={(newValue: { value: string }) => {
+                                        dispatch(
+                                            zipTracksActions.setDisplayTracks({
+                                                version: versionId,
+                                                selectedTracks: newValue ? [newValue.value] : [],
+                                            })
+                                        );
+                                    }}
                                 />
-                            </a>
-                        </div>
-                    ))}
+                                <a
+                                    target={'_blank'}
+                                    href={`${getBaseUrl()}?display=${versionId}`}
+                                    referrerPolicy={'no-referrer'}
+                                >
+                                    <FormattedMessage
+                                        id={'msg.detailsVersionGpx'}
+                                        values={{ versionName: versionName }}
+                                    />
+                                </a>
+                            </div>
+                        );
+                    })}
                 <div className={'mx-3'} style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}>
                     <Form.Check
                         type={'checkbox'}
