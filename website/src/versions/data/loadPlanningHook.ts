@@ -27,9 +27,7 @@ export function useLoadPlannings(planningIds: string[]) {
         dispatch(zipTracksActions.removeZipTracks());
         dispatch(zipTracksActions.setIsLoading(true));
         Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))])
-            .then(() => {
-                setTimeout(() => setStartAndEndTime(dispatch), 500);
-            })
+            .then(() => setTimeout(() => setStartAndEndTime(dispatch), 500))
             .then(() => dispatch(zipTracksActions.setIsLoading(false)));
     }, []);
 }
