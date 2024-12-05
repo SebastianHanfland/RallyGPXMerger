@@ -47,6 +47,9 @@ const zipTracksSlice = createSlice({
             action: PayloadAction<{ version: string; versionTitle: string | undefined }>
         ) => {
             const { version, versionTitle } = action.payload;
+            if (state.trackInfo === undefined) {
+                state.trackInfo = {};
+            }
             state.trackInfo[version] = versionTitle;
         },
     },

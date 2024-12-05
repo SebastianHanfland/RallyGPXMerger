@@ -26,9 +26,10 @@ export function useLoadPlannings(planningIds: string[]) {
     useEffect(() => {
         dispatch(zipTracksActions.removeZipTracks());
         dispatch(zipTracksActions.setIsLoading(true));
-        Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))]).then(() => {
-            setStartAndEndTime(dispatch);
-        });
-        dispatch(zipTracksActions.setIsLoading(false));
-    }, [planningIds]);
+        Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))])
+            .then(() => {
+                setTimeout(() => setStartAndEndTime(dispatch), 500);
+            })
+            .then(() => dispatch(zipTracksActions.setIsLoading(false)));
+    }, []);
 }
