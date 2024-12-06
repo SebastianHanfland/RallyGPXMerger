@@ -34,7 +34,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             setParticipantsDelay(planning.trackMerge.participantDelay);
             dispatch(zipTracksActions.setZipTracks({ version: id, tracks: calculatedTracks }));
             dispatch(zipTracksActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
-            dispatch(zipTracksActions.selectVersion(id));
+            dispatch(zipTracksActions.setSelectVersions([id]));
         })
         .catch(console.error)
         .finally();
