@@ -5,12 +5,14 @@ import { useEffect } from 'react';
 import { getData } from '../api/api.ts';
 import { backendActions, getPlanningPassword } from './store/backend.reducer.ts';
 import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
+import { calculateTracks } from './logic/automaticCalculation.ts';
+import { AppDispatch } from './store/store.ts';
 
 export function useLoadPlanningFromServer() {
     const planningId = useGetUrlParam('planning=');
     const adminToken = useGetUrlParam('admin=');
     const planningPassword = useSelector(getPlanningPassword);
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const intl = useIntl();
 
     useEffect(() => {
@@ -30,6 +32,7 @@ export function useLoadPlanningFromServer() {
                         intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
                         intl.formatMessage({ id: 'msg.dataLoad.success.message' })
                     );
+                    dispatch(calculateTracks);
                 })
                 .catch(() => {
                     errorNotification(
