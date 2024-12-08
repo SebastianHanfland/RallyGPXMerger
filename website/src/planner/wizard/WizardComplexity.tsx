@@ -56,7 +56,7 @@ export const WizardsComplexity = () => {
                 </Col>
             </Row>
             <h5 className={'mt-5'}>
-                <FormattedMessage id={'msg.helpButton.hint'} />:
+                <FormattedMessage id={'msg.helpButton.hint'} />
             </h5>
         </Container>
     );

@@ -14,6 +14,7 @@ import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/store.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import flip from '../../assets/flip.svg';
+import { DraggableIcon } from './DraggableIcon.tsx';
 
 interface Props {
     trackId: string;
@@ -48,6 +49,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
                 }}
                 key={segmentId}
             >
+                <DraggableIcon />
                 <div className={'m-2'} title={segmentName}>
                     {getPauseLabel(segmentId)}
                 </div>
@@ -91,6 +93,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
                 }}
                 key={segmentId}
             >
+                <DraggableIcon />
                 <div className={'m-2'} title={segmentName}>
                     {segmentName}
                 </div>
