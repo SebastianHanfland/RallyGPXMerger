@@ -37,6 +37,9 @@ export function extractSnakeTrack(timeStampFront: string, participants: number, 
         }
         track.points.forEach((point, index, points) => {
             if (index === 0) {
+                if (lastTrack === null && timeStampEnd < point.time.toISOString()) {
+                    returnPoints.push({ lat: point.lat, lng: point.lon });
+                }
                 return;
             }
             const next = point.time.toISOString();
