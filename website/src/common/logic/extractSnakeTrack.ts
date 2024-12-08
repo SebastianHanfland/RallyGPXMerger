@@ -45,11 +45,11 @@ export function extractSnakeTrack(timeStampFront: string, participants: number, 
             const next = point.time.toISOString();
             const previous = points[index - 1].time.toISOString();
 
-            if (previous < timeStampFront && timeStampFront < next) {
-                returnPoints.push(interpolatePosition(points[index - 1], point, timeStampFront));
-            }
             if (previous < timeStampEnd && timeStampEnd < next) {
                 returnPoints.push(interpolatePosition(points[index - 1], point, timeStampEnd));
+            }
+            if (previous < timeStampFront && timeStampFront < next) {
+                returnPoints.push(interpolatePosition(points[index - 1], point, timeStampFront));
             }
             if (timeStampEnd < next && next < timeStampFront) {
                 returnPoints.push({ lat: point.lat, lng: point.lon });
