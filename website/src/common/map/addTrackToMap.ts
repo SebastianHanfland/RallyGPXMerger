@@ -5,6 +5,7 @@ import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../types.ts';
 import { getGpx } from '../cache/gpxCache.ts';
+import { getLanguage } from '../../language.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };
@@ -37,7 +38,7 @@ function addStartAndBreakMarker(
         if (lastTrack === null) {
             const startMarker = L.marker(trackPoints[0], {
                 icon: startIcon,
-                title: `Start von ${gpxSegment.filename}`,
+                title: getLanguage() === 'de' ? `Start von ${gpxSegment.filename}` : `Start of ${gpxSegment.filename}`,
             });
             startMarker.addTo(routeLayer);
         }
@@ -61,13 +62,13 @@ function addStartAndBreakMarker(
             if (lastTimeStamp) {
                 const timeDifferenceInSeconds = getTimeDifferenceInSeconds(point.time.toISOString(), lastTimeStamp);
                 if (timeDifferenceInSeconds > 4 * 60) {
-                    const endMarker = L.marker(toLatLng(point), {
+                    const breakMarker = L.marker(toLatLng(point), {
                         icon: breakIcon,
                         title: `${gpxSegment.filename} - ${(timeDifferenceInSeconds / 60).toFixed(
                             0
                         )} min Pause\n um ${formatTimeOnly(lastTimeStamp, true)}`,
                     });
-                    endMarker.addTo(routeLayer);
+                    breakMarker.addTo(routeLayer);
                 }
             }
             lastPoint = point;
@@ -78,7 +79,7 @@ function addStartAndBreakMarker(
 export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
     const gpx = getGpx(gpxSegment);
     let lastTrack: Track | null = null;
-    gpx.tracks.forEach((track) => {
+    gpx.tracks.forEach((track, index) => {
         const trackPoints = track.points.map(toLatLng);
         const connection = L.polyline(trackPoints, {
             weight: options.weight ?? 8,
@@ -111,6 +112,13 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
         connection.addTo(routeLayer);
         if (options.onlyShowBreaks) {
             addStartAndBreakMarker(options, lastTrack, trackPoints, gpxSegment, routeLayer, track);
+            if (index === gpx.tracks.length - 1) {
+                const endMarker = L.marker(trackPoints.reverse()[0], {
+                    icon: endIcon,
+                    title: getLanguage() === 'de' ? `Ziel` : `Destination`,
+                });
+                endMarker.addTo(routeLayer);
+            }
         } else {
             if (options.showMarker) {
                 const startMarker = L.marker(trackPoints[0], {
