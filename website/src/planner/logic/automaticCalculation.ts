@@ -15,32 +15,34 @@ const calculationThunk =
         return Promise.resolve();
     };
 
-export const calculateTracks = (dispatch: AppDispatch) => {
-    dispatch(trackMergeActions.setHasChangesSinceLastCalculation(false));
-    dispatch(calculationThunk(true)).then(() =>
-        setTimeout(() => {
-            dispatch(calculateMerge).then(() =>
-                dispatch(calculateTrackStreetInfos).then(() =>
-                    dispatch(addPostCodeToStreetInfos)
-                        .then(() => dispatch(calculationThunk(false)))
-                        .then(() =>
-                            successNotification(
-                                dispatch,
-                                getMessages()['msg.calculation.success.title'],
-                                getMessages()['msg.calculation.success.message']
+export const calculateTracks =
+    (trackAsChange = true) =>
+    (dispatch: AppDispatch) => {
+        dispatch(trackMergeActions.setHasChangesSinceLastCalculation(false));
+        dispatch(calculationThunk(true)).then(() =>
+            setTimeout(() => {
+                dispatch(calculateMerge).then(() =>
+                    dispatch(calculateTrackStreetInfos).then(() =>
+                        dispatch(addPostCodeToStreetInfos)
+                            .then(() => dispatch(calculationThunk(false)))
+                            .then(() =>
+                                successNotification(
+                                    dispatch,
+                                    getMessages()['msg.calculation.success.title'],
+                                    getMessages()['msg.calculation.success.message']
+                                )
                             )
-                        )
-                )
-            );
-        }, 10)
-    );
-    dispatch(backendActions.setHasChangesSinceLastUpload(true));
-};
+                    )
+                );
+            }, 10)
+        );
+        dispatch(backendActions.setHasChangesSinceLastUpload(trackAsChange));
+    };
 
 export const triggerAutomaticCalculation = (dispatch: AppDispatch, getState: () => State) => {
     const isCalculationOnTheFly = getIsCalculationOnTheFly(getState());
     if (isCalculationOnTheFly) {
-        dispatch(calculateTracks);
+        dispatch(calculateTracks());
     } else {
         dispatch(trackMergeActions.setHasChangesSinceLastCalculation(true));
     }

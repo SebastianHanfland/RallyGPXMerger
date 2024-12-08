@@ -32,7 +32,7 @@ export function useLoadPlanningFromServer() {
                         intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
                         intl.formatMessage({ id: 'msg.dataLoad.success.message' })
                     );
-                    dispatch(calculateTracks);
+                    dispatch(calculateTracks(false));
                 })
                 .catch(() => {
                     errorNotification(

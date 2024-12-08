@@ -50,7 +50,7 @@ export const CalculationOnTheFly = () => {
                     title={'Calculate tracks'}
                     variant={hasChanges ? 'warning' : 'light'}
                     className={'shadow my-1 mx-1'}
-                    onClick={() => dispatch(calculateTracks)}
+                    onClick={() => dispatch(calculateTracks())}
                     disabled={isRunning}
                 >
                     {hasChanges && <Warning size={13} />}
