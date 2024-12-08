@@ -27,7 +27,8 @@ export function addTrackToMap(points: { lat: number; lng: number }[], trackId: s
     const trackMarker = L.marker(points.reverse()[0], {
         icon: bikeIcon,
     });
-    const trackSnake = L.polyline(points, { weight: 20, color: getColorFromUuid(trackId), opacity: 1 });
+    const enhancesPoints = points.length === 1 ? [points[0], points[0]] : points;
+    const trackSnake = L.polyline(enhancesPoints, { weight: 20, color: getColorFromUuid(trackId), opacity: 1 });
     trackMarker.addTo(routeLayer);
     trackSnake.addTo(routeLayer);
 }
