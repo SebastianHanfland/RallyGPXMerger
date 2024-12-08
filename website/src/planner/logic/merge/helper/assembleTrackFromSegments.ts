@@ -60,7 +60,7 @@ export function assembleTrackFromSegments(
 
             gpxOrBreak.gpx.shiftToArrivalTime(arrivalTimeForPreviousSegment);
             arrivalTimeForPreviousSegment = gpxOrBreak.gpx.getStart();
-            shiftedGpxContents = [gpxOrBreak.gpx, ...shiftedGpxContents];
+            shiftedGpxContents = [SimpleGPX.fromString(gpxOrBreak.gpx.toString()), ...shiftedGpxContents];
 
             lastPoint = gpxOrBreak.gpx.getStartPoint();
             lastSegmentName = gpxOrBreak.name;
