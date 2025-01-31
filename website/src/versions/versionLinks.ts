@@ -435,5 +435,17 @@ export const versions: Record<string, Variant[]> = {
             mode: 'present',
         },
     ],
+    25_A96_v1_v1alt: [
+        {
+            name: 'SF25_A96',
+            url: 'https://sternfahrtmuc.github.io/Sternfahrt2024/SF25_MUC.json',
+            color: 'green',
+        },
+        {
+            name: 'SF25_A96_kurz',
+            url: 'https://sternfahrtmuc.github.io/Sternfahrt2024/SF25_MUC_alternativ.json',
+            color: 'blue',
+        },
+    ],
 };
 export const versionKey = window.location.search.split('&')[0].replace('?version=', '');
