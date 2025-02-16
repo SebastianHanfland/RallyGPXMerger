@@ -21,6 +21,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             }
             const calculatedTracks: ZipTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
+                id: track.id + '_' + id,
                 version: id,
                 color: getColorFromUuid(track.id),
                 content: optionallyDecompress(track.content),
