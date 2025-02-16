@@ -28,7 +28,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             }));
             extendReadableTracks(
                 calculatedTracks.map((track) => ({
-                    id: track.id,
+                    id: track.id + '_' + id,
                     gpx: SimpleGPX.fromString(track.content),
                 }))
             );
