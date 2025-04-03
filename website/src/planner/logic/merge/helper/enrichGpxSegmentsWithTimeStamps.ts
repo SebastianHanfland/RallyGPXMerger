@@ -22,6 +22,7 @@ export function enrichGpxSegmentsWithTimeStamps(
                 segment.flipped ? track.points.reverse() : track.points
             );
             track.points = generatedPoints;
+            // TODO: #200 still need to fix this
             if (generatedPoints.length > 0) {
                 const end = generatedPoints[generatedPoints.length - 1].time.toISOString();
                 gpxContent.setEnd(end);
