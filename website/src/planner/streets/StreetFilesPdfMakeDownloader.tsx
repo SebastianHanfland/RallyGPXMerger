@@ -17,7 +17,7 @@ export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispa
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
     const planningLabel = getPlanningLabel(getState());
     trackStreetInfos
-        .filter((info) => info.id === id)
+        .filter((info) => id.includes(info.id))
         .forEach((track) => createTrackStreetPdf(intl, planningLabel)(track).download(`${track.name}.pdf`));
 };
 
