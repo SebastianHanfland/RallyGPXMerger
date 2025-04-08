@@ -50,7 +50,7 @@ function TrackInfoRow({ track }: { track: ZipTrack }) {
         return null;
     }
     const trackStreetInfos = getEnrichedTrackStreetInfos(storedState);
-    const foundInfo = trackStreetInfos.find((info) => info.id === track.id);
+    const foundInfo = trackStreetInfos.find((info) => track.id.includes(info.id));
     if (!foundInfo) {
         return <div>Info not found</div>;
     }
