@@ -22,10 +22,13 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
     if (trackCompositions.length === 0 || gpxSegments.length === 0 || !matchedTrackInfo) {
         return null;
     }
-    const track = trackCompositions[0];
     return (
         <div className={'d-flex flex-row'}>
-            <Button size={'sm'} className={'m-1'} onClick={() => dispatch(downloadSinglePdfFiles(intl, track.id))}>
+            <Button
+                size={'sm'}
+                className={'m-1'}
+                onClick={() => dispatch(downloadSinglePdfFiles(intl, matchedTrackInfo?.id))}
+            >
                 <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
                 PDF
             </Button>
