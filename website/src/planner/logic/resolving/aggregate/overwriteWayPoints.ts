@@ -1,10 +1,10 @@
-import { AggregatedPoints, StreetNameReplacementWayPoint } from '../types.ts';
+import { ReplacementWayPoint, StreetNameReplacementWayPoint } from '../types.ts';
 import { sameWayPoint } from '../../../store/geoCoding.reducer.ts';
 
-export function overwriteWayPoints(
-    wayPoints: AggregatedPoints[],
+export function overwriteWayPoints<T extends ReplacementWayPoint>(
+    wayPoints: T[],
     replacementWayPoints: StreetNameReplacementWayPoint[]
-): AggregatedPoints[] {
+): T[] {
     return wayPoints.map((point) => {
         const pointToReplaceWith = replacementWayPoints.find((replacementPoint) =>
             sameWayPoint(replacementPoint, point)
