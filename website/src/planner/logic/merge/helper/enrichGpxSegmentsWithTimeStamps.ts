@@ -2,8 +2,6 @@ import { generateTimeData } from '../speedSimulator.ts';
 
 import { GpxSegment, ResolvedGpxSegment } from '../../../../common/types.ts';
 import { getGpx } from '../../../../common/cache/gpxCache.ts';
-import { errorNotification } from '../../../store/toast.reducer.ts';
-import { store } from '../../../store/store.ts';
 
 export function enrichGpxSegmentsWithTimeStamps(
     gpxSegments: GpxSegment[],
@@ -28,10 +26,7 @@ export function enrichGpxSegmentsWithTimeStamps(
                 gpxContent.setEnd(end);
                 nextStartDate = track.points[track.points.length - 1].time.toISOString();
             } else {
-                errorNotification(
-                    store.dispatch,
-                    `Segment file with unfilled track: "${segment.filename}" (empty track: "${track.name}")`
-                );
+                alert(`Segment file with unfilled track: "${segment.filename}" (empty track: "${track.name}")`);
             }
         });
         return {
