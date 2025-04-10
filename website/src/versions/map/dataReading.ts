@@ -27,7 +27,7 @@ const extractLocationZip =
     } => {
         let foundZipTrack: ZipTrack | undefined;
         Object.values(zipTracks).forEach((tracks) => {
-            const find = tracks?.find((track) => track.id === readableTrack.id);
+            const find = tracks?.find((track) => readableTrack.id.includes(track.id));
             if (find) {
                 foundZipTrack = find;
             }
@@ -65,7 +65,9 @@ export const getDisplayTimeStamp = (state: VersionsState): string | undefined =>
 };
 
 function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, selectedTrackIds: string[]) {
-    return readableTracks?.filter((track) => selectedTrackIds.includes(track.id));
+    return readableTracks?.filter((track) => {
+        return selectedTrackIds.some((id) => track.id.includes(id));
+    });
 }
 
 export const getZipCurrentMarkerPositionsForTracks = createSelector(
