@@ -22,7 +22,7 @@
     "allowSyntheticDefaultImports": true,
 
     /* vite */
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "include": ["src"],
   "files": ["node_modules/vitest/globals.d.ts"],
