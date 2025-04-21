@@ -1,17 +1,31 @@
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
-import { getIsZipLoading } from './store/zipTracks.reducer.ts';
+import { getIsZipLoading, zipTracksActions } from './store/zipTracks.reducer.ts';
 import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { PresentationTable } from './table/PresentationTable.tsx';
-import { useLoadPlanningById } from './data/loadPlanningHook.ts';
+import { useEffect } from 'react';
+import { loadServerFile } from './data/loadServerFile.ts';
+import { setStartAndEndTime } from './data/loadFilesHook.ts';
 
 function RallyTable() {
     const planningId = useGetUrlParam('table=');
-    useLoadPlanningById(planningId);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (planningId) {
+            dispatch(zipTracksActions.removeZipTracks());
+            dispatch(zipTracksActions.setIsLoading(true));
+
+            loadServerFile(planningId, dispatch).then(() => {
+                dispatch(zipTracksActions.setIsLoading(false));
+                setStartAndEndTime(dispatch);
+            });
+        }
+    }, [planningId]);
 
     const isLoading = useSelector(getIsZipLoading);
 

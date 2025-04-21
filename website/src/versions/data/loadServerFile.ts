@@ -1,7 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { ZipTrack } from '../../common/types.ts';
-import { extendReadableTracks } from '../cache/readableTracks.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { zipTracksActions } from '../store/zipTracks.reducer.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
@@ -26,12 +24,15 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                 color: getColorFromUuid(track.id),
                 content: optionallyDecompress(track.content),
             }));
-            extendReadableTracks(
-                calculatedTracks.map((track) => ({
-                    id: track.id + '_' + id,
-                    gpx: SimpleGPX.fromString(track.content),
-                }))
-            );
+            // extendReadableTracks(
+            //     calculatedTracks.map((track) => {
+            //         console.log(track.content)
+            //         return {
+            //             id: track.id + '_' + id,
+            //             gpx: SimpleGPX.fromString(track.content),
+            //         };
+            //     })
+            // );
             setParticipantsDelay(planning.trackMerge.participantDelay);
             dispatch(zipTracksActions.setZipTracks({ version: id, tracks: calculatedTracks }));
             dispatch(zipTracksActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
