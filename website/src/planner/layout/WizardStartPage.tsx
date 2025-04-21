@@ -2,7 +2,6 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { Sections } from './types.ts';
 import stars from '../../assets/stars.svg';
 import fileUp from '../../assets/file-up.svg';
-import versionSvg from '../../assets/version.svg';
 import pencil from '../../assets/pencil.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,14 +83,6 @@ export const WizardStartPage = () => {
                         ref={uploadInput}
                         hidden={true}
                         accept={'application/json'}
-                    />
-                </Col>
-                <Col>
-                    <WizardCard
-                        icon={versionSvg}
-                        onClick={() => setSelectedSection('wizard-versions')}
-                        title={<FormattedMessage id={'msg.versions'} />}
-                        text={<FormattedMessage id={'msg.versions.hint'} />}
                     />
                 </Col>
             </Row>

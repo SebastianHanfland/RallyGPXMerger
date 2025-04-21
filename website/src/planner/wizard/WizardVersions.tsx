@@ -5,7 +5,6 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { Sections } from '../layout/types.ts';
 import { AppDispatch } from '../store/store.ts';
 import { FormattedMessage } from 'react-intl';
-import { versions } from '../../versions/versionLinks.ts';
 
 export const WizardVersions = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -33,20 +32,6 @@ export const WizardVersions = () => {
                                 </th>
                             </tr>
                         </thead>
-                        {Object.entries(versions).map(([version, variants]) => (
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <a href={`${window.location.pathname}?version=${version}`} target={'_blank'}>
-                                            {version}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {variants.length} ({variants.map((variant) => variant.name).join(', ')})
-                                    </td>
-                                </tr>
-                            </tbody>
-                        ))}
                     </Table>
                 </Col>
             </Row>
