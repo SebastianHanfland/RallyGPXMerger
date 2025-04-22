@@ -1,11 +1,12 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import GpxParser, { Link, MetaData, Point, Route, Track, Waypoint } from 'gpxparser';
+import GpxParser from 'gpx-parser-ts';
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from '../planner/logic/merge/types.ts';
 import { getTimeDifferenceInSeconds } from './dateUtil.ts';
+import { Link, Metadata, Point, Route, Track, Waypoint } from 'gpx-parser-ts/dist/types';
 
-export function mergeSimpleGPXs(parsers: (GpxParser | SimpleGPX)[]): SimpleGPX {
+export function mergeSimpleGPXs(parsers: SimpleGPX[]): SimpleGPX {
     const metadata = parsers[0].metadata;
     const waypoints = parsers.flatMap((p) => p.waypoints);
     const tracks = parsers.flatMap((p) => p.tracks);
@@ -18,8 +19,12 @@ function haveTimeStamp(waypoints: Waypoint[]) {
     return waypoints.filter((wayPoint) => !!wayPoint.time).length === waypoints.length;
 }
 
+function getPointsFromTracksAndRoutes(routes: Route[], tracks: Track[]) {
+    return [...routes.map((route) => route.rtept), ...tracks.map((track) => track.trkseg.trkpt)];
+}
+
 export class SimpleGPX extends GpxParser implements GpxFileAccess {
-    metadata: MetaData;
+    metadata: Metadata;
     waypoints: Waypoint[];
     tracks: Track[];
     routes: Route[];
@@ -27,15 +32,15 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     end: Date;
     mergeTracks: Boolean;
 
-    public static fromString(raw: string) {
+    public static async fromString(raw: string) {
         const parser = new GpxParser();
-        parser.parse(raw);
-        const { metadata, waypoints, tracks, routes } = parser;
-        return new SimpleGPX(metadata, waypoints, tracks, routes);
+        const gpxJson = await parser.parse(raw);
+        const { metadata, wpt, trk, rte } = gpxJson;
+        return new SimpleGPX(metadata, wpt ?? [], trk, rte ?? []);
     }
 
-    public duplicate(tracks?: Track[]) {
-        const copy = SimpleGPX.fromString(this.toString());
+    public async duplicate(tracks?: Track[]) {
+        const copy = await SimpleGPX.fromString(this.toString());
         if (tracks) {
             copy.tracks = tracks;
         }
@@ -43,7 +48,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     public constructor(
-        metadata: MetaData,
+        metadata: Metadata,
         waypoints: Waypoint[],
         tracks: Track[],
         routes: Route[],
@@ -57,9 +62,9 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         this.mergeTracks = mergeTracks;
 
         const times = <number[]>[];
-        [...routes, ...tracks].forEach((thing) => {
+        getPointsFromTracksAndRoutes(routes, tracks).forEach((points) => {
             times.push(
-                ...thing.points.map((_point: Point) => {
+                ...points.map((_point: Point) => {
                     return new Date(_point.time).getTime();
                 })
             );
@@ -72,9 +77,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         this.start = date.addSeconds(this.start, interval);
         this.end = date.addSeconds(this.end, interval);
         // immediately propagate to all the time points
-        [...this.routes, ...this.tracks].forEach((thing) => {
-            thing.points.forEach((_point: Point) => {
-                _point.time = date.addSeconds(_point.time, interval);
+        getPointsFromTracksAndRoutes(this.routes, this.tracks).forEach((points) => {
+            points.forEach((point) => {
+                console.log(point.time, typeof point.time, interval);
+                point.time = date.addSeconds(new Date(point.time), interval);
             });
         });
         if (this.waypoints.length && haveTimeStamp(this.waypoints)) {
@@ -88,9 +94,9 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         // find the iterable with the last (in time) point
         let found: boolean = false;
         let points: Point[] = [];
-        for (let thing of [...this.routes, ...this.tracks]) {
-            points = thing.points;
-            for (let _point of thing.points) {
+        for (let point of getPointsFromTracksAndRoutes(this.routes, this.tracks)) {
+            points = point;
+            for (let _point of point) {
                 if (_point.time >= this.end) {
                     found = true;
                     break;
@@ -128,10 +134,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         const m = this.metadata;
         builder.setMetadata(
             new gpxBuilder.Metadata({
-                name: m.name,
-                desc: m.desc,
-                time: m.time,
-                link: toLink(m.link),
+                name: m?.name,
+                desc: m?.desc,
+                time: m?.time,
+                link: toLink(m?.link),
             })
         );
         if (this.routes.length) {
@@ -180,11 +186,11 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
 
     getEndPoint(): Point {
         const lastTrack = this.tracks[this.tracks.length - 1];
-        return lastTrack.points[lastTrack.points.length - 1];
+        return lastTrack.trkseg.trkpt[lastTrack.trkseg.trkpt.length - 1];
     }
 
     getStartPoint(): Point {
-        return this.tracks[0].points[0];
+        return this.tracks[0].trkseg.trkpt[0];
     }
 }
 
@@ -228,23 +234,23 @@ function track2track(_track: Track, timeshift: number = 0): gpxBuilder.Track {
 
 function track2seg(_track: Track, timeshift: number = 0): gpxBuilder.Segment {
     // gpx-builder (i.e. output) tracks can have segments, but gpx-parser (i.e. input) ones do not
-    return new gpxBuilder.Segment(_track.points.map((_point: Point) => point2point(_point, timeshift)));
+    return new gpxBuilder.Segment(_track.trkseg.trkpt.map((_point: Point) => point2point(_point, timeshift)));
 }
 
 function tracks2seg(_track: Track[], timeshift: number = 0): gpxBuilder.Segment {
     return new gpxBuilder.Segment(
-        _track.flatMap((track) => track.points.map((_point: Point) => point2point(_point, timeshift)))
+        _track.flatMap((track) => track.trkseg.trkpt.map((_point: Point) => point2point(_point, timeshift)))
     );
 }
 
 function route2route(_route: Route, timeshift: number = 0): gpxBuilder.Route {
     // you cannot get the properties of a type because at compile time or runtime it just might be a whole different fuck-up.
     // this is like an Exclude or Omit<T, K> but as an object rather than a type
-    const { link, number, points, distance, elevation, slopes, ...without } = _route;
+    const { link, number, rtept, distance, elevation, slopes, ...without } = _route;
 
     return new gpxBuilder.Route({
         ...without,
-        rtept: _route.points.map((_point: Point) => point2point(_point, timeshift)),
+        rtept: _route.rtept.map((_point: Point) => point2point(_point, timeshift)),
         // @ts-ignore
         link: toLink(_track.link),
         number: Number(_route.number),

@@ -9,6 +9,7 @@ import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
 import { extendReadableTracks, getReadableTracks } from '../../src/versions/cache/readableTracks';
 import { ReadableTrack } from '../../src/common/types';
+import GpxParser from 'gpx-parser-ts';
 
 export const CCom = () => {
     return <div>Dummy</div>;
@@ -26,7 +27,6 @@ describe('dummy render test', () => {
         // given
         const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as State;
-
 
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');

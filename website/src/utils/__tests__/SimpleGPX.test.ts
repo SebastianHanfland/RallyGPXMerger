@@ -12,9 +12,9 @@ describe('SimpleGPX', () => {
         '</trkseg></trk>\n' +
         '</gpx>';
 
-    it('should find last start time stamp of first track', () => {
+    it('should find last start time stamp of first track', async () => {
         // given
-        const simpleGPX = SimpleGPX.fromString(first);
+        const simpleGPX = await SimpleGPX.fromString(first);
 
         // when
         const startTimeStamp = simpleGPX.getStart();
@@ -23,9 +23,9 @@ describe('SimpleGPX', () => {
         expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
     });
 
-    it('should be able to shift the times within a gpx track', () => {
+    it('should be able to shift the times within a gpx track', async () => {
         // given
-        const simpleGPX = SimpleGPX.fromString(first);
+        const simpleGPX = await SimpleGPX.fromString(first);
         const startTimeStamp = simpleGPX.getStart();
         expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
         const arrivalDateTime = '2017-11-12T10:14:57.000Z';
@@ -33,7 +33,7 @@ describe('SimpleGPX', () => {
         // when
         simpleGPX.shiftToArrivalTime(arrivalDateTime);
         expect(
-            simpleGPX.tracks[0].points.map((point: Point) => ({ ...point, time: point.time?.toISOString() }))
+            simpleGPX.tracks[0].trkseg.trkpt.map((point: Point) => ({ ...point, time: point.time?.toISOString() }))
         ).toEqual([
             {
                 ele: 2376,
@@ -54,7 +54,7 @@ describe('SimpleGPX', () => {
         expect(simpleGPX.getEnd()).toEqual('2017-11-12T10:14:57.000Z');
     });
 
-    it('merging two GPX files', () => {
+    it('merging two GPX files', async () => {
         // given
 
         const second =
@@ -105,7 +105,10 @@ describe('SimpleGPX', () => {
             '</gpx>';
 
         // when
-        const mergedGpxs = mergeSimpleGPXs([SimpleGPX.fromString(first), SimpleGPX.fromString(second)]).toString();
+        const mergedGpxs = mergeSimpleGPXs([
+            await SimpleGPX.fromString(first),
+            await SimpleGPX.fromString(second),
+        ]).toString();
 
         // then
         expect(mergedGpxs.replaceAll('  ', '')).toEqual(manualMerged.replaceAll('  ', ''));
