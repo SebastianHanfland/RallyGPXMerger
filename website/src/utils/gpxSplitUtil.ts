@@ -1,7 +1,7 @@
 import { SimpleGPX } from './SimpleGPX.ts';
 import geoDistance from 'geo-distance-helper';
 import { toLatLng } from './pointUtil.ts';
-import { Track } from 'gpxparser';
+import { Track } from './gpxTypes.ts';
 
 export const splitGpx = (content: string, splitPoint: { lat: number; lng: number }): [string, string] => {
     let pointWithMinimalDistance: { lat: number; lon: number } | undefined = undefined;

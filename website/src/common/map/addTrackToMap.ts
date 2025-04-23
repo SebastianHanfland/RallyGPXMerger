@@ -1,4 +1,3 @@
-import { Point, Track } from 'gpxparser';
 import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
@@ -6,6 +5,7 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../types.ts';
 import { getGpx } from '../cache/gpxCache.ts';
 import { getLanguage } from '../../language.ts';
+import { Point, Track } from '../../utils/gpxTypes.ts';
 
 function toLatLng(point: Point): { lat: number; lng: number } {
     return { lat: point.lat, lng: point.lon };

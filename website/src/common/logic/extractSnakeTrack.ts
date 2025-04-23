@@ -1,8 +1,8 @@
-import { Point, Track } from 'gpxparser';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../planner/store/trackMerge.reducer.ts';
 import { ReadableTrack } from '../types.ts';
+import { Point, Track } from '../../utils/gpxTypes.ts';
 
 function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     const nextTime = next.time.toISOString();
