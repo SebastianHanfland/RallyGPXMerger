@@ -26,8 +26,8 @@ export function generateTimeData(start: string, avg: number, points: Omit<Point,
 
     return points.map((point, index, points) => {
         if (index === 0) {
-            previousPoint = { ...point, time: new Date(start) };
-            return { ...point, time: new Date(start) };
+            previousPoint = { ...point, time: start };
+            return { ...point, time: start };
         }
         const a = previousPoint as Point;
         const b = points[index];
@@ -37,11 +37,11 @@ export function generateTimeData(start: string, avg: number, points: Omit<Point,
         const slope_factor = slopeFactor(slope);
 
         const speed = alpha * (avg / slope_factor) + (1 - alpha) * last_speed;
-        const time = new Date(date.addSeconds(a.time, (60 * 60 * distInKm) / speed));
+        const time = date.addSeconds(new Date(a.time), (60 * 60 * distInKm) / speed);
         last_speed = speed;
 
-        previousPoint = { ...point, time };
-        return { ...point, time };
+        previousPoint = { ...point, time: time.toISOString() };
+        return { ...point, time: time.toISOString() };
     });
 }
 
@@ -58,8 +58,7 @@ export function calculateSpeed(points: Point[]): number {
         lastPoint = point;
     });
 
-    const timeInHours =
-        getTimeDifferenceInSeconds(endPoint.time.toISOString(), startPoint.time.toISOString()) / 60 / 60;
+    const timeInHours = getTimeDifferenceInSeconds(endPoint.time, startPoint.time) / 60 / 60;
 
     return distance / timeInHours;
 }

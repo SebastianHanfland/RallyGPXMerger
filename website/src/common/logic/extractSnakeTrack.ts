@@ -5,8 +5,8 @@ import { ReadableTrack } from '../types.ts';
 import { Point, Track } from '../../utils/gpxTypes.ts';
 
 function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
-    const nextTime = next.time.toISOString();
-    const previousTime = previous.time.toISOString();
+    const nextTime = next.time;
+    const previousTime = previous.time;
     const timeRange = getTimeDifferenceInSeconds(previousTime, nextTime);
     const timePart = getTimeDifferenceInSeconds(previousTime, timeStamp);
     const percentage = timePart / timeRange;
@@ -28,22 +28,19 @@ export function extractSnakeTrack(timeStampFront: string, participants: number, 
         if (lastTrack !== null) {
             const lastPointOfLastTrack = lastTrack.points[lastTrack.points.length - 1];
             const firstPointNextTrack = track.points[0];
-            if (
-                timeStampFront > lastPointOfLastTrack.time.toISOString() &&
-                timeStampFront < firstPointNextTrack.time.toISOString()
-            ) {
+            if (timeStampFront > lastPointOfLastTrack.time && timeStampFront < firstPointNextTrack.time) {
                 returnPoints.push({ lat: lastPointOfLastTrack.lat, lng: lastPointOfLastTrack.lon });
             }
         }
         track.points.forEach((point, index, points) => {
             if (index === 0) {
-                if (lastTrack === null && timeStampEnd < point.time.toISOString()) {
+                if (lastTrack === null && timeStampEnd < point.time) {
                     returnPoints.push({ lat: point.lat, lng: point.lon });
                 }
                 return;
             }
-            const next = point.time.toISOString();
-            const previous = points[index - 1].time.toISOString();
+            const next = point.time;
+            const previous = points[index - 1].time;
 
             if (previous < timeStampEnd && timeStampEnd < next) {
                 returnPoints.push(interpolatePosition(points[index - 1], point, timeStampEnd));

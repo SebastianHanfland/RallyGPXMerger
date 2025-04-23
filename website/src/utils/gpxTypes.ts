@@ -13,7 +13,7 @@ export type Waypoint = {
     lat: number;
     lon: number;
     ele: number;
-    time: Date;
+    time: string;
     sym: string;
 };
 
@@ -49,7 +49,7 @@ export type Point = {
     lat: number;
     lon: number;
     ele: number;
-    time: Date;
+    time: string;
     extensions?: {};
 };
 

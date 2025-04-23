@@ -45,7 +45,7 @@ const enrichWithStreetsAndAggregate =
 
             return {
                 ...point,
-                time: point.time.toISOString(),
+                time: point.time,
                 street,
             };
         });

@@ -1,5 +1,4 @@
 import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
-import { Point } from '../gpxTypes.ts';
 
 describe('SimpleGPX', () => {
     const first =
@@ -33,9 +32,7 @@ describe('SimpleGPX', () => {
 
         // when
         simpleGPX.shiftToArrivalTime(arrivalDateTime);
-        expect(
-            simpleGPX.tracks[0].points.map((point: Point) => ({ ...point, time: point.time?.toISOString() }))
-        ).toEqual([
+        expect(simpleGPX.tracks[0].points).toEqual([
             {
                 ele: 2376,
                 lat: 46.57608333,

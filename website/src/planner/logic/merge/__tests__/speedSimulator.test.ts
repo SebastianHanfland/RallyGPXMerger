@@ -1,5 +1,4 @@
 import { calculateSpeed, generateTimeData } from '../speedSimulator.ts';
-import { Point } from '../../../../utils/gpxTypes.ts';
 
 describe('speedSimulator', () => {
     it('should map an empty point list into an empty point list', () => {
@@ -10,16 +9,12 @@ describe('speedSimulator', () => {
         expect(points).toEqual([]);
     });
 
-    function stringifyDate(point: Point) {
-        return { ...point, time: point.time.toISOString() };
-    }
-
     it('should set the first time stamp to the start value', () => {
         // when
         const points = generateTimeData('2020-02-02T20:20:20.000Z', 12, [{ lat: 1, lon: 1, ele: 1 }]);
 
         // then
-        expect(points.map(stringifyDate)).toEqual([{ lat: 1, lon: 1, ele: 1, time: '2020-02-02T20:20:20.000Z' }]);
+        expect(points).toEqual([{ lat: 1, lon: 1, ele: 1, time: '2020-02-02T20:20:20.000Z' }]);
     });
 
     it('should set second timestamp', () => {
@@ -30,7 +25,7 @@ describe('speedSimulator', () => {
         ]);
 
         // then
-        expect(points.map(stringifyDate)).toEqual([
+        expect(points).toEqual([
             { lat: 1, lon: 1, ele: 1, time: '2020-02-02T20:20:20.000Z' },
             { lat: 1, lon: 1.0001, ele: 1, time: '2020-02-02T20:20:23.335Z' },
         ]);
@@ -46,7 +41,7 @@ describe('speedSimulator', () => {
         ]);
 
         // then
-        expect(points.map(stringifyDate)).toEqual([
+        expect(points).toEqual([
             { lat: 1, lon: 1, ele: 1, time: '2020-02-02T20:20:20.000Z' },
             { lat: 1, lon: 1.0001, ele: 3, time: '2020-02-02T20:20:23.834Z' },
             { lat: 1, lon: 1.0002, ele: 5, time: '2020-02-02T20:20:28.228Z' },

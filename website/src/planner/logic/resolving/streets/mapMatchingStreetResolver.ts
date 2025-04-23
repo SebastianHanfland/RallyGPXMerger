@@ -14,7 +14,7 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
         mode: 'drive',
         waypoints: points.map((point) => ({
-            timestamp: point.time?.toISOString(),
+            timestamp: point.time,
             location: [point.lon, point.lat],
         })),
     };

@@ -80,12 +80,12 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         getPointsFromTracksAndRoutes(this.routes, this.tracks).forEach((points) => {
             points.forEach((point) => {
                 console.log(point.time, typeof point.time, interval);
-                point.time = date.addSeconds(new Date(point.time), interval);
+                point.time = date.addSeconds(new Date(point.time), interval).toISOString();
             });
         });
         if (this.waypoints.length && haveTimeStamp(this.waypoints)) {
             this.waypoints.forEach((wp) => {
-                wp.time = date.addSeconds(wp.time, interval);
+                wp.time = date.addSeconds(new Date(wp.time), interval).toISOString();
             });
         }
     }
@@ -97,7 +97,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         for (let point of getPointsFromTracksAndRoutes(this.routes, this.tracks)) {
             points = point;
             for (let _point of point) {
-                if (_point.time >= this.end) {
+                if (_point.time >= this.end.toISOString()) {
                     found = true;
                     break;
                 }
@@ -115,7 +115,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
             lat: last_point.lat,
             lon: last_point.lon,
             ele: last_point.ele,
-            time: date.addSeconds(new Date(last_point.time), interval),
+            time: date.addSeconds(new Date(last_point.time), interval).toISOString(),
         });
         this.end = date.addSeconds(this.end, interval);
     }

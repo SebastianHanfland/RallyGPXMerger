@@ -22,9 +22,9 @@ export function enrichGpxSegmentsWithTimeStamps(
             track.points = generatedPoints;
             // TODO: #200 still need to fix this
             if (generatedPoints.length > 0) {
-                const end = generatedPoints[generatedPoints.length - 1].time.toISOString();
+                const end = generatedPoints[generatedPoints.length - 1].time;
                 gpxContent.setEnd(end);
-                nextStartDate = track.points[track.points.length - 1].time.toISOString();
+                nextStartDate = track.points[track.points.length - 1].time;
             } else {
                 alert(`Segment file with unfilled track: "${segment.filename}" (empty track: "${track.name}")`);
             }

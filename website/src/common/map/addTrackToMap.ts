@@ -44,8 +44,8 @@ function addStartAndBreakMarker(
         }
 
         if (lastTrack !== null) {
-            const lastTrackTime = lastTrack.points[lastTrack.points.length - 1].time.toISOString();
-            const nextTrackTime = track.points[0].time.toISOString();
+            const lastTrackTime = lastTrack.points[lastTrack.points.length - 1].time;
+            const nextTrackTime = track.points[0].time;
             const timeDifferenceInSeconds = getTimeDifferenceInSeconds(nextTrackTime, lastTrackTime);
             if (timeDifferenceInSeconds > 4 * 60) {
                 const endMarker = L.marker(trackPoints[0], {
@@ -58,9 +58,9 @@ function addStartAndBreakMarker(
 
         let lastPoint: Point | null = null;
         track.points.forEach((point) => {
-            const lastTimeStamp = lastPoint?.time.toISOString();
+            const lastTimeStamp = lastPoint?.time;
             if (lastTimeStamp) {
-                const timeDifferenceInSeconds = getTimeDifferenceInSeconds(point.time.toISOString(), lastTimeStamp);
+                const timeDifferenceInSeconds = getTimeDifferenceInSeconds(point.time, lastTimeStamp);
                 if (timeDifferenceInSeconds > 4 * 60) {
                     const breakMarker = L.marker(toLatLng(point), {
                         icon: breakIcon,

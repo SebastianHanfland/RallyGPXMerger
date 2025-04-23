@@ -5,6 +5,15 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { Point } from '../../utils/gpxTypes.ts';
+
+function getRelevantAttributes(startPointA: Point) {
+    return { lat: startPointA.lat, lon: startPointA.lon, time: startPointA.time, ele: startPointA.ele };
+}
+
+function assertAdjustedTime(startPointA: Point, startPointA1: Point, time: string) {
+    expect(getRelevantAttributes(startPointA)).toEqual(getRelevantAttributes({ ...startPointA1, time: time }));
+}
 
 describe('test merging of gpx file', () => {
     it('Should make a simple merge without people', () => {
@@ -34,10 +43,10 @@ describe('test merging of gpx file', () => {
         const startPointB1 = SimpleGPX.fromString(gpxB1Content).getStartPoint();
         const endPointAB = SimpleGPX.fromString(gpxABContent).getEndPoint();
 
-        expect(startPointA).toEqual({ ...startPointA1, time: new Date('2023-10-17T22:13:54.240Z') });
-        expect(startPointB).toEqual({ ...startPointB1, time: new Date('2023-10-17T22:13:52.259Z') });
-        expect(endPointA).toEqual({ ...endPointAB, time: new Date('2023-10-17T22:15:00.000Z') });
-        expect(endPointB).toEqual({ ...endPointAB, time: new Date('2023-10-17T22:15:00.000Z') });
+        assertAdjustedTime(startPointA, startPointA1, '2023-10-17T22:13:54.240Z');
+        assertAdjustedTime(startPointB, startPointB1, '2023-10-17T22:13:52.259Z');
+        assertAdjustedTime(endPointA, endPointAB, '2023-10-17T22:15:00.000Z');
+        assertAdjustedTime(endPointB, endPointAB, '2023-10-17T22:15:00.000Z');
     });
 
     it('Should make a simple merge with people', () => {
@@ -71,9 +80,9 @@ describe('test merging of gpx file', () => {
         const startPointB1 = SimpleGPX.fromString(gpxB1Content).getStartPoint();
         const endPointAB = SimpleGPX.fromString(gpxABContent).getEndPoint();
 
-        expect(startPointA).toEqual({ ...startPointA1, time: new Date('2023-10-17T22:14:34.240Z') });
-        expect(startPointB).toEqual({ ...startPointB1, time: new Date('2023-10-17T22:13:52.259Z') });
-        expect(endPointB).toEqual({ ...endPointAB, time: new Date('2023-10-17T22:15:00.000Z') });
-        expect(endPointA).toEqual({ ...endPointAB, time: new Date('2023-10-17T22:15:40.000Z') });
+        assertAdjustedTime(startPointA, startPointA1, '2023-10-17T22:14:34.240Z');
+        assertAdjustedTime(startPointB, startPointB1, '2023-10-17T22:13:52.259Z');
+        assertAdjustedTime(endPointB, endPointAB, '2023-10-17T22:15:00.000Z');
+        assertAdjustedTime(endPointA, endPointAB, '2023-10-17T22:15:40.000Z');
     });
 });
