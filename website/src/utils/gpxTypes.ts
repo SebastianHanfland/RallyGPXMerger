@@ -85,47 +85,9 @@ export type Link = {
     type: string;
 };
 
-export type GeoJsonFeature = {
-    type: string;
-    geometry: {
-        type: string;
-        coordinates: number[][];
-    };
-    properties: {
-        name: any;
-        cmt: any;
-        desc: any;
-        src?: any;
-        number?: any;
-        link?: any;
-        type?: any;
-        sym?: any;
-    };
-};
-
-export type GeoJson = {
-    type: string;
-    features: GeoJsonFeature[];
-};
-
 export type GpxJson = {
     metadata: Metadata;
     wpt?: Waypoint[];
     trk: Track[];
     rte?: Route[];
-};
-
-export type StreamJson = {
-    distance: number[];
-    distanceBelowThreshold: number[];
-    altitude: number[];
-    extension: any;
-    gradeAdjustedDistance: number[];
-    elapsedTime: number[];
-    movingTime: number[];
-};
-
-export type StreamJSONInputOptions = {
-    extensionProcessor?: (extension: any) => any;
-    speedThreshold?: number;
 };
