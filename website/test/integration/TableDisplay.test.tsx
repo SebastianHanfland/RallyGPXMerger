@@ -9,7 +9,6 @@ import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
 import { extendReadableTracks, getReadableTracks } from '../../src/versions/cache/readableTracks';
 import { ReadableTrack } from '../../src/common/types';
-import GpxParser from 'gpx-parser-ts';
 
 export const CCom = () => {
     return <div>Dummy</div>;
@@ -20,8 +19,7 @@ vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
 
-
-let readableTracks = undefined
+let readableTracks = undefined;
 describe('dummy render test', () => {
     it('should find a node', async () => {
         // given
@@ -38,12 +36,18 @@ describe('dummy render test', () => {
                 readableTracks = [...readableTracks, ...newReadableTracks];
             }
         });
-        (getData as Mock).mockResolvedValue({data: state});
-        const loadingPage = act(() => render(<BrowserRouter><RallyTableWrapper /></BrowserRouter>));
-        screen.getByText('Loading')
+        (getData as Mock).mockResolvedValue({ data: state });
+        const loadingPage = act(() =>
+            render(
+                <BrowserRouter>
+                    <RallyTableWrapper />
+                </BrowserRouter>
+            )
+        );
+        screen.getByText('Loading');
         await loadingPage;
 
-        screen.debug()
-        screen.getByText('Ride of Silence 2024')
+        screen.debug();
+        screen.getByText('Ride of Silence 2024');
     });
 });
