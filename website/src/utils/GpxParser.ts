@@ -1,25 +1,27 @@
-import * as xml2js from 'xml2js';
-import { parseNumbers } from 'xml2js/lib/processors';
 import { GpxJson } from './gpxTypes.ts';
+import { X2jOptions, XMLParser } from 'fast-xml-parser';
+
+const parseNumbers = (_: string, attrValue: string, __: string): number | string => {
+    return isNaN(Number(attrValue)) ? attrValue : attrValue;
+};
 
 export class GpxParser {
     constructor() {}
 
-    async parse(gpxstring: string): Promise<GpxJson> {
-        const parserOptions: xml2js.ParserOptions = {
-            tagNameProcessors: [parseNumbers],
-            attrNameProcessors: [parseNumbers],
-            valueProcessors: [parseNumbers],
-            attrValueProcessors: [parseNumbers],
-            preserveChildrenOrder: true,
-            trim: true,
-            explicitArray: false,
-            mergeAttrs: true,
+    parse(gpxString: string): GpxJson {
+        const parserOptions: X2jOptions = {
+            tagValueProcessor: parseNumbers,
+            attributeValueProcessor: parseNumbers,
+            parseAttributeValue: true,
+            parseTagValue: true,
+            ignoreAttributes: false,
+            attributeNamePrefix: '',
         };
-        let parser = new xml2js.Parser(parserOptions);
-        let jsonReturn: GpxJson = {} as GpxJson;
+        const parser = new XMLParser(parserOptions);
+
+        const jsonReturn: GpxJson = {} as GpxJson;
         try {
-            let result = await parser.parseStringPromise(gpxstring);
+            const result = parser.parse(gpxString);
             jsonReturn.metadata = result.gpx.metadata;
             jsonReturn.wpt = result.gpx.wpt;
             if (result.gpx.rte) {

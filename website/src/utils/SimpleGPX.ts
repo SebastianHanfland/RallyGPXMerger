@@ -1,10 +1,10 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import GpxParser from 'gpx-parser-ts';
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from '../planner/logic/merge/types.ts';
 import { getTimeDifferenceInSeconds } from './dateUtil.ts';
 import { Link, Metadata, Point, Route, Track, Waypoint } from 'gpx-parser-ts/dist/types';
+import { GpxParser } from './GpxParser.ts';
 
 export function mergeSimpleGPXs(parsers: SimpleGPX[]): SimpleGPX {
     const metadata = parsers[0].metadata;
@@ -32,15 +32,15 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     end: Date;
     mergeTracks: Boolean;
 
-    public static async fromString(raw: string) {
+    public static fromString(raw: string) {
         const parser = new GpxParser();
-        const gpxJson = await parser.parse(raw);
+        const gpxJson = parser.parse(raw);
         const { metadata, wpt, trk, rte } = gpxJson;
         return new SimpleGPX(metadata, wpt ?? [], trk, rte ?? []);
     }
 
-    public async duplicate(tracks?: Track[]) {
-        const copy = await SimpleGPX.fromString(this.toString());
+    public duplicate(tracks?: Track[]) {
+        const copy = SimpleGPX.fromString(this.toString());
         if (tracks) {
             copy.tracks = tracks;
         }

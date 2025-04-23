@@ -12,9 +12,9 @@ describe('SimpleGPX', () => {
         '</trkseg></trk>\n' +
         '</gpx>';
 
-    it('should find last start time stamp of first track', async () => {
+    it('should find last start time stamp of first track', () => {
         // given
-        const simpleGPX = await SimpleGPX.fromString(first);
+        const simpleGPX = SimpleGPX.fromString(first);
 
         // when
         const startTimeStamp = simpleGPX.getStart();
@@ -23,9 +23,9 @@ describe('SimpleGPX', () => {
         expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
     });
 
-    it('should be able to shift the times within a gpx track', async () => {
+    it('should be able to shift the times within a gpx track', () => {
         // given
-        const simpleGPX = await SimpleGPX.fromString(first);
+        const simpleGPX = SimpleGPX.fromString(first);
         const startTimeStamp = simpleGPX.getStart();
         expect(startTimeStamp).toEqual('2007-10-14T10:09:57.000Z');
         const arrivalDateTime = '2017-11-12T10:14:57.000Z';
@@ -54,7 +54,7 @@ describe('SimpleGPX', () => {
         expect(simpleGPX.getEnd()).toEqual('2017-11-12T10:14:57.000Z');
     });
 
-    it('merging two GPX files', async () => {
+    it('merging two GPX files', () => {
         // given
 
         const second =
@@ -105,10 +105,7 @@ describe('SimpleGPX', () => {
             '</gpx>';
 
         // when
-        const mergedGpxs = mergeSimpleGPXs([
-            await SimpleGPX.fromString(first),
-            await SimpleGPX.fromString(second),
-        ]).toString();
+        const mergedGpxs = mergeSimpleGPXs([SimpleGPX.fromString(first), SimpleGPX.fromString(second)]).toString();
 
         // then
         expect(mergedGpxs.replaceAll('  ', '')).toEqual(manualMerged.replaceAll('  ', ''));
