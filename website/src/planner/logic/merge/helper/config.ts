@@ -1,0 +1,1 @@
+export const DELAY_PER_PERSON_IN_SECONDS = 0.2;
