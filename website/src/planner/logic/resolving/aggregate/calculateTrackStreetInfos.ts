@@ -3,7 +3,6 @@ import { TrackStreetInfo } from '../types.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
 import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
-import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
 import {
     geoCodingActions,
@@ -19,6 +18,7 @@ import { toLatLng } from '../../../../utils/pointUtil.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { overwriteWayPoints } from './overwriteWayPoints.ts';
+import { Point } from '../../../../utils/gpxTypes.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>

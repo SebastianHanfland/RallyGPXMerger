@@ -1,5 +1,5 @@
 import { calculateSpeed, generateTimeData } from '../speedSimulator.ts';
-import { Point } from 'gpxparser';
+import { Point } from '../../../../utils/gpxTypes.ts';
 
 describe('speedSimulator', () => {
     it('should map an empty point list into an empty point list', () => {

@@ -1,8 +1,8 @@
 import geoDistance from 'geo-distance-helper';
-import { Point } from 'gpxparser';
 import date from 'date-and-time';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
+import { Point } from '../../../utils/gpxTypes.ts';
 
 function slopeFactor(slope: number): number {
     const max_slope = 100;

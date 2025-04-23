@@ -3,12 +3,12 @@ import { geoCodingActions, getGeoApifyKey } from '../../../store/geoCoding.reduc
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
 import { getGpxSegments, gpxSegmentsActions } from '../../../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
-import { Point } from 'gpxparser';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { AppDispatch } from '../../../store/store.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
+import { Point } from '../../../../utils/gpxTypes.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {

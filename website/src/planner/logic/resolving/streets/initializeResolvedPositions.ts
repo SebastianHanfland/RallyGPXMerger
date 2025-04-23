@@ -3,7 +3,7 @@ import { AppDispatch } from '../../../store/store.ts';
 import { geoCodingActions } from '../../../store/geoCoding.reducer.ts';
 import { toKey } from '../helper/pointKeys.ts';
 import { getReadableTracks } from '../../../cache/readableTracks.ts';
-import { Point } from 'gpxparser';
+import { Point } from '../../../../utils/gpxTypes.ts';
 
 export const initializeResolvedPositions = (dispatch: AppDispatch) => {
     const positionMap: ResolvedPositions = {};

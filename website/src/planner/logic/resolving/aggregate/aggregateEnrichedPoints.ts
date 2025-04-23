@@ -1,4 +1,3 @@
-import { Point } from 'gpxparser';
 import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 import { AggregatedPoints, TrackWayPointType } from '../types.ts';
@@ -6,6 +5,7 @@ import geoDistance from 'geo-distance-helper';
 import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 import { NodePosition } from '../selectors/getNodePositions.ts';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
+import { Point } from '../../../../utils/gpxTypes.ts';
 
 export interface EnrichedPoints extends PointS {
     street: string | null;

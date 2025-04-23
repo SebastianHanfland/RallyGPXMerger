@@ -1,5 +1,6 @@
 import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
-import { Point } from 'gpxparser';
+import { Point } from '../gpxTypes.ts';
+
 describe('SimpleGPX', () => {
     const first =
         '<?xml version="1.0" encoding="UTF-8"?>\n' +

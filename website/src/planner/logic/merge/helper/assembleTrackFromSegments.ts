@@ -4,7 +4,6 @@ import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
 import { shiftEndDate } from '../../../../utils/dateUtil.ts';
 import { ResolvedCalculatedTrack, ResolvedGpxSegment } from '../../../../common/types.ts';
-import { Point } from 'gpxparser';
 import geoDistance from 'geo-distance-helper';
 import { NamedGpx } from './types.ts';
 import { store } from '../../../store/store.ts';
@@ -13,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
+import { Point } from '../../../../utils/gpxTypes.ts';
 
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
     const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
