@@ -1,5 +1,7 @@
 import { GpxJson, Point, Route, Track } from './gpxTypes.ts';
 import { X2jOptions, XMLParser } from 'fast-xml-parser';
+import { Util } from 'leaflet';
+import isArray = Util.isArray;
 
 const parseNumbers = (_: string, attrValue: string, __: string): number | string => {
     return isNaN(Number(attrValue)) ? attrValue : attrValue;
@@ -49,11 +51,12 @@ export class GpxParser {
         throw new Error('Method not implemented.');
     }
 
-    mapTrack(gpxTrack: { trkseg: { trkpt: Point[] }; name: string; number: number }): Track {
+    mapTrack(gpxTrack: { trkseg: { trkpt: Point[] | Point }; name: string; number: number }): Track {
+        const points = gpxTrack.trkseg.trkpt;
         return {
             name: gpxTrack.name,
             number: gpxTrack.number ? `${gpxTrack.number}` : undefined,
-            points: gpxTrack.trkseg.trkpt,
+            points: (isArray(points) ? points : [points]) as Point[],
         };
     }
 }

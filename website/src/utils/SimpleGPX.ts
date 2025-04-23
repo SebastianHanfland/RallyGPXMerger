@@ -79,7 +79,6 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         // immediately propagate to all the time points
         getPointsFromTracksAndRoutes(this.routes, this.tracks).forEach((points) => {
             points.forEach((point) => {
-                console.log(point.time, typeof point.time, interval);
                 point.time = date.addSeconds(new Date(point.time), interval).toISOString();
             });
         });
