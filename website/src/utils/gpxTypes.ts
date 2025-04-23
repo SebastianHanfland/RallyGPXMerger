@@ -19,18 +19,16 @@ export type Waypoint = {
 
 export type Track = {
     name: string;
-    cmt: string;
-    desc: string;
-    src: string;
-    number: string;
-    link: Link;
-    type: string;
-    trkseg: {
-        trkpt: Point[];
-    };
-    distance: Distance;
-    elevation: Elevation;
-    slopes: number[];
+    number?: string;
+    points: Point[];
+    // cmt: string;
+    // desc: string;
+    // src: string;
+    // link: Link;
+    // type: string;
+    // distance: Distance;
+    // elevation: Elevation;
+    // slopes: number[];
 };
 
 export type Route = {
@@ -41,7 +39,7 @@ export type Route = {
     number: string;
     link: Link;
     type: string;
-    rtept: Point[];
+    points: Point[];
     distance: Distance;
     elevation: Elevation;
     slopes: number[];
@@ -88,6 +86,6 @@ export type Link = {
 export type GpxJson = {
     metadata: Metadata;
     wpt?: Waypoint[];
-    trk: Track[];
-    rte?: Route[];
+    tracks: Track[];
+    routes?: Route[];
 };

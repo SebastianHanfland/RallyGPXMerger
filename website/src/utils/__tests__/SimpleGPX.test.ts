@@ -33,7 +33,7 @@ describe('SimpleGPX', () => {
         // when
         simpleGPX.shiftToArrivalTime(arrivalDateTime);
         expect(
-            simpleGPX.tracks[0].trkseg.trkpt.map((point: Point) => ({ ...point, time: point.time?.toISOString() }))
+            simpleGPX.tracks[0].points.map((point: Point) => ({ ...point, time: point.time?.toISOString() }))
         ).toEqual([
             {
                 ele: 2376,
