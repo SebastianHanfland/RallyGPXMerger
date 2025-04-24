@@ -5,12 +5,9 @@ import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
-import { Simulate } from 'react-dom/test-utils';
-import click = Simulate.click;
 
 const messages = getMessages('en');
 
-// vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
@@ -23,6 +20,9 @@ const ui = {
             : expect(screen.queryByRole('button', { name: RegExp(messages['msg.continuePlan']) })).toBeNull(),
     openButton: () => screen.getByRole('button', { name: RegExp(messages['msg.loadPlan']) }),
     header: () => screen.getByRole('heading', { name: 'Rally GPX Merger' }),
+
+    simpleButton: () => screen.getByRole('button', { name: RegExp(messages['msg.simple']) }),
+    complexButton: () => screen.getByRole('button', { name: RegExp(messages['msg.complex']) }),
 };
 
 describe('Planner integration test', () => {
@@ -44,7 +44,15 @@ describe('Planner integration test', () => {
         ui.continueButton(false);
 
         await user.click(ui.startButton());
-        screen.debug();
-        await waitFor(() => screen.getByText(/Simple/));
+
+        ui.simpleButton();
+        ui.complexButton();
+
+        await user.click(ui.simpleButton());
+        screen.getByRole('heading', { name: messages['msg.segments'] });
+        expect(screen.getAllByRole('heading')).toHaveLength(1);
+
+        screen.getByText(/rack/);
+        // screen.getByText(/upload/);
     });
 });
