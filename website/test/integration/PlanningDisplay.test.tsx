@@ -16,6 +16,16 @@ vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
 
+const ui = {
+    startButton: () => screen.getByRole('button', { name: RegExp(messages['msg.startPlan']) }),
+    continueButton: (exists: boolean = true) =>
+        exists
+            ? screen.getByRole('button', { name: RegExp(messages['msg.continuePlan']) })
+            : expect(screen.queryByRole('button', { name: RegExp(messages['msg.continuePlan']) })).toBeNull(),
+    openButton: () => screen.getByRole('button', { name: RegExp(messages['msg.loadPlan']) }),
+    header: () => screen.getByRole('heading', { name: 'Rally GPX Merger' }),
+};
+
 describe('Planner integration test', () => {
     it('Starts a new simple planning', async () => {
         // given
@@ -32,10 +42,9 @@ describe('Planner integration test', () => {
                 </BrowserRouter>
             )
         );
-
-        screen.getByRole('heading', { name: 'Rally GPX Merger' });
-        screen.getByRole('button', { name: RegExp(messages['msg.startPlan']) });
-        expect(screen.queryByRole('button', { name: RegExp(messages['msg.continuePlan']) })).toBeNull();
-        screen.getByRole('button', { name: RegExp(messages['msg.loadPlan']) });
+        ui.header();
+        ui.startButton();
+        ui.openButton();
+        ui.continueButton(false);
     });
 });
