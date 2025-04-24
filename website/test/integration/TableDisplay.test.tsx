@@ -13,8 +13,8 @@ vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
 
-describe('Render a table and ensure the presence of fields', () => {
-    it('should find a node', async () => {
+describe('Table integration test', () => {
+    it('Render a table and ensure the presence of fields', async () => {
         // given
         const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as State;
