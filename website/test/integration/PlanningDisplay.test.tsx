@@ -1,17 +1,16 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
-import { useGetUrlParam } from '../../src/utils/linkUtil';
 import { getLanguage } from '../../src/language';
-import { getData } from '../../src/api/api';
-import * as fs from 'node:fs';
-import { State } from '../../src/planner/store/types';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
+import { Simulate } from 'react-dom/test-utils';
+import click = Simulate.click;
 
 const messages = getMessages('en');
 
-vi.mock('../../src/utils/linkUtil');
+// vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
@@ -35,16 +34,17 @@ describe('Planner integration test', () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         // (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
         // (getData as Mock).mockResolvedValue({ data: state });
-        await act(() =>
-            render(
-                <BrowserRouter>
-                    <RallyPlannerWrapper />
-                </BrowserRouter>
-            )
-        );
+        render(<RallyPlannerWrapper />, { wrapper: BrowserRouter });
+
+        const user = userEvent.setup();
+
         ui.header();
         ui.startButton();
         ui.openButton();
         ui.continueButton(false);
+
+        await user.click(ui.startButton());
+        screen.debug();
+        await waitFor(() => screen.getByText(/Simple/));
     });
 });
