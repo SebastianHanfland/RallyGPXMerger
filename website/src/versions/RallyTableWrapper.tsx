@@ -1,13 +1,13 @@
 import { Provider, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
-import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { PresentationTable } from './table/PresentationTable.tsx';
 import { useLoadPlanningById } from './data/loadPlanningHook.ts';
+import { Store } from '@reduxjs/toolkit';
 
 function RallyTable() {
     const planningId = useGetUrlParam('table=');
@@ -30,9 +30,9 @@ function RallyTable() {
     );
 }
 
-export function RallyTableWrapper() {
+export function RallyTableWrapper({ store }: { store: Store }) {
     return (
-        <Provider store={versionsStore}>
+        <Provider store={store}>
             <IntlProvider locale={getLanguage()} messages={getMessages()}>
                 <RallyTable />
             </IntlProvider>

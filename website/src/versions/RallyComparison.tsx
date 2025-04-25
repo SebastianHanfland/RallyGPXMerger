@@ -3,12 +3,12 @@ import { ComparisonMap } from './map/ComparisonMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
-import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useLoadPlannings } from './data/loadPlanningHook.ts';
+import { Store } from '@reduxjs/toolkit';
 
 function RallyDisplay() {
     const planningIds = useGetUrlParam('comparison=')?.split(',') ?? [];
@@ -39,9 +39,9 @@ function RallyDisplay() {
     );
 }
 
-export function RallyComparison() {
+export function RallyComparison({ store }: { store: Store }) {
     return (
-        <Provider store={versionsStore}>
+        <Provider store={store}>
             <IntlProvider locale={getLanguage()} messages={getMessages()}>
                 <RallyDisplay />
             </IntlProvider>

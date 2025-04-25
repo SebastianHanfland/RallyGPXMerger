@@ -1,7 +1,6 @@
 import { Provider, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { getIsZipLoading } from './store/zipTracks.reducer.ts';
-import { versionsStore } from './store/store.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
@@ -9,6 +8,7 @@ import { PresentationMap } from './map/PresentationMap.tsx';
 import { PresentationMenu } from './menu/PresentationMenu.tsx';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useLoadPlanningById } from './data/loadPlanningHook.ts';
+import { Store } from '@reduxjs/toolkit';
 
 function RallyDisplay() {
     const planningId = useGetUrlParam('display=');
@@ -32,9 +32,9 @@ function RallyDisplay() {
     );
 }
 
-export function RallyDisplayWrapper() {
+export function RallyDisplayWrapper({ store }: { store: Store }) {
     return (
-        <Provider store={versionsStore}>
+        <Provider store={store}>
             <IntlProvider locale={getLanguage()} messages={getMessages()}>
                 <RallyDisplay />
             </IntlProvider>
