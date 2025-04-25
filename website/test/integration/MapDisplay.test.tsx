@@ -9,6 +9,7 @@ import { State } from '../../src/planner/store/types';
 import { createVersionsStore } from '../../src/versions/store/store';
 import { RallyDisplayWrapper } from '../../src/versions/RallyDisplayWrapper';
 import { getZipCurrentMarkerPositionsForTracks } from '../../src/versions/map/dataReading';
+import { mapActions } from '../../src/versions/store/map.reducer';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
@@ -41,5 +42,12 @@ describe('Table integration test', () => {
         screen.getAllByRole('button');
         const displayedTracks = getZipCurrentMarkerPositionsForTracks(store.getState());
         expect(displayedTracks).toHaveLength(1);
+        expect(displayedTracks[0].trackPositions).toHaveLength(1);
+        expect(displayedTracks[0].trackPositions[0]).toEqual({ lat: 48.141161, lng: 11.597148 });
+
+        store.dispatch(mapActions.setCurrentTime(10000));
+        const displayedTracks2 = getZipCurrentMarkerPositionsForTracks(store.getState());
+        expect(displayedTracks2[0].trackPositions).toHaveLength(3);
+        expect(displayedTracks2[0].trackPositions[0]).not.toEqual({ lat: 48.141161, lng: 11.597148 });
     });
 });
