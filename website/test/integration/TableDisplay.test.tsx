@@ -7,11 +7,26 @@ import { getLanguage } from '../../src/language';
 import { getData } from '../../src/api/api';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
+import { createVersionsStore } from '../../src/versions/store/store';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
+
+const ui = {
+    isLoading: () => screen.getByText('Loading'),
+    hasHeading: () => screen.getByText('Ride of Silence 2024'),
+    hasOneGpxDownloadButton: () => screen.getByRole('button', { name: /GPX/ }),
+    hasOnePdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),
+    hasATable: () => {
+        screen.getByRole('table');
+        ['Name', 'Start', 'Ziel', 'Länge in km', 'Dateien'].forEach((text) =>
+            screen.getByRole('columnheader', { name: text })
+        );
+        expect(screen.getAllByRole('row')).toHaveLength(2);
+    },
+};
 
 describe('Table integration test', () => {
     it('Render a table and ensure the presence of fields', async () => {
@@ -22,19 +37,21 @@ describe('Table integration test', () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
         (getData as Mock).mockResolvedValue({ data: state });
+        const store = createVersionsStore();
         const loadingPage = act(() =>
             render(
                 <BrowserRouter>
-                    <RallyTableWrapper />
+                    <RallyTableWrapper store={store} />
                 </BrowserRouter>
             )
         );
-        screen.getByText('Loading');
+        ui.isLoading();
         await loadingPage;
 
-        screen.getByText('Ride of Silence 2024');
-        ['Name', 'Start', 'Ziel', 'Länge in km', 'Dateien'].forEach((text) => screen.getByText(text));
-        screen.getByRole('button', { name: /GPX/ });
-        screen.getByRole('button', { name: /PDF/ });
+        ui.hasHeading();
+
+        ui.hasATable();
+        ui.hasOneGpxDownloadButton();
+        ui.hasOnePdfDownloadButton();
     });
 });

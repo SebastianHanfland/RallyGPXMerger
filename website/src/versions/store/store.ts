@@ -7,7 +7,7 @@ const versionsReducer: Reducer = combineReducers({
     map: mapReducer,
 });
 
-const createVersionsStore = () =>
+export const createVersionsStore = () =>
     configureStore({
         reducer: versionsReducer,
     });
