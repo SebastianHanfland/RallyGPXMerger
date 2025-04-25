@@ -57,7 +57,5 @@ describe('Planner integration test', () => {
         ui.segmentHeading();
         ui.simpleSegmentTab();
         ui.simpleSettingsTab();
-
-        // screen.getByText(/upload/);
     });
 });
