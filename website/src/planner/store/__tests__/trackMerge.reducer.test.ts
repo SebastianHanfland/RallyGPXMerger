@@ -1,4 +1,4 @@
-import { createStore } from '../store.ts';
+import { createStore } from '../planningStore.ts';
 import {
     DEFAULT_AVERAGE_SPEED_IN_KM_H,
     getArrivalDateTime,

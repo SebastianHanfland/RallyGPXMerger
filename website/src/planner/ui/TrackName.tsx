@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
 import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
 export const TrackName = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();

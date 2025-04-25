@@ -1,5 +1,5 @@
 import { ResolvedPositions } from '../../../store/types.ts';
-import { AppDispatch } from '../../../store/store.ts';
+import { AppDispatch } from '../../../store/planningStore.ts';
 import { geoCodingActions } from '../../../store/geoCoding.reducer.ts';
 import { toKey } from '../helper/pointKeys.ts';
 import { getReadableTracks } from '../../../cache/readableTracks.ts';

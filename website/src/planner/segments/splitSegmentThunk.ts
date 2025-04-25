@@ -4,7 +4,7 @@ import { State } from '../store/types.ts';
 import { getClickOnSegment, getGpxSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { splitGpx } from '../../utils/gpxSplitUtil.ts';
 import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { GpxSegment } from '../../common/types.ts';
 
 export const splitGpxAtPosition = (dispatch: AppDispatch, getState: () => State) => {

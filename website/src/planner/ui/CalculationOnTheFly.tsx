@@ -9,7 +9,7 @@ import { CSSProperties } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { calculateTracks } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
 
 const calculationIsRunningStyle: CSSProperties = {

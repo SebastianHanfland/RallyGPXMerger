@@ -9,7 +9,7 @@ import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { GpxSegment } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
 import { GpxSegmentsUpload } from '../ui/GpxSegmentsUpload.tsx';
 

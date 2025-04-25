@@ -3,7 +3,7 @@ import { getPlanningLabel, trackMergeActions } from '../store/trackMerge.reducer
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
 export function PlanningLabel() {
     const intl = useIntl();

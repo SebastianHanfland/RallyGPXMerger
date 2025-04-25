@@ -11,7 +11,7 @@ import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
 import { getGpxSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import flip from '../../assets/flip.svg';
 import { DraggableIcon } from './DraggableIcon.tsx';

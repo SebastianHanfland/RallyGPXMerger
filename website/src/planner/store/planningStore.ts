@@ -44,7 +44,7 @@ export const createStore = () =>
         reducer: reduceReducer(...[rootReducer, storingReducer, stateSettingReducer]),
     });
 
-export const store = createStore();
+export const planningStore = createStore();
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof planningStore.dispatch;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, State, unknown, Action<string>>;

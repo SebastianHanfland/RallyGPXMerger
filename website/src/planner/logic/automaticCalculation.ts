@@ -1,5 +1,5 @@
 import { calculateMerge } from './merge/MergeCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { calculateTrackStreetInfos } from './resolving/aggregate/calculateTrackStreetInfos.ts';
 import { addPostCodeToStreetInfos } from './resolving/postcode/postCodeResolver.ts';
 import { getIsCalculationOnTheFly, trackMergeActions } from '../store/trackMerge.reducer.ts';

@@ -1,4 +1,4 @@
-import { createStore } from '../store.ts';
+import { createStore } from '../planningStore.ts';
 import { getGpxSegments, gpxSegmentsActions } from '../gpxSegments.reducer.ts';
 
 import { GpxSegment } from '../../../common/types.ts';

@@ -4,7 +4,7 @@ import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatc
 import { getGpxSegments, gpxSegmentsActions } from '../../../store/gpxSegments.reducer.ts';
 import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
-import { AppDispatch } from '../../../store/store.ts';
+import { AppDispatch } from '../../../store/planningStore.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';

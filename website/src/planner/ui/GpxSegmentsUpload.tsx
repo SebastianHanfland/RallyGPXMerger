@@ -6,7 +6,7 @@ import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { optionallyCompress } from '../store/compressHelper.ts';

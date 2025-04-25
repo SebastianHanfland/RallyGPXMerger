@@ -1,4 +1,4 @@
-import { createStore } from '../store.ts';
+import { createStore } from '../planningStore.ts';
 import { calculatedTracksActions, getCalculatedTracks } from '../calculatedTracks.reducer.ts';
 
 describe('Calculated Track reducer test', () => {

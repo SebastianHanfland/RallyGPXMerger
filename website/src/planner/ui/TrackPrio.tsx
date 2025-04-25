@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
 
 export const TrackPrio = ({ track }: { track: TrackComposition }) => {

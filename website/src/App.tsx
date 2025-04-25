@@ -7,7 +7,7 @@ import { RallyDisplayWrapper } from './versions/RallyDisplayWrapper.tsx';
 import { RallyTableWrapper } from './versions/RallyTableWrapper.tsx';
 import { RallyComparison } from './versions/RallyComparison.tsx';
 import { useGetUrlParam } from './utils/linkUtil.ts';
-import { store } from './planner/store/store.ts';
+import { planningStore } from './planner/store/planningStore.ts';
 import { versionsStore } from './versions/store/store.ts';
 
 export function App() {
@@ -24,6 +24,6 @@ export function App() {
     if (hasDisplayUrl) {
         return <ErrorBoundary>{<RallyDisplayWrapper store={versionsStore} />}</ErrorBoundary>;
     } else {
-        return <ErrorBoundary>{<RallyPlannerWrapper store={store} />}</ErrorBoundary>;
+        return <ErrorBoundary>{<RallyPlannerWrapper store={planningStore} />}</ErrorBoundary>;
     }
 }

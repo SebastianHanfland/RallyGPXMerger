@@ -8,7 +8,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
 interface Props {
     waypoint: TrackWayPoint;

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { downloadSinglePdfFiles } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import download from '../../assets/file-down.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getGpxSegments } from '../store/gpxSegments.reducer.ts';

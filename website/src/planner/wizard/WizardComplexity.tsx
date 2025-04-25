@@ -5,7 +5,7 @@ import { WizardHeader } from './WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
 import { simpleRallyThunk } from './simpleRallyThunk.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from '../layout/WizardCard.tsx';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';

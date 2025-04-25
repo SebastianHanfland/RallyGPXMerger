@@ -9,7 +9,7 @@ import { TrackPause } from '../store/types.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
 export const PauseDialog = () => {
     const trackIdForBreak = useSelector(getTrackIdForAddingABreak);

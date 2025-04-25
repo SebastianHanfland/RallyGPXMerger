@@ -8,7 +8,7 @@ import { createTrackStreetPdf } from '../download/pdf/trackStreetsPdf.ts';
 import { getPlanningLabel } from '../store/trackMerge.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { IntlShape, useIntl } from 'react-intl';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';

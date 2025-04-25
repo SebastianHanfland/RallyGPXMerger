@@ -7,7 +7,7 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
 import { toGpxSegment } from './GpxSegments.tsx';
 import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 

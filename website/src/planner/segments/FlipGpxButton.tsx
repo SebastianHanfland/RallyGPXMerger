@@ -4,7 +4,7 @@ import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import flip from '../../assets/flip.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
 interface Props {
     id: string;

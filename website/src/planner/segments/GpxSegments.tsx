@@ -8,7 +8,7 @@ import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
 
 const fileTypes = ['GPX'];

@@ -6,7 +6,7 @@ import { getData } from '../api/api.ts';
 import { backendActions, getPlanningPassword } from './store/backend.reducer.ts';
 import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
 import { calculateTracks } from './logic/automaticCalculation.ts';
-import { AppDispatch } from './store/store.ts';
+import { AppDispatch } from './store/planningStore.ts';
 
 export function useLoadPlanningFromServer() {
     const planningId = useGetUrlParam('planning=');

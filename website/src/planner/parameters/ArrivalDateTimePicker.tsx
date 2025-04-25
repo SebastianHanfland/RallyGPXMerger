@@ -4,7 +4,7 @@ import { getArrivalDateTime, trackMergeActions } from '../store/trackMerge.reduc
 import 'react-datepicker/dist/react-datepicker.css';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
 export function ArrivalDateTimePicker({ noHeader }: { noHeader?: boolean }) {
     const intl = useIntl();

@@ -4,7 +4,7 @@ import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import clear from '../../assets/clear.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { AppDispatch } from '../store/store.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 import { successNotification } from '../store/toast.reducer.ts';
 
 interface Props {

@@ -6,7 +6,7 @@ import { shiftEndDate } from '../../../../utils/dateUtil.ts';
 import { ResolvedCalculatedTrack, ResolvedGpxSegment } from '../../../../common/types.ts';
 import geoDistance from 'geo-distance-helper';
 import { NamedGpx } from './types.ts';
-import { store } from '../../../store/store.ts';
+import { planningStore } from '../../../store/planningStore.ts';
 import { pointsActions } from '../../../store/points.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
@@ -17,12 +17,12 @@ import { Point } from '../../../../utils/gpxTypes.ts';
 function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
     const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
     const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(endOfNextSegment)) as number;
-    const gapToleranceInKm = getGapToleranceInKm(store.getState()) ?? DEFAULT_GAP_TOLERANCE;
+    const gapToleranceInKm = getGapToleranceInKm(planningStore.getState()) ?? DEFAULT_GAP_TOLERANCE;
     if (distanceBetweenSegments > gapToleranceInKm) {
         const message = `Here is something too far away: track ${track.name}, between '${
             gpxOrBreak.name
         }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`;
-        store.dispatch(
+        planningStore.dispatch(
             pointsActions.addGapPoint({
                 id: uuidv4(),
                 type: PointOfInterestType.GAP,
@@ -37,7 +37,7 @@ function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposi
 }
 
 function clearAllGaps() {
-    store.dispatch(pointsActions.removeAllGapPoint());
+    planningStore.dispatch(pointsActions.removeAllGapPoint());
 }
 
 export function assembleTrackFromSegments(
