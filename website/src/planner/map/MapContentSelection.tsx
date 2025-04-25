@@ -32,7 +32,7 @@ export function MapContentSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
     const showPointsOfInterest = useSelector(getShowPointsOfInterest);
     const showConstructions = useSelector(getShowConstructions);
-    const hasConstructions = useSelector(getConstructionSegments)?.length > 0;
+    const hasConstructions = (useSelector(getConstructionSegments) ?? [])?.length > 0;
     const showBlockStreets = useSelector(getShowBlockStreets);
     const showCalculatedTracks = useSelector(getShowCalculatedTracks);
     const showGpxSegments = useSelector(getShowGpxSegments);

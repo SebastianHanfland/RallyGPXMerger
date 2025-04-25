@@ -24,6 +24,11 @@ const ui = {
 
     simpleButton: () => screen.getByRole('button', { name: RegExp(messages['msg.simple']) }),
     complexButton: () => screen.getByRole('button', { name: RegExp(messages['msg.complex']) }),
+
+    segmentHeading: () => screen.getByRole('heading', { name: messages['msg.segments'] }),
+    simpleSegmentTab: () => screen.getByRole('button', { name: messages['msg.simpleTrack'] }),
+    simpleSettingsTab: () =>
+        screen.getByRole('button', { name: `${messages['msg.settings']}/${messages['msg.documents']}` }),
 };
 
 describe('Planner integration test', () => {
@@ -49,10 +54,10 @@ describe('Planner integration test', () => {
         ui.complexButton();
 
         await user.click(ui.simpleButton());
-        screen.getByRole('heading', { name: messages['msg.segments'] });
-        expect(screen.getAllByRole('heading')).toHaveLength(1);
+        ui.segmentHeading();
+        ui.simpleSegmentTab();
+        ui.simpleSettingsTab();
 
-        screen.getByText(/rack/);
         // screen.getByText(/upload/);
     });
 });

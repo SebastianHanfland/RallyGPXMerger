@@ -6,7 +6,7 @@ import { addTracksToLayer } from '../../../common/map/addTrackToMap.ts';
 import { getShowConstructions } from '../../store/map.reducer.ts';
 
 export function constructionsDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
-    const gpxSegments = useSelector(getConstructionSegments);
+    const gpxSegments = useSelector(getConstructionSegments) ?? [];
     const showConstructions = useSelector(getShowConstructions);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -22,7 +22,7 @@ export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
 export function ConstructionSites() {
     const intl = useIntl();
     const dispatch = useDispatch();
-    const constructionSegments = useSelector(getConstructionSegments);
+    const constructionSegments = useSelector(getConstructionSegments) ?? [];
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>

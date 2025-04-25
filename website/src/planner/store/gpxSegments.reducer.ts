@@ -91,7 +91,7 @@ export const getDecompressedGpxSegments = createSelector(
     }
 );
 export const getGpxSegments = getDecompressedGpxSegments;
-export const getConstructionSegments = (state: State) => getBase(state).constructionSegments ?? [];
+export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
