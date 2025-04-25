@@ -1,4 +1,4 @@
-import { createStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore.ts';
 import {
     DEFAULT_AVERAGE_SPEED_IN_KM_H,
     getArrivalDateTime,
@@ -18,7 +18,7 @@ describe('TrackMerge reducer', () => {
     it('should create an empty composition and fill it', () => {
         // given
         const trackName = 'ABC';
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getTrackCompositions(store.getState())).toEqual([]);
 
         // when & then
@@ -45,7 +45,7 @@ describe('TrackMerge reducer', () => {
     it('should initialize full track', () => {
         // given
         const track = { id: '1', name: 'abc', segmentIds: ['2'] };
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getTrackCompositions(store.getState())).toEqual([]);
 
         // when
@@ -58,7 +58,7 @@ describe('TrackMerge reducer', () => {
     it('should set and remove arrival date', () => {
         // given
         const arrivalDate = 'arrivalDate';
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getArrivalDateTime(store.getState())).toEqual(undefined);
 
         // when & then
@@ -72,7 +72,7 @@ describe('TrackMerge reducer', () => {
 
     it('should set and reset participants delay', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getParticipantsDelay(store.getState())).toEqual(DELAY_PER_PERSON_IN_SECONDS);
 
         // when & then
@@ -86,7 +86,7 @@ describe('TrackMerge reducer', () => {
 
     it('should set and reset average speed', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
 
         // when & then

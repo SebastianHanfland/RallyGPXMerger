@@ -1,10 +1,10 @@
-import { createStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore.ts';
 import { getCurrenMapTime, mapActions } from '../map.reducer.ts';
 
 describe('Map reducer test', () => {
     it('should set map time', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getCurrenMapTime(store.getState())).toEqual(0);
 
         // when

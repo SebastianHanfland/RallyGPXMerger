@@ -1,10 +1,10 @@
-import { createStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore.ts';
 import { calculatedTracksActions, getCalculatedTracks } from '../calculatedTracks.reducer.ts';
 
 describe('Calculated Track reducer test', () => {
     it('should set and remove calculated tracks', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getCalculatedTracks(store.getState())).toEqual([]);
         const dummyTrack = { content: 'a trkpt', id: '1', filename: 'b' };
 

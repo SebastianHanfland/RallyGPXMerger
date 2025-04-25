@@ -1,4 +1,4 @@
-import { createStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore.ts';
 import { getGpxSegments, gpxSegmentsActions } from '../gpxSegments.reducer.ts';
 
 import { GpxSegment } from '../../../common/types.ts';
@@ -9,7 +9,7 @@ describe('Gpx segment reducer test', () => {
 
     it('should set and remove gpx segments', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         expect(getGpxSegments(store.getState())).toEqual([]);
 
         // when & then
@@ -27,7 +27,7 @@ describe('Gpx segment reducer test', () => {
 
     it('should change file content', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         store.dispatch(gpxSegmentsActions.addGpxSegments([dummyGpxSegment1, dummyGpxSegment2]));
 
         // when

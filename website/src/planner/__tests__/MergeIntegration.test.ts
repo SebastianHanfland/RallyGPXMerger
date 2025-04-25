@@ -1,4 +1,4 @@
-import { createStore } from '../store/planningStore.ts';
+import { createPlanningStore } from '../store/planningStore.ts';
 import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { gpxA1Content, gpxABContent, gpxB1Content } from './gpxContents.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
@@ -18,7 +18,7 @@ function assertAdjustedTime(startPointA: Point, startPointA1: Point, time: strin
 describe('test merging of gpx file', () => {
     it('Should make a simple merge without people', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         store.dispatch(
             gpxSegmentsActions.addGpxSegments([
                 { id: '1', content: gpxA1Content, filename: 'A1' },
@@ -51,7 +51,7 @@ describe('test merging of gpx file', () => {
 
     it('Should make a simple merge with people', () => {
         // given
-        const store = createStore();
+        const store = createPlanningStore();
         store.dispatch(
             gpxSegmentsActions.addGpxSegments([
                 { id: '1', content: gpxA1Content, filename: 'A1' },

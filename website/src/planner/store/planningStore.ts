@@ -39,12 +39,12 @@ const stateSettingReducer: Reducer = (state: State, action: AnyAction) => {
     return state;
 };
 
-export const createStore = () =>
+export const createPlanningStore = () =>
     configureStore({
         reducer: reduceReducer(...[rootReducer, storingReducer, stateSettingReducer]),
     });
 
-export const planningStore = createStore();
+export const planningStore = createPlanningStore();
 
 export type AppDispatch = typeof planningStore.dispatch;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, State, unknown, Action<string>>;

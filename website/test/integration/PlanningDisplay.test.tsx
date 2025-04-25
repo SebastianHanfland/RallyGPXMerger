@@ -1,10 +1,11 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
+import { createPlanningStore } from '../../src/planner/store/planningStore';
 
 const messages = getMessages('en');
 
@@ -32,9 +33,8 @@ describe('Planner integration test', () => {
         // const state = JSON.parse(buffer) as State;
 
         (getLanguage as Mock).mockImplementation(() => 'en');
-        // (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
-        // (getData as Mock).mockResolvedValue({ data: state });
-        render(<RallyPlannerWrapper />, { wrapper: BrowserRouter });
+        const store = createPlanningStore();
+        render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
 
         const user = userEvent.setup();
 
