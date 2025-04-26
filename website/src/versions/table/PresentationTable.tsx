@@ -1,17 +1,18 @@
 import { useSelector } from 'react-redux';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
+import {
+    getDisplayPlanningLabel,
+    getDisplayTracks,
+    getDisplayTrackStreetInfos,
+} from '../store/displayTracksReducer.ts';
 import { DisplayTrack } from '../../common/types.ts';
-import { storedState } from '../data/loadJsonFile.ts';
-import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { useIntl } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 import { Button, Table } from 'react-bootstrap';
-import { downloadSinglePdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
-import { State } from '../../planner/store/types.ts';
 import download from '../../assets/file-down.svg';
 import { getLink } from '../../utils/linkUtil.ts';
+import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
 
 export const isInIframe = window.location.search.includes('&iframe');
 
@@ -45,10 +46,11 @@ export const PresentationTable = () => {
 };
 
 function TrackInfoRow({ track }: { track: DisplayTrack }) {
-    if (!storedState) {
+    const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
+    const planningLabel = useSelector(getDisplayPlanningLabel);
+    if (!trackStreetInfos) {
         return null;
     }
-    const trackStreetInfos = getEnrichedTrackStreetInfos(storedState);
     const foundInfo = trackStreetInfos.find((info) => track.id.includes(info.id));
     if (!foundInfo) {
         return <div>Info not found</div>;
@@ -89,12 +91,12 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                     onlyIcon={true}
                     size={'sm'}
                 />
-                {storedState && (
+                {foundInfo && (
                     <Button
                         size={'sm'}
                         className={'m-1'}
                         onClick={() =>
-                            downloadSinglePdfFiles(intl, track.id)(undefined as any, () => storedState as State)
+                            createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
                         }
                     >
                         <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
