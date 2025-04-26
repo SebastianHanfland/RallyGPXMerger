@@ -3,11 +3,13 @@ import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
-import { getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
+import { getPlanningLabel, getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 import { getData } from '../../api/api.ts';
 import { setStoredState } from './loadJsonFile.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
+import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
+import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
@@ -19,6 +21,9 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                 document.title = planningTitle;
             }
             dispatch(displayTracksActions.setTitle(planningTitle));
+            dispatch(displayTracksActions.setEnrichedTrackStreetInfos(getEnrichedTrackStreetInfos(planning)));
+            dispatch(displayTracksActions.setBlockStreetInfos(getBlockedStreetInfo(planning)));
+            dispatch(displayTracksActions.setPlanningLabel(getPlanningLabel(planning)));
 
             const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,

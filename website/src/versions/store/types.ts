@@ -1,8 +1,12 @@
 import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
+import { BlockedStreetInfo, TrackStreetInfo } from '../../planner/logic/resolving/types.ts';
 
 export interface DisplayTracksState {
     tracks: DisplayTrack[];
     parsedTracks: ParsedTrack[];
+    blockedStreetInfos?: BlockedStreetInfo[];
+    trackInfos?: TrackStreetInfo[];
+    planningLabel?: string;
     title?: string;
     isLoading: boolean;
 }

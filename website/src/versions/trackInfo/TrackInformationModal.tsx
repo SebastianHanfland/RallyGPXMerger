@@ -5,17 +5,22 @@ import { batch, useDispatch, useSelector } from 'react-redux';
 import { getShowSingleTrackInfo, getShowTrackInfo, mapActions } from '../store/map.reducer.ts';
 import { TrackInformationModalBody } from './TrackInformationModalBody.tsx';
 import { ZipFilesDownloader } from './TracksDownload.tsx';
-import { downloadPdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
-import { storedState } from '../data/loadJsonFile.ts';
-import { State } from '../../planner/store/types.ts';
-import { showTimes } from '../store/LoadStateButton.tsx';
+import { downloadPdfFilesPure } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
 import L from 'leaflet';
+import {
+    getDisplayBlockedStreets,
+    getDisplayPlanningLabel,
+    getDisplayTrackStreetInfos,
+} from '../store/displayTracksReducer.ts';
 
 export function TrackInformationModal() {
     const intl = useIntl();
     const dispatch = useDispatch();
     const showModal = useSelector(getShowTrackInfo);
     const singleTrackId = useSelector(getShowSingleTrackInfo);
+    const planningLabel = useSelector(getDisplayPlanningLabel) ?? '';
+    const blockedStreetInfos = useSelector(getDisplayBlockedStreets);
+    const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
 
     const setShowModal = (value: boolean) => dispatch(mapActions.setShowTrackInfo(value));
 
@@ -46,10 +51,12 @@ export function TrackInformationModal() {
             {!singleTrackId && (
                 <Modal.Footer>
                     <ZipFilesDownloader />
-                    {storedState && showTimes && (
+                    {blockedStreetInfos && trackStreetInfos && (
                         <Button
                             variant="success"
-                            onClick={() => downloadPdfFiles(intl)(undefined as any, () => storedState as State)}
+                            onClick={() =>
+                                downloadPdfFilesPure(intl, planningLabel, trackStreetInfos, blockedStreetInfos)
+                            }
                         >
                             Alle PDF herunterladen
                         </Button>

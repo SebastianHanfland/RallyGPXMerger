@@ -12,6 +12,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { IntlShape, useIntl } from 'react-intl';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
@@ -21,11 +22,12 @@ export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispa
         .forEach((track) => createTrackStreetPdf(intl, planningLabel)(track).download(`${track.name}.pdf`));
 };
 
-export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
-    const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
-    const blockedStreetInfos = getBlockedStreetInfo(getState());
-    const planningLabel = getPlanningLabel(getState());
-
+export function downloadPdfFilesPure(
+    intl: IntlShape,
+    planningLabel: string,
+    trackStreetInfos: TrackStreetInfo[],
+    blockedStreetInfos: BlockedStreetInfo[]
+) {
     const zip = new JSZip();
     trackStreetInfos.forEach((track) => {
         createTrackStreetPdf(
@@ -44,6 +46,13 @@ export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () 
             );
         });
     }, 500);
+}
+
+export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
+    const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
+    const blockedStreetInfos = getBlockedStreetInfo(getState());
+    const planningLabel = getPlanningLabel(getState()) ?? '';
+    downloadPdfFilesPure(intl, planningLabel, trackStreetInfos, blockedStreetInfos);
 };
 
 export const StreetFilesPdfMakeDownloader = () => {
