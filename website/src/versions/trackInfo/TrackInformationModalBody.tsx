@@ -1,31 +1,33 @@
 import { useSelector } from 'react-redux';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
+import {
+    getDisplayPlanningLabel,
+    getDisplayTracks,
+    getDisplayTrackStreetInfos,
+} from '../store/displayTracksReducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
 import { DisplayTrack } from '../../common/types.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
-import { downloadSinglePdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
-import { storedState } from '../data/loadJsonFile.ts';
-import { State } from '../../planner/store/types.ts';
 import { useIntl } from 'react-intl';
-import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
-import { showTimes } from '../store/LoadStateButton.tsx';
 import L from 'leaflet';
+import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
 
 const cardStyle = {
-    style: { width: '170px', height: showTimes ? '145px' : '120px', cursor: 'default' },
+    style: { width: '170px', height: '145px', cursor: 'default' },
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
 function TrackInfo({ track }: { track: DisplayTrack }) {
-    if (!storedState) {
+    const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
+    const planningLabel = useSelector(getDisplayPlanningLabel);
+    if (!trackStreetInfos) {
         return null;
     }
-    const trackStreetInfos = getEnrichedTrackStreetInfos(storedState);
-    const foundInfo = trackStreetInfos.find((info) => track.id.includes(info.id));
+
+    const foundInfo = trackStreetInfos?.find((info) => track.id.includes(info.id));
     if (!foundInfo) {
         return <div>Info not found</div>;
     }
@@ -33,10 +35,8 @@ function TrackInfo({ track }: { track: DisplayTrack }) {
     return (
         <>
             <h6>{track.filename}</h6>
-            {showTimes && (
-                <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront)}`}</p>
-            )}
-            {showTimes && <p className={'p-0 m-0'}>{`Ziel: ${formatTimeOnly(foundInfo.arrivalFront)}`}</p>}
+            <p className={'p-0 m-0'}>{`Start: ${formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront)}`}</p>
+            {<p className={'p-0 m-0'}>{`Ziel: ${formatTimeOnly(foundInfo.arrivalFront)}`}</p>}
             <p className={'p-0 m-0'}>{`Länge: ${formatNumber(foundInfo.distanceInKm)} km`}</p>
             <div>
                 <div>
@@ -48,12 +48,12 @@ function TrackInfo({ track }: { track: DisplayTrack }) {
                         onlyIcon={true}
                         size={'sm'}
                     />
-                    {storedState && showTimes && (
+                    {foundInfo && (
                         <Button
                             size={'sm'}
                             className={'m-1'}
                             onClick={() =>
-                                downloadSinglePdfFiles(intl, track.id)(undefined as any, () => storedState as State)
+                                createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
                             }
                         >
                             <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
