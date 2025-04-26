@@ -19,8 +19,8 @@ const ui = {
     isLoading: () => screen.getByText('Loading'),
 };
 
-describe('Table integration test', () => {
-    it('Render a table and ensure the presence of fields', async () => {
+describe('Map Display integration test', () => {
+    it('Render the map display and have different snakes at different times', async () => {
         // given
         const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as State;
