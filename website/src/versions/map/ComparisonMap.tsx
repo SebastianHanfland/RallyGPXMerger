@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
 import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
-import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
+import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
 
@@ -20,18 +20,18 @@ export const ComparisonMap = () => {
         }
     }, []);
 
-    const zipTracksLayer = useRef<LayerGroup>(null);
-    const tracksLayer = useRef<LayerGroup>(null);
+    const trackLayer = useRef<LayerGroup>(null);
+    const snakeLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         // @ts-ignore
-        zipTracksLayer.current = L.layerGroup().addTo(myMap);
+        trackLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
-        tracksLayer.current = L.layerGroup().addTo(myMap);
+        snakeLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    zipTracksDisplayHook(zipTracksLayer);
-    zipTrackMarkerDisplayHook(tracksLayer);
+    zipTracksDisplayHook(trackLayer);
+    snakeForDisplayMapHook(snakeLayer);
 
     return (
         <div>

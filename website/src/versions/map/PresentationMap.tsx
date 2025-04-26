@@ -6,7 +6,7 @@ import 'leaflet.locatecontrol'; // Import plugin
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
 import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
-import { zipTrackMarkerDisplayHook } from './zipTrackMarkerDisplayHook.ts';
+import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLive, mapActions } from '../store/map.reducer.ts';
@@ -66,7 +66,7 @@ export const PresentationMap = () => {
     }, []);
 
     zipTracksDisplayHook(zipTracksLayer, true);
-    zipTrackMarkerDisplayHook(tracksLayer);
+    snakeForDisplayMapHook(tracksLayer);
     criticalMapsHook(criticalMapsLayer);
 
     return (

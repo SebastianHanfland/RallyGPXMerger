@@ -15,16 +15,11 @@ import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { getReadableTracks } from '../cache/readableTracks.ts';
+import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationZip =
     (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>
-    (
-        readableTrack: ReadableTrack
-    ): {
-        trackPositions: { lat: number; lng: number }[];
-        name: string;
-        color: string;
-    } => {
+    (readableTrack: ReadableTrack): BikeSnake => {
         let foundZipTrack: ZipTrack | undefined;
         Object.values(zipTracks).forEach((tracks) => {
             const find = tracks?.find((track) => readableTrack.id.includes(track.id));
@@ -35,9 +30,10 @@ const extractLocationZip =
         const participants = foundZipTrack?.peopleCount ?? 0;
 
         return {
-            trackPositions: extractSnakeTrack(timeStampFront, participants, readableTrack),
-            name: foundZipTrack?.filename ?? 'N/A',
+            points: extractSnakeTrack(timeStampFront, participants, readableTrack),
+            title: foundZipTrack?.filename ?? 'N/A',
             color: foundZipTrack?.color ?? 'white',
+            id: foundZipTrack?.id ?? 'id-not-found',
         };
     };
 export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined => {
@@ -70,13 +66,13 @@ function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, se
     });
 }
 
-export const getZipCurrentMarkerPositionsForTracks = createSelector(
+export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
     getZipTracks,
     getReadableTracks,
     getSelectedTracks,
     getSelectedVersions,
-    (timeStamp, zipTracks, readableTracks, selectedTracks, selectedVersions) => {
+    (timeStamp, zipTracks, readableTracks, selectedTracks, selectedVersions): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
