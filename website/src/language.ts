@@ -1,7 +1,6 @@
 export type SupportedLanguages = 'de' | 'en';
 
 export const getInitialLanguage = (): SupportedLanguages => {
-    console.log('Evaluating language', window.navigator.language);
     return window.navigator.language.includes('de') ? 'de' : 'en';
 };
 

@@ -40,14 +40,14 @@ describe('Table integration test', () => {
         await loadingPage;
 
         screen.getAllByRole('button');
-        const displayedTracks = getBikeSnakesForDisplayMap(store.getState());
-        expect(displayedTracks).toHaveLength(1);
-        expect(displayedTracks[0].trackPositions).toHaveLength(1);
-        expect(displayedTracks[0].trackPositions[0]).toEqual({ lat: 48.141161, lng: 11.597148 });
+        const snakes = getBikeSnakesForDisplayMap(store.getState());
+        expect(snakes).toHaveLength(1);
+        expect(snakes[0].points).toHaveLength(1);
+        expect(snakes[0].points[0]).toEqual({ lat: 48.141161, lng: 11.597148 });
 
-        store.dispatch(mapActions.setCurrentTime(10000));
-        const displayedTracks2 = getBikeSnakesForDisplayMap(store.getState());
-        expect(displayedTracks2[0].trackPositions).toHaveLength(3);
-        expect(displayedTracks2[0].trackPositions[0]).not.toEqual({ lat: 48.141161, lng: 11.597148 });
+        act(() => store.dispatch(mapActions.setCurrentTime(10000)));
+        const snakes2 = getBikeSnakesForDisplayMap(store.getState());
+        expect(snakes2[0].points).toHaveLength(3);
+        expect(snakes2[0].points[0]).not.toEqual({ lat: 48.141161, lng: 11.597148 });
     });
 });
