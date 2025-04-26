@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { zipTracksActions } from '../../versions/store/zipTracks.reducer.ts';
+import { zipTracksActions } from '../store/tracks.reducer.ts';
 import { loadServerFile } from './loadServerFile.ts';
 import { setStartAndEndTime } from './loadFilesHook.ts';
 

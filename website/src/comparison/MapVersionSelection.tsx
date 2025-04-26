@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowMapMarker, mapActions } from '../versions/store/map.reducer.ts';
+import { getShowMapMarker, mapActions } from './store/map.reducer.ts';
 import {
     getSelectedTracks,
     getSelectedVersions,

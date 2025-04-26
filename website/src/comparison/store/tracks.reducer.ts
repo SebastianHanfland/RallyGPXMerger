@@ -10,7 +10,7 @@ const initialState: ZipTracksState = {
     isLoading: true,
 };
 
-const zipTracksSlice = createSlice({
+const comparisonTracksSlice = createSlice({
     name: 'zipTracks',
     initialState: initialState,
     reducers: {
@@ -55,10 +55,11 @@ const zipTracksSlice = createSlice({
     },
 });
 
-export const zipTracksActions = zipTracksSlice.actions;
-export const zipTracksReducer: Reducer<ZipTracksState> = zipTracksSlice.reducer;
+export const zipTracksActions = comparisonTracksSlice.actions;
+export const zipTracksReducer: Reducer<ZipTracksState> = comparisonTracksSlice.reducer;
 const getBase = (state: ComparisonState) => state.zipTracks;
 export const getZipTracks = (state: ComparisonState) => getBase(state).tracks;
+export const getIsZipLoading = (state: ComparisonState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: ComparisonState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: ComparisonState) => getBase(state).selectedTracks;
 export const getTrackInfo = (state: ComparisonState) => getBase(state).trackInfo;

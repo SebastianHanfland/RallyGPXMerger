@@ -2,7 +2,7 @@ import { Provider, useSelector } from 'react-redux';
 import { ComparisonMap } from './map/ComparisonMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
-import { getIsZipLoading } from '../versions/store/zipTracks.reducer.ts';
+import { getIsZipLoading } from './store/tracks.reducer.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
