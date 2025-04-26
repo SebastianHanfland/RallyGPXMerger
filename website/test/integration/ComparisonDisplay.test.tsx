@@ -44,8 +44,6 @@ describe('Comparison Display integration test', () => {
 
         expect(getData).toHaveBeenCalledTimes(2);
 
-        screen.getAllByRole('button');
-
         console.log({ state: store.getState() });
     });
 });
