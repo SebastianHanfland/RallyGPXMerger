@@ -17,7 +17,11 @@ function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
     return { lat: interpolatedLat, lng: interpolatedLng };
 }
 
-export function extractSnakeTrack(timeStampFront: string, participants: number, readableTrack: ReadableTrack) {
+export function extractSnakeTrack(
+    timeStampFront: string,
+    participants: number,
+    readableTrack: ReadableTrack
+): { lat: number; lng: number }[] {
     const timeStampEnd = date
         .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
         .toISOString();

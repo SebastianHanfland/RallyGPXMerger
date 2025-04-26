@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
 import { gpxSegmentDisplayHook } from './hooks/gpxSegmentsDisplayHook.ts';
 import { calculatedTracksDisplayHook } from './hooks/calculatedTracksDisplayHook.ts';
-import { trackMarkerDisplayHook } from './hooks/trackMarkerDisplayHook.ts';
+import { snakeForPlanningMapHook } from './hooks/snakeForPlanningMapHook.ts';
 import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
 import { centerPointHook } from './hooks/centerPointHook.tsx';
 import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
@@ -73,7 +73,7 @@ export const InteractionMap = () => {
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
     const blockedStreetLayer = useRef<LayerGroup>(null);
     const calculatedTracksLayer = useRef<LayerGroup>(null);
-    const trackMarkerLayer = useRef<LayerGroup>(null);
+    const snakeLayer = useRef<LayerGroup>(null);
     const constructionsLayer = useRef<LayerGroup>(null);
     const pointsOfInterestLayer = useRef<LayerGroup>(null);
     const nodePointsLayer = useRef<LayerGroup>(null);
@@ -89,7 +89,7 @@ export const InteractionMap = () => {
         // @ts-ignore
         calculatedTracksLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
-        trackMarkerLayer.current = L.layerGroup().addTo(myMap);
+        snakeLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         constructionsLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
@@ -100,7 +100,7 @@ export const InteractionMap = () => {
 
     blockedStreetsDisplayHook(blockedStreetLayer);
     calculatedTracksDisplayHook(calculatedTracksLayer);
-    trackMarkerDisplayHook(trackMarkerLayer);
+    snakeForPlanningMapHook(snakeLayer);
     constructionsDisplayHook(constructionsLayer);
     pointsOfInterestDisplayHook(pointsOfInterestLayer);
     nodePointsDisplayHook(nodePointsLayer);
