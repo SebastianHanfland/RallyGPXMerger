@@ -5,17 +5,17 @@ import {
     getSelectedTracks,
     getSelectedVersions,
     getTrackInfo,
-    getZipTracks,
-    zipTracksActions,
+    getComparisonTracks,
+    comparisonActions,
 } from './store/tracks.reducer.ts';
 import Select from 'react-select';
-import { ZipTimeSlider } from './ZipTimeSlider.tsx';
+import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getBaseUrl } from '../utils/linkUtil.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
-    const zipTracks = useSelector(getZipTracks);
+    const comparisonTracks = useSelector(getComparisonTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const trackInfo = useSelector(getTrackInfo);
@@ -23,7 +23,7 @@ export function MapVersionSelection() {
     const intl = useIntl();
 
     const optionsMap: Record<string, { value: string; label: string }[] | undefined> = {};
-    Object.entries(zipTracks).forEach(([version, tracks]) => {
+    Object.entries(comparisonTracks).forEach(([version, tracks]) => {
         if (!tracks) {
             return;
         }
@@ -39,7 +39,7 @@ export function MapVersionSelection() {
     return (
         <Form.Group>
             <Form className={'d-flex'}>
-                {Object.keys(zipTracks)
+                {Object.keys(comparisonTracks)
                     .sort()
                     .map((versionId) => {
                         const versionName = trackInfo[versionId] ?? versionId;
@@ -47,7 +47,7 @@ export function MapVersionSelection() {
                             <div
                                 key={versionId}
                                 className={'mx-3'}
-                                style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}
+                                style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}
                             >
                                 <Form.Check
                                     type={'checkbox'}
@@ -57,7 +57,7 @@ export function MapVersionSelection() {
                                     title={versionName}
                                     checked={selectedVersions.includes(versionId)}
                                     readOnly
-                                    onClick={() => dispatch(zipTracksActions.selectVersion(versionId))}
+                                    onClick={() => dispatch(comparisonActions.selectVersion(versionId))}
                                 ></Form.Check>
                                 <Select
                                     name="version"
@@ -76,7 +76,7 @@ export function MapVersionSelection() {
                                     // @ts-ignore
                                     onChange={(newValue: { value: string }) => {
                                         dispatch(
-                                            zipTracksActions.setDisplayTracks({
+                                            comparisonActions.setDisplayTracks({
                                                 version: versionId,
                                                 selectedTracks: newValue ? [newValue.value] : [],
                                             })
@@ -96,7 +96,7 @@ export function MapVersionSelection() {
                             </div>
                         );
                     })}
-                <div className={'mx-3'} style={{ width: `${100 / (Object.keys(zipTracks).length + 2)}vw` }}>
+                <div className={'mx-3'} style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}>
                     <Form.Check
                         type={'checkbox'}
                         id={'marker'}
@@ -107,7 +107,7 @@ export function MapVersionSelection() {
                         readOnly
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                     ></Form.Check>
-                    <ZipTimeSlider showTimes={true} />
+                    <ComparisonTimeSlider showTimes={true} />
                 </div>
             </Form>
         </Form.Group>

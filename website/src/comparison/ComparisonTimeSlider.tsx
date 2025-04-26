@@ -13,7 +13,7 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-export function ZipTimeSlider({
+export function ComparisonTimeSlider({
     bigThumb,
     showPlayButton,
     showTimes,

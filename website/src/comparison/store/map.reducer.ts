@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { ComparisonState, MapState } from './types';
+import { ComparisonTrackState, MapState } from './types';
 
 const initialState: MapState = {
     currentTime: 0,
@@ -40,11 +40,11 @@ const mapSlice = createSlice({
 
 export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
-const getBase = (state: ComparisonState) => state.map;
-export const getCurrenMapTime = (state: ComparisonState) => getBase(state).currentTime;
-export const getCurrentRealTime = (state: ComparisonState) => getBase(state).currentRealTime;
-export const getStartMapTime = (state: ComparisonState) => getBase(state).start;
-export const getEndMapTime = (state: ComparisonState) => getBase(state).end;
-export const getShowMapMarker = (state: ComparisonState) => getBase(state).showMapMarker ?? false;
-export const getHighlightedTrack = (state: ComparisonState) => getBase(state).highlightedTrack;
-export const getIsLive = (state: ComparisonState) => getBase(state).isLive;
+const getBase = (state: ComparisonTrackState) => state.map;
+export const getCurrenMapTime = (state: ComparisonTrackState) => getBase(state).currentTime;
+export const getCurrentRealTime = (state: ComparisonTrackState) => getBase(state).currentRealTime;
+export const getStartComparisonMapTime = (state: ComparisonTrackState) => getBase(state).start;
+export const getEndComparisonMapTime = (state: ComparisonTrackState) => getBase(state).end;
+export const getShowMapMarker = (state: ComparisonTrackState) => getBase(state).showMapMarker ?? false;
+export const getHighlightedTrack = (state: ComparisonTrackState) => getBase(state).highlightedTrack;
+export const getIsLive = (state: ComparisonTrackState) => getBase(state).isLive;

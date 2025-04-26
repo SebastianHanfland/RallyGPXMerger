@@ -3,13 +3,13 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/tracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getComparisonTracks } from '../store/tracks.reducer.ts';
 
-export function zipTracksDisplayHook(
+export function comparisonTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
     showMarkerOverwrite?: boolean
 ) {
-    const zipTracks = useSelector(getZipTracks);
+    const comparisonTracks = useSelector(getComparisonTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
@@ -19,16 +19,16 @@ export function zipTracksDisplayHook(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const tracks = selectedVersions.flatMap((version) => {
-            const tracksOfVersion = zipTracks[version] ?? [];
+            const tracksOfVersion = comparisonTracks[version] ?? [];
             if ((selectedTracks[version]?.length ?? 0) === 0) {
                 return tracksOfVersion;
             }
-            const zipTracks1 = tracksOfVersion
+            const selecteTracksOfVersion = tracksOfVersion
                 .filter((track) => selectedTracks[version]?.includes(track.id))
                 .sort((a, b) => b.filename.localeCompare(a.filename, undefined, { numeric: true }));
 
-            console.log(zipTracks1.map((track) => track.filename));
-            return zipTracks1;
+            console.log(selecteTracksOfVersion.map((track) => track.filename));
+            return selecteTracksOfVersion;
         });
 
         const sortedTracks = tracks.sort((a, b) => -b.filename.localeCompare(a.filename, undefined, { numeric: true }));
@@ -49,5 +49,5 @@ export function zipTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-    }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
+    }, [comparisonTracks, comparisonTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
 }

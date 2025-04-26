@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
-import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
+import { comparisonTracksDisplayHook } from './comparisonTracksDisplayHook.ts';
 import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { Munich } from '../../common/locations.ts';
@@ -30,7 +30,7 @@ export const ComparisonMap = () => {
         snakeLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    zipTracksDisplayHook(trackLayer);
+    comparisonTracksDisplayHook(trackLayer);
     snakeForDisplayMapHook(snakeLayer);
 
     return (

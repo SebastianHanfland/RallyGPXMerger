@@ -1,13 +1,13 @@
 import { ReadableTrack, DisplayTrack } from '../../common/types.ts';
-import { ComparisonState } from '../store/types.ts';
+import { ComparisonTrackState } from '../store/types.ts';
 import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/tracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getComparisonTracks } from '../store/tracks.reducer.ts';
 import {
-    getCurrenMapTime as zipGetCurrenMapTime,
+    getCurrenMapTime as getCurrenComparisonMapTime,
     getCurrentRealTime,
-    getEndMapTime as zipGetEndMapTime,
+    getEndComparisonMapTime,
     getIsLive,
-    getStartMapTime as zipGetStartMapTime,
+    getStartComparisonMapTime,
 } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
@@ -17,33 +17,33 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getReadableTracks } from '../cache/readableTracks.ts';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
-const extractLocationZip =
-    (timeStampFront: string, zipTracks: Record<string, DisplayTrack[] | undefined>) =>
+const extractLocationComparison =
+    (timeStampFront: string, comparisonTracks: Record<string, DisplayTrack[] | undefined>) =>
     (readableTrack: ReadableTrack): BikeSnake => {
-        let foundZipTrack: DisplayTrack | undefined;
-        Object.values(zipTracks).forEach((tracks) => {
+        let foundTrack: DisplayTrack | undefined;
+        Object.values(comparisonTracks).forEach((tracks) => {
             const find = tracks?.find((track) => readableTrack.id.includes(track.id));
             if (find) {
-                foundZipTrack = find;
+                foundTrack = find;
             }
         });
-        const participants = foundZipTrack?.peopleCount ?? 0;
+        const participants = foundTrack?.peopleCount ?? 0;
 
         return {
             points: extractSnakeTrack(timeStampFront, participants, readableTrack),
-            title: foundZipTrack?.filename ?? 'N/A',
-            color: foundZipTrack?.color ?? 'white',
-            id: foundZipTrack?.id ?? 'id-not-found',
+            title: foundTrack?.filename ?? 'N/A',
+            color: foundTrack?.color ?? 'white',
+            id: foundTrack?.id ?? 'id-not-found',
         };
     };
-export const getZipCurrentTimeStamp = (state: ComparisonState): string | undefined => {
-    const calculatedTracks = getZipTracks(state);
+export const getCurrentComparisonTimeStamp = (state: ComparisonTrackState): string | undefined => {
+    const calculatedTracks = getComparisonTracks(state);
     if (Object.keys(calculatedTracks).length === 0) {
         return;
     }
-    const mapTime = zipGetCurrenMapTime(state) ?? 0;
-    const start = zipGetStartMapTime(state);
-    const end = zipGetEndMapTime(state);
+    const mapTime = getCurrenComparisonMapTime(state) ?? 0;
+    const start = getStartComparisonMapTime(state);
+    const end = getEndComparisonMapTime(state);
     if (!start || !end) {
         return undefined;
     }
@@ -53,8 +53,8 @@ export const getZipCurrentTimeStamp = (state: ComparisonState): string | undefin
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
-export const getDisplayTimeStamp = (state: ComparisonState): string | undefined => {
-    const sliderTimeStamp = getZipCurrentTimeStamp(state);
+export const getDisplayTimeStamp = (state: ComparisonTrackState): string | undefined => {
+    const sliderTimeStamp = getCurrentComparisonTimeStamp(state);
     const currentRealTime = getCurrentRealTime(state);
     const isLive = getIsLive(state);
     return isLive ? currentRealTime : sliderTimeStamp;
@@ -68,16 +68,16 @@ function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, se
 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
-    getZipTracks,
+    getComparisonTracks,
     getReadableTracks,
     getSelectedTracks,
     getSelectedVersions,
-    (timeStamp, zipTracks, readableTracks, selectedTracks, selectedVersions): BikeSnake[] => {
+    (timeStamp, comparisonTracks, readableTracks, selectedTracks, selectedVersions): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
         const selectedTrackIds = selectedVersions.flatMap((version) => {
-            const trackIdsOfVersion = zipTracks[version]?.map((track) => track.id) ?? [];
+            const trackIdsOfVersion = comparisonTracks[version]?.map((track) => track.id) ?? [];
             if ((selectedTracks[version]?.length ?? 0) === 0) {
                 return trackIdsOfVersion;
             }
@@ -85,8 +85,9 @@ export const getBikeSnakesForDisplayMap = createSelector(
         });
 
         return (
-            filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(extractLocationZip(timeStamp, zipTracks)) ??
-            []
+            filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(
+                extractLocationComparison(timeStamp, comparisonTracks)
+            ) ?? []
         );
     }
 );

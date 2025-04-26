@@ -1,6 +1,6 @@
 import { DisplayTrack } from '../../common/types.ts';
 
-export interface ZipTracksState {
+export interface ComparisonState {
     tracks: Record<string, DisplayTrack[] | undefined>;
     trackInfo: Record<string, string | undefined>;
     selectedTracks: Record<string, string[] | undefined>;
@@ -20,7 +20,7 @@ export interface MapState {
     isLive: boolean;
 }
 
-export interface ComparisonState {
-    zipTracks: ZipTracksState;
+export interface ComparisonTrackState {
+    tracks: ComparisonState;
     map: MapState;
 }

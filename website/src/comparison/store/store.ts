@@ -1,9 +1,9 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
-import { zipTracksReducer } from './tracks.reducer';
+import { comparisonTracksReducer } from './tracks.reducer';
 import { mapReducer } from './map.reducer';
 
 const versionsReducer: Reducer = combineReducers({
-    zipTracks: zipTracksReducer,
+    tracks: comparisonTracksReducer,
     map: mapReducer,
 });
 

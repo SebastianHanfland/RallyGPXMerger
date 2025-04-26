@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { DisplayTrack } from '../../common/types.ts';
-import { zipTracksActions } from '../store/tracks.reducer.ts';
+import { comparisonActions } from '../store/tracks.reducer.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
@@ -35,9 +35,9 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                 })
             );
             setParticipantsDelay(planning.trackMerge.participantDelay);
-            dispatch(zipTracksActions.setZipTracks({ version: id, tracks: calculatedTracks }));
-            dispatch(zipTracksActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
-            dispatch(zipTracksActions.setSelectVersions([id]));
+            dispatch(comparisonActions.setComparisonTracks({ version: id, tracks: calculatedTracks }));
+            dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
+            dispatch(comparisonActions.setSelectVersions([id]));
         })
         .catch(console.error)
         .finally();

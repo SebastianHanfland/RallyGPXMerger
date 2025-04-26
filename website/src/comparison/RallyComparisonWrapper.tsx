@@ -2,7 +2,7 @@ import { Provider, useSelector } from 'react-redux';
 import { ComparisonMap } from './map/ComparisonMap.tsx';
 import { Container } from 'react-bootstrap';
 import { NavigationBar } from './NavigationBar.tsx';
-import { getIsZipLoading } from './store/tracks.reducer.ts';
+import { getIsComparisonLoading } from './store/tracks.reducer.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
@@ -13,7 +13,7 @@ import { useLoadPlanningsHook } from './data/useLoadPlanningsHook.ts';
 function RallyComparison() {
     const planningIds = useGetUrlParam('comparison=')?.split(',') ?? [];
     useLoadPlanningsHook(planningIds);
-    const isLoading = useSelector(getIsZipLoading);
+    const isLoading = useSelector(getIsComparisonLoading);
 
     if (isLoading) {
         return (

@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/tracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getComparisonTracks } from '../store/tracks.reducer.ts';
 import { getBikeSnakesForDisplayMap, getDisplayTimeStamp } from './dataReading.ts';
 import { addBikeSnakesToLayer } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 export function snakeForDisplayMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
-    const zipTracks = useSelector(getZipTracks);
+    const comparisonTracks = useSelector(getComparisonTracks);
     const currentMapTime = useSelector(getDisplayTimeStamp);
     const selectedTracks = useSelector(getSelectedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
@@ -15,5 +15,5 @@ export function snakeForDisplayMapHook(snakeLayer: MutableRefObject<LayerGroup |
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         addBikeSnakesToLayer(snakeLayer, pointsToDisplay, true);
-    }, [zipTracks, currentMapTime, selectedTracks, selectedVersions]);
+    }, [comparisonTracks, currentMapTime, selectedTracks, selectedVersions]);
 }
