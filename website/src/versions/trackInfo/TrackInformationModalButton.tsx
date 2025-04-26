@@ -3,9 +3,10 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEndDisplayMapTime, getIsLive, getStartDisplayMapTime, mapActions } from '../store/map.reducer.ts';
 import { setStartAndEndTime } from '../data/loadFilesHook.ts';
+import { DisplayDispatch } from '../store/store.ts';
 
 export function TrackInformationModalButton() {
-    const dispatch = useDispatch();
+    const dispatch: DisplayDispatch = useDispatch();
     const isLive = useSelector(getIsLive);
     const startTime = useSelector(getStartDisplayMapTime);
     const endTime = useSelector(getEndDisplayMapTime);
@@ -24,7 +25,7 @@ export function TrackInformationModalButton() {
                 <Button
                     onClick={() => {
                         if (isLive) {
-                            setStartAndEndTime(dispatch);
+                            dispatch(setStartAndEndTime);
                         }
                         dispatch(mapActions.setIsLive(!isLive));
                     }}
