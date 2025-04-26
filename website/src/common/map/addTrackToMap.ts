@@ -2,7 +2,7 @@ import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
-import { CalculatedTrack, GpxSegment, isZipTrack, ZipTrack } from '../types.ts';
+import { CalculatedTrack, GpxSegment, isZipTrack, DisplayTrack } from '../types.ts';
 import { getGpx } from '../cache/gpxCache.ts';
 import { getLanguage } from '../../language.ts';
 import { Point, Track } from '../../utils/gpxTypes.ts';
@@ -18,9 +18,9 @@ export interface MapOptions {
     opacity?: number;
     weight?: number;
     highlightedId?: string;
-    clickCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack, event?: LeafletMouseEvent) => void;
-    mouseInCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
-    mouseOutCallBack?: (track: GpxSegment | CalculatedTrack | ZipTrack) => void;
+    clickCallBack?: (track: GpxSegment | CalculatedTrack | DisplayTrack, event?: LeafletMouseEvent) => void;
+    mouseInCallBack?: (track: GpxSegment | CalculatedTrack | DisplayTrack) => void;
+    mouseOutCallBack?: (track: GpxSegment | CalculatedTrack | DisplayTrack) => void;
 }
 
 function addStartAndBreakMarker(
@@ -139,7 +139,7 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
 
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
-    calculatedTracks: CalculatedTrack[] | GpxSegment[] | ZipTrack[],
+    calculatedTracks: CalculatedTrack[] | GpxSegment[] | DisplayTrack[],
     show: boolean,
     options: MapOptions
 ) {

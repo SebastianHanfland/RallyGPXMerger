@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { getSingleZipTracks } from '../store/zipTracks.reducer.ts';
+import { getZipTracks } from '../store/zipTracks.reducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
-import { ZipTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 import { downloadSinglePdfFiles } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
 import { storedState } from '../data/loadJsonFile.ts';
@@ -20,7 +20,7 @@ const cardStyle = {
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
-function TrackInfo({ track }: { track: ZipTrack }) {
+function TrackInfo({ track }: { track: DisplayTrack }) {
     if (!storedState) {
         return null;
     }
@@ -67,7 +67,7 @@ function TrackInfo({ track }: { track: ZipTrack }) {
 }
 
 export function TrackInformationModalBody() {
-    const tracks = useSelector(getSingleZipTracks);
+    const tracks = useSelector(getZipTracks);
     const singleTrackId = useSelector(getShowSingleTrackInfo);
     const filteredTracks = tracks?.filter((track) => (singleTrackId ? track.id === singleTrackId : true));
     const sortedTracks = [...(filteredTracks ?? [])].sort((a, b) =>

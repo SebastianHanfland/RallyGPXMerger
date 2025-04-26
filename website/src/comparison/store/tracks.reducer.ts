@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { VersionsState, ZipTracksState } from './types';
-import { ZipTrack } from '../../common/types.ts';
+import { ComparisonState, ZipTracksState } from './types';
+import { DisplayTrack } from '../../common/types.ts';
 
 const initialState: ZipTracksState = {
     tracks: {},
@@ -14,7 +14,7 @@ const zipTracksSlice = createSlice({
     name: 'zipTracks',
     initialState: initialState,
     reducers: {
-        setZipTracks: (state: ZipTracksState, action: PayloadAction<{ version: string; tracks: ZipTrack[] }>) => {
+        setZipTracks: (state: ZipTracksState, action: PayloadAction<{ version: string; tracks: DisplayTrack[] }>) => {
             const { version, tracks } = action.payload;
             state.tracks[version] = tracks;
         },
@@ -57,11 +57,8 @@ const zipTracksSlice = createSlice({
 
 export const zipTracksActions = zipTracksSlice.actions;
 export const zipTracksReducer: Reducer<ZipTracksState> = zipTracksSlice.reducer;
-const getBase = (state: VersionsState) => state.zipTracks;
-export const getZipTracks = (state: VersionsState) => getBase(state).tracks;
-export const getSingleZipTracks = (state: VersionsState) =>
-    getBase(state).tracks[Object.keys(getBase(state).tracks)[0]];
-export const getIsZipLoading = (state: VersionsState) => getBase(state).isLoading;
-export const getSelectedVersions = (state: VersionsState) => getBase(state).selectedVersions;
-export const getSelectedTracks = (state: VersionsState) => getBase(state).selectedTracks;
-export const getTrackInfo = (state: VersionsState) => getBase(state).trackInfo;
+const getBase = (state: ComparisonState) => state.zipTracks;
+export const getZipTracks = (state: ComparisonState) => getBase(state).tracks;
+export const getSelectedVersions = (state: ComparisonState) => getBase(state).selectedVersions;
+export const getSelectedTracks = (state: ComparisonState) => getBase(state).selectedTracks;
+export const getTrackInfo = (state: ComparisonState) => getBase(state).trackInfo;

@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { ZipTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
 import { zipTracksActions } from '../store/tracks.reducer.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
@@ -19,7 +19,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             if (planningTitle) {
                 document.title = planningTitle;
             }
-            const calculatedTracks: ZipTrack[] = planning.calculatedTracks.tracks.map((track) => ({
+            const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 id: track.id + '_' + id,
                 version: id,

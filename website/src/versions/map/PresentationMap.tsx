@@ -15,13 +15,13 @@ import { getZipTracks } from '../store/zipTracks.reducer.ts';
 import { getGpx } from '../../common/cache/gpxCache.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
 import { Munich } from '../../common/locations.ts';
-import { ZipTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
 
-function getCenterPoint(currentZipTracks: ZipTrack[] | undefined) {
+function getCenterPoint(currentZipTracks: DisplayTrack[] | undefined) {
     if (!currentZipTracks || !currentZipTracks[0]) {
         return Munich;
     }
@@ -35,7 +35,6 @@ export const PresentationMap = () => {
     const dispatch = useDispatch();
     const zipTracks = useSelector(getZipTracks);
     const isLive = useSelector(getIsLive);
-    const currentZipTracks = zipTracks ? Object.values(zipTracks)[0] : undefined;
 
     useEffect(() => {
         if (!myMap) {
@@ -47,7 +46,7 @@ export const PresentationMap = () => {
                 locate.addTo(myMap);
                 locate.start();
             }
-            const centerPoint = getCenterPoint(currentZipTracks);
+            const centerPoint = getCenterPoint(zipTracks);
             myMap.setView(centerPoint, 12);
         }
     }, []);

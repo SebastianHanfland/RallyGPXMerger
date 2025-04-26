@@ -1,5 +1,5 @@
-import { ReadableTrack, ZipTrack } from '../../common/types.ts';
-import { VersionsState } from '../store/types.ts';
+import { ReadableTrack, DisplayTrack } from '../../common/types.ts';
+import { ComparisonState } from '../store/types.ts';
 import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
 import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/tracks.reducer.ts';
 import {
@@ -18,9 +18,9 @@ import { getReadableTracks } from '../cache/readableTracks.ts';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationZip =
-    (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>
+    (timeStampFront: string, zipTracks: Record<string, DisplayTrack[] | undefined>) =>
     (readableTrack: ReadableTrack): BikeSnake => {
-        let foundZipTrack: ZipTrack | undefined;
+        let foundZipTrack: DisplayTrack | undefined;
         Object.values(zipTracks).forEach((tracks) => {
             const find = tracks?.find((track) => readableTrack.id.includes(track.id));
             if (find) {
@@ -36,7 +36,7 @@ const extractLocationZip =
             id: foundZipTrack?.id ?? 'id-not-found',
         };
     };
-export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined => {
+export const getZipCurrentTimeStamp = (state: ComparisonState): string | undefined => {
     const calculatedTracks = getZipTracks(state);
     if (Object.keys(calculatedTracks).length === 0) {
         return;
@@ -53,7 +53,7 @@ export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
-export const getDisplayTimeStamp = (state: VersionsState): string | undefined => {
+export const getDisplayTimeStamp = (state: ComparisonState): string | undefined => {
     const sliderTimeStamp = getZipCurrentTimeStamp(state);
     const currentRealTime = getCurrentRealTime(state);
     const isLive = getIsLive(state);

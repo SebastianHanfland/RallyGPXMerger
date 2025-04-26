@@ -35,11 +35,11 @@ export interface CalculatedTrack extends GpxFile {
     peopleCount?: number;
 }
 
-export function isZipTrack(track: GpxSegment | CalculatedTrack | ZipTrack): track is ZipTrack {
-    return (track as ZipTrack).color !== undefined;
+export function isZipTrack(track: GpxSegment | CalculatedTrack | DisplayTrack): track is DisplayTrack {
+    return (track as DisplayTrack).color !== undefined;
 }
 
-export interface ZipTrack extends GpxFile {
+export interface DisplayTrack extends GpxFile {
     version: string;
     color?: string;
     peopleCount?: number;

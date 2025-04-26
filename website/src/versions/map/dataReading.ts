@@ -1,7 +1,7 @@
-import { ReadableTrack, ZipTrack } from '../../common/types.ts';
+import { DisplayTrack, ReadableTrack } from '../../common/types.ts';
 import { VersionsState } from '../store/types.ts';
 import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getZipTracks } from '../store/zipTracks.reducer.ts';
 import {
     getCurrenMapTime as zipGetCurrenMapTime,
     getCurrentRealTime,
@@ -18,22 +18,16 @@ import { getReadableTracks } from '../cache/readableTracks.ts';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationZip =
-    (timeStampFront: string, zipTracks: Record<string, ZipTrack[] | undefined>) =>
+    (timeStampFront: string, zipTracks: DisplayTrack[] | undefined) =>
     (readableTrack: ReadableTrack): BikeSnake => {
-        let foundZipTrack: ZipTrack | undefined;
-        Object.values(zipTracks).forEach((tracks) => {
-            const find = tracks?.find((track) => readableTrack.id.includes(track.id));
-            if (find) {
-                foundZipTrack = find;
-            }
-        });
-        const participants = foundZipTrack?.peopleCount ?? 0;
+        const foundTrack = zipTracks?.find((track) => readableTrack.id.includes(track.id));
+        const participants = foundTrack?.peopleCount ?? 0;
 
         return {
             points: extractSnakeTrack(timeStampFront, participants, readableTrack),
-            title: foundZipTrack?.filename ?? 'N/A',
-            color: foundZipTrack?.color ?? 'white',
-            id: foundZipTrack?.id ?? 'id-not-found',
+            title: foundTrack?.filename ?? 'N/A',
+            color: foundTrack?.color ?? 'white',
+            id: foundTrack?.id ?? 'id-not-found',
         };
     };
 export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined => {
@@ -60,33 +54,15 @@ export const getDisplayTimeStamp = (state: VersionsState): string | undefined =>
     return isLive ? currentRealTime : sliderTimeStamp;
 };
 
-function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, selectedTrackIds: string[]) {
-    return readableTracks?.filter((track) => {
-        return selectedTrackIds.some((id) => track.id.includes(id));
-    });
-}
-
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
     getZipTracks,
     getReadableTracks,
-    getSelectedTracks,
-    getSelectedVersions,
-    (timeStamp, zipTracks, readableTracks, selectedTracks, selectedVersions): BikeSnake[] => {
+    (timeStamp, zipTracks, readableTracks): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
-        const selectedTrackIds = selectedVersions.flatMap((version) => {
-            const trackIdsOfVersion = zipTracks[version]?.map((track) => track.id) ?? [];
-            if ((selectedTracks[version]?.length ?? 0) === 0) {
-                return trackIdsOfVersion;
-            }
-            return selectedTracks[version] ?? [];
-        });
 
-        return (
-            filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(extractLocationZip(timeStamp, zipTracks)) ??
-            []
-        );
+        return readableTracks?.map(extractLocationZip(timeStamp, zipTracks)) ?? [];
     }
 );

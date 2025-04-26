@@ -3,7 +3,7 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getZipTracks } from '../store/zipTracks.reducer.ts';
 
 export function zipTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
@@ -11,29 +11,12 @@ export function zipTracksDisplayHook(
 ) {
     const zipTracks = useSelector(getZipTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
-    const selectedVersions = useSelector(getSelectedVersions);
-    const selectedTracks = useSelector(getSelectedTracks);
     const highlightedTrack = useSelector(getHighlightedTrack);
     const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const tracks = selectedVersions.flatMap((version) => {
-            const tracksOfVersion = zipTracks[version] ?? [];
-            if ((selectedTracks[version]?.length ?? 0) === 0) {
-                return tracksOfVersion;
-            }
-            const zipTracks1 = tracksOfVersion
-                .filter((track) => selectedTracks[version]?.includes(track.id))
-                .sort((a, b) => b.filename.localeCompare(a.filename, undefined, { numeric: true }));
-
-            console.log(zipTracks1.map((track) => track.filename));
-            return zipTracks1;
-        });
-
-        const sortedTracks = tracks.sort((a, b) => -b.filename.localeCompare(a.filename, undefined, { numeric: true }));
-
-        addTracksToLayer(calculatedTracksLayer, sortedTracks, true, {
+        addTracksToLayer(calculatedTracksLayer, zipTracks, true, {
             showMarker,
             onlyShowBreaks: true,
             opacity: highlightedTrack ? 0.2 : 0.7,
@@ -49,5 +32,5 @@ export function zipTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-    }, [zipTracks, zipTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
+    }, [zipTracks, zipTracks.length, showMarker, highlightedTrack]);
 }

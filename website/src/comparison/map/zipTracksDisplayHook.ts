@@ -3,7 +3,7 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getSelectedTracks, getSelectedVersions, getZipTracks } from '../store/tracks.reducer.ts';
 
 export function zipTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,

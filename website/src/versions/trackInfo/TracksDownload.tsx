@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { downloadFilesInZip } from '../../planner/tracks/CalculatedFilesDownloader.tsx';
-import { getSingleZipTracks } from '../store/zipTracks.reducer.ts';
+import { getZipTracks } from '../store/zipTracks.reducer.ts';
 
 export const ZipFilesDownloader = () => {
     const intl = useIntl();
-    const zipTracks = useSelector(getSingleZipTracks);
+    const zipTracks = useSelector(getZipTracks);
     if (!zipTracks) {
         return null;
     }

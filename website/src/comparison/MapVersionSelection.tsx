@@ -7,7 +7,7 @@ import {
     getTrackInfo,
     getZipTracks,
     zipTracksActions,
-} from '../versions/store/zipTracks.reducer.ts';
+} from './store/tracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';

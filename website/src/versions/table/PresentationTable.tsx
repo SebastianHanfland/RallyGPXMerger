@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { getSingleZipTracks } from '../store/zipTracks.reducer.ts';
-import { ZipTrack } from '../../common/types.ts';
+import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { DisplayTrack } from '../../common/types.ts';
 import { storedState } from '../data/loadJsonFile.ts';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { useIntl } from 'react-intl';
@@ -17,7 +17,7 @@ import { getLink } from '../../utils/linkUtil.ts';
 export const isInIframe = window.location.search.includes('&iframe');
 
 export const PresentationTable = () => {
-    const tracks = useSelector(getSingleZipTracks);
+    const tracks = useSelector(getZipTracks);
 
     if (!tracks) {
         return <div>Loading</div>;
@@ -45,7 +45,7 @@ export const PresentationTable = () => {
     );
 };
 
-function TrackInfoRow({ track }: { track: ZipTrack }) {
+function TrackInfoRow({ track }: { track: DisplayTrack }) {
     if (!storedState) {
         return null;
     }
