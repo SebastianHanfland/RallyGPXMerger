@@ -45,7 +45,7 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
-export const getCurrentMarkerPositionsForTracks = createSelector(
+export const getBikeSnakesForPlanningMap = createSelector(
     getCurrentTimeStamp,
     getTrackCompositions,
     getReadableTracks,
