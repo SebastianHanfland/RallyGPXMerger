@@ -2,13 +2,15 @@ import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { displayTracksReducer } from './displayTracksReducer.ts';
 import { mapReducer } from './map.reducer.ts';
 
-const versionsReducer: Reducer = combineReducers({
+const displayReducer: Reducer = combineReducers({
     tracks: displayTracksReducer,
     map: mapReducer,
 });
 
-export const createVersionsStore = () =>
+export const createDisplayStore = () =>
     configureStore({
-        reducer: versionsReducer,
+        reducer: displayReducer,
     });
-export const versionsStore = createVersionsStore();
+
+export const displayStore = createDisplayStore();
+export type DisplayDispatch = typeof displayStore.dispatch;

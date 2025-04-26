@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { VersionsState, DisplayState } from './types';
-import { DisplayTrack } from '../../common/types.ts';
+import { DisplayState, DisplayTracksState } from './types';
+import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
 
-const initialState: DisplayState = {
+const initialState: DisplayTracksState = {
     tracks: [],
+    parsedTracks: [],
     isLoading: true,
 };
 
@@ -11,20 +12,24 @@ const displayTrackSlice = createSlice({
     name: 'displayTracks',
     initialState: initialState,
     reducers: {
-        setDisplayTracks: (state: DisplayState, action: PayloadAction<DisplayTrack[]>) => {
+        setDisplayTracks: (state: DisplayTracksState, action: PayloadAction<DisplayTrack[]>) => {
             state.tracks = action.payload;
         },
-        setIsLoading: (state: DisplayState, action: PayloadAction<boolean>) => {
+        setParsedTracks: (state: DisplayTracksState, action: PayloadAction<ParsedTrack[]>) => {
+            state.parsedTracks = action.payload;
+        },
+        setIsLoading: (state: DisplayTracksState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
         },
-        removeDisplayTracks: (state: DisplayState) => {
+        removeDisplayTracks: (state: DisplayTracksState) => {
             state.tracks = [];
         },
     },
 });
 
 export const displayTracksActions = displayTrackSlice.actions;
-export const displayTracksReducer: Reducer<DisplayState> = displayTrackSlice.reducer;
-const getBase = (state: VersionsState) => state.tracks;
-export const getDisplayTracks = (state: VersionsState) => getBase(state).tracks;
-export const getIsDisplayLoading = (state: VersionsState) => getBase(state).isLoading;
+export const displayTracksReducer: Reducer<DisplayTracksState> = displayTrackSlice.reducer;
+const getBase = (state: DisplayState) => state.tracks;
+export const getDisplayTracks = (state: DisplayState) => getBase(state).tracks;
+export const getParsedTracks = (state: DisplayState) => getBase(state).parsedTracks;
+export const getIsDisplayLoading = (state: DisplayState) => getBase(state).isLoading;

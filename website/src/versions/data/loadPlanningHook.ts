@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { loadServerFile } from './loadServerFile.ts';
 import { setStartAndEndTime } from './loadFilesHook.ts';
+import { DisplayDispatch } from '../store/store.ts';
 
 export function useLoadPlanningById(planningId: string | undefined) {
-    const dispatch = useDispatch();
+    const dispatch: DisplayDispatch = useDispatch();
 
     useEffect(() => {
         if (planningId) {
@@ -14,7 +15,7 @@ export function useLoadPlanningById(planningId: string | undefined) {
 
             loadServerFile(planningId, dispatch).then(() => {
                 dispatch(displayTracksActions.setIsLoading(false));
-                setStartAndEndTime(dispatch);
+                dispatch(setStartAndEndTime);
             });
         }
     }, [planningId]);

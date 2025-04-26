@@ -1,7 +1,8 @@
-import { DisplayTrack } from '../../common/types.ts';
+import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
 
-export interface DisplayState {
+export interface DisplayTracksState {
     tracks: DisplayTrack[];
+    parsedTracks: ParsedTrack[];
     isLoading: boolean;
 }
 
@@ -17,7 +18,7 @@ export interface MapState {
     isLive: boolean;
 }
 
-export interface VersionsState {
-    tracks: DisplayState;
+export interface DisplayState {
+    tracks: DisplayTracksState;
     map: MapState;
 }

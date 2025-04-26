@@ -8,7 +8,7 @@ import { RallyTableWrapper } from './versions/RallyTableWrapper.tsx';
 import { RallyComparisonWrapper } from './comparison/RallyComparisonWrapper.tsx';
 import { useGetUrlParam } from './utils/linkUtil.ts';
 import { planningStore } from './planner/store/planningStore.ts';
-import { versionsStore } from './versions/store/store.ts';
+import { displayStore } from './versions/store/store.ts';
 import { comparisonStore } from './comparison/store/store.ts';
 
 export function App() {
@@ -20,10 +20,10 @@ export function App() {
         return <ErrorBoundary>{<RallyComparisonWrapper store={comparisonStore} />}</ErrorBoundary>;
     }
     if (hasTableUrl) {
-        return <ErrorBoundary>{<RallyTableWrapper store={versionsStore} />}</ErrorBoundary>;
+        return <ErrorBoundary>{<RallyTableWrapper store={displayStore} />}</ErrorBoundary>;
     }
     if (hasDisplayUrl) {
-        return <ErrorBoundary>{<RallyDisplayWrapper store={versionsStore} />}</ErrorBoundary>;
+        return <ErrorBoundary>{<RallyDisplayWrapper store={displayStore} />}</ErrorBoundary>;
     } else {
         return <ErrorBoundary>{<RallyPlannerWrapper store={planningStore} />}</ErrorBoundary>;
     }

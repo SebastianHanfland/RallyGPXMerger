@@ -1,7 +1,7 @@
-import { DisplayTrack, ReadableTrack } from '../../common/types.ts';
-import { VersionsState } from '../store/types.ts';
-import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
+import { ParsedTrack } from '../../common/types.ts';
+import { DisplayState } from '../store/types.ts';
+import { extractSnakeTrackFromParsedTrack } from '../../common/logic/extractSnakeTrack.ts';
+import { getDisplayTracks, getParsedTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,
     getCurrentRealTime,
@@ -14,23 +14,22 @@ import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { getReadableTracks } from '../cache/readableTracks.ts';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationDisplay =
-    (timeStampFront: string, displayTracks: DisplayTrack[] | undefined) =>
-    (readableTrack: ReadableTrack): BikeSnake => {
-        const foundTrack = displayTracks?.find((track) => readableTrack.id.includes(track.id));
-        const participants = foundTrack?.peopleCount ?? 0;
+    (timeStampFront: string) =>
+    (parsedTrack: ParsedTrack): BikeSnake => {
+        const participants = parsedTrack?.peopleCount ?? 0;
 
         return {
-            points: extractSnakeTrack(timeStampFront, participants, readableTrack),
-            title: foundTrack?.filename ?? 'N/A',
-            color: foundTrack?.color ?? 'white',
-            id: foundTrack?.id ?? 'id-not-found',
+            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
+            title: parsedTrack.filename,
+            color: parsedTrack.color ?? 'white',
+            id: parsedTrack.id,
         };
     };
-export const getCurrentDisplayTimeStamp = (state: VersionsState): string | undefined => {
+
+export const getCurrentDisplayTimeStamp = (state: DisplayState): string | undefined => {
     const calculatedTracks = getDisplayTracks(state);
     if (Object.keys(calculatedTracks).length === 0) {
         return;
@@ -47,7 +46,7 @@ export const getCurrentDisplayTimeStamp = (state: VersionsState): string | undef
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
-export const getDisplayTimeStamp = (state: VersionsState): string | undefined => {
+export const getDisplayTimeStamp = (state: DisplayState): string | undefined => {
     const sliderTimeStamp = getCurrentDisplayTimeStamp(state);
     const currentRealTime = getCurrentRealTime(state);
     const isLive = getIsLive(state);
@@ -56,13 +55,12 @@ export const getDisplayTimeStamp = (state: VersionsState): string | undefined =>
 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
-    getDisplayTracks,
-    getReadableTracks,
-    (timeStamp, displayTracks, readableTracks): BikeSnake[] => {
+    getParsedTracks,
+    (timeStamp, parsedTracks): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
 
-        return readableTracks?.map(extractLocationDisplay(timeStamp, displayTracks)) ?? [];
+        return parsedTracks?.map(extractLocationDisplay(timeStamp)) ?? [];
     }
 );

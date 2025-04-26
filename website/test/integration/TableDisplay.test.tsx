@@ -7,7 +7,7 @@ import { getLanguage } from '../../src/language';
 import { getData } from '../../src/api/api';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
-import { createVersionsStore } from '../../src/versions/store/store';
+import { createDisplayStore } from '../../src/versions/store/store';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
@@ -37,7 +37,7 @@ describe('Table integration test', () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
         (getData as Mock).mockResolvedValue({ data: state });
-        const store = createVersionsStore();
+        const store = createDisplayStore();
         const loadingPage = act(() =>
             render(
                 <BrowserRouter>

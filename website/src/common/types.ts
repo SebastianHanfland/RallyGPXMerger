@@ -1,4 +1,5 @@
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
+import { Point } from '../utils/gpxTypes.ts';
 
 export interface GpxFile {
     id: string;
@@ -40,6 +41,15 @@ export function isZipTrack(track: GpxSegment | CalculatedTrack | DisplayTrack): 
 }
 
 export interface DisplayTrack extends GpxFile {
+    version: string;
+    color?: string;
+    peopleCount?: number;
+}
+
+export interface ParsedTrack {
+    id: string;
+    filename: string;
+    points: Point[];
     version: string;
     color?: string;
     peopleCount?: number;

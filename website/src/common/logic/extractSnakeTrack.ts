@@ -1,7 +1,7 @@
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../planner/store/trackMerge.reducer.ts';
-import { ReadableTrack } from '../types.ts';
+import { ParsedTrack, ReadableTrack } from '../types.ts';
 import { Point, Track } from '../../utils/gpxTypes.ts';
 
 function interpolatePosition(previous: Point, next: Point, timeStamp: string) {
@@ -57,6 +57,41 @@ export function extractSnakeTrack(
             }
         });
         lastTrack = track;
+    });
+    return returnPoints;
+}
+
+export function extractSnakeTrackFromParsedTrack(
+    timeStampFront: string,
+    participants: number,
+    track: ParsedTrack
+): { lat: number; lng: number }[] {
+    const timeStampEnd = date
+        .addSeconds(new Date(timeStampFront), -participants * PARTICIPANTS_DELAY_IN_SECONDS)
+        .toISOString();
+
+    let returnPoints: { lat: number; lng: number }[] = [];
+
+    const points = track.points;
+    points.forEach((point, index) => {
+        if (index === 0) {
+            if (timeStampEnd < point.time) {
+                returnPoints.push({ lat: point.lat, lng: point.lon });
+            }
+            return;
+        }
+        const next = point.time;
+        const previous = points[index - 1].time;
+
+        if (previous < timeStampEnd && timeStampEnd < next) {
+            returnPoints.push(interpolatePosition(points[index - 1], point, timeStampEnd));
+        }
+        if (previous < timeStampFront && timeStampFront < next) {
+            returnPoints.push(interpolatePosition(points[index - 1], point, timeStampFront));
+        }
+        if (timeStampEnd < next && next < timeStampFront) {
+            returnPoints.push({ lat: point.lat, lng: point.lon });
+        }
     });
     return returnPoints;
 }

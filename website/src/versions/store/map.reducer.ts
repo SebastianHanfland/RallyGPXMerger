@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { VersionsState, MapState } from './types';
+import { DisplayState, MapState } from './types';
 
 const initialState: MapState = {
     currentTime: 0,
@@ -40,13 +40,13 @@ const mapSlice = createSlice({
 
 export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
-const getBase = (state: VersionsState) => state.map;
-export const getCurrenDisplayMapTime = (state: VersionsState) => getBase(state).currentTime;
-export const getCurrentRealTime = (state: VersionsState) => getBase(state).currentRealTime;
-export const getStartDisplayMapTime = (state: VersionsState) => getBase(state).start;
-export const getEndDisplayMapTime = (state: VersionsState) => getBase(state).end;
-export const getShowMapMarker = (state: VersionsState) => getBase(state).showMapMarker ?? false;
-export const getShowTrackInfo = (state: VersionsState) => getBase(state).showTrackInfo ?? false;
-export const getShowSingleTrackInfo = (state: VersionsState) => getBase(state).showSingleTrackInfo;
-export const getHighlightedTrack = (state: VersionsState) => getBase(state).highlightedTrack;
-export const getIsLive = (state: VersionsState) => getBase(state).isLive;
+const getBase = (state: DisplayState) => state.map;
+export const getCurrenDisplayMapTime = (state: DisplayState) => getBase(state).currentTime;
+export const getCurrentRealTime = (state: DisplayState) => getBase(state).currentRealTime;
+export const getStartDisplayMapTime = (state: DisplayState) => getBase(state).start;
+export const getEndDisplayMapTime = (state: DisplayState) => getBase(state).end;
+export const getShowMapMarker = (state: DisplayState) => getBase(state).showMapMarker ?? false;
+export const getShowTrackInfo = (state: DisplayState) => getBase(state).showTrackInfo ?? false;
+export const getShowSingleTrackInfo = (state: DisplayState) => getBase(state).showSingleTrackInfo;
+export const getHighlightedTrack = (state: DisplayState) => getBase(state).highlightedTrack;
+export const getIsLive = (state: DisplayState) => getBase(state).isLive;

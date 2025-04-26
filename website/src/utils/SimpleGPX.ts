@@ -123,6 +123,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         this.shiftSeconds(getTimeDifferenceInSeconds(arrival, this.getEnd()));
     }
 
+    public getPoints() {
+        return this.tracks.flatMap((track) => track.points);
+    }
+
     public shiftToDepartureTime(departure: string) {
         this.shiftSeconds(getTimeDifferenceInSeconds(this.getStart(), departure));
     }

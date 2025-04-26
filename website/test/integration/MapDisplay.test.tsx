@@ -6,7 +6,7 @@ import { getLanguage } from '../../src/language';
 import { getData } from '../../src/api/api';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
-import { createVersionsStore } from '../../src/versions/store/store';
+import { createDisplayStore } from '../../src/versions/store/store';
 import { RallyDisplayWrapper } from '../../src/versions/RallyDisplayWrapper';
 import { getBikeSnakesForDisplayMap } from '../../src/versions/map/dataReading';
 import { mapActions } from '../../src/versions/store/map.reducer';
@@ -28,7 +28,7 @@ describe('Map Display integration test', () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
         (getData as Mock).mockResolvedValue({ data: state });
-        const store = createVersionsStore();
+        const store = createDisplayStore();
         const loadingPage = act(() =>
             render(
                 <BrowserRouter>
