@@ -10,7 +10,7 @@ import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useLoadPlannings } from './data/loadPlanningHook.ts';
 import { Store } from '@reduxjs/toolkit';
 
-function RallyComparisonDisplay() {
+function RallyComparison() {
     const planningIds = useGetUrlParam('comparison=')?.split(',') ?? [];
     useLoadPlannings(planningIds);
     const isLoading = useSelector(getIsZipLoading);
@@ -39,11 +39,11 @@ function RallyComparisonDisplay() {
     );
 }
 
-export function RallyComparison({ store }: { store: Store }) {
+export function RallyComparisonWrapper({ store }: { store: Store }) {
     return (
         <Provider store={store}>
             <IntlProvider locale={getLanguage()} messages={getMessages()}>
-                <RallyComparisonDisplay />
+                <RallyComparison />
             </IntlProvider>
         </Provider>
     );
