@@ -9,6 +9,7 @@ import { RallyComparisonWrapper } from './comparison/RallyComparisonWrapper.tsx'
 import { useGetUrlParam } from './utils/linkUtil.ts';
 import { planningStore } from './planner/store/planningStore.ts';
 import { versionsStore } from './versions/store/store.ts';
+import { comparisonStore } from './comparison/store/store.ts';
 
 export function App() {
     const hasComparisonUrl = useGetUrlParam('comparison=');
@@ -16,7 +17,7 @@ export function App() {
     const hasTableUrl = useGetUrlParam('table=');
 
     if (hasComparisonUrl) {
-        return <ErrorBoundary>{<RallyComparisonWrapper store={versionsStore} />}</ErrorBoundary>;
+        return <ErrorBoundary>{<RallyComparisonWrapper store={comparisonStore} />}</ErrorBoundary>;
     }
     if (hasTableUrl) {
         return <ErrorBoundary>{<RallyTableWrapper store={versionsStore} />}</ErrorBoundary>;
