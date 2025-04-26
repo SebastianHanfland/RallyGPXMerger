@@ -1,12 +1,6 @@
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-
-try {
-    // @ts-ignore
-    (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
-} catch (error) {
-    console.error('pdfmake error', error);
-}
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export const styles = {
     linkStyle: {
