@@ -3,6 +3,7 @@ import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
 export interface DisplayTracksState {
     tracks: DisplayTrack[];
     parsedTracks: ParsedTrack[];
+    title?: string;
     isLoading: boolean;
 }
 

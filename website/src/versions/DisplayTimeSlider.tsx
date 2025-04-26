@@ -14,15 +14,12 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-export function DisplayTimeSlider({
-    bigThumb,
-    showPlayButton,
-    showTimes,
-}: {
+interface Props {
     bigThumb?: boolean;
     showPlayButton?: boolean;
-    showTimes: boolean;
-}) {
+}
+
+export function DisplayTimeSlider({ bigThumb, showPlayButton }: Props) {
     const mapTime = useSelector(getCurrenDisplayMapTime);
     const dateValue = useSelector(getDisplayTimeStamp);
     const isLive = useSelector(getIsLive);
@@ -68,13 +65,11 @@ export function DisplayTimeSlider({
         <div className={'d-flex'}>
             <div className={'flex-fill'}>
                 <Form.Group className={'mx-3'}>
-                    {showTimes && (
-                        <div>
-                            {dateValue
-                                ? intl.formatDate(dateValue, DateTimeFormat)
-                                : intl.formatMessage({ id: 'msg.time' })}
-                        </div>
-                    )}
+                    <div>
+                        {dateValue
+                            ? intl.formatDate(dateValue, DateTimeFormat)
+                            : intl.formatMessage({ id: 'msg.time' })}
+                    </div>
                     <div className={`d-flex${bigThumb ? ' my-2' : ''}`}>
                         <Form.Range
                             min={0}

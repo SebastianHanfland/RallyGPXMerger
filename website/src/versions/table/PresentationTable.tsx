@@ -4,7 +4,6 @@ import { DisplayTrack } from '../../common/types.ts';
 import { storedState } from '../data/loadJsonFile.ts';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { useIntl } from 'react-intl';
-import { showTimes } from '../store/LoadStateButton.tsx';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
@@ -90,7 +89,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                     onlyIcon={true}
                     size={'sm'}
                 />
-                {storedState && showTimes && (
+                {storedState && (
                     <Button
                         size={'sm'}
                         className={'m-1'}

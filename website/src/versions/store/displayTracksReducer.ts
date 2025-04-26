@@ -18,6 +18,9 @@ const displayTrackSlice = createSlice({
         setParsedTracks: (state: DisplayTracksState, action: PayloadAction<ParsedTrack[]>) => {
             state.parsedTracks = action.payload;
         },
+        setTitle: (state: DisplayTracksState, action: PayloadAction<string | undefined>) => {
+            state.title = action.payload;
+        },
         setIsLoading: (state: DisplayTracksState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
         },
@@ -32,4 +35,5 @@ export const displayTracksReducer: Reducer<DisplayTracksState> = displayTrackSli
 const getBase = (state: DisplayState) => state.tracks;
 export const getDisplayTracks = (state: DisplayState) => getBase(state).tracks;
 export const getParsedTracks = (state: DisplayState) => getBase(state).parsedTracks;
+export const getDisplayTitle = (state: DisplayState) => getBase(state).title;
 export const getIsDisplayLoading = (state: DisplayState) => getBase(state).isLoading;

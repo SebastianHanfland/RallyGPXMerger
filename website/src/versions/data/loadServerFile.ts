@@ -18,6 +18,8 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             if (planningTitle) {
                 document.title = planningTitle;
             }
+            dispatch(displayTracksActions.setTitle(planningTitle));
+
             const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 id: track.id + '_' + id,
