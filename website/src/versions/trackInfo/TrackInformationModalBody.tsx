@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
@@ -67,7 +67,7 @@ function TrackInfo({ track }: { track: DisplayTrack }) {
 }
 
 export function TrackInformationModalBody() {
-    const tracks = useSelector(getZipTracks);
+    const tracks = useSelector(getDisplayTracks);
     const singleTrackId = useSelector(getShowSingleTrackInfo);
     const filteredTracks = tracks?.filter((track) => (singleTrackId ? track.id === singleTrackId : true));
     const sortedTracks = [...(filteredTracks ?? [])].sort((a, b) =>

@@ -3,20 +3,20 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
-export function zipTracksDisplayHook(
+export function tracksForDisplayMapHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
     showMarkerOverwrite?: boolean
 ) {
-    const zipTracks = useSelector(getZipTracks);
+    const displayTracks = useSelector(getDisplayTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
     const highlightedTrack = useSelector(getHighlightedTrack);
     const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addTracksToLayer(calculatedTracksLayer, zipTracks, true, {
+        addTracksToLayer(calculatedTracksLayer, displayTracks, true, {
             showMarker,
             onlyShowBreaks: true,
             opacity: highlightedTrack ? 0.2 : 0.7,
@@ -32,5 +32,5 @@ export function zipTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-    }, [zipTracks, zipTracks.length, showMarker, highlightedTrack]);
+    }, [displayTracks, displayTracks.length, showMarker, highlightedTrack]);
 }

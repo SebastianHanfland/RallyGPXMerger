@@ -1,13 +1,13 @@
 import { DisplayTrack, ReadableTrack } from '../../common/types.ts';
 import { VersionsState } from '../store/types.ts';
 import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import {
-    getCurrenMapTime as zipGetCurrenMapTime,
+    getCurrenDisplayMapTime,
     getCurrentRealTime,
-    getEndMapTime as zipGetEndMapTime,
+    getEndDisplayMapTime,
     getIsLive,
-    getStartMapTime as zipGetStartMapTime,
+    getStartDisplayMapTime,
 } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
@@ -17,10 +17,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getReadableTracks } from '../cache/readableTracks.ts';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
-const extractLocationZip =
-    (timeStampFront: string, zipTracks: DisplayTrack[] | undefined) =>
+const extractLocationDisplay =
+    (timeStampFront: string, displayTracks: DisplayTrack[] | undefined) =>
     (readableTrack: ReadableTrack): BikeSnake => {
-        const foundTrack = zipTracks?.find((track) => readableTrack.id.includes(track.id));
+        const foundTrack = displayTracks?.find((track) => readableTrack.id.includes(track.id));
         const participants = foundTrack?.peopleCount ?? 0;
 
         return {
@@ -30,14 +30,14 @@ const extractLocationZip =
             id: foundTrack?.id ?? 'id-not-found',
         };
     };
-export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined => {
-    const calculatedTracks = getZipTracks(state);
+export const getCurrentDisplayTimeStamp = (state: VersionsState): string | undefined => {
+    const calculatedTracks = getDisplayTracks(state);
     if (Object.keys(calculatedTracks).length === 0) {
         return;
     }
-    const mapTime = zipGetCurrenMapTime(state) ?? 0;
-    const start = zipGetStartMapTime(state);
-    const end = zipGetEndMapTime(state);
+    const mapTime = getCurrenDisplayMapTime(state) ?? 0;
+    const start = getStartDisplayMapTime(state);
+    const end = getEndDisplayMapTime(state);
     if (!start || !end) {
         return undefined;
     }
@@ -48,7 +48,7 @@ export const getZipCurrentTimeStamp = (state: VersionsState): string | undefined
 };
 
 export const getDisplayTimeStamp = (state: VersionsState): string | undefined => {
-    const sliderTimeStamp = getZipCurrentTimeStamp(state);
+    const sliderTimeStamp = getCurrentDisplayTimeStamp(state);
     const currentRealTime = getCurrentRealTime(state);
     const isLive = getIsLive(state);
     return isLive ? currentRealTime : sliderTimeStamp;
@@ -56,13 +56,13 @@ export const getDisplayTimeStamp = (state: VersionsState): string | undefined =>
 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
-    getZipTracks,
+    getDisplayTracks,
     getReadableTracks,
-    (timeStamp, zipTracks, readableTracks): BikeSnake[] => {
+    (timeStamp, displayTracks, readableTracks): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
 
-        return readableTracks?.map(extractLocationZip(timeStamp, zipTracks)) ?? [];
+        return readableTracks?.map(extractLocationDisplay(timeStamp, displayTracks)) ?? [];
     }
 );

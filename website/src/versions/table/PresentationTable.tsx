@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { DisplayTrack } from '../../common/types.ts';
 import { storedState } from '../data/loadJsonFile.ts';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
@@ -17,7 +17,7 @@ import { getLink } from '../../utils/linkUtil.ts';
 export const isInIframe = window.location.search.includes('&iframe');
 
 export const PresentationTable = () => {
-    const tracks = useSelector(getZipTracks);
+    const tracks = useSelector(getDisplayTracks);
 
     if (!tracks) {
         return <div>Loading</div>;

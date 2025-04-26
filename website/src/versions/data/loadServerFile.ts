@@ -8,7 +8,7 @@ import { getData } from '../../api/api.ts';
 import { setStoredState } from './loadJsonFile.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { extendReadableTracks } from '../cache/readableTracks.ts';
-import { zipTracksActions } from '../store/zipTracks.reducer.ts';
+import { displayTracksActions } from '../store/displayTracksReducer.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
@@ -34,7 +34,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                     };
                 })
             );
-            dispatch(zipTracksActions.setZipTracks(calculatedTracks));
+            dispatch(displayTracksActions.setDisplayTracks(calculatedTracks));
             setParticipantsDelay(planning.trackMerge.participantDelay);
         })
         .catch(console.error)

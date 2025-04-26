@@ -1,14 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEndMapTime, getIsLive, getStartMapTime, mapActions } from '../store/map.reducer.ts';
+import { getEndDisplayMapTime, getIsLive, getStartDisplayMapTime, mapActions } from '../store/map.reducer.ts';
 import { setStartAndEndTime } from '../data/loadFilesHook.ts';
 
 export function TrackInformationModalButton() {
     const dispatch = useDispatch();
     const isLive = useSelector(getIsLive);
-    const startTime = useSelector(getStartMapTime);
-    const endTime = useSelector(getEndMapTime);
+    const startTime = useSelector(getStartDisplayMapTime);
+    const endTime = useSelector(getEndDisplayMapTime);
     const rallyIsToday =
         startTime?.startsWith(new Date().toISOString().substring(0, 10)) ||
         endTime?.startsWith(new Date().toISOString().substring(0, 10));

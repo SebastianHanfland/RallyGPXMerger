@@ -5,13 +5,13 @@ import 'leaflet/dist/leaflet.js';
 import 'leaflet.locatecontrol'; // Import plugin
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
-import { zipTracksDisplayHook } from './zipTracksDisplayHook.ts';
+import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
 import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLive, mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { getZipTracks } from '../store/zipTracks.reducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { getGpx } from '../../common/cache/gpxCache.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
 import { Munich } from '../../common/locations.ts';
@@ -21,11 +21,11 @@ let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
 
-function getCenterPoint(currentZipTracks: DisplayTrack[] | undefined) {
-    if (!currentZipTracks || !currentZipTracks[0]) {
+function getCenterPoint(displayTracks: DisplayTrack[] | undefined) {
+    if (!displayTracks || !displayTracks[0]) {
         return Munich;
     }
-    const gpx = getGpx(currentZipTracks[0]);
+    const gpx = getGpx(displayTracks[0]);
     const point = gpx.tracks[gpx.tracks.length - 1].points[gpx.tracks[gpx.tracks.length - 1].points.length - 1];
     return toLatLng(point);
 }
@@ -33,7 +33,7 @@ function getCenterPoint(currentZipTracks: DisplayTrack[] | undefined) {
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
-    const zipTracks = useSelector(getZipTracks);
+    const displayTracks = useSelector(getDisplayTracks);
     const isLive = useSelector(getIsLive);
 
     useEffect(() => {
@@ -46,26 +46,26 @@ export const PresentationMap = () => {
                 locate.addTo(myMap);
                 locate.start();
             }
-            const centerPoint = getCenterPoint(zipTracks);
+            const centerPoint = getCenterPoint(displayTracks);
             myMap.setView(centerPoint, 12);
         }
     }, []);
 
-    const zipTracksLayer = useRef<LayerGroup>(null);
-    const tracksLayer = useRef<LayerGroup>(null);
+    const trackLayer = useRef<LayerGroup>(null);
+    const snakeLayer = useRef<LayerGroup>(null);
     const criticalMapsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         // @ts-ignore
-        zipTracksLayer.current = L.layerGroup().addTo(myMap);
+        trackLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
-        tracksLayer.current = L.layerGroup().addTo(myMap);
+        snakeLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         criticalMapsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    zipTracksDisplayHook(zipTracksLayer, true);
-    snakeForDisplayMapHook(tracksLayer);
+    tracksForDisplayMapHook(trackLayer, true);
+    snakeForDisplayMapHook(snakeLayer);
     criticalMapsHook(criticalMapsLayer);
 
     return (

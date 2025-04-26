@@ -1,4 +1,4 @@
-import { ZipTimeSlider } from '../ZipTimeSlider.tsx';
+import { DisplayTimeSlider } from '../DisplayTimeSlider.tsx';
 import { CSSProperties } from 'react';
 import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
 import { LoadStateButton, showTimes } from '../store/LoadStateButton.tsx';
@@ -31,7 +31,7 @@ export function PresentationMenu() {
             <TrackInformationModal />
             <div style={style} className={'shadow d-sm-block'}>
                 <h5 className={'mt-2'}>{title}</h5>
-                <ZipTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
+                <DisplayTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
                 <LoadStateButton />
                 <div>
                     <TrackInformationModalButton />
@@ -39,7 +39,7 @@ export function PresentationMenu() {
             </div>
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
                 <h5 className={'mt-2'}>{title}</h5>
-                <ZipTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
+                <DisplayTimeSlider showPlayButton={true} bigThumb={true} showTimes={showTimes} />
                 <LoadStateButton />
                 <div>
                     <TrackInformationModalButton />

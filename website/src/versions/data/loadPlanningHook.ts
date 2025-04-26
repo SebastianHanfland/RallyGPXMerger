@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { zipTracksActions } from '../store/zipTracks.reducer.ts';
+import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { loadServerFile } from './loadServerFile.ts';
 import { setStartAndEndTime } from './loadFilesHook.ts';
 
@@ -9,11 +9,11 @@ export function useLoadPlanningById(planningId: string | undefined) {
 
     useEffect(() => {
         if (planningId) {
-            dispatch(zipTracksActions.removeZipTracks());
-            dispatch(zipTracksActions.setIsLoading(true));
+            dispatch(displayTracksActions.removeDisplayTracks());
+            dispatch(displayTracksActions.setIsLoading(true));
 
             loadServerFile(planningId, dispatch).then(() => {
-                dispatch(zipTracksActions.setIsLoading(false));
+                dispatch(displayTracksActions.setIsLoading(false));
                 setStartAndEndTime(dispatch);
             });
         }

@@ -1,6 +1,6 @@
 import { Provider, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
-import { getIsZipLoading } from './store/zipTracks.reducer.ts';
+import { getIsDisplayLoading } from './store/displayTracksReducer.ts';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
@@ -13,7 +13,7 @@ function RallyTable() {
     const planningId = useGetUrlParam('table=');
     useLoadPlanningById(planningId);
 
-    const isLoading = useSelector(getIsZipLoading);
+    const isLoading = useSelector(getIsDisplayLoading);
 
     if (isLoading) {
         return (

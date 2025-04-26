@@ -1,6 +1,6 @@
 import { DisplayTrack } from '../../common/types.ts';
 
-export interface ZipTracksState {
+export interface DisplayState {
     tracks: DisplayTrack[];
     isLoading: boolean;
 }
@@ -18,6 +18,6 @@ export interface MapState {
 }
 
 export interface VersionsState {
-    zipTracks: ZipTracksState;
+    tracks: DisplayState;
     map: MapState;
 }

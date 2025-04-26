@@ -1,6 +1,6 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapTime, getIsLive, mapActions } from './store/map.reducer.ts';
+import { getCurrenDisplayMapTime, getIsLive, mapActions } from './store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
 import { getDisplayTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
@@ -14,7 +14,7 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-export function ZipTimeSlider({
+export function DisplayTimeSlider({
     bigThumb,
     showPlayButton,
     showTimes,
@@ -23,7 +23,7 @@ export function ZipTimeSlider({
     showPlayButton?: boolean;
     showTimes: boolean;
 }) {
-    const mapTime = useSelector(getCurrenMapTime);
+    const mapTime = useSelector(getCurrenDisplayMapTime);
     const dateValue = useSelector(getDisplayTimeStamp);
     const isLive = useSelector(getIsLive);
     const dispatch = useDispatch();
