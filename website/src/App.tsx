@@ -5,7 +5,7 @@ import { ErrorBoundary } from './common/ErrorBoundary.tsx';
 import { RallyPlannerWrapper } from './planner/RallyPlanner.tsx';
 import { RallyDisplayWrapper } from './versions/RallyDisplayWrapper.tsx';
 import { RallyTableWrapper } from './versions/RallyTableWrapper.tsx';
-import { RallyComparisonWrapper } from './versions/RallyComparisonWrapper.tsx';
+import { RallyComparisonWrapper } from './comparison/RallyComparisonWrapper.tsx';
 import { useGetUrlParam } from './utils/linkUtil.ts';
 import { planningStore } from './planner/store/planningStore.ts';
 import { versionsStore } from './versions/store/store.ts';

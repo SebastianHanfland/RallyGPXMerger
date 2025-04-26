@@ -10,7 +10,7 @@ import { createVersionsStore } from '../../src/versions/store/store';
 import { RallyDisplayWrapper } from '../../src/versions/RallyDisplayWrapper';
 import { getBikeSnakesForDisplayMap } from '../../src/versions/map/dataReading';
 import { mapActions } from '../../src/versions/store/map.reducer';
-import { RallyComparisonWrapper } from '../../src/versions/RallyComparisonWrapper';
+import { RallyComparisonWrapper } from '../../src/comparison/RallyComparisonWrapper';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');

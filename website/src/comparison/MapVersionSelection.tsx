@@ -1,13 +1,13 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowMapMarker, mapActions } from './store/map.reducer.ts';
+import { getShowMapMarker, mapActions } from '../versions/store/map.reducer.ts';
 import {
     getSelectedTracks,
     getSelectedVersions,
     getTrackInfo,
     getZipTracks,
     zipTracksActions,
-} from './store/zipTracks.reducer.ts';
+} from '../versions/store/zipTracks.reducer.ts';
 import Select from 'react-select';
 import { ZipTimeSlider } from './ZipTimeSlider.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
