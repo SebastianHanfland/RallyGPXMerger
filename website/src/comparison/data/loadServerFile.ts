@@ -6,7 +6,6 @@ import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 import { getData } from '../../api/api.ts';
-import { setStoredState } from './loadJsonFile.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { extendReadableTracks } from '../cache/readableTracks.ts';
 
@@ -14,7 +13,6 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
         .then((res) => res.data)
         .then((planning: State) => {
-            setStoredState(planning);
             const planningTitle = getPlanningTitle(planning);
             if (planningTitle) {
                 document.title = planningTitle;
