@@ -3,6 +3,7 @@ import { ComparisonTrackState, MapState } from './types';
 
 const initialState: MapState = {
     currentTime: 0,
+    startAndEndTimes: {},
     isLive: window.location.search.includes('&live'),
 };
 
@@ -13,9 +14,12 @@ const mapSlice = createSlice({
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
-        setStartAndEndTime: (state: MapState, action: PayloadAction<{ start: string; end: string }>) => {
-            state.start = action.payload.start;
-            state.end = action.payload.end;
+        setStartAndEndTime: (
+            state: MapState,
+            action: PayloadAction<{ start: string; end: string; planningId: string }>
+        ) => {
+            const { start, end, planningId } = action.payload;
+            state.startAndEndTimes[planningId] = { start, end };
         },
         setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
             state.showMapMarker = action.payload;

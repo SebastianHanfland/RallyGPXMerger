@@ -13,6 +13,7 @@ export interface ComparisonState {
 export interface MapState {
     currentTime: number;
     currentRealTime?: string;
+    startAndEndTimes: Record<string, { start: string; end: string }>;
     start?: string;
     end?: string;
     showMapMarker?: boolean;

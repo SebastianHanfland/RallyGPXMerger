@@ -7,7 +7,8 @@ import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 import { getData } from '../../api/api.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { extendReadableTracks } from '../cache/readableTracks.ts';
+import { mapActions } from '../store/map.reducer.ts';
+import { getStartAndEndOfParsedTracks } from '../../utils/parsedTracksUtil.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
@@ -34,14 +35,8 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                     points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
                 })
             );
-            extendReadableTracks(
-                calculatedTracks.map((track) => {
-                    return {
-                        id: track.id + '_' + id,
-                        gpx: SimpleGPX.fromString(track.content),
-                    };
-                })
-            );
+
+            dispatch(mapActions.setStartAndEndTime({ ...getStartAndEndOfParsedTracks(parsedTracks), planningId: id }));
             setParticipantsDelay(planning.trackMerge.participantDelay);
             dispatch(comparisonActions.setComparisonTracks({ version: id, tracks: calculatedTracks }));
             dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: parsedTracks }));
