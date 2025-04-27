@@ -2,12 +2,12 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { mapActions } from '../store/map.reducer.ts';
 import { DisplayState } from '../store/types.ts';
 import { getParsedTracks } from '../store/displayTracksReducer.ts';
+import { ParsedTrack } from '../../common/types.ts';
 
-export function setStartAndEndTime(dispatch: Dispatch, getState: () => DisplayState) {
+function getStartAndEndOfParsedTracks(parsedTracks: ParsedTrack[]) {
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 
-    const parsedTracks = getParsedTracks(getState());
     parsedTracks.forEach((track) => {
         const startTimeOfTrack = track.points[0].time;
         if (startTimeOfTrack < startDate) {
@@ -20,14 +20,17 @@ export function setStartAndEndTime(dispatch: Dispatch, getState: () => DisplaySt
         }
     });
 
-    const payload = {
+    return {
         start: startDate,
         end: endDate,
     };
-    if (
-        endDate.startsWith(new Date().toISOString().substring(0, 10)) ||
-        startDate.startsWith(new Date().toISOString().substring(0, 10))
-    ) {
+}
+
+export function setStartAndEndTime(dispatch: Dispatch, getState: () => DisplayState) {
+    const parsedTracks = getParsedTracks(getState());
+    const payload = getStartAndEndOfParsedTracks(parsedTracks);
+    const todayDateString = new Date().toISOString().substring(0, 10);
+    if (payload.end.startsWith(todayDateString) || payload.start.startsWith(todayDateString)) {
         dispatch(mapActions.setIsLive(true));
     }
     dispatch(mapActions.setStartAndEndTime(payload));
