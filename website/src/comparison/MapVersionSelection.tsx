@@ -7,6 +7,7 @@ import {
     getTrackInfo,
     getComparisonTracks,
     comparisonActions,
+    getPlanningIds,
 } from './store/tracks.reducer.ts';
 import Select from 'react-select';
 import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
@@ -19,6 +20,7 @@ export function MapVersionSelection() {
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const trackInfo = useSelector(getTrackInfo);
+    const planningIds = useSelector(getPlanningIds);
     const dispatch = useDispatch();
     const intl = useIntl();
 
@@ -39,63 +41,58 @@ export function MapVersionSelection() {
     return (
         <Form.Group>
             <Form className={'d-flex'}>
-                {Object.keys(comparisonTracks)
-                    .sort()
-                    .map((versionId) => {
-                        const versionName = trackInfo[versionId] ?? versionId;
-                        return (
-                            <div
-                                key={versionId}
-                                className={'mx-3'}
-                                style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}
+                {planningIds.map((planningId) => {
+                    const versionName = trackInfo[planningId] ?? planningId;
+                    return (
+                        <div
+                            key={planningId}
+                            className={'mx-3'}
+                            style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}
+                        >
+                            <Form.Check
+                                type={'checkbox'}
+                                id={planningId}
+                                className={'m-3'}
+                                label={<span>{versionName}</span>}
+                                title={versionName}
+                                checked={selectedVersions.includes(planningId)}
+                                readOnly
+                                onClick={() => dispatch(comparisonActions.selectVersion(planningId))}
+                            ></Form.Check>
+                            <Select
+                                name="version"
+                                value={optionsMap[planningId]?.find((opt) =>
+                                    selectedTracks[planningId]?.includes(opt.value)
+                                )}
+                                placeholder={intl.formatMessage(
+                                    { id: 'msg.onlyDisplaySingle' },
+                                    { versionName: versionName }
+                                )}
+                                // @ts-ignore
+                                options={optionsMap[planningId] ?? []}
+                                className="basic-multi-select"
+                                isClearable={true}
+                                classNamePrefix="select"
+                                // @ts-ignore
+                                onChange={(newValue: { value: string }) => {
+                                    dispatch(
+                                        comparisonActions.setDisplayTracks({
+                                            version: planningId,
+                                            selectedTracks: newValue ? [newValue.value] : [],
+                                        })
+                                    );
+                                }}
+                            />
+                            <a
+                                target={'_blank'}
+                                href={`${getBaseUrl()}?display=${planningId}`}
+                                referrerPolicy={'no-referrer'}
                             >
-                                <Form.Check
-                                    type={'checkbox'}
-                                    id={versionId}
-                                    className={'m-3'}
-                                    label={<span>{versionName}</span>}
-                                    title={versionName}
-                                    checked={selectedVersions.includes(versionId)}
-                                    readOnly
-                                    onClick={() => dispatch(comparisonActions.selectVersion(versionId))}
-                                ></Form.Check>
-                                <Select
-                                    name="version"
-                                    value={optionsMap[versionId]?.find((opt) =>
-                                        selectedTracks[versionId]?.includes(opt.value)
-                                    )}
-                                    placeholder={intl.formatMessage(
-                                        { id: 'msg.onlyDisplaySingle' },
-                                        { versionName: versionName }
-                                    )}
-                                    // @ts-ignore
-                                    options={optionsMap[versionId] ?? []}
-                                    className="basic-multi-select"
-                                    isClearable={true}
-                                    classNamePrefix="select"
-                                    // @ts-ignore
-                                    onChange={(newValue: { value: string }) => {
-                                        dispatch(
-                                            comparisonActions.setDisplayTracks({
-                                                version: versionId,
-                                                selectedTracks: newValue ? [newValue.value] : [],
-                                            })
-                                        );
-                                    }}
-                                />
-                                <a
-                                    target={'_blank'}
-                                    href={`${getBaseUrl()}?display=${versionId}`}
-                                    referrerPolicy={'no-referrer'}
-                                >
-                                    <FormattedMessage
-                                        id={'msg.detailsVersionGpx'}
-                                        values={{ versionName: versionName }}
-                                    />
-                                </a>
-                            </div>
-                        );
-                    })}
+                                <FormattedMessage id={'msg.detailsVersionGpx'} values={{ versionName: versionName }} />
+                            </a>
+                        </div>
+                    );
+                })}
                 <div className={'mx-3'} style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}>
                     <Form.Check
                         type={'checkbox'}
