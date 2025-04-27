@@ -8,6 +8,7 @@ import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
+import { getPlanningIds, getTrackInfo } from './store/tracks.reducer.ts';
 
 let interval: NodeJS.Timeout | undefined;
 
@@ -15,6 +16,9 @@ let timeMirror = 0;
 
 export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: boolean; showPlayButton?: boolean }) {
     const mapTime = useSelector(getCurrenMapTime);
+    const planningIds = useSelector(getPlanningIds);
+    const trackInfo = useSelector(getTrackInfo);
+
     const currentTimeStampValues = useSelector(getCurrentComparisonTimeStamps);
     const dispatch = useDispatch();
     const intl = useIntl();
@@ -38,13 +42,19 @@ export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: 
         <div className={'d-flex'}>
             <div className={'flex-fill'}>
                 <Form.Group className={'mx-3'}>
-                    <div>
-                        {Object.values(currentTimeStampValues).map((timeStamp) =>
-                            timeStamp
-                                ? intl.formatDate(timeStamp, DateTimeFormat)
-                                : intl.formatMessage({ id: 'msg.time' })
-                        )}
-                    </div>
+                    {planningIds.map((planningId) => {
+                        const currentTimeStampValue = currentTimeStampValues[planningId];
+                        const formattedTimeStamp = currentTimeStampValue
+                            ? intl.formatDate(currentTimeStampValue, DateTimeFormat)
+                            : intl.formatMessage({ id: 'msg.time' });
+
+                        return (
+                            <div>
+                                {formattedTimeStamp}
+                                {` (${trackInfo[planningId]})`}
+                            </div>
+                        );
+                    })}
                     <div className={`d-flex${bigThumb ? ' my-2' : ''}`}>
                         <Form.Range
                             min={0}
