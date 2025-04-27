@@ -107,7 +107,7 @@ export function MapVersionSelection() {
                         readOnly
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                     ></Form.Check>
-                    <ComparisonTimeSlider showTimes={true} />
+                    <ComparisonTimeSlider />
                 </div>
             </Form>
         </Form.Group>

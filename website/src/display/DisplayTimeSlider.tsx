@@ -92,9 +92,9 @@ export function DisplayTimeSlider({ bigThumb, showPlayButton }: Props) {
                         title={intl.formatMessage({ id: playing ? 'msg.play.stop' : 'msg.play.normal' })}
                     >
                         {playing ? (
-                            <img src={stop} className="m-1" alt="open file" />
+                            <img src={stop} className="m-1" alt="stop" />
                         ) : (
-                            <img src={play} className="m-1" alt="open file" />
+                            <img src={play} className="m-1" alt="play" />
                         )}
                     </Button>
                 </div>

@@ -16,7 +16,6 @@ let timeMirror = 0;
 export function ComparisonTimeSlider({
     bigThumb,
     showPlayButton,
-    showTimes,
 }: {
     bigThumb?: boolean;
     showPlayButton?: boolean;
@@ -46,13 +45,11 @@ export function ComparisonTimeSlider({
         <div className={'d-flex'}>
             <div className={'flex-fill'}>
                 <Form.Group className={'mx-3'}>
-                    {showTimes && (
-                        <div>
-                            {dateValue
-                                ? intl.formatDate(dateValue, DateTimeFormat)
-                                : intl.formatMessage({ id: 'msg.time' })}
-                        </div>
-                    )}
+                    <div>
+                        {dateValue
+                            ? intl.formatDate(dateValue, DateTimeFormat)
+                            : intl.formatMessage({ id: 'msg.time' })}
+                    </div>
                     <div className={`d-flex${bigThumb ? ' my-2' : ''}`}>
                         <Form.Range
                             min={0}
@@ -75,9 +72,9 @@ export function ComparisonTimeSlider({
                         title={intl.formatMessage({ id: playing ? 'msg.play.stop' : 'msg.play.normal' })}
                     >
                         {playing ? (
-                            <img src={stop} className="m-1" alt="open file" />
+                            <img src={stop} className="m-1" alt="stop" />
                         ) : (
-                            <img src={play} className="m-1" alt="open file" />
+                            <img src={play} className="m-1" alt="play" />
                         )}
                     </Button>
                 </div>
