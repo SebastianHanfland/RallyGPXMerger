@@ -10,6 +10,8 @@ export function useLoadPlanningsHook(planningIds: string[]) {
     useEffect(() => {
         dispatch(comparisonActions.removeComparisonTracks());
         dispatch(comparisonActions.setIsLoading(true));
+        dispatch(comparisonActions.setPlanningIds(planningIds));
+
         Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))])
             .then(() => setTimeout(() => setStartAndEndTime(dispatch), 500))
             .then(() => dispatch(comparisonActions.setIsLoading(false)));

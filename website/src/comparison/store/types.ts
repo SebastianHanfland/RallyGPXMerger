@@ -4,6 +4,7 @@ export interface ComparisonState {
     tracks: Record<string, DisplayTrack[] | undefined>;
     parsedTracks: Record<string, ParsedTrack[] | undefined>;
     trackInfo: Record<string, string | undefined>;
+    planningIds: string[];
     selectedTracks: Record<string, string[] | undefined>;
     selectedVersions: string[];
     isLoading: boolean;

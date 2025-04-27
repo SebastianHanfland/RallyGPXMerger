@@ -6,6 +6,7 @@ const initialState: ComparisonState = {
     tracks: {},
     parsedTracks: {},
     trackInfo: {},
+    planningIds: [],
     selectedTracks: {},
     selectedVersions: [],
     isLoading: true,
@@ -28,6 +29,9 @@ const comparisonTracksSlice = createSlice({
         ) => {
             const { version, tracks } = action.payload;
             state.parsedTracks[version] = tracks;
+        },
+        setPlanningIds: (state: ComparisonState, action: PayloadAction<string[]>) => {
+            state.planningIds = action.payload;
         },
         setIsLoading: (state: ComparisonState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
@@ -71,6 +75,7 @@ export const comparisonTracksReducer: Reducer<ComparisonState> = comparisonTrack
 const getBase = (state: ComparisonTrackState) => state.tracks;
 export const getComparisonTracks = (state: ComparisonTrackState) => getBase(state).tracks;
 export const getComparisonParsedTracks = (state: ComparisonTrackState) => getBase(state).tracks;
+export const getPlanningIds = (state: ComparisonTrackState) => getBase(state).planningIds;
 export const getIsComparisonLoading = (state: ComparisonTrackState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: ComparisonTrackState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: ComparisonTrackState) => getBase(state).selectedTracks;
