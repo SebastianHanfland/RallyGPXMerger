@@ -22,7 +22,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                 ...track,
                 id: track.id + '_' + id,
                 version: id,
-                color: getColorFromUuid(track.id),
+                color: getColorFromUuid(id),
                 content: optionallyDecompress(track.content),
             }));
             const parsedTracks = planning.calculatedTracks.tracks.map(
@@ -31,7 +31,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                     filename: track.filename,
                     peopleCount: track.peopleCount,
                     version: id,
-                    color: getColorFromUuid(track.id),
+                    color: getColorFromUuid(id),
                     points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
                 })
             );
