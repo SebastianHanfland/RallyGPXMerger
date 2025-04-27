@@ -24,8 +24,9 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             dispatch(displayTracksActions.setPlanningLabel(getPlanningLabel(planning)));
 
             const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
-                ...track,
-                id: track.id + '_' + id,
+                peopleCount: track.peopleCount,
+                filename: track.filename,
+                id: track.id,
                 version: id,
                 color: getColorFromUuid(track.id),
                 content: optionallyDecompress(track.content),
