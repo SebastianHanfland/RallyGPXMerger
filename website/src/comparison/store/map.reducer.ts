@@ -4,7 +4,6 @@ import { ComparisonTrackState, MapState } from './types';
 const initialState: MapState = {
     currentTime: 0,
     startAndEndTimes: {},
-    isLive: window.location.search.includes('&live'),
 };
 
 const mapSlice = createSlice({
@@ -40,7 +39,6 @@ export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
 const getBase = (state: ComparisonTrackState) => state.map;
 export const getCurrenMapTime = (state: ComparisonTrackState) => getBase(state).currentTime;
-export const getStartComparisonMapTime = (state: ComparisonTrackState) => getBase(state).start;
-export const getEndComparisonMapTime = (state: ComparisonTrackState) => getBase(state).end;
+export const getComparisonMapStartAndEndTimes = (state: ComparisonTrackState) => getBase(state).startAndEndTimes;
 export const getShowMapMarker = (state: ComparisonTrackState) => getBase(state).showMapMarker ?? false;
 export const getHighlightedTrack = (state: ComparisonTrackState) => getBase(state).highlightedTrack;

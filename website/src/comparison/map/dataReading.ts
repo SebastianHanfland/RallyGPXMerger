@@ -3,15 +3,13 @@ import { ComparisonTrackState } from '../store/types.ts';
 import { extractSnakeTrackFromParsedTrack } from '../../common/logic/extractSnakeTrack.ts';
 import {
     getComparisonParsedTracks,
-    getComparisonTracks,
     getPlanningIds,
     getSelectedTracks,
     getSelectedVersions,
 } from '../store/tracks.reducer.ts';
 import {
+    getComparisonMapStartAndEndTimes,
     getCurrenMapTime as getCurrenComparisonMapTime,
-    getEndComparisonMapTime,
-    getStartComparisonMapTime,
 } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
@@ -20,44 +18,47 @@ import { createSelector } from '@reduxjs/toolkit';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationComparison =
-    (timeStampFront: string) =>
+    (timeStampsFront: Record<string, string>) =>
     (parsedTrack: ParsedTrack): BikeSnake => {
         const participants = parsedTrack.peopleCount ?? 0;
         return {
-            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
+            points: extractSnakeTrackFromParsedTrack(timeStampsFront[parsedTrack.version], participants, parsedTrack),
             title: parsedTrack?.filename ?? 'N/A',
             color: parsedTrack?.color ?? 'white',
             id: parsedTrack?.id ?? 'id-not-found',
         };
     };
-export const getCurrentComparisonTimeStamp = (state: ComparisonTrackState): string | undefined => {
-    const calculatedTracks = getComparisonTracks(state);
-    if (Object.keys(calculatedTracks).length === 0) {
-        return;
-    }
-    const mapTime = getCurrenComparisonMapTime(state) ?? 0;
-    const start = getStartComparisonMapTime(state);
-    const end = getEndComparisonMapTime(state);
-    if (!start || !end) {
-        return undefined;
+export const getCurrentComparisonTimeStamps = (state: ComparisonTrackState): Record<string, string> => {
+    const mapTimes = getComparisonMapStartAndEndTimes(state);
+    if (Object.values(mapTimes).length === 0) {
+        return {};
     }
 
-    const percentage = mapTime / MAX_SLIDER_TIME;
-    const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
-    return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
+    const planningIds = getPlanningIds(state);
+    const sliderNumber = getCurrenComparisonMapTime(state) ?? 0;
+    const percentage = sliderNumber / MAX_SLIDER_TIME;
+
+    const timeForPlanningIds: Record<string, string> = {};
+    planningIds.forEach((planningId) => {
+        const mapTime = mapTimes[planningId];
+        if (mapTime) {
+            const start = mapTime.start;
+            const end = mapTime.end;
+            const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
+            timeForPlanningIds[planningId] = date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
+        }
+    });
+
+    return timeForPlanningIds;
 };
 
 export const getBikeSnakesForDisplayMap = createSelector(
-    getCurrentComparisonTimeStamp,
+    getCurrentComparisonTimeStamps,
     getPlanningIds,
     getComparisonParsedTracks,
     getSelectedTracks,
     getSelectedVersions,
-    (timeStamp, planningIds, parsedTracks, selectedTracks, selectedVersions): BikeSnake[] => {
-        if (!timeStamp) {
-            return [];
-        }
-
+    (timeStamps, planningIds, parsedTracks, selectedTracks, selectedVersions): BikeSnake[] => {
         const tracksToDisplayOnMap: ParsedTrack[] = [];
         planningIds.forEach((planningId) => {
             if (selectedVersions.includes(planningId)) {
@@ -73,6 +74,6 @@ export const getBikeSnakesForDisplayMap = createSelector(
             }
         });
 
-        return tracksToDisplayOnMap.map(extractLocationComparison(timeStamp)) ?? [];
+        return tracksToDisplayOnMap.map(extractLocationComparison(timeStamps)) ?? [];
     }
 );

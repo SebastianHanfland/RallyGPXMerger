@@ -13,14 +13,11 @@ export interface ComparisonState {
 export interface MapState {
     currentTime: number;
     currentRealTime?: string;
-    startAndEndTimes: Record<string, { start: string; end: string }>;
-    start?: string;
-    end?: string;
+    startAndEndTimes: Record<string, { start: string; end: string } | undefined>;
     showMapMarker?: boolean;
     showTrackInfo?: boolean;
     showSingleTrackInfo?: string;
     highlightedTrack?: string;
-    isLive: boolean;
 }
 
 export interface ComparisonTrackState {

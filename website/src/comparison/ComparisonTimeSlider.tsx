@@ -2,7 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
-import { getCurrentComparisonTimeStamp } from './map/dataReading.ts';
+import { getCurrentComparisonTimeStamps } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
 import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
@@ -13,16 +13,9 @@ let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-export function ComparisonTimeSlider({
-    bigThumb,
-    showPlayButton,
-}: {
-    bigThumb?: boolean;
-    showPlayButton?: boolean;
-    showTimes: boolean;
-}) {
+export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: boolean; showPlayButton?: boolean }) {
     const mapTime = useSelector(getCurrenMapTime);
-    const dateValue = useSelector(getCurrentComparisonTimeStamp);
+    const currentTimeStampValues = useSelector(getCurrentComparisonTimeStamps);
     const dispatch = useDispatch();
     const intl = useIntl();
     const [playing, setPlaying] = useState(false);
@@ -46,9 +39,11 @@ export function ComparisonTimeSlider({
             <div className={'flex-fill'}>
                 <Form.Group className={'mx-3'}>
                     <div>
-                        {dateValue
-                            ? intl.formatDate(dateValue, DateTimeFormat)
-                            : intl.formatMessage({ id: 'msg.time' })}
+                        {Object.values(currentTimeStampValues).map((timeStamp) =>
+                            timeStamp
+                                ? intl.formatDate(timeStamp, DateTimeFormat)
+                                : intl.formatMessage({ id: 'msg.time' })
+                        )}
                     </div>
                     <div className={`d-flex${bigThumb ? ' my-2' : ''}`}>
                         <Form.Range
