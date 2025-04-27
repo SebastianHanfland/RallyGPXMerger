@@ -20,9 +20,6 @@ const mapSlice = createSlice({
             state.start = action.payload.start;
             state.end = action.payload.end;
         },
-        setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
-            state.showMapMarker = action.payload;
-        },
         setShowTrackInfo: (state: MapState, action: PayloadAction<boolean>) => {
             state.showTrackInfo = action.payload;
         },
@@ -45,7 +42,6 @@ export const getCurrenDisplayMapTime = (state: DisplayState) => getBase(state).c
 export const getCurrentRealTime = (state: DisplayState) => getBase(state).currentRealTime;
 export const getStartDisplayMapTime = (state: DisplayState) => getBase(state).start;
 export const getEndDisplayMapTime = (state: DisplayState) => getBase(state).end;
-export const getShowMapMarker = (state: DisplayState) => getBase(state).showMapMarker ?? false;
 export const getShowTrackInfo = (state: DisplayState) => getBase(state).showTrackInfo ?? false;
 export const getShowSingleTrackInfo = (state: DisplayState) => getBase(state).showSingleTrackInfo;
 export const getHighlightedTrack = (state: DisplayState) => getBase(state).highlightedTrack;

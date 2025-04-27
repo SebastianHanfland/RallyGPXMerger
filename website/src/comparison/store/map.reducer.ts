@@ -13,9 +13,6 @@ const mapSlice = createSlice({
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
-        setCurrentRealTime: (state: MapState) => {
-            state.currentRealTime = new Date().toISOString();
-        },
         setStartAndEndTime: (state: MapState, action: PayloadAction<{ start: string; end: string }>) => {
             state.start = action.payload.start;
             state.end = action.payload.end;
@@ -32,9 +29,6 @@ const mapSlice = createSlice({
         setHighlightedTrack: (state: MapState, action: PayloadAction<string | undefined>) => {
             state.highlightedTrack = action.payload;
         },
-        setIsLive: (state: MapState, action: PayloadAction<boolean>) => {
-            state.isLive = action.payload;
-        },
     },
 });
 
@@ -42,9 +36,7 @@ export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
 const getBase = (state: ComparisonTrackState) => state.map;
 export const getCurrenMapTime = (state: ComparisonTrackState) => getBase(state).currentTime;
-export const getCurrentRealTime = (state: ComparisonTrackState) => getBase(state).currentRealTime;
 export const getStartComparisonMapTime = (state: ComparisonTrackState) => getBase(state).start;
 export const getEndComparisonMapTime = (state: ComparisonTrackState) => getBase(state).end;
 export const getShowMapMarker = (state: ComparisonTrackState) => getBase(state).showMapMarker ?? false;
 export const getHighlightedTrack = (state: ComparisonTrackState) => getBase(state).highlightedTrack;
-export const getIsLive = (state: ComparisonTrackState) => getBase(state).isLive;

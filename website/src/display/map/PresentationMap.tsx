@@ -64,7 +64,7 @@ export const PresentationMap = () => {
         criticalMapsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
-    tracksForDisplayMapHook(trackLayer, true);
+    tracksForDisplayMapHook(trackLayer);
     snakeForDisplayMapHook(snakeLayer);
     criticalMapsHook(criticalMapsLayer);
 
