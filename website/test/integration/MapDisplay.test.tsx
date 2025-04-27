@@ -6,10 +6,10 @@ import { getLanguage } from '../../src/language';
 import { getData } from '../../src/api/api';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
-import { createDisplayStore } from '../../src/versions/store/store';
-import { RallyDisplayWrapper } from '../../src/versions/RallyDisplayWrapper';
-import { getBikeSnakesForDisplayMap } from '../../src/versions/map/dataReading';
-import { mapActions } from '../../src/versions/store/map.reducer';
+import { createDisplayStore } from '../../src/display/store/store';
+import { RallyDisplayWrapper } from '../../src/display/RallyDisplayWrapper';
+import { getBikeSnakesForDisplayMap } from '../../src/display/map/dataReading';
+import { mapActions } from '../../src/display/store/map.reducer';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');

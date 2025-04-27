@@ -6,11 +6,8 @@ import { getLanguage } from '../../src/language';
 import { getData } from '../../src/api/api';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
-import { createDisplayStore } from '../../src/versions/store/store';
-import { RallyDisplayWrapper } from '../../src/versions/RallyDisplayWrapper';
-import { getBikeSnakesForDisplayMap } from '../../src/versions/map/dataReading';
-import { mapActions } from '../../src/versions/store/map.reducer';
 import { RallyComparisonWrapper } from '../../src/comparison/RallyComparisonWrapper';
+import { createComparisonStore } from '../../src/comparison/store/store';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
@@ -31,7 +28,7 @@ describe('Comparison Display integration test', () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id,planning-id2');
         (getData as Mock).mockResolvedValue([{ data: state }, { data: state2 }]);
-        const store = createDisplayStore();
+        const store = createComparisonStore();
         const loadingPage = act(() =>
             render(
                 <BrowserRouter>

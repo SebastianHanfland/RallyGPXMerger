@@ -1,13 +1,13 @@
 import { act, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
-import { RallyTableWrapper } from '../../src/versions/RallyTableWrapper';
+import { RallyTableWrapper } from '../../src/display/RallyTableWrapper';
 import { Mock, vi } from 'vitest';
 import { useGetUrlParam } from '../../src/utils/linkUtil';
 import { getLanguage } from '../../src/language';
 import { getData } from '../../src/api/api';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
-import { createDisplayStore } from '../../src/versions/store/store';
+import { createDisplayStore } from '../../src/display/store/store';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');

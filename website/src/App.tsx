@@ -3,12 +3,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { ErrorBoundary } from './common/ErrorBoundary.tsx';
 import { RallyPlannerWrapper } from './planner/RallyPlanner.tsx';
-import { RallyDisplayWrapper } from './versions/RallyDisplayWrapper.tsx';
-import { RallyTableWrapper } from './versions/RallyTableWrapper.tsx';
+import { RallyDisplayWrapper } from './display/RallyDisplayWrapper.tsx';
+import { RallyTableWrapper } from './display/RallyTableWrapper.tsx';
 import { RallyComparisonWrapper } from './comparison/RallyComparisonWrapper.tsx';
 import { useGetUrlParam } from './utils/linkUtil.ts';
 import { planningStore } from './planner/store/planningStore.ts';
-import { displayStore } from './versions/store/store.ts';
+import { displayStore } from './display/store/store.ts';
 import { comparisonStore } from './comparison/store/store.ts';
 
 export function App() {
