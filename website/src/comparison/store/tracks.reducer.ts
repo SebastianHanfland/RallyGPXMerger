@@ -73,6 +73,7 @@ const comparisonTracksSlice = createSlice({
 export const comparisonActions = comparisonTracksSlice.actions;
 export const comparisonTracksReducer: Reducer<ComparisonState> = comparisonTracksSlice.reducer;
 const getBase = (state: ComparisonTrackState) => state.tracks;
+// TODO-187: make it obsolete to have these tracks
 export const getComparisonTracks = (state: ComparisonTrackState) => getBase(state).tracks;
 export const getComparisonParsedTracks = (state: ComparisonTrackState) => getBase(state).parsedTracks;
 export const getPlanningIds = (state: ComparisonTrackState) => getBase(state).planningIds;

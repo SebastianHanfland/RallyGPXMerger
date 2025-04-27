@@ -137,6 +137,7 @@ export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLay
     });
 }
 
+// TODO-187: When the readableTracks is just a list of gpxs, it should not be so big, I hope, and then wie do not need instances of the SimpleGpx anymore... at least for displaying
 export function addTracksToLayer(
     calculatedTracksLayer: React.MutableRefObject<LayerGroup | null>,
     calculatedTracks: CalculatedTrack[] | GpxSegment[] | DisplayTrack[],

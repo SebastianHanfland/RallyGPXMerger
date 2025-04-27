@@ -5,9 +5,9 @@ import {
     getSelectedTracks,
     getSelectedVersions,
     getTrackInfo,
-    getComparisonTracks,
     comparisonActions,
     getPlanningIds,
+    getComparisonParsedTracks,
 } from './store/tracks.reducer.ts';
 import Select from 'react-select';
 import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
@@ -16,7 +16,7 @@ import { getBaseUrl } from '../utils/linkUtil.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
-    const comparisonTracks = useSelector(getComparisonTracks);
+    const comparisonParsedTracks = useSelector(getComparisonParsedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const trackInfo = useSelector(getTrackInfo);
@@ -25,7 +25,7 @@ export function MapVersionSelection() {
     const intl = useIntl();
 
     const optionsMap: Record<string, { value: string; label: string }[] | undefined> = {};
-    Object.entries(comparisonTracks).forEach(([version, tracks]) => {
+    Object.entries(comparisonParsedTracks).forEach(([version, tracks]) => {
         if (!tracks) {
             return;
         }
@@ -47,7 +47,7 @@ export function MapVersionSelection() {
                         <div
                             key={planningId}
                             className={'mx-3'}
-                            style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}
+                            style={{ width: `${100 / (Object.keys(comparisonParsedTracks).length + 2)}vw` }}
                         >
                             <Form.Check
                                 type={'checkbox'}
@@ -93,7 +93,10 @@ export function MapVersionSelection() {
                         </div>
                     );
                 })}
-                <div className={'mx-3'} style={{ width: `${100 / (Object.keys(comparisonTracks).length + 2)}vw` }}>
+                <div
+                    className={'mx-3'}
+                    style={{ width: `${100 / (Object.keys(comparisonParsedTracks).length + 2)}vw` }}
+                >
                     <Form.Check
                         type={'checkbox'}
                         id={'marker'}
