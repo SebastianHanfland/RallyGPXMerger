@@ -1,39 +1,33 @@
-import { ReadableTrack, DisplayTrack } from '../../common/types.ts';
+import { ParsedTrack } from '../../common/types.ts';
 import { ComparisonTrackState } from '../store/types.ts';
-import { extractSnakeTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getSelectedTracks, getSelectedVersions, getComparisonTracks } from '../store/tracks.reducer.ts';
+import { extractSnakeTrackFromParsedTrack } from '../../common/logic/extractSnakeTrack.ts';
+import {
+    getComparisonParsedTracks,
+    getComparisonTracks,
+    getPlanningIds,
+    getSelectedTracks,
+    getSelectedVersions,
+} from '../store/tracks.reducer.ts';
 import {
     getCurrenMapTime as getCurrenComparisonMapTime,
-    getCurrentRealTime,
     getEndComparisonMapTime,
-    getIsLive,
     getStartComparisonMapTime,
 } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
-
-import { getReadableTracks } from '../cache/readableTracks.ts';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationComparison =
-    (timeStampFront: string, comparisonTracks: Record<string, DisplayTrack[] | undefined>) =>
-    (readableTrack: ReadableTrack): BikeSnake => {
-        let foundTrack: DisplayTrack | undefined;
-        Object.values(comparisonTracks).forEach((tracks) => {
-            const find = tracks?.find((track) => readableTrack.id.includes(track.id));
-            if (find) {
-                foundTrack = find;
-            }
-        });
-        const participants = foundTrack?.peopleCount ?? 0;
-
+    (timeStampFront: string) =>
+    (parsedTrack: ParsedTrack): BikeSnake => {
+        const participants = parsedTrack.peopleCount ?? 0;
         return {
-            points: extractSnakeTrack(timeStampFront, participants, readableTrack),
-            title: foundTrack?.filename ?? 'N/A',
-            color: foundTrack?.color ?? 'white',
-            id: foundTrack?.id ?? 'id-not-found',
+            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
+            title: parsedTrack?.filename ?? 'N/A',
+            color: parsedTrack?.color ?? 'white',
+            id: parsedTrack?.id ?? 'id-not-found',
         };
     };
 export const getCurrentComparisonTimeStamp = (state: ComparisonTrackState): string | undefined => {
@@ -53,41 +47,32 @@ export const getCurrentComparisonTimeStamp = (state: ComparisonTrackState): stri
     return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
-export const getDisplayTimeStamp = (state: ComparisonTrackState): string | undefined => {
-    const sliderTimeStamp = getCurrentComparisonTimeStamp(state);
-    const currentRealTime = getCurrentRealTime(state);
-    const isLive = getIsLive(state);
-    return isLive ? currentRealTime : sliderTimeStamp;
-};
-
-function filterForSelectedTracks(readableTracks: ReadableTrack[] | undefined, selectedTrackIds: string[]) {
-    return readableTracks?.filter((track) => {
-        return selectedTrackIds.some((id) => track.id.includes(id));
-    });
-}
-
 export const getBikeSnakesForDisplayMap = createSelector(
-    getDisplayTimeStamp,
-    getComparisonTracks,
-    getReadableTracks,
+    getCurrentComparisonTimeStamp,
+    getPlanningIds,
+    getComparisonParsedTracks,
     getSelectedTracks,
     getSelectedVersions,
-    (timeStamp, comparisonTracks, readableTracks, selectedTracks, selectedVersions): BikeSnake[] => {
+    (timeStamp, planningIds, parsedTracks, selectedTracks, selectedVersions): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
-        const selectedTrackIds = selectedVersions.flatMap((version) => {
-            const trackIdsOfVersion = comparisonTracks[version]?.map((track) => track.id) ?? [];
-            if ((selectedTracks[version]?.length ?? 0) === 0) {
-                return trackIdsOfVersion;
+
+        const tracksToDisplayOnMap: ParsedTrack[] = [];
+        planningIds.forEach((planningId) => {
+            if (selectedVersions.includes(planningId)) {
+                const tracksOfPlanning = parsedTracks[planningId];
+                const selectedTrackIdsOfPlanning = selectedTracks[planningId];
+                if (selectedTrackIdsOfPlanning && selectedTrackIdsOfPlanning.length > 0) {
+                    tracksToDisplayOnMap.push(
+                        ...(tracksOfPlanning?.filter((track) => selectedTrackIdsOfPlanning.includes(track.id)) ?? [])
+                    );
+                } else {
+                    tracksToDisplayOnMap.push(...(tracksOfPlanning ?? []));
+                }
             }
-            return selectedTracks[version] ?? [];
         });
 
-        return (
-            filterForSelectedTracks(readableTracks, selectedTrackIds)?.map(
-                extractLocationComparison(timeStamp, comparisonTracks)
-            ) ?? []
-        );
+        return tracksToDisplayOnMap.map(extractLocationComparison(timeStamp)) ?? [];
     }
 );

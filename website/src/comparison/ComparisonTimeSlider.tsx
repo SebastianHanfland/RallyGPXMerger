@@ -2,7 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
-import { getDisplayTimeStamp } from './map/dataReading.ts';
+import { getCurrentComparisonTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
 import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
@@ -23,7 +23,7 @@ export function ComparisonTimeSlider({
     showTimes: boolean;
 }) {
     const mapTime = useSelector(getCurrenMapTime);
-    const dateValue = useSelector(getDisplayTimeStamp);
+    const dateValue = useSelector(getCurrentComparisonTimeStamp);
     const dispatch = useDispatch();
     const intl = useIntl();
     const [playing, setPlaying] = useState(false);

@@ -6,6 +6,7 @@ export function setStartAndEndTime(dispatch: Dispatch) {
     let endDate = '1990-10-14T10:09:57.000Z';
     let startDate = '9999-10-14T10:09:57.000Z';
 
+    // TODO-187: start and end time for each planning
     getReadableTracks()?.forEach((track) => {
         if (track.gpx.getStart() < startDate) {
             startDate = track.gpx.getStart();

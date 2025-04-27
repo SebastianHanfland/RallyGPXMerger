@@ -74,7 +74,7 @@ export const comparisonActions = comparisonTracksSlice.actions;
 export const comparisonTracksReducer: Reducer<ComparisonState> = comparisonTracksSlice.reducer;
 const getBase = (state: ComparisonTrackState) => state.tracks;
 export const getComparisonTracks = (state: ComparisonTrackState) => getBase(state).tracks;
-export const getComparisonParsedTracks = (state: ComparisonTrackState) => getBase(state).tracks;
+export const getComparisonParsedTracks = (state: ComparisonTrackState) => getBase(state).parsedTracks;
 export const getPlanningIds = (state: ComparisonTrackState) => getBase(state).planningIds;
 export const getIsComparisonLoading = (state: ComparisonTrackState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: ComparisonTrackState) => getBase(state).selectedVersions;
