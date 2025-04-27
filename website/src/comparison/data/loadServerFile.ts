@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { DisplayTrack } from '../../common/types.ts';
+import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
 import { comparisonActions } from '../store/tracks.reducer.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
@@ -24,6 +24,16 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                 color: getColorFromUuid(track.id),
                 content: optionallyDecompress(track.content),
             }));
+            const parsedTracks = planning.calculatedTracks.tracks.map(
+                (track): ParsedTrack => ({
+                    id: track.id,
+                    filename: track.filename,
+                    peopleCount: track.peopleCount,
+                    version: id,
+                    color: getColorFromUuid(track.id),
+                    points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
+                })
+            );
             extendReadableTracks(
                 calculatedTracks.map((track) => {
                     return {
@@ -34,6 +44,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             );
             setParticipantsDelay(planning.trackMerge.participantDelay);
             dispatch(comparisonActions.setComparisonTracks({ version: id, tracks: calculatedTracks }));
+            dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: parsedTracks }));
             dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
             dispatch(comparisonActions.setSelectVersions([id]));
         })

@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ComparisonTrackState, ComparisonState } from './types';
-import { DisplayTrack } from '../../common/types.ts';
+import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
 
 const initialState: ComparisonState = {
     tracks: {},
+    parsedTracks: {},
     trackInfo: {},
     selectedTracks: {},
     selectedVersions: [],
@@ -20,6 +21,13 @@ const comparisonTracksSlice = createSlice({
         ) => {
             const { version, tracks } = action.payload;
             state.tracks[version] = tracks;
+        },
+        setComparisonParsedTracks: (
+            state: ComparisonState,
+            action: PayloadAction<{ version: string; tracks: ParsedTrack[] }>
+        ) => {
+            const { version, tracks } = action.payload;
+            state.parsedTracks[version] = tracks;
         },
         setIsLoading: (state: ComparisonState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
@@ -62,6 +70,7 @@ export const comparisonActions = comparisonTracksSlice.actions;
 export const comparisonTracksReducer: Reducer<ComparisonState> = comparisonTracksSlice.reducer;
 const getBase = (state: ComparisonTrackState) => state.tracks;
 export const getComparisonTracks = (state: ComparisonTrackState) => getBase(state).tracks;
+export const getComparisonParsedTracks = (state: ComparisonTrackState) => getBase(state).tracks;
 export const getIsComparisonLoading = (state: ComparisonTrackState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: ComparisonTrackState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: ComparisonTrackState) => getBase(state).selectedTracks;
