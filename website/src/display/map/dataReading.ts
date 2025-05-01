@@ -30,8 +30,8 @@ const extractLocationDisplay =
     };
 
 export const getCurrentDisplayTimeStamp = (state: DisplayState): string | undefined => {
-    const tracks = getParsedTracks(state);
-    if (Object.keys(tracks).length === 0) {
+    const calculatedTracks = getParsedTracks(state);
+    if (Object.keys(calculatedTracks).length === 0) {
         return;
     }
     const mapTime = getCurrenDisplayMapTime(state) ?? 0;

@@ -4,8 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConstructionSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
-import { GpxSegment } from '../../common/types.ts';
+import { GpxSegment, ParsedTrack } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { parsedTracksActions } from '../store/parsedTracks.reducer.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
+import { optionallyDecompress } from '../store/compressHelper.ts';
 
 const fileTypes = ['GPX'];
 
@@ -25,9 +28,19 @@ export function ConstructionSites() {
     const constructionSegments = useSelector(getConstructionSegments) ?? [];
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) =>
-            dispatch(gpxSegmentsActions.addConstructionSegments(newGpxSegments))
-        );
+        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) => {
+            dispatch(gpxSegmentsActions.addConstructionSegments(newGpxSegments));
+            const parsedConstructionSegments = newGpxSegments.map(
+                (track): ParsedTrack => ({
+                    id: track.id,
+                    filename: track.filename,
+                    version: 'current',
+                    color: 'red',
+                    points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
+                })
+            );
+            dispatch(parsedTracksActions.addParsedConstructionSegments(parsedConstructionSegments));
+        });
     };
     return (
         <div style={{ height: '95%', overflow: 'auto' }}>

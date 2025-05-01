@@ -101,6 +101,7 @@ export interface TrackMergeState {
 export interface ParsedTrackState {
     parsedTracks: ParsedTrack[];
     parsedSegments: ParsedTrack[];
+    parsedConstructionSegments: ParsedTrack[];
 }
 
 export interface MapState {

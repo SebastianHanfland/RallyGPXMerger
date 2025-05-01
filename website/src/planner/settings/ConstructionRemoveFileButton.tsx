@@ -5,6 +5,7 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
 import { useIntl } from 'react-intl';
+import { parsedTracksActions } from '../store/parsedTracks.reducer.ts';
 
 interface Props {
     id: string;
@@ -17,6 +18,7 @@ export function ConstructionRemoveFileButton({ id, name }: Props) {
     const [showModal, setShowModal] = useState(false);
     const removeConstruction = () => {
         dispatch(gpxSegmentsActions.removeConstructionSegment(id));
+        dispatch(parsedTracksActions.removeParsedConstructionSegment(id));
     };
     return (
         <>

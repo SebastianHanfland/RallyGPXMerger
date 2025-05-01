@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
-import { getConstructionSegments } from '../../store/gpxSegments.reducer.ts';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../../common/map/addTrackToMap.ts';
+import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
 import { getShowConstructions } from '../../store/map.reducer.ts';
+import { getParsedConstructionSegments } from '../../store/parsedTracks.reducer.ts';
 
 export function constructionsDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
-    const gpxSegments = useSelector(getConstructionSegments) ?? [];
+    const gpxSegments = useSelector(getParsedConstructionSegments) ?? [];
     const showConstructions = useSelector(getShowConstructions);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -5,6 +5,7 @@ import { ParsedTrack } from '../../common/types.ts';
 const initialState: ParsedTrackState = {
     parsedTracks: [],
     parsedSegments: [],
+    parsedConstructionSegments: [],
 };
 
 const parsedTracksSlice = createSlice({
@@ -17,6 +18,14 @@ const parsedTracksSlice = createSlice({
         setParsedSegments: (state: ParsedTrackState, action: PayloadAction<ParsedTrack[]>) => {
             state.parsedSegments = action.payload;
         },
+        addParsedConstructionSegments: (state: ParsedTrackState, action: PayloadAction<ParsedTrack[]>) => {
+            state.parsedConstructionSegments = [...(state.parsedConstructionSegments ?? []), ...action.payload];
+        },
+        removeParsedConstructionSegment: (state: ParsedTrackState, action: PayloadAction<string>) => {
+            state.parsedConstructionSegments = state.parsedConstructionSegments?.filter(
+                (segment) => segment.id !== action.payload
+            );
+        },
         clear: () => initialState,
     },
 });
@@ -26,3 +35,4 @@ export const parsedTracksReducer: Reducer<ParsedTrackState> = parsedTracksSlice.
 const getBase = (state: State) => state.parsedTracks;
 export const getParsedTracks = (state: State) => getBase(state)?.parsedTracks;
 export const getParsedSegments = (state: State) => getBase(state)?.parsedSegments;
+export const getParsedConstructionSegments = (state: State) => getBase(state)?.parsedConstructionSegments;
