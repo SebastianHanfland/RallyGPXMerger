@@ -33,6 +33,7 @@ export function GpxSegmentsUpload() {
     }
 
     const handleChange = (newFiles: FileList) => {
+        console.log('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
         Promise.all([...newFiles].map(toGpxSegment))
             .then((newGpxSegments) => {
                 dispatch(addGpxSegments(newGpxSegments));

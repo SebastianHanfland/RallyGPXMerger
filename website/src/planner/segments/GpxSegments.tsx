@@ -15,6 +15,7 @@ import { addGpxSegments } from './addGpxSegmentsThunk.ts';
 const fileTypes = ['GPX'];
 
 export async function toGpxSegment(file: File): Promise<GpxSegment> {
+    console.log('WTF', file.arrayBuffer);
     return file.arrayBuffer().then((buffer) => ({
         id: uuidv4(),
         filename: file.name.replace('.gpx', ''),
