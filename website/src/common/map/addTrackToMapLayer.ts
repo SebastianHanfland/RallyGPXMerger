@@ -1,4 +1,4 @@
-import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
+import L, { LayerGroup, LeafletMouseEvent, Polyline } from 'leaflet';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
@@ -73,16 +73,7 @@ function setDestinationOnMap(destination: { lat: number; lng: number }, routeLay
     endMarker.addTo(routeLayer);
 }
 
-export function addTrackToMap(parsedTrack: ParsedTrack, routeLayer: LayerGroup, options: MapOptions) {
-    const trackPoints = parsedTrack.points.map(toLatLng);
-    const trackOnMap = L.polyline(trackPoints, {
-        weight: options.weight ?? 8,
-        color: options.color ?? getColorFromUuid(parsedTrack.id),
-        opacity: options.opacity ?? 0.6,
-    }).bindTooltip(parsedTrack.filename, {
-        sticky: true,
-    });
-
+function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: ParsedTrack) {
     const clickCallBack = options?.clickCallBack;
     if (clickCallBack) {
         trackOnMap.on('click', (event: LeafletMouseEvent) => {
@@ -103,6 +94,22 @@ export function addTrackToMap(parsedTrack: ParsedTrack, routeLayer: LayerGroup, 
             mouseOutCallBack(parsedTrack);
         });
     }
+}
+
+function drawTrackOnMap(trackPoints: { lat: number; lng: number }[], options: MapOptions, parsedTrack: ParsedTrack) {
+    return L.polyline(trackPoints, {
+        weight: options.weight ?? 8,
+        color: options.color ?? getColorFromUuid(parsedTrack.id),
+        opacity: options.opacity ?? 0.6,
+    }).bindTooltip(parsedTrack.filename, {
+        sticky: true,
+    });
+}
+
+export function addTrackToMap(parsedTrack: ParsedTrack, routeLayer: LayerGroup, options: MapOptions) {
+    const trackPoints = parsedTrack.points.map(toLatLng);
+    const trackOnMap = drawTrackOnMap(trackPoints, options, parsedTrack);
+    addCallBacks(options, trackOnMap, parsedTrack);
 
     trackOnMap.addTo(routeLayer);
     if (options.onlyShowBreaks) {
