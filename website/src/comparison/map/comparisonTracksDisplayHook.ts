@@ -1,15 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
+import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import { getSelectedTracks, getSelectedVersions, getComparisonTracks } from '../store/tracks.reducer.ts';
+import {
+    getSelectedTracks,
+    getSelectedVersions,
+    getComparisonTracks,
+    getComparisonParsedTracks,
+} from '../store/tracks.reducer.ts';
 
 export function comparisonTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
     showMarkerOverwrite?: boolean
 ) {
     const comparisonTracks = useSelector(getComparisonTracks);
+    const parsedTracks = useSelector(getComparisonParsedTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
@@ -19,16 +25,16 @@ export function comparisonTracksDisplayHook(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const tracks = selectedVersions.flatMap((version) => {
-            const tracksOfVersion = comparisonTracks[version] ?? [];
+            const tracksOfVersion = parsedTracks[version] ?? [];
             if ((selectedTracks[version]?.length ?? 0) === 0) {
                 return tracksOfVersion;
             }
-            const selecteTracksOfVersion = tracksOfVersion
+            const selectedTracksOfVersion = tracksOfVersion
                 .filter((track) => selectedTracks[version]?.includes(track.id))
                 .sort((a, b) => b.filename.localeCompare(a.filename, undefined, { numeric: true }));
 
-            console.log(selecteTracksOfVersion.map((track) => track.filename));
-            return selecteTracksOfVersion;
+            console.log(selectedTracksOfVersion.map((track) => track.filename));
+            return selectedTracksOfVersion;
         });
 
         const sortedTracks = tracks.sort((a, b) => -b.filename.localeCompare(a.filename, undefined, { numeric: true }));
