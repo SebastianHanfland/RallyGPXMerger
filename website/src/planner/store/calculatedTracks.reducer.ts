@@ -3,10 +3,8 @@ import { CalculatedTracksState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { optionallyCompress, optionallyDecompress } from './compressHelper.ts';
 import { CalculatedTrack } from '../../common/types.ts';
-import { setReadableTracks } from '../cache/readableTracks.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
@@ -25,9 +23,10 @@ const calculatedTracksSlice = createSlice({
         },
         removeSingleCalculatedTrack: (state: CalculatedTracksState, action: PayloadAction<string>) => {
             state.tracks = state.tracks?.filter((track) => track.id !== action.payload);
-            setReadableTracks(
-                state.tracks?.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) })) ?? []
-            );
+            // TODO-187: check if this is a problem when it is not done. Due to it being deleting, I think it could be just fine
+            // setReadableTracks(
+            //     state.tracks?.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) })) ?? []
+            // );
         },
     },
 });
