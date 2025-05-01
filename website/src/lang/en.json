@@ -83,6 +83,7 @@
     "msg.downloads": "Downloads",
     "msg.imports": "Imports",
     "msg.marker": "Marker",
+    "msg.showBreakMarker": "Show Break points",
     "msg.play.normal": "Play the rally simulation",
     "msg.play.fast": "Play the rally simulation fast",
     "msg.play.stop": "Stop the rally simulation",

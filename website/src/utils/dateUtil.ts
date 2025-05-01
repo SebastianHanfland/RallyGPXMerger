@@ -1,5 +1,6 @@
 import date from 'date-and-time';
 import { FormatDateOptions } from 'react-intl';
+import { getLanguage } from '../language.ts';
 
 export function shiftEndDate(endDateString: string, breakInMinutes: number): string {
     return date.addSeconds(new Date(endDateString), -breakInMinutes * 60).toISOString();
@@ -19,7 +20,9 @@ export function formatDate(dateString: string): string {
 }
 
 export function formatTimeOnly(dateString: string, noSecond = false): string {
-    const TIME_FORMAT = noSecond ? 'HH:mm' : 'HH:mm:ss';
+    const germanFormat = noSecond ? 'HH:mm' : 'HH:mm:ss';
+    const englishFormat = noSecond ? 'HH:mm A' : 'HH:mm:ss A';
+    const TIME_FORMAT = getLanguage() === 'de' ? germanFormat : englishFormat;
     return date.format(new Date(dateString), TIME_FORMAT);
 }
 

@@ -101,7 +101,7 @@ export function MapVersionSelection() {
                         type={'checkbox'}
                         id={'marker'}
                         className={'m-3'}
-                        label={'Marker'}
+                        label={intl.formatMessage({ id: 'msg.showBreakMarker' })}
                         title={intl.formatMessage({ id: showMapMarker ? 'msg.hideMarker' : 'msg.showMarker' })}
                         checked={showMapMarker}
                         readOnly

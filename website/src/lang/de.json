@@ -83,6 +83,7 @@
     "msg.downloads": "Downloads",
     "msg.imports": "Imports",
     "msg.marker": "Marker",
+    "msg.showBreakMarker": "Pausen anzeigen",
     "msg.play.normal": "Sternfahrtsimulation abspielen",
     "msg.play.fast": "Sternfahrtsimulation schnell abspielen",
     "msg.play.stop": "Sternfahrtsimulation stoppen",
