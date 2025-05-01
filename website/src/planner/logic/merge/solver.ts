@@ -2,7 +2,7 @@ import { getAdjustedArrivalDateTime } from './helper/peopleDelayCounter.ts';
 
 import { assembleTrackFromSegments } from './helper/assembleTrackFromSegments.ts';
 import { TrackComposition } from '../../store/types.ts';
-import { ResolvedCalculatedTrack, ResolvedGpxSegment } from '../../../common/types.ts';
+import { CalculatedTrack, ResolvedGpxSegment } from '../../../common/types.ts';
 
 /*
 We have to find nodes where the branches join
@@ -19,7 +19,7 @@ export interface GpxMergeLogic {
         gpxSegments: ResolvedGpxSegment[],
         trackCompositions: TrackComposition[],
         arrivalDateTime: string
-    ): ResolvedCalculatedTrack[];
+    ): CalculatedTrack[];
 }
 
 function isNotNull<T>(arg: T | null): arg is T {

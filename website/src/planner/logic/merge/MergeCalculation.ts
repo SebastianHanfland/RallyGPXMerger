@@ -34,17 +34,8 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     setParticipantsDelay(getParticipantsDelay(getState()));
 
     const gpxSegmentsWithTimeStamp = enrichGpxSegmentsWithTimeStamps(gpxSegments, averageSpeed, segmentSpeeds);
+    const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegmentsWithTimeStamp, trackCompositions, arrivalDateTime);
 
-    const calculatedTracksWithGpxObject = mergeAndDelayAndAdjustTimes(
-        gpxSegmentsWithTimeStamp,
-        trackCompositions,
-        arrivalDateTime
-    );
-
-    const calculatedTracks = calculatedTracksWithGpxObject.map((track) => ({
-        ...track,
-        content: track.content.toString(),
-    }));
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(mapActions.setShowCalculatedTracks(true));
 
