@@ -15,9 +15,6 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
         .then((res) => res.data)
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
-            if (planningTitle) {
-                document.title = planningTitle;
-            }
             const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
                 ...track,
                 id: track.id + '_' + id,

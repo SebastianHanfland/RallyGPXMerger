@@ -1,10 +1,11 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { comparisonActions } from '../store/tracks.reducer.ts';
+import { comparisonActions, getComparisonTrackTitles } from '../store/tracks.reducer.ts';
 import { loadServerFile } from './loadServerFile.ts';
 
 export function useLoadPlanningsHook(planningIds: string[]) {
     const dispatch = useDispatch();
+    const trackTitles = useSelector(getComparisonTrackTitles);
 
     useEffect(() => {
         dispatch(comparisonActions.removeComparisonTracks());
@@ -15,4 +16,8 @@ export function useLoadPlanningsHook(planningIds: string[]) {
             dispatch(comparisonActions.setIsLoading(false))
         );
     }, []);
+
+    useEffect(() => {
+        document.title = `Vergleich: ${Object.values(trackTitles).join(', ')}`;
+    }, [trackTitles]);
 }

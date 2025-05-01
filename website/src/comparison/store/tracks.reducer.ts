@@ -80,4 +80,4 @@ export const getPlanningIds = (state: ComparisonTrackState) => getBase(state).pl
 export const getIsComparisonLoading = (state: ComparisonTrackState) => getBase(state).isLoading;
 export const getSelectedVersions = (state: ComparisonTrackState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: ComparisonTrackState) => getBase(state).selectedTracks;
-export const getTrackInfo = (state: ComparisonTrackState) => getBase(state).trackInfo;
+export const getComparisonTrackTitles = (state: ComparisonTrackState) => getBase(state).trackInfo;

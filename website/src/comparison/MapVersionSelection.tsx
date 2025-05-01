@@ -4,7 +4,7 @@ import { getShowMapMarker, mapActions } from './store/map.reducer.ts';
 import {
     getSelectedTracks,
     getSelectedVersions,
-    getTrackInfo,
+    getComparisonTrackTitles,
     comparisonActions,
     getPlanningIds,
     getComparisonParsedTracks,
@@ -19,7 +19,7 @@ export function MapVersionSelection() {
     const comparisonParsedTracks = useSelector(getComparisonParsedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
-    const trackInfo = useSelector(getTrackInfo);
+    const trackInfo = useSelector(getComparisonTrackTitles);
     const planningIds = useSelector(getPlanningIds);
     const dispatch = useDispatch();
     const intl = useIntl();

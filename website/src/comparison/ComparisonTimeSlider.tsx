@@ -8,7 +8,7 @@ import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
-import { getPlanningIds, getTrackInfo } from './store/tracks.reducer.ts';
+import { getPlanningIds, getComparisonTrackTitles } from './store/tracks.reducer.ts';
 
 let interval: NodeJS.Timeout | undefined;
 
@@ -17,7 +17,7 @@ let timeMirror = 0;
 export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: boolean; showPlayButton?: boolean }) {
     const mapTime = useSelector(getCurrenMapTime);
     const planningIds = useSelector(getPlanningIds);
-    const trackInfo = useSelector(getTrackInfo);
+    const trackInfo = useSelector(getComparisonTrackTitles);
 
     const currentTimeStampValues = useSelector(getCurrentComparisonTimeStamps);
     const dispatch = useDispatch();
