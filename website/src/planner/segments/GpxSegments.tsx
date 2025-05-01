@@ -10,6 +10,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
+import { addGpxSegments } from './addGpxSegmentsThunk.ts';
 
 const fileTypes = ['GPX'];
 
@@ -37,7 +38,7 @@ export function GpxSegments({ noFilter }: Props) {
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment))
-            .then((newGpxSegments) => dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments)))
+            .then((newGpxSegments) => dispatch(addGpxSegments(newGpxSegments)))
             .then(() => dispatch(resolveStreetNames));
     };
     return (

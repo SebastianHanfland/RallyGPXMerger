@@ -1,10 +1,11 @@
-import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { clearGpxCache } from '../../common/cache/gpxCache.ts';
+import { addGpxSegments } from './addGpxSegmentsThunk.ts';
+import { AppDispatch } from '../store/planningStore.ts';
 
-export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () => State) => {
+export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
     const trackCompositions = getTrackCompositions(getState());
 
@@ -29,7 +30,7 @@ export const executeGpxSegmentReplacement = (dispatch: Dispatch, getState: () =>
                 dispatch(trackMergeActions.setSegments({ id: track.id, segments: newSegments }));
             }
         });
-        dispatch(gpxSegmentsActions.addGpxSegments(replacementSegments));
+        dispatch(addGpxSegments(replacementSegments));
         dispatch(gpxSegmentsActions.removeGpxSegment(targetSegment));
     }
 

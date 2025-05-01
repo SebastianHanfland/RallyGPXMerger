@@ -1,6 +1,5 @@
 import { FileUploader } from 'react-drag-drop-files';
 import { useDispatch, useSelector } from 'react-redux';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
@@ -10,6 +9,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { optionallyCompress } from '../store/compressHelper.ts';
+import { addGpxSegments } from '../segments/addGpxSegmentsThunk.ts';
 
 const fileTypes = ['GPX'];
 
@@ -35,7 +35,7 @@ export function GpxSegmentsUpload() {
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map(toGpxSegment))
             .then((newGpxSegments) => {
-                dispatch(gpxSegmentsActions.addGpxSegments(newGpxSegments));
+                dispatch(addGpxSegments(newGpxSegments));
                 dispatch(
                     trackMergeActions.setSegments({
                         id: track.id,
