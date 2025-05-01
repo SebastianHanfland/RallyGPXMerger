@@ -76,7 +76,7 @@ function addStartAndBreakMarker(
     }
 }
 
-export function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
+function addTrackToMap(gpxSegment: CalculatedTrack | GpxSegment, routeLayer: LayerGroup, options: MapOptions) {
     const gpx = getGpx(gpxSegment);
     let lastTrack: Track | null = null;
     gpx.tracks.forEach((track, index) => {

@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../common/map/addTrackToMap.ts';
+import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedTrack, mapActions } from '../store/map.reducer.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
+import { getParsedTracks } from '../store/displayTracksReducer.ts';
 
 export function tracksForDisplayMapHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
-    const displayTracks = useSelector(getDisplayTracks);
+    const displayTracks = useSelector(getParsedTracks);
     const highlightedTrack = useSelector(getHighlightedTrack);
     const dispatch = useDispatch();
 
