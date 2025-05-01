@@ -17,6 +17,7 @@ const parsedTracksSlice = createSlice({
         setParsedSegments: (state: ParsedTrackState, action: PayloadAction<ParsedTrack[]>) => {
             state.parsedSegments = action.payload;
         },
+        clear: () => initialState,
     },
 });
 
