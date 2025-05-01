@@ -11,29 +11,27 @@ import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLive, mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
-import { getGpx } from '../../common/cache/gpxCache.ts';
+import { getParsedTracks } from '../store/displayTracksReducer.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
 import { Munich } from '../../common/locations.ts';
-import { DisplayTrack } from '../../common/types.ts';
+import { ParsedTrack } from '../../common/types.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
 
-function getCenterPoint(displayTracks: DisplayTrack[] | undefined) {
-    if (!displayTracks || !displayTracks[0]) {
+function getCenterPoint(parsedTracks: ParsedTrack[] | undefined) {
+    if (!parsedTracks || parsedTracks.length === 0) {
         return Munich;
     }
-    const gpx = getGpx(displayTracks[0]);
-    const point = gpx.tracks[gpx.tracks.length - 1].points[gpx.tracks[gpx.tracks.length - 1].points.length - 1];
+    const point = parsedTracks[0].points[parsedTracks[0].points.length - 1];
     return toLatLng(point);
 }
 
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
-    const displayTracks = useSelector(getDisplayTracks);
+    const parsedTracks = useSelector(getParsedTracks);
     const isLive = useSelector(getIsLive);
 
     useEffect(() => {
@@ -46,7 +44,7 @@ export const PresentationMap = () => {
                 locate.addTo(myMap);
                 locate.start();
             }
-            const centerPoint = getCenterPoint(displayTracks);
+            const centerPoint = getCenterPoint(parsedTracks);
             myMap.setView(centerPoint, 12);
         }
     }, []);

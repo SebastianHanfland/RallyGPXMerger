@@ -3,7 +3,7 @@ import {
     StreetNameReplacementWayPoint,
     TrackStreetInfo,
 } from '../logic/resolving/types.ts';
-import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
+import { CalculatedTrack, GpxSegment, ParsedTrack } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
 
@@ -98,6 +98,11 @@ export interface TrackMergeState {
     changesSinceLastCalculation?: boolean;
 }
 
+export interface ParsedTrackState {
+    parsedTracks: ParsedTrack[];
+    parsedSegments: ParsedTrack[];
+}
+
 export interface MapState {
     currentTime: number;
     start?: string;
@@ -154,6 +159,7 @@ export interface State {
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
     toasts: ToastsState;
+    parsedTracks: ParsedTrackState | undefined;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

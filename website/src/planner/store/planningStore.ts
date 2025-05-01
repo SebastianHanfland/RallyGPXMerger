@@ -12,6 +12,7 @@ import { layoutReducer } from './layout.reducer.ts';
 import { pointsReducer } from './points.reducer.ts';
 import { backendReducer } from './backend.reducer.ts';
 import { toastsReducer } from './toast.reducer.ts';
+import { parsedTracksReducer } from './parsedTracks.reducer.ts';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,
@@ -24,10 +25,11 @@ const rootReducer: Reducer = combineReducers({
     geoCoding: geoCodingReducer,
     geoCodingRequests: geoCodingRequestsReducer,
     toasts: toastsReducer,
+    parsedTracks: parsedTracksReducer,
 });
 const storingReducer: Reducer = (state: State) => {
     if (state) {
-        storage.save(state);
+        storage.save({ ...state, parsedTracks: undefined });
     }
     return state;
 };
