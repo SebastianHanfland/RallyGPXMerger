@@ -7,11 +7,6 @@ export interface GpxFile {
     content: string;
 }
 
-export interface ReadableTrack {
-    id: string;
-    gpx: SimpleGPX;
-}
-
 export interface GpxSegment extends GpxFile {
     flipped?: boolean;
     streetsResolved?: boolean;

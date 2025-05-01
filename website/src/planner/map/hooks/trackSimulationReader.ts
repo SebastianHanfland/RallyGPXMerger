@@ -6,22 +6,22 @@ import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
-import { extractSnakeTrack } from '../../../common/logic/extractSnakeTrack.ts';
-import { ReadableTrack } from '../../../common/types.ts';
-import { getReadableTracks } from '../../cache/readableTracks.ts';
+import { extractSnakeTrackFromParsedTrack } from '../../../common/logic/extractSnakeTrack.ts';
+import { ParsedTrack } from '../../../common/types.ts';
 import { BikeSnake } from '../../../common/map/addSnakeWithBikeToMap.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
+import { getParsedTracks } from '../../store/parsedTracks.reducer.ts';
 
 const extractSnakeLocationForTimeStamp =
     (timeStampFront: string, trackCompositions: TrackComposition[]) =>
-    (readableTrack: ReadableTrack): BikeSnake => {
+    (parsedTrack: ParsedTrack): BikeSnake => {
         const foundTrackComposition =
-            trackCompositions.length > 0 ? trackCompositions.find((track) => track.id === readableTrack.id) : undefined;
+            trackCompositions.length > 0 ? trackCompositions.find((track) => track.id === parsedTrack.id) : undefined;
         const participants = foundTrackComposition?.peopleCount ?? 0;
 
         const trackId = foundTrackComposition?.id;
         return {
-            points: extractSnakeTrack(timeStampFront, participants, readableTrack),
+            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
             title: foundTrackComposition?.name ?? 'N/A',
             color: trackId ? getColorFromUuid(trackId) : 'white',
             id: trackId ?? 'id-not-found',
@@ -48,11 +48,11 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
 export const getBikeSnakesForPlanningMap = createSelector(
     getCurrentTimeStamp,
     getTrackCompositions,
-    getReadableTracks,
-    (timeStamp, trackParticipants, readableTracks): BikeSnake[] => {
+    getParsedTracks,
+    (timeStamp, trackParticipants, parsedTracks): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
-        return readableTracks?.map(extractSnakeLocationForTimeStamp(timeStamp, trackParticipants)) ?? [];
+        return parsedTracks?.map(extractSnakeLocationForTimeStamp(timeStamp, trackParticipants)) ?? [];
     }
 );
