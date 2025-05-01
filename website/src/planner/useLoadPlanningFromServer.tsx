@@ -30,15 +30,16 @@ function createAndStoreReadablePoints(state: State, planningId: string, dispatch
             points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
         })
     );
-    const parsedSegments = gpxSegments.map(
-        (segment): ParsedTrack => ({
+    const parsedSegments = gpxSegments.map((segment): ParsedTrack => {
+        const points = SimpleGPX.fromString(optionallyDecompress(segment.content)).getPoints();
+        return {
             id: segment.id,
             filename: segment.filename,
             version: planningId,
             color: getColorFromUuid(segment.id),
-            points: SimpleGPX.fromString(optionallyDecompress(segment.content)).getPoints(),
-        })
-    );
+            points: segment.flipped ? points.reverse() : points,
+        };
+    });
     const parsedConstructionSegments = constructionSegments?.map(
         (segment): ParsedTrack => ({
             id: segment.id,
