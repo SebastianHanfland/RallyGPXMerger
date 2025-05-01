@@ -1,17 +1,15 @@
 import { State } from '../../../store/types.ts';
 import { TrackStreetInfo } from '../types.ts';
-import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import geoDistance from 'geo-distance-helper';
 import {
     geoCodingActions,
-    getStreetNameReplacementWayPoints,
     getResolvedPositions,
+    getStreetNameReplacementWayPoints,
 } from '../../../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
-import { CalculatedTrack } from '../../../../common/types.ts';
+import { ParsedTrack } from '../../../../common/types.ts';
 import { toKey } from '../helper/pointKeys.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
@@ -19,18 +17,18 @@ import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { overwriteWayPoints } from './overwriteWayPoints.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
+import { getParsedTracks } from '../../../store/parsedTracks.reducer.ts';
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
-    (track: CalculatedTrack): TrackStreetInfo => {
+    (track: ParsedTrack): TrackStreetInfo => {
         const resolvedPositions = getResolvedPositions(state);
         const replacementWayPoints = getStreetNameReplacementWayPoints(state);
         const tracks = getTrackCompositions(state);
         const nodePositions = getNodePositions(state);
         const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
 
-        const gpx = SimpleGPX.fromString(track.content);
-        const points = gpx.tracks.flatMap((track) => track.points);
+        const points = track.points;
         let lastPoint: Point | null = null;
         let distance = 0;
         const enrichedPoints = points.map((point) => {
@@ -72,8 +70,8 @@ const enrichWithStreetsAndAggregate =
 
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
     dispatch(geoCodingRequestsActions.setIsAggregating(true));
-    const calculatedTracks = getCalculatedTracks(getState());
-    const trackStreetInfos = calculatedTracks.map(enrichWithStreetsAndAggregate(getState()));
+    const parsedTracks = getParsedTracks(getState());
+    const trackStreetInfos = parsedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
     dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
     dispatch(geoCodingRequestsActions.setIsAggregating(false));
     return Promise.resolve();
