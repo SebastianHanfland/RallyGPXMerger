@@ -60,7 +60,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     );
 
     dispatch(parsedTracksActions.setParsedTracks(parsedTracks));
-    initializeResolvedPositions(dispatch);
+    initializeResolvedPositions(parsedTracks)(dispatch);
 
     const payload = getStartAndEndOfParsedTracks(parsedTracks);
     dispatch(mapActions.setStartAndEndTime(payload));
