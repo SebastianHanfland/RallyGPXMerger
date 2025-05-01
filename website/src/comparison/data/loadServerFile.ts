@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
+import { ParsedTrack } from '../../common/types.ts';
 import { comparisonActions } from '../store/tracks.reducer.ts';
 import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
@@ -15,13 +15,6 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
         .then((res) => res.data)
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
-            const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
-                ...track,
-                id: track.id + '_' + id,
-                version: id,
-                color: getColorFromUuid(id),
-                content: optionallyDecompress(track.content),
-            }));
             const parsedTracks = planning.calculatedTracks.tracks.map(
                 (track): ParsedTrack => ({
                     id: track.id,
@@ -35,7 +28,6 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
 
             dispatch(mapActions.setStartAndEndTime({ ...getStartAndEndOfParsedTracks(parsedTracks), planningId: id }));
             setParticipantsDelay(planning.trackMerge.participantDelay);
-            dispatch(comparisonActions.setComparisonTracks({ version: id, tracks: calculatedTracks }));
             dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: parsedTracks }));
             dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
             dispatch(comparisonActions.setSelectVersions([id]));

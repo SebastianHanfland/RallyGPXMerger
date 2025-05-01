@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ComparisonTrackState, ComparisonState } from './types';
-import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
+import { ParsedTrack } from '../../common/types.ts';
 
 const initialState: ComparisonState = {
-    tracks: {},
     parsedTracks: {},
     trackInfo: {},
     planningIds: [],
@@ -16,13 +15,6 @@ const comparisonTracksSlice = createSlice({
     name: 'comparison',
     initialState: initialState,
     reducers: {
-        setComparisonTracks: (
-            state: ComparisonState,
-            action: PayloadAction<{ version: string; tracks: DisplayTrack[] }>
-        ) => {
-            const { version, tracks } = action.payload;
-            state.tracks[version] = tracks;
-        },
         setComparisonParsedTracks: (
             state: ComparisonState,
             action: PayloadAction<{ version: string; tracks: ParsedTrack[] }>
@@ -47,9 +39,6 @@ const comparisonTracksSlice = createSlice({
         setSelectVersions: (state: ComparisonState, action: PayloadAction<string[]>) => {
             state.selectedVersions = [...state.selectedVersions, ...action.payload];
         },
-        removeComparisonTracks: (state: ComparisonState) => {
-            state.tracks = {};
-        },
         setDisplayTracks: (
             state: ComparisonState,
             action: PayloadAction<{ version: string; selectedTracks: string[] | undefined }>
@@ -73,8 +62,6 @@ const comparisonTracksSlice = createSlice({
 export const comparisonActions = comparisonTracksSlice.actions;
 export const comparisonTracksReducer: Reducer<ComparisonState> = comparisonTracksSlice.reducer;
 const getBase = (state: ComparisonTrackState) => state.tracks;
-// TODO-187: make it obsolete to have these tracks
-export const getComparisonTracks = (state: ComparisonTrackState) => getBase(state).tracks;
 export const getComparisonParsedTracks = (state: ComparisonTrackState) => getBase(state).parsedTracks;
 export const getPlanningIds = (state: ComparisonTrackState) => getBase(state).planningIds;
 export const getIsComparisonLoading = (state: ComparisonTrackState) => getBase(state).isLoading;

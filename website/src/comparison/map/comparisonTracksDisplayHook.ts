@@ -3,18 +3,12 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
-import {
-    getSelectedTracks,
-    getSelectedVersions,
-    getComparisonTracks,
-    getComparisonParsedTracks,
-} from '../store/tracks.reducer.ts';
+import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer.ts';
 
 export function comparisonTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
     showMarkerOverwrite?: boolean
 ) {
-    const comparisonTracks = useSelector(getComparisonTracks);
     const parsedTracks = useSelector(getComparisonParsedTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
     const selectedVersions = useSelector(getSelectedVersions);
@@ -55,5 +49,5 @@ export function comparisonTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-    }, [comparisonTracks, comparisonTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
+    }, [parsedTracks, parsedTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
 }

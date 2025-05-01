@@ -1,7 +1,6 @@
-import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
+import { ParsedTrack } from '../../common/types.ts';
 
 export interface ComparisonState {
-    tracks: Record<string, DisplayTrack[] | undefined>;
     parsedTracks: Record<string, ParsedTrack[] | undefined>;
     trackInfo: Record<string, string | undefined>;
     planningIds: string[];

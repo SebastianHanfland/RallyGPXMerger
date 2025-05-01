@@ -8,7 +8,6 @@ export function useLoadPlanningsHook(planningIds: string[]) {
     const trackTitles = useSelector(getComparisonTrackTitles);
 
     useEffect(() => {
-        dispatch(comparisonActions.removeComparisonTracks());
         dispatch(comparisonActions.setIsLoading(true));
         dispatch(comparisonActions.setPlanningIds(planningIds));
 
