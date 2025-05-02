@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
@@ -35,7 +35,7 @@ const ui = {
     complexSegmentsTab: () => screen.getByRole('button', { name: messages['msg.segments'] }),
     complexTracksTab: () => screen.getByRole('button', { name: messages['msg.tracks'] }),
     uploadGpxSegment: async (fileName: string) => {
-        const fileInput = screen.getByText(/upload the/);
+        const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
         const inputElement = fileInput.parentNode.parentNode;
         const buffer = fs.readFileSync(`./test/integration/data/${fileName}.gpx`);
         const file = new File([buffer], `${fileName}.gpx`, { type: 'application/gpx+xml' });
@@ -100,6 +100,9 @@ describe('Planner integration test', () => {
         await user.click(ui.startButton());
         await user.click(ui.complexButton());
         await ui.uploadGpxSegment('segment1');
-        expect(getGpxSegments(store.getState())).toHaveLength(1);
+        await ui.uploadGpxSegment('segment2');
+        screen.debug();
+        await ui.uploadGpxSegment('segment3');
+        expect(getGpxSegments(store.getState())).toHaveLength(3);
     });
 });
