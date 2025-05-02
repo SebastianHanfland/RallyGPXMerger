@@ -8,7 +8,6 @@ import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
 import * as fs from 'node:fs';
-import { resolveStreetNames } from '../../src/planner/logic/resolving/streets/mapMatchingStreetResolver';
 
 const messages = getMessages('en');
 
@@ -39,10 +38,6 @@ const ui = {
 
 describe('Planner integration test', () => {
     it('Starts a new simple planning', async () => {
-        // given
-        // const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
-        // const state = JSON.parse(buffer) as State;
-
         (getLanguage as Mock).mockImplementation(() => 'en');
         const store = createPlanningStore();
         render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
@@ -65,6 +60,28 @@ describe('Planner integration test', () => {
         ui.simpleSettingsTab();
     });
 
+    it('Starts a new complex planning', async () => {
+        (getLanguage as Mock).mockImplementation(() => 'en');
+        const store = createPlanningStore();
+        render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+
+        const user = userEvent.setup();
+
+        ui.header();
+        ui.startButton();
+        ui.openButton();
+        ui.continueButton(false);
+
+        await user.click(ui.startButton());
+
+        ui.simpleButton();
+        ui.complexButton();
+
+        await user.click(ui.complexButton());
+        ui.complexSegmentsTab();
+        ui.complexTracksTab();
+    });
+
     it('splitting a segment into two', async () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         const store = createPlanningStore();
@@ -75,34 +92,17 @@ describe('Planner integration test', () => {
         await user.click(ui.startButton());
         await user.click(ui.complexButton());
 
-        ui.complexSegmentsTab();
-        ui.complexTracksTab();
         const fileInput = screen.getByText(/upload the/);
         const inputElement = fileInput.parentNode.parentNode;
-        const buffer2 = '' + fs.readFileSync('./test/integration/segment1.gpx');
         const buffer = fs.readFileSync('./test/integration/segment1.gpx');
 
-        console.log(buffer2.length, buffer.byteLength);
-
-        const file = new File([buffer2], 'segment1.gpx', { type: 'application/gpx+xml' });
+        const file = new File([buffer], 'segment1.gpx', { type: 'application/gpx+xml' });
         file.arrayBuffer = () => Promise.resolve(buffer.buffer);
 
-        // await user.click(inputElement);
-        // fireEvent.focus(inputElement);
-        // fireEvent.change(inputElement, { target: { files: [file] } });
-        // fireEvent.drop(inputElement, { target: { files: [file] } });
-        act(() =>
-            fireEvent.drop(inputElement, {
-                dataTransfer: { files: [file] },
-                // target: { files: [file] },
-            })
-        );
-
-        // await user.upload(inputElement as HTMLElement, file);
+        act(() => fireEvent.drop(inputElement, { dataTransfer: { files: [file] } }));
 
         await waitFor(() => {
             const gpxSegments = getGpxSegments(store.getState());
-            console.log(gpxSegments);
             expect(gpxSegments).toHaveLength(1);
         });
     });

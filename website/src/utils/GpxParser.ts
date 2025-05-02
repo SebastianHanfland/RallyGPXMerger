@@ -24,7 +24,6 @@ export class GpxParser {
         const jsonReturn: GpxJson = {} as GpxJson;
         try {
             const result = parser.parse(gpxString);
-            console.log({ result });
             jsonReturn.metadata = result.gpx?.metadata;
             jsonReturn.wpt = result.gpx.wpt;
             if (result.gpx.rte) {

@@ -15,15 +15,11 @@ import { addGpxSegments } from './addGpxSegmentsThunk.ts';
 const fileTypes = ['GPX'];
 
 export async function toGpxSegment(file: File): Promise<GpxSegment> {
-    return file.arrayBuffer().then((buffer) => {
-        const content2 = new TextDecoder().decode(buffer);
-        console.log('WTF', content2);
-        return {
-            id: uuidv4(),
-            filename: file.name.replace('.gpx', ''),
-            content: gpxShortener(content2),
-        };
-    });
+    return file.arrayBuffer().then((buffer) => ({
+        id: uuidv4(),
+        filename: file.name.replace('.gpx', ''),
+        content: gpxShortener(new TextDecoder().decode(buffer)),
+    }));
 }
 
 export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
@@ -41,7 +37,6 @@ export function GpxSegments({ noFilter }: Props) {
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
     const handleChange = (newFiles: FileList) => {
-        console.log('FFFFFFF', newFiles.length, newFiles);
         Promise.all([...newFiles].map(toGpxSegment))
             .then((newGpxSegments) => dispatch(addGpxSegments(newGpxSegments)))
             .then(() => dispatch(resolveStreetNames));

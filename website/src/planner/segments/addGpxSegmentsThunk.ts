@@ -9,7 +9,6 @@ import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 export const addGpxSegments =
     (gpxSegments: GpxSegment[], versionId: string = 'current') =>
     (dispatch: Dispatch) => {
-        console.log('herrrrr');
         const parsedSegments = gpxSegments.map((segment): ParsedTrack => {
             const points = SimpleGPX.fromString(optionallyDecompress(segment.content)).getPoints();
             return {

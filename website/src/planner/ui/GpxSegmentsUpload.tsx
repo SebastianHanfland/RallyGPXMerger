@@ -14,15 +14,11 @@ import { addGpxSegments } from '../segments/addGpxSegmentsThunk.ts';
 const fileTypes = ['GPX'];
 
 export async function toGpxSegment(file: File): Promise<GpxSegment> {
-    return file.arrayBuffer().then((buffer) => {
-        const string = new TextDecoder().decode(buffer);
-        console.log({ string });
-        return {
-            id: uuidv4(),
-            filename: file.name.replace('.gpx', ''),
-            content: optionallyCompress(gpxShortener(string)),
-        };
-    });
+    return file.arrayBuffer().then((buffer) => ({
+        id: uuidv4(),
+        filename: file.name.replace('.gpx', ''),
+        content: optionallyCompress(gpxShortener(new TextDecoder().decode(buffer))),
+    }));
 }
 
 export function GpxSegmentsUpload() {
@@ -37,7 +33,6 @@ export function GpxSegmentsUpload() {
     }
 
     const handleChange = (newFiles: FileList) => {
-        console.log('FFFFFFF', newFiles.length, newFiles);
         Promise.all([...newFiles].map(toGpxSegment))
             .then((newGpxSegments) => {
                 dispatch(addGpxSegments(newGpxSegments));
