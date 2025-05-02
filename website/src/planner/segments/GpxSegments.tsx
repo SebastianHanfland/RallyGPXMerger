@@ -22,8 +22,6 @@ export async function toGpxSegment(file: File): Promise<GpxSegment> {
     }));
 }
 
-export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
-
 interface Props {
     noFilter?: boolean;
 }

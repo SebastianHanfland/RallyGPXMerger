@@ -219,7 +219,7 @@ function toLink(link: string | Link | undefined): gpxBuilder.Link | undefined {
 function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
     return new gpxBuilder.Point(_point.lat, _point.lon, {
         ele: _point.ele,
-        time: date.addSeconds(new Date(_point.time), timeshift),
+        ...(_point.time ? { time: date.addSeconds(new Date(_point.time), timeshift) } : {}),
     });
 }
 

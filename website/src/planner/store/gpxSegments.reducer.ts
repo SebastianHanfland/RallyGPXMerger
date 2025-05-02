@@ -80,6 +80,7 @@ const gpxSegmentsSlice = createSlice({
     },
 });
 
+const defaultSegmentSpeeds: Record<string, number | undefined> = {};
 export const gpxSegmentsActions = gpxSegmentsSlice.actions;
 export const gpxSegmentsReducer: Reducer<GpxSegmentsState> = gpxSegmentsSlice.reducer;
 const getBase = (state: State) => state.gpxSegments;
@@ -94,7 +95,7 @@ export const getGpxSegments = getDecompressedGpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
-export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? {};
+export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;
 export const getClickOnSegment = (state: State) => getBase(state).clickOnSegment;
 
 export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {

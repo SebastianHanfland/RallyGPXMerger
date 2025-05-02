@@ -6,8 +6,9 @@ import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
-import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
+import { getGpxSegments, gpxSegmentsActions } from '../../src/planner/store/gpxSegments.reducer';
 import * as fs from 'node:fs';
+import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
 
 const messages = getMessages('en');
 
@@ -100,9 +101,19 @@ describe('Planner integration test', () => {
         await user.click(ui.startButton());
         await user.click(ui.complexButton());
         await ui.uploadGpxSegment('segment1');
+        const listWithFirstSegment = getGpxSegments(store.getState());
+        expect(listWithFirstSegment).toHaveLength(1);
+        const firstSegment = listWithFirstSegment[0];
         await ui.uploadGpxSegment('segment2');
         screen.debug();
         await ui.uploadGpxSegment('segment3');
         expect(getGpxSegments(store.getState())).toHaveLength(3);
+
+        // simulate split click
+        const actionPayload = { segmentId: firstSegment.id, lat: 48.128275, lng: 11.630246 };
+        await act(() => store.dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
+        await act(() => store.dispatch(splitGpxAtPosition(store.dispatch, store.getState)));
+
+        expect(getGpxSegments(store.getState())).toHaveLength(4);
     });
 });
