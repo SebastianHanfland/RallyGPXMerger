@@ -15,12 +15,15 @@ import { addGpxSegments } from './addGpxSegmentsThunk.ts';
 const fileTypes = ['GPX'];
 
 export async function toGpxSegment(file: File): Promise<GpxSegment> {
-    console.log('WTF', file.arrayBuffer);
-    return file.arrayBuffer().then((buffer) => ({
-        id: uuidv4(),
-        filename: file.name.replace('.gpx', ''),
-        content: gpxShortener(new TextDecoder().decode(buffer)),
-    }));
+    return file.arrayBuffer().then((buffer) => {
+        const content2 = new TextDecoder().decode(buffer);
+        console.log('WTF', content2);
+        return {
+            id: uuidv4(),
+            filename: file.name.replace('.gpx', ''),
+            content: gpxShortener(content2),
+        };
+    });
 }
 
 export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;

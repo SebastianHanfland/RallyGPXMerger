@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
@@ -8,12 +8,14 @@ import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
 import * as fs from 'node:fs';
+import { resolveStreetNames } from '../../src/planner/logic/resolving/streets/mapMatchingStreetResolver';
 
 const messages = getMessages('en');
 
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
+vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
 
 const ui = {
     startButton: () => screen.getByRole('button', { name: RegExp(messages['msg.startPlan']) }),
@@ -77,10 +79,13 @@ describe('Planner integration test', () => {
         ui.complexTracksTab();
         const fileInput = screen.getByText(/upload the/);
         const inputElement = fileInput.parentNode.parentNode;
-        console.log(inputElement);
-        const buffer = fs.readFileSync('./test/integration/segment1.gpx').buffer;
-        const file = new File([buffer], 'segment1');
-        file.arrayBuffer = () => Promise.resolve(new ArrayBuffer(3));
+        const buffer2 = '' + fs.readFileSync('./test/integration/segment1.gpx');
+        const buffer = fs.readFileSync('./test/integration/segment1.gpx');
+
+        console.log(buffer2.length, buffer.byteLength);
+
+        const file = new File([buffer2], 'segment1.gpx', { type: 'application/gpx+xml' });
+        file.arrayBuffer = () => Promise.resolve(buffer.buffer);
 
         // await user.click(inputElement);
         fireEvent.focus(inputElement);
@@ -95,6 +100,10 @@ describe('Planner integration test', () => {
 
         // await user.upload(inputElement as HTMLElement, file);
 
-        expect(getGpxSegments(store.getState())).toHaveLength(1);
+        await waitFor(() => {
+            const gpxSegments = getGpxSegments(store.getState());
+            console.log(gpxSegments);
+            expect(gpxSegments).toHaveLength(1);
+        });
     });
 });

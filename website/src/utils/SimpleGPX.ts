@@ -36,6 +36,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         const parser = new GpxParser();
         const gpxJson = parser.parse(raw);
         const { metadata, wpt, tracks, routes } = gpxJson;
+        console.log(gpxJson, raw, 'HEEEEEER');
         return new SimpleGPX(metadata, wpt ?? [], tracks, routes ?? []);
     }
 
