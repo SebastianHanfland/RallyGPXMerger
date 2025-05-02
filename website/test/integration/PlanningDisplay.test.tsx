@@ -34,6 +34,14 @@ const ui = {
         screen.getByRole('button', { name: `${messages['msg.settings']}/${messages['msg.documents']}` }),
     complexSegmentsTab: () => screen.getByRole('button', { name: messages['msg.segments'] }),
     complexTracksTab: () => screen.getByRole('button', { name: messages['msg.tracks'] }),
+    uploadGpxSegment: async (fileName: string) => {
+        const fileInput = screen.getByText(/upload the/);
+        const inputElement = fileInput.parentNode.parentNode;
+        const buffer = fs.readFileSync(`./test/integration/data/${fileName}.gpx`);
+        const file = new File([buffer], `${fileName}.gpx`, { type: 'application/gpx+xml' });
+        file.arrayBuffer = () => Promise.resolve(buffer.buffer);
+        await act(() => fireEvent.drop(inputElement, { dataTransfer: { files: [file] } }));
+    },
 };
 
 describe('Planner integration test', () => {
@@ -91,19 +99,7 @@ describe('Planner integration test', () => {
 
         await user.click(ui.startButton());
         await user.click(ui.complexButton());
-
-        const fileInput = screen.getByText(/upload the/);
-        const inputElement = fileInput.parentNode.parentNode;
-        const buffer = fs.readFileSync('./test/integration/segment1.gpx');
-
-        const file = new File([buffer], 'segment1.gpx', { type: 'application/gpx+xml' });
-        file.arrayBuffer = () => Promise.resolve(buffer.buffer);
-
-        act(() => fireEvent.drop(inputElement, { dataTransfer: { files: [file] } }));
-
-        await waitFor(() => {
-            const gpxSegments = getGpxSegments(store.getState());
-            expect(gpxSegments).toHaveLength(1);
-        });
+        await ui.uploadGpxSegment('segment1');
+        expect(getGpxSegments(store.getState())).toHaveLength(1);
     });
 });
