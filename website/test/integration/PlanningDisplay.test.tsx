@@ -88,8 +88,8 @@ describe('Planner integration test', () => {
         file.arrayBuffer = () => Promise.resolve(buffer.buffer);
 
         // await user.click(inputElement);
-        fireEvent.focus(inputElement);
-        fireEvent.change(inputElement, { target: { files: [file] } });
+        // fireEvent.focus(inputElement);
+        // fireEvent.change(inputElement, { target: { files: [file] } });
         // fireEvent.drop(inputElement, { target: { files: [file] } });
         act(() =>
             fireEvent.drop(inputElement, {

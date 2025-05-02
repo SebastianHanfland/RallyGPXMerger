@@ -41,6 +41,7 @@ export function GpxSegments({ noFilter }: Props) {
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
     const handleChange = (newFiles: FileList) => {
+        console.log('FFFFFFF', newFiles.length, newFiles);
         Promise.all([...newFiles].map(toGpxSegment))
             .then((newGpxSegments) => dispatch(addGpxSegments(newGpxSegments)))
             .then(() => dispatch(resolveStreetNames));
