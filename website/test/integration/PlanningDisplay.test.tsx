@@ -9,8 +9,8 @@ import { AppDispatch, createPlanningStore } from '../../src/planner/store/planni
 import { getGpxSegments, gpxSegmentsActions } from '../../src/planner/store/gpxSegments.reducer';
 import * as fs from 'node:fs';
 import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
-import { Store } from '@reduxjs/toolkit';
-import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
+import { addPostCodeToStreetInfos } from '../../src/planner/logic/resolving/postcode/postCodeResolver';
 
 const messages = getMessages('en');
 
@@ -18,6 +18,7 @@ vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
 vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
+vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver');
 
 const ui = {
     startButton: () => screen.getByRole('button', { name: RegExp(messages['msg.startPlan']) }),
@@ -53,69 +54,91 @@ const ui = {
 };
 
 describe('Planner integration test', () => {
-    it('Starts a new simple planning', async () => {
-        (getLanguage as Mock).mockImplementation(() => 'en');
-        const store = createPlanningStore();
-        render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+    describe('Main navigation', () => {
+        it('Starts a new simple planning', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
 
-        const user = userEvent.setup();
+            const user = userEvent.setup();
 
-        ui.header();
-        ui.startButton();
-        ui.openButton();
-        ui.continueButton(false);
+            ui.header();
+            ui.startButton();
+            ui.openButton();
+            ui.continueButton(false);
 
-        await user.click(ui.startButton());
+            await user.click(ui.startButton());
 
-        ui.simpleButton();
-        ui.complexButton();
+            ui.simpleButton();
+            ui.complexButton();
 
-        await user.click(ui.simpleButton());
-        ui.segmentHeading();
-        ui.simpleSegmentTab();
-        ui.simpleSettingsTab();
+            await user.click(ui.simpleButton());
+            ui.segmentHeading();
+            ui.simpleSegmentTab();
+            ui.simpleSettingsTab();
+        });
+
+        it('Starts a new complex planning', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+
+            const user = userEvent.setup();
+
+            ui.header();
+            ui.startButton();
+            ui.openButton();
+            ui.continueButton(false);
+
+            await user.click(ui.startButton());
+
+            ui.simpleButton();
+            ui.complexButton();
+
+            await user.click(ui.complexButton());
+            ui.complexSegmentsTab();
+            ui.complexTracksTab();
+        });
     });
 
-    it('Starts a new complex planning', async () => {
-        (getLanguage as Mock).mockImplementation(() => 'en');
-        const store = createPlanningStore();
-        render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+    describe('Simple planning', () => {
+        it('Create a simple planning with two elements', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
 
-        const user = userEvent.setup();
+            const user = userEvent.setup();
 
-        ui.header();
-        ui.startButton();
-        ui.openButton();
-        ui.continueButton(false);
+            await user.click(ui.startButton());
+            await user.click(ui.simpleButton());
+            await ui.uploadGpxSegment('segment1');
+            await ui.uploadGpxSegment('segment2');
 
-        await user.click(ui.startButton());
-
-        ui.simpleButton();
-        ui.complexButton();
-
-        await user.click(ui.complexButton());
-        ui.complexSegmentsTab();
-        ui.complexTracksTab();
+            expect(getGpxSegments(store.getState())).toHaveLength(2);
+            expect(getCalculatedTracks(store.getState())).toHaveLength(1);
+        });
     });
 
-    it('splitting a segment into two', async () => {
-        (getLanguage as Mock).mockImplementation(() => 'en');
-        const store = createPlanningStore();
-        render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+    describe('Complex planning', () => {
+        it('splitting a segment into two', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
 
-        const user = userEvent.setup();
+            const user = userEvent.setup();
 
-        await user.click(ui.startButton());
-        await user.click(ui.complexButton());
-        await ui.uploadGpxSegment('segment1');
-        const listWithFirstSegment = getGpxSegments(store.getState());
-        expect(listWithFirstSegment).toHaveLength(1);
-        const firstSegment = listWithFirstSegment[0];
-        await ui.uploadGpxSegment('segment2');
-        await ui.uploadGpxSegment('segment3');
-        expect(getGpxSegments(store.getState())).toHaveLength(3);
+            await user.click(ui.startButton());
+            await user.click(ui.complexButton());
+            await ui.uploadGpxSegment('segment1');
+            const listWithFirstSegment = getGpxSegments(store.getState());
+            expect(listWithFirstSegment).toHaveLength(1);
+            const firstSegment = listWithFirstSegment[0];
+            await ui.uploadGpxSegment('segment2');
+            await ui.uploadGpxSegment('segment3');
+            expect(getGpxSegments(store.getState())).toHaveLength(3);
 
-        await ui.splitSegment(firstSegment.id, store.dispatch);
-        expect(getGpxSegments(store.getState())).toHaveLength(4);
+            await ui.splitSegment(firstSegment.id, store.dispatch);
+            expect(getGpxSegments(store.getState())).toHaveLength(4);
+        });
     });
 });
