@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router';
+import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
@@ -65,7 +65,7 @@ describe('Planner integration test', () => {
         it('Starts a new simple planning', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
-            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+            render(<RallyPlannerWrapper store={store} />, { wrapper: MemoryRouter });
 
             const user = userEvent.setup();
 
@@ -88,7 +88,7 @@ describe('Planner integration test', () => {
         it('Starts a new complex planning', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
-            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+            render(<RallyPlannerWrapper store={store} />, { wrapper: MemoryRouter });
 
             const user = userEvent.setup();
 
@@ -112,7 +112,7 @@ describe('Planner integration test', () => {
         it('Create a simple planning with two elements', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
-            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+            render(<RallyPlannerWrapper store={store} />, { wrapper: MemoryRouter });
 
             const user = userEvent.setup();
 
@@ -132,7 +132,11 @@ describe('Planner integration test', () => {
         it('Create a complex planning with two tracks', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
-            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+            render(
+                <MemoryRouter>
+                    <RallyPlannerWrapper store={store} />
+                </MemoryRouter>
+            );
 
             const user = userEvent.setup();
 
@@ -167,7 +171,7 @@ describe('Planner integration test', () => {
         it('splitting a segment into two', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
-            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+            render(<RallyPlannerWrapper store={store} />, { wrapper: MemoryRouter });
 
             const user = userEvent.setup();
 

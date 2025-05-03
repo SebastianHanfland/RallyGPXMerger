@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router';
+import { MemoryRouter } from 'react-router';
 import { expect, Mock, vi } from 'vitest';
 import { useGetUrlParam } from '../../src/utils/linkUtil';
 import { getLanguage } from '../../src/language';
@@ -31,9 +31,9 @@ describe('Comparison Display integration test', () => {
         const store = createComparisonStore();
         const loadingPage = act(() =>
             render(
-                <BrowserRouter>
+                <MemoryRouter>
                     <RallyComparisonWrapper store={store} />
-                </BrowserRouter>
+                </MemoryRouter>
             )
         );
         ui.isLoading();

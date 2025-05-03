@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router';
+import { MemoryRouter } from 'react-router';
 import { RallyTableWrapper } from '../../src/display/RallyTableWrapper';
 import { Mock, vi } from 'vitest';
 import { useGetUrlParam } from '../../src/utils/linkUtil';
@@ -40,9 +40,9 @@ describe('Table integration test', () => {
         const store = createDisplayStore();
         const loadingPage = act(() =>
             render(
-                <BrowserRouter>
+                <MemoryRouter>
                     <RallyTableWrapper store={store} />
-                </BrowserRouter>
+                </MemoryRouter>
             )
         );
         ui.isLoading();
