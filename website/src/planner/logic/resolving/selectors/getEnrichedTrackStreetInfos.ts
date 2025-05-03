@@ -27,16 +27,18 @@ export const getEnrichedTrackStreetInfos = createSelector(
         districtReplacements?.forEach((replacement) => {
             overwrites[getWayPointKey(replacement).postCodeKey] = replacement.district;
         });
-        return trackStreetInfos.map((info) => ({
+        return (trackStreetInfos ?? []).map((info) => ({
             ...info,
-            wayPoints: overwriteWayPoints(info.wayPoints, streetReplacements)
+            wayPoints: overwriteWayPoints(info.wayPoints, streetReplacements ?? [])
                 .map((wayPoint) => {
                     const postCodeKey = getWayPointKey(wayPoint).postCodeKey;
 
                     return {
                         ...wayPoint,
-                        postCode: resolvedPostCodes[postCodeKey],
-                        district: overwrites[postCodeKey] ? overwrites[postCodeKey] : resolvedDistricts[postCodeKey],
+                        postCode: (resolvedPostCodes ?? {})[postCodeKey],
+                        district: overwrites[postCodeKey]
+                            ? overwrites[postCodeKey]
+                            : (resolvedDistricts ?? {})[postCodeKey],
                     };
                 })
                 .filter(

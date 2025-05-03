@@ -14,7 +14,7 @@ import { batch } from 'react-redux';
 const getUniquePostCodeEntries = createSelector([getTrackStreetInfos], (infos) => {
     const uniquePostCodeKeys: string[] = [];
 
-    infos.forEach((info) =>
+    infos?.forEach((info) =>
         info.wayPoints.forEach((wayPoint) => {
             const postCodeKey = getWayPointKey(wayPoint).postCodeKey;
             if (!uniquePostCodeKeys.includes(postCodeKey)) {
@@ -27,7 +27,7 @@ const getUniquePostCodeEntries = createSelector([getTrackStreetInfos], (infos) =
 
 export const getUnresolvedPostCodeEntries = (state: State) => {
     const uniquePostCodeEntries = getUniquePostCodeEntries(state);
-    const postCodes = getResolvedPostCodes(state);
+    const postCodes = getResolvedPostCodes(state) ?? {};
     return uniquePostCodeEntries.filter(
         (postCodeKey) => postCodes[postCodeKey] === undefined || postCodes[postCodeKey] === -1
     );
@@ -75,7 +75,7 @@ export const getPostCodeRequestProgress = createSelector(
     [getUniquePostCodeEntries, getResolvedPostCodes],
     (uniquePostCode, resolvedPostCodes) => {
         const numberOfUniquePostCodeEntries = uniquePostCode.length;
-        const numberOfResolvedPostCodeEntries = Object.keys(resolvedPostCodes).length;
+        const numberOfResolvedPostCodeEntries = Object.keys(resolvedPostCodes ?? {}).length;
 
         if (numberOfUniquePostCodeEntries === 0) {
             return 0;

@@ -22,8 +22,8 @@ import { getParsedTracks } from '../../../store/parsedTracks.reducer.ts';
 const enrichWithStreetsAndAggregate =
     (state: State) =>
     (track: ParsedTrack): TrackStreetInfo => {
-        const resolvedPositions = getResolvedPositions(state);
-        const replacementWayPoints = getStreetNameReplacementWayPoints(state);
+        const resolvedPositions = getResolvedPositions(state) ?? {};
+        const replacementWayPoints = getStreetNameReplacementWayPoints(state) ?? [];
         const tracks = getTrackCompositions(state);
         const nodePositions = getNodePositions(state);
         const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
