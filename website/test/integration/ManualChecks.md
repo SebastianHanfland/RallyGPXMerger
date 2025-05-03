@@ -1,0 +1,2 @@
+-[ ] Checking download of pdfs in locally started one
+-[ ] Checking download of pdfs in compiled local one (build -> preview)

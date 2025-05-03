@@ -10,13 +10,20 @@ import { createDisplayStore } from '../../src/display/store/store';
 import { RallyDisplayWrapper } from '../../src/display/RallyDisplayWrapper';
 import { getBikeSnakesForDisplayMap } from '../../src/display/map/dataReading';
 import { mapActions } from '../../src/display/store/map.reducer';
+import { getMessages } from '../../src/lang/getMessages';
+import userEvent from '@testing-library/user-event';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 
+const messages = getMessages('en');
+
 const ui = {
     isLoading: () => screen.getByText('Loading'),
+    trackInfoButton: () => screen.getAllByRole('button', { name: messages['msg.trackInfoShort'] })[0],
+    pdfDownloadButtons: () => screen.getAllByRole('button', { name: /PDF/ }),
+    gpxDownloadButtons: () => screen.getAllByRole('button', { name: /GPX/ }),
 };
 
 describe('Map Display integration test', () => {
@@ -24,6 +31,7 @@ describe('Map Display integration test', () => {
         // given
         const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as State;
+        const user = userEvent.setup();
 
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
@@ -49,5 +57,9 @@ describe('Map Display integration test', () => {
         const snakes2 = getBikeSnakesForDisplayMap(store.getState());
         expect(snakes2[0].points).toHaveLength(3);
         expect(snakes2[0].points[0]).not.toEqual({ lat: 48.141161, lng: 11.597148 });
+
+        await user.click(ui.trackInfoButton());
+        ui.pdfDownloadButtons();
+        ui.gpxDownloadButtons();
     });
 });

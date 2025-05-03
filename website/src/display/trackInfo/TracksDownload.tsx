@@ -3,13 +3,12 @@ import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { downloadFilesInZip } from '../../planner/tracks/CalculatedFilesDownloader.tsx';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
-import { getPlanningTitle } from '../../planner/store/trackMerge.reducer.ts';
+import { getDisplayTitle, getDisplayTracks } from '../store/displayTracksReducer.ts';
 
 export const ZipFilesDownloader = () => {
     const intl = useIntl();
     const displayTracks = useSelector(getDisplayTracks);
-    const planningTitle = useSelector(getPlanningTitle);
+    const planningTitle = useSelector(getDisplayTitle);
 
     if (!displayTracks) {
         return null;
