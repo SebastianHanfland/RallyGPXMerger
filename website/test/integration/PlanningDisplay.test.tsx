@@ -112,7 +112,7 @@ describe('Planner integration test', () => {
         // simulate split click
         const actionPayload = { segmentId: firstSegment.id, lat: 48.128275, lng: 11.630246 };
         await act(() => store.dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
-        await act(() => store.dispatch(splitGpxAtPosition(store.dispatch, store.getState)));
+        await act(() => store.dispatch(splitGpxAtPosition));
 
         expect(getGpxSegments(store.getState())).toHaveLength(4);
     });
