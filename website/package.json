@@ -23,9 +23,6 @@
     "file-saver": "^2.0.5",
     "geo-distance-helper": "^2.0.4",
     "gpx-builder": "^5.2.1",
-    "js-sha256": "^0.11.0",
-    "jspdf": "^3.0.1",
-    "jspdf-autotable": "^5.0.2",
     "jszip": "^3.10.1",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.81.0",
@@ -74,8 +71,8 @@
     "prettier": "2.8.8",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^5.0.2",
-    "vite": "^6.3.2",
-    "vitest": "^3.1.2"
+    "vite": "^4.4.5",
+    "vitest": "^1.4.0"
   },
   "husky": {
     "hooks": {
