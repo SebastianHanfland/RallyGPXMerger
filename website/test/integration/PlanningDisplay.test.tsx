@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
@@ -57,6 +57,8 @@ const ui = {
     },
     pdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),
     newTrackButton: () => screen.getByText(messages['msg.addNewTrack'], { exact: false }),
+    trackNameInput: () => screen.getByPlaceholderText('Track name'),
+    segmentSelect: () => screen.getByRole('combobox'),
 };
 
 describe('Planner integration test', () => {
@@ -147,6 +149,20 @@ describe('Planner integration test', () => {
             await user.click(ui.complexTracksTab(0));
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(1);
+
+            await user.clear(ui.trackNameInput());
+            await user.type(ui.trackNameInput(), 'Track 1');
+
+            const byRole = screen.getByRole('combobox');
+            await user.click(ui.segmentSelect());
+            await user.click(screen.getByText('segment1'));
+            await user.click(ui.segmentSelect());
+            await user.click(screen.getByText('segment3'));
+            expect(getTrackCompositions(store.getState())[0].segmentIds).toHaveLength(2);
+
+            await user.click(screen.getByText(/Calculate/));
+            await waitFor(() => expect(getCalculatedTracks(store.getState())).toHaveLength(1));
+            ui.pdfDownloadButton();
         });
 
         it('splitting a segment into two', async () => {
