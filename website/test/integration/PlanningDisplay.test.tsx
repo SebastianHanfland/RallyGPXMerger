@@ -5,10 +5,12 @@ import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
-import { createPlanningStore } from '../../src/planner/store/planningStore';
+import { AppDispatch, createPlanningStore } from '../../src/planner/store/planningStore';
 import { getGpxSegments, gpxSegmentsActions } from '../../src/planner/store/gpxSegments.reducer';
 import * as fs from 'node:fs';
 import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
+import { Store } from '@reduxjs/toolkit';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 
 const messages = getMessages('en');
 
@@ -42,6 +44,11 @@ const ui = {
         const file = new File([buffer], `${fileName}.gpx`, { type: 'application/gpx+xml' });
         file.arrayBuffer = () => Promise.resolve(buffer.buffer);
         await act(() => fireEvent.drop(inputElement, { dataTransfer: { files: [file] } }));
+    },
+    splitSegment: async (segmentId: string, dispatch: AppDispatch) => {
+        const actionPayload = { segmentId, lat: 48.128275, lng: 11.630246 };
+        await act(() => dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
+        await act(() => dispatch(splitGpxAtPosition));
     },
 };
 
@@ -108,11 +115,7 @@ describe('Planner integration test', () => {
         await ui.uploadGpxSegment('segment3');
         expect(getGpxSegments(store.getState())).toHaveLength(3);
 
-        // simulate split click
-        const actionPayload = { segmentId: firstSegment.id, lat: 48.128275, lng: 11.630246 };
-        await act(() => store.dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
-        await act(() => store.dispatch(splitGpxAtPosition));
-
+        await ui.splitSegment(firstSegment.id, store.dispatch);
         expect(getGpxSegments(store.getState())).toHaveLength(4);
     });
 });
