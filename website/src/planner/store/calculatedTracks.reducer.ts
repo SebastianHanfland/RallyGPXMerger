@@ -23,10 +23,6 @@ const calculatedTracksSlice = createSlice({
         },
         removeSingleCalculatedTrack: (state: CalculatedTracksState, action: PayloadAction<string>) => {
             state.tracks = state.tracks?.filter((track) => track.id !== action.payload);
-            // TODO-187: check if this is a problem when it is not done. Due to it being deleting, I think it could be just fine
-            // setReadableTracks(
-            //     state.tracks?.map((track) => ({ id: track.id, gpx: SimpleGPX.fromString(track.content) })) ?? []
-            // );
         },
     },
 });
