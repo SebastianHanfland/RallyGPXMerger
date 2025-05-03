@@ -11,6 +11,7 @@ import * as fs from 'node:fs';
 import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 import { addPostCodeToStreetInfos } from '../../src/planner/logic/resolving/postcode/postCodeResolver';
+import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 
 const messages = getMessages('en');
 
@@ -18,7 +19,9 @@ vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
 vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
-vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver');
+vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
+    addPostCodeToStreetInfos: () => Promise.resolve(),
+}));
 
 const ui = {
     startButton: () => screen.getByRole('button', { name: RegExp(messages['msg.startPlan']) }),
@@ -37,7 +40,8 @@ const ui = {
     simpleSettingsTab: () =>
         screen.getByRole('button', { name: `${messages['msg.settings']}/${messages['msg.documents']}` }),
     complexSegmentsTab: () => screen.getByRole('button', { name: messages['msg.segments'] }),
-    complexTracksTab: () => screen.getByRole('button', { name: messages['msg.tracks'] }),
+    complexTracksTab: (amount: number) =>
+        screen.getByRole('button', { name: messages['msg.tracks'] + '(' + amount + ')' }),
     uploadGpxSegment: async (fileName: string) => {
         const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
         const inputElement = fileInput.parentNode.parentNode;
@@ -51,6 +55,8 @@ const ui = {
         await act(() => dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
         await act(() => dispatch(splitGpxAtPosition));
     },
+    pdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),
+    newTrackButton: () => screen.getByText(messages['msg.addNewTrack'], { exact: false }),
 };
 
 describe('Planner integration test', () => {
@@ -97,7 +103,7 @@ describe('Planner integration test', () => {
 
             await user.click(ui.complexButton());
             ui.complexSegmentsTab();
-            ui.complexTracksTab();
+            ui.complexTracksTab(0);
         });
     });
 
@@ -116,10 +122,33 @@ describe('Planner integration test', () => {
 
             expect(getGpxSegments(store.getState())).toHaveLength(2);
             expect(getCalculatedTracks(store.getState())).toHaveLength(1);
+
+            ui.pdfDownloadButton();
         });
     });
 
     describe('Complex planning', () => {
+        it('Create a complex planning with two tracks', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(<RallyPlannerWrapper store={store} />, { wrapper: BrowserRouter });
+
+            const user = userEvent.setup();
+
+            await user.click(ui.startButton());
+            await user.click(ui.complexButton());
+            await ui.uploadGpxSegment('segment1');
+            await ui.uploadGpxSegment('segment2');
+            await ui.uploadGpxSegment('segment3');
+
+            expect(getGpxSegments(store.getState())).toHaveLength(3);
+            expect(getCalculatedTracks(store.getState())).toHaveLength(0);
+
+            await user.click(ui.complexTracksTab(0));
+            await user.click(ui.newTrackButton());
+            expect(getTrackCompositions(store.getState())).toHaveLength(1);
+        });
+
         it('splitting a segment into two', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
