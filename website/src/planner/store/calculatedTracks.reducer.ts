@@ -35,10 +35,11 @@ export const calculatedTracksActions = calculatedTracksSlice.actions;
 export const calculatedTracksReducer: Reducer<CalculatedTracksState> = calculatedTracksSlice.reducer;
 const getBase = (state: State) => state.calculatedTracks;
 
+const emptyTracks: CalculatedTrack[] = [];
 export const getDecompressedCalculatedTracks = createSelector(
     (state: State) => getBase(state).tracks,
     (tracks) => {
-        return tracks?.map((track) => ({ ...track, content: optionallyDecompress(track.content) })) ?? [];
+        return tracks?.map((track) => ({ ...track, content: optionallyDecompress(track.content) })) ?? emptyTracks;
     }
 );
 export const getCalculatedTracks = getDecompressedCalculatedTracks;

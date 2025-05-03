@@ -42,7 +42,7 @@ export const getCurrenDisplayMapTime = (state: DisplayState) => getBase(state).c
 export const getCurrentRealTime = (state: DisplayState) => getBase(state).currentRealTime;
 export const getStartDisplayMapTime = (state: DisplayState) => getBase(state).start;
 export const getEndDisplayMapTime = (state: DisplayState) => getBase(state).end;
-export const getShowTrackInfo = (state: DisplayState) => getBase(state).showTrackInfo ?? false;
+export const getShowTrackInfo = (state: DisplayState) => getBase(state).showTrackInfo;
 export const getShowSingleTrackInfo = (state: DisplayState) => getBase(state).showSingleTrackInfo;
 export const getHighlightedTrack = (state: DisplayState) => getBase(state).highlightedTrack;
 export const getIsLive = (state: DisplayState) => getBase(state).isLive;

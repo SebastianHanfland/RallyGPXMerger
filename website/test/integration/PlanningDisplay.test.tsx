@@ -105,7 +105,6 @@ describe('Planner integration test', () => {
         expect(listWithFirstSegment).toHaveLength(1);
         const firstSegment = listWithFirstSegment[0];
         await ui.uploadGpxSegment('segment2');
-        screen.debug();
         await ui.uploadGpxSegment('segment3');
         expect(getGpxSegments(store.getState())).toHaveLength(3);
 

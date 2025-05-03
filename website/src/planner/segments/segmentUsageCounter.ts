@@ -1,5 +1,4 @@
-import { State } from '../store/types.ts';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { TrackComposition } from '../store/types.ts';
 import { IntlShape } from 'react-intl';
 
 function createTooltip(intl: IntlShape, counter: number, tracks: string[], planningHasTracks: boolean) {
@@ -11,8 +10,7 @@ function createTooltip(intl: IntlShape, counter: number, tracks: string[], plann
         : intl.formatMessage({ id: 'msg.segmentUsed.hint' }, { counter, tracks: tracks.join('\n') });
 }
 
-export const countUsagesOfSegment = (segmentId: string, intl: IntlShape) => (state: State) => {
-    const trackCompositions = getTrackCompositions(state);
+export function getUsagesOfSegment(trackCompositions: TrackComposition[], segmentId: string, intl: IntlShape) {
     let counter = 0;
     const tracks: string[] = [];
     trackCompositions.forEach((track) => {
@@ -26,4 +24,4 @@ export const countUsagesOfSegment = (segmentId: string, intl: IntlShape) => (sta
     const tooltip = createTooltip(intl, counter, tracks, trackCompositions.length > 0);
     const alert = counter === 0 && trackCompositions.length > 0;
     return { alert, tooltip };
-};
+}

@@ -4,7 +4,7 @@ import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { FileDownloaderDropdownItem } from './FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
-import { countUsagesOfSegment } from './segmentUsageCounter.ts';
+import { getUsagesOfSegment } from './segmentUsageCounter.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
@@ -13,12 +13,14 @@ import flip from '../../assets/flip.svg';
 import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
+import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 
 export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
     const { id, filename, content, flipped, streetsResolved } = gpxSegment;
     const intl = useIntl();
     const dispatch = useDispatch();
-    const { alert, tooltip } = useSelector(countUsagesOfSegment(id, intl));
+    const trackCompositions = useSelector(getTrackCompositions);
+    const { alert, tooltip } = getUsagesOfSegment(trackCompositions, id, intl);
 
     return (
         <tr
