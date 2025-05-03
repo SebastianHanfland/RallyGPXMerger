@@ -11,7 +11,7 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
     const gpxSegments = useSelector(getParsedSegments);
     const highlightedSegmentId = useSelector(getHighlightedSegmentId);
     const showSegments = useSelector(getShowGpxSegments) || !!highlightedSegmentId;
-    const showMarker = useSelector(getShowMapMarker);
+    const showMarker = useSelector(getShowMapMarker) ?? false;
     const dispatch = useDispatch();
     const filteredSegmentIds = filteredGpxSegments.map(({ id }) => id);
 

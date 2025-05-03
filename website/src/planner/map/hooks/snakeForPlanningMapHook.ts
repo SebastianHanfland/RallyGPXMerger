@@ -8,7 +8,7 @@ import { addBikeSnakesToLayer } from '../../../common/map/addSnakeWithBikeToMap.
 
 export function snakeForPlanningMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getCalculatedTracks);
-    const showTracks = useSelector(getShowCalculatedTracks);
+    const showTracks = useSelector(getShowCalculatedTracks) ?? false;
     const currentMapTime = useSelector(getCurrenMapTime);
     const snakesToDisplay = useSelector(getBikeSnakesForPlanningMap);
 

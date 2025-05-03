@@ -7,7 +7,7 @@ import { getParsedConstructionSegments } from '../../store/parsedTracks.reducer.
 
 export function constructionsDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const gpxSegments = useSelector(getParsedConstructionSegments) ?? [];
-    const showConstructions = useSelector(getShowConstructions);
+    const showConstructions = useSelector(getShowConstructions) ?? false;
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {

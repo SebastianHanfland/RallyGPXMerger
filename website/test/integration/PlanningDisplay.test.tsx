@@ -10,7 +10,6 @@ import { getGpxSegments, gpxSegmentsActions } from '../../src/planner/store/gpxS
 import * as fs from 'node:fs';
 import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
-import { addPostCodeToStreetInfos } from '../../src/planner/logic/resolving/postcode/postCodeResolver';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 
 const messages = getMessages('en');
