@@ -1,6 +1,6 @@
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import { getData } from '../api/api.ts';
 import { backendActions, getPlanningPassword } from './store/backend.reducer.ts';
@@ -54,6 +54,33 @@ function createAndStoreReadablePoints(state: State, planningId: string, dispatch
     dispatch(parsedTracksActions.addParsedConstructionSegments(parsedConstructionSegments ?? []));
 }
 
+export function loadStateAndSetUpPlanner(
+    dispatch: Dispatch,
+    state: State,
+    intl: IntlShape,
+    planningId?: string,
+    adminToken?: string,
+    planningPassword?: string
+) {
+    dispatch({ payload: state, type: 'wholeState' });
+
+    if (planningId) {
+        dispatch(backendActions.setPlanningId(planningId));
+    }
+    dispatch(toastsActions.clearToasts());
+    const passwordToSet = adminToken ?? planningPassword;
+    if (passwordToSet) {
+        dispatch(backendActions.setPlanningPassword(passwordToSet));
+    }
+    dispatch(backendActions.setIsPlanningSaved(true));
+    successNotification(
+        dispatch,
+        intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
+        intl.formatMessage({ id: 'msg.dataLoad.success.message' })
+    );
+    createAndStoreReadablePoints(state, planningId ?? 'current', dispatch);
+}
+
 export function useLoadPlanningFromServer() {
     const planningId = useGetUrlParam('planning=');
     const adminToken = useGetUrlParam('admin=');
@@ -66,21 +93,7 @@ export function useLoadPlanningFromServer() {
             getData(planningId)
                 .then((data) => {
                     const state = data.data;
-                    dispatch({ payload: state, type: 'wholeState' });
-
-                    dispatch(backendActions.setPlanningId(planningId));
-                    dispatch(toastsActions.clearToasts());
-                    const passwordToSet = adminToken ?? planningPassword;
-                    if (passwordToSet) {
-                        dispatch(backendActions.setPlanningPassword(passwordToSet));
-                    }
-                    dispatch(backendActions.setIsPlanningSaved(true));
-                    successNotification(
-                        dispatch,
-                        intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
-                        intl.formatMessage({ id: 'msg.dataLoad.success.message' })
-                    );
-                    createAndStoreReadablePoints(state, planningId, dispatch);
+                    loadStateAndSetUpPlanner(dispatch, state, intl, planningId, adminToken, planningPassword);
                 })
                 .catch(() => {
                     errorNotification(

@@ -48,6 +48,7 @@ describe('Import planning', () => {
         await user.upload(ui.uploadNode(), file);
 
         const tracks = getTrackCompositions(store.getState());
+        const state2 = store.getState();
         await waitFor(() => expect(getParsedTracks(store.getState()) ?? []).toHaveLength(1));
     });
 });
