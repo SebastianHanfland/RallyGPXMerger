@@ -151,7 +151,7 @@ export interface PointsState {
 
 export interface State {
     layout: LayoutState;
-    backend: BackendState;
+    backend?: BackendState;
     gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
@@ -159,7 +159,7 @@ export interface State {
     points: PointsState;
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
-    toasts: ToastsState;
+    toasts?: ToastsState;
     parsedTracks: ParsedTrackState | undefined;
 }
 

@@ -1,10 +1,12 @@
 import { useRef } from 'react';
 import { gpxShortener } from './gpxShortener.ts';
 import { storage } from '../store/storage.ts';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { State } from '../store/types.ts';
+import { useDispatch } from 'react-redux';
 
 export function importHook() {
     const uploadInput = useRef<HTMLInputElement>(null);
+    const dispatch = useDispatch();
 
     const importButtonClicked = () => {
         const current = uploadInput.current;
@@ -20,10 +22,9 @@ export function importHook() {
                 ?.text()
                 .then((loadedState) => {
                     const shortenedLoadedState = gpxShortener(loadedState);
-                    storage.save(JSON.parse(shortenedLoadedState));
-                    history.pushState('', '', getBaseUrl() + '?section=menu');
-                    history.pushState('', '', getBaseUrl() + '?section=gps');
-                    window.location.reload();
+                    const wholeState: State = JSON.parse(shortenedLoadedState);
+                    storage.save(wholeState);
+                    dispatch({ payload: wholeState, type: 'wholeState' });
                 })
                 .catch(console.error);
         }

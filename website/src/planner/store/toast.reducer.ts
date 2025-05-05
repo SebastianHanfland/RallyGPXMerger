@@ -57,4 +57,4 @@ export const toastsActions = toastsSlice.actions;
 export const toastsReducer: Reducer<ToastsState> = toastsSlice.reducer;
 const getBase = (state: State) => state.toasts;
 
-export const getToasts = (state: State) => getBase(state).toasts;
+export const getToasts = (state: State) => getBase(state)?.toasts;

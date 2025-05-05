@@ -39,7 +39,7 @@ export const backendActions = backendSlice.actions;
 export const backendReducer: Reducer<BackendState> = backendSlice.reducer;
 const getBase = (state: State) => state.backend;
 
-export const getPlanningId = (state: State) => getBase(state).planningId;
-export const getPlanningPassword = (state: State) => getBase(state).planningPassword;
-export const getIsPlanningAlreadySaved = (state: State) => getBase(state).isPlanningAlreadySaved;
-export const getHasChangesSinceLastUpload = (state: State) => getBase(state).hasChangesSinceLastUpload;
+export const getPlanningId = (state: State) => getBase(state)?.planningId;
+export const getPlanningPassword = (state: State) => getBase(state)?.planningPassword;
+export const getIsPlanningAlreadySaved = (state: State) => getBase(state)?.isPlanningAlreadySaved;
+export const getHasChangesSinceLastUpload = (state: State) => getBase(state)?.hasChangesSinceLastUpload;

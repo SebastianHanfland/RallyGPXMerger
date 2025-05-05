@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getToasts, toastsActions } from '../store/toast.reducer.ts';
 
 export const ToastWrapper = () => {
-    const toasts = useSelector(getToasts);
+    const toasts = useSelector(getToasts) ?? [];
     const dispatch = useDispatch();
     return (
         <ToastContainer className="p-3" position={'bottom-end'} style={{ zIndex: 2000 }}>

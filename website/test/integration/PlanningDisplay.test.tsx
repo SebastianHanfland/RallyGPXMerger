@@ -11,6 +11,7 @@ import * as fs from 'node:fs';
 import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
+import { plannerUi as ui } from './data/PlannerTestAccess';
 
 const messages = getMessages('en');
 
@@ -21,44 +22,6 @@ vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
 vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
     addPostCodeToStreetInfos: () => Promise.resolve(),
 }));
-
-const ui = {
-    startButton: () => screen.getByRole('button', { name: RegExp(messages['msg.startPlan']) }),
-    continueButton: (exists: boolean = true) =>
-        exists
-            ? screen.getByRole('button', { name: RegExp(messages['msg.continuePlan']) })
-            : expect(screen.queryByRole('button', { name: RegExp(messages['msg.continuePlan']) })).toBeNull(),
-    openButton: () => screen.getByRole('button', { name: RegExp(messages['msg.loadPlan']) }),
-    header: () => screen.getByRole('heading', { name: 'Rally GPX Merger' }),
-
-    simpleButton: () => screen.getByRole('button', { name: RegExp(messages['msg.simple']) }),
-    complexButton: () => screen.getByRole('button', { name: RegExp(messages['msg.complex']) }),
-
-    segmentHeading: () => screen.getByRole('heading', { name: messages['msg.segments'] }),
-    simpleSegmentTab: () => screen.getByRole('button', { name: messages['msg.simpleTrack'] }),
-    simpleSettingsTab: () =>
-        screen.getByRole('button', { name: `${messages['msg.settings']}/${messages['msg.documents']}` }),
-    complexSegmentsTab: () => screen.getByRole('button', { name: messages['msg.segments'] }),
-    complexTracksTab: (amount: number) =>
-        screen.getByRole('button', { name: messages['msg.tracks'] + '(' + amount + ')' }),
-    uploadGpxSegment: async (fileName: string) => {
-        const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
-        const inputElement = fileInput.parentNode.parentNode;
-        const buffer = fs.readFileSync(`./test/integration/data/${fileName}.gpx`);
-        const file = new File([buffer], `${fileName}.gpx`, { type: 'application/gpx+xml' });
-        file.arrayBuffer = () => Promise.resolve(buffer.buffer);
-        await act(() => fireEvent.drop(inputElement, { dataTransfer: { files: [file] } }));
-    },
-    splitSegment: async (segmentId: string, dispatch: AppDispatch) => {
-        const actionPayload = { segmentId, lat: 48.128275, lng: 11.630246 };
-        await act(() => dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
-        await act(() => dispatch(splitGpxAtPosition));
-    },
-    pdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),
-    newTrackButton: () => screen.getByText(messages['msg.addNewTrack'], { exact: false }),
-    trackNameInput: () => screen.getByPlaceholderText('Track name'),
-    segmentSelect: () => screen.getByRole('combobox'),
-};
 
 describe('Planner integration test', () => {
     describe('Main navigation', () => {
