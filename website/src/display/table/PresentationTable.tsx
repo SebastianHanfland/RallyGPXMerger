@@ -45,6 +45,8 @@ export const PresentationTable = () => {
     );
 };
 
+const hideSeconds = true;
+
 function TrackInfoRow({ track }: { track: DisplayTrack }) {
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
     const planningLabel = useSelector(getDisplayPlanningLabel);
@@ -66,7 +68,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
         <tr>
             <td>{track.filename}</td>
             <td>
-                {formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront)}{' '}
+                {formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront, hideSeconds)}{' '}
                 <div>
                     <a href={startLink} target={'_blank'} referrerPolicy={'no-referrer'}>
                         {startStreetName}
@@ -74,7 +76,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                 </div>
             </td>
             <td>
-                {formatTimeOnly(foundInfo.arrivalFront)}
+                {formatTimeOnly(foundInfo.arrivalFront, hideSeconds)}
                 <div>
                     <a href={endLink} target={'_blank'} referrerPolicy={'no-referrer'}>
                         {endStreetName}
