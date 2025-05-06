@@ -16,7 +16,7 @@ import { getConstructionSegments, getGpxSegments } from './store/gpxSegments.red
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from './store/types.ts';
 
-const createAndStoreReadablePoints = (planningId: string) => (dispatch: Dispatch, getState: () => State) => {
+export const createAndStoreReadablePoints = (planningId: string) => (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
     const calculatedTracks = getCalculatedTracks(state);
     const gpxSegments = getGpxSegments(state);

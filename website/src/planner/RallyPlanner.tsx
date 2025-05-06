@@ -1,5 +1,5 @@
 import '../App.css';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { RallyPlannerRouter } from './layout/RallyPlannerRouter.tsx';
 import { getDisplayLanguage } from './store/layout.reducer.ts';
 import { getMessages } from '../lang/getMessages.ts';
@@ -8,9 +8,19 @@ import { getLanguage } from '../language.ts';
 import { AppFooter } from './layout/Footer.tsx';
 import { ToastWrapper } from './toasts/ToastWrapper.tsx';
 import { Store } from '@reduxjs/toolkit';
+import { AppDispatch } from './store/planningStore.ts';
+import { useEffect } from 'react';
+import { useGetUrlParam } from '../utils/linkUtil.ts';
+import { createAndStoreReadablePoints } from './useLoadPlanningFromServer.tsx';
 
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);
+    const planningId = useGetUrlParam('planning=') ?? 'current';
+    const dispatch: AppDispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(createAndStoreReadablePoints(planningId));
+    }, []);
 
     return (
         <IntlProvider locale={language ?? getLanguage()} messages={getMessages(language)}>
