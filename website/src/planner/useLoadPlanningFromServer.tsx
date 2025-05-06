@@ -74,7 +74,7 @@ export function loadStateAndSetUpPlanner(
     if (passwordToSet) {
         dispatch(backendActions.setPlanningPassword(passwordToSet));
     }
-    dispatch(backendActions.setIsPlanningSaved(true));
+    dispatch(backendActions.setIsPlanningSaved(!!planningId));
     dispatch(createAndStoreReadablePoints(planningId ?? 'current'));
 }
 
