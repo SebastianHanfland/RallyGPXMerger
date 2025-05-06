@@ -17,7 +17,7 @@ import { UploadModalBody } from './UploadModalBody.tsx';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
 import { downloadFile } from '../segments/FileDownloader.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
-import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
+import { getIsCalculationRunning, getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
 import { Warning } from './dashboard/Warning.tsx';
@@ -31,6 +31,7 @@ export function UploadDataButton() {
     const planningPassword = useSelector(getPlanningPassword);
     const planningTitle = useSelector(getPlanningTitle);
     const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
+    const isCalculating = useSelector(getIsCalculationRunning);
 
     const planningState = useSelector((state: State) => state);
     const intl = useIntl();
@@ -112,7 +113,7 @@ export function UploadDataButton() {
             </Modal>
             <Button
                 variant="success"
-                disabled={isLoading}
+                disabled={isLoading || isCalculating}
                 title={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.hint' })}
                 onClick={() => {
                     if (!planningTitle) {
