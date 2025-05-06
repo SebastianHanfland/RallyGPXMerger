@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     getFilteredTrackCompositions,
     getTrackCompositionFilterTerm,
+    getTrackCompositions,
     trackMergeActions,
 } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
@@ -13,18 +14,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 
 export const PlannerSidebarTracks = () => {
-    const trackCompositions = useSelector(getFilteredTrackCompositions);
+    const trackCompositions = useSelector(getTrackCompositions);
+    const filteredTracks = useSelector(getFilteredTrackCompositions);
     const dispatch = useDispatch();
     const intl = useIntl();
     const filterTerm = useSelector(getTrackCompositionFilterTerm);
     const setFilterTerm = (term: string) => dispatch(trackMergeActions.setTrackCompositionFilterTerm(term));
 
     const [selectedTrackId, setSelectedTrackId] = useState<string | undefined>();
-    const selectedTrack = trackCompositions.find((track) => track.id === selectedTrackId);
+    const selectedTrack = filteredTracks.find((track) => track.id === selectedTrackId);
 
     useEffect(() => {
-        if (trackCompositions.length > 0) {
-            setSelectedTrackId(trackCompositions[0].id);
+        if (filteredTracks.length > 0) {
+            setSelectedTrackId(filteredTracks[0].id);
         }
     }, []);
 
@@ -44,7 +46,7 @@ export const PlannerSidebarTracks = () => {
                 </div>
             )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>
-                {trackCompositions.map((track) => (
+                {filteredTracks.map((track) => (
                     <PageItem
                         key={track.id}
                         active={selectedTrackId === track.id}
