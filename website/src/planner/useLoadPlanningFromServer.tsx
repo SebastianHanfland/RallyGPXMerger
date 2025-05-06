@@ -15,6 +15,7 @@ import { optionallyDecompress } from './store/compressHelper.ts';
 import { getConstructionSegments, getGpxSegments } from './store/gpxSegments.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from './store/types.ts';
+import { trackMergeActions } from './store/trackMerge.reducer.ts';
 
 export const createAndStoreReadablePoints = (planningId: string) => (dispatch: Dispatch, getState: () => State) => {
     const state = getState();
@@ -68,6 +69,7 @@ export function loadStateAndSetUpPlanner(
         dispatch(backendActions.setPlanningId(planningId));
     }
     dispatch(toastsActions.clearToasts());
+    dispatch(trackMergeActions.setIsCalculationRunning(false));
     const passwordToSet = adminToken ?? planningPassword;
     if (passwordToSet) {
         dispatch(backendActions.setPlanningPassword(passwordToSet));
