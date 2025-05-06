@@ -28,7 +28,6 @@ export function importHook() {
                     const wholeState: State = JSON.parse(shortenedLoadedState);
                     storage.save(wholeState);
                     loadStateAndSetUpPlanner(dispatch, wholeState, intl);
-                    dispatch({ payload: wholeState, type: 'wholeState' });
                 })
                 .catch(console.error);
         }
