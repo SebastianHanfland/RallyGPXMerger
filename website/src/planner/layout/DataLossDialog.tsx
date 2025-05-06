@@ -6,7 +6,7 @@ import { ExportStateJson } from '../io/ExportStateJson.tsx';
 import { useState } from 'react';
 import { Warning } from './dashboard/Warning.tsx';
 
-export function BackToStartDialog(props: { closeModal: () => void; onConfirm?: () => void }) {
+export function DataLossDialog(props: { closeModal: () => void; onConfirm?: () => void; importWarning: boolean }) {
     const dispatch = useDispatch();
     const intl = useIntl();
     const [downloaded, setDownloaded] = useState(false);
@@ -21,25 +21,33 @@ export function BackToStartDialog(props: { closeModal: () => void; onConfirm?: (
         <ConfirmationModal
             onConfirm={removeAllData}
             closeModal={props.closeModal}
-            title={intl.formatMessage({ id: 'msg.backToStart.modalTitle' })}
+            title={intl.formatMessage({
+                id: props.importWarning ? 'msg.importWarning.modalTitle' : 'msg.backToStart.modalTitle',
+            })}
             body={
                 <div onClick={() => setDownloaded(true)} className={'text-center'}>
                     <div>
                         <Warning size={50} />
                     </div>
                     <div className={'m-2 mb-4'}>
-                        <FormattedMessage id={'msg.backToStart.modalBody'} />
+                        <FormattedMessage
+                            id={props.importWarning ? 'msg.importWarning.modalBody' : 'msg.backToStart.modalBody'}
+                        />
                     </div>
                     <ExportStateJson label={intl.formatMessage({ id: 'msg.downloadPlanning' })} />
                     {!downloaded && (
                         <p>
                             <b>
                                 <Warning />
-                                <FormattedMessage id={'msg.backToStart.dataHint'} />
+                                <FormattedMessage
+                                    id={props.importWarning ? 'msg.importWarning.dataHint' : 'msg.backToStart.dataHint'}
+                                />
                             </b>
                         </p>
                     )}
-                    <FormattedMessage id={'msg.backToStart.question'} />
+                    <FormattedMessage
+                        id={props.importWarning ? 'msg.importWarning.question' : 'msg.backToStart.question'}
+                    />
                 </div>
             }
         />

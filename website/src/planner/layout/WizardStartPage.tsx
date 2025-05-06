@@ -9,7 +9,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { importHook } from '../io/importHook.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
-import { BackToStartDialog } from './BackToStartDialog.tsx';
+import { DataLossDialog } from './DataLossDialog.tsx';
 import { useState } from 'react';
 import { isPlanningInProgress } from '../store/planner.selector.ts';
 import { LanguageSelection } from './LanguageSelection.tsx';
@@ -30,16 +30,25 @@ export const WizardStartPage = () => {
     };
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
+    const [showImportWarningModal, setShowImportWarningModal] = useState(false);
     const [nextSection, setNextSection] = useState<'gps' | 'wizard-complexity' | undefined>();
 
     return (
         <Container fluid className={'m-0'}>
             {showModal && (
-                <BackToStartDialog
+                <DataLossDialog
                     closeModal={() => setShowModal(false)}
                     onConfirm={() => {
                         nextSection && setSelectedSection(nextSection);
                     }}
+                    importWarning={false}
+                />
+            )}
+            {showImportWarningModal && (
+                <DataLossDialog
+                    closeModal={() => setShowImportWarningModal(false)}
+                    onConfirm={importButtonClicked}
+                    importWarning={true}
                 />
             )}
             <WizardHeader />
@@ -72,7 +81,13 @@ export const WizardStartPage = () => {
                 <Col>
                     <WizardCard
                         icon={fileUp}
-                        onClick={importButtonClicked}
+                        onClick={() => {
+                            if (planningInProgress) {
+                                setShowImportWarningModal(true);
+                            } else {
+                                importButtonClicked();
+                            }
+                        }}
                         title={<FormattedMessage id={'msg.loadPlan'} />}
                         text={<FormattedMessage id={'msg.loadPlan.hint'} />}
                     />
