@@ -1,5 +1,5 @@
 import { State } from '../store/types.ts';
-import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import { getReplaceProcess, getSegmentSpeeds, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { clearGpxCache } from '../../common/cache/gpxCache.ts';
 import { addGpxSegments } from './addGpxSegmentsThunk.ts';
@@ -21,6 +21,7 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
         dispatch(gpxSegmentsActions.setFilename({ id: targetSegment, filename: replacementSegments[0].filename }));
         clearGpxCache();
     } else {
+        const previousSegmentSpeed = getSegmentSpeeds(getState())[targetSegment];
         const replacementIds = replacementSegments.map((segment) => segment.id);
         trackCompositions.forEach((track) => {
             if (track.segmentIds.includes(targetSegment)) {
@@ -29,6 +30,9 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
                 );
                 dispatch(trackMergeActions.setSegments({ id: track.id, segments: newSegments }));
             }
+        });
+        replacementIds.forEach((replacementId) => {
+            dispatch(gpxSegmentsActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed }));
         });
         dispatch(addGpxSegments(replacementSegments));
         dispatch(gpxSegmentsActions.removeGpxSegment(targetSegment));
