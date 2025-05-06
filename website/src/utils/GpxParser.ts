@@ -51,8 +51,8 @@ export class GpxParser {
         throw new Error('Method not implemented.');
     }
 
-    mapTrack(gpxTrack: { trkseg: { trkpt: Point[] | Point }; name: string; number: number }): Track {
-        const points = gpxTrack.trkseg.trkpt;
+    mapTrack(gpxTrack: { trkseg: { trkpt: Point[] | Point } | undefined; name: string; number: number }): Track {
+        const points = gpxTrack?.trkseg?.trkpt ?? [];
         return {
             name: gpxTrack.name,
             number: gpxTrack.number ? `${gpxTrack.number}` : undefined,
