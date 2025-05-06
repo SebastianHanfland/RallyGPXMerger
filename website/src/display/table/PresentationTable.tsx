@@ -83,7 +83,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                     </a>
                 </div>
             </td>
-            <td>{formatNumber(foundInfo.distanceInKm)}</td>
+            <td>{formatNumber(foundInfo.distanceInKm, 1)}</td>
             <td>
                 <FileDownloader
                     name={`${track.filename}.gpx`}
