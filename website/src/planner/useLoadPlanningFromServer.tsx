@@ -16,7 +16,8 @@ import { getConstructionSegments, getGpxSegments } from './store/gpxSegments.red
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from './store/types.ts';
 
-function createAndStoreReadablePoints(state: State, planningId: string, dispatch: Dispatch) {
+const createAndStoreReadablePoints = (planningId: string) => (dispatch: Dispatch, getState: () => State) => {
+    const state = getState();
     const calculatedTracks = getCalculatedTracks(state);
     const gpxSegments = getGpxSegments(state);
     const constructionSegments = getConstructionSegments(state);
@@ -52,10 +53,10 @@ function createAndStoreReadablePoints(state: State, planningId: string, dispatch
     dispatch(parsedTracksActions.setParsedTracks(parsedTracks));
     dispatch(parsedTracksActions.setParsedSegments(parsedSegments));
     dispatch(parsedTracksActions.addParsedConstructionSegments(parsedConstructionSegments ?? []));
-}
+};
 
 export function loadStateAndSetUpPlanner(
-    dispatch: Dispatch,
+    dispatch: AppDispatch,
     state: State,
     intl: IntlShape,
     planningId?: string,
@@ -78,7 +79,7 @@ export function loadStateAndSetUpPlanner(
         intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
         intl.formatMessage({ id: 'msg.dataLoad.success.message' })
     );
-    createAndStoreReadablePoints(state, planningId ?? 'current', dispatch);
+    dispatch(createAndStoreReadablePoints(planningId ?? 'current'));
 }
 
 export function useLoadPlanningFromServer() {
