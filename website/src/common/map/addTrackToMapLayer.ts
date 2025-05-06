@@ -40,10 +40,9 @@ function addBreakMarkerToMap(
     const breakText = getLanguage() === 'de' ? 'min Pause\n um' : 'min Break\n at';
     const breakMarker = L.marker(toLatLng(point), {
         icon: breakIcon,
-        title: `${parsedTrack.filename} - ${(timeDifferenceInSeconds / 60).toFixed(0)} ${breakText} ${formatTimeOnly(
-            lastTimeStamp,
-            true
-        )}`,
+        title: `${parsedTrack.filename ? parsedTrack.filename + ' - ' : ''}${(timeDifferenceInSeconds / 60).toFixed(
+            0
+        )} ${breakText} ${formatTimeOnly(lastTimeStamp, true)}`,
     });
     breakMarker.addTo(routeLayer);
 }
