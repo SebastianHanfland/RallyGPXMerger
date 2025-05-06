@@ -4,13 +4,11 @@ import { storage } from '../store/storage.ts';
 import { State } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
 import { loadStateAndSetUpPlanner } from '../useLoadPlanningFromServer.tsx';
-import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router';
 
 export function importHook() {
     const uploadInput = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
-    const intl = useIntl();
     const navigateTo = useNavigate();
 
     const importButtonClicked = () => {
@@ -29,7 +27,7 @@ export function importHook() {
                     const shortenedLoadedState = gpxShortener(loadedState);
                     const wholeState: State = JSON.parse(shortenedLoadedState);
                     storage.save(wholeState);
-                    loadStateAndSetUpPlanner(dispatch, wholeState, intl);
+                    loadStateAndSetUpPlanner(dispatch, wholeState);
                     navigateTo('?section=gps');
                 })
                 .catch(console.error);

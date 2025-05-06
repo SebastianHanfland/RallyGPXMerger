@@ -1,6 +1,6 @@
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { IntlShape, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import { getData } from '../api/api.ts';
 import { backendActions, getPlanningPassword } from './store/backend.reducer.ts';
@@ -58,7 +58,6 @@ export const createAndStoreReadablePoints = (planningId: string) => (dispatch: D
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
     state: State,
-    intl: IntlShape,
     planningId?: string,
     adminToken?: string,
     planningPassword?: string
@@ -74,11 +73,6 @@ export function loadStateAndSetUpPlanner(
         dispatch(backendActions.setPlanningPassword(passwordToSet));
     }
     dispatch(backendActions.setIsPlanningSaved(true));
-    successNotification(
-        dispatch,
-        intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
-        intl.formatMessage({ id: 'msg.dataLoad.success.message' })
-    );
     dispatch(createAndStoreReadablePoints(planningId ?? 'current'));
 }
 
@@ -94,7 +88,12 @@ export function useLoadPlanningFromServer() {
             getData(planningId)
                 .then((data) => {
                     const state = data.data;
-                    loadStateAndSetUpPlanner(dispatch, state, intl, planningId, adminToken, planningPassword);
+                    loadStateAndSetUpPlanner(dispatch, state, planningId, adminToken, planningPassword);
+                    successNotification(
+                        dispatch,
+                        intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
+                        intl.formatMessage({ id: 'msg.dataLoad.success.message' })
+                    );
                 })
                 .catch(() => {
                     errorNotification(
