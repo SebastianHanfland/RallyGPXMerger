@@ -49,7 +49,6 @@ export function TrackButtonsCell({ track }: Props) {
             <Dropdown.Item
                 onClick={() => {
                     dispatch(trackMergeActions.setSegments({ id: track.id, segments: segmentIdClipboard! }));
-                    dispatch(trackMergeActions.setSegmentIdClipboard(undefined));
                 }}
                 disabled={!segmentIdClipboard}
             >
