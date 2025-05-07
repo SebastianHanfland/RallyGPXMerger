@@ -21,7 +21,7 @@ export function formatDate(dateString: string): string {
 
 export function formatTimeOnly(dateString: string, noSecond = false): string {
     const germanFormat = noSecond ? 'HH:mm' : 'HH:mm:ss';
-    const englishFormat = noSecond ? 'HH:mm A' : 'HH:mm:ss A';
+    const englishFormat = noSecond ? 'hh:mm A' : 'hh:mm:ss A';
     const TIME_FORMAT = getLanguage() === 'de' ? germanFormat : englishFormat;
     return date.format(new Date(dateString), TIME_FORMAT);
 }

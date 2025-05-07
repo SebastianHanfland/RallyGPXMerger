@@ -23,6 +23,8 @@ export const PresentationTable = () => {
         return <div>Loading</div>;
     }
 
+    const sortedTracks = [...tracks].sort((a, b) => a.filename.localeCompare(b.filename));
+
     return (
         <div>
             <Table striped bordered hover>
@@ -36,7 +38,7 @@ export const PresentationTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {tracks.map((track) => (
+                    {sortedTracks.map((track) => (
                         <TrackInfoRow track={track} key={track.id} />
                     ))}
                 </tbody>
