@@ -18,6 +18,11 @@ const parsedTracksSlice = createSlice({
         setParsedSegments: (state: ParsedTrackState, action: PayloadAction<ParsedTrack[]>) => {
             state.parsedSegments = action.payload;
         },
+        updateParsedSegment: (state: ParsedTrackState, action: PayloadAction<ParsedTrack>) => {
+            state.parsedSegments = state.parsedSegments.map((segment) =>
+                segment.id === action.payload.id ? action.payload : segment
+            );
+        },
         addParsedConstructionSegments: (state: ParsedTrackState, action: PayloadAction<ParsedTrack[]>) => {
             state.parsedConstructionSegments = [...(state.parsedConstructionSegments ?? []), ...action.payload];
         },
