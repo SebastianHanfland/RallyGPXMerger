@@ -15,11 +15,17 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
     const dispatch = useDispatch();
     const filteredSegmentIds = filteredGpxSegments.map(({ id }) => id);
 
+    useEffect(() => {
+        dispatch(mapActions.setHighlightedSegmentId());
+    }, []);
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const tracks = highlightedSegmentId
             ? gpxSegments?.filter(({ id }) => id === highlightedSegmentId) ?? []
             : gpxSegments?.filter(({ id }) => filteredSegmentIds.includes(id)) ?? [];
+
+        console.log(tracks, 'here', gpxSegments, filteredSegmentIds, highlightedSegmentId);
 
         addTracksToLayer(gpxSegmentsLayer, tracks, showSegments, {
             showMarker,

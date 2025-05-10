@@ -48,7 +48,7 @@ export function EditStreetNameModal(props: Props & { closeModal: () => void }) {
     };
 
     return (
-        <Modal show={true} onHide={closeModal} backdrop="static" keyboard={false} onEscapeKeyDown={closeModal}>
+        <Modal show={true} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
                     <FormattedMessage id={'msg.changeStreetName'} />

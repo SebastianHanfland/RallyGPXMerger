@@ -36,7 +36,6 @@ export function TrackInformationModal() {
         <Modal
             show={showModal}
             onHide={close}
-            keyboard={false}
             size={singleTrackId ? 'sm' : 'xl'}
             dialogClassName={L.Browser.mobile ? 'm-0' : undefined}
         >

@@ -11,7 +11,7 @@ interface Props {
 
 export const StreetInfoModal = ({ selectedTrack, onHide }: Props) => {
     return (
-        <Modal show={true} onHide={onHide} backdrop="static" keyboard={false} size={'xl'}>
+        <Modal show={true} onHide={onHide} backdrop="static" size={'xl'}>
             <Modal.Header closeButton>
                 <Modal.Title>{selectedTrack.name}</Modal.Title>
             </Modal.Header>

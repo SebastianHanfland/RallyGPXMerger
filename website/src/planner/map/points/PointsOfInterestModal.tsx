@@ -58,7 +58,7 @@ export function PointsOfInterestModal() {
         setPointOfInterestValues({});
     };
     return (
-        <Modal show={hasMarkedPoint} onHide={closeModal} backdrop="static" keyboard={false}>
+        <Modal show={hasMarkedPoint} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
                     <FormattedMessage id={'msg.pointOfInterest'} />

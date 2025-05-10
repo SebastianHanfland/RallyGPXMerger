@@ -18,7 +18,7 @@ export const GpxSegmentDialog = () => {
     }
 
     return (
-        <Modal show={true} onHide={closeModal} backdrop="static" keyboard={false}>
+        <Modal show={true} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
                     <FormattedMessage id={'msg.actionOnSegmentClick'} />
