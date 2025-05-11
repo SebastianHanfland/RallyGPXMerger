@@ -29,7 +29,7 @@ const displayTrackSlice = createSlice({
             state.blockedStreetInfos = action.payload;
         },
         setPlanningLabel: (state: DisplayTracksState, action: PayloadAction<string | undefined>) => {
-            state.title = action.payload;
+            state.planningLabel = action.payload;
         },
         setIsLoading: (state: DisplayTracksState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
