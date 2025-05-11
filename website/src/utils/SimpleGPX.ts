@@ -57,7 +57,15 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         super();
         this.metadata = metadata;
         this.waypoints = waypoints;
-        this.tracks = tracks;
+        this.tracks = tracks.map((track) => ({
+            ...track,
+            points: track.points.map((point) => ({
+                ...point,
+                lat: typeof point.lat === 'string' ? Number(point.lat) : point.lat,
+                lon: typeof point.lon === 'string' ? Number(point.lon) : point.lon,
+                ele: typeof point.ele === 'string' ? Number(point.ele) : point.ele,
+            })),
+        }));
         this.routes = routes;
         this.mergeTracks = mergeTracks;
 
@@ -124,7 +132,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     public getPoints() {
-        return this.tracks.flatMap((track) => track.points);
+        return this.tracks.flatMap((track) => track.points).map((point) => ({ ...point }));
     }
 
     public shiftToDepartureTime(departure: string) {
@@ -188,12 +196,12 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     getEndPoint(): Point {
-        const lastTrack = this.tracks[this.tracks.length - 1];
-        return lastTrack.points[lastTrack.points.length - 1];
+        const points = this.getPoints();
+        return points[points.length - 1];
     }
 
     getStartPoint(): Point {
-        return this.tracks[0].points[0];
+        return this.getPoints()[0];
     }
 }
 
@@ -217,10 +225,15 @@ function toLink(link: string | Link | undefined): gpxBuilder.Link | undefined {
 }
 
 function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
-    return new gpxBuilder.Point(_point.lat, _point.lon, {
-        ele: _point.ele,
-        ...(_point.time ? { time: date.addSeconds(new Date(_point.time), timeshift) } : {}),
-    });
+    console.log(_point, 'POINT');
+    return new gpxBuilder.Point(
+        typeof _point.lat === 'string' ? Number(_point.lat) : _point.lat,
+        typeof _point.lon === 'string' ? Number(_point.lon) : _point.lon,
+        {
+            ele: typeof _point.ele === 'string' ? Number(_point.ele) : _point.ele,
+            ...(_point.time ? { time: date.addSeconds(new Date(_point.time), timeshift) } : {}),
+        }
+    );
 }
 
 function track2track(_track: Track, timeshift: number = 0): gpxBuilder.Track {
