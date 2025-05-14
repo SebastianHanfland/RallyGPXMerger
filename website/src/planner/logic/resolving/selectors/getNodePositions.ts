@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { listAllNodesOfTracks, TrackNode } from '../../merge/helper/nodeFinder.ts';
 import { TrackComposition } from '../../../store/types.ts';
-import { getParsedTracks } from '../../../store/parsedTracks.reducer.ts';
+import { getParsedSegments } from '../../../store/parsedTracks.reducer.ts';
 
 export interface NodePosition {
     point: { lat: number; lon: number };
@@ -23,7 +23,7 @@ function getTracks(segmentId: string, trackNodes: TrackNode[], trackCompositions
 
 export const getNodePositions = createSelector(
     getTrackCompositions,
-    getParsedTracks,
+    getParsedSegments,
     (trackCompositions, parsedTracks): NodePosition[] => {
         const trackNodes = listAllNodesOfTracks(trackCompositions);
         const segmentIdsBeforeNode = trackNodes.flatMap((trackNode) =>

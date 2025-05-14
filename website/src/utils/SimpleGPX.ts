@@ -225,7 +225,6 @@ function toLink(link: string | Link | undefined): gpxBuilder.Link | undefined {
 }
 
 function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
-    console.log(_point, 'POINT');
     return new gpxBuilder.Point(
         typeof _point.lat === 'string' ? Number(_point.lat) : _point.lat,
         typeof _point.lon === 'string' ? Number(_point.lon) : _point.lon,
