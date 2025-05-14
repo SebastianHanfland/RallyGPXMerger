@@ -13,10 +13,7 @@ interface Props {
     streetsResolved?: boolean;
 }
 
-export function ResetResolvedStreetsButton({ id, name, streetsResolved }: Props) {
-    if (!streetsResolved) {
-        return null;
-    }
+export function ResetResolvedStreetsButton({ id, name }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const resetStreets = () => {

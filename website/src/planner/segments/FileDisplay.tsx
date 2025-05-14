@@ -62,7 +62,7 @@ export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxS
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
                     <FlipGpxButton id={id} name={filename} flipped={flipped} />
-                    <ResetResolvedStreetsButton id={id} name={filename} streetsResolved={streetsResolved} />
+                    <ResetResolvedStreetsButton id={id} name={filename} />
                 </DropdownButton>
             </td>
         </tr>

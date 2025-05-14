@@ -75,7 +75,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
     if (!gpxSegment) {
         return null;
     }
-    const { id, filename, content, flipped, streetsResolved } = gpxSegment;
+    const { id, filename, content, flipped } = gpxSegment;
 
     return (
         <div
@@ -126,7 +126,7 @@ export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxD
                         <FileChangeButton id={id} name={filename} />
                         <RemoveFileButton id={id} name={filename} />
                         <FlipGpxButton id={id} name={filename} flipped={flipped} />
-                        <ResetResolvedStreetsButton id={id} name={filename} streetsResolved={streetsResolved} />
+                        <ResetResolvedStreetsButton id={id} name={filename} />
                     </DropdownButton>
                 </div>
             </div>

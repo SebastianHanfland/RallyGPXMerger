@@ -15,7 +15,7 @@ export const GpxSegmentContent = () => {
     if (!clickedSegment) {
         return null;
     }
-    const { id, content, filename, streetsResolved, flipped } = clickedSegment;
+    const { id, content, filename, flipped } = clickedSegment;
 
     return (
         <div>
@@ -25,7 +25,7 @@ export const GpxSegmentContent = () => {
             <FileChangeButton id={id} name={filename} />
             <RemoveFileButton id={id} name={filename} />
             <FlipGpxButton id={id} name={filename} flipped={flipped} />
-            <ResetResolvedStreetsButton id={id} name={filename} streetsResolved={streetsResolved} />
+            <ResetResolvedStreetsButton id={id} name={filename} />
         </div>
     );
 };
