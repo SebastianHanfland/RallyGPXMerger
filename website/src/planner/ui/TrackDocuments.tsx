@@ -22,6 +22,7 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
     if (trackCompositions.length === 0 || gpxSegments.length === 0 || !matchedTrackInfo) {
         return null;
     }
+    const calculatedTrack = calculatedTracks.find((track) => track.id === matchedTrackInfo?.id);
     return (
         <div className={'d-flex flex-row'}>
             <Button
@@ -32,11 +33,11 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
                 <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
                 PDF
             </Button>
-            {calculatedTracks.map((track) => track.id).includes(matchedTrackInfo?.id) && (
+            {calculatedTrack && (
                 <FileDownloader
-                    name={`${calculatedTracks[0].filename}.gpx`}
-                    content={calculatedTracks[0].content}
-                    id={calculatedTracks[0].id}
+                    name={`${calculatedTrack.filename}.gpx`}
+                    content={calculatedTrack.content}
+                    id={calculatedTrack.id}
                     label={'GPX'}
                     onlyIcon={true}
                     size={'sm'}

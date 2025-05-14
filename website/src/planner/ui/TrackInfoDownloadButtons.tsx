@@ -23,7 +23,11 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
     if (trackCompositions.length === 0 || gpxSegments.length === 0) {
         return null;
     }
-    const track = trackCompositions[0];
+    const track = trackCompositions.find((tr) => tr.id === matchedTrackInfo?.id);
+    const calculatedTrack = calculatedTracks.find((tr) => tr.id === matchedTrackInfo?.id);
+    if (!track) {
+        return null;
+    }
     return (
         <>
             <Row>
@@ -40,12 +44,12 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
                         PDF
                     </Button>
                 </Col>
-                {calculatedTracks.length > 0 && (
+                {calculatedTrack && (
                     <Col>
                         <FileDownloader
-                            name={`${calculatedTracks[0].filename}.gpx`}
-                            content={calculatedTracks[0].content}
-                            id={calculatedTracks[0].id}
+                            name={`${calculatedTrack.filename}.gpx`}
+                            content={calculatedTrack.content}
+                            id={calculatedTrack.id}
                             label={'GPX'}
                             onlyIcon={true}
                             size={'sm'}
