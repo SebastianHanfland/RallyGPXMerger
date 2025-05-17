@@ -4,15 +4,14 @@ import { State } from '../../planner/store/types.ts';
 import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { getPlanningLabel, getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
-import { getData } from '../../api/api.ts';
+import { getBackupData, getData } from '../../api/api.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
 
-export async function loadServerFile(id: string, dispatch: Dispatch) {
-    return getData(id)
-        .then((res) => res.data)
+export async function loadServerFile(id: string, dispatch: Dispatch, isBackup: boolean = false) {
+    return (isBackup ? getBackupData() : getData(id).then((res) => res.data))
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
             if (planningTitle) {

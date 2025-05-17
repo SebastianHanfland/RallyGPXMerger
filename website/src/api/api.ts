@@ -26,3 +26,10 @@ export const deletePlanning = (id: string, adminToken: string) => {
 export const getData = (id: string) => {
     return fetch(`${baseUrl}/${id}`, { method: 'get' }).then((res) => res.json());
 };
+
+const backupUrl = `https://raw.githubusercontent.com/SebastianHanfland/RallyGPXMerger/refs/heads/main/data/Leo.json`;
+export const getBackupData = () => {
+    return fetch(backupUrl, {
+        method: 'get',
+    }).then((res) => res.json());
+};
