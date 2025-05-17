@@ -65,7 +65,7 @@ function getMatchingNodePosition(
     );
 }
 
-const MINIMUM_SECONDS_FOR_BREAK = 200;
+const MINIMUM_SECONDS_FOR_BREAK = 59;
 const MAXMIMUM_DISTANCE_IN_KM_FOR_BREAK = 0.1;
 
 function isABreak(lastElement: AggregatedPoints, point: EnrichedPoints) {
