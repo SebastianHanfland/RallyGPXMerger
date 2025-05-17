@@ -16,6 +16,11 @@ import userEvent from '@testing-library/user-event';
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
+vi.mock('leaflet.locatecontrol', () => ({
+    LocateControl: () => ({
+        locate: () => {},
+    }),
+}));
 
 const messages = getMessages('en');
 
