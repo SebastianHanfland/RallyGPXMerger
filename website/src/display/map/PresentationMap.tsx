@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
-import Locate from 'leaflet.locatecontrol'; // Import plugin
+import 'leaflet.locatecontrol'; // Import plugin
+import { LocateControl } from 'leaflet.locatecontrol';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
 import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
@@ -40,8 +41,7 @@ export const PresentationMap = () => {
             myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             if (isLive && L.Browser.mobile && !isInIframe) {
-                // @ts-ignore
-                const locate = new Locate({ initialZoomLevel: 12 });
+                const locate = new LocateControl({ initialZoomLevel: 12 });
                 locate.addTo(myMap);
                 locate.start();
             }
