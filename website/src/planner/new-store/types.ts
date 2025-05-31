@@ -28,8 +28,8 @@ export interface SegmentDataState {
     segments: ParsedGpxSegment[];
     segmentFilterTerm?: string;
     pois: PointOfInterest[];
-    segmentSpeeds?: Record<string, number | undefined>;
-    constructionSegments?: ParsedGpxSegment[];
+    segmentSpeeds: Record<string, number | undefined>;
+    constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;
 }
