@@ -33,6 +33,7 @@ export interface SegmentDataState {
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;
+    streetLookup: Record<number, string>;
 }
 
 export interface CalculatedTracksState {

@@ -10,6 +10,7 @@ const initialState: SegmentDataState = {
     pois: [],
     constructionSegments: [],
     segmentSpeeds: {},
+    streetLookup: {},
 };
 
 const gpxSegmentsSlice = createSlice({
@@ -18,6 +19,10 @@ const gpxSegmentsSlice = createSlice({
     reducers: {
         addGpxSegments: (state: SegmentDataState, action: PayloadAction<ParsedGpxSegment[]>) => {
             state.segments = [...state.segments, ...action.payload];
+        },
+        addStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+            // TODO #223: add added street resolvals
+            state.streetLookup = action.payload;
         },
         removeGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);

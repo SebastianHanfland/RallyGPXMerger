@@ -4,10 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
-import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
 
 const fileTypes = ['GPX'];
 
@@ -24,9 +24,12 @@ export function GpxSegmentsUploadAndParse() {
     const dispatch: AppDispatch = useDispatch();
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toParsedGpxSegment))
-            .then((newGpxSegments) => dispatch(segmentDataActions.addGpxSegments(newGpxSegments)))
-            .then(() => dispatch(resolveStreetNames));
+        Promise.all([...newFiles].map(toParsedGpxSegment)).then((newGpxSegments) => {
+            enrichGpxSegmentsWithStreetNames(newGpxSegments).then(({ segments, streetLookup }) => {
+                dispatch(segmentDataActions.addGpxSegments(segments));
+                dispatch(segmentDataActions.addStreetLookup(streetLookup));
+            });
+        });
     };
     return (
         <FileUploader

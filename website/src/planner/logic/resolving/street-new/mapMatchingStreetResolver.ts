@@ -9,6 +9,7 @@ import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reduc
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
+import { ParsedGpxSegment } from '../../../new-store/types.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -19,6 +20,12 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
         })),
     };
 }
+
+export const enrichGpxSegmentsWithStreetNames = (
+    parsedSegments: ParsedGpxSegment[]
+): Promise<{ segments: ParsedGpxSegment[]; streetLookup: Record<number, string> }> => {
+    return Promise.resolve({ streetLookup: {}, segments: parsedSegments });
+};
 
 export async function resolveStreetNames(dispatch: AppDispatch, getState: () => State) {
     const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
