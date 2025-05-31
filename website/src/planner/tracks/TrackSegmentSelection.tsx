@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
-import { GpxSegmentsUpload } from '../ui/GpxSegmentsUpload.tsx';
+import { SimpleRouteGpxSegmentsUpload } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
 import { TrackSegmentSelect } from './TrackSegmentSelect.tsx';
 
 interface Props {
@@ -56,7 +56,7 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
             </ReactSortable>
             <div className={'d-flex my-4'}>
                 <div className={'flex-grow-1'}>
-                    {!hideSelect ? <TrackSegmentSelect track={track} /> : <GpxSegmentsUpload />}
+                    {!hideSelect ? <TrackSegmentSelect track={track} /> : <SimpleRouteGpxSegmentsUpload />}
                 </div>
                 <div style={{ marginLeft: '10px' }}>
                     <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>

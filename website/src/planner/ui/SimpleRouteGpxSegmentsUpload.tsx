@@ -21,7 +21,7 @@ export async function toGpxSegment(file: File): Promise<GpxSegment> {
     }));
 }
 
-export function GpxSegmentsUpload() {
+export function SimpleRouteGpxSegmentsUpload() {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
