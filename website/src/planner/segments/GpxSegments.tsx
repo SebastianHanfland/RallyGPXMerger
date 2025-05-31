@@ -1,26 +1,11 @@
-import { FileUploader } from 'react-drag-drop-files';
 import { Form, Spinner, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { v4 as uuidv4 } from 'uuid';
-import { gpxShortener } from '../io/gpxShortener.ts';
-import { GpxSegment } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
-import { addGpxSegments } from './addGpxSegmentsThunk.ts';
-
-const fileTypes = ['GPX'];
-
-export async function toGpxSegment(file: File): Promise<GpxSegment> {
-    return file.arrayBuffer().then((buffer) => ({
-        id: uuidv4(),
-        filename: file.name.replace('.gpx', ''),
-        content: gpxShortener(new TextDecoder().decode(buffer)),
-    }));
-}
+import { GpxSegmentsUpload } from './GpxSegmentsUpload.tsx';
 
 interface Props {
     noFilter?: boolean;
@@ -34,11 +19,6 @@ export function GpxSegments({ noFilter }: Props) {
     const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
-    const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment))
-            .then((newGpxSegments) => dispatch(addGpxSegments(newGpxSegments)))
-            .then(() => dispatch(resolveStreetNames));
-    };
     return (
         <div>
             {isLoadingStreetData && (
@@ -79,13 +59,7 @@ export function GpxSegments({ noFilter }: Props) {
                         {filteredSegments.length > 5 && (
                             <tr>
                                 <td colSpan={3}>
-                                    <FileUploader
-                                        handleChange={handleChange}
-                                        name="file"
-                                        types={fileTypes}
-                                        multiple={true}
-                                        label={intl.formatMessage({ id: 'msg.uploadFile' })}
-                                    />
+                                    <GpxSegmentsUpload />
                                 </td>
                             </tr>
                         )}
@@ -94,13 +68,7 @@ export function GpxSegments({ noFilter }: Props) {
                         ))}
                         <tr>
                             <td colSpan={3}>
-                                <FileUploader
-                                    handleChange={handleChange}
-                                    name="file"
-                                    types={fileTypes}
-                                    multiple={true}
-                                    label={intl.formatMessage({ id: 'msg.uploadFile' })}
-                                />
+                                <GpxSegmentsUpload />
                             </td>
                         </tr>
                     </tbody>
@@ -111,13 +79,7 @@ export function GpxSegments({ noFilter }: Props) {
                         <FormattedMessage id={'msg.noFile'} />
                     </div>
                     <div style={{ height: '70px', width: '200px' }}>
-                        <FileUploader
-                            handleChange={handleChange}
-                            name="file"
-                            types={fileTypes}
-                            multiple={true}
-                            label={intl.formatMessage({ id: 'msg.uploadFile' })}
-                        />
+                        <GpxSegmentsUpload />
                     </div>
                 </div>
             )}

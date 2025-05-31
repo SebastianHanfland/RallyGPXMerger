@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
-import { toGpxSegment } from './GpxSegments.tsx';
+import { toGpxSegment } from './GpxSegmentsUpload.tsx';
 import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
