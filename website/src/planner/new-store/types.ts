@@ -12,6 +12,7 @@ export interface ClickOnSegment {
 export interface ParsedPoint {
     l: number; // longitude
     b: number; // latitude
+    e: number; // elevation
     t: number; // time in seconds from start of segment
     s: number; // index of street resolving
 }
@@ -21,7 +22,7 @@ export interface ParsedGpxSegment {
     streetsResolved: boolean;
     id: string;
     filename: string;
-    points: ParsedPoint;
+    points: ParsedPoint[];
 }
 
 export interface SegmentDataState {
@@ -152,19 +153,6 @@ export interface PointsState {
     points: PointOfInterest[];
     contextMenuPoint?: { lat: number; lng: number };
     editPointOfInterest?: PointOfInterest;
-}
-
-export interface State {
-    layout: LayoutState;
-    backend?: BackendState;
-    gpxSegments: SegmentDataState;
-    trackMerge: TrackMergeState;
-    calculatedTracks: CalculatedTracksState;
-    map: MapState;
-    points: PointsState;
-    geoCoding: GeoCodingState;
-    toasts?: ToastsState;
-    parsedTracks: ParsedTrackState | undefined;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

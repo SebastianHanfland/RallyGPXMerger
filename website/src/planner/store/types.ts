@@ -6,6 +6,7 @@ import {
 import { CalculatedTrack, GpxSegment, ParsedTrack } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
+import { SegmentDataState } from '../new-store/types.ts';
 
 export interface ClickOnSegment {
     lat: number;
@@ -153,6 +154,7 @@ export interface State {
     layout: LayoutState;
     backend?: BackendState;
     gpxSegments: GpxSegmentsState;
+    segmentData: SegmentDataState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
     map: MapState;

@@ -13,11 +13,13 @@ import { pointsReducer } from './points.reducer.ts';
 import { backendReducer } from './backend.reducer.ts';
 import { toastsReducer } from './toast.reducer.ts';
 import { parsedTracksReducer } from './parsedTracks.reducer.ts';
+import { segmentDataReducer } from '../new-store/segmentData.redux.ts';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,
     layout: layoutReducer,
     gpxSegments: gpxSegmentsReducer,
+    segmentData: segmentDataReducer,
     trackMerge: trackMergeReducer,
     calculatedTracks: calculatedTracksReducer,
     map: mapReducer,
