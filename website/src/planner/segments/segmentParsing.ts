@@ -10,11 +10,14 @@ function getPoints(gpxString: string, averageSpeed: number): ParsedPoint[] {
 }
 
 export async function toParsedGpxSegment(file: File, averageSpeed: number): Promise<ParsedGpxSegment> {
-    return file.arrayBuffer().then((buffer) => ({
-        id: uuidv4(),
-        filename: file.name.replace('.gpx', ''),
-        flipped: false,
-        streetsResolved: false,
-        points: getPoints(new TextDecoder().decode(buffer), averageSpeed),
-    }));
+    return file.arrayBuffer().then((buffer) => {
+        const gpxString = new TextDecoder().decode(buffer);
+        return {
+            id: uuidv4(),
+            filename: file.name.replace('.gpx', ''),
+            flipped: false,
+            streetsResolved: false,
+            points: getPoints(gpxString, averageSpeed),
+        };
+    });
 }
