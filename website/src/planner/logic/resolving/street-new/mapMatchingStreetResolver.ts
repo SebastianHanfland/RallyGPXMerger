@@ -8,6 +8,7 @@ import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
 import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../new-store/types.ts';
 import { getStreetLookup, segmentDataActions } from '../../../new-store/segmentData.redux.ts';
+import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -54,14 +55,6 @@ function combineStreetNames(streetNames: ResolvedPositions[]): ResolvedPositions
         });
     });
     return combinedStreetNames;
-}
-
-function enrichSegmentWithResolvedStreets(
-    segment: ParsedGpxSegment,
-    allResolvedStreetNames: ResolvedPositions,
-    streetResolveStart: number
-): { segment: ParsedGpxSegment; streetLookUp: Record<number, string> } {
-    return { segment, streetLookUp: {} };
 }
 
 const enrichOneGpxSegment =
