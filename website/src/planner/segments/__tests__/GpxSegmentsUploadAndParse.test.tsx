@@ -34,5 +34,6 @@ describe('GpxUpload and parse', () => {
         await ui.uploadGpxSegment('segment1');
         const segments = getParsedGpxSegments(store.getState());
         expect(segments).toHaveLength(1);
+        console.log(segments[0]);
     });
 });

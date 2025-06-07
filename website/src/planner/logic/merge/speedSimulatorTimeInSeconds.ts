@@ -38,7 +38,7 @@ export function generateParsedPointsWithTimeInSeconds(avg: number, points: Omit<
         const slope_factor = slopeFactor(slope);
 
         const speed = alpha * (avg / slope_factor) + (1 - alpha) * last_speed;
-        const time = a.t + (60 * 60 * distInKm) / speed;
+        const time = Number((a.t + (60 * 60 * distInKm) / speed).toFixed(2));
         last_speed = speed;
 
         previousPoint = { ...point, t: time };

@@ -1,5 +1,5 @@
 import { FileUploader } from 'react-drag-drop-files';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { gpxShortener } from '../io/gpxShortener.ts';
 import { GpxSegment } from '../../common/types.ts';
@@ -8,6 +8,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
+import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -22,9 +23,10 @@ export async function toGpxSegment(file: File): Promise<GpxSegment> {
 export function GpxSegmentsUploadAndParse() {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
+    const averageSpeed = useSelector(getAverageSpeedInKmH);
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toParsedGpxSegment)).then((newGpxSegments) =>
+        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) =>
             enrichGpxSegmentsWithStreetNames(newGpxSegments).then(({ segments, streetLookup }) => {
                 dispatch(segmentDataActions.addGpxSegments(segments));
                 dispatch(segmentDataActions.addStreetLookup(streetLookup));
