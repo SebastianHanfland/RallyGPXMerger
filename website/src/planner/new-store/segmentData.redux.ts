@@ -3,6 +3,7 @@ import { ClickOnSegment, ParsedGpxSegment, SegmentDataState } from './types.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { getDecompressedGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { State } from '../store/types.ts';
+import { storage } from '../store/storage.ts';
 
 const initialState: SegmentDataState = {
     segments: [],
@@ -14,7 +15,7 @@ const initialState: SegmentDataState = {
 
 const segmentDataSlice = createSlice({
     name: 'segmentData',
-    initialState: initialState,
+    initialState: storage.load()?.segmentData ?? initialState,
     reducers: {
         addGpxSegments: (state: SegmentDataState, action: PayloadAction<ParsedGpxSegment[]>) => {
             state.segments = [...state.segments, ...action.payload];

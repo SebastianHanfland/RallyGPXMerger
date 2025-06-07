@@ -2,15 +2,15 @@ import { Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getSelectedSidebarSection } from '../store/layout.reducer.ts';
 import { SidebarNavItem } from './SidebarNavItem.tsx';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { FormattedMessage } from 'react-intl';
 import { getHasChangesSinceLastUpload } from '../store/backend.reducer.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 export const PlannerSidebarNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
-    const segmentsCount = useSelector(getGpxSegments).length;
+    const segmentsCount = useSelector(getParsedGpxSegments).length;
     const tracksCount = useSelector(getTrackCompositions).length;
     const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
