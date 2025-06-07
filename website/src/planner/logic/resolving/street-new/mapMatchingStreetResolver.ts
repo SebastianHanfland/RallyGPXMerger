@@ -37,11 +37,12 @@ export const enrichGpxSegmentsWithStreetNames =
     (parsedSegments: ParsedGpxSegment[]) =>
     async (dispatch: AppDispatch, getState: () => State): Promise<void> => {
         const streetLookup = getStreetLookup(getState());
-        const maximumIndex = Math.max(...Object.keys(streetLookup).map(Number));
+        const lookupKeys = Object.keys(streetLookup);
+        const maximumIndex = lookupKeys.length === 0 ? 1 : Math.max(...lookupKeys.map(Number));
         const segmentIndexOffset = Math.ceil(maximumIndex / 1000);
 
         const promises = parsedSegments.map((segment, segmentIndex) =>
-            enrichOneGpxSegment(segment, (segmentIndexOffset + segmentIndex) * 1000)
+            dispatch(enrichOneGpxSegment(segment, (segmentIndexOffset + segmentIndex) * 1000))
         );
         await Promise.all(promises);
         dispatch(triggerAutomaticCalculation);
