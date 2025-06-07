@@ -13,7 +13,7 @@ const initialState: SegmentDataState = {
     streetLookup: {},
 };
 
-const gpxSegmentsSlice = createSlice({
+const segmentDataSlice = createSlice({
     name: 'segmentData',
     initialState: initialState,
     reducers: {
@@ -88,8 +88,8 @@ const gpxSegmentsSlice = createSlice({
 });
 
 const defaultSegmentSpeeds: Record<string, number | undefined> = {};
-export const segmentDataActions = gpxSegmentsSlice.actions;
-export const segmentDataReducer: Reducer<SegmentDataState> = gpxSegmentsSlice.reducer;
+export const segmentDataActions = segmentDataSlice.actions;
+export const segmentDataReducer: Reducer<SegmentDataState> = segmentDataSlice.reducer;
 const getBase = (state: State) => state.segmentData;
 
 export const getParsedGpxSegments = (state: State) => getBase(state).segments;
