@@ -27,7 +27,7 @@ export function GpxSegmentsUploadAndParse() {
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) =>
-            enrichGpxSegmentsWithStreetNames(newGpxSegments).then(({ segments, streetLookup }) => {
+            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(({ segments, streetLookup }) => {
                 dispatch(segmentDataActions.addGpxSegments(segments));
                 dispatch(segmentDataActions.addStreetLookup(streetLookup));
             })

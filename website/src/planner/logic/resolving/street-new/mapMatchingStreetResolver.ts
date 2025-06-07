@@ -1,15 +1,14 @@
 import { State } from '../../../store/types.ts';
 import { geoCodingActions, getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
-import { getGpxSegments, gpxSegmentsActions } from '../../../store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
+import { gpxSegmentsActions } from '../../../store/gpxSegments.reducer.ts';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
-import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
 import { ParsedGpxSegment } from '../../../new-store/types.ts';
+import { getStreetLookup } from '../../../new-store/segmentData.redux.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {
@@ -21,42 +20,51 @@ function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     };
 }
 
-export const enrichGpxSegmentsWithStreetNames = (
-    parsedSegments: ParsedGpxSegment[]
-): Promise<{ segments: ParsedGpxSegment[]; streetLookup: Record<number, string> }> => {
-    return Promise.resolve({ streetLookup: {}, segments: parsedSegments });
-};
+export const enrichGpxSegmentsWithStreetNames =
+    (parsedSegments: ParsedGpxSegment[]) =>
+    (
+        dispatch: AppDispatch,
+        getState: () => State
+    ): Promise<{ segments: ParsedGpxSegment[]; streetLookup: Record<number, string> }> => {
+        const streetLookup = getStreetLookup(getState());
+        dispatch(resolveStreetNames(parsedSegments));
+        return Promise.resolve({ streetLookup: {}, segments: parsedSegments });
+    };
 
-export async function resolveStreetNames(dispatch: AppDispatch, getState: () => State) {
-    const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
-    const gpxSegments = getGpxSegments(getState()).filter((segment) => !segment.streetsResolved);
-    dispatch(geoCodingRequestsActions.setIsLoadingStreetData(true));
-    let apiError = false;
-    const promises = gpxSegments.flatMap((segment) => {
-        const points = SimpleGPX.fromString(segment.content).getPoints();
-        splitListIntoSections(points, 1000).flatMap((points) =>
-            geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points)).then((resolvedPositions) => {
-                if (Object.keys(resolvedPositions).length === 0) {
-                    apiError = true;
-                }
-                dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
-                dispatch(
-                    gpxSegmentsActions.setSegmentStreetsResolved({
-                        id: segment.id,
-                        streetsResolved: true,
-                    })
-                );
-            })
-        );
-    });
-    await Promise.all(promises);
-    if (apiError) {
-        errorNotification(
-            dispatch,
-            'GeoApify Quota exceeded',
-            'Please read the FAQ and create an own free account at geoapify and enter the API Key under Settings'
-        );
-    }
-    dispatch(triggerAutomaticCalculation);
-    return dispatch(geoCodingRequestsActions.setIsLoadingStreetData(false));
+const dateTimeInMillis = new Date('2025-06-01T10:11:55').getTime();
+
+function getDateTimeStringWithOffset(offsetInSeconds: number) {
+    return new Date(dateTimeInMillis + offsetInSeconds * 1000).toISOString();
 }
+
+function getPointsOfParsedPgxSegment(parsedSegment: ParsedGpxSegment): Point[] {
+    return parsedSegment.points.map((point) => ({
+        lat: point.b,
+        lon: point.l,
+        ele: point.e,
+        time: getDateTimeStringWithOffset(point.t),
+    }));
+}
+
+export const resolveStreetNames =
+    (parsedSegments: ParsedGpxSegment[]) => async (dispatch: AppDispatch, getState: () => State) => {
+        const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
+        const promises = parsedSegments.flatMap((segment) => {
+            const points = getPointsOfParsedPgxSegment(segment);
+            splitListIntoSections(points, 1000).flatMap((points) =>
+                geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points))
+                    .then((resolvedPositions) => {
+                        dispatch(geoCodingActions.saveResolvedPositions(resolvedPositions));
+                        dispatch(
+                            gpxSegmentsActions.setSegmentStreetsResolved({
+                                id: segment.id,
+                                streetsResolved: true,
+                            })
+                        );
+                    })
+                    .catch((error) => errorNotification(dispatch, 'GeoApify Error', error.toString()))
+            );
+        });
+        await Promise.all(promises);
+        dispatch(triggerAutomaticCalculation);
+    };
