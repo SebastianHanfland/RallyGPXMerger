@@ -6,7 +6,6 @@ import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
 import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
 
@@ -27,10 +26,7 @@ export function GpxSegmentsUploadAndParse() {
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) =>
-            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(({ segments, streetLookup }) => {
-                dispatch(segmentDataActions.addGpxSegments(segments));
-                dispatch(segmentDataActions.addStreetLookup(streetLookup));
-            })
+            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments))
         );
     };
     return (
