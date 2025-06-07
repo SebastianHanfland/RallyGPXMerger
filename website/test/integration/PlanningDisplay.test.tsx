@@ -1,14 +1,12 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
-import { AppDispatch, createPlanningStore } from '../../src/planner/store/planningStore';
-import { getGpxSegments, gpxSegmentsActions } from '../../src/planner/store/gpxSegments.reducer';
-import * as fs from 'node:fs';
-import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
+import { createPlanningStore } from '../../src/planner/store/planningStore';
+import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';

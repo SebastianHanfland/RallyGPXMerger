@@ -93,6 +93,7 @@ export const segmentDataActions = gpxSegmentsSlice.actions;
 export const segmentDataReducer: Reducer<SegmentDataState> = gpxSegmentsSlice.reducer;
 const getBase = (state: State) => state.gpxSegments;
 
+export const getParsedGpxSegments = (state: State) => getBase(state).segments;
 export const getGpxSegments = getDecompressedGpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;

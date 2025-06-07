@@ -4,7 +4,6 @@ import { AppDispatch } from '../../../src/planner/store/planningStore';
 import { gpxSegmentsActions } from '../../../src/planner/store/gpxSegments.reducer';
 import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
-import { State } from '../../../src/planner/store/types';
 
 const messages = getMessages('en');
 
@@ -28,17 +27,17 @@ export const plannerUi = {
     complexSegmentsTab: () => screen.getByRole('button', { name: messages['msg.segments'] }),
     complexTracksTab: (amount: number) =>
         screen.getByRole('button', { name: messages['msg.tracks'] + '(' + amount + ')' }),
-    uploadGpxSegment: async (fileName: string) => {
+    uploadGpxSegment: async (fileName: 'segment1' | 'segment2' | 'segment3') => {
         const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
-        const inputElement = fileInput.parentNode.parentNode;
+        const inputElement = fileInput?.parentNode?.parentNode;
         const buffer = fs.readFileSync(`./test/integration/data/${fileName}.gpx`);
         const file = new File([buffer], `${fileName}.gpx`, { type: 'application/gpx+xml' });
         file.arrayBuffer = () => Promise.resolve(buffer.buffer);
-        await act(() => fireEvent.drop(inputElement, { dataTransfer: { files: [file] } }));
+        await act(() => fireEvent.drop(inputElement!, { dataTransfer: { files: [file] } }));
     },
     uploadNode: () => {
         const loadLabel = screen.getByText(messages['msg.loadPlan']);
-        return loadLabel.parentNode.parentNode.parentNode.childNodes[1] as HTMLElement;
+        return loadLabel?.parentNode?.parentNode?.parentNode?.childNodes[1] as HTMLElement;
     },
     splitSegment: async (segmentId: string, dispatch: AppDispatch) => {
         const actionPayload = { segmentId, lat: 48.128275, lng: 11.630246 };
