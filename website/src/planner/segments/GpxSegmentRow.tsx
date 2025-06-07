@@ -5,7 +5,6 @@ import { FileDownloaderDropdownItem } from './FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 import { getUsagesOfSegment } from './segmentUsageCounter.ts';
-import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
 import { FlipGpxButton } from './FlipGpxButton.tsx';
@@ -14,9 +13,17 @@ import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { ParsedGpxSegment } from '../new-store/types.ts';
+import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
-export function FileDisplay({ gpxSegment, hideChangeButton }: { gpxSegment: GpxSegment; hideChangeButton?: boolean }) {
-    const { id, filename, content, flipped, streetsResolved } = gpxSegment;
+interface Props {
+    gpxSegment: ParsedGpxSegment;
+    hideChangeButton?: boolean;
+}
+
+export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
+    const { id, filename, flipped, streetsResolved } = gpxSegment;
+    const content = useOnTheFlyCreatedGpx(gpxSegment);
     const intl = useIntl();
     const dispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);

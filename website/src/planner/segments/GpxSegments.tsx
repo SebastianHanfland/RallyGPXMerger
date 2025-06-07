@@ -1,5 +1,5 @@
 import { Form, Spinner, Table } from 'react-bootstrap';
-import { FileDisplay } from './FileDisplay.tsx';
+import { GpxSegmentRow } from './GpxSegmentRow.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -65,7 +65,7 @@ export function GpxSegments({ noFilter }: Props) {
                             </tr>
                         )}
                         {filteredSegments.map((gpxSegment) => (
-                            <FileDisplay key={gpxSegment.id} gpxSegment={gpxSegment} />
+                            <GpxSegmentRow key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                         <tr>
                             <td colSpan={3}>
