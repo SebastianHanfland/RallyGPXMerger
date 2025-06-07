@@ -1,5 +1,14 @@
 import { enrichSegmentWithResolvedStreets } from '../enrichSegmentWithResolvedStreets.ts';
 import { ParsedGpxSegment } from '../../../../new-store/types.ts';
+import { toKey } from '../../helper/pointKeys.ts';
+
+function createPoint(l: number, b: number) {
+    return { l, b, e: 1, t: 1, s: -1 };
+}
+
+function getKey(l: number, b: number) {
+    return toKey({ lat: b, lon: l });
+}
 
 describe('enrichSegmentWithResolvedStreets', () => {
     it('should keep most information on segment the same, but set the resolved flag', () => {
@@ -25,12 +34,12 @@ describe('enrichSegmentWithResolvedStreets', () => {
     it('should resolve the street on one point', () => {
         // given
         const segmentWithoutStreets: ParsedGpxSegment = {
-            points: [{ l: 3, b: 2, e: 1, t: 1, s: -1 }],
+            points: [createPoint(3, 2)],
             filename: 'fname',
             id: '123',
             streetsResolved: false,
         };
-        const allResolvedStreetNames = { '': 'Main road' };
+        const allResolvedStreetNames = { [getKey(3, 2)]: 'Main road' };
 
         // when
         const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(
