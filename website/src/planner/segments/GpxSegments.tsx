@@ -5,7 +5,7 @@ import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
-import { GpxSegmentsUpload } from './GpxSegmentsUpload.tsx';
+import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
 
 interface Props {
     noFilter?: boolean;
@@ -59,7 +59,7 @@ export function GpxSegments({ noFilter }: Props) {
                         {filteredSegments.length > 5 && (
                             <tr>
                                 <td colSpan={3}>
-                                    <GpxSegmentsUpload />
+                                    <GpxSegmentsUploadAndParse />
                                 </td>
                             </tr>
                         )}
@@ -68,7 +68,7 @@ export function GpxSegments({ noFilter }: Props) {
                         ))}
                         <tr>
                             <td colSpan={3}>
-                                <GpxSegmentsUpload />
+                                <GpxSegmentsUploadAndParse />
                             </td>
                         </tr>
                     </tbody>
@@ -79,7 +79,7 @@ export function GpxSegments({ noFilter }: Props) {
                         <FormattedMessage id={'msg.noFile'} />
                     </div>
                     <div style={{ height: '70px', width: '200px' }}>
-                        <GpxSegmentsUpload />
+                        <GpxSegmentsUploadAndParse />
                     </div>
                 </div>
             )}
