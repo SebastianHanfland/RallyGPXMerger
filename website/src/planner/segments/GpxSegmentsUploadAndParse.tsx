@@ -24,12 +24,12 @@ export function GpxSegmentsUploadAndParse() {
     const dispatch: AppDispatch = useDispatch();
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toParsedGpxSegment)).then((newGpxSegments) => {
+        Promise.all([...newFiles].map(toParsedGpxSegment)).then((newGpxSegments) =>
             enrichGpxSegmentsWithStreetNames(newGpxSegments).then(({ segments, streetLookup }) => {
                 dispatch(segmentDataActions.addGpxSegments(segments));
                 dispatch(segmentDataActions.addStreetLookup(streetLookup));
-            });
-        });
+            })
+        );
     };
     return (
         <FileUploader

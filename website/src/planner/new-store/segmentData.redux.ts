@@ -91,7 +91,7 @@ const gpxSegmentsSlice = createSlice({
 const defaultSegmentSpeeds: Record<string, number | undefined> = {};
 export const segmentDataActions = gpxSegmentsSlice.actions;
 export const segmentDataReducer: Reducer<SegmentDataState> = gpxSegmentsSlice.reducer;
-const getBase = (state: State) => state.gpxSegments;
+const getBase = (state: State) => state.segmentData;
 
 export const getParsedGpxSegments = (state: State) => getBase(state).segments;
 export const getGpxSegments = getDecompressedGpxSegments;

@@ -31,8 +31,8 @@ describe('GpxUpload and parse', () => {
             { wrapper: MemoryRouter }
         );
 
-        ui.uploadGpxSegment('segment1');
+        await ui.uploadGpxSegment('segment1');
         const segments = getParsedGpxSegments(store.getState());
-        expect(segments).toHaveLength(0);
+        expect(segments).toHaveLength(1);
     });
 });
