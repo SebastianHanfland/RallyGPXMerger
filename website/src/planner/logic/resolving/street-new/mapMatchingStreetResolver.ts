@@ -36,10 +36,11 @@ export const enrichGpxSegmentsWithStreetNames =
     (parsedSegments: ParsedGpxSegment[]) =>
     async (dispatch: AppDispatch, getState: () => State): Promise<void> => {
         const streetLookup = getStreetLookup(getState());
-        const segmentIndexOffset = 5; // TODO calculate from highest key
+        const maximumIndex = Math.max(...Object.keys(streetLookup).map(Number));
+        const segmentIndexOffset = Math.ceil(maximumIndex / 1000);
 
         const promises = parsedSegments.map((segment, segmentIndex) =>
-            enrichOneGpxSegment(segment, segmentIndex * 100)
+            enrichOneGpxSegment(segment, (segmentIndexOffset + segmentIndex) * 1000)
         );
         await Promise.all(promises);
         dispatch(triggerAutomaticCalculation);
@@ -57,7 +58,8 @@ function combineStreetNames(streetNames: ResolvedPositions[]): ResolvedPositions
 
 function enrichSegmentWithResolvedStreets(
     segment: ParsedGpxSegment,
-    allResolvedStreetNames: ResolvedPositions
+    allResolvedStreetNames: ResolvedPositions,
+    streetResolveStart: number
 ): { segment: ParsedGpxSegment; streetLookUp: Record<number, string> } {
     return { segment, streetLookUp: {} };
 }
@@ -78,7 +80,8 @@ const enrichOneGpxSegment =
             const allResolvedStreetNames = combineStreetNames(streetNames);
             const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(
                 segmentWithoutStreets,
-                allResolvedStreetNames
+                allResolvedStreetNames,
+                streetResolveStart
             );
             dispatch(segmentDataActions.addGpxSegments([segment]));
             dispatch(segmentDataActions.addStreetLookup(streetLookUp));
