@@ -15,5 +15,10 @@ describe('enrichSegmentWithResolvedStreets', () => {
 
         // then
         expect(segment.streetsResolved).toBeTruthy();
+        expect(segment.filename).toEqual(segmentWithoutStreets.filename);
+        expect(segment.id).toEqual(segmentWithoutStreets.id);
+        expect(segment.points.length).toEqual(segmentWithoutStreets.points.length);
+
+        expect(streetLookUp).toEqual({});
     });
 });
