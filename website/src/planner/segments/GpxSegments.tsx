@@ -1,11 +1,12 @@
 import { Form, Spinner, Table } from 'react-bootstrap';
 import { FileDisplay } from './FileDisplay.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+// import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
 import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
+import { getFilteredGpxSegments, getSegmentFilterTerm, segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 interface Props {
     noFilter?: boolean;
@@ -16,7 +17,7 @@ export function GpxSegments({ noFilter }: Props) {
     const dispatch: AppDispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
     const isLoadingStreetData = useSelector(getIsLoadingStreetData);
-    const setFilterTerm = (term: string) => dispatch(gpxSegmentsActions.setFilterTerm(term));
+    const setFilterTerm = (term: string) => dispatch(segmentDataActions.setFilterTerm(term));
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
     return (

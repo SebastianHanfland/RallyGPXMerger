@@ -1,7 +1,6 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ClickOnSegment, ParsedGpxSegment, SegmentDataState } from './types.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { GpxSegment } from '../../common/types.ts';
 import { getDecompressedGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { State } from '../store/types.ts';
 
@@ -103,6 +102,10 @@ export const getReplaceProcess = (state: State) => getBase(state).replaceProcess
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;
 export const getClickOnSegment = (state: State) => getBase(state).clickOnSegment;
 
-export const getFilteredGpxSegments = createSelector(getGpxSegments, getSegmentFilterTerm, (segments, filterTerm) => {
-    return filterItems(filterTerm, segments, (track: GpxSegment) => track.filename);
-});
+export const getFilteredGpxSegments = createSelector(
+    getParsedGpxSegments,
+    getSegmentFilterTerm,
+    (segments, filterTerm) => {
+        return filterItems(filterTerm, segments, (track: ParsedGpxSegment) => track.filename);
+    }
+);
