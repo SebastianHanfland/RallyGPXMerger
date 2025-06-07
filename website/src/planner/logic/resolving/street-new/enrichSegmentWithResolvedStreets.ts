@@ -5,5 +5,11 @@ export function enrichSegmentWithResolvedStreets(
     allResolvedStreetNames: ResolvedPositions,
     streetResolveStart: number
 ): { segment: ParsedGpxSegment; streetLookUp: Record<number, string> } {
-    return { segment: { ...segmentWithoutStreets, streetsResolved: true }, streetLookUp: {} };
+    const segment = {
+        ...segmentWithoutStreets,
+        streetsResolved: true,
+        points: segmentWithoutStreets.points.map((point) => ({ ...point, s: streetResolveStart })),
+    };
+    const streetLookUp = { [streetResolveStart]: Object.values(allResolvedStreetNames)[0] ?? '' };
+    return { segment, streetLookUp: streetLookUp };
 }
