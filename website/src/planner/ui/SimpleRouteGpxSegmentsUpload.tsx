@@ -1,50 +1,31 @@
 import { FileUploader } from 'react-drag-drop-files';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import { gpxShortener } from '../io/gpxShortener.ts';
-import { GpxSegment } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
-import { resolveStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { optionallyCompress } from '../store/compressHelper.ts';
-import { addGpxSegments } from '../segments/addGpxSegmentsThunk.ts';
+import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
+import { TrackComposition } from '../store/types.ts';
 
 const fileTypes = ['GPX'];
 
-export async function toGpxSegment(file: File): Promise<GpxSegment> {
-    return file.arrayBuffer().then((buffer) => ({
-        id: uuidv4(),
-        filename: file.name.replace('.gpx', ''),
-        content: optionallyCompress(gpxShortener(new TextDecoder().decode(buffer))),
-    }));
-}
-
-export function SimpleRouteGpxSegmentsUpload() {
+export function GpxSegmentsUploadAndParseAndSetToTrack({ track }: { track: TrackComposition }) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
-    const trackCompositions = useSelector(getTrackCompositions);
-    const track = trackCompositions[0];
-
-    if (!track) {
-        dispatch(trackMergeActions.addTrackComposition());
-        return null;
-    }
+    const averageSpeed = useSelector(getAverageSpeedInKmH);
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment))
-            .then((newGpxSegments) => {
-                dispatch(addGpxSegments(newGpxSegments));
-                dispatch(
-                    trackMergeActions.setSegments({
-                        id: track.id,
-                        segments: [...track.segmentIds, ...newGpxSegments.map((segment) => segment.id)],
-                    })
-                );
-                dispatch(triggerAutomaticCalculation);
-            })
-            .then(() => dispatch(resolveStreetNames));
+        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) => {
+            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments));
+            dispatch(
+                trackMergeActions.setSegments({
+                    id: track.id,
+                    segments: [...track.segmentIds, ...newGpxSegments.map((segment) => segment.id)],
+                })
+            );
+            dispatch(triggerAutomaticCalculation);
+        });
     };
     return (
         <FileUploader

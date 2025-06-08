@@ -18,10 +18,9 @@ import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook
 import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
 import { PauseDialog } from './PauseDialog.tsx';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { toLatLng } from '../../utils/pointUtil.ts';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { ParsedPoint } from '../new-store/types.ts';
 
 let myMap: L.Map | undefined;
 
@@ -32,26 +31,30 @@ const shiftStartPoint = (point: { lat: number; lng: number }, sideBarOpen: boole
     return { ...point, lng: point.lng + 0.25 };
 };
 
+function getLatLng(point: ParsedPoint) {
+    return { lat: point.b, lng: point.l };
+}
+
 export const InteractionMap = () => {
     const dispatch = useDispatch();
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getParsedGpxSegments);
     const isSidebarOpen = useSelector(getIsSidebarOpen);
 
     useEffect(() => {
         if (gpxSegments.length > 1 && myMap) {
-            const simpleGPX = SimpleGPX.fromString(gpxSegments[gpxSegments.length - 1].content);
-            const startPoint = toLatLng(simpleGPX.getStartPoint());
-            myMap.setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
+            const lastSegment = gpxSegments[gpxSegments.length - 1];
+            if (lastSegment.points.length > 0) {
+                const point = lastSegment.points[0];
+                const startPoint = getLatLng(point);
+                myMap.setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
+            }
         }
     }, []);
 
     useEffect(() => {
         if (!myMap) {
-            const startPoint =
-                gpxSegments.length > 0
-                    ? toLatLng(SimpleGPX.fromString(gpxSegments[0].content).getStartPoint())
-                    : Munich;
+            const startPoint = gpxSegments.length > 0 ? getLatLng(gpxSegments[0].points[0]) : Munich;
             myMap = L.map('mapid').setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             myMap.on('contextmenu', (event: LeafletMouseEvent) => {

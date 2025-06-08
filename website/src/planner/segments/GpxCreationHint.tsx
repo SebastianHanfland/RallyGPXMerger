@@ -1,14 +1,14 @@
 import { FormattedMessage } from 'react-intl';
 import { getLanguage } from '../../language.ts';
 import { useSelector } from 'react-redux';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
 import hand from '../../assets/hand.svg';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 export function GpxCreationHint() {
     const language = getLanguage();
     const link = language === 'de' ? 'https://gpx.studio/de' : 'https://gpx.studio/';
-    const hasNoGPXSegments = useSelector(getGpxSegments).length === 0;
+    const hasNoGPXSegments = useSelector(getParsedGpxSegments).length === 0;
 
     return (
         <p style={hasNoGPXSegments ? { border: '2px solid transparent', borderColor: 'red' } : undefined}>

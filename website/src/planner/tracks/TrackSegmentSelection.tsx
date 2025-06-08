@@ -1,7 +1,6 @@
 import { TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 
 import { ReactSortable } from 'react-sortablejs';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
@@ -9,8 +8,9 @@ import { FormattedMessage } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
-import { SimpleRouteGpxSegmentsUpload } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
+import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
 import { TrackSegmentSelect } from './TrackSegmentSelect.tsx';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 interface Props {
     track: TrackComposition;
@@ -21,7 +21,7 @@ interface Props {
 export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Props) {
     const { id, segmentIds } = track;
     const dispatch: AppDispatch = useDispatch();
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getParsedGpxSegments);
 
     const setSegmentIds = (items: { id: string }[]) => {
         const mappedIds = items.map((item) => item.id).join();
@@ -56,7 +56,11 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
             </ReactSortable>
             <div className={'d-flex my-4'}>
                 <div className={'flex-grow-1'}>
-                    {!hideSelect ? <TrackSegmentSelect track={track} /> : <SimpleRouteGpxSegmentsUpload />}
+                    {!hideSelect ? (
+                        <TrackSegmentSelect track={track} />
+                    ) : (
+                        <GpxSegmentsUploadAndParseAndSetToTrack track={track} />
+                    )}
                 </div>
                 <div style={{ marginLeft: '10px' }}>
                     <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>

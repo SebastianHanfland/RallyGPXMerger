@@ -11,13 +11,13 @@ import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
 import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
     const trackInfos = useSelector(getEnrichedTrackStreetInfos);
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getParsedGpxSegments);
     if (trackCompositions.length === 0) {
         return null;
     }

@@ -1,6 +1,5 @@
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import {
     getArrivalDateTime,
     getHasChangesSinceLastCalculation,
@@ -10,11 +9,12 @@ import {
 } from '../store/trackMerge.reducer.ts';
 import { getHasChangesSinceLastUpload, getPlanningId } from '../store/backend.reducer.ts';
 import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 export const useHelpingHook = (): [string, string, () => void] => {
     const intl = useIntl();
     const dispatch = useDispatch();
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getParsedGpxSegments);
     const tracks = useSelector(getTrackCompositions);
     const arrivalDateTime = useSelector(getArrivalDateTime);
     const hasDefaultArrivalTime = useSelector(getHasDefaultArrivalDateTime);

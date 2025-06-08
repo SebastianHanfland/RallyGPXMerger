@@ -8,16 +8,16 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { ExportStateJson } from '../io/ExportStateJson.tsx';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { StreetInfoModal } from './StreetInfoModal.tsx';
 import { useState } from 'react';
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getParsedGpxSegments);
     const calculatedTracks = useSelector(getCalculatedTracks);
     const [displayStreetInfo, setDisplayStreetInfo] = useState(false);
     if (trackCompositions.length === 0 || gpxSegments.length === 0) {

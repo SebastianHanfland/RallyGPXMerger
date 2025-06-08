@@ -9,9 +9,8 @@ import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 export function SimpleGpxSegments() {
     const dispatch: AppDispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
-    const track = trackCompositions[0];
 
-    if (!track) {
+    if (trackCompositions.length === 0) {
         dispatch(trackMergeActions.addTrackComposition());
         return null;
     }
@@ -24,7 +23,7 @@ export function SimpleGpxSegments() {
             <BlockTextDescription messageId={'msg.description.simpleSegments'} />
             <div className={'m-3'}>
                 <GpxCreationHint />
-                <TrackSegmentSelection track={track} hideSelect={true} fullGpxDelete={true} />
+                <TrackSegmentSelection track={trackCompositions[0]} hideSelect={true} fullGpxDelete={true} />
             </div>
         </div>
     );

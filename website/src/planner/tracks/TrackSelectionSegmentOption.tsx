@@ -9,11 +9,13 @@ import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
-import { getGpxSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
+import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import flip from '../../assets/flip.svg';
 import { DraggableIcon } from './DraggableIcon.tsx';
+import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
 interface Props {
     trackId: string;
@@ -26,11 +28,12 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
 
-    const gpxSegment = useSelector(getGpxSegments).find((segment) => segment.id === segmentId);
+    const gpxSegment = useSelector(getParsedGpxSegments).find((segment) => segment.id === segmentId);
     if (!gpxSegment) {
         return null;
     }
-    const { id, filename, content, flipped } = gpxSegment;
+    const { id, filename, flipped } = gpxSegment;
+    const content = useOnTheFlyCreatedGpx(gpxSegment);
 
     return (
         <div
