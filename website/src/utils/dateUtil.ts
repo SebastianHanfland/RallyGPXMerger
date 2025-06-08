@@ -6,6 +6,10 @@ export function shiftEndDate(endDateString: string, breakInMinutes: number): str
     return date.addSeconds(new Date(endDateString), -breakInMinutes * 60).toISOString();
 }
 
+export function shiftDateBySeconds(datetime: string, shiftInSeconds: number): string {
+    return date.addSeconds(new Date(datetime), shiftInSeconds).toISOString();
+}
+
 export function getTimeDifferenceInSeconds(firstDateString: string, secondDateString: string): number {
     const firstDate = new Date(secondDateString);
     const secondDate = new Date(firstDateString);

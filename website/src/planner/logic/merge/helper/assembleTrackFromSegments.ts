@@ -1,8 +1,7 @@
 import { PointOfInterestType, TrackComposition } from '../../../store/types.ts';
-import { mergeSimpleGPXs, SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
-import { shiftEndDate } from '../../../../utils/dateUtil.ts';
+import { shiftDateBySeconds, shiftEndDate } from '../../../../utils/dateUtil.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
 import geoDistance from 'geo-distance-helper';
 import { planningStore } from '../../../store/planningStore.ts';
@@ -11,10 +10,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
-import { ParsedGpxSegment, ParsedPoint } from '../../../new-store/types.ts';
+import { ParsedGpxSegment, TimedPoint } from '../../../new-store/types.ts';
+import { getGpxContentFromTimedPoints } from '../../../../utils/SimpleGPXFromPoints.ts';
 
 function checkForGap(
-    lastPoint: ParsedPoint,
+    lastPoint: TimedPoint,
     segment: ParsedGpxSegment,
     track: TrackComposition,
     lastSegmentName: string
@@ -44,43 +44,49 @@ function clearAllGaps() {
     planningStore.dispatch(pointsActions.removeAllGapPoint());
 }
 
+function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: string): TimedPoint[] {
+    const points = gpxOrBreak.points;
+    const secondsOfSegment = points[points.length - 1].t;
+
+    return points.map((point) => ({ ...point, t: shiftDateBySeconds(endTime, point.t - secondsOfSegment) }));
+}
+
 export function assembleTrackFromSegments(
     track: TrackComposition,
     gpxSegments: ParsedGpxSegment[],
     initialEndDate: string
 ): CalculatedTrack | null {
     let arrivalTimeForPreviousSegment = initialEndDate;
-    let shiftedGpxContents: SimpleGPX[] = [];
+    let trackPoints: TimedPoint[] = [];
     clearAllGaps();
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
-    let lastPoint: ParsedPoint | undefined = undefined;
+    let lastPoint: TimedPoint | undefined = undefined;
     let lastSegmentName: string = '';
     gpxSegmentContents.reverse().forEach((gpxOrBreak) => {
-        if (!instanceOfBreak(gpxOrBreak)) {
+        if (instanceOfBreak(gpxOrBreak)) {
+            arrivalTimeForPreviousSegment = shiftEndDate(arrivalTimeForPreviousSegment, gpxOrBreak.minutes);
+        } else {
             if (!!lastPoint) {
                 checkForGap(lastPoint, gpxOrBreak, track, lastSegmentName);
             }
 
-            gpxOrBreak.gpx.shiftToArrivalTime(arrivalTimeForPreviousSegment);
-            arrivalTimeForPreviousSegment = gpxOrBreak.gpx.getStart();
-            shiftedGpxContents = [SimpleGPX.fromString(gpxOrBreak.gpx.toString()), ...shiftedGpxContents];
+            const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
+            arrivalTimeForPreviousSegment = shiftedPoint[0].t;
+            trackPoints = [...shiftedPoint, ...trackPoints];
 
-            lastPoint = gpxOrBreak.gpx.getStartPoint();
-            lastSegmentName = gpxOrBreak.name;
-        } else {
-            arrivalTimeForPreviousSegment = shiftEndDate(arrivalTimeForPreviousSegment, gpxOrBreak.minutes);
+            lastPoint = shiftedPoint[0];
+            lastSegmentName = gpxOrBreak.filename;
         }
     });
 
-    if (shiftedGpxContents.length === 0) {
+    if (trackPoints.length === 0) {
         return null;
     }
-    const trackContent = mergeSimpleGPXs(shiftedGpxContents);
 
     return {
         id: track.id,
-        content: trackContent.toString(),
+        content: getGpxContentFromTimedPoints(trackPoints, track.name!),
         filename: track.name!,
         peopleCount: track.peopleCount ?? 0,
     };

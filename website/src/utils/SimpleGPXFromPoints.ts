@@ -1,10 +1,10 @@
-import { ParsedGpxSegment, ParsedPoint } from '../planner/new-store/types.ts';
+import { ParsedGpxSegment, ParsedPoint, TimedPoint } from '../planner/new-store/types.ts';
 import { SimpleGPX } from './SimpleGPX.ts';
 import { Point } from './gpxTypes.ts';
 
-function getMetadata(parsedGpxSegment: ParsedGpxSegment) {
+function getMetadata(name: string) {
     return {
-        name: parsedGpxSegment.filename,
+        name: name,
         time: new Date(),
         author: {
             name: 'sternfahrtplaner.de',
@@ -12,13 +12,13 @@ function getMetadata(parsedGpxSegment: ParsedGpxSegment) {
             email: { id: '', domain: '' },
         },
         link: { href: '', type: '', text: '' },
-        desc: parsedGpxSegment.filename,
+        desc: name,
     };
 }
 
 export function getGpxContentStringFromParsedSegment(parsedGpxSegment: ParsedGpxSegment): string {
     return new SimpleGPX(
-        getMetadata(parsedGpxSegment),
+        getMetadata(parsedGpxSegment.filename),
         [],
         [{ name: parsedGpxSegment.filename, points: parsedGpxSegment.points.map(toGpxPoint) }],
         []
@@ -27,4 +27,17 @@ export function getGpxContentStringFromParsedSegment(parsedGpxSegment: ParsedGpx
 
 function toGpxPoint(parsedPoint: ParsedPoint): Point {
     return { lat: parsedPoint.b, lon: parsedPoint.l, ele: parsedPoint.e, time: '' };
+}
+
+export function getGpxContentFromTimedPoints(timedPoints: TimedPoint[], name: string): string {
+    return new SimpleGPX(
+        getMetadata(name),
+        [],
+        [{ name: name, points: timedPoints.map(toTimedGpxPoint) }],
+        []
+    ).toString();
+}
+
+function toTimedGpxPoint(timedPoint: TimedPoint): Point {
+    return { lat: timedPoint.b, lon: timedPoint.l, ele: timedPoint.e, time: timedPoint.t };
 }

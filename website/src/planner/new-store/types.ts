@@ -17,6 +17,14 @@ export interface ParsedPoint {
     s: number; // index of street resolving
 }
 
+export interface TimedPoint {
+    l: number; // longitude
+    b: number; // latitude
+    e: number; // elevation
+    t: string; // Date time in isoformat
+    s: number; // index of street resolving
+}
+
 export interface ParsedGpxSegment {
     flipped?: boolean;
     streetsResolved: boolean;
