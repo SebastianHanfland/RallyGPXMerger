@@ -6,10 +6,10 @@ import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
-import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';
+import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
 
 const messages = getMessages('en');
 
@@ -82,7 +82,7 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment1');
             await ui.uploadGpxSegment('segment2');
 
-            expect(getGpxSegments(store.getState())).toHaveLength(2);
+            expect(getParsedGpxSegments(store.getState())).toHaveLength(2);
             expect(getCalculatedTracks(store.getState())).toHaveLength(1);
 
             ui.pdfDownloadButton();
@@ -107,7 +107,7 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
 
-            expect(getGpxSegments(store.getState())).toHaveLength(3);
+            expect(getParsedGpxSegments(store.getState())).toHaveLength(3);
             expect(getCalculatedTracks(store.getState())).toHaveLength(0);
 
             await user.click(ui.complexTracksTab(0));
@@ -150,15 +150,15 @@ describe('Planner integration test', () => {
             await user.click(ui.startButton());
             await user.click(ui.complexButton());
             await ui.uploadGpxSegment('segment1');
-            const listWithFirstSegment = getGpxSegments(store.getState());
+            const listWithFirstSegment = getParsedGpxSegments(store.getState());
             expect(listWithFirstSegment).toHaveLength(1);
             const firstSegment = listWithFirstSegment[0];
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
-            expect(getGpxSegments(store.getState())).toHaveLength(3);
+            expect(getParsedGpxSegments(store.getState())).toHaveLength(3);
 
             await ui.splitSegment(firstSegment.id, store.dispatch);
-            expect(getGpxSegments(store.getState())).toHaveLength(4);
+            expect(getParsedGpxSegments(store.getState())).toHaveLength(4);
         });
     });
 });

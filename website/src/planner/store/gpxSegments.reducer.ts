@@ -1,7 +1,6 @@
-import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ClickOnSegment, GpxSegmentsState, State } from './types.ts';
 import { storage } from './storage.ts';
-import { optionallyDecompress } from './compressHelper.ts';
 import { GpxSegment } from '../../common/types.ts';
 
 const initialState: GpxSegmentsState = {
@@ -84,13 +83,6 @@ export const gpxSegmentsActions = gpxSegmentsSlice.actions;
 export const gpxSegmentsReducer: Reducer<GpxSegmentsState> = gpxSegmentsSlice.reducer;
 const getBase = (state: State) => state.gpxSegments;
 
-export const getDecompressedGpxSegments = createSelector(
-    (state: State) => getBase(state).segments,
-    (segments) => {
-        return segments?.map((segment) => ({ ...segment, content: optionallyDecompress(segment.content) }));
-    }
-);
-export const getGpxSegments = getDecompressedGpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;

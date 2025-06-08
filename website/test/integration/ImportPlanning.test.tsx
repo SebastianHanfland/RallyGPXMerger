@@ -11,7 +11,6 @@ import { useGetUrlParam } from '../../src/utils/linkUtil';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
-import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
 import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 
@@ -52,6 +51,5 @@ describe('Import planning', () => {
         await waitFor(() => expect(getCalculatedTracks(store.getState()) ?? []).toHaveLength(1));
         expect(getTrackCompositions(store.getState())).toHaveLength(1);
         expect(getParsedGpxSegments(store.getState()) ?? []).toHaveLength(4);
-        expect(getGpxSegments(store.getState()) ?? []).toHaveLength(4);
     });
 });
