@@ -6,7 +6,6 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { geoCodingRequestsActions } from '../store/geoCodingRequests.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { pointsActions } from '../store/points.reducer.ts';
-import { clearGpxCache } from '../../common/cache/gpxCache.ts';
 import { backendActions } from '../store/backend.reducer.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
@@ -22,6 +21,5 @@ export function resetData(dispatch: Dispatch) {
     dispatch(pointsActions.clear());
     dispatch(backendActions.clear());
     dispatch(segmentDataActions.clear());
-    clearGpxCache();
     localStorage.clear();
 }
