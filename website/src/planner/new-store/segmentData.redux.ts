@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { ClickOnSegment, ParsedGpxSegment, SegmentDataState } from './types.ts';
+import { ClickOnSegment, ParsedGpxSegment, ParsedPoint, SegmentDataState } from './types.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { State } from '../store/types.ts';
 import { storage } from '../store/storage.ts';
@@ -30,12 +30,12 @@ const segmentDataSlice = createSlice({
                 segment.id === action.payload ? { ...segment, flipped: !segment.flipped } : segment
             );
         },
-        changeGpxSegmentContent: (
+        changeGpxSegmentPoints: (
             state: SegmentDataState,
-            action: PayloadAction<{ id: string; newContent: string }>
+            action: PayloadAction<{ id: string; newPoints: ParsedPoint[] }>
         ) => {
             state.segments = state.segments.map((segment) =>
-                segment.id === action.payload.id ? { ...segment, content: action.payload.newContent } : segment
+                segment.id === action.payload.id ? { ...segment, points: action.payload.newPoints } : segment
             );
         },
         setSegmentStreetsResolved: (

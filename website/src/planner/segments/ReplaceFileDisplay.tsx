@@ -1,11 +1,11 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
-import { GpxSegment } from '../../common/types.ts';
 import { RemoveReplaceFileButton } from './RemoveReplaceFileButton.tsx';
 import { useIntl } from 'react-intl';
+import { ParsedGpxSegment } from '../new-store/types.ts';
+import { getReplaceProcess, segmentDataActions } from '../new-store/segmentData.redux.ts';
 
-export function ReplaceFileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
+export function ReplaceFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const intl = useIntl();
     const { id, filename } = gpxSegment;
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export function ReplaceFileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
                             return;
                         }
                         dispatch(
-                            gpxSegmentsActions.setReplaceProcess({
+                            segmentDataActions.setReplaceProcess({
                                 ...replacementProcess,
                                 replacementSegments: replacementProcess.replacementSegments.map((segment) =>
                                     segment.id === id ? { ...segment, filename: value.target.value } : segment
