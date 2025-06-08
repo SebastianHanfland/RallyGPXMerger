@@ -12,6 +12,7 @@ import { StreetInfoModal } from './StreetInfoModal.tsx';
 import { useState } from 'react';
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const intl = useIntl();
@@ -25,6 +26,8 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
     }
     const track = trackCompositions.find((tr) => tr.id === matchedTrackInfo?.id);
     const calculatedTrack = calculatedTracks.find((tr) => tr.id === matchedTrackInfo?.id);
+    const content = getGpxContentFromTimedPoints(calculatedTrack?.points ?? [], calculatedTrack?.filename ?? 'Track');
+
     if (!track) {
         return null;
     }
@@ -48,7 +51,7 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
                     <Col>
                         <FileDownloader
                             name={`${calculatedTrack.filename}.gpx`}
-                            content={calculatedTrack.content}
+                            content={content}
                             id={calculatedTrack.id}
                             label={'GPX'}
                             onlyIcon={true}

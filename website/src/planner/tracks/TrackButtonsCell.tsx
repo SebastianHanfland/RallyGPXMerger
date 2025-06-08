@@ -10,6 +10,7 @@ import trash from '../../assets/trashB.svg';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 interface Props {
     track: TrackComposition;
@@ -22,6 +23,8 @@ export function TrackButtonsCell({ track }: Props) {
     const [showModal, setShowModal] = useState(false);
     const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
+
+    const content = getGpxContentFromTimedPoints(calculatedTrack?.points ?? [], calculatedTrack?.filename ?? 'Track');
 
     return (
         <DropdownButton
@@ -69,10 +72,7 @@ export function TrackButtonsCell({ track }: Props) {
                 />
             )}
             {calculatedTrack && (
-                <FileDownloaderDropdownItem
-                    content={calculatedTrack.content}
-                    name={calculatedTrack.filename + '.gpx'}
-                />
+                <FileDownloaderDropdownItem content={content} name={calculatedTrack.filename + '.gpx'} />
             )}
         </DropdownButton>
     );

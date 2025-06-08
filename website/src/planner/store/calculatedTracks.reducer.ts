@@ -3,7 +3,6 @@ import { CalculatedTracksState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { optionallyCompress } from './compressHelper.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 
 const initialState: CalculatedTracksState = {
@@ -15,8 +14,7 @@ const calculatedTracksSlice = createSlice({
     initialState: storage.load()?.calculatedTracks ?? initialState,
     reducers: {
         setCalculatedTracks: (state: CalculatedTracksState, action: PayloadAction<CalculatedTrack[]>) => {
-            state.tracks =
-                action.payload?.map((track) => ({ ...track, content: optionallyCompress(track.content) })) ?? [];
+            state.tracks = action.payload;
         },
         removeCalculatedTracks: (state: CalculatedTracksState) => {
             state.tracks = [];
