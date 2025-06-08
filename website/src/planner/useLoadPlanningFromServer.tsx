@@ -6,29 +6,8 @@ import { getData } from '../api/api.ts';
 import { backendActions, getPlanningPassword } from './store/backend.reducer.ts';
 import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
 import { AppDispatch } from './store/planningStore.ts';
-import { parsedTracksActions } from './store/parsedTracks.reducer.ts';
-import { ParsedTrack } from '../common/types.ts';
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { optionallyDecompress } from './store/compressHelper.ts';
-import { getConstructionSegments } from './store/gpxSegments.reducer.ts';
-import { Dispatch } from '@reduxjs/toolkit';
 import { State } from './store/types.ts';
 import { trackMergeActions } from './store/trackMerge.reducer.ts';
-
-export const createAndStoreReadablePoints = (planningId: string) => (dispatch: Dispatch, getState: () => State) => {
-    const state = getState();
-    const constructionSegments = getConstructionSegments(state);
-    const parsedConstructionSegments = constructionSegments?.map(
-        (segment): ParsedTrack => ({
-            id: segment.id,
-            filename: segment.filename,
-            version: planningId,
-            color: 'red',
-            points: SimpleGPX.fromString(optionallyDecompress(segment.content)).getPoints(),
-        })
-    );
-    dispatch(parsedTracksActions.addParsedConstructionSegments(parsedConstructionSegments ?? []));
-};
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
@@ -49,7 +28,6 @@ export function loadStateAndSetUpPlanner(
         dispatch(backendActions.setPlanningPassword(passwordToSet));
     }
     dispatch(backendActions.setIsPlanningSaved(!!planningId));
-    dispatch(createAndStoreReadablePoints(planningId ?? 'current'));
 }
 
 export function useLoadPlanningFromServer() {

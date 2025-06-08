@@ -1,12 +1,12 @@
 import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { getSegmentSpeeds, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ParsedGpxSegment } from '../new-store/types.ts';
+import { getSegmentSpeeds, segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const intl = useIntl();
@@ -33,7 +33,7 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
                     title={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
                     value={segmentSpeed?.toString() ?? ''}
                     onChange={(value) => {
-                        dispatch(gpxSegmentsActions.setSegmentSpeeds({ id, speed: getCount(value) }));
+                        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed: getCount(value) }));
                         dispatch(triggerAutomaticCalculation);
                     }}
                 />

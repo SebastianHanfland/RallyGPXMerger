@@ -1,9 +1,11 @@
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
-import { GpxSegment } from '../../common/types.ts';
+import { ParsedGpxSegment } from '../new-store/types.ts';
+import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
-export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: GpxSegment }) {
-    const { id, filename, content } = gpxSegment;
+export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
+    const { id, filename } = gpxSegment;
+    const content = useOnTheFlyCreatedGpx(gpxSegment);
 
     return (
         <tr>

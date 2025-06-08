@@ -1,7 +1,6 @@
 import { Action, AnyAction, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
 import reduceReducer from 'reduce-reducers';
 import { State } from './types.ts';
-import { gpxSegmentsReducer } from './gpxSegments.reducer.ts';
 import { trackMergeReducer } from './trackMerge.reducer.ts';
 import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
@@ -12,13 +11,11 @@ import { layoutReducer } from './layout.reducer.ts';
 import { pointsReducer } from './points.reducer.ts';
 import { backendReducer } from './backend.reducer.ts';
 import { toastsReducer } from './toast.reducer.ts';
-import { parsedTracksReducer } from './parsedTracks.reducer.ts';
 import { segmentDataReducer } from '../new-store/segmentData.redux.ts';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,
     layout: layoutReducer,
-    gpxSegments: gpxSegmentsReducer,
     segmentData: segmentDataReducer,
     trackMerge: trackMergeReducer,
     calculatedTracks: calculatedTracksReducer,
@@ -27,7 +24,6 @@ const rootReducer: Reducer = combineReducers({
     geoCoding: geoCodingReducer,
     geoCodingRequests: geoCodingRequestsReducer,
     toasts: toastsReducer,
-    parsedTracks: parsedTracksReducer,
 });
 const storingReducer: Reducer = (state: State) => {
     if (state) {

@@ -3,10 +3,10 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
 import { getShowConstructions } from '../../store/map.reducer.ts';
-import { getParsedConstructionSegments } from '../../store/parsedTracks.reducer.ts';
+import { getConstructionSegments } from '../../new-store/segmentData.redux.ts';
 
 export function constructionsDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
-    const gpxSegments = useSelector(getParsedConstructionSegments) ?? [];
+    const gpxSegments = useSelector(getConstructionSegments) ?? [];
     const showConstructions = useSelector(getShowConstructions) ?? false;
 
     // eslint-disable-next-line react-hooks/rules-of-hooks

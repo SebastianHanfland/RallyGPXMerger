@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import flip from '../../assets/flip.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
+import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 interface Props {
     id: string;
@@ -16,7 +16,7 @@ export function FlipGpxButton({ id, name, flipped }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const flipGpxSegment = () => {
-        dispatch(gpxSegmentsActions.flipGpxSegment(id));
+        dispatch(segmentDataActions.flipGpxSegment(id));
         dispatch(triggerAutomaticCalculation);
     };
     return (

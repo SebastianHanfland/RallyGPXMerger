@@ -1,4 +1,3 @@
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { calculatedTracksActions } from '../store/calculatedTracks.reducer.ts';
 import { mapActions } from '../store/map.reducer.ts';
@@ -9,12 +8,9 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { pointsActions } from '../store/points.reducer.ts';
 import { clearGpxCache } from '../../common/cache/gpxCache.ts';
 import { backendActions } from '../store/backend.reducer.ts';
-import { parsedTracksActions } from '../store/parsedTracks.reducer.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 export function resetData(dispatch: Dispatch) {
-    dispatch(parsedTracksActions.clear());
-    dispatch(gpxSegmentsActions.clearGpxSegments());
     dispatch(trackMergeActions.clear());
     dispatch(calculatedTracksActions.removeCalculatedTracks());
     dispatch(mapActions.setShowGpxSegments(true));

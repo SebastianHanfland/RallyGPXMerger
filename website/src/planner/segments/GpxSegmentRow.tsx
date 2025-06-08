@@ -1,6 +1,5 @@
 import { ButtonGroup, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { FileDownloaderDropdownItem } from './FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
@@ -15,6 +14,7 @@ import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { ParsedGpxSegment } from '../new-store/types.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
+import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 interface Props {
     gpxSegment: ParsedGpxSegment;
@@ -41,8 +41,8 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
                     placeholder={intl.formatMessage({ id: 'msg.filename' })}
                     value={filename}
                     onChange={(value) => {
-                        dispatch(gpxSegmentsActions.setFilename({ id, filename: value.target.value }));
-                        dispatch(gpxSegmentsActions.setFilterTerm(undefined));
+                        dispatch(segmentDataActions.setFilename({ id, filename: value.target.value }));
+                        dispatch(segmentDataActions.setFilterTerm(undefined));
                     }}
                 />
             </td>

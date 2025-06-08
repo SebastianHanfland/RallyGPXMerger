@@ -1,9 +1,8 @@
 import { State } from '../store/types.ts';
-import { getSegmentSpeeds, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
-import { getReplaceProcess, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
@@ -19,7 +18,7 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
         const payload = { id: targetSegment, newPoints: newSegment.points };
         // TODO: 223 street resolving
         dispatch(segmentDataActions.changeGpxSegmentPoints(payload));
-        dispatch(gpxSegmentsActions.setFilename({ id: targetSegment, filename: newSegment.filename }));
+        dispatch(segmentDataActions.setFilename({ id: targetSegment, filename: newSegment.filename }));
     } else {
         const previousSegmentSpeed = getSegmentSpeeds(getState())[targetSegment];
         const replacementIds = replacementSegments.map((segment) => segment.id);
@@ -32,10 +31,10 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
             }
         });
         replacementIds.forEach((replacementId) => {
-            dispatch(gpxSegmentsActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed }));
+            dispatch(segmentDataActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed }));
         });
         dispatch(segmentDataActions.addGpxSegments(replacementSegments));
-        dispatch(gpxSegmentsActions.removeGpxSegment(targetSegment));
+        dispatch(segmentDataActions.removeGpxSegment(targetSegment));
     }
 
     dispatch(segmentDataActions.setReplaceProcess(undefined));

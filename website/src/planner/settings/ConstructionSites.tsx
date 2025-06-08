@@ -1,24 +1,12 @@
 import { FileUploader } from 'react-drag-drop-files';
 import { Table } from 'react-bootstrap';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import { getConstructionSegments, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
-import { GpxSegment, ParsedTrack } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { parsedTracksActions } from '../store/parsedTracks.reducer.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { optionallyDecompress } from '../store/compressHelper.ts';
+import { getConstructionSegments, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
 
 const fileTypes = ['GPX'];
-
-async function toGpxSegment(file: File): Promise<GpxSegment> {
-    return file.arrayBuffer().then((buffer) => ({
-        id: uuidv4(),
-        filename: file.name,
-        content: new TextDecoder().decode(buffer),
-    }));
-}
 
 export function ConstructionSites() {
     const intl = useIntl();
@@ -26,18 +14,8 @@ export function ConstructionSites() {
     const constructionSegments = useSelector(getConstructionSegments) ?? [];
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment)).then((newGpxSegments) => {
-            dispatch(gpxSegmentsActions.addConstructionSegments(newGpxSegments));
-            const parsedConstructionSegments = newGpxSegments.map(
-                (track): ParsedTrack => ({
-                    id: track.id,
-                    filename: track.filename,
-                    version: 'current',
-                    color: 'red',
-                    points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
-                })
-            );
-            dispatch(parsedTracksActions.addParsedConstructionSegments(parsedConstructionSegments));
+        Promise.all([...newFiles].map(toParsedGpxSegment)).then((newGpxSegments) => {
+            dispatch(segmentDataActions.addConstructionSegments(newGpxSegments));
         });
     };
     return (

@@ -1,11 +1,11 @@
 import { createPlanningStore } from '../store/planningStore.ts';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { gpxA1Content, gpxABContent, gpxB1Content } from './gpxContents.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from '../../utils/gpxTypes.ts';
+import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 function getRelevantAttributes(startPointA: Point) {
     return { lat: startPointA.lat, lon: startPointA.lon, time: startPointA.time, ele: startPointA.ele };
@@ -20,10 +20,10 @@ describe('test merging of gpx file', () => {
         // given
         const store = createPlanningStore();
         store.dispatch(
-            gpxSegmentsActions.addGpxSegments([
-                { id: '1', content: gpxA1Content, filename: 'A1' },
-                { id: '2', content: gpxB1Content, filename: 'B1' },
-                { id: '3', content: gpxABContent, filename: 'AB' },
+            segmentDataActions.addGpxSegments([
+                { id: '1', points: [], filename: 'A1', streetsResolved: false },
+                { id: '2', points: [], filename: 'B1', streetsResolved: false },
+                { id: '3', points: [], filename: 'AB', streetsResolved: false },
             ])
         );
         store.dispatch(trackMergeActions.addTrackComposition({ id: '1', segmentIds: ['1', '3'], name: 'A' }));
@@ -53,10 +53,10 @@ describe('test merging of gpx file', () => {
         // given
         const store = createPlanningStore();
         store.dispatch(
-            gpxSegmentsActions.addGpxSegments([
-                { id: '1', content: gpxA1Content, filename: 'A1' },
-                { id: '2', content: gpxB1Content, filename: 'B1' },
-                { id: '3', content: gpxABContent, filename: 'AB' },
+            segmentDataActions.addGpxSegments([
+                { id: '1', points: [], filename: 'A1', streetsResolved: false },
+                { id: '2', points: [], filename: 'B1', streetsResolved: false },
+                { id: '3', points: [], filename: 'AB', streetsResolved: false },
             ])
         );
         store.dispatch(

@@ -9,12 +9,11 @@ import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import flip from '../../assets/flip.svg';
 import { DraggableIcon } from './DraggableIcon.tsx';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments, segmentDataActions } from '../new-store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
 interface Props {
@@ -64,7 +63,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                         onClick={() => {
                             dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
                             if (fullGpxDelete) {
-                                dispatch(gpxSegmentsActions.removeGpxSegment(segmentId));
+                                dispatch(segmentDataActions.removeGpxSegment(segmentId));
                             }
                             dispatch(triggerAutomaticCalculation);
                         }}

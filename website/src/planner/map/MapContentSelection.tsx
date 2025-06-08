@@ -9,11 +9,14 @@ import {
     getShowPointsOfInterest,
     mapActions,
 } from '../store/map.reducer.ts';
-import { getConstructionSegments } from '../store/gpxSegments.reducer.ts';
 import { useIntl } from 'react-intl';
 import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
-import { getFilteredGpxSegments, getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import {
+    getConstructionSegments,
+    getFilteredGpxSegments,
+    getParsedGpxSegments,
+} from '../new-store/segmentData.redux.ts';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
