@@ -39,5 +39,4 @@ export const parsedTracksActions = parsedTracksSlice.actions;
 export const parsedTracksReducer: Reducer<ParsedTrackState> = parsedTracksSlice.reducer;
 const getBase = (state: State) => state.parsedTracks;
 export const getParsedTracks = (state: State) => getBase(state)?.parsedTracks;
-export const getParsedSegments = (state: State) => getBase(state)?.parsedSegments;
 export const getParsedConstructionSegments = (state: State) => getBase(state)?.parsedConstructionSegments;

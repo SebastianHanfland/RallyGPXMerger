@@ -10,3 +10,6 @@ export const toLatLng = ({ lat, lon }: Omit<Point, 'time' | 'ele'>): GeoPoint =>
 export function getLatLng(point: ParsedPoint | TimedPoint) {
     return { lat: point.b, lng: point.l };
 }
+export function getLatLon(point: ParsedPoint | TimedPoint) {
+    return { lat: point.b, lon: point.l };
+}

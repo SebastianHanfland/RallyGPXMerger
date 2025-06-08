@@ -1,7 +1,6 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ClickOnSegment, ParsedGpxSegment, SegmentDataState } from './types.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { getDecompressedGpxSegments } from '../store/gpxSegments.reducer.ts';
 import { State } from '../store/types.ts';
 import { storage } from '../store/storage.ts';
 
@@ -96,7 +95,6 @@ export const getParsedGpxSegments = (state: State) => getBase(state).segments;
 export const getStreetLookup = (state: State) => getBase(state).streetLookup;
 
 // Older functions TODO: #223 tidy up
-export const getGpxSegments = getDecompressedGpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;

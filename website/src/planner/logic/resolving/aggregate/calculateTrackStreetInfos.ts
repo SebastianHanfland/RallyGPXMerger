@@ -2,53 +2,50 @@ import { State } from '../../../store/types.ts';
 import { TrackStreetInfo } from '../types.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import geoDistance from 'geo-distance-helper';
-import {
-    geoCodingActions,
-    getResolvedPositions,
-    getStreetNameReplacementWayPoints,
-} from '../../../store/geoCoding.reducer.ts';
+import { geoCodingActions, getStreetNameReplacementWayPoints } from '../../../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
-import { ParsedTrack } from '../../../../common/types.ts';
-import { toKey } from '../helper/pointKeys.ts';
+import { CalculatedTrack } from '../../../../common/types.ts';
 import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
-import { toLatLng } from '../../../../utils/pointUtil.ts';
+import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { overwriteWayPoints } from './overwriteWayPoints.ts';
-import { Point } from '../../../../utils/gpxTypes.ts';
-import { getParsedTracks } from '../../../store/parsedTracks.reducer.ts';
+import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
+import { TimedPoint } from '../../../new-store/types.ts';
+import { getStreetLookup } from '../../../new-store/segmentData.redux.ts';
+
+function calculateDistance(track: CalculatedTrack): number {
+    const points = track.points;
+    let lastPoint: TimedPoint | null = null;
+    let distance = 0;
+    points.forEach((point) => {
+        if (lastPoint === null) {
+            lastPoint = point;
+        } else {
+            distance += geoDistance(getLatLng(point), getLatLng(lastPoint)) as number;
+        }
+        lastPoint = point;
+
+        return {
+            ...point,
+            time: point.t,
+        };
+    });
+    return distance;
+}
 
 const enrichWithStreetsAndAggregate =
     (state: State) =>
-    (track: ParsedTrack): TrackStreetInfo => {
-        const resolvedPositions = getResolvedPositions(state) ?? {};
+    (track: CalculatedTrack): TrackStreetInfo => {
         const replacementWayPoints = getStreetNameReplacementWayPoints(state) ?? [];
         const tracks = getTrackCompositions(state);
+        const streetLookup = getStreetLookup(state);
         const nodePositions = getNodePositions(state);
         const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
+        const distance = calculateDistance(track);
 
-        const points = track.points;
-        let lastPoint: Point | null = null;
-        let distance = 0;
-        const enrichedPoints = points.map((point) => {
-            if (lastPoint === null) {
-                lastPoint = point;
-            } else {
-                distance += geoDistance(toLatLng(point), toLatLng(lastPoint)) as number;
-            }
-            const positionKey = toKey(point);
-            const street = resolvedPositions[positionKey] ?? null;
-            lastPoint = point;
-
-            return {
-                ...point,
-                time: point.time,
-                street,
-            };
-        });
-
-        const wayPoints = aggregateEnrichedPoints(enrichedPoints, track.peopleCount ?? 0, nodePositions);
+        const wayPoints = aggregateEnrichedPoints(track.points, track.peopleCount ?? 0, nodePositions, streetLookup);
         const overwrittenWayPoints = overwriteWayPoints(wayPoints, replacementWayPoints);
 
         const startFront = wayPoints[0].frontArrival;
@@ -70,8 +67,8 @@ const enrichWithStreetsAndAggregate =
 
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
     dispatch(geoCodingRequestsActions.setIsAggregating(true));
-    const parsedTracks = getParsedTracks(getState());
-    const trackStreetInfos = parsedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
+    const calculatedTracks = getCalculatedTracks(getState());
+    const trackStreetInfos = calculatedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
     dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
     dispatch(geoCodingRequestsActions.setIsAggregating(false));
     return Promise.resolve();

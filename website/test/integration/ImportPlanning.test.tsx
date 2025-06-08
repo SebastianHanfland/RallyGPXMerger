@@ -10,9 +10,10 @@ import { State } from '../../src/planner/store/types';
 import { useGetUrlParam } from '../../src/utils/linkUtil';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
-import { getParsedSegments, getParsedTracks } from '../../src/planner/store/parsedTracks.reducer';
+import { getParsedTracks } from '../../src/planner/store/parsedTracks.reducer';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { getGpxSegments } from '../../src/planner/store/gpxSegments.reducer';
+import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
 
 const messages = getMessages('en');
 
@@ -50,7 +51,7 @@ describe('Import planning', () => {
 
         await waitFor(() => expect(getParsedTracks(store.getState()) ?? []).toHaveLength(1));
         expect(getTrackCompositions(store.getState())).toHaveLength(1);
-        expect(getParsedSegments(store.getState()) ?? []).toHaveLength(4);
+        expect(getParsedGpxSegments(store.getState()) ?? []).toHaveLength(4);
         expect(getGpxSegments(store.getState()) ?? []).toHaveLength(4);
     });
 });
