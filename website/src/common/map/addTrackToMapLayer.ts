@@ -2,13 +2,10 @@ import L, { LayerGroup, LeafletMouseEvent, Polyline } from 'leaflet';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
-import { ParsedTrack } from '../types.ts';
+import { CalculatedTrack } from '../types.ts';
 import { getLanguage } from '../../language.ts';
-import { Point } from '../../utils/gpxTypes.ts';
-
-function toLatLng(point: Point): { lat: number; lng: number } {
-    return { lat: point.lat, lng: point.lon };
-}
+import { getLatLng } from '../../utils/pointUtil.ts';
+import { TimedPoint } from '../../planner/new-store/types.ts';
 
 export interface MapOptions {
     showMarker: boolean;
@@ -17,9 +14,9 @@ export interface MapOptions {
     opacity?: number;
     weight?: number;
     highlightedId?: string;
-    clickCallBack?: (track: ParsedTrack, event?: LeafletMouseEvent) => void;
-    mouseInCallBack?: (track: ParsedTrack) => void;
-    mouseOutCallBack?: (track: ParsedTrack) => void;
+    clickCallBack?: (track: CalculatedTrack, event?: LeafletMouseEvent) => void;
+    mouseInCallBack?: (track: CalculatedTrack) => void;
+    mouseOutCallBack?: (track: CalculatedTrack) => void;
 }
 
 function setStartMarker(startPosition: { lat: number; lng: number }, routeLayer: LayerGroup<any>, trackName: string) {
@@ -31,14 +28,14 @@ function setStartMarker(startPosition: { lat: number; lng: number }, routeLayer:
 }
 
 function addBreakMarkerToMap(
-    point: Point,
-    parsedTrack: ParsedTrack,
+    point: TimedPoint,
+    parsedTrack: CalculatedTrack,
     timeDifferenceInSeconds: number,
     lastTimeStamp: string,
     routeLayer: LayerGroup<any>
 ) {
     const breakText = getLanguage() === 'de' ? 'min Pause\n um' : 'min Break\n at';
-    const breakMarker = L.marker(toLatLng(point), {
+    const breakMarker = L.marker(getLatLng(point), {
         icon: breakIcon,
         title: `${parsedTrack.filename ? parsedTrack.filename + ' - ' : ''}${(timeDifferenceInSeconds / 60).toFixed(
             0
@@ -47,16 +44,16 @@ function addBreakMarkerToMap(
     breakMarker.addTo(routeLayer);
 }
 
-function addBreakMarker(options: MapOptions, parsedTrack: ParsedTrack, routeLayer: LayerGroup<any>) {
+function addBreakMarker(options: MapOptions, parsedTrack: CalculatedTrack, routeLayer: LayerGroup<any>) {
     if (!options.showMarker) {
         return;
     }
 
-    let lastPoint: Point | null = null;
+    let lastPoint: TimedPoint | null = null;
     parsedTrack.points.forEach((point) => {
-        const lastTimeStamp = lastPoint?.time;
+        const lastTimeStamp = lastPoint?.t;
         if (lastTimeStamp) {
-            const timeDifferenceInSeconds = getTimeDifferenceInSeconds(point.time, lastTimeStamp);
+            const timeDifferenceInSeconds = getTimeDifferenceInSeconds(point.t, lastTimeStamp);
             if (timeDifferenceInSeconds > 4 * 60) {
                 addBreakMarkerToMap(point, parsedTrack, timeDifferenceInSeconds, lastTimeStamp, routeLayer);
             }
@@ -73,7 +70,7 @@ function setDestinationOnMap(destination: { lat: number; lng: number }, routeLay
     endMarker.addTo(routeLayer);
 }
 
-function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: ParsedTrack) {
+function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: CalculatedTrack) {
     const clickCallBack = options?.clickCallBack;
     if (clickCallBack) {
         trackOnMap.on('click', (event: LeafletMouseEvent) => {
@@ -96,7 +93,11 @@ function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: Pa
     }
 }
 
-function drawTrackOnMap(trackPoints: { lat: number; lng: number }[], options: MapOptions, parsedTrack: ParsedTrack) {
+function drawTrackOnMap(
+    trackPoints: { lat: number; lng: number }[],
+    options: MapOptions,
+    parsedTrack: CalculatedTrack
+) {
     return L.polyline(trackPoints, {
         weight: options.weight ?? 8,
         color: options.color ?? getColorFromUuid(parsedTrack.id),
@@ -106,8 +107,8 @@ function drawTrackOnMap(trackPoints: { lat: number; lng: number }[], options: Ma
     });
 }
 
-export function addTrackToMap(parsedTrack: ParsedTrack, routeLayer: LayerGroup, options: MapOptions) {
-    const trackPoints = parsedTrack.points.map(toLatLng);
+export function addTrackToMap(parsedTrack: CalculatedTrack, routeLayer: LayerGroup, options: MapOptions) {
+    const trackPoints = parsedTrack.points.map(getLatLng);
     const trackOnMap = drawTrackOnMap(trackPoints, options, parsedTrack);
     addCallBacks(options, trackOnMap, parsedTrack);
 
@@ -126,7 +127,7 @@ export function addTrackToMap(parsedTrack: ParsedTrack, routeLayer: LayerGroup, 
 
 export function addTracksToLayer(
     mapLayer: React.MutableRefObject<LayerGroup | null>,
-    parsedTracks: ParsedTrack[],
+    parsedTracks: CalculatedTrack[],
     show: boolean,
     options: MapOptions
 ) {

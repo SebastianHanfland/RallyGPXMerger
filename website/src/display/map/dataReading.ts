@@ -1,6 +1,6 @@
 import { ParsedTrack } from '../../common/types.ts';
 import { DisplayState } from '../store/types.ts';
-import { extractSnakeTrackFromParsedTrack } from '../../common/logic/extractSnakeTrack.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/logic/extractSnakeTrack.ts';
 import { getParsedTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,
@@ -22,7 +22,7 @@ const extractLocationDisplay =
         const participants = parsedTrack?.peopleCount ?? 0;
 
         return {
-            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
+            points: extractSnakeTrackFromCalculatedTrack(timeStampFront, participants, parsedTrack),
             title: parsedTrack.filename,
             color: parsedTrack.color ?? 'white',
             id: parsedTrack.id,

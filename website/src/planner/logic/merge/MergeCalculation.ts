@@ -9,12 +9,6 @@ import {
 import { calculatedTracksActions } from '../../store/calculatedTracks.reducer.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../../store/map.reducer.ts';
-import { initializeResolvedPositions } from '../resolving/streets/initializeResolvedPositions.ts';
-import { parsedTracksActions } from '../../store/parsedTracks.reducer.ts';
-import { ParsedTrack } from '../../../common/types.ts';
-import { getColorFromUuid } from '../../../utils/colorUtil.ts';
-import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
-import { optionallyDecompress } from '../../store/compressHelper.ts';
 import { getStartAndEndOfParsedTracks } from '../../../utils/parsedTracksUtil.ts';
 import { getParsedGpxSegments } from '../../new-store/segmentData.redux.ts';
 
@@ -34,21 +28,8 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(mapActions.setShowCalculatedTracks(true));
 
-    const parsedTracks = calculatedTracks.map(
-        (track): ParsedTrack => ({
-            id: track.id,
-            filename: track.filename,
-            peopleCount: track.peopleCount,
-            version: 'current',
-            color: getColorFromUuid(track.id),
-            points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
-        })
-    );
-
-    dispatch(parsedTracksActions.setParsedTracks(parsedTracks));
-    initializeResolvedPositions(parsedTracks)(dispatch);
-
-    const payload = getStartAndEndOfParsedTracks(parsedTracks);
+    const payload = getStartAndEndOfParsedTracks(calculatedTracks);
+    console.log({ payload });
     dispatch(mapActions.setStartAndEndTime(payload));
     return Promise.resolve();
 }

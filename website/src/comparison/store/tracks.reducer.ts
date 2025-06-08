@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { ComparisonTrackState, ComparisonState } from './types';
-import { ParsedTrack } from '../../common/types.ts';
+import { ComparisonState, ComparisonTrackState } from './types';
+import { CalculatedTrack } from '../../common/types.ts';
 
 const initialState: ComparisonState = {
     parsedTracks: {},
@@ -17,7 +17,7 @@ const comparisonTracksSlice = createSlice({
     reducers: {
         setComparisonParsedTracks: (
             state: ComparisonState,
-            action: PayloadAction<{ version: string; tracks: ParsedTrack[] }>
+            action: PayloadAction<{ version: string; tracks: CalculatedTrack[] }>
         ) => {
             const { version, tracks } = action.payload;
             state.parsedTracks[version] = tracks;

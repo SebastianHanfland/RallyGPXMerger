@@ -1,5 +1,6 @@
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { Point } from '../utils/gpxTypes.ts';
+import { TimedPoint } from '../planner/new-store/types.ts';
 
 export interface GpxFile {
     id: string;
@@ -22,6 +23,9 @@ export interface ResolvedGpxSegment {
 
 export interface CalculatedTrack extends GpxFile {
     peopleCount?: number;
+    points: TimedPoint[];
+    color?: string;
+    version?: string;
 }
 
 export interface DisplayTrack extends GpxFile {

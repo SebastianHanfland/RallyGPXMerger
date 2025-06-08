@@ -1,6 +1,6 @@
-import { ParsedTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { ComparisonTrackState } from '../store/types.ts';
-import { extractSnakeTrackFromParsedTrack } from '../../common/logic/extractSnakeTrack.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/logic/extractSnakeTrack.ts';
 import {
     getComparisonParsedTracks,
     getPlanningIds,
@@ -19,10 +19,14 @@ import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationComparison =
     (timeStampsFront: Record<string, string>) =>
-    (parsedTrack: ParsedTrack): BikeSnake => {
+    (parsedTrack: CalculatedTrack): BikeSnake => {
         const participants = parsedTrack.peopleCount ?? 0;
         return {
-            points: extractSnakeTrackFromParsedTrack(timeStampsFront[parsedTrack.version], participants, parsedTrack),
+            points: extractSnakeTrackFromCalculatedTrack(
+                timeStampsFront[parsedTrack.version!],
+                participants,
+                parsedTrack
+            ),
             title: parsedTrack?.filename ?? 'N/A',
             color: parsedTrack?.color ?? 'white',
             id: parsedTrack?.id ?? 'id-not-found',
@@ -59,7 +63,7 @@ export const getBikeSnakesForDisplayMap = createSelector(
     getSelectedTracks,
     getSelectedVersions,
     (timeStamps, planningIds, parsedTracks, selectedTracks, selectedVersions): BikeSnake[] => {
-        const tracksToDisplayOnMap: ParsedTrack[] = [];
+        const tracksToDisplayOnMap: CalculatedTrack[] = [];
         planningIds.forEach((planningId) => {
             if (selectedVersions.includes(planningId)) {
                 const tracksOfPlanning = parsedTracks[planningId];

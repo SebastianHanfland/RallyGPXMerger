@@ -88,6 +88,7 @@ export function assembleTrackFromSegments(
         id: track.id,
         content: getGpxContentFromTimedPoints(trackPoints, track.name!),
         filename: track.name!,
+        points: trackPoints,
         peopleCount: track.peopleCount ?? 0,
     };
 }

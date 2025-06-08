@@ -10,6 +10,7 @@ import { pointsActions } from '../store/points.reducer.ts';
 import { clearGpxCache } from '../../common/cache/gpxCache.ts';
 import { backendActions } from '../store/backend.reducer.ts';
 import { parsedTracksActions } from '../store/parsedTracks.reducer.ts';
+import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 export function resetData(dispatch: Dispatch) {
     dispatch(parsedTracksActions.clear());
@@ -24,6 +25,7 @@ export function resetData(dispatch: Dispatch) {
     dispatch(geoCodingRequestsActions.clear());
     dispatch(pointsActions.clear());
     dispatch(backendActions.clear());
+    dispatch(segmentDataActions.clear());
     clearGpxCache();
     localStorage.clear();
 }

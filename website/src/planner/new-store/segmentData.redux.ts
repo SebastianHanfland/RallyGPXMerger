@@ -83,7 +83,7 @@ const segmentDataSlice = createSlice({
         setClickOnSegment: (state: SegmentDataState, action: PayloadAction<ClickOnSegment | undefined>) => {
             state.clickOnSegment = action.payload;
         },
-        clearGpxSegments: () => initialState,
+        clear: () => initialState,
     },
 });
 
