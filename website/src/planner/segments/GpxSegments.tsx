@@ -1,10 +1,9 @@
-import { Form, Spinner, Table } from 'react-bootstrap';
+import { Form, Table } from 'react-bootstrap';
 import { GpxSegmentRow } from './GpxSegmentRow.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getFilteredGpxSegments, getSegmentFilterTerm, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
-import { getIsLoadingStreetData } from '../store/geoCodingRequests.reducer.ts';
 import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
 import { getFilteredGpxSegments, getSegmentFilterTerm, segmentDataActions } from '../new-store/segmentData.redux.ts';
 
@@ -16,18 +15,11 @@ export function GpxSegments({ noFilter }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
-    const isLoadingStreetData = useSelector(getIsLoadingStreetData);
     const setFilterTerm = (term: string) => dispatch(segmentDataActions.setFilterTerm(term));
     const filteredSegments = useSelector(getFilteredGpxSegments);
 
     return (
         <div>
-            {isLoadingStreetData && (
-                <span>
-                    <Spinner size={'sm'} />
-                    <FormattedMessage id={'msg.loadingStreetNames'} />
-                </span>
-            )}
             {!noFilter && (
                 <div className={'my-2'}>
                     <Form.Control

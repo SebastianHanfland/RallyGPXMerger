@@ -5,7 +5,6 @@ import { trackMergeReducer } from './trackMerge.reducer.ts';
 import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
 import { geoCodingReducer } from './geoCoding.reducer.ts';
-import { geoCodingRequestsReducer } from './geoCodingRequests.reducer.ts';
 import { storage } from './storage.ts';
 import { layoutReducer } from './layout.reducer.ts';
 import { pointsReducer } from './points.reducer.ts';
@@ -22,12 +21,11 @@ const rootReducer: Reducer = combineReducers({
     map: mapReducer,
     points: pointsReducer,
     geoCoding: geoCodingReducer,
-    geoCodingRequests: geoCodingRequestsReducer,
     toasts: toastsReducer,
 });
 const storingReducer: Reducer = (state: State) => {
     if (state) {
-        storage.save({ ...state, parsedTracks: undefined });
+        storage.save({ ...state });
     }
     return state;
 };

@@ -7,7 +7,6 @@ import {
 } from '../../../store/geoCoding.reducer.ts';
 import { createSelector, Dispatch } from '@reduxjs/toolkit';
 import { State } from '../../../store/types.ts';
-import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { fromKey, getWayPointKey } from '../helper/pointKeys.ts';
 import { batch } from 'react-redux';
 
@@ -60,15 +59,12 @@ export const addPostCodeToStreetInfos = async (dispatch: Dispatch, getState: () 
     if (!bigDataCloudKey) {
         return Promise.resolve();
     }
-    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
 
     const unresolvedPostCodeKeys = getUnresolvedPostCodeEntries(getState());
     const postCodeRequests = unresolvedPostCodeKeys.map((postCodeKey) =>
         fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch)
     );
-    return Promise.all(postCodeRequests)
-        .then(() => dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false)))
-        .then();
+    return Promise.all(postCodeRequests).then();
 };
 
 export const getPostCodeRequestProgress = createSelector(

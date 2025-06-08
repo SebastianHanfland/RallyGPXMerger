@@ -10,6 +10,7 @@ import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.re
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
+import { geoApifyFetchMapMatching } from '../../src/planner/logic/resolving/street-new/geoApifyMapMatching';
 
 const messages = getMessages('en');
 
@@ -19,6 +20,9 @@ vi.mock('../../src/versions/cache/readableTracks');
 vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
 vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
     addPostCodeToStreetInfos: () => Promise.resolve(),
+}));
+vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
+    geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 
 describe('Planner integration test', () => {

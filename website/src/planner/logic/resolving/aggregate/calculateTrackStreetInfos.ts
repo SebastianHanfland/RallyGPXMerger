@@ -6,7 +6,6 @@ import { geoCodingActions, getStreetNameReplacementWayPoints } from '../../../st
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
-import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
 import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
@@ -66,10 +65,8 @@ const enrichWithStreetsAndAggregate =
     };
 
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
-    dispatch(geoCodingRequestsActions.setIsAggregating(true));
     const calculatedTracks = getCalculatedTracks(getState());
     const trackStreetInfos = calculatedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
     dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
-    dispatch(geoCodingRequestsActions.setIsAggregating(false));
     return Promise.resolve();
 }

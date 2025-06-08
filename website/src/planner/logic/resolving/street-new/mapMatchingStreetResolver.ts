@@ -46,6 +46,7 @@ export const enrichGpxSegmentsWithStreetNames =
         );
         await Promise.all(promises);
         dispatch(triggerAutomaticCalculation);
+        return Promise.resolve();
     };
 
 function combineStreetNames(streetNames: ResolvedPositions[]): ResolvedPositions {

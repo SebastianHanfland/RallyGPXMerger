@@ -21,7 +21,6 @@
     "msg.aggregation": "Aggregation",
     "msg.postCodes": "Post codes",
     "msg.clearPostCodes": "Clear all post codes",
-    "msg.clearStreetNames": "Clear all street names",
     "msg.documents": "Upload/Download",
     "msg.documents.plain": "Documents",
     "msg.gps": "Planner",

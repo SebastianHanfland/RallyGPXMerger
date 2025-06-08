@@ -53,7 +53,7 @@ describe('enrichSegmentWithResolvedStreets', () => {
         );
 
         // then
-        expect(segment.points.map(({ s }) => s)).toEqual([1000, 1000, 1001]);
-        expect(streetLookUp).toEqual({ 1000: 'Main road', 1001: 'Small road' });
+        expect(segment.points.map(({ s }) => s)).toEqual([1001, 1001, 1002]);
+        expect(streetLookUp).toEqual({ 1001: 'Main road', 1002: 'Small road' });
     });
 });

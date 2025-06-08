@@ -152,8 +152,19 @@ export interface PointsState {
 export interface State {
     layout: LayoutState;
     backend?: BackendState;
-    gpxSegments: GpxSegmentsState;
     segmentData: SegmentDataState;
+    trackMerge: TrackMergeState;
+    calculatedTracks: CalculatedTracksState;
+    map: MapState;
+    points: PointsState;
+    geoCoding: GeoCodingState;
+    toasts?: ToastsState;
+}
+
+export interface OldState {
+    layout: LayoutState;
+    backend?: BackendState;
+    gpxSegments: GpxSegmentsState;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
     map: MapState;
@@ -161,7 +172,6 @@ export interface State {
     geoCoding: GeoCodingState;
     geoCodingRequests: GeoCodingRequestsState;
     toasts?: ToastsState;
-    parsedTracks: ParsedTrackState | undefined;
 }
 
 export type ResolvedPositions = Record<string, string | null>;

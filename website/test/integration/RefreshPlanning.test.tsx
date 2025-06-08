@@ -9,7 +9,6 @@ import { State } from '../../src/planner/store/types';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 // The order of imports is important, the storage mock has to be set before the store is created
-import { storage } from '../../src/planner/store/storage';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
@@ -39,8 +38,7 @@ describe('Refresh planning, when planning is in localStorage', () => {
 
         (getLanguage as Mock).mockImplementation(() => 'en');
         const store = createPlanningStore();
-        const state2 = store.getState();
-        const state1 = storage.load();
+        // In the mocks a planning is referenced
 
         const loadingPage = act(() =>
             render(

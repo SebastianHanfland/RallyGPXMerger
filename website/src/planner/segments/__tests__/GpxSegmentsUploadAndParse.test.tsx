@@ -12,8 +12,9 @@ import { getMessages } from '../../../lang/getMessages.ts';
 
 vi.mock('../../../language');
 vi.mock('../../src/api/api');
-vi.mock('../../src/versions/cache/readableTracks');
-vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
+vi.mock('../../logic/resolving/street-new/geoApifyMapMatching.ts', () => ({
+    geoApifyFetchMapMatching: () => () => Promise.resolve({}),
+}));
 vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
     addPostCodeToStreetInfos: () => Promise.resolve(),
 }));
