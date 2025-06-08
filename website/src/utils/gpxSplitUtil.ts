@@ -23,7 +23,10 @@ export const splitGpx = (
     let splitPointReached = false;
 
     points.forEach((point) => {
-        if (getLatLon(point) === pointWithMinimalDistance) {
+        if (
+            getLatLon(point).lat === pointWithMinimalDistance?.lat &&
+            getLatLon(point).lon === pointWithMinimalDistance?.lon
+        ) {
             splitPointReached = true;
             pointsBefore.push(point);
         }
@@ -34,5 +37,6 @@ export const splitGpx = (
         }
     });
 
+    console.log({ pointsBefore, pointsAfter });
     return [pointsBefore, pointsAfter];
 };
