@@ -1,9 +1,9 @@
 import { act, fireEvent, screen } from '@testing-library/react';
 import * as fs from 'node:fs';
 import { AppDispatch } from '../../../src/planner/store/planningStore';
-import { gpxSegmentsActions } from '../../../src/planner/store/gpxSegments.reducer';
 import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
+import { segmentDataActions } from '../../../src/planner/new-store/segmentData.redux.ts';
 
 const messages = getMessages('en');
 
@@ -41,7 +41,7 @@ export const plannerUi = {
     },
     splitSegment: async (segmentId: string, dispatch: AppDispatch) => {
         const actionPayload = { segmentId, lat: 48.128275, lng: 11.630246 };
-        await act(() => dispatch(gpxSegmentsActions.setClickOnSegment(actionPayload)));
+        await act(() => dispatch(segmentDataActions.setClickOnSegment(actionPayload)));
         await act(() => dispatch(splitGpxAtPosition));
     },
     pdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),

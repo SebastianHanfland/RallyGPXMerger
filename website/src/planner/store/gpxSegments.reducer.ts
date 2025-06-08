@@ -86,4 +86,3 @@ const getBase = (state: State) => state.gpxSegments;
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;
-export const getClickOnSegment = (state: State) => getBase(state).clickOnSegment;

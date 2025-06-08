@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getClickOnSegment, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { GpxSegmentContent } from './GpxSegmentContent.tsx';
+import { getClickOnSegment, segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 export const GpxSegmentDialog = () => {
     const clickOnSegment = useSelector(getClickOnSegment);
     const dispatch = useDispatch();
 
     const closeModal = () => {
-        dispatch(gpxSegmentsActions.setClickOnSegment(undefined));
+        dispatch(segmentDataActions.setClickOnSegment(undefined));
     };
 
     if (!clickOnSegment) {

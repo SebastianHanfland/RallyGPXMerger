@@ -1,12 +1,11 @@
 import { useSelector } from 'react-redux';
-import { getClickOnSegment } from '../store/gpxSegments.reducer.ts';
 import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
 import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
 import { SplitSegmentDropdownItem } from '../segments/SplitSegment.tsx';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getClickOnSegment, getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
 export const GpxSegmentContent = () => {
