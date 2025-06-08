@@ -1,6 +1,6 @@
 import { SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 
 export interface NamedGpx {
-    gpx: SimpleGPX;
+    points: SimpleGPX;
     name: string;
 }

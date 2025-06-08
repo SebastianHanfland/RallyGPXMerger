@@ -3,24 +3,28 @@ import { mergeSimpleGPXs, SimpleGPX } from '../../../../utils/SimpleGPX.ts';
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
 import { shiftEndDate } from '../../../../utils/dateUtil.ts';
-import { CalculatedTrack, ResolvedGpxSegment } from '../../../../common/types.ts';
+import { CalculatedTrack } from '../../../../common/types.ts';
 import geoDistance from 'geo-distance-helper';
-import { NamedGpx } from './types.ts';
 import { planningStore } from '../../../store/planningStore.ts';
 import { pointsActions } from '../../../store/points.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { toLatLng } from '../../../../utils/pointUtil.ts';
+import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
-import { Point } from '../../../../utils/gpxTypes.ts';
+import { ParsedGpxSegment, ParsedPoint } from '../../../new-store/types.ts';
 
-function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposition, lastSegmentName: string) {
-    const endOfNextSegment = gpxOrBreak.gpx.getEndPoint();
-    const distanceBetweenSegments = geoDistance(toLatLng(lastPoint), toLatLng(endOfNextSegment)) as number;
+function checkForGap(
+    lastPoint: ParsedPoint,
+    segment: ParsedGpxSegment,
+    track: TrackComposition,
+    lastSegmentName: string
+) {
+    const endOfNextSegment = segment.points[segment.points.length - 1];
+    const distanceBetweenSegments = geoDistance(getLatLng(lastPoint), getLatLng(endOfNextSegment)) as number;
     const gapToleranceInKm = getGapToleranceInKm(planningStore.getState()) ?? DEFAULT_GAP_TOLERANCE;
     if (distanceBetweenSegments > gapToleranceInKm) {
         const message = `Here is something too far away: track ${track.name}, between '${
-            gpxOrBreak.name
+            segment.filename
         }' and '${lastSegmentName}: distance is ${formatNumber(distanceBetweenSegments, 2)} km'`;
         planningStore.dispatch(
             pointsActions.addGapPoint({
@@ -29,8 +33,8 @@ function checkForGap(lastPoint: Point, gpxOrBreak: NamedGpx, track: TrackComposi
                 radiusInM: (distanceBetweenSegments * 1000) / 2,
                 description: message,
                 title: `Too big gap on ${track.name}`,
-                lat: (lastPoint.lat + endOfNextSegment.lat) / 2,
-                lng: (lastPoint.lon + endOfNextSegment.lon) / 2,
+                lat: (lastPoint.b + endOfNextSegment.b) / 2,
+                lng: (lastPoint.l + endOfNextSegment.l) / 2,
             })
         );
     }
@@ -42,7 +46,7 @@ function clearAllGaps() {
 
 export function assembleTrackFromSegments(
     track: TrackComposition,
-    gpxSegments: ResolvedGpxSegment[],
+    gpxSegments: ParsedGpxSegment[],
     initialEndDate: string
 ): CalculatedTrack | null {
     let arrivalTimeForPreviousSegment = initialEndDate;
@@ -50,7 +54,7 @@ export function assembleTrackFromSegments(
     clearAllGaps();
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
-    let lastPoint: Point | undefined = undefined;
+    let lastPoint: ParsedPoint | undefined = undefined;
     let lastSegmentName: string = '';
     gpxSegmentContents.reverse().forEach((gpxOrBreak) => {
         if (!instanceOfBreak(gpxOrBreak)) {

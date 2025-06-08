@@ -20,7 +20,7 @@ import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
 import { PauseDialog } from './PauseDialog.tsx';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
 import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
-import { ParsedPoint } from '../new-store/types.ts';
+import { getLatLng } from '../../utils/pointUtil.ts';
 
 let myMap: L.Map | undefined;
 
@@ -30,10 +30,6 @@ const shiftStartPoint = (point: { lat: number; lng: number }, sideBarOpen: boole
     }
     return { ...point, lng: point.lng + 0.25 };
 };
-
-function getLatLng(point: ParsedPoint) {
-    return { lat: point.b, lng: point.l };
-}
 
 export const InteractionMap = () => {
     const dispatch = useDispatch();

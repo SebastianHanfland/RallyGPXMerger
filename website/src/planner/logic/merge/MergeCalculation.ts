@@ -1,9 +1,7 @@
 import { State } from '../../store/types.ts';
 import { AppDispatch } from '../../store/planningStore.ts';
-import { getGpxSegments, getSegmentSpeeds } from '../../store/gpxSegments.reducer.ts';
 import {
     getArrivalDateTime,
-    getAverageSpeedInKmH,
     getParticipantsDelay,
     getTrackCompositions,
     setParticipantsDelay,
@@ -11,7 +9,6 @@ import {
 import { calculatedTracksActions } from '../../store/calculatedTracks.reducer.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../../store/map.reducer.ts';
-import { enrichGpxSegmentsWithTimeStamps } from './helper/enrichGpxSegmentsWithTimeStamps.ts';
 import { initializeResolvedPositions } from '../resolving/streets/initializeResolvedPositions.ts';
 import { parsedTracksActions } from '../../store/parsedTracks.reducer.ts';
 import { ParsedTrack } from '../../../common/types.ts';
@@ -19,13 +16,12 @@ import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
 import { optionallyDecompress } from '../../store/compressHelper.ts';
 import { getStartAndEndOfParsedTracks } from '../../../utils/parsedTracksUtil.ts';
+import { getParsedGpxSegments } from '../../new-store/segmentData.redux.ts';
 
 export async function calculateMerge(dispatch: AppDispatch, getState: () => State) {
-    const gpxSegments = getGpxSegments(getState());
+    const gpxSegments = getParsedGpxSegments(getState());
     const trackCompositions = getTrackCompositions(getState());
     const arrivalDateTime = getArrivalDateTime(getState());
-    const averageSpeed = getAverageSpeedInKmH(getState());
-    const segmentSpeeds = getSegmentSpeeds(getState());
 
     if (!arrivalDateTime) {
         return;
@@ -33,8 +29,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     setParticipantsDelay(getParticipantsDelay(getState()));
 
-    const gpxSegmentsWithTimeStamp = enrichGpxSegmentsWithTimeStamps(gpxSegments, averageSpeed, segmentSpeeds);
-    const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegmentsWithTimeStamp, trackCompositions, arrivalDateTime);
+    const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
     dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(mapActions.setShowCalculatedTracks(true));

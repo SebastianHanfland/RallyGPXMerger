@@ -3,6 +3,7 @@ import { getAdjustedArrivalDateTime } from './helper/peopleDelayCounter.ts';
 import { assembleTrackFromSegments } from './helper/assembleTrackFromSegments.ts';
 import { TrackComposition } from '../../store/types.ts';
 import { CalculatedTrack, ResolvedGpxSegment } from '../../../common/types.ts';
+import { ParsedGpxSegment } from '../../new-store/types.ts';
 
 /*
 We have to find nodes where the branches join
@@ -16,7 +17,7 @@ Also don't forget that duplicating a SimpleGPX is probably more complicated than
 
 export interface GpxMergeLogic {
     (
-        gpxSegments: ResolvedGpxSegment[],
+        gpxSegments: ParsedGpxSegment[],
         trackCompositions: TrackComposition[],
         arrivalDateTime: string
     ): CalculatedTrack[];
