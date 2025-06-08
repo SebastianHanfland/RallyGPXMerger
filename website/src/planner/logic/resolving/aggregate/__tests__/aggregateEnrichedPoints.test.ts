@@ -1,24 +1,21 @@
-import {
-    aggregateEnrichedPoints,
-    anyStreetNameMatch,
-    EnrichedPoints,
-    takeMostDetailedStreetName,
-} from '../aggregateEnrichedPoints.ts';
+import { aggregateEnrichedPoints, anyStreetNameMatch, takeMostDetailedStreetName } from '../aggregateEnrichedPoints.ts';
 import { TrackWayPointType } from '../../types.ts';
+import { TimedPoint } from '../../../../new-store/types.ts';
 
 describe('aggregateEnrichedPoints', () => {
     describe('aggregateEnrichedPoints', () => {
         it('should take to and from when ', () => {
             // given
-            const longList: EnrichedPoints[] = [
+            const longList: TimedPoint[] = [
                 {
-                    street: 'Street A',
-                    time: '2023-10-22T06:23:46Z',
-                    lat: 1,
-                    lon: 2,
-                    ele: 3,
-                } as unknown as EnrichedPoints,
+                    s: 1,
+                    t: '2023-10-22T06:23:46Z',
+                    b: 1,
+                    l: 2,
+                    e: 3,
+                },
             ];
+            const streetLookup = { 1: 'Street A' };
 
             // when
             const aggregatedPoints = aggregateEnrichedPoints(longList, 0, [], streetLookup);
@@ -39,15 +36,16 @@ describe('aggregateEnrichedPoints', () => {
 
         it('should take participants into account ', () => {
             // given
-            const longList: EnrichedPoints[] = [
+            const longList: TimedPoint[] = [
                 {
-                    street: 'Street A',
-                    time: '2023-10-22T06:23:46Z',
-                    lat: 1,
-                    lon: 2,
-                    ele: 3,
-                } as unknown as EnrichedPoints,
+                    s: 1,
+                    t: '2023-10-22T06:23:46Z',
+                    b: 1,
+                    l: 2,
+                    e: 3,
+                },
             ];
+            const streetLookup = { 1: 'Street A' };
 
             // when
             const aggregatedPoints = aggregateEnrichedPoints(longList, 100, [], streetLookup);
@@ -68,10 +66,11 @@ describe('aggregateEnrichedPoints', () => {
 
         it('should group points according to streetNames', () => {
             // given
-            const longList: EnrichedPoints[] = [
-                { street: 'Street A', time: '2023-10-22T06:23:46Z', lat: 1, lon: 2, ele: 3 },
-                { street: 'Street A', time: '2023-10-22T06:26:46Z', lat: 4, lon: 5, ele: 6 },
+            const longList: TimedPoint[] = [
+                { s: 1, t: '2023-10-22T06:23:46Z', b: 1, l: 2, e: 3 },
+                { s: 1, t: '2023-10-22T06:26:46Z', b: 4, l: 5, e: 6 },
             ];
+            const streetLookup = { 1: 'Street A' };
 
             // when
             const aggregatedPoints = aggregateEnrichedPoints(longList, 0, [], streetLookup);
@@ -94,17 +93,26 @@ describe('aggregateEnrichedPoints', () => {
 
         it('should group points according to streetNames when similar parts exist', () => {
             // given
-            const longList: EnrichedPoints[] = [
-                { street: 'Street A', time: '2023-10-22T06:23:46Z', lat: 1, lon: 2, ele: 3 },
-                { street: 'Street A', time: '2023-10-22T06:26:46Z', lat: 4, lon: 5, ele: 3 },
-                { street: 'Friedberger Straße', time: '2023-10-22T06:36:46Z', lat: 6, lon: 7, ele: 3 },
-                { street: 'Friedberger Straße, B 300', time: '2023-10-22T06:46:46Z', lat: 1, lon: 2, ele: 3 },
-                { street: 'Friedberger Straße, B 2, B 300', time: '2023-10-22T08:30:46Z', lat: 8, lon: 9, ele: 3 },
-                { street: 'Meringer Straße, B 2', time: '2023-10-22T08:35:46Z', lat: 10, lon: 11, ele: 3 },
-                { street: 'Meringer Straße', time: '2023-10-22T08:40:46Z', lat: 12, lon: 13, ele: 3 },
-                { street: 'Street B', time: '2023-10-22T08:46:46Z', lat: 14, lon: 15, ele: 3 },
-                { street: 'Street B', time: '2023-10-22T09:00:46Z', lat: 16, lon: 17, ele: 3 },
+            const longList: TimedPoint[] = [
+                { s: 1, t: '2023-10-22T06:23:46Z', b: 1, l: 2, e: 3 },
+                { s: 1, t: '2023-10-22T06:26:46Z', b: 4, l: 5, e: 3 },
+                { s: 2, t: '2023-10-22T06:36:46Z', b: 6, l: 7, e: 3 },
+                { s: 3, t: '2023-10-22T06:46:46Z', b: 1, l: 2, e: 3 },
+                { s: 4, t: '2023-10-22T08:30:46Z', b: 8, l: 9, e: 3 },
+                { s: 5, t: '2023-10-22T08:35:46Z', b: 10, l: 11, e: 3 },
+                { s: 6, t: '2023-10-22T08:40:46Z', b: 12, l: 13, e: 3 },
+                { s: 7, t: '2023-10-22T08:46:46Z', b: 14, l: 15, e: 3 },
+                { s: 7, t: '2023-10-22T09:00:46Z', b: 16, l: 17, e: 3 },
             ];
+            const streetLookup = {
+                1: 'Street A',
+                2: 'Friedberger Straße',
+                3: 'Friedberger Straße, B 300',
+                4: 'Friedberger Straße, B 2, B 300',
+                5: 'Meringer Straße, B 2',
+                6: 'Meringer Straße',
+                7: 'Street B',
+            };
 
             // when
             const aggregatedPoints = aggregateEnrichedPoints(longList, 0, [], streetLookup);
@@ -159,26 +167,27 @@ describe('aggregateEnrichedPoints', () => {
         });
 
         describe('getting rid of unknown streets', () => {
-            function createWayPointWithStreetName(street: string | null, lat: number) {
+            function createWayPointWithStreetName(street: number, lat: number): TimedPoint {
                 return {
-                    street,
-                    time: '2023-10-22T06:23:46Z',
-                    lat,
-                    lon: 2,
-                    ele: 3,
-                } as unknown as EnrichedPoints;
+                    s: street,
+                    t: '2023-10-22T06:23:46Z',
+                    b: lat,
+                    l: 2,
+                    e: 3,
+                };
             }
 
             it('should take previous street name it unknown occurs for 5 waypoints', () => {
                 // given
-                const longList: EnrichedPoints[] = [
-                    createWayPointWithStreetName('A', 1),
-                    createWayPointWithStreetName(null, 2),
-                    createWayPointWithStreetName(null, 3),
-                    createWayPointWithStreetName(null, 4),
-                    createWayPointWithStreetName(null, 5),
-                    createWayPointWithStreetName(null, 6),
+                const longList: TimedPoint[] = [
+                    createWayPointWithStreetName(1, 1),
+                    createWayPointWithStreetName(-1, 2),
+                    createWayPointWithStreetName(-1, 3),
+                    createWayPointWithStreetName(-1, 4),
+                    createWayPointWithStreetName(-1, 5),
+                    createWayPointWithStreetName(-1, 6),
                 ];
+                const streetLookup = { 1: 'Street A' };
 
                 // when
                 const aggregatedPoints = aggregateEnrichedPoints(longList, 100, [], streetLookup);
@@ -186,7 +195,7 @@ describe('aggregateEnrichedPoints', () => {
                 // then
                 expect(aggregatedPoints).toEqual([
                     {
-                        streetName: 'A',
+                        streetName: 'Street A',
                         frontArrival: '2023-10-22T06:23:46Z',
                         backArrival: '2023-10-22T06:24:06.000Z',
                         frontPassage: '2023-10-22T06:23:46Z',

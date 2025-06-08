@@ -32,6 +32,7 @@ export interface DisplayTrack extends GpxFile {
     version: string;
     color?: string;
     peopleCount?: number;
+    points: TimedPoint[];
 }
 
 export interface ParsedTrack {

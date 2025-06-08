@@ -20,8 +20,6 @@ async function toGpxSegment(file: File): Promise<GpxSegment> {
     }));
 }
 
-export const ALLOWS_TO_ENTER_PEOPLE_AT_START: boolean = false;
-
 export function ConstructionSites() {
     const intl = useIntl();
     const dispatch = useDispatch();

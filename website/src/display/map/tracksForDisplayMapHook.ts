@@ -3,10 +3,10 @@ import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedTrack, mapActions } from '../store/map.reducer.ts';
-import { getParsedTracks } from '../store/displayTracksReducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
 export function tracksForDisplayMapHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
-    const displayTracks = useSelector(getParsedTracks);
+    const displayTracks = useSelector(getDisplayTracks);
     const highlightedTrack = useSelector(getHighlightedTrack);
     const dispatch = useDispatch();
 

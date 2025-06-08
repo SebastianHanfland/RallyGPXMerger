@@ -28,6 +28,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch, isBackup: b
                 id: track.id,
                 version: id,
                 color: getColorFromUuid(track.id),
+                points: track.points,
                 content: optionallyDecompress(track.content),
             }));
             const parsedTracks = planning.calculatedTracks.tracks.map(

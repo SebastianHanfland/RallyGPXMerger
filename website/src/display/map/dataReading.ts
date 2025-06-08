@@ -1,7 +1,7 @@
-import { ParsedTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
 import { DisplayState } from '../store/types.ts';
 import { extractSnakeTrackFromCalculatedTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getParsedTracks } from '../store/displayTracksReducer.ts';
+import { getDisplayTracks, getParsedTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,
     getCurrentRealTime,
@@ -18,7 +18,7 @@ import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 
 const extractLocationDisplay =
     (timeStampFront: string) =>
-    (parsedTrack: ParsedTrack): BikeSnake => {
+    (parsedTrack: DisplayTrack): BikeSnake => {
         const participants = parsedTrack?.peopleCount ?? 0;
 
         return {
@@ -55,7 +55,7 @@ export const getDisplayTimeStamp = (state: DisplayState): string | undefined => 
 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
-    getParsedTracks,
+    getDisplayTracks,
     (timeStamp, parsedTracks): BikeSnake[] => {
         if (!timeStamp) {
             return [];
