@@ -9,10 +9,11 @@ import {
     getShowPointsOfInterest,
     mapActions,
 } from '../store/map.reducer.ts';
-import { getConstructionSegments, getFilteredGpxSegments, getGpxSegments } from '../store/gpxSegments.reducer.ts';
+import { getConstructionSegments } from '../store/gpxSegments.reducer.ts';
 import { useIntl } from 'react-intl';
 import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
+import { getFilteredGpxSegments, getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
@@ -39,7 +40,7 @@ export function MapContentSelection() {
     const dispatch = useDispatch();
 
     const numberOfFilteredSections = useSelector(getFilteredGpxSegments).length;
-    const numberOfAllSections = useSelector(getGpxSegments).length;
+    const numberOfAllSections = useSelector(getParsedGpxSegments).length;
     const showSectionExtra = numberOfFilteredSections !== numberOfAllSections;
     const sectionLabel =
         intl.formatMessage({ id: 'msg.segments' }) +

@@ -1,49 +1,38 @@
-import { SimpleGPX } from './SimpleGPX.ts';
 import geoDistance from 'geo-distance-helper';
-import { toLatLng } from './pointUtil.ts';
-import { Track } from './gpxTypes.ts';
+import { getLatLng, getLatLon } from './pointUtil.ts';
+import { ParsedPoint } from '../planner/new-store/types.ts';
 
-export const splitGpx = (content: string, splitPoint: { lat: number; lng: number }): [string, string] => {
+export const splitGpx = (
+    points: ParsedPoint[],
+    splitPoint: { lat: number; lng: number }
+): [ParsedPoint[], ParsedPoint[]] => {
     let pointWithMinimalDistance: { lat: number; lon: number } | undefined = undefined;
     let minimalDistance: number = 999999999;
-    const simpleGPX = SimpleGPX.fromString(content);
-    simpleGPX.tracks.forEach((track) => {
-        track.points.forEach((point) => {
-            const distance = geoDistance(toLatLng(point), splitPoint) as number;
-            if (distance < minimalDistance) {
-                minimalDistance = distance;
-                pointWithMinimalDistance = point;
-            }
-        });
+    points.forEach((point) => {
+        const distance = geoDistance(getLatLng(point), splitPoint) as number;
+        if (distance < minimalDistance) {
+            minimalDistance = distance;
+            pointWithMinimalDistance = getLatLon(point);
+        }
     });
     console.log(pointWithMinimalDistance, splitPoint, minimalDistance);
 
-    const tracksBefore: Track[] = [];
-    const tracksAfter: Track[] = [];
+    const pointsBefore: ParsedPoint[] = [];
+    const pointsAfter: ParsedPoint[] = [];
 
     let splitPointReached = false;
 
-    simpleGPX.tracks.forEach((track) => {
-        if (!splitPointReached) {
-            tracksBefore.push({ ...track, points: [] });
-        } else {
-            tracksAfter.push({ ...track, points: [] });
+    points.forEach((point) => {
+        if (getLatLon(point) === pointWithMinimalDistance) {
+            splitPointReached = true;
+            pointsBefore.push(point);
         }
-        track.points.forEach((point) => {
-            if (point === pointWithMinimalDistance) {
-                splitPointReached = true;
-                tracksBefore[tracksBefore.length - 1].points.push(point);
-                tracksAfter.push({ ...track, points: [] });
-            }
-            if (!splitPointReached) {
-                tracksBefore[tracksBefore.length - 1].points.push(point);
-            } else {
-                tracksAfter[tracksAfter.length - 1].points.push(point);
-            }
-        });
+        if (!splitPointReached) {
+            pointsBefore.push(point);
+        } else {
+            pointsAfter.push(point);
+        }
     });
-    const gpxBefore = simpleGPX.duplicate(tracksBefore).toString();
-    const gpxAfter = simpleGPX.duplicate(tracksAfter).toString();
 
-    return [gpxBefore, gpxAfter];
+    return [pointsBefore, pointsAfter];
 };

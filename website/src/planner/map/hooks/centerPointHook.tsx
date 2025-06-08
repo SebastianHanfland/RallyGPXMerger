@@ -1,31 +1,15 @@
 import L from 'leaflet';
 import { useSelector } from 'react-redux';
-import { getCenterPoint } from '../../store/map.reducer.ts';
-import { getGpxSegments } from '../../store/gpxSegments.reducer.ts';
 import { useEffect } from 'react';
-import { SimpleGPX } from '../../../utils/SimpleGPX.ts';
-import { State } from '../../store/types.ts';
-import { CalculatedTrack, GpxSegment } from '../../../common/types.ts';
+import { getParsedGpxSegments } from '../../new-store/segmentData.redux.ts';
 
-export function centerPointHook(
-    map: L.Map | undefined,
-    startZoom: number,
-    selector: (state: State) => GpxSegment[] | CalculatedTrack[] = getGpxSegments
-) {
-    const centerPoint = useSelector(getCenterPoint);
-    const gpxSegments = useSelector(selector);
-
-    useEffect(() => {
-        if (map && centerPoint) {
-            map.setView(centerPoint, centerPoint.zoom);
-        }
-    }, [centerPoint]);
+export function centerPointHook(map: L.Map | undefined, startZoom: number) {
+    const gpxSegments = useSelector(getParsedGpxSegments);
 
     useEffect(() => {
         if (map && gpxSegments.length > 0) {
-            const firstSegment = SimpleGPX.fromString(gpxSegments[0].content);
-            const { lat, lon } = firstSegment.tracks[0].points[0];
-            map.setView({ lat, lng: lon }, startZoom);
+            const { b, l } = gpxSegments[0].points[0];
+            map.setView({ lat: b, lng: l }, startZoom);
         }
     }, [gpxSegments.length > 0]);
 }

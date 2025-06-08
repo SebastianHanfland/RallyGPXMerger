@@ -109,7 +109,6 @@ export interface MapState {
     currentTime: number;
     start?: string;
     end?: string;
-    centerPoint?: { lat: number; lng: number; zoom: number };
     showMapMarker?: boolean;
     showBlockStreets?: boolean;
     showCalculatedTracks?: boolean;
