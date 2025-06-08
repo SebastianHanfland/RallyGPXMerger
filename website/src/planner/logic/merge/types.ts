@@ -1,3 +1,5 @@
+import { ParsedGpxSegment } from '../../new-store/types.ts';
+
 export interface GpxFileAccess {
     shiftToArrivalTime: (arrival: string) => void;
     getStart: () => string;
@@ -8,8 +10,9 @@ export interface Break {
     minutes: number;
 }
 
-export function instanceOfBreak(object: any): object is Break {
-    return 'minutes' in object && typeof object.minutes === 'number' && Object.keys(object).length == 1;
+export function instanceOfBreak(breakOrSegment: Break | ParsedGpxSegment): breakOrSegment is Break {
+    const minutes = (breakOrSegment as Break).minutes;
+    return minutes !== undefined;
 }
 
 export const BREAK_IDENTIFIER = '%%min-%%';
