@@ -5,7 +5,7 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { CalculatedTrack } from '../types.ts';
 import { getLanguage } from '../../language.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
-import { TimedPoint } from '../../planner/new-store/types.ts';
+import { ParsedGpxSegment, TimedPoint } from '../../planner/new-store/types.ts';
 
 export interface MapOptions {
     showMarker: boolean;
@@ -14,9 +14,9 @@ export interface MapOptions {
     opacity?: number;
     weight?: number;
     highlightedId?: string;
-    clickCallBack?: (track: CalculatedTrack, event?: LeafletMouseEvent) => void;
-    mouseInCallBack?: (track: CalculatedTrack) => void;
-    mouseOutCallBack?: (track: CalculatedTrack) => void;
+    clickCallBack?: (track: CalculatedTrack | ParsedGpxSegment, event?: LeafletMouseEvent) => void;
+    mouseInCallBack?: (track: CalculatedTrack | ParsedGpxSegment) => void;
+    mouseOutCallBack?: (track: CalculatedTrack | ParsedGpxSegment) => void;
 }
 
 function setStartMarker(startPosition: { lat: number; lng: number }, routeLayer: LayerGroup<any>, trackName: string) {
@@ -70,7 +70,7 @@ function setDestinationOnMap(destination: { lat: number; lng: number }, routeLay
     endMarker.addTo(routeLayer);
 }
 
-function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: CalculatedTrack) {
+function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: CalculatedTrack | ParsedGpxSegment) {
     const clickCallBack = options?.clickCallBack;
     if (clickCallBack) {
         trackOnMap.on('click', (event: LeafletMouseEvent) => {
@@ -96,7 +96,7 @@ function addCallBacks(options: MapOptions, trackOnMap: Polyline, parsedTrack: Ca
 function drawTrackOnMap(
     trackPoints: { lat: number; lng: number }[],
     options: MapOptions,
-    parsedTrack: CalculatedTrack
+    parsedTrack: CalculatedTrack | ParsedGpxSegment
 ) {
     return L.polyline(trackPoints, {
         weight: options.weight ?? 8,
@@ -107,7 +107,15 @@ function drawTrackOnMap(
     });
 }
 
-export function addTrackToMap(parsedTrack: CalculatedTrack, routeLayer: LayerGroup, options: MapOptions) {
+function isParsedGpxSegment(track: CalculatedTrack | ParsedGpxSegment): track is ParsedGpxSegment {
+    return (track as ParsedGpxSegment).streetsResolved !== undefined;
+}
+
+export function addTrackToMap(
+    parsedTrack: CalculatedTrack | ParsedGpxSegment,
+    routeLayer: LayerGroup,
+    options: MapOptions
+) {
     const trackPoints = parsedTrack.points.map(getLatLng);
     const trackOnMap = drawTrackOnMap(trackPoints, options, parsedTrack);
     addCallBacks(options, trackOnMap, parsedTrack);
@@ -115,7 +123,9 @@ export function addTrackToMap(parsedTrack: CalculatedTrack, routeLayer: LayerGro
     trackOnMap.addTo(routeLayer);
     if (options.onlyShowBreaks) {
         setStartMarker(trackPoints[0], routeLayer, parsedTrack.filename);
-        addBreakMarker(options, parsedTrack, routeLayer);
+        if (!isParsedGpxSegment(parsedTrack)) {
+            addBreakMarker(options, parsedTrack, routeLayer);
+        }
         setDestinationOnMap(trackPoints[trackPoints.length - 1], routeLayer);
     } else {
         if (options.showMarker) {
@@ -127,7 +137,7 @@ export function addTrackToMap(parsedTrack: CalculatedTrack, routeLayer: LayerGro
 
 export function addTracksToLayer(
     mapLayer: React.MutableRefObject<LayerGroup | null>,
-    parsedTracks: CalculatedTrack[],
+    parsedTracks: CalculatedTrack[] | ParsedGpxSegment[],
     show: boolean,
     options: MapOptions
 ) {

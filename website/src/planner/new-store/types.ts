@@ -30,6 +30,7 @@ export interface ParsedGpxSegment {
     streetsResolved: boolean;
     id: string;
     filename: string;
+    color?: string;
     points: ParsedPoint[];
 }
 
