@@ -1,13 +1,46 @@
-import { OldState, State } from '../store/types.ts';
+import { GpxSegmentsState, OldState, State } from '../store/types.ts';
+import { ParsedGpxSegment, SegmentDataState } from '../new-store/types.ts';
+import { GpxSegment } from '../../common/types.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 
 export const isOldState = (state: State | OldState): state is OldState => {
     return (state as OldState).gpxSegments !== undefined;
 };
 
+function gpxSegmentToParsedSegment(gpxSegment: GpxSegment): ParsedGpxSegment {
+    return {
+        id: gpxSegment.id,
+        streetsResolved: gpxSegment.streetsResolved ?? false,
+        flipped: gpxSegment.flipped,
+        filename: gpxSegment.filename,
+        color: undefined,
+        points: SimpleGPX.fromString(gpxSegment.content)
+            .getPoints()
+            .map((point) => ({ b: point.lat, l: point.lon, e: point.ele, t: -1, s: -1 })),
+    };
+}
+
+function migrateToSegmentData(state: GpxSegmentsState): SegmentDataState {
+    return {
+        segmentSpeeds: state.segmentSpeeds ?? {},
+        segments: state.segments.map(gpxSegmentToParsedSegment),
+        pois: [],
+        clickOnSegment: state.clickOnSegment,
+        constructionSegments: state.constructionSegments?.map(gpxSegmentToParsedSegment) ?? [],
+        replaceProcess: state.replaceProcess
+            ? {
+                  targetSegment: state.replaceProcess?.targetSegment,
+                  replacementSegments: state.replaceProcess?.replacementSegments?.map(gpxSegmentToParsedSegment),
+              }
+            : undefined,
+        streetLookup: {},
+        segmentFilterTerm: state.segmentFilterTerm,
+    };
+}
+
 export function migrateState(state: OldState): State {
-    state.gpxSegments;
-    const migratedState: State = {
-        segmentData: state.gpxSegments,
+    return {
+        segmentData: migrateToSegmentData(state.gpxSegments),
         layout: state.layout,
         map: state.map,
         trackMerge: state.trackMerge,
@@ -16,5 +49,4 @@ export function migrateState(state: OldState): State {
         points: state.points,
         geoCoding: state.geoCoding,
     };
-    return migratedState;
 }
