@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 import 'leaflet/dist/leaflet.css';
-import 'leaflet/dist/leaflet.js';
 import { LocateControl } from 'leaflet.locatecontrol';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
+import 'leaflet/dist/leaflet.js';
 import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
 import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
 import { getMapConfiguration } from '../../common/mapConfig.ts';
@@ -38,6 +38,8 @@ export const PresentationMap = () => {
         if (!myMap) {
             const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
             myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined);
+            console.log('HEEEEERREE', myMap, L);
+
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             if (isLive && L.Browser.mobile && !isInIframe) {
                 const locate = new LocateControl({ initialZoomLevel: 12 });
@@ -68,7 +70,7 @@ export const PresentationMap = () => {
 
     return (
         <div onMouseLeave={() => dispatch(mapActions.setHighlightedTrack())}>
-            <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
+            <div id="mapid" style={{ height: '100vh', zIndex: 0, width: '100vw' }} />
         </div>
     );
 };
