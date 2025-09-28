@@ -63,22 +63,25 @@ export function assembleTrackFromSegments(
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
     let lastPoint: TimedPoint | undefined = undefined;
     let lastSegmentName: string = '';
-    gpxSegmentContents.reverse().forEach((gpxOrBreak) => {
-        if (instanceOfBreak(gpxOrBreak)) {
-            arrivalTimeForPreviousSegment = shiftEndDate(arrivalTimeForPreviousSegment, gpxOrBreak.minutes);
-        } else {
-            if (!!lastPoint) {
-                checkForGap(lastPoint, gpxOrBreak, track, lastSegmentName);
+    gpxSegmentContents
+        .reverse()
+        .filter((entry) => entry !== undefined)
+        .forEach((gpxOrBreak) => {
+            if (instanceOfBreak(gpxOrBreak)) {
+                arrivalTimeForPreviousSegment = shiftEndDate(arrivalTimeForPreviousSegment, gpxOrBreak.minutes);
+            } else {
+                if (!!lastPoint) {
+                    checkForGap(lastPoint, gpxOrBreak, track, lastSegmentName);
+                }
+
+                const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
+                arrivalTimeForPreviousSegment = shiftedPoint[0].t;
+                trackPoints = [...shiftedPoint, ...trackPoints];
+
+                lastPoint = shiftedPoint[0];
+                lastSegmentName = gpxOrBreak.filename;
             }
-
-            const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
-            arrivalTimeForPreviousSegment = shiftedPoint[0].t;
-            trackPoints = [...shiftedPoint, ...trackPoints];
-
-            lastPoint = shiftedPoint[0];
-            lastSegmentName = gpxOrBreak.filename;
-        }
-    });
+        });
 
     if (trackPoints.length === 0) {
         return null;

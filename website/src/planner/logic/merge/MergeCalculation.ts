@@ -29,7 +29,6 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
     dispatch(mapActions.setShowCalculatedTracks(true));
 
     const payload = getStartAndEndOfParsedTracks(calculatedTracks);
-    console.log({ payload });
     dispatch(mapActions.setStartAndEndTime(payload));
     return Promise.resolve();
 }
