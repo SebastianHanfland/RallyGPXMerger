@@ -11,7 +11,6 @@ import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
 import { ParsedGpxSegment, TimedPoint } from '../../../new-store/types.ts';
-import { getGpxContentFromTimedPoints } from '../../../../utils/SimpleGPXFromPoints.ts';
 
 function checkForGap(
     lastPoint: TimedPoint,
@@ -89,7 +88,6 @@ export function assembleTrackFromSegments(
 
     return {
         id: track.id,
-        content: getGpxContentFromTimedPoints(trackPoints, track.name!),
         filename: track.name!,
         points: trackPoints,
         peopleCount: track.peopleCount ?? 0,

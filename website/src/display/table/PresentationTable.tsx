@@ -13,6 +13,7 @@ import { Button, Table } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 export const isInIframe = window.location.search.includes('&iframe');
 
@@ -89,7 +90,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
             <td>
                 <FileDownloader
                     name={`${track.filename}.gpx`}
-                    content={track.content}
+                    content={getGpxContentFromTimedPoints(track.points, track.filename!)}
                     id={track.id}
                     label={'GPX'}
                     onlyIcon={true}

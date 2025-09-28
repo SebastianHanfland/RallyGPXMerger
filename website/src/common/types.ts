@@ -21,14 +21,18 @@ export interface ResolvedGpxSegment {
     streetsResolved?: boolean;
 }
 
-export interface CalculatedTrack extends GpxFile {
+export interface CalculatedTrack {
+    id: string;
+    filename: string;
     peopleCount?: number;
     points: TimedPoint[];
     color?: string;
     version?: string;
 }
 
-export interface DisplayTrack extends GpxFile {
+export interface DisplayTrack {
+    id: string;
+    filename: string;
     version: string;
     color?: string;
     peopleCount?: number;

@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import download from '../../assets/file-down.svg';
 import { downloadFilesInZip } from '../../planner/tracks/CalculatedFilesDownloader.tsx';
 import { getDisplayTitle, getDisplayTracks } from '../store/displayTracksReducer.ts';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 export const ZipFilesDownloader = () => {
     const intl = useIntl();
@@ -15,7 +16,13 @@ export const ZipFilesDownloader = () => {
     }
     return (
         <Button
-            onClick={() => downloadFilesInZip(displayTracks, planningTitle ?? 'Demonstration')}
+            onClick={() => {
+                const tracksWithContent = displayTracks.map((track) => ({
+                    filename: track.filename,
+                    content: getGpxContentFromTimedPoints(track.points, track.filename),
+                }));
+                downloadFilesInZip(tracksWithContent, planningTitle ?? 'Demonstration');
+            }}
             disabled={displayTracks.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadTracks.hint' })}
         >

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import download from '../../assets/file-downB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
@@ -28,7 +29,13 @@ export const CalculatedFilesDownloader = () => {
     const calculatedTracks = useSelector(getCalculatedTracks);
     return (
         <Button
-            onClick={() => downloadFilesInZip(calculatedTracks, 'RallySimulation')}
+            onClick={() => {
+                const trackWithContent = calculatedTracks.map((track) => ({
+                    filename: track.filename,
+                    content: getGpxContentFromTimedPoints(track.points, track.filename!),
+                }));
+                downloadFilesInZip(trackWithContent, 'RallySimulation');
+            }}
             disabled={calculatedTracks.length === 0}
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadTracks.hint' })}

@@ -14,6 +14,7 @@ import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import L from 'leaflet';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 const cardStyle = {
     style: { width: '170px', height: '145px', cursor: 'default' },
@@ -42,7 +43,7 @@ function TrackInfo({ track }: { track: DisplayTrack }) {
                 <div>
                     <FileDownloader
                         name={`${track.filename}.gpx`}
-                        content={track.content}
+                        content={getGpxContentFromTimedPoints(track.points, track.filename)}
                         id={track.id}
                         label={'GPX'}
                         onlyIcon={true}
