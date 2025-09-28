@@ -1,5 +1,5 @@
 import { DistrictReplacementWayPoint, StreetNameReplacementWayPoint } from '../logic/resolving/types.ts';
-import { CalculatedTrack, ParsedTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
 
@@ -109,12 +109,6 @@ export interface TrackMergeState {
     isCalculationRunning?: boolean;
     isCalculationOnTheFly?: boolean;
     changesSinceLastCalculation?: boolean;
-}
-
-export interface ParsedTrackState {
-    parsedTracks: ParsedTrack[];
-    parsedSegments: ParsedTrack[];
-    parsedConstructionSegments: ParsedTrack[];
 }
 
 export interface MapState {

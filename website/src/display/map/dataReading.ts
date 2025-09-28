@@ -1,7 +1,7 @@
 import { DisplayTrack } from '../../common/types.ts';
 import { DisplayState } from '../store/types.ts';
 import { extractSnakeTrackFromCalculatedTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getDisplayTracks, getParsedTracks } from '../store/displayTracksReducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,
     getCurrentRealTime,
@@ -30,8 +30,8 @@ const extractLocationDisplay =
     };
 
 export const getCurrentDisplayTimeStamp = (state: DisplayState): string | undefined => {
-    const calculatedTracks = getParsedTracks(state);
-    if (Object.keys(calculatedTracks).length === 0) {
+    const displayTracks = getDisplayTracks(state);
+    if (Object.keys(displayTracks).length === 0) {
         return;
     }
     const mapTime = getCurrenDisplayMapTime(state) ?? 0;

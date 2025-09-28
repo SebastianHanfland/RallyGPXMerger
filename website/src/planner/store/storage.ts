@@ -1,7 +1,7 @@
 import { State } from './types.ts';
 
 import { optionallyCompress } from './compressHelper.ts';
-import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
+import { GpxSegment } from '../../common/types.ts';
 
 const localStorage = window.localStorage;
 
@@ -9,10 +9,8 @@ const stateKey = `gpxMerger.state`;
 
 const save = (value: State) => {
     try {
-        const { layout, gpxSegments, calculatedTracks, geoCoding, trackMerge, map, points, backend, segmentData } =
-            value;
+        const { layout, calculatedTracks, geoCoding, trackMerge, map, points, backend, segmentData } = value;
         localStorage.setItem(stateKey + '.layout', JSON.stringify(layout));
-        localStorage.setItem(stateKey + '.gpxSegments', JSON.stringify(gpxSegments));
         localStorage.setItem(stateKey + '.map', JSON.stringify(map));
         localStorage.setItem(stateKey + '.points', JSON.stringify(points));
         localStorage.setItem(stateKey + '.trackMerge', JSON.stringify(trackMerge));
@@ -81,13 +79,7 @@ const load = (): State | undefined => {
         }
         const calculatedTracksStringified = localStorage.getItem(stateKey + '.calculatedTracks');
         if (isDefined(calculatedTracksStringified)) {
-            const parsedTracks = JSON.parse(calculatedTracksStringified);
-            const compressedTracks =
-                parsedTracks.tracks?.map((segment: CalculatedTrack) => ({
-                    ...segment,
-                    content: optionallyCompress(segment.content),
-                })) ?? [];
-            calculatedTracks = { ...parsedTracks, tracks: compressedTracks };
+            calculatedTracks = JSON.parse(calculatedTracksStringified);
         }
         return {
             layout,

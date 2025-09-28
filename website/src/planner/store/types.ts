@@ -3,7 +3,7 @@ import {
     StreetNameReplacementWayPoint,
     TrackStreetInfo,
 } from '../logic/resolving/types.ts';
-import { CalculatedTrack, GpxSegment, ParsedTrack } from '../../common/types.ts';
+import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
 import { SegmentDataState } from '../new-store/types.ts';
@@ -97,12 +97,6 @@ export interface TrackMergeState {
     isCalculationRunning?: boolean;
     isCalculationOnTheFly?: boolean;
     changesSinceLastCalculation?: boolean;
-}
-
-export interface ParsedTrackState {
-    parsedTracks: ParsedTrack[];
-    parsedSegments: ParsedTrack[];
-    parsedConstructionSegments: ParsedTrack[];
 }
 
 export interface MapState {

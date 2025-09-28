@@ -1,11 +1,9 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
 import { State } from '../../planner/store/types.ts';
-import { optionallyDecompress } from '../../planner/store/compressHelper.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { getPlanningLabel, getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 import { getBackupData, getData } from '../../api/api.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
@@ -29,19 +27,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch, isBackup: b
                 version: id,
                 color: getColorFromUuid(track.id),
                 points: track.points,
-                content: optionallyDecompress(track.content),
             }));
-            const parsedTracks = planning.calculatedTracks.tracks.map(
-                (track): ParsedTrack => ({
-                    id: track.id,
-                    filename: track.filename,
-                    peopleCount: track.peopleCount,
-                    version: id,
-                    color: getColorFromUuid(track.id),
-                    points: SimpleGPX.fromString(optionallyDecompress(track.content)).getPoints(),
-                })
-            );
-            dispatch(displayTracksActions.setParsedTracks(parsedTracks));
             dispatch(displayTracksActions.setDisplayTracks(calculatedTracks));
             setParticipantsDelay(planning.trackMerge.participantDelay);
         })

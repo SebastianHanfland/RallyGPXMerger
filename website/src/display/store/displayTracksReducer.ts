@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { DisplayState, DisplayTracksState } from './types';
-import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
 import { BlockedStreetInfo, TrackStreetInfo } from '../../planner/logic/resolving/types.ts';
 
 const initialState: DisplayTracksState = {
     tracks: [],
-    parsedTracks: [],
     isLoading: true,
 };
 
@@ -15,9 +14,6 @@ const displayTrackSlice = createSlice({
     reducers: {
         setDisplayTracks: (state: DisplayTracksState, action: PayloadAction<DisplayTrack[]>) => {
             state.tracks = action.payload;
-        },
-        setParsedTracks: (state: DisplayTracksState, action: PayloadAction<ParsedTrack[]>) => {
-            state.parsedTracks = action.payload;
         },
         setTitle: (state: DisplayTracksState, action: PayloadAction<string | undefined>) => {
             state.title = action.payload;
@@ -44,7 +40,6 @@ export const displayTracksActions = displayTrackSlice.actions;
 export const displayTracksReducer: Reducer<DisplayTracksState> = displayTrackSlice.reducer;
 const getBase = (state: DisplayState) => state.tracks;
 export const getDisplayTracks = (state: DisplayState) => getBase(state).tracks;
-export const getParsedTracks = (state: DisplayState) => getBase(state).parsedTracks;
 export const getDisplayTitle = (state: DisplayState) => getBase(state).title;
 export const getIsDisplayLoading = (state: DisplayState) => getBase(state).isLoading;
 export const getDisplayPlanningLabel = (state: DisplayState) => getBase(state).planningLabel;

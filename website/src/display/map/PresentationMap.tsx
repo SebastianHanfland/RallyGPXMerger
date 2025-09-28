@@ -11,27 +11,27 @@ import { getMapConfiguration } from '../../common/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLive, mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { getParsedTracks } from '../store/displayTracksReducer.ts';
-import { toLatLng } from '../../utils/pointUtil.ts';
+import { getLatLng } from '../../utils/pointUtil.ts';
 import { Munich } from '../../common/locations.ts';
-import { ParsedTrack } from '../../common/types.ts';
+import { DisplayTrack } from '../../common/types.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
 
-function getCenterPoint(parsedTracks: ParsedTrack[] | undefined) {
+function getCenterPoint(parsedTracks: DisplayTrack[] | undefined): { lat: number; lng: number } {
     if (!parsedTracks || parsedTracks.length === 0) {
         return Munich;
     }
     const point = parsedTracks[0].points[parsedTracks[0].points.length - 1];
-    return toLatLng(point);
+    return getLatLng(point);
 }
 
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
-    const parsedTracks = useSelector(getParsedTracks);
+    const parsedTracks = useSelector(getDisplayTracks);
     const isLive = useSelector(getIsLive);
 
     useEffect(() => {
