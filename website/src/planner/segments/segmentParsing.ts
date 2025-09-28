@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../logic/merge/speedSimulatorTimeInSeconds.ts';
 
-function getPoints(gpxString: string, averageSpeed: number): ParsedPoint[] {
+export function getPoints(gpxString: string, averageSpeed: number): ParsedPoint[] {
     const points = SimpleGPX.fromString(gpxString).getPoints();
     const parsedPoints = points.map((point) => ({ l: point.lon, b: point.lat, e: point.ele, s: -1, t: 0 }));
     return generateParsedPointsWithTimeInSeconds(averageSpeed, parsedPoints);

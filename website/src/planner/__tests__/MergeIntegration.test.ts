@@ -1,12 +1,13 @@
 import { createPlanningStore } from '../store/planningStore.ts';
 import { gpxA1Content, gpxABContent, gpxB1Content } from './gpxContents.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from '../../utils/gpxTypes.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
-import { ParsedPoint, TimedPoint } from '../new-store/types.ts';
+import { TimedPoint } from '../new-store/types.ts';
+import { getPoints } from '../segments/segmentParsing.ts';
 
 function timePointToPoint(timedPoint: TimedPoint): Point {
     return { lat: timedPoint.b, lon: timedPoint.l, ele: timedPoint.e, time: timedPoint.t };
@@ -20,33 +21,29 @@ function assertAdjustedTime(startPointA: Point, startPointA1: Point, time: strin
     expect(getRelevantAttributes(startPointA)).toEqual(getRelevantAttributes({ ...startPointA1, time: time }));
 }
 
-function getPointsFromGpxString(gpxString: string): ParsedPoint[] {
-    return SimpleGPX.fromString(gpxString)
-        .getPoints()
-        .map((point) => ({ b: point.lat, l: point.lon, e: point.ele, t: -1, s: -1 }));
-}
-
 describe('test merging of gpx file', () => {
     it('Should make a simple merge without people', () => {
         // given
         const store = createPlanningStore();
+        const averageSpeed = getAverageSpeedInKmH(store.getState());
+
         store.dispatch(
             segmentDataActions.addGpxSegments([
                 {
                     id: '1',
-                    points: getPointsFromGpxString(gpxA1Content),
+                    points: getPoints(gpxA1Content, averageSpeed),
                     filename: 'A1',
                     streetsResolved: false,
                 },
                 {
                     id: '2',
-                    points: getPointsFromGpxString(gpxB1Content),
+                    points: getPoints(gpxB1Content, averageSpeed),
                     filename: 'B1',
                     streetsResolved: false,
                 },
                 {
                     id: '3',
-                    points: getPointsFromGpxString(gpxABContent),
+                    points: getPoints(gpxABContent, averageSpeed),
                     filename: 'AB',
                     streetsResolved: false,
                 },
@@ -73,7 +70,7 @@ describe('test merging of gpx file', () => {
         const endPointAB = SimpleGPX.fromString(gpxABContent).getEndPoint();
 
         assertAdjustedTime(startPointA, startPointA1, '2023-10-17T22:13:54.240Z');
-        assertAdjustedTime(startPointB, startPointB1, '2023-10-17T22:13:52.259Z');
+        assertAdjustedTime(startPointB, startPointB1, '2023-10-17T22:13:52.260Z');
         assertAdjustedTime(endPointA, endPointAB, '2023-10-17T22:15:00.000Z');
         assertAdjustedTime(endPointB, endPointAB, '2023-10-17T22:15:00.000Z');
     });
@@ -81,11 +78,12 @@ describe('test merging of gpx file', () => {
     it('Should make a simple merge with people', () => {
         // given
         const store = createPlanningStore();
+        const averageSpeed = getAverageSpeedInKmH(store.getState());
         store.dispatch(
             segmentDataActions.addGpxSegments([
-                { id: '1', points: getPointsFromGpxString(gpxA1Content), filename: 'A1', streetsResolved: false },
-                { id: '2', points: getPointsFromGpxString(gpxB1Content), filename: 'B1', streetsResolved: false },
-                { id: '3', points: getPointsFromGpxString(gpxABContent), filename: 'AB', streetsResolved: false },
+                { id: '1', points: getPoints(gpxA1Content, averageSpeed), filename: 'A1', streetsResolved: false },
+                { id: '2', points: getPoints(gpxB1Content, averageSpeed), filename: 'B1', streetsResolved: false },
+                { id: '3', points: getPoints(gpxABContent, averageSpeed), filename: 'AB', streetsResolved: false },
             ])
         );
         store.dispatch(
@@ -113,7 +111,7 @@ describe('test merging of gpx file', () => {
         const endPointAB = SimpleGPX.fromString(gpxABContent).getEndPoint();
 
         assertAdjustedTime(startPointA, startPointA1, '2023-10-17T22:14:34.240Z');
-        assertAdjustedTime(startPointB, startPointB1, '2023-10-17T22:13:52.259Z');
+        assertAdjustedTime(startPointB, startPointB1, '2023-10-17T22:13:52.260Z');
         assertAdjustedTime(endPointB, endPointAB, '2023-10-17T22:15:00.000Z');
         assertAdjustedTime(endPointA, endPointAB, '2023-10-17T22:15:40.000Z');
     });
