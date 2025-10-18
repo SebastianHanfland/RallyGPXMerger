@@ -3,6 +3,7 @@ import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.red
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
+import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 
 function AverageSpeedRangeInput() {
     const dispatch = useDispatch();
@@ -17,7 +18,9 @@ function AverageSpeedRangeInput() {
                 step={0.1}
                 value={averageSpeed}
                 onChange={(event) => {
-                    dispatch(trackMergeActions.setAverageSpeed(Number(event.target.value)));
+                    const newSpeed = Number(event.target.value);
+                    dispatch(trackMergeActions.setAverageSpeed(newSpeed));
+                    dispatch(segmentDataActions.adjustTimesOfAllSegments(newSpeed));
                     debounceConstructionOfTracks(dispatch);
                 }}
             />

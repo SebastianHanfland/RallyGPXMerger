@@ -75,7 +75,18 @@ const segmentDataSlice = createSlice({
                     const adjustedPoints = generateParsedPointsWithTimeInSeconds(speed, segment.points);
                     return segment.id === id ? { ...segment, points: adjustedPoints } : segment;
                 });
+            } else {
+                // TODO set to average speed
             }
+        },
+        adjustTimesOfAllSegments: (state: SegmentDataState, action: PayloadAction<number>) => {
+            const averageSpeed = action.payload;
+
+            state.segments = state.segments.map((segment) => {
+                const segmentSpeed = state.segmentSpeeds[segment.id] ?? averageSpeed;
+                const adjustedPoints = generateParsedPointsWithTimeInSeconds(segmentSpeed, segment.points);
+                return { ...segment, points: adjustedPoints };
+            });
         },
         addConstructionSegments: (state: SegmentDataState, action: PayloadAction<ParsedGpxSegment[]>) => {
             state.constructionSegments = [...(state.constructionSegments ?? []), ...action.payload];
