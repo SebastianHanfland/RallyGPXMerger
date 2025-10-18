@@ -63,21 +63,20 @@ const segmentDataSlice = createSlice({
         setFilterTerm: (state: SegmentDataState, action: PayloadAction<string | undefined>) => {
             state.segmentFilterTerm = action.payload;
         },
-        setSegmentSpeeds: (state: SegmentDataState, action: PayloadAction<{ id: string; speed?: number }>) => {
-            const { id, speed } = action.payload;
+        setSegmentSpeeds: (
+            state: SegmentDataState,
+            action: PayloadAction<{ id: string; speed?: number; averageSpeed: number }>
+        ) => {
+            const { id, speed, averageSpeed } = action.payload;
             if (!state.segmentSpeeds) {
                 state.segmentSpeeds = { [id]: speed };
             } else {
                 state.segmentSpeeds[id] = speed;
             }
-            if (speed) {
-                state.segments = state.segments.map((segment) => {
-                    const adjustedPoints = generateParsedPointsWithTimeInSeconds(speed, segment.points);
-                    return segment.id === id ? { ...segment, points: adjustedPoints } : segment;
-                });
-            } else {
-                // TODO set to average speed
-            }
+            state.segments = state.segments.map((segment) => {
+                const adjustedPoints = generateParsedPointsWithTimeInSeconds(speed ?? averageSpeed, segment.points);
+                return segment.id === id ? { ...segment, points: adjustedPoints } : segment;
+            });
         },
         adjustTimesOfAllSegments: (state: SegmentDataState, action: PayloadAction<number>) => {
             const averageSpeed = action.payload;

@@ -1,12 +1,14 @@
 import { State } from '../store/types.ts';
-import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getAverageSpeedInKmH, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { useSelector } from 'react-redux';
 
 export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
     const trackCompositions = getTrackCompositions(getState());
+    const averageSpeed = useSelector(getAverageSpeedInKmH);
 
     if (!replaceProcess || replaceProcess.replacementSegments.length === 0) {
         return;
@@ -31,7 +33,9 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
             }
         });
         replacementIds.forEach((replacementId) => {
-            dispatch(segmentDataActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed }));
+            dispatch(
+                segmentDataActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed, averageSpeed })
+            );
         });
         dispatch(segmentDataActions.addGpxSegments(replacementSegments));
         dispatch(segmentDataActions.removeGpxSegment(targetSegment));

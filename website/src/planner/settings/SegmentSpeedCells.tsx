@@ -33,7 +33,7 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
                     title={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
                     value={segmentSpeed?.toString() ?? ''}
                     onChange={(value) => {
-                        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed: getCount(value) }));
+                        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed: getCount(value), averageSpeed }));
                         dispatch(triggerAutomaticCalculation);
                     }}
                 />
