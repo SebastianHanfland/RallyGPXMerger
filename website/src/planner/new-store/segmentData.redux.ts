@@ -27,9 +27,18 @@ const segmentDataSlice = createSlice({
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
         },
         flipGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
-            state.segments = state.segments.map((segment) =>
-                segment.id === action.payload ? { ...segment, flipped: !segment.flipped } : segment
-            );
+            state.segments = state.segments.map((segment) => {
+                if (segment.id !== action.payload) {
+                    return segment;
+                }
+                // TODO: remove hardcoded average speed
+                const speed = state.segmentSpeeds[segment.id] ?? 12;
+                return {
+                    ...segment,
+                    flipped: !segment.flipped,
+                    points: generateParsedPointsWithTimeInSeconds(speed, segment.points.reverse()),
+                };
+            });
         },
         changeGpxSegmentPoints: (
             state: SegmentDataState,
