@@ -26,7 +26,7 @@ function getDateTimeStringWithOffset(offsetInSeconds: number) {
     return new Date(dateTimeInMillis + offsetInSeconds * 1000).toISOString();
 }
 
-const toPoint = (point: ParsedPoint) => ({
+const toPoint = (point: ParsedPoint): Point => ({
     lat: point.b,
     lon: point.l,
     ele: point.e,

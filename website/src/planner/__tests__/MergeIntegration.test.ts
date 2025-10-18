@@ -7,7 +7,7 @@ import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from '../../utils/gpxTypes.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
 import { TimedPoint } from '../new-store/types.ts';
-import { getPoints } from '../segments/segmentParsing.ts';
+import { getPointsFromGpx } from '../segments/segmentParsing.ts';
 
 function timePointToPoint(timedPoint: TimedPoint): Point {
     return { lat: timedPoint.b, lon: timedPoint.l, ele: timedPoint.e, time: timedPoint.t };
@@ -31,19 +31,19 @@ describe('test merging of gpx file', () => {
             segmentDataActions.addGpxSegments([
                 {
                     id: '1',
-                    points: getPoints(gpxA1Content, averageSpeed),
+                    points: getPointsFromGpx(gpxA1Content, averageSpeed),
                     filename: 'A1',
                     streetsResolved: false,
                 },
                 {
                     id: '2',
-                    points: getPoints(gpxB1Content, averageSpeed),
+                    points: getPointsFromGpx(gpxB1Content, averageSpeed),
                     filename: 'B1',
                     streetsResolved: false,
                 },
                 {
                     id: '3',
-                    points: getPoints(gpxABContent, averageSpeed),
+                    points: getPointsFromGpx(gpxABContent, averageSpeed),
                     filename: 'AB',
                     streetsResolved: false,
                 },
@@ -81,9 +81,24 @@ describe('test merging of gpx file', () => {
         const averageSpeed = getAverageSpeedInKmH(store.getState());
         store.dispatch(
             segmentDataActions.addGpxSegments([
-                { id: '1', points: getPoints(gpxA1Content, averageSpeed), filename: 'A1', streetsResolved: false },
-                { id: '2', points: getPoints(gpxB1Content, averageSpeed), filename: 'B1', streetsResolved: false },
-                { id: '3', points: getPoints(gpxABContent, averageSpeed), filename: 'AB', streetsResolved: false },
+                {
+                    id: '1',
+                    points: getPointsFromGpx(gpxA1Content, averageSpeed),
+                    filename: 'A1',
+                    streetsResolved: false,
+                },
+                {
+                    id: '2',
+                    points: getPointsFromGpx(gpxB1Content, averageSpeed),
+                    filename: 'B1',
+                    streetsResolved: false,
+                },
+                {
+                    id: '3',
+                    points: getPointsFromGpx(gpxABContent, averageSpeed),
+                    filename: 'AB',
+                    streetsResolved: false,
+                },
             ])
         );
         store.dispatch(
