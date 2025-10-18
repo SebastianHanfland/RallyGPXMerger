@@ -3,6 +3,7 @@ import { ClickOnSegment, ParsedGpxSegment, ParsedPoint, SegmentDataState } from 
 import { filterItems } from '../../utils/filterUtil.ts';
 import { State } from '../store/types.ts';
 import { storage } from '../store/storage.ts';
+import { generateParsedPointsWithTimeInSeconds } from '../logic/merge/speedSimulatorTimeInSeconds.ts';
 
 const initialState: SegmentDataState = {
     segments: [],
@@ -68,6 +69,12 @@ const segmentDataSlice = createSlice({
                 state.segmentSpeeds = { [id]: speed };
             } else {
                 state.segmentSpeeds[id] = speed;
+            }
+            if (speed) {
+                state.segments = state.segments.map((segment) => {
+                    const adjustedPoints = generateParsedPointsWithTimeInSeconds(speed, segment.points);
+                    return segment.id === id ? { ...segment, points: adjustedPoints } : segment;
+                });
             }
         },
         addConstructionSegments: (state: SegmentDataState, action: PayloadAction<ParsedGpxSegment[]>) => {
