@@ -26,13 +26,15 @@ const segmentDataSlice = createSlice({
         removeGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
         },
-        flipGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
+        flipGpxSegment: (
+            state: SegmentDataState,
+            action: PayloadAction<{ segmentId: string; averageSpeed: number }>
+        ) => {
             state.segments = state.segments.map((segment) => {
-                if (segment.id !== action.payload) {
+                if (segment.id !== action.payload.segmentId) {
                     return segment;
                 }
-                // TODO: remove hardcoded average speed
-                const speed = state.segmentSpeeds[segment.id] ?? 12;
+                const speed = state.segmentSpeeds[segment.id] ?? action.payload.averageSpeed;
                 return {
                     ...segment,
                     flipped: !segment.flipped,
