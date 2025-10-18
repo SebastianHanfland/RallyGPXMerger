@@ -20,7 +20,7 @@ function haveTimeStamp(waypoints: Waypoint[]) {
 }
 
 function getPointsFromTracksAndRoutes(routes: Route[], tracks: Track[]) {
-    return [...routes.map((route) => route.points), ...tracks.map((track) => track.points)];
+    return [...routes.map((route) => route.points), ...(tracks ?? []).map((track) => track.points)];
 }
 
 export class SimpleGPX extends GpxParser implements GpxFileAccess {
@@ -57,7 +57,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         super();
         this.metadata = metadata;
         this.waypoints = waypoints;
-        this.tracks = tracks.map((track) => ({
+        this.tracks = (tracks ?? []).map((track) => ({
             ...track,
             points: track.points.map((point) => ({
                 ...point,

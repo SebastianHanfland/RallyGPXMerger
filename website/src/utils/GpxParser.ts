@@ -25,8 +25,8 @@ export class GpxParser {
         try {
             const result = parser.parse(gpxString);
             jsonReturn.metadata = result.gpx?.metadata;
-            jsonReturn.wpt = result.gpx.wpt;
-            if (result.gpx.rte) {
+            jsonReturn.wpt = result.gpx?.wpt;
+            if (result.gpx?.rte) {
                 if (Array.isArray(result.gpx.rte)) {
                     jsonReturn.routes = result.gpx.rte.map(this.mapRoute);
                 } else {
@@ -34,10 +34,12 @@ export class GpxParser {
                 }
             }
 
-            if (Array.isArray(result.gpx.trk)) {
-                jsonReturn.tracks = result.gpx.trk.map(this.mapTrack);
-            } else {
-                jsonReturn.tracks = [result.gpx.trk].map(this.mapTrack);
+            if (result.gpx?.trk) {
+                if (Array.isArray(result.gpx?.trk)) {
+                    jsonReturn.tracks = result.gpx.trk.map(this.mapTrack);
+                } else {
+                    jsonReturn.tracks = [result.gpx.trk].map(this.mapTrack);
+                }
             }
         } catch (e) {
             console.error(e);
