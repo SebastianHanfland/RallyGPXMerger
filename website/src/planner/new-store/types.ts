@@ -1,8 +1,3 @@
-import { DistrictReplacementWayPoint, StreetNameReplacementWayPoint } from '../logic/resolving/types.ts';
-import { CalculatedTrack } from '../../common/types.ts';
-import { Sections } from '../layout/types.ts';
-import { SupportedLanguages } from '../../language.ts';
-
 export interface ClickOnSegment {
     lat: number;
     lng: number;
@@ -47,86 +42,6 @@ export interface SegmentDataState {
     districtLookup: Record<number, string>;
 }
 
-export interface CalculatedTracksState {
-    tracks: CalculatedTrack[];
-}
-
-export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
-
-export interface LayoutState {
-    selectedSection: Sections;
-    language: SupportedLanguages;
-    hasSingleTrack: boolean;
-    isSidebarOpen: boolean;
-    selectedSidebarSection: SidebarSections;
-}
-export interface BackendState {
-    planningId?: string;
-    planningPassword?: string;
-    isPlanningAlreadySaved: boolean;
-    hasChangesSinceLastUpload?: boolean;
-}
-
-export interface Toast {
-    id: string;
-    title: string;
-    message?: string;
-    type: 'success' | 'danger' | 'info';
-}
-
-export interface ToastsState {
-    toasts: Toast[];
-}
-
-export interface TrackComposition {
-    id: string;
-    name?: string;
-    segmentIds: string[];
-    peopleCount?: number;
-    priority?: number;
-    buffer?: number;
-    rounding?: number;
-}
-
-export interface GeoCodingState {
-    geoApifyKey?: string;
-    bigDataCloudKey?: string;
-    streetReplacementWayPoints?: StreetNameReplacementWayPoint[];
-    districtReplacementWayPoints?: DistrictReplacementWayPoint[];
-    onlyShowUnknown?: boolean;
-}
-
-export interface TrackMergeState {
-    trackCompositions: TrackComposition[];
-    filterTerm?: string;
-    arrivalDateTime?: string;
-    hasDefaultArrivalDate?: boolean;
-    planningLabel?: string;
-    planningTitle?: string;
-    participantDelay: number;
-    averageSpeedInKmH?: number;
-    gapToleranceInKm?: number;
-    segmentIdClipboard?: string[];
-    trackIdForAddingABreak?: string;
-    isCalculationRunning?: boolean;
-    isCalculationOnTheFly?: boolean;
-    changesSinceLastCalculation?: boolean;
-}
-
-export interface MapState {
-    currentTime: number;
-    start?: string;
-    end?: string;
-    centerPoint?: { lat: number; lng: number; zoom: number };
-    showMapMarker?: boolean;
-    showBlockStreets?: boolean;
-    showCalculatedTracks?: boolean;
-    showGpxSegments?: boolean;
-    showConstructions?: boolean;
-    showPointsOfInterest?: boolean;
-    highlightedSegmentId?: string;
-}
-
 export interface PointOfInterest {
     id: string;
     lat: number;
@@ -136,12 +51,6 @@ export interface PointOfInterest {
     minutes?: number;
     type: PointOfInterestType;
     radiusInM: number;
-}
-
-export interface TrackPause {
-    minutes: number;
-    description: string;
-    hasToilet: boolean;
 }
 
 export enum PointOfInterestType {
@@ -155,12 +64,4 @@ export enum PointOfInterestType {
     NODE = 'NODE',
 }
 
-export interface PointsState {
-    points: PointOfInterest[];
-    contextMenuPoint?: { lat: number; lng: number };
-    editPointOfInterest?: PointOfInterest;
-}
-
 export type ResolvedPositions = Record<string, string | null>;
-export type ResolvedPostCodes = Record<string, number>;
-export type ResolvedDistricts = Record<string, string>;
