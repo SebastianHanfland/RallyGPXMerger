@@ -133,9 +133,9 @@ export interface SegmentDataState {
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;
-    streetLookup: Record<number, string>;
-    postCodeLookup: Record<number, string>;
-    districtLookup: Record<number, string>;
+    streetLookup: Record<number, string | null>;
+    postCodeLookup: Record<number, string | null>;
+    districtLookup: Record<number, string | null>;
 }
 
 export interface PointOfInterest {

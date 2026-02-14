@@ -13,7 +13,7 @@ export const isOldState = (state: State | StateOld): state is StateOld => {
 
 export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 {
     return {
-        segmentData: migrateToSegmentData(stateVersion1.gpxSegments),
+        segmentData: migrateToSegmentData(stateVersion1.gpxSegments, stateVersion1.geoCoding),
         layout: stateVersion1.layout,
         map: stateVersion1.map,
         trackMerge: migrateTrackMerge(stateVersion1.trackMerge),
