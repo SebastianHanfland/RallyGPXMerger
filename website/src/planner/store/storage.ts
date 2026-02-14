@@ -2,6 +2,8 @@ import { State } from './types.ts';
 
 import { optionallyCompress } from './compressHelper.ts';
 import { GpxSegment } from '../../common/types.ts';
+import { StateOld } from './typesOld.ts';
+import { isOldState, migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
 
 const localStorage = window.localStorage;
 
@@ -9,13 +11,12 @@ const stateKey = `gpxMerger.state`;
 
 const save = (value: State) => {
     try {
-        const { layout, calculatedTracks, geoCoding, trackMerge, map, points, backend, segmentData } = value;
+        const { layout, geoCoding, trackMerge, map, points, backend, segmentData } = value;
         localStorage.setItem(stateKey + '.layout', JSON.stringify(layout));
         localStorage.setItem(stateKey + '.map', JSON.stringify(map));
         localStorage.setItem(stateKey + '.points', JSON.stringify(points));
         localStorage.setItem(stateKey + '.trackMerge', JSON.stringify(trackMerge));
         localStorage.setItem(stateKey + '.geoCoding', JSON.stringify(geoCoding));
-        localStorage.setItem(stateKey + '.calculatedTracks', JSON.stringify(calculatedTracks));
         localStorage.setItem(stateKey + '.backend', JSON.stringify(backend));
         localStorage.setItem(stateKey + '.segmentData', JSON.stringify(segmentData));
     } catch (error) {
@@ -81,7 +82,7 @@ const load = (): State | undefined => {
         if (isDefined(calculatedTracksStringified)) {
             calculatedTracks = JSON.parse(calculatedTracksStringified);
         }
-        return {
+        const readState: State | StateOld = {
             layout,
             gpxSegments,
             map,
@@ -91,7 +92,11 @@ const load = (): State | undefined => {
             calculatedTracks,
             backend,
             segmentData,
-        } as State;
+        };
+        if (isOldState(readState)) {
+            return migrateVersion1To2(readState);
+        }
+        return readState;
     } catch (error) {
         console.log(error);
         return undefined;

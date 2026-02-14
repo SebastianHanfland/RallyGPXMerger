@@ -59,7 +59,7 @@ interface GpxFile {
     content: string;
 }
 
-interface GpxSegment extends GpxFile {
+export interface GpxSegmentOld extends GpxFile {
     flipped?: boolean;
     streetsResolved?: boolean;
 }
@@ -86,12 +86,12 @@ interface ClickOnSegment {
     segmentId: string;
 }
 
-interface GpxSegmentsState {
-    segments: GpxSegment[];
+export interface GpxSegmentsStateOld {
+    segments: GpxSegmentOld[];
     segmentFilterTerm?: string;
     segmentSpeeds?: Record<string, number | undefined>;
-    constructionSegments?: GpxSegment[];
-    replaceProcess?: { targetSegment: string; replacementSegments: GpxSegment[] };
+    constructionSegments?: GpxSegmentOld[];
+    replaceProcess?: { targetSegment: string; replacementSegments: GpxSegmentOld[] };
     clickOnSegment?: ClickOnSegment;
 }
 
@@ -223,7 +223,7 @@ type ResolvedDistricts = Record<string, string>;
 export interface StateOld {
     layout: LayoutState;
     backend?: BackendState;
-    gpxSegments: GpxSegmentsState;
+    gpxSegments: GpxSegmentsStateOld;
     trackMerge: TrackMergeState;
     calculatedTracks: CalculatedTracksState;
     map: MapState;
