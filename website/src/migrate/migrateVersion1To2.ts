@@ -38,6 +38,8 @@ function migrateToSegmentData(state: GpxSegmentsState): SegmentDataState {
               }
             : undefined,
         streetLookup: {},
+        postCodeLookup: {},
+        districtLookup: {},
         segmentFilterTerm: state.segmentFilterTerm,
     };
 }
