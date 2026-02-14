@@ -16,7 +16,6 @@ export const createPostCodeAndDistrictLookups = (
 
             let district: string | null = null;
             let postCode: string | null = null;
-            console.log({ point, streetName, streetLookup });
             geoCoding.trackStreetInfos?.forEach((trackInfo) => {
                 const foundWayPoint = trackInfo.wayPoints.find((wayPoint) => {
                     return (
@@ -26,7 +25,6 @@ export const createPostCodeAndDistrictLookups = (
                     );
                 });
                 if (foundWayPoint && geoCoding.resolvedPostCodes && geoCoding.resolvedDistricts) {
-                    console.log('there are stuff');
                     const postCodeKey = getWayPointKey(foundWayPoint).postCodeKey;
                     const foundPostCode = geoCoding.resolvedPostCodes[postCodeKey];
                     district = geoCoding.resolvedDistricts[postCodeKey];
@@ -38,11 +36,7 @@ export const createPostCodeAndDistrictLookups = (
                         districtLookup = { ...districtLookup, ...{ [point.s]: district } };
                     }
                 }
-                if (foundWayPoint) {
-                    console.log('there are stuff');
-                }
             });
-            console.log({ streetName, district, postCode });
         });
     });
     return { postCodeLookup, districtLookup };
