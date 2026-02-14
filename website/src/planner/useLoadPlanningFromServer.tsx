@@ -8,7 +8,7 @@ import { errorNotification, successNotification, toastsActions } from './store/t
 import { AppDispatch } from './store/planningStore.ts';
 import { State } from './store/types.ts';
 import { trackMergeActions } from './store/trackMerge.reducer.ts';
-import { isOldState, migrateState } from './state-migration/migrateOldState.ts';
+import { isOldState, migrateVersion1To2 } from '../migrate/migrateVersion1To2.ts';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
@@ -18,7 +18,7 @@ export function loadStateAndSetUpPlanner(
     planningPassword?: string
 ) {
     if (isOldState(state)) {
-        dispatch({ payload: migrateState(state), type: 'wholeState' });
+        dispatch({ payload: migrateVersion1To2(state), type: 'wholeState' });
     } else {
         dispatch({ payload: state, type: 'wholeState' });
     }
