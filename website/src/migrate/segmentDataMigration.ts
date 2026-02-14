@@ -42,11 +42,8 @@ export function migrateToSegmentData(state: GpxSegmentsStateOld, geoCoding: GeoC
     const parsedSegments = state.segments.map((segment) => gpxSegmentToParsedSegmentAndResolve(segment));
 
     const { segments, streetLookUp } = enrichGpxSegmentsWithStreetNames(parsedSegments, geoCoding);
-    const { postCodeLookup, districtLookup } = createPostCodeAndDistrictLookups(
-        parsedSegments,
-        geoCoding,
-        streetLookUp
-    );
+    const { postCodeLookup, districtLookup } = createPostCodeAndDistrictLookups(segments, geoCoding, streetLookUp);
+    console.log({ postCodeLookup, districtLookup });
 
     return {
         segmentSpeeds: state.segmentSpeeds ?? {},
