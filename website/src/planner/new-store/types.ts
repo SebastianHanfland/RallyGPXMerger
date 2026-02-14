@@ -43,6 +43,8 @@ export interface SegmentDataState {
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;
     streetLookup: Record<number, string>;
+    postCodeLookup: Record<number, string>;
+    districtLookup: Record<number, string>;
 }
 
 export interface CalculatedTracksState {

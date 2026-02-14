@@ -11,6 +11,8 @@ const initialState: SegmentDataState = {
     constructionSegments: [],
     segmentSpeeds: {},
     streetLookup: {},
+    postCodeLookup: {},
+    districtLookup: {},
 };
 
 const segmentDataSlice = createSlice({
@@ -22,6 +24,12 @@ const segmentDataSlice = createSlice({
         },
         addStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
             state.streetLookup = { ...state.streetLookup, ...action.payload };
+        },
+        addPostCodeLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+            state.postCodeLookup = { ...state.postCodeLookup, ...action.payload };
+        },
+        addDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+            state.districtLookup = { ...state.districtLookup, ...action.payload };
         },
         removeGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
@@ -121,6 +129,8 @@ const getBase = (state: State) => state.segmentData;
 
 export const getParsedGpxSegments = (state: State) => getBase(state).segments;
 export const getStreetLookup = (state: State) => getBase(state).streetLookup;
+export const getPostCodeLookup = (state: State) => getBase(state).postCodeLookup;
+export const getDistrictLookup = (state: State) => getBase(state).districtLookup;
 
 // Older functions TODO: #223 tidy up
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
