@@ -154,7 +154,7 @@ interface GeoCodingRequestsState {
     isLoadingStreetData: boolean;
 }
 
-interface TrackMergeState {
+export interface TrackMergeStateOld {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
     arrivalDateTime?: string;
@@ -224,7 +224,7 @@ export interface StateOld {
     layout: LayoutState;
     backend?: BackendState;
     gpxSegments: GpxSegmentsStateOld;
-    trackMerge: TrackMergeState;
+    trackMerge: TrackMergeStateOld;
     calculatedTracks: CalculatedTracksState;
     map: MapState;
     points: PointsState;
