@@ -66,17 +66,3 @@ export const addPostCodeToStreetInfos = async (dispatch: Dispatch, getState: () 
     );
     return Promise.all(postCodeRequests).then();
 };
-
-export const getPostCodeRequestProgress = createSelector(
-    [getUniquePostCodeEntries, getResolvedPostCodes],
-    (uniquePostCode, resolvedPostCodes) => {
-        const numberOfUniquePostCodeEntries = uniquePostCode.length;
-        const numberOfResolvedPostCodeEntries = Object.keys(resolvedPostCodes ?? {}).length;
-
-        if (numberOfUniquePostCodeEntries === 0) {
-            return 0;
-        }
-
-        return (numberOfResolvedPostCodeEntries / numberOfUniquePostCodeEntries) * 100;
-    }
-);
