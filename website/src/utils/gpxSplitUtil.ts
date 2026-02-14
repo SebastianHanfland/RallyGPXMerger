@@ -1,6 +1,7 @@
 import geoDistance from 'geo-distance-helper';
 import { getLatLng, getLatLon } from './pointUtil.ts';
-import { ParsedPoint } from '../planner/new-store/types.ts';
+
+import { ParsedPoint } from '../planner/store/types.ts';
 
 export const splitGpx = (
     points: ParsedPoint[],

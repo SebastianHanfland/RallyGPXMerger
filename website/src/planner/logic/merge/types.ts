@@ -1,4 +1,4 @@
-import { ParsedGpxSegment } from '../../new-store/types.ts';
+import { ParsedGpxSegment } from '../../store/types.ts';
 
 export interface GpxFileAccess {
     shiftToArrivalTime: (arrival: string) => void;

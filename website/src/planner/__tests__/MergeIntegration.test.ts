@@ -6,8 +6,8 @@ import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from '../../utils/gpxTypes.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
-import { TimedPoint } from '../new-store/types.ts';
 import { getPointsFromGpx } from '../segments/segmentParsing.ts';
+import { TimedPoint } from '../store/types.ts';
 
 function timePointToPoint(timedPoint: TimedPoint): Point {
     return { lat: timedPoint.b, lon: timedPoint.l, ele: timedPoint.e, time: timedPoint.t };

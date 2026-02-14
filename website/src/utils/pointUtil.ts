@@ -1,6 +1,6 @@
 import { GeoPoint } from 'geo-distance-helper/dist/geoDistance';
 import { Point } from './gpxTypes.ts';
-import { ParsedPoint, TimedPoint } from '../planner/new-store/types.ts';
+import { ParsedPoint, TimedPoint } from '../planner/store/types.ts';
 
 export const toLatLng = ({ lat, lon }: Omit<Point, 'time' | 'ele'>): GeoPoint => ({
     lat: typeof lat === 'string' ? Number(lat) : lat,

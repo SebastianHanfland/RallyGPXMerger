@@ -1,6 +1,7 @@
 import { aggregateEnrichedPoints, anyStreetNameMatch, takeMostDetailedStreetName } from '../aggregateEnrichedPoints.ts';
 import { TrackWayPointType } from '../../types.ts';
-import { TimedPoint } from '../../../../new-store/types.ts';
+
+import { TimedPoint } from '../../../../store/types.ts';
 
 describe('aggregateEnrichedPoints', () => {
     describe('aggregateEnrichedPoints', () => {

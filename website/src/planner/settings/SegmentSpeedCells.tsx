@@ -5,8 +5,8 @@ import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { ParsedGpxSegment } from '../new-store/types.ts';
 import { getSegmentSpeeds, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { ParsedGpxSegment } from '../store/types.ts';
 
 export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const intl = useIntl();

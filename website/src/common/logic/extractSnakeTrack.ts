@@ -3,7 +3,8 @@ import date from 'date-and-time';
 import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../planner/store/trackMerge.reducer.ts';
 import { CalculatedTrack } from '../types.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
-import { TimedPoint } from '../../planner/new-store/types.ts';
+
+import { TimedPoint } from '../../planner/store/types.ts';
 
 function interpolatePosition(previous: TimedPoint, next: TimedPoint, timeStamp: string) {
     const nextTime = next.t;

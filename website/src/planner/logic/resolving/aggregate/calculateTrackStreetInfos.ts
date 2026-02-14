@@ -1,4 +1,4 @@
-import { State } from '../../../store/types.ts';
+import { State, TimedPoint } from '../../../store/types.ts';
 import { TrackStreetInfo } from '../types.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import geoDistance from 'geo-distance-helper';
@@ -11,7 +11,6 @@ import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { overwriteWayPoints } from './overwriteWayPoints.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { TimedPoint } from '../../../new-store/types.ts';
 import { getStreetLookup } from '../../../new-store/segmentData.redux.ts';
 
 function calculateDistance(track: CalculatedTrack): number {

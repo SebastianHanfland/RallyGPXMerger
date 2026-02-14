@@ -1,6 +1,6 @@
-import { ParsedGpxSegment, ParsedPoint, TimedPoint } from '../planner/new-store/types.ts';
 import { SimpleGPX } from './SimpleGPX.ts';
 import { Point } from './gpxTypes.ts';
+import { ParsedGpxSegment, ParsedPoint, TimedPoint } from '../planner/store/types.ts';
 
 function getMetadata(name: string) {
     return {

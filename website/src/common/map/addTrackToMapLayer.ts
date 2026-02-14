@@ -5,7 +5,7 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { CalculatedTrack } from '../types.ts';
 import { getLanguage } from '../../language.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
-import { ParsedGpxSegment, TimedPoint } from '../../planner/new-store/types.ts';
+import { ParsedGpxSegment, TimedPoint } from '../../planner/store/types.ts';
 
 export interface MapOptions {
     showMarker: boolean;

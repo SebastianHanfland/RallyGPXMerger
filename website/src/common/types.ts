@@ -1,4 +1,4 @@
-import { TimedPoint } from '../planner/new-store/types.ts';
+import { TimedPoint } from '../planner/store/types.ts';
 
 export interface GpxFile {
     id: string;

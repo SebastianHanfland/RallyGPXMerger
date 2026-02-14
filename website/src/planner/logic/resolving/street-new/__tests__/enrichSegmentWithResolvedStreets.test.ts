@@ -1,6 +1,6 @@
 import { enrichSegmentWithResolvedStreets } from '../enrichSegmentWithResolvedStreets.ts';
-import { ParsedGpxSegment } from '../../../../new-store/types.ts';
 import { toKey } from '../../helper/pointKeys.ts';
+import { ParsedGpxSegment } from '../../../../store/types.ts';
 
 function createPoint(l: number, b: number) {
     return { l, b, e: 1, t: 1, s: -1 };

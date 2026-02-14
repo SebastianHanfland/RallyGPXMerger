@@ -1,7 +1,7 @@
 import { FileDownloader } from '../segments/FileDownloader.tsx';
 import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
-import { ParsedGpxSegment } from '../new-store/types.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
+import { ParsedGpxSegment } from '../store/types.ts';
 
 export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const { id, filename } = gpxSegment;

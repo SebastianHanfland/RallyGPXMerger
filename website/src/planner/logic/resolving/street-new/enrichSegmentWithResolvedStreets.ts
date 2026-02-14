@@ -1,6 +1,5 @@
-import { ParsedGpxSegment } from '../../../new-store/types.ts';
 import { toKey } from '../helper/pointKeys.ts';
-import { ResolvedPositions } from '../../../store/types.ts';
+import { ParsedGpxSegment, ResolvedPositions } from '../../../store/types.ts';
 
 export function enrichSegmentWithResolvedStreets(
     segmentWithoutStreets: ParsedGpxSegment,

@@ -1,7 +1,6 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { ClickOnSegment, ParsedGpxSegment, ParsedPoint, SegmentDataState } from './types.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { State } from '../store/types.ts';
+import { ClickOnSegment, ParsedGpxSegment, ParsedPoint, SegmentDataState, State } from '../store/types.ts';
 import { storage } from '../store/storage.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../logic/merge/speedSimulatorTimeInSeconds.ts';
 

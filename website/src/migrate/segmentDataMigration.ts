@@ -1,6 +1,6 @@
-import { ParsedGpxSegment, SegmentDataState } from '../planner/new-store/types.ts';
 import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { GpxSegmentOld, GpxSegmentsStateOld } from '../planner/store/typesOld.ts';
+import { ParsedGpxSegment, SegmentDataState } from '../planner/store/types.ts';
 
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegmentOld): ParsedGpxSegment {
     return {

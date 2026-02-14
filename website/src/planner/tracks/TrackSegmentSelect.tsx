@@ -1,4 +1,4 @@
-import { TrackComposition } from '../store/types.ts';
+import { ParsedGpxSegment, TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';
@@ -6,7 +6,6 @@ import { useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
-import { ParsedGpxSegment } from '../new-store/types.ts';
 
 interface Props {
     track: TrackComposition;

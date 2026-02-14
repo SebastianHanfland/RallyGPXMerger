@@ -1,9 +1,8 @@
 import { getAdjustedArrivalDateTime } from './helper/peopleDelayCounter.ts';
 
 import { assembleTrackFromSegments } from './helper/assembleTrackFromSegments.ts';
-import { TrackComposition } from '../../store/types.ts';
+import { ParsedGpxSegment, TrackComposition } from '../../store/types.ts';
 import { CalculatedTrack } from '../../../common/types.ts';
-import { ParsedGpxSegment } from '../../new-store/types.ts';
 
 /*
 We have to find nodes where the branches join

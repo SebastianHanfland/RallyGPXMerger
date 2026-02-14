@@ -1,4 +1,4 @@
-import { PointOfInterestType, TrackComposition } from '../../../store/types.ts';
+import { ParsedGpxSegment, PointOfInterestType, TimedPoint, TrackComposition } from '../../../store/types.ts';
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
 import { shiftDateBySeconds, shiftEndDate } from '../../../../utils/dateUtil.ts';
@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
-import { ParsedGpxSegment, TimedPoint } from '../../../new-store/types.ts';
 
 function checkForGap(
     lastPoint: TimedPoint,

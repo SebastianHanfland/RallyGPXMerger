@@ -1,6 +1,5 @@
-import { TrackComposition } from '../../../store/types.ts';
+import { ParsedGpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Break, BREAK_IDENTIFIER } from '../types.ts';
-import { ParsedGpxSegment } from '../../../new-store/types.ts';
 
 export function resolveGpxSegments(
     track: TrackComposition,

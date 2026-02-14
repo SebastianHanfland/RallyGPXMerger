@@ -12,9 +12,9 @@ import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { ParsedGpxSegment } from '../new-store/types.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { ParsedGpxSegment } from '../store/types.ts';
 
 interface Props {
     gpxSegment: ParsedGpxSegment;
