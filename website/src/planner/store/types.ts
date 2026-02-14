@@ -154,19 +154,6 @@ export interface State {
     toasts?: ToastsState;
 }
 
-export interface OldState {
-    layout: LayoutState;
-    backend?: BackendState;
-    gpxSegments: GpxSegmentsState;
-    trackMerge: TrackMergeState;
-    calculatedTracks: CalculatedTracksState;
-    map: MapState;
-    points: PointsState;
-    geoCoding: GeoCodingState;
-    geoCodingRequests: GeoCodingRequestsState;
-    toasts?: ToastsState;
-}
-
 export type ResolvedPositions = Record<string, string | null>;
 export type ResolvedPostCodes = Record<string, number>;
 export type ResolvedDistricts = Record<string, string>;

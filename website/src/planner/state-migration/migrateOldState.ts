@@ -1,10 +1,11 @@
-import { GpxSegmentsState, OldState, State } from '../store/types.ts';
+import { GpxSegmentsState, State } from '../store/types.ts';
+import { StateOld } from '../store/typesOld.ts';
 import { ParsedGpxSegment, SegmentDataState } from '../new-store/types.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 
-export const isOldState = (state: State | OldState): state is OldState => {
-    return (state as OldState).gpxSegments !== undefined;
+export const isOldState = (state: State | StateOld): state is StateOld => {
+    return (state as StateOld).gpxSegments !== undefined;
 };
 
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegment): ParsedGpxSegment {
@@ -38,7 +39,7 @@ function migrateToSegmentData(state: GpxSegmentsState): SegmentDataState {
     };
 }
 
-export function migrateState(state: OldState): State {
+export function migrateState(state: StateOld): State {
     return {
         segmentData: migrateToSegmentData(state.gpxSegments),
         layout: state.layout,
