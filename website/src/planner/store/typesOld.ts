@@ -136,7 +136,7 @@ interface TrackComposition {
     rounding?: number;
 }
 
-interface GeoCodingState {
+export interface GeoCodingStateOld {
     geoApifyKey?: string;
     bigDataCloudKey?: string;
     resolvedPositions?: ResolvedPositions;
@@ -228,7 +228,7 @@ export interface StateOld {
     calculatedTracks: CalculatedTracksState;
     map: MapState;
     points: PointsState;
-    geoCoding: GeoCodingState;
+    geoCoding: GeoCodingStateOld;
     geoCodingRequests: GeoCodingRequestsState;
     toasts?: ToastsState;
     parsedTracks: ParsedTrackState | undefined;

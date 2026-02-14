@@ -1,6 +1,7 @@
 import { State } from '../planner/store/types.ts';
 import { StateOld } from '../planner/store/typesOld.ts';
 import { migrateToSegmentData } from './segmentDataMigration.ts';
+import { migrateGeoCoding } from './geoCodingMigration.ts';
 
 type StateVersion1 = StateOld;
 type StateVersion2 = State;
@@ -17,7 +18,7 @@ export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 
         trackMerge: stateVersion1.trackMerge,
         backend: stateVersion1.backend,
         points: stateVersion1.points,
-        geoCoding: stateVersion1.geoCoding,
+        geoCoding: migrateGeoCoding(stateVersion1.geoCoding),
         toasts: stateVersion1.toasts,
     };
 }
