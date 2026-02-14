@@ -3,8 +3,8 @@ import { GeoCodingStateOld, GpxSegmentOld, GpxSegmentsStateOld } from '../planne
 import { ParsedGpxSegment, SegmentDataState } from '../planner/store/types.ts';
 import { Point } from '../utils/gpxTypes.ts';
 import { optionallyDecompress } from '../planner/store/compressHelper.ts';
-import { enrichGpxSegmentsWithStreetNames } from './resolvingHelper.ts';
-import { getWayPointKey, toKey } from '../planner/logic/resolving/helper/pointKeys.ts';
+import { enrichGpxSegmentsWithStreetNames } from './streetNameResolvingHelper.ts';
+import { createPostCodeAndDistrictLookups } from './postCodeAndDistrictResolvingHelper.ts';
 
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegmentOld): ParsedGpxSegment {
     return {
@@ -39,12 +39,14 @@ function gpxSegmentToParsedSegmentAndResolve(gpxSegment: GpxSegmentOld): ParsedG
 }
 
 export function migrateToSegmentData(state: GpxSegmentsStateOld, geoCoding: GeoCodingStateOld): SegmentDataState {
-    geoCoding.resolvedPositions;
-    const postCodeLookup = {};
-    const districtLookup = {};
     const parsedSegments = state.segments.map((segment) => gpxSegmentToParsedSegmentAndResolve(segment));
 
     const { segments, streetLookUp } = enrichGpxSegmentsWithStreetNames(parsedSegments, geoCoding);
+    const { postCodeLookup, districtLookup } = createPostCodeAndDistrictLookups(
+        parsedSegments,
+        geoCoding,
+        streetLookUp
+    );
 
     return {
         segmentSpeeds: state.segmentSpeeds ?? {},
@@ -59,27 +61,3 @@ export function migrateToSegmentData(state: GpxSegmentsStateOld, geoCoding: GeoC
         segmentFilterTerm: state.segmentFilterTerm,
     };
 }
-
-// const positionKey = toKey(point);
-// let streetName: string | null = null;
-// if (geoCoding.resolvedPositions) {
-//     streetName = geoCoding.resolvedPositions[positionKey];
-// }
-// let district: string | null = null;
-// let postCode: string | null = null;
-// geoCoding.trackStreetInfos?.forEach((trackInfo) => {
-//     const foundWayPoint = trackInfo.wayPoints.find(
-//         (wayPoint) =>
-//             wayPoint.streetName === streetName &&
-//             wayPoint.pointFrom.lat === point.lat &&
-//             wayPoint.pointFrom.lon === point.lon
-//     );
-//     if (foundWayPoint && geoCoding.resolvedPostCodes && geoCoding.resolvedDistricts) {
-//         const postCodeKey = getWayPointKey(foundWayPoint).postCodeKey;
-//         const foundPostCode = geoCoding.resolvedPostCodes[postCodeKey];
-//         district = geoCoding.resolvedDistricts[postCodeKey];
-//         postCode = foundPostCode ? `${foundPostCode}` : null;
-//         console.log('found waypoint');
-//     }
-// });
-// console.log({ streetName, district, postCode });
