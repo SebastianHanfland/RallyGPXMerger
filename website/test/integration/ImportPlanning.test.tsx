@@ -11,7 +11,7 @@ import { useGetUrlParam } from '../../src/utils/linkUtil';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
-import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
+import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 
 const messages = getMessages('en');

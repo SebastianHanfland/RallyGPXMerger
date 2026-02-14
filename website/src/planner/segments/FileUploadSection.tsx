@@ -2,7 +2,7 @@ import { GpxSegments } from './GpxSegments.tsx';
 import { GpxCreationHint } from './GpxCreationHint.tsx';
 import { useSelector } from 'react-redux';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export function FileUploadSection() {
     const hasNoGPXSegments = useSelector(getParsedGpxSegments).length === 0;

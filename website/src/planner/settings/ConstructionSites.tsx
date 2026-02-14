@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getConstructionSegments, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getConstructionSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
 
 const fileTypes = ['GPX'];

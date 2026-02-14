@@ -5,7 +5,7 @@ import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { calculateMerge } from '../logic/merge/MergeCalculation.ts';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { Point } from '../../utils/gpxTypes.ts';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { getPointsFromGpx } from '../segments/segmentParsing.ts';
 import { TimedPoint } from '../store/types.ts';
 

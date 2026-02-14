@@ -10,7 +10,7 @@ import { calculatedTracksActions } from '../../store/calculatedTracks.reducer.ts
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../../store/map.reducer.ts';
 import { getStartAndEndOfParsedTracks } from '../../../utils/parsedTracksUtil.ts';
-import { getParsedGpxSegments } from '../../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 
 export async function calculateMerge(dispatch: AppDispatch, getState: () => State) {
     const gpxSegments = getParsedGpxSegments(getState());

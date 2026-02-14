@@ -12,7 +12,7 @@ import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.t
 import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);

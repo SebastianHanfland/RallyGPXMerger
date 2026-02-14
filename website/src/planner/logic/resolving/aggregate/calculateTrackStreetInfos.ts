@@ -11,7 +11,7 @@ import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { overwriteWayPoints } from './overwriteWayPoints.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { getStreetLookup } from '../../../new-store/segmentData.redux.ts';
+import { getStreetLookup } from '../../../store/segmentData.redux.ts';
 
 function calculateDistance(track: CalculatedTrack): number {
     const points = track.points;

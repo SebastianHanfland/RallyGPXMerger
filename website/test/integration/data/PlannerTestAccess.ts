@@ -3,7 +3,7 @@ import * as fs from 'node:fs';
 import { AppDispatch } from '../../../src/planner/store/planningStore';
 import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
-import { segmentDataActions } from '../../../src/planner/new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../../../src/planner/store/segmentData.redux.ts';
 
 const messages = getMessages('en');
 

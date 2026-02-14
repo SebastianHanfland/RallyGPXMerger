@@ -10,7 +10,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
 import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
 import { TrackSegmentSelect } from './TrackSegmentSelect.tsx';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 interface Props {
     track: TrackComposition;

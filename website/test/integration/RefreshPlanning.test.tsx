@@ -10,7 +10,7 @@ import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 // The order of imports is important, the storage mock has to be set before the store is created
 import { createPlanningStore } from '../../src/planner/store/planningStore';
-import { getParsedGpxSegments } from '../../src/planner/new-store/segmentData.redux';
+import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 
 const messages = getMessages('en');

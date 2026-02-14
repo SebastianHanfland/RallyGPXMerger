@@ -3,7 +3,7 @@ import { getLanguage } from '../../language.ts';
 import { useSelector } from 'react-redux';
 import { Warning } from '../layout/dashboard/Warning.tsx';
 import hand from '../../assets/hand.svg';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export function GpxCreationHint() {
     const language = getLanguage();

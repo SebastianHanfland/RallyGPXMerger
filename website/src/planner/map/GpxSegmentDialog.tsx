@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { GpxSegmentContent } from './GpxSegmentContent.tsx';
-import { getClickOnSegment, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getClickOnSegment, segmentDataActions } from '../store/segmentData.redux.ts';
 
 export const GpxSegmentDialog = () => {
     const clickOnSegment = useSelector(getClickOnSegment);

@@ -6,7 +6,7 @@ import { layoutActions } from '../store/layout.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { pointsActions } from '../store/points.reducer.ts';
 import { backendActions } from '../store/backend.reducer.ts';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 export function resetData(dispatch: Dispatch) {
     dispatch(trackMergeActions.clear());

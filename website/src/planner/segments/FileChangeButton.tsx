@@ -8,7 +8,7 @@ import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getReplaceProcess, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
 

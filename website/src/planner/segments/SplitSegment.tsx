@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { splitGpxAtPosition } from './splitSegmentThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { getClickOnSegment, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getClickOnSegment, segmentDataActions } from '../store/segmentData.redux.ts';
 
 export const SplitSegmentDropdownItem = () => {
     const dispatch: AppDispatch = useDispatch();

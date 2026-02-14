@@ -4,7 +4,7 @@ import flip from '../../assets/flip.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
 
 interface Props {

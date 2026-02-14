@@ -3,7 +3,7 @@ import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.red
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 function AverageSpeedRangeInput() {
     const dispatch = useDispatch();

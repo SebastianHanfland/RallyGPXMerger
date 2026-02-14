@@ -12,11 +12,7 @@ import {
 import { useIntl } from 'react-intl';
 import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
-import {
-    getConstructionSegments,
-    getFilteredGpxSegments,
-    getParsedGpxSegments,
-} from '../new-store/segmentData.redux.ts';
+import { getConstructionSegments, getFilteredGpxSegments, getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',

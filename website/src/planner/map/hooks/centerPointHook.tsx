@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getParsedGpxSegments } from '../../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 
 export function centerPointHook(map: L.Map | undefined, startZoom: number) {
     const gpxSegments = useSelector(getParsedGpxSegments);

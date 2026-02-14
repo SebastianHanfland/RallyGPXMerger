@@ -19,7 +19,7 @@ import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
 import { PauseDialog } from './PauseDialog.tsx';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
 
 let myMap: L.Map | undefined;

@@ -13,7 +13,7 @@ import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
 
 interface Props {

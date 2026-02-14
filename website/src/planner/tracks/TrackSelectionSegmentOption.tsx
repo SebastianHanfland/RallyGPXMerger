@@ -13,7 +13,7 @@ import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import flip from '../../assets/flip.svg';
 import { DraggableIcon } from './DraggableIcon.tsx';
-import { getParsedGpxSegments, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
 interface Props {

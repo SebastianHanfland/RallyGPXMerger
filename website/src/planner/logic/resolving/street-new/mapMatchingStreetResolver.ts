@@ -6,7 +6,7 @@ import { AppDispatch } from '../../../store/planningStore.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
-import { getStreetLookup, segmentDataActions } from '../../../new-store/segmentData.redux.ts';
+import { getStreetLookup, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {

@@ -5,7 +5,7 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trashB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
     id: string;

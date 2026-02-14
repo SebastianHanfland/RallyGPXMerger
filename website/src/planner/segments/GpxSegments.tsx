@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
-import { getFilteredGpxSegments, getSegmentFilterTerm, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getFilteredGpxSegments, getSegmentFilterTerm, segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
     noFilter?: boolean;

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import download from '../../assets/file-downB.svg';
 import { downloadFilesInZip } from '../tracks/CalculatedFilesDownloader.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints.ts';
 
 export const SegmentFilesDownloader = () => {

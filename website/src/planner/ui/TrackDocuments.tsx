@@ -10,7 +10,7 @@ import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { StreetInfoModal } from './StreetInfoModal.tsx';
 import { useState } from 'react';
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 
 export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {

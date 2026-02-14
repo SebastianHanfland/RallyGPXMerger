@@ -5,7 +5,7 @@ import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
 import { SplitSegmentDropdownItem } from '../segments/SplitSegment.tsx';
-import { getClickOnSegment, getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getClickOnSegment, getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 
 export const GpxSegmentContent = () => {

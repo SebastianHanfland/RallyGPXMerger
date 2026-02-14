@@ -5,7 +5,7 @@ import Select, { SingleValue } from 'react-select';
 import { useIntl } from 'react-intl';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 interface Props {
     track: TrackComposition;

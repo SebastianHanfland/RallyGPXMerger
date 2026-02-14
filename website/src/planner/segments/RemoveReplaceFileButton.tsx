@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
-import { getReplaceProcess, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
     id: string;

@@ -6,7 +6,7 @@ import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { FormattedMessage } from 'react-intl';
 import { getHasChangesSinceLastUpload } from '../store/backend.reducer.ts';
 import { Warning } from '../layout/dashboard/Warning.tsx';
-import { getParsedGpxSegments } from '../new-store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export const PlannerSidebarNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);

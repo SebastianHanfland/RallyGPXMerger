@@ -2,7 +2,7 @@ import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RemoveReplaceFileButton } from './RemoveReplaceFileButton.tsx';
 import { useIntl } from 'react-intl';
-import { getReplaceProcess, segmentDataActions } from '../new-store/segmentData.redux.ts';
+import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
 
 export function ReplaceFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
