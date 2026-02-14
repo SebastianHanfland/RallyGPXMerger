@@ -37,6 +37,10 @@ function gpxSegmentToParsedSegmentAndResolve(gpxSegment: GpxSegmentOld): ParsedG
         points: points,
     };
 }
+//
+// const segmentSpeed = state.segmentSpeeds[segment.id] ?? averageSpeed;
+// const adjustedPoints = generateParsedPointsWithTimeInSeconds(segmentSpeed, segment.points);
+// oder die action triggern...
 
 export function migrateToSegmentData(state: GpxSegmentsStateOld, geoCoding: GeoCodingStateOld): SegmentDataState {
     const parsedSegments = state.segments.map((segment) => gpxSegmentToParsedSegmentAndResolve(segment));
