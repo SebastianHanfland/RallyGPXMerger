@@ -148,7 +148,6 @@ export interface State {
     backend?: BackendState;
     segmentData: SegmentDataState;
     trackMerge: TrackMergeState;
-    calculatedTracks: CalculatedTracksState;
     map: MapState;
     points: PointsState;
     geoCoding: GeoCodingState;

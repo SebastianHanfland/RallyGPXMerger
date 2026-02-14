@@ -1,10 +1,10 @@
-export enum TrackWayPointType {
+enum TrackWayPointType {
     Track = 'TRACK',
     Break = 'BREAK',
     Node = 'NODE',
 }
 
-export interface TrackWayPoint {
+interface TrackWayPoint {
     streetName: string | null;
     frontArrival: string;
     frontPassage: string;
@@ -20,7 +20,7 @@ export interface TrackWayPoint {
     nodeTracks?: string[];
 }
 
-export interface TrackStreetInfo {
+interface TrackStreetInfo {
     id: string;
     name: string;
     startFront: string;
@@ -32,20 +32,20 @@ export interface TrackStreetInfo {
     peopleCount?: number;
 }
 
-export interface ReplacementWayPoint {
+interface ReplacementWayPoint {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
 }
 
-export interface StreetNameReplacementWayPoint extends ReplacementWayPoint {
+interface StreetNameReplacementWayPoint extends ReplacementWayPoint {
     streetName: string;
 }
 
-export interface DistrictReplacementWayPoint extends ReplacementWayPoint {
+interface DistrictReplacementWayPoint extends ReplacementWayPoint {
     district: string;
 }
 
-export type Point = {
+type Point = {
     lat: number;
     lon: number;
     ele: number;
@@ -53,22 +53,22 @@ export type Point = {
     extensions?: {};
 };
 
-export interface GpxFile {
+interface GpxFile {
     id: string;
     filename: string;
     content: string;
 }
 
-export interface GpxSegment extends GpxFile {
+interface GpxSegment extends GpxFile {
     flipped?: boolean;
     streetsResolved?: boolean;
 }
 
-export interface CalculatedTrack extends GpxFile {
+interface CalculatedTrack extends GpxFile {
     peopleCount?: number;
 }
 
-export interface ParsedTrack {
+interface ParsedTrack {
     id: string;
     filename: string;
     points: Point[];
@@ -77,16 +77,16 @@ export interface ParsedTrack {
     peopleCount?: number;
 }
 
-export type Sections = 'menu' | 'gps' | 'wizard-complexity';
-export type SupportedLanguages = 'de' | 'en';
+type Sections = 'menu' | 'gps' | 'wizard-complexity';
+type SupportedLanguages = 'de' | 'en';
 
-export interface ClickOnSegment {
+interface ClickOnSegment {
     lat: number;
     lng: number;
     segmentId: string;
 }
 
-export interface GpxSegmentsState {
+interface GpxSegmentsState {
     segments: GpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds?: Record<string, number | undefined>;
@@ -95,38 +95,38 @@ export interface GpxSegmentsState {
     clickOnSegment?: ClickOnSegment;
 }
 
-export interface CalculatedTracksState {
+interface CalculatedTracksState {
     tracks: CalculatedTrack[];
 }
 
-export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
+type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
 
-export interface LayoutState {
+interface LayoutState {
     selectedSection: Sections;
     language: SupportedLanguages;
     hasSingleTrack: boolean;
     isSidebarOpen: boolean;
     selectedSidebarSection: SidebarSections;
 }
-export interface BackendState {
+interface BackendState {
     planningId?: string;
     planningPassword?: string;
     isPlanningAlreadySaved: boolean;
     hasChangesSinceLastUpload?: boolean;
 }
 
-export interface Toast {
+interface Toast {
     id: string;
     title: string;
     message?: string;
     type: 'success' | 'danger' | 'info';
 }
 
-export interface ToastsState {
+interface ToastsState {
     toasts: Toast[];
 }
 
-export interface TrackComposition {
+interface TrackComposition {
     id: string;
     name?: string;
     segmentIds: string[];
@@ -136,7 +136,7 @@ export interface TrackComposition {
     rounding?: number;
 }
 
-export interface GeoCodingState {
+interface GeoCodingState {
     geoApifyKey?: string;
     bigDataCloudKey?: string;
     resolvedPositions?: ResolvedPositions;
@@ -148,13 +148,13 @@ export interface GeoCodingState {
     onlyShowUnknown?: boolean;
 }
 
-export interface GeoCodingRequestsState {
+interface GeoCodingRequestsState {
     isAggregating: boolean;
     isLoadingPostCodeData: boolean;
     isLoadingStreetData: boolean;
 }
 
-export interface TrackMergeState {
+interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
     arrivalDateTime?: string;
@@ -171,13 +171,13 @@ export interface TrackMergeState {
     changesSinceLastCalculation?: boolean;
 }
 
-export interface ParsedTrackState {
+interface ParsedTrackState {
     parsedTracks: ParsedTrack[];
     parsedSegments: ParsedTrack[];
     parsedConstructionSegments: ParsedTrack[];
 }
 
-export interface MapState {
+interface MapState {
     currentTime: number;
     start?: string;
     end?: string;
@@ -191,7 +191,7 @@ export interface MapState {
     highlightedSegmentId?: string;
 }
 
-export interface PointOfInterest {
+interface PointOfInterest {
     id: string;
     lat: number;
     lng: number;
@@ -201,13 +201,7 @@ export interface PointOfInterest {
     radiusInM: number;
 }
 
-export interface TrackPause {
-    minutes: number;
-    description: string;
-    hasToilet: boolean;
-}
-
-export enum PointOfInterestType {
+enum PointOfInterestType {
     TOILET = 'TOILET',
     IMPEDIMENT = 'IMPEDIMENT',
     GATHERING = 'GATHERING',
@@ -216,11 +210,15 @@ export enum PointOfInterestType {
     OTHER = 'OTHER',
 }
 
-export interface PointsState {
+interface PointsState {
     points: PointOfInterest[];
     contextMenuPoint?: { lat: number; lng: number };
     editPointOfInterest?: PointOfInterest;
 }
+
+type ResolvedPositions = Record<string, string | null>;
+type ResolvedPostCodes = Record<string, number>;
+type ResolvedDistricts = Record<string, string>;
 
 export interface StateOld {
     layout: LayoutState;
@@ -235,7 +233,3 @@ export interface StateOld {
     toasts?: ToastsState;
     parsedTracks: ParsedTrackState | undefined;
 }
-
-export type ResolvedPositions = Record<string, string | null>;
-export type ResolvedPostCodes = Record<string, number>;
-export type ResolvedDistricts = Record<string, string>;
