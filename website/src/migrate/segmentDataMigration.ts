@@ -2,7 +2,7 @@ import { SimpleGPX } from '../utils/SimpleGPX.ts';
 import { GeoCodingStateOld, GpxSegmentOld, GpxSegmentsStateOld } from '../planner/store/typesOld.ts';
 import { ParsedGpxSegment, SegmentDataState } from '../planner/store/types.ts';
 import { Point } from '../utils/gpxTypes.ts';
-import { toKey } from '../planner/logic/resolving/helper/pointKeys.ts';
+import { getWayPointKey, toKey } from '../planner/logic/resolving/helper/pointKeys.ts';
 import { optionallyDecompress } from '../planner/store/compressHelper.ts';
 
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegmentOld): ParsedGpxSegment {
@@ -26,11 +26,28 @@ function mapPoint(
     geoCoding: GeoCodingStateOld
 ) {
     const positionKey = toKey(point);
-    let streetName = null;
+    let streetName: string | null = null;
     if (geoCoding.resolvedPositions) {
         streetName = geoCoding.resolvedPositions[positionKey];
     }
-    console.log({ streetName });
+    let district: string | null = null;
+    let postCode: string | null = null;
+    geoCoding.trackStreetInfos?.forEach((trackInfo) => {
+        const foundWayPoint = trackInfo.wayPoints.find(
+            (wayPoint) =>
+                wayPoint.streetName === streetName &&
+                wayPoint.pointFrom.lat === point.lat &&
+                wayPoint.pointFrom.lon === point.lon
+        );
+        if (foundWayPoint && geoCoding.resolvedPostCodes && geoCoding.resolvedDistricts) {
+            const postCodeKey = getWayPointKey(foundWayPoint).postCodeKey;
+            const foundPostCode = geoCoding.resolvedPostCodes[postCodeKey];
+            district = geoCoding.resolvedDistricts[postCodeKey];
+            postCode = foundPostCode ? `${foundPostCode}` : null;
+            console.log('found waypoint');
+        }
+    });
+    console.log({ streetName, district, postCode });
     return { b: point.lat, l: point.lon, e: point.ele, t: -1, s: -1 };
 }
 
@@ -41,7 +58,6 @@ function gpxSegmentToParsedSegmentAndResolve(
     districtLookup: Record<number, string | null>,
     geoCoding: GeoCodingStateOld
 ): ParsedGpxSegment {
-    console.log(optionallyDecompress(gpxSegment.content));
     return {
         id: gpxSegment.id,
         streetsResolved: gpxSegment.streetsResolved ?? false,
