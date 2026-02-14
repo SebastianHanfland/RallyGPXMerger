@@ -63,5 +63,3 @@ export enum PointOfInterestType {
     BREAK = 'BREAK',
     NODE = 'NODE',
 }
-
-export type ResolvedPositions = Record<string, string | null>;

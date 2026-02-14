@@ -132,5 +132,5 @@ export interface State {
 }
 
 export type ResolvedPositions = Record<string, string | null>;
-export type ResolvedPostCodes = Record<string, number>;
-export type ResolvedDistricts = Record<string, string>;
+export type ResolvedPostCodes = Record<string, number | null>;
+export type ResolvedDistricts = Record<string, string | null>;

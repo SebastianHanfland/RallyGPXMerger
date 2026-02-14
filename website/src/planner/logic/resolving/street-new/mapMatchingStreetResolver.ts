@@ -1,4 +1,4 @@
-import { State } from '../../../store/types.ts';
+import { ResolvedPositions, State } from '../../../store/types.ts';
 import { getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
 import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
@@ -6,7 +6,7 @@ import { AppDispatch } from '../../../store/planningStore.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
-import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../new-store/types.ts';
+import { ParsedGpxSegment, ParsedPoint } from '../../../new-store/types.ts';
 import { getStreetLookup, segmentDataActions } from '../../../new-store/segmentData.redux.ts';
 import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
 
