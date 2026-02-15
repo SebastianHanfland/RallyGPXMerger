@@ -10,7 +10,23 @@ describe('test merging of gpx file', () => {
         // when
         const state = migrateVersion1To2(oldState);
 
-        // then
+        // then SegmentData
         expect(state.segmentData.segments).toHaveLength(oldState.gpxSegments.segments.length);
+        expect(state.segmentData.streetLookup).toEqual({
+            '1': 'Orthstraße',
+            '1001': 'Chopinstraße',
+            '2001': 'Orthstraße',
+        });
+        expect(state.segmentData.districtLookup).toEqual({
+            '1': 'München',
+            '1001': 'München',
+            '2001': 'München',
+        });
+        expect(state.segmentData.postCodeLookup).toEqual({
+            '1': '81245',
+            '1001': '81245',
+            '2001': '81245',
+        });
+        expect(state.segmentData.segmentSpeeds).toEqual(oldState.gpxSegments.segmentSpeeds);
     });
 });
