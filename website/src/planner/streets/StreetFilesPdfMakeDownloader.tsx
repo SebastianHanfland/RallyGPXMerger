@@ -2,7 +2,6 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import download from '../../assets/file-downB.svg';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { createBlockedStreetsPdf } from '../download/pdf/blockedStreetsPdf.ts';
 import { createTrackStreetPdf } from '../download/pdf/trackStreetsPdf.ts';
 import { getPlanningLabel } from '../store/trackMerge.reducer.ts';
@@ -13,9 +12,10 @@ import { IntlShape, useIntl } from 'react-intl';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
+import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosNew.ts';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
-    const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
+    const trackStreetInfos = getTrackStreetInfos(getState());
     const planningLabel = getPlanningLabel(getState());
     trackStreetInfos
         .filter((info) => id.includes(info.id))
@@ -49,7 +49,7 @@ export function downloadPdfFilesPure(
 }
 
 export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () => State) => {
-    const trackStreetInfos = getEnrichedTrackStreetInfos(getState());
+    const trackStreetInfos = getTrackStreetInfos(getState());
     const blockedStreetInfos = getBlockedStreetInfo(getState());
     const planningLabel = getPlanningLabel(getState()) ?? '';
     downloadPdfFilesPure(intl, planningLabel, trackStreetInfos, blockedStreetInfos);
@@ -58,7 +58,7 @@ export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () 
 export const StreetFilesPdfMakeDownloader = () => {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
-    const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
+    const trackStreetInfos = useSelector(getTrackStreetInfos);
     return (
         <Button
             onClick={(event) => {

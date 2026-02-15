@@ -5,8 +5,8 @@ import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { getPlanningLabel, getPlanningTitle, setParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 import { getBackupData, getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
-import { getEnrichedTrackStreetInfos } from '../../planner/logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
+import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfosNew.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch, isBackup: boolean = false) {
     return (isBackup ? getBackupData() : getData(id).then((res) => res.data))
@@ -16,7 +16,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch, isBackup: b
                 document.title = planningTitle;
             }
             dispatch(displayTracksActions.setTitle(planningTitle));
-            dispatch(displayTracksActions.setEnrichedTrackStreetInfos(getEnrichedTrackStreetInfos(planning)));
+            dispatch(displayTracksActions.setEnrichedTrackStreetInfos(getTrackStreetInfos(planning)));
             dispatch(displayTracksActions.setBlockStreetInfos(getBlockedStreetInfo(planning)));
             dispatch(displayTracksActions.setPlanningLabel(getPlanningLabel(planning)));
 

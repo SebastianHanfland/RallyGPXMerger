@@ -1,4 +1,4 @@
-import { TrackWayPoint } from '../logic/resolving/types.ts';
+import { AggregatedPoints } from '../logic/resolving/types.ts';
 import Button from 'react-bootstrap/Button';
 import pencil from '../../assets/pencil.svg';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 
 interface Props {
-    waypoint: TrackWayPoint;
+    waypoint: AggregatedPoints;
 }
 
 export function EditStreetNameButton(props: Props) {

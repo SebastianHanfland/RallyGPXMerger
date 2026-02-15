@@ -56,22 +56,6 @@ export enum TrackWayPointType {
     Node = 'NODE',
 }
 
-export interface TrackWayPoint {
-    streetName: string | null;
-    frontArrival: string;
-    frontPassage: string;
-    backArrival: string;
-    pointFrom: { lat: number; lon: number };
-    pointTo: { lat: number; lon: number };
-    postCode?: number;
-    district?: string;
-    distanceInKm?: number;
-    speed?: number;
-    type?: TrackWayPointType;
-    breakLength?: number;
-    nodeTracks?: string[];
-}
-
 export interface TrackStreetInfo {
     id: string;
     name: string;
@@ -80,14 +64,14 @@ export interface TrackStreetInfo {
     arrivalBack: string;
     arrivalFront: string;
     distanceInKm: number;
-    wayPoints: TrackWayPoint[];
+    wayPoints: AggregatedPoints[];
     peopleCount?: number;
 }
 
 export interface BlockedStreetInfo {
     streetName: string | null;
-    postCode?: number;
-    district?: string;
+    postCode: string | null;
+    district: string | null;
     frontArrival: string;
     backPassage: string;
     pointFrom: { lat: number; lon: number };
@@ -97,6 +81,8 @@ export interface BlockedStreetInfo {
 
 export interface AggregatedPoints {
     streetName: string | null;
+    postCode: string | null;
+    district: string | null;
     frontArrival: string;
     frontPassage: string;
     backArrival: string;

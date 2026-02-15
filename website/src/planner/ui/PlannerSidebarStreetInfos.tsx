@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
-import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { StreetInfoModal } from './StreetInfoModal.tsx';
+import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosNew.ts';
 
 export const PlannerSidebarStreetInfos = () => {
-    const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
+    const trackStreetInfos = useSelector(getTrackStreetInfos);
 
     const [selectedTrackId, setSelectedTrackId] = useState<string>();
     const selectedTrack = trackStreetInfos.find((track) => track.id === selectedTrackId);

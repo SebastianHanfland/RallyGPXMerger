@@ -1,17 +1,15 @@
-import { State, TimedPoint } from '../../../store/types.ts';
+import { TimedPoint } from '../../../store/types.ts';
 import { TrackStreetInfo } from '../types.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import geoDistance from 'geo-distance-helper';
-import { getStreetNameReplacementWayPoints } from '../../../store/geoCoding.reducer.ts';
-import { Dispatch } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
 import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { overwriteWayPoints } from './overwriteWayPoints.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { getStreetLookup } from '../../../store/segmentData.redux.ts';
+import { getDistrictLookup, getPostCodeLookup, getStreetLookup } from '../../../store/segmentData.redux.ts';
 
 function calculateDistance(track: CalculatedTrack): number {
     const points = track.points;
@@ -33,40 +31,45 @@ function calculateDistance(track: CalculatedTrack): number {
     return distance;
 }
 
-const enrichWithStreetsAndAggregate =
-    (state: State) =>
-    (track: CalculatedTrack): TrackStreetInfo => {
-        const replacementWayPoints = getStreetNameReplacementWayPoints(state) ?? [];
-        const tracks = getTrackCompositions(state);
-        const streetLookup = getStreetLookup(state);
-        const nodePositions = getNodePositions(state);
-        const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
-        const distance = calculateDistance(track);
+export const getTrackStreetInfos = createSelector(
+    [
+        getCalculatedTracks,
+        getTrackCompositions,
+        getStreetLookup,
+        getDistrictLookup,
+        getPostCodeLookup,
+        getNodePositions,
+    ],
+    (calculatedTracks, tracks, streetLookup, districtLookup, postCodeLookup, nodePositions) => {
+        return calculatedTracks.map((track: CalculatedTrack): TrackStreetInfo => {
+            const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
+            const distance = calculateDistance(track);
 
-        const wayPoints = aggregateEnrichedPoints(track.points, track.peopleCount ?? 0, nodePositions, streetLookup);
-        const overwrittenWayPoints = overwriteWayPoints(wayPoints, replacementWayPoints);
+            const wayPoints = aggregateEnrichedPoints(
+                track.points,
+                track.peopleCount ?? 0,
+                nodePositions,
+                streetLookup,
+                districtLookup,
+                postCodeLookup
+            );
 
-        const startFront = wayPoints[0].frontArrival;
-        const publicStart = trackComposition
-            ? roundPublishedStartTimes(startFront, trackComposition.buffer ?? 0, trackComposition.rounding ?? 0)
-            : startFront;
-        return {
-            id: track.id,
-            name: track.filename,
-            startFront: startFront,
-            publicStart: publicStart,
-            arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
-            arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
-            distanceInKm: distance,
-            peopleCount: track.peopleCount,
-            wayPoints: overwrittenWayPoints,
-        };
-    };
+            const startFront = wayPoints[0].frontArrival;
+            const publicStart = trackComposition
+                ? roundPublishedStartTimes(startFront, trackComposition.buffer ?? 0, trackComposition.rounding ?? 0)
+                : startFront;
 
-export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
-    const calculatedTracks = getCalculatedTracks(getState());
-    const trackStreetInfos = calculatedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
-    // TODO
-    console.log(trackStreetInfos, dispatch);
-    return Promise.resolve();
-}
+            return {
+                id: track.id,
+                name: track.filename,
+                startFront: startFront,
+                publicStart: publicStart,
+                arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
+                arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
+                distanceInKm: distance,
+                peopleCount: track.peopleCount,
+                wayPoints: wayPoints,
+            };
+        });
+    }
+);

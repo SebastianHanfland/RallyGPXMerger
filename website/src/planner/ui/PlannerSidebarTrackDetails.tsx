@@ -5,12 +5,12 @@ import { TrackSegmentSelection } from '../tracks/TrackSegmentSelection.tsx';
 import { PlannerSidebarTrackFormDetails } from './PlannerSidebarTrackFormDetails.tsx';
 import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
-import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { TrackDocuments } from './TrackDocuments.tsx';
+import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosNew.ts';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
-    const trackInfos = useSelector(getEnrichedTrackStreetInfos);
+    const trackInfos = useSelector(getTrackStreetInfos);
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
     return (

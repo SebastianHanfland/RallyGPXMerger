@@ -80,10 +80,14 @@ function createAggregatedPoint(
     point: TimedPoint,
     participants: number,
     type: TrackWayPointType,
-    streetLookup: Record<number, string | null>
-) {
+    streetLookup: Record<number, string | null>,
+    districtLookup: Record<number, string | null>,
+    postCodeLookup: Record<number, string | null>
+): AggregatedPoints {
     return {
         streetName: streetLookup[point.s],
+        district: districtLookup[point.s],
+        postCode: postCodeLookup[point.s],
         backArrival: shiftEndTimeByParticipants(point.t, participants),
         frontPassage: point.t,
         frontArrival: point.t,
@@ -117,7 +121,9 @@ export function aggregateEnrichedPoints(
     enrichedPoints: TimedPoint[],
     participants: number,
     nodePositions: NodePosition[],
-    streetLookup: Record<number, string | null>
+    streetLookup: Record<number, string | null>,
+    districtLookup: Record<number, string | null>,
+    postCodeLookup: Record<number, string | null>
 ): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point, index) => {
@@ -125,7 +131,16 @@ export function aggregateEnrichedPoints(
             return;
         }
         if (aggregatedPoints.length === 0) {
-            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Track, streetLookup));
+            aggregatedPoints.push(
+                createAggregatedPoint(
+                    point,
+                    participants,
+                    TrackWayPointType.Track,
+                    streetLookup,
+                    districtLookup,
+                    postCodeLookup
+                )
+            );
             return;
         }
 
@@ -143,6 +158,8 @@ export function aggregateEnrichedPoints(
         if (isABreak(lastElement, point) && lastElement.type !== TrackWayPointType.Break) {
             aggregatedPoints.push({
                 streetName: streetLookup[point.s],
+                postCode: postCodeLookup[point.s],
+                district: districtLookup[point.s],
                 backArrival: shiftEndTimeByParticipants(point.t, participants),
                 frontPassage: lastElement.frontArrival,
                 frontArrival: lastElement.frontArrival,
@@ -167,7 +184,14 @@ export function aggregateEnrichedPoints(
                 lastNodeTracks !== matchingNodePosition.tracks?.join('')
             ) {
                 aggregatedPoints.push({
-                    ...createAggregatedPoint(point, participants, TrackWayPointType.Node, streetLookup),
+                    ...createAggregatedPoint(
+                        point,
+                        participants,
+                        TrackWayPointType.Node,
+                        streetLookup,
+                        districtLookup,
+                        postCodeLookup
+                    ),
                     nodeTracks: matchingNodePosition.tracks,
                 });
             }
@@ -199,7 +223,16 @@ export function aggregateEnrichedPoints(
                 frontPassage: point.t,
                 pointTo: extractLatLon(point),
             };
-            aggregatedPoints.push(createAggregatedPoint(point, participants, TrackWayPointType.Track, streetLookup));
+            aggregatedPoints.push(
+                createAggregatedPoint(
+                    point,
+                    participants,
+                    TrackWayPointType.Track,
+                    streetLookup,
+                    districtLookup,
+                    postCodeLookup
+                )
+            );
         }
     });
     return aggregatedPoints;

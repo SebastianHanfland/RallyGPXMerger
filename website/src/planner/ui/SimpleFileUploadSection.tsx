@@ -2,7 +2,6 @@ import { SimpleGpxSegments } from './SimpleGpxSegments.tsx';
 import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { Col, Row } from 'react-bootstrap';
 import { TrackName } from './TrackName.tsx';
 import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
@@ -13,10 +12,11 @@ import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
+import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosNew.ts';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
-    const trackInfos = useSelector(getEnrichedTrackStreetInfos);
+    const trackInfos = useSelector(getTrackStreetInfos);
     const gpxSegments = useSelector(getParsedGpxSegments);
     if (trackCompositions.length === 0) {
         return null;
