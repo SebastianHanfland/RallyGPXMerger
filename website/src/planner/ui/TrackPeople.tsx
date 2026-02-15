@@ -5,7 +5,15 @@ import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfPeople(dispatch: AppDispatch, count: number | undefined, id: string) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: count }));
+    }, 500);
+}
 
 export const TrackPeople = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
@@ -16,10 +24,9 @@ export const TrackPeople = ({ track }: { track: TrackComposition }) => {
         <Form.Control
             type="text"
             placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-            value={peopleCount?.toString() ?? ''}
+            defaultValue={peopleCount?.toString() ?? ''}
             onChange={(value) => {
-                dispatch(trackMergeActions.setTrackPeopleCount({ id, peopleCount: getCount(value) }));
-                debounceConstructionOfTracks(dispatch);
+                debounceSettingOfPeople(dispatch, getCount(value), id);
             }}
         />
     );

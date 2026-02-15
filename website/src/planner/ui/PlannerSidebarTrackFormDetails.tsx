@@ -19,7 +19,7 @@ export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposit
                         <Form.Label>
                             <FormattedMessage id={'msg.trackPeople'} />
                         </Form.Label>
-                        <TrackPeople track={track} />
+                        <TrackPeople track={track} key={track.id} />
                     </Col>
                 </Row>
             </Form.Group>

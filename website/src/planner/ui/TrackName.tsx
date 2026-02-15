@@ -3,7 +3,6 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
@@ -12,7 +11,6 @@ export function debounceSettingOfName(dispatch: AppDispatch, value: string, id: 
     clearTimeout(constructTimeout);
     constructTimeout = setTimeout(() => {
         dispatch(trackMergeActions.setTrackName({ id, trackName: value }));
-        dispatch(triggerAutomaticCalculation);
     }, 500);
 }
 
