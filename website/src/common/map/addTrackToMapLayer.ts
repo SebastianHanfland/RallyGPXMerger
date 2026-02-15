@@ -117,6 +117,9 @@ export function addTrackToMap(
     options: MapOptions
 ) {
     const trackPoints = parsedTrack.points.map(getLatLng);
+    if (trackPoints.length === 0) {
+        return;
+    }
     const trackOnMap = drawTrackOnMap(trackPoints, options, parsedTrack);
     addCallBacks(options, trackOnMap, parsedTrack);
 

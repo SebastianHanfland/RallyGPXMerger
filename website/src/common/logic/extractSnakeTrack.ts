@@ -30,6 +30,9 @@ export function extractSnakeTrackFromCalculatedTrack(
 
     let returnPoints: { lat: number; lng: number }[] = [];
     const points = track.points;
+    if (points.length === 0) {
+        return [];
+    }
 
     // Early returns for edge cases of time before or after the track
     if (timeStampFront < points[0].t) {
