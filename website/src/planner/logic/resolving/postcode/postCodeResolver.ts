@@ -1,14 +1,10 @@
 import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
-import {
-    geoCodingActions,
-    getBigDataCloudKey,
-    getResolvedPostCodes,
-    getTrackStreetInfos,
-} from '../../../store/geoCoding.reducer.ts';
+import { getBigDataCloudKey, getResolvedPostCodes, getTrackStreetInfos } from '../../../store/geoCoding.reducer.ts';
 import { createSelector, Dispatch } from '@reduxjs/toolkit';
 import { State } from '../../../store/types.ts';
-import { fromKey, getWayPointKey } from '../helper/pointKeys.ts';
+import { getWayPointKey } from '../helper/pointKeys.ts';
 import { batch } from 'react-redux';
+import { segmentDataActions } from '../../../store/segmentData.redux.ts';
 
 const getUniquePostCodeEntries = createSelector([getTrackStreetInfos], (infos) => {
     const uniquePostCodeKeys: string[] = [];
@@ -32,23 +28,32 @@ export const getUnresolvedPostCodeEntries = (state: State) => {
     );
 };
 
-async function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCodeKey: string, dispatch: Dispatch) {
-    const { lon, lat } = fromKey(postCodeKey);
+const correctionTuples: [string, string][] = [
+    ['constituency for the Bundestag election ', ''],
+    ['Bundestagswahlkreis ', ''],
+    ['Wahlkreis ', ''],
+    ['Munchen', 'München'],
+    ['Munich', 'München'],
+];
 
+function correctDistrict(district: string): string {
+    let correctDistrict = district;
+    correctionTuples.forEach(([find, replacement]) => (correctDistrict = correctDistrict.replace(find, replacement)));
+    return correctDistrict;
+}
+
+async function fetchAndStorePostCodeAndDistrict(
+    bigDataCloudKey: string,
+    streetIndex: number,
+    dispatch: Dispatch,
+    lat: number,
+    lon: number
+) {
     return fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
         batch(() => {
-            dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
+            dispatch(segmentDataActions.addPostCodeLookup({ [streetIndex]: `${postCode}` }));
             if (district) {
-                dispatch(
-                    geoCodingActions.saveResolvedDistricts({
-                        [postCodeKey]: district
-                            .replace('constituency for the Bundestag election ', '')
-                            .replace('Bundestagswahlkreis ', '')
-                            .replace('Wahlkreis', '')
-                            .replace('Munchen', 'München')
-                            .replace('Munich', 'München'),
-                    })
-                );
+                dispatch(segmentDataActions.addDistrictLookup({ [streetIndex]: correctDistrict(district) }));
             }
         });
     });
