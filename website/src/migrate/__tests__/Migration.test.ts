@@ -1,6 +1,7 @@
 import stateVersion1 from './stateVersion1.json';
 import { migrateVersion1To2 } from '../migrateVersion1To2.ts';
 import { StateOld } from '../../planner/store/typesOld.ts';
+import { calculateTracks } from '../../planner/logic/calculate/calculateTracks.ts';
 
 describe('test migration', () => {
     it('testing segment data', () => {
@@ -39,6 +40,8 @@ describe('test migration', () => {
         const state = migrateVersion1To2(oldState);
 
         // then SegmentData
+        const calculatedTracks = calculateTracks(state);
+        expect(calculatedTracks).toHaveLength(oldState.calculatedTracks.tracks.length);
         // TODO: check that calculated tracks exist
     });
 });

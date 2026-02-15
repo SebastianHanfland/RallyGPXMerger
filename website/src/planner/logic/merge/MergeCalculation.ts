@@ -6,7 +6,6 @@ import {
     getTrackCompositions,
     setParticipantsDelay,
 } from '../../store/trackMerge.reducer.ts';
-import { calculatedTracksActions } from '../../store/calculatedTracks.reducer.ts';
 import { mergeAndDelayAndAdjustTimes } from './solver.ts';
 import { mapActions } from '../../store/map.reducer.ts';
 import { getStartAndEndOfParsedTracks } from '../../../utils/parsedTracksUtil.ts';
@@ -25,7 +24,7 @@ export async function calculateMerge(dispatch: AppDispatch, getState: () => Stat
 
     const calculatedTracks = mergeAndDelayAndAdjustTimes(gpxSegments, trackCompositions, arrivalDateTime);
 
-    dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
+    // dispatch(calculatedTracksActions.setCalculatedTracks(calculatedTracks));
     dispatch(mapActions.setShowCalculatedTracks(true));
 
     const payload = getStartAndEndOfParsedTracks(calculatedTracks);

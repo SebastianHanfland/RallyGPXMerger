@@ -2,7 +2,6 @@ import { Action, AnyAction, combineReducers, configureStore, Reducer, ThunkActio
 import reduceReducer from 'reduce-reducers';
 import { State } from './types.ts';
 import { trackMergeReducer } from './trackMerge.reducer.ts';
-import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
 import { geoCodingReducer } from './geoCoding.reducer.ts';
 import { storage } from './storage.ts';
@@ -17,7 +16,6 @@ const rootReducer: Reducer = combineReducers({
     layout: layoutReducer,
     segmentData: segmentDataReducer,
     trackMerge: trackMergeReducer,
-    calculatedTracks: calculatedTracksReducer,
     map: mapReducer,
     points: pointsReducer,
     geoCoding: geoCodingReducer,

@@ -5,7 +5,7 @@ import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.re
 import { useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
-import { calculatedTracksActions, getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import trash from '../../assets/trashB.svg';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
@@ -63,7 +63,6 @@ export function TrackButtonsCell({ track }: Props) {
             {showModal && (
                 <ConfirmationModal
                     onConfirm={() => {
-                        dispatch(calculatedTracksActions.removeSingleCalculatedTrack(id));
                         dispatch(trackMergeActions.removeTrackComposition(id));
                     }}
                     closeModal={() => setShowModal(false)}
