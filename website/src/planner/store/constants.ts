@@ -1,0 +1,1 @@
+export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;

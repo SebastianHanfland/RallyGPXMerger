@@ -4,14 +4,13 @@ import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/merge/helper/config.ts';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from './constants.ts';
 
 export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
 
 export const setParticipantsDelay = (delay: number) => {
     PARTICIPANTS_DELAY_IN_SECONDS = delay;
 };
-
-export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
 
 export const DEFAULT_GAP_TOLERANCE = 0.01;
 

@@ -4,6 +4,7 @@ import { optionallyCompress } from './compressHelper.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { StateOld } from './typesOld.ts';
 import { isOldState } from '../../migrate/types.ts';
+import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
 
 const localStorage = window.localStorage;
 
@@ -94,7 +95,7 @@ const load = (): State | undefined => {
             segmentData,
         };
         if (isOldState(readState)) {
-            return readState as unknown as State;
+            return migrateVersion1To2(readState);
         }
         return readState;
     } catch (error) {

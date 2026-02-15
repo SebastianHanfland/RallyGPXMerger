@@ -1,8 +1,8 @@
 import { migrateToSegmentData } from './segmentDataMigration.ts';
 import { migrateGeoCoding } from './geoCodingMigration.ts';
 import { migrateTrackMerge } from './trackMergeMigration.ts';
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../planner/store/trackMerge.reducer.ts';
 import { StateVersion1, StateVersion2 } from './types.ts';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../planner/store/constants.ts';
 
 export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 {
     return {
