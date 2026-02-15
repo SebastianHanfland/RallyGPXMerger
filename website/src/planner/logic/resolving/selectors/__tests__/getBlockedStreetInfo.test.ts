@@ -2,7 +2,7 @@ import { getBlockedStreetInfo } from '../getBlockedStreetInfo.ts';
 import { Mock } from 'vitest';
 import { BlockedStreetInfo, TrackStreetInfo } from '../../types.ts';
 import { State } from '../../../../store/types.ts';
-import { getTrackStreetInfos } from '../../aggregate/calculateTrackStreetInfosNew.ts';
+import { getTrackStreetInfos } from '../../aggregate/calculateTrackStreetInfos.ts';
 
 vi.mock('../getEnrichedTrackStreetInfos.ts');
 

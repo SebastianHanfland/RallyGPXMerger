@@ -6,7 +6,7 @@ import { PlannerSidebarTrackFormDetails } from './PlannerSidebarTrackFormDetails
 import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { TrackDocuments } from './TrackDocuments.tsx';
-import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosNew.ts';
+import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
