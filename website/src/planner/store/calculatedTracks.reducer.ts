@@ -4,6 +4,7 @@ import { storage } from './storage.ts';
 import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { CalculatedTrack } from '../../common/types.ts';
+import { calculateTracks } from '../logic/calculate/calculateTracks.ts';
 
 const initialState: CalculatedTracksState = {
     tracks: [],
@@ -29,7 +30,7 @@ export const calculatedTracksActions = calculatedTracksSlice.actions;
 export const calculatedTracksReducer: Reducer<CalculatedTracksState> = calculatedTracksSlice.reducer;
 const getBase = (state: State) => state.calculatedTracks;
 
-export const getCalculatedTracks = (state: State) => getBase(state).tracks;
+export const getCalculatedTracks = (state: State) => calculateTracks(state);
 
 export const getFilteredCalculatedTracks = createSelector(
     getCalculatedTracks,

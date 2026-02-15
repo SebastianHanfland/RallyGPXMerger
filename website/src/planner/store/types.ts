@@ -42,6 +42,7 @@ export interface TrackComposition {
     priority?: number;
     buffer?: number;
     rounding?: number;
+    delayAtEndInSeconds?: number;
 }
 
 export interface GeoCodingState {

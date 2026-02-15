@@ -1,4 +1,4 @@
-import { TimedPoint } from '../planner/store/types.ts';
+import { ParsedPoint, TimedPoint } from '../planner/store/types.ts';
 
 export interface GpxFile {
     id: string;
@@ -16,6 +16,15 @@ export interface CalculatedTrack {
     filename: string;
     peopleCount?: number;
     points: TimedPoint[];
+    color?: string;
+    version?: string;
+}
+
+export interface CalculatedTrack2 {
+    id: string;
+    filename: string;
+    peopleCount?: number;
+    points: ParsedPoint[];
     color?: string;
     version?: string;
 }

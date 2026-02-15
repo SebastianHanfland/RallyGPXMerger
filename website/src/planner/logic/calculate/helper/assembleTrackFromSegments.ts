@@ -1,8 +1,7 @@
-import { ParsedGpxSegment, PointOfInterestType, TimedPoint, TrackComposition } from '../../../store/types.ts';
-import { instanceOfBreak } from '../types.ts';
+import { ParsedGpxSegment, ParsedPoint, PointOfInterestType, TrackComposition } from '../../../store/types.ts';
+import { instanceOfBreak } from '../../merge/types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
-import { shiftDateBySeconds, shiftEndDate } from '../../../../utils/dateUtil.ts';
-import { CalculatedTrack } from '../../../../common/types.ts';
+import { CalculatedTrack2 } from '../../../../common/types.ts';
 import geoDistance from 'geo-distance-helper';
 import { planningStore } from '../../../store/planningStore.ts';
 import { pointsActions } from '../../../store/points.reducer.ts';
@@ -12,7 +11,7 @@ import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { DEFAULT_GAP_TOLERANCE, getGapToleranceInKm } from '../../../store/trackMerge.reducer.ts';
 
 function checkForGap(
-    lastPoint: TimedPoint,
+    lastPoint: ParsedPoint,
     segment: ParsedGpxSegment,
     track: TrackComposition,
     lastSegmentName: string
@@ -42,31 +41,30 @@ function clearAllGaps() {
     planningStore.dispatch(pointsActions.removeAllGapPoint());
 }
 
-function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: string): TimedPoint[] {
+function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
     const points = gpxOrBreak.points;
     const secondsOfSegment = points[points.length - 1].t;
 
-    return points.map((point) => ({ ...point, t: shiftDateBySeconds(endTime, point.t - secondsOfSegment) }));
+    return points.map((point) => ({ ...point, t: endTime - (point.t - secondsOfSegment) }));
 }
 
 export function assembleTrackFromSegments(
     track: TrackComposition,
-    gpxSegments: ParsedGpxSegment[],
-    initialEndDate: string
-): CalculatedTrack | null {
-    let arrivalTimeForPreviousSegment = initialEndDate;
-    let trackPoints: TimedPoint[] = [];
+    gpxSegments: ParsedGpxSegment[]
+): CalculatedTrack2 | null {
+    let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
+    let trackPoints: ParsedPoint[] = [];
     clearAllGaps();
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
-    let lastPoint: TimedPoint | undefined = undefined;
+    let lastPoint: ParsedPoint | undefined = undefined;
     let lastSegmentName: string = '';
     gpxSegmentContents
         .reverse()
         .filter((entry) => entry !== undefined)
         .forEach((gpxOrBreak) => {
             if (instanceOfBreak(gpxOrBreak)) {
-                arrivalTimeForPreviousSegment = shiftEndDate(arrivalTimeForPreviousSegment, gpxOrBreak.minutes);
+                arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment + gpxOrBreak.minutes * 60;
             } else {
                 if (!!lastPoint) {
                     checkForGap(lastPoint, gpxOrBreak, track, lastSegmentName);
