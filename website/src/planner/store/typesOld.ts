@@ -45,12 +45,17 @@ interface DistrictReplacementWayPoint extends ReplacementWayPoint {
     district: string;
 }
 
-type Point = {
+type TrackPoint = {
     lat: number;
     lon: number;
     ele: number;
     time: string;
-    extensions?: {};
+};
+
+type SegmentPoint = {
+    lat: number;
+    lon: number;
+    ele: number;
 };
 
 interface GpxFile {
@@ -71,7 +76,16 @@ interface CalculatedTrack extends GpxFile {
 interface ParsedTrack {
     id: string;
     filename: string;
-    points: Point[];
+    points: TrackPoint[];
+    version: string;
+    color?: string;
+    peopleCount?: number;
+}
+
+interface ParsedSegment {
+    id: string;
+    filename: string;
+    points: SegmentPoint[];
     version: string;
     color?: string;
     peopleCount?: number;
@@ -173,7 +187,7 @@ export interface TrackMergeStateOld {
 
 interface ParsedTrackState {
     parsedTracks: ParsedTrack[];
-    parsedSegments: ParsedTrack[];
+    parsedSegments: ParsedSegment[];
     parsedConstructionSegments: ParsedTrack[];
 }
 
@@ -217,7 +231,7 @@ interface PointsState {
 }
 
 type ResolvedPositions = Record<string, string | null>;
-type ResolvedPostCodes = Record<string, number>;
+type ResolvedPostCodes = Record<string, string>;
 type ResolvedDistricts = Record<string, string>;
 
 export interface StateOld {

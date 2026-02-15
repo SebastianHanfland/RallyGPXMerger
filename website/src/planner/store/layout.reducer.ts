@@ -17,6 +17,8 @@ function loadLayoutState() {
     const storedLanguage = layoutState?.language;
     if (storedLanguage) {
         setLanguage(storedLanguage);
+    } else {
+        setLanguage(getInitialLanguage());
     }
     return layoutState;
 }
