@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getArrivalDateTime, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 
 export function ArrivalDateTimePicker({ noHeader }: { noHeader?: boolean }) {
@@ -23,7 +22,6 @@ export function ArrivalDateTimePicker({ noHeader }: { noHeader?: boolean }) {
                 placeholderText={intl.formatMessage({ id: 'msg.arrivalDate.title' })}
                 onChange={(date) => {
                     dispatch(trackMergeActions.setArrivalDateTime(date?.toISOString() ?? undefined));
-                    dispatch(triggerAutomaticCalculation);
                 }}
                 selected={arrivalDateTime ? new Date(arrivalDateTime) : null}
                 isClearable={true}

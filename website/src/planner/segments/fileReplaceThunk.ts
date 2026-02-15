@@ -1,7 +1,6 @@
 import { State } from '../store/types.ts';
 import { getAverageSpeedInKmH, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 
 export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
@@ -41,5 +40,4 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
     }
 
     dispatch(segmentDataActions.setReplaceProcess(undefined));
-    dispatch(triggerAutomaticCalculation);
 };

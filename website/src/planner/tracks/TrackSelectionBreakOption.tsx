@@ -3,7 +3,6 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
 import { DraggableIcon } from './DraggableIcon.tsx';
@@ -46,7 +45,6 @@ export function TrackSelectionBreakOption({ segmentId, segmentName, trackId }: P
                     className={'m-1'}
                     onClick={() => {
                         dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
-                        dispatch(triggerAutomaticCalculation);
                     }}
                     title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
                 >

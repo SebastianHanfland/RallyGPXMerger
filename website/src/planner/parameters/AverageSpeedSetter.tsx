@@ -2,8 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
+import { AppDispatch } from '../store/planningStore.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfSpeed(dispatch: AppDispatch, newSpeed: number) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(trackMergeActions.setAverageSpeed(newSpeed));
+        dispatch(segmentDataActions.adjustTimesOfAllSegments(newSpeed));
+    }, 500);
+}
 
 function AverageSpeedRangeInput() {
     const dispatch = useDispatch();
@@ -16,12 +26,10 @@ function AverageSpeedRangeInput() {
                 min={3}
                 max={20}
                 step={0.1}
-                value={averageSpeed}
+                defaultValue={averageSpeed}
                 onChange={(event) => {
                     const newSpeed = Number(event.target.value);
-                    dispatch(trackMergeActions.setAverageSpeed(newSpeed));
-                    dispatch(segmentDataActions.adjustTimesOfAllSegments(newSpeed));
-                    debounceConstructionOfTracks(dispatch);
+                    debounceSettingOfSpeed(dispatch, newSpeed);
                 }}
             />
             <span className={'mx-4'}>20&nbsp;km/h</span>

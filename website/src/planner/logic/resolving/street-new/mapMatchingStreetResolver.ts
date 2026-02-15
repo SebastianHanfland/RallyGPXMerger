@@ -4,7 +4,6 @@ import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatc
 import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
-import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
 import { getStreetLookup, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
@@ -44,7 +43,6 @@ export const enrichGpxSegmentsWithStreetNames =
             dispatch(enrichOneGpxSegment(segment, (segmentIndexOffset + segmentIndex) * 1000))
         );
         await Promise.all(promises);
-        dispatch(triggerAutomaticCalculation);
         return Promise.resolve();
     };
 

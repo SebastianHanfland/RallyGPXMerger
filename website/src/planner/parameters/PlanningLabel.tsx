@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPlanningLabel, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 
 export function PlanningLabel() {
@@ -22,7 +21,6 @@ export function PlanningLabel() {
                 value={planningLabel}
                 onChange={(value) => {
                     dispatch(trackMergeActions.setPlanningLabel(value.target.value));
-                    dispatch(triggerAutomaticCalculation);
                 }}
             />
         </div>

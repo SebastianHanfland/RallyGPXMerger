@@ -3,10 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfSpeed(
+    dispatch: AppDispatch,
+    speed: number | undefined,
+    id: string,
+    averageSpeed: number
+) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed: speed, averageSpeed }));
+    }, 500);
+}
 
 export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const intl = useIntl();
@@ -31,10 +44,9 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
                     type="text"
                     placeholder={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
                     title={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
-                    value={segmentSpeed?.toString() ?? ''}
+                    defaultValue={segmentSpeed?.toString() ?? ''}
                     onChange={(value) => {
-                        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed: getCount(value), averageSpeed }));
-                        dispatch(triggerAutomaticCalculation);
+                        debounceSettingOfSpeed(dispatch, getCount(value), id, averageSpeed);
                     }}
                 />
             </td>

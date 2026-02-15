@@ -5,7 +5,15 @@ import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfPrio(dispatch: AppDispatch, value: number | undefined, id: string) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(trackMergeActions.setTrackPriority({ id, priority: value }));
+    }, 500);
+}
 
 export const TrackPrio = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
@@ -16,10 +24,9 @@ export const TrackPrio = ({ track }: { track: TrackComposition }) => {
         <Form.Control
             type="text"
             placeholder={intl.formatMessage({ id: 'msg.priority' })}
-            value={priority?.toString() ?? ''}
+            defaultValue={priority?.toString() ?? ''}
             onChange={(value) => {
-                dispatch(trackMergeActions.setTrackPriority({ id, priority: getCount(value) }));
-                debounceConstructionOfTracks(dispatch);
+                debounceSettingOfPrio(dispatch, getCount(value), id);
             }}
         />
     );

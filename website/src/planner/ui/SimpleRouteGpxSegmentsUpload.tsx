@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
 import { TrackComposition } from '../store/types.ts';
@@ -24,7 +23,6 @@ export function GpxSegmentsUploadAndParseAndSetToTrack({ track }: { track: Track
                     segments: [...track.segmentIds, ...newGpxSegments.map((segment) => segment.id)],
                 })
             );
-            dispatch(triggerAutomaticCalculation);
         });
     };
     return (

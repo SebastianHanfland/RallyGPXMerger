@@ -2,7 +2,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAverageSpeedInKmH, getParticipantsDelay, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
+import { AppDispatch } from '../store/planningStore.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfDelay(dispatch: AppDispatch, value: number) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(trackMergeActions.setParticipantsDelays(value));
+    }, 500);
+}
 
 export function ParticipantsDelaySetter({ slim }: { slim?: boolean }) {
     const dispatch = useDispatch();
@@ -29,10 +38,9 @@ export function ParticipantsDelaySetter({ slim }: { slim?: boolean }) {
                         min={0}
                         max={1.0}
                         step={0.01}
-                        value={participantsDelay}
+                        defaultValue={participantsDelay}
                         onChange={(event) => {
-                            dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)));
-                            debounceConstructionOfTracks(dispatch);
+                            debounceSettingOfDelay(dispatch, Number(event.target.value));
                         }}
                     />
                     <span className={'mx-4'} style={{ whiteSpace: 'nowrap' }}>
@@ -56,10 +64,9 @@ export function ParticipantsDelaySetter({ slim }: { slim?: boolean }) {
                     min={0}
                     max={1.0}
                     step={0.01}
-                    value={participantsDelay}
+                    defaultValue={participantsDelay}
                     onChange={(event) => {
-                        dispatch(trackMergeActions.setParticipantsDelays(Number(event.target.value)));
-                        debounceConstructionOfTracks(dispatch);
+                        debounceSettingOfDelay(dispatch, Number(event.target.value));
                     }}
                 />
                 <span className={'mx-4'} style={{ whiteSpace: 'nowrap' }}>

@@ -5,7 +5,15 @@ import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfRounding(dispatch: AppDispatch, value: number | undefined, id: string) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(trackMergeActions.setTrackRounding({ id, rounding: value }));
+    }, 500);
+}
 
 export const TrackRounding = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
@@ -16,10 +24,9 @@ export const TrackRounding = ({ track }: { track: TrackComposition }) => {
         <Form.Control
             type="text"
             placeholder={intl.formatMessage({ id: 'msg.rounding' })}
-            value={rounding?.toString() ?? ''}
+            defaultValue={rounding?.toString() ?? ''}
             onChange={(value) => {
-                dispatch(trackMergeActions.setTrackRounding({ id, rounding: getCount(value) }));
-                debounceConstructionOfTracks(dispatch);
+                debounceSettingOfRounding(dispatch, getCount(value), id);
             }}
         />
     );

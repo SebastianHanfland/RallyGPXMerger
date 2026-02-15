@@ -5,7 +5,6 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { FormattedMessage } from 'react-intl';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
 import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
@@ -28,7 +27,6 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
         if (mappedIds !== segmentIds.join()) {
             const newSegments = items.map((segmentOption) => segmentOption.id);
             dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
-            dispatch(triggerAutomaticCalculation);
         }
     };
 

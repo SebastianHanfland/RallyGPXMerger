@@ -9,7 +9,6 @@ import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import flip from '../../assets/flip.svg';
 import { DraggableIcon } from './DraggableIcon.tsx';
@@ -65,7 +64,6 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                             if (fullGpxDelete) {
                                 dispatch(segmentDataActions.removeGpxSegment(segmentId));
                             }
-                            dispatch(triggerAutomaticCalculation);
                         }}
                         title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
                     >

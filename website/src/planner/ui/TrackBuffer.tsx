@@ -5,7 +5,15 @@ import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../store/types.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { debounceConstructionOfTracks } from '../logic/automaticCalculation.ts';
+
+let constructTimeout: undefined | NodeJS.Timeout;
+
+export function debounceSettingOfBuffer(dispatch: AppDispatch, value: number | undefined, id: string) {
+    clearTimeout(constructTimeout);
+    constructTimeout = setTimeout(() => {
+        dispatch(trackMergeActions.setTrackBuffer({ id, buffer: value }));
+    }, 500);
+}
 
 export const TrackBuffer = ({ track }: { track: TrackComposition }) => {
     const intl = useIntl();
@@ -16,10 +24,9 @@ export const TrackBuffer = ({ track }: { track: TrackComposition }) => {
         <Form.Control
             type="text"
             placeholder={intl.formatMessage({ id: 'msg.buffer' })}
-            value={buffer?.toString() ?? ''}
+            defaultValue={buffer?.toString() ?? ''}
             onChange={(value) => {
-                dispatch(trackMergeActions.setTrackBuffer({ id, buffer: getCount(value) }));
-                debounceConstructionOfTracks(dispatch);
+                debounceSettingOfBuffer(dispatch, getCount(value), id);
             }}
         />
     );
