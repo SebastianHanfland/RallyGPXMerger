@@ -48,10 +48,7 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
     return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
 }
 
-export function assembleTrackFromSegments(
-    track: TrackComposition,
-    gpxSegments: ParsedGpxSegment[]
-): CalculatedTrack2 | null {
+export function assembleTrackFromSegments(track: TrackComposition, gpxSegments: ParsedGpxSegment[]): CalculatedTrack2 {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
     let trackPoints: ParsedPoint[] = [];
     clearAllGaps();
@@ -78,10 +75,6 @@ export function assembleTrackFromSegments(
                 lastSegmentName = gpxOrBreak.filename;
             }
         });
-
-    if (trackPoints.length === 0) {
-        return null;
-    }
 
     return {
         id: track.id,
