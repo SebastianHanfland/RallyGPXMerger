@@ -20,6 +20,8 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
     const trackCompositions = useSelector(getTrackCompositions);
     const gpxSegments = useSelector(getParsedGpxSegments);
     const calculatedTracks = useSelector(getCalculatedTracks);
+    console.log('TrackInfo');
+
     const [displayStreetInfo, setDisplayStreetInfo] = useState(false);
     if (trackCompositions.length === 0 || gpxSegments.length === 0) {
         return null;

@@ -10,13 +10,17 @@ import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.t
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { getInfo } from '../logic/calculate/calculateTracks.ts';
 
 export const PlannerSidebarServerSection = () => {
     const className = 'm-1';
+    const amount = useSelector(getInfo);
     return (
         <div>
             <Row>
                 <Col className={className}>
+                    {amount}
                     <Row>
                         <h5>
                             <FormattedMessage id={'msg.serverData'} />

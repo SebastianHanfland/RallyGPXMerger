@@ -19,6 +19,8 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
     const trackCompositions = useSelector(getTrackCompositions);
     const gpxSegments = useSelector(getParsedGpxSegments);
     const calculatedTracks = useSelector(getCalculatedTracks);
+    console.log('Track Docs');
+
     const [displayStreetInfo, setDisplayStreetInfo] = useState(false);
     if (trackCompositions.length === 0 || gpxSegments.length === 0 || !matchedTrackInfo) {
         return null;

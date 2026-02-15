@@ -27,6 +27,8 @@ export const downloadFilesInZip = (calculatedTracks: { content: string; filename
 export const CalculatedFilesDownloader = () => {
     const intl = useIntl();
     const calculatedTracks = useSelector(getCalculatedTracks);
+    console.log('Files downloader');
+
     return (
         <Button
             onClick={() => {

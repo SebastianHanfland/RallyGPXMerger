@@ -94,7 +94,7 @@ const load = (): State | undefined => {
             segmentData,
         };
         if (isOldState(readState)) {
-            return migrateVersion1To2(readState);
+            return readState as unknown as State;
         }
         return readState;
     } catch (error) {
