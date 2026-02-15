@@ -45,7 +45,7 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
     const points = gpxOrBreak.points;
     const secondsOfSegment = points[points.length - 1].t;
 
-    return points.map((point) => ({ ...point, t: endTime - (point.t - secondsOfSegment) }));
+    return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
 }
 
 export function assembleTrackFromSegments(
@@ -64,7 +64,7 @@ export function assembleTrackFromSegments(
         .filter((entry) => entry !== undefined)
         .forEach((gpxOrBreak) => {
             if (instanceOfBreak(gpxOrBreak)) {
-                arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment + gpxOrBreak.minutes * 60;
+                arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
             } else {
                 if (!!lastPoint) {
                     checkForGap(lastPoint, gpxOrBreak, track, lastSegmentName);
