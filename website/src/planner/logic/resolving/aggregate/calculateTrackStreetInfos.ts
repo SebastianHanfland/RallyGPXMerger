@@ -2,7 +2,7 @@ import { State, TimedPoint } from '../../../store/types.ts';
 import { TrackStreetInfo } from '../types.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
 import geoDistance from 'geo-distance-helper';
-import { geoCodingActions, getStreetNameReplacementWayPoints } from '../../../store/geoCoding.reducer.ts';
+import { getStreetNameReplacementWayPoints } from '../../../store/geoCoding.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
@@ -66,6 +66,7 @@ const enrichWithStreetsAndAggregate =
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
     const calculatedTracks = getCalculatedTracks(getState());
     const trackStreetInfos = calculatedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
-    dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));
+    // TODO
+    console.log(trackStreetInfos, dispatch);
     return Promise.resolve();
 }

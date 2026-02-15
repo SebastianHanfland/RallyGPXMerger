@@ -1,24 +1,8 @@
-import { ParsedGpxSegment, ParsedPoint, ResolvedPositions, State } from '../../../store/types.ts';
-import { getBigDataCloudKey, getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
-import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
-import { splitListIntoSections } from '../helper/splitPointsService.ts';
+import { ParsedGpxSegment, State } from '../../../store/types.ts';
+import { getBigDataCloudKey } from '../../../store/geoCoding.reducer.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
-import { errorNotification } from '../../../store/toast.reducer.ts';
-import { triggerAutomaticCalculation } from '../../automaticCalculation.ts';
-import { Point } from '../../../../utils/gpxTypes.ts';
-import { getParsedGpxSegments, getStreetLookup, segmentDataActions } from '../../../store/segmentData.redux.ts';
-import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
-
-function getDateTimeStringWithOffset(offsetInSeconds: number) {
-    return new Date(dateTimeInMillis + offsetInSeconds * 1000).toISOString();
-}
-
-const toPoint = (point: ParsedPoint): Point => ({
-    lat: point.b,
-    lon: point.l,
-    ele: point.e,
-    time: getDateTimeStringWithOffset(point.t),
-});
+import { getParsedGpxSegments, getStreetLookup } from '../../../store/segmentData.redux.ts';
+import { fetchAndStorePostCodeAndDistrict } from '../postcode/postCodeResolver.ts';
 
 function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: number; lon: number } | null {
     const segmentsWithStreetIndex = segments.filter((segment) => segment.points.find((point) => `${point.s}` === key));
@@ -42,63 +26,30 @@ function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: nu
     };
 }
 
-export const enrichGpxSegmentsWithStreetNames = async (dispatch: AppDispatch, getState: () => State): Promise<void> => {
+export const enrichGpxSegmentsWithPostCodesAndDistricts = async (
+    dispatch: AppDispatch,
+    getState: () => State
+): Promise<void> => {
     const streetLookup = getStreetLookup(getState());
     const segments = getParsedGpxSegments(getState());
+    const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
+    if (!bigDataCloudKey) {
+        return Promise.resolve();
+    }
 
-    // find streets without post code and district yet
-
-    // iterate through the streetnames
-    // find the start and end points of a street use
-    // use them for setting the requests
-    // store the result
-
-    const lookupKeys = Object.keys(streetLookup).map((key) => {
+    const postCodeRequests: Promise<void>[] = Object.keys(streetLookup).map((key) => {
         const positionForKey = getPositionForKey(key, segments);
-        getBigDataCloudKey();
-    });
-
-    const maximumIndex = lookupKeys.length === 0 ? 1 : Math.max(...lookupKeys.map(Number));
-    const segmentIndexOffset = Math.ceil(maximumIndex / 1000);
-
-    const promises = parsedSegments.map((segment, segmentIndex) =>
-        dispatch(enrichOneGpxSegment(segment, (segmentIndexOffset + segmentIndex) * 1000))
-    );
-    await Promise.all(promises);
-    dispatch(triggerAutomaticCalculation);
-    return Promise.resolve();
-};
-
-function combineStreetNames(streetNames: ResolvedPositions[]): ResolvedPositions {
-    const combinedStreetNames: ResolvedPositions = {};
-    streetNames.forEach((streets) => {
-        Object.entries(streets).forEach(([key, value]) => {
-            combinedStreetNames[key] = value;
-        });
-    });
-    return combinedStreetNames;
-}
-
-const enrichOneGpxSegment =
-    (segmentWithoutStreets: ParsedGpxSegment, streetResolveStart: number) =>
-    (dispatch: AppDispatch, getState: () => State): Promise<void> => {
-        const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
-        const points = segmentWithoutStreets.points;
-
-        const resolvedPositions = splitListIntoSections(points, 1000).flatMap((points) =>
-            geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points.map(toPoint))).catch((error) => {
-                errorNotification(dispatch, 'GeoApify Error', error.toString());
-                return {};
-            })
+        if (!positionForKey) {
+            return Promise.resolve();
+        }
+        return fetchAndStorePostCodeAndDistrict(
+            bigDataCloudKey,
+            Number(key),
+            dispatch,
+            positionForKey.lat,
+            positionForKey.lon
         );
-        return Promise.all(resolvedPositions).then((streetNames) => {
-            const allResolvedStreetNames = combineStreetNames(streetNames);
-            const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(
-                segmentWithoutStreets,
-                allResolvedStreetNames,
-                streetResolveStart
-            );
-            dispatch(segmentDataActions.addGpxSegments([segment]));
-            dispatch(segmentDataActions.addStreetLookup(streetLookUp));
-        });
-    };
+    });
+
+    return Promise.all(postCodeRequests).then();
+};

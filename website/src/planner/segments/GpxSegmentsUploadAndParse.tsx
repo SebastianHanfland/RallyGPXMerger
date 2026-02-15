@@ -5,6 +5,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
 import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
+import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/street-new/enrichWithPostCodeAndDistrict.ts';
 
 const fileTypes = ['GPX'];
 
@@ -15,7 +16,9 @@ export function GpxSegmentsUploadAndParse() {
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) =>
-            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments))
+            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
+                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+            )
         );
     };
     return (

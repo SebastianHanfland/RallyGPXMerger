@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GeoCodingState, ResolvedDistricts, ResolvedPostCodes, State } from './types.ts';
+import { GeoCodingState, State } from './types.ts';
 import { storage } from './storage.ts';
 import {
     DistrictReplacementWayPoint,
     ReplacementWayPoint,
     StreetNameReplacementWayPoint,
-    TrackStreetInfo,
 } from '../logic/resolving/types.ts';
 
 const initialState: GeoCodingState = {};
@@ -28,37 +27,6 @@ const geoCodingSlice = createSlice({
         },
         setBigDataCloudKey: (state: GeoCodingState, action: PayloadAction<string>) => {
             state.bigDataCloudKey = action.payload;
-        },
-        saveResolvedPostCodes: (state: GeoCodingState, action: PayloadAction<ResolvedPostCodes>) => {
-            if (!state.resolvedPostCodes) {
-                state.resolvedPostCodes = {};
-            }
-            const resolvedPostCodes = state.resolvedPostCodes;
-            Object.entries(action.payload).forEach(([key, value]) => {
-                if (resolvedPostCodes[key] === undefined || resolvedPostCodes[key] === -1) {
-                    resolvedPostCodes[key] = value;
-                }
-            });
-            state.resolvedPostCodes = resolvedPostCodes;
-        },
-        saveResolvedDistricts: (state: GeoCodingState, action: PayloadAction<ResolvedDistricts>) => {
-            if (!state.resolvedDistricts) {
-                state.resolvedDistricts = {};
-            }
-            const resolvedDistricts = state.resolvedDistricts;
-            Object.entries(action.payload).forEach(([key, value]) => {
-                if (resolvedDistricts[key] === undefined) {
-                    resolvedDistricts[key] = value;
-                }
-            });
-            state.resolvedDistricts = resolvedDistricts;
-        },
-        clearPostCodesAndDistricts: (state: GeoCodingState) => {
-            state.resolvedPostCodes = undefined;
-            state.resolvedDistricts = undefined;
-        },
-        setTrackStreetInfos: (state: GeoCodingState, action: PayloadAction<TrackStreetInfo[]>) => {
-            state.trackStreetInfos = action.payload;
         },
         setStreetNameReplacementWaypoint: (
             state: GeoCodingState,
@@ -95,9 +63,6 @@ export const geoCodingReducer: Reducer<GeoCodingState> = geoCodingSlice.reducer;
 const getBase = (state: State) => state.geoCoding;
 export const getGeoApifyKey = (state: State) => getBase(state).geoApifyKey;
 export const getBigDataCloudKey = (state: State) => getBase(state).bigDataCloudKey;
-export const getResolvedPostCodes = (state: State) => getBase(state).resolvedPostCodes;
 export const getStreetNameReplacementWayPoints = (state: State) => getBase(state).streetReplacementWayPoints;
 export const getDistrictReplacementWayPoints = (state: State) => getBase(state).districtReplacementWayPoints;
-export const getResolvedDistricts = (state: State) => getBase(state).resolvedDistricts;
-export const getTrackStreetInfos = (state: State) => getBase(state).trackStreetInfos;
 export const getOnlyShowUnknown = (state: State) => getBase(state).onlyShowUnknown ?? false;

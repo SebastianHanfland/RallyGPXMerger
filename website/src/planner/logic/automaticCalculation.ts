@@ -1,7 +1,5 @@
 import { calculateMerge } from './merge/MergeCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { calculateTrackStreetInfos } from './resolving/aggregate/calculateTrackStreetInfos.ts';
-import { addPostCodeToStreetInfos } from './resolving/postcode/postCodeResolver.ts';
 import { getIsCalculationOnTheFly, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { State } from '../store/types.ts';
 import { successNotification } from '../store/toast.reducer.ts';
@@ -21,19 +19,15 @@ export const calculateTracks =
         dispatch(trackMergeActions.setHasChangesSinceLastCalculation(false));
         dispatch(calculationThunk(true)).then(() =>
             setTimeout(() => {
-                dispatch(calculateMerge).then(() =>
-                    dispatch(calculateTrackStreetInfos).then(() =>
-                        dispatch(addPostCodeToStreetInfos)
-                            .then(() => dispatch(calculationThunk(false)))
-                            .then(() =>
-                                successNotification(
-                                    dispatch,
-                                    getMessages()['msg.calculation.success.title'],
-                                    getMessages()['msg.calculation.success.message']
-                                )
-                            )
-                    )
-                );
+                dispatch(calculateMerge)
+                    .then(() => dispatch(calculationThunk(false)))
+                    .then(() =>
+                        successNotification(
+                            dispatch,
+                            getMessages()['msg.calculation.success.title'],
+                            getMessages()['msg.calculation.success.message']
+                        )
+                    );
             }, 10)
         );
         dispatch(backendActions.setHasChangesSinceLastUpload(trackAsChange));
