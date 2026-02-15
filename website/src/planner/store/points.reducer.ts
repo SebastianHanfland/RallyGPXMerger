@@ -19,7 +19,6 @@ const pointSlice = createSlice({
                 (point) =>
                     point.lat === newGap.lat && point.lng === newGap.lng && point.type === PointOfInterestType.GAP
             );
-            console.log(newGap, gapAlreadyAtLocation, 'GAP');
             if (!gapAlreadyAtLocation) {
                 state.points = [...state.points, newGap];
             } else {
