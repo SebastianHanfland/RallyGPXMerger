@@ -1,7 +1,12 @@
 import { ParsedGpxSegment, State } from '../../../store/types.ts';
 import { getBigDataCloudKey } from '../../../store/geoCoding.reducer.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
-import { getParsedGpxSegments, getStreetLookup } from '../../../store/segmentData.redux.ts';
+import {
+    getDistrictLookup,
+    getParsedGpxSegments,
+    getPostCodeLookup,
+    getStreetLookup,
+} from '../../../store/segmentData.redux.ts';
 import { fetchAndStorePostCodeAndDistrict } from '../postcode/postCodeResolver.ts';
 
 function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: number; lon: number } | null {
@@ -31,6 +36,8 @@ export const enrichGpxSegmentsWithPostCodesAndDistricts = async (
     getState: () => State
 ): Promise<void> => {
     const streetLookup = getStreetLookup(getState());
+    const districtLookup = getDistrictLookup(getState());
+    const postCodeLookup = getPostCodeLookup(getState());
     const segments = getParsedGpxSegments(getState());
     const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
     if (!bigDataCloudKey) {
@@ -39,7 +46,7 @@ export const enrichGpxSegmentsWithPostCodesAndDistricts = async (
 
     const postCodeRequests: Promise<void>[] = Object.keys(streetLookup).map((key) => {
         const positionForKey = getPositionForKey(key, segments);
-        if (!positionForKey) {
+        if (!positionForKey || (postCodeLookup[Number(key)] && districtLookup[Number(key)])) {
             return Promise.resolve();
         }
         return fetchAndStorePostCodeAndDistrict(
