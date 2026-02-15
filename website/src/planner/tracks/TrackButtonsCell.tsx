@@ -22,7 +22,6 @@ export function TrackButtonsCell({ track }: Props) {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
-    console.log('Track Button Cell');
 
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
 

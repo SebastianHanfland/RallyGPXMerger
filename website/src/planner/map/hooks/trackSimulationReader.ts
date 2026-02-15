@@ -51,7 +51,6 @@ export const getBikeSnakesForPlanningMap = createSelector(
     getTrackCompositions,
     getCalculatedTracks,
     (timeStamp, trackParticipants, parsedTracks): BikeSnake[] => {
-        console.log('snake');
         if (!timeStamp) {
             return [];
         }

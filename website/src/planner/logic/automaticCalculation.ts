@@ -18,11 +18,9 @@ const calculationThunk =
 export const calculateTracks =
     (trackAsChange = true) =>
     (dispatch: AppDispatch) => {
-        console.log('calc tracks');
         dispatch(trackMergeActions.setHasChangesSinceLastCalculation(false));
         dispatch(calculationThunk(true)).then(() =>
             setTimeout(() => {
-                console.log('calc merge');
                 dispatch(calculateMerge).then(() =>
                     dispatch(calculateTrackStreetInfos).then(() =>
                         dispatch(addPostCodeToStreetInfos)

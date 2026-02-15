@@ -64,7 +64,6 @@ const enrichWithStreetsAndAggregate =
     };
 
 export async function calculateTrackStreetInfos(dispatch: Dispatch, getState: () => State) {
-    console.log('here?');
     const calculatedTracks = getCalculatedTracks(getState());
     const trackStreetInfos = calculatedTracks?.map(enrichWithStreetsAndAggregate(getState())) ?? [];
     dispatch(geoCodingActions.setTrackStreetInfos(trackStreetInfos));

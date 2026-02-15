@@ -8,9 +8,8 @@ import { shiftDateBySeconds } from '../../utils/dateUtil.ts';
 export const getCalculatedTracks = createSelector(
     [getArrivalDateTime, cachedTrackCompositions, cachedParsedSegments],
     (arrivalDate, trackCompositions, segments) => {
-        const calculatedTracks = calculateTracks('nope')(trackCompositions, segments);
+        const calculatedTracks = calculateTracks(trackCompositions, segments);
         const arrivalDateTime = arrivalDate ?? '2025-06-01T10:11:55';
-        console.log('calculation');
         return calculatedTracks.map((track) => ({
             ...track,
             points: track.points.map((point) => ({ ...point, t: shiftDateBySeconds(arrivalDateTime, point.t) })),
@@ -22,7 +21,6 @@ export const getFilteredCalculatedTracks = createSelector(
     getCalculatedTracks,
     getTrackCompositionFilterTerm,
     (tracks, filterTerm) => {
-        console.log('filter');
         return filterItems(filterTerm, tracks, (track: CalculatedTrack) => track.filename);
     }
 );

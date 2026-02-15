@@ -80,7 +80,7 @@ function createAggregatedPoint(
     point: TimedPoint,
     participants: number,
     type: TrackWayPointType,
-    streetLookup: Record<number, string>
+    streetLookup: Record<number, string | null>
 ) {
     return {
         streetName: streetLookup[point.s],
@@ -99,7 +99,7 @@ function streetUnknownAndAPreviousPointHasAStreet(
     point: TimedPoint,
     index: number,
     enrichedPoints: TimedPoint[],
-    streetLookup: Record<number, string>
+    streetLookup: Record<number, string | null>
 ) {
     if (streetLookup[point.s] !== null) {
         return false;
@@ -117,7 +117,7 @@ export function aggregateEnrichedPoints(
     enrichedPoints: TimedPoint[],
     participants: number,
     nodePositions: NodePosition[],
-    streetLookup: Record<number, string>
+    streetLookup: Record<number, string | null>
 ): AggregatedPoints[] {
     const aggregatedPoints: AggregatedPoints[] = [];
     enrichedPoints.forEach((point, index) => {
