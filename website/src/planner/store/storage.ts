@@ -3,7 +3,7 @@ import { State } from './types.ts';
 import { optionallyCompress } from './compressHelper.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { StateOld } from './typesOld.ts';
-import { isOldState, migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
+import { isOldState } from '../../migrate/types.ts';
 
 const localStorage = window.localStorage;
 

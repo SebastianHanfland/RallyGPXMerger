@@ -1,16 +1,8 @@
-import { State } from '../planner/store/types.ts';
-import { StateOld } from '../planner/store/typesOld.ts';
 import { migrateToSegmentData } from './segmentDataMigration.ts';
 import { migrateGeoCoding } from './geoCodingMigration.ts';
 import { migrateTrackMerge } from './trackMergeMigration.ts';
 import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../planner/store/trackMerge.reducer.ts';
-
-type StateVersion1 = StateOld;
-type StateVersion2 = State;
-
-export const isOldState = (state: State | StateOld): state is StateOld => {
-    return (state as StateOld).gpxSegments !== undefined;
-};
+import { StateVersion1, StateVersion2 } from './types.ts';
 
 export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 {
     return {

@@ -8,7 +8,8 @@ import { errorNotification, successNotification, toastsActions } from './store/t
 import { AppDispatch } from './store/planningStore.ts';
 import { State } from './store/types.ts';
 import { trackMergeActions } from './store/trackMerge.reducer.ts';
-import { isOldState, migrateVersion1To2 } from '../migrate/migrateVersion1To2.ts';
+import { migrateVersion1To2 } from '../migrate/migrateVersion1To2.ts';
+import { isOldState } from '../migrate/types.ts';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
