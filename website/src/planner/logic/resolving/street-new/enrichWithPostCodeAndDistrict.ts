@@ -45,8 +45,11 @@ export const enrichGpxSegmentsWithPostCodesAndDistricts = async (
     }
 
     const postCodeRequests: Promise<void>[] = Object.keys(streetLookup).map((key) => {
+        if (postCodeLookup[Number(key)] && districtLookup[Number(key)]) {
+            return Promise.resolve();
+        }
         const positionForKey = getPositionForKey(key, segments);
-        if (!positionForKey || (postCodeLookup[Number(key)] && districtLookup[Number(key)])) {
+        if (!positionForKey) {
             return Promise.resolve();
         }
         return fetchAndStorePostCodeAndDistrict(
