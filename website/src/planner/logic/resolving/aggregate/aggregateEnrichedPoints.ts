@@ -5,17 +5,8 @@ import geoDistance from 'geo-distance-helper';
 import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 import { NodePosition } from '../selectors/getNodePositions.ts';
 import { getLatLng, getLatLon, toLatLng } from '../../../../utils/pointUtil.ts';
-import { Point } from '../../../../utils/gpxTypes.ts';
 
 import { TimedPoint } from '../../../store/types.ts';
-
-export interface EnrichedPoints extends PointS {
-    street: string | null;
-}
-
-export interface PointS extends Omit<Point, 'time'> {
-    time: string;
-}
 
 export function anyStreetNameMatch(streetName: string | null, lastStreetName: string | null): boolean {
     if (!streetName && !lastStreetName) {

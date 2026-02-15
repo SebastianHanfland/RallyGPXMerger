@@ -17,20 +17,31 @@ describe('aggregateEnrichedPoints', () => {
                 },
             ];
             const streetLookup = { 1: 'Street A' };
+            const districtLookup = { 1: 'Town' };
+            const postCodeLookup = { 1: '1234' };
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, [], streetLookup);
+            const aggregatedPoints = aggregateEnrichedPoints(
+                longList,
+                0,
+                [],
+                streetLookup,
+                districtLookup,
+                postCodeLookup
+            );
 
             // then
             expect(aggregatedPoints).toEqual([
                 {
                     streetName: 'Street A',
+                    district: 'Town',
                     frontArrival: '2023-10-22T06:23:46Z',
                     backArrival: '2023-10-22T06:23:46.000Z',
                     frontPassage: '2023-10-22T06:23:46Z',
                     pointFrom: { lat: 1, lon: 2, time: '2023-10-22T06:23:46Z' },
                     pointTo: { lat: 1, lon: 2, time: '2023-10-22T06:23:46Z' },
                     type: TrackWayPointType.Track,
+                    postCode: '1234',
                 },
             ]);
         });
@@ -47,14 +58,25 @@ describe('aggregateEnrichedPoints', () => {
                 },
             ];
             const streetLookup = { 1: 'Street A' };
+            const districtLookup = { 1: 'Town' };
+            const postCodeLookup = { 1: '1234' };
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 100, [], streetLookup);
+            const aggregatedPoints = aggregateEnrichedPoints(
+                longList,
+                100,
+                [],
+                streetLookup,
+                districtLookup,
+                postCodeLookup
+            );
 
             // then
             expect(aggregatedPoints).toEqual([
                 {
                     streetName: 'Street A',
+                    district: 'Town',
+                    postCode: '1234',
                     frontArrival: '2023-10-22T06:23:46Z',
                     backArrival: '2023-10-22T06:24:06.000Z',
                     frontPassage: '2023-10-22T06:23:46Z',
@@ -72,14 +94,25 @@ describe('aggregateEnrichedPoints', () => {
                 { s: 1, t: '2023-10-22T06:26:46Z', b: 4, l: 5, e: 6 },
             ];
             const streetLookup = { 1: 'Street A' };
+            const districtLookup = { 1: 'Town' };
+            const postCodeLookup = { 1: '1234' };
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, [], streetLookup);
+            const aggregatedPoints = aggregateEnrichedPoints(
+                longList,
+                0,
+                [],
+                streetLookup,
+                districtLookup,
+                postCodeLookup
+            );
 
             // then
             expect(aggregatedPoints).toEqual([
                 {
                     streetName: 'Street A',
+                    postCode: '1234',
+                    district: 'Town',
                     frontArrival: '2023-10-22T06:23:46Z',
                     backArrival: '2023-10-22T06:26:46.000Z',
                     frontPassage: '2023-10-22T06:26:46Z',
@@ -114,14 +147,25 @@ describe('aggregateEnrichedPoints', () => {
                 6: 'Meringer Straße',
                 7: 'Street B',
             };
+            const districtLookup = { 1: 'Town' };
+            const postCodeLookup = { 1: '1234' };
 
             // when
-            const aggregatedPoints = aggregateEnrichedPoints(longList, 0, [], streetLookup);
+            const aggregatedPoints = aggregateEnrichedPoints(
+                longList,
+                0,
+                [],
+                streetLookup,
+                districtLookup,
+                postCodeLookup
+            );
 
             // then
             expect(aggregatedPoints).toEqual([
                 {
                     streetName: 'Street A',
+                    postCode: '1234',
+                    district: 'Town',
                     distanceInKm: 471.4858683408698,
                     speed: 9429.717366817395,
                     frontArrival: '2023-10-22T06:23:46Z',
@@ -189,14 +233,25 @@ describe('aggregateEnrichedPoints', () => {
                     createWayPointWithStreetName(-1, 6),
                 ];
                 const streetLookup = { 1: 'Street A' };
+                const districtLookup = { 1: 'Town' };
+                const postCodeLookup = { 1: '1234' };
 
                 // when
-                const aggregatedPoints = aggregateEnrichedPoints(longList, 100, [], streetLookup);
+                const aggregatedPoints = aggregateEnrichedPoints(
+                    longList,
+                    100,
+                    [],
+                    streetLookup,
+                    districtLookup,
+                    postCodeLookup
+                );
 
                 // then
                 expect(aggregatedPoints).toEqual([
                     {
                         streetName: 'Street A',
+                        postCode: '1234',
+                        district: 'Town',
                         frontArrival: '2023-10-22T06:23:46Z',
                         backArrival: '2023-10-22T06:24:06.000Z',
                         frontPassage: '2023-10-22T06:23:46Z',
