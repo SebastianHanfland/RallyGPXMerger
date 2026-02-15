@@ -5,6 +5,7 @@ import { Point } from '../utils/gpxTypes.ts';
 import { optionallyDecompress } from '../planner/store/compressHelper.ts';
 import { enrichGpxSegmentsWithStreetNames } from './streetNameResolvingHelper.ts';
 import { createPostCodeAndDistrictLookups } from './postCodeAndDistrictResolvingHelper.ts';
+import { setTimingsForSegments } from './segmentTimingResolver.ts';
 
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegmentOld): ParsedGpxSegment {
     return {
@@ -37,20 +38,21 @@ function gpxSegmentToParsedSegmentAndResolve(gpxSegment: GpxSegmentOld): ParsedG
         points: points,
     };
 }
-//
-// const segmentSpeed = state.segmentSpeeds[segment.id] ?? averageSpeed;
-// const adjustedPoints = generateParsedPointsWithTimeInSeconds(segmentSpeed, segment.points);
-// oder die action triggern...
 
-export function migrateToSegmentData(state: GpxSegmentsStateOld, geoCoding: GeoCodingStateOld): SegmentDataState {
+export function migrateToSegmentData(
+    state: GpxSegmentsStateOld,
+    geoCoding: GeoCodingStateOld,
+    averageSpeed: number
+): SegmentDataState {
     const parsedSegments = state.segments.map((segment) => gpxSegmentToParsedSegmentAndResolve(segment));
 
     const { segments, streetLookUp } = enrichGpxSegmentsWithStreetNames(parsedSegments, geoCoding);
     const { postCodeLookup, districtLookup } = createPostCodeAndDistrictLookups(segments, geoCoding, streetLookUp);
+    const segmentsWithTiming = setTimingsForSegments(segments, state.segmentSpeeds, averageSpeed);
 
     return {
         segmentSpeeds: state.segmentSpeeds ?? {},
-        segments: segments,
+        segments: segmentsWithTiming,
         pois: [],
         clickOnSegment: state.clickOnSegment,
         constructionSegments: state.constructionSegments?.map((segment) => gpxSegmentToParsedSegment(segment)) ?? [],
