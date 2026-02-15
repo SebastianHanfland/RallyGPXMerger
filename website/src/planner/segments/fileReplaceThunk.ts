@@ -3,12 +3,11 @@ import { getAverageSpeedInKmH, getTrackCompositions, trackMergeActions } from '.
 import { AppDispatch } from '../store/planningStore.ts';
 import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
-import { useSelector } from 'react-redux';
 
 export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
     const trackCompositions = getTrackCompositions(getState());
-    const averageSpeed = useSelector(getAverageSpeedInKmH);
+    const averageSpeed = getAverageSpeedInKmH(getState());
 
     if (!replaceProcess || replaceProcess.replacementSegments.length === 0) {
         return;
