@@ -34,10 +34,36 @@ export interface ToastsState {
     toasts: Toast[];
 }
 
+enum TrackElementType {
+    Segment = 'SEGMENT',
+    Break = 'BREAK',
+    Node = 'NODE',
+}
+
+export interface TrackSegment {
+    id: string;
+    segmentId: string;
+    type: TrackElementType.Segment;
+}
+
+export interface TrackBreak {
+    id: string;
+    minutes: number;
+    type: TrackElementType.Break;
+}
+
+export interface TrackNode {
+    id: string;
+    nodeId: string;
+    type: TrackElementType.Node;
+}
+
+export type TrackElement = TrackSegment | TrackBreak | TrackNode;
+
 export interface TrackComposition {
     id: string;
     name?: string;
-    segmentIds: string[];
+    segments: TrackElement[];
     peopleCount?: number;
     priority?: number;
     buffer?: number;
