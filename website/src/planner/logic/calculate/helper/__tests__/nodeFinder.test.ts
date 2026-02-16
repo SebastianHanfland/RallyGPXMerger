@@ -1,13 +1,20 @@
-import { TrackComposition } from '../../../../store/types.ts';
+import { BREAK, SEGMENT, TrackComposition, TrackElement } from '../../../../store/types.ts';
 import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
-import { BREAK_IDENTIFIER } from '../../types.ts';
+
+function getSegment(id: string) {
+    return { id, segmentId: id, type: SEGMENT };
+}
+
+function getBreak(id: string, minutes: number) {
+    return { id: id, type: BREAK, minutes: minutes };
+}
 
 describe('Node finder', () => {
     it('should find a node', () => {
         // given
         const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['0', '1', '3'], peopleCount: 200 },
-            { id: '2', name: 'B', segmentIds: ['2', '3'], peopleCount: 300 },
+            { id: '1', name: 'A', segments: ['0', '1', '3'].map(getSegment), peopleCount: 200 },
+            { id: '2', name: 'B', segments: ['2', '3'].map(getSegment), peopleCount: 300 },
         ];
 
         const expectedTrackNodes: TrackNode[] = [
@@ -30,8 +37,13 @@ describe('Node finder', () => {
     it('track finder ignore break nodes', () => {
         // given
         const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['0', `20${BREAK_IDENTIFIER}1`, '1', '3'], peopleCount: 200 },
-            { id: '2', name: 'B', segmentIds: ['2', `20${BREAK_IDENTIFIER}1`, '4'], peopleCount: 300 },
+            {
+                id: '1',
+                name: 'A',
+                segments: [getSegment('0'), getBreak('5', 20), getSegment('1'), getSegment('3')],
+                peopleCount: 200,
+            },
+            { id: '2', name: 'B', segments: [getSegment('2'), getBreak('5', 20), getSegment('4')], peopleCount: 300 },
         ];
 
         const expectedTrackNodes: TrackNode[] = [];
@@ -46,8 +58,8 @@ describe('Node finder', () => {
     it('should find a node when a track is a subset of another track', () => {
         // given
         const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['0', '1', '3'], peopleCount: 200 },
-            { id: '2', name: 'B', segmentIds: ['3'], peopleCount: 300 },
+            { id: '1', name: 'A', segments: ['0', '1', '3'].map(getSegment), peopleCount: 200 },
+            { id: '2', name: 'B', segments: ['3'].map(getSegment), peopleCount: 300 },
         ];
 
         const expectedTrackNodes: TrackNode[] = [
@@ -68,43 +80,67 @@ describe('Node finder', () => {
     });
 
     describe('node finding regardless of breaks', () => {
-        const getA = (segmentIds: string[]) => ({ id: '1', name: 'A', segmentIds, peopleCount: 200 });
-        const getB = (segmentIds: string[]) => ({ id: '2', name: 'B', segmentIds, peopleCount: 300 });
+        const getA = (segments: TrackElement[]) => ({
+            id: '1',
+            name: 'A',
+            segments: segments,
+            peopleCount: 200,
+        });
+        const getB = (segments: TrackElement[]) => ({
+            id: '2',
+            name: 'B',
+            segments: segments,
+            peopleCount: 300,
+        });
 
-        const break20_1 = `20${BREAK_IDENTIFIER}1`;
-        const break15_1 = `15${BREAK_IDENTIFIER}1`;
-        const break5_1 = `5${BREAK_IDENTIFIER}1`;
-        const break5_2 = `5${BREAK_IDENTIFIER}2`;
         const testCases = [
             ...[
                 { beforeA: [], beforeB: [] },
-                { beforeA: [break20_1], beforeB: [] },
-                { beforeA: [], beforeB: [break15_1] },
-                { beforeA: [break20_1], beforeB: [break15_1] },
+                { beforeA: [getBreak('2', 20)], beforeB: [] },
+                { beforeA: [], beforeB: [getBreak('1', 15)] },
+                { beforeA: [getBreak('2', 20)], beforeB: [getBreak('1', 15)] },
             ].flatMap(({ beforeA, beforeB }) => [
                 {
                     description: `should find nodes when no breaks are present after merge ${beforeA} ${beforeB}`,
-                    tracks: [getA(['0', ...beforeA, '1', '3']), getB(['2', ...beforeB, '1', '3'])],
+                    tracks: [
+                        getA([getSegment('0'), ...beforeA, getSegment('1'), getSegment('3')]),
+                        getB([getSegment('2'), ...beforeB, getSegment('1'), getSegment('3')]),
+                    ],
                 },
                 {
                     description: `even if one track has a break on the shared path ${beforeA} ${beforeB}`,
-                    tracks: [getA(['0', ...beforeA, '1', break5_1, '3']), getB(['2', ...beforeB, '1', '3'])],
+                    tracks: [
+                        getA([getSegment('0'), ...beforeA, getSegment('1'), getBreak('7', 5), getSegment('3')]),
+                        getB([getSegment('2'), ...beforeB, getSegment('1'), getSegment('3')]),
+                    ],
                 },
                 {
                     description: `even if the other track has a break on the shared path ${beforeA} ${beforeB}`,
-                    tracks: [getA(['0', ...beforeA, '1', '3']), getB(['2', ...beforeB, '1', break5_1, '3'])],
+                    tracks: [
+                        getA([getSegment('0'), ...beforeA, getSegment('1'), getSegment('3')]),
+                        getB([getSegment('2'), ...beforeB, getSegment('1'), getBreak('7', 5), getSegment('3')]),
+                    ],
                 },
                 {
                     description: `even if both tracks have a break on the shared path ${beforeA} ${beforeB}`,
-                    tracks: [getA(['0', ...beforeA, '1', break5_1, '3']), getB(['2', ...beforeB, '1', break5_1, '3'])],
+                    tracks: [
+                        getA([getSegment('0'), ...beforeA, getSegment('1'), getBreak('7', 5), getSegment('3')]),
+                        getB([getSegment('2'), ...beforeB, getSegment('1'), getBreak('7', 5), getSegment('3')]),
+                    ],
                 },
                 {
                     description: `even if both tracks have a different id break on the shared path ${beforeA} ${beforeB}`,
-                    tracks: [getA(['0', ...beforeA, '1', break5_1, '3']), getB(['2', ...beforeB, '1', break5_2, '3'])],
+                    tracks: [
+                        getA([getSegment('0'), ...beforeA, getSegment('1'), getBreak('7', 5), getSegment('3')]),
+                        getB([getSegment('2'), ...beforeB, getSegment('1'), getBreak('8', 5), getSegment('3')]),
+                    ],
                 },
                 {
                     description: `even if both tracks have a different length break on the shared path ${beforeA} ${beforeB}`,
-                    tracks: [getA(['0', ...beforeA, '1', break5_1, '3']), getB(['2', ...beforeB, '1', break15_1, '3'])],
+                    tracks: [
+                        getA([getSegment('0'), ...beforeA, getSegment('1'), getBreak('7', 5), getSegment('3')]),
+                        getB([getSegment('2'), ...beforeB, getSegment('1'), getBreak('9', 15), getSegment('3')]),
+                    ],
                 },
             ]),
         ];
@@ -121,13 +157,6 @@ describe('Node finder', () => {
                             { amount: 300, segmentId: '2', trackId: '2' },
                         ],
                     },
-                    {
-                        segmentIdAfterNode: '3',
-                        segmentsBeforeNode: [
-                            { amount: 200, segmentId: '1', trackId: '1' },
-                            { amount: 300, segmentId: '1', trackId: '2' },
-                        ],
-                    },
                 ];
 
                 // when
@@ -142,9 +171,9 @@ describe('Node finder', () => {
     it('should find two nodes, (first two branches then another)', () => {
         // given
         const trackCompositions: TrackComposition[] = [
-            { id: '1', name: 'A', segmentIds: ['A1', 'AB', 'ABC'], peopleCount: 200 },
-            { id: '2', name: 'B', segmentIds: ['B1', 'AB', 'ABC'], peopleCount: 300 },
-            { id: '3', name: 'C', segmentIds: ['C1', 'ABC'], peopleCount: 400 },
+            { id: '1', name: 'A', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount: 200 },
+            { id: '2', name: 'B', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount: 300 },
+            { id: '3', name: 'C', segments: ['C1', 'ABC'].map(getSegment), peopleCount: 400 },
         ];
 
         const expectedTrackNodes: TrackNode[] = [
@@ -172,12 +201,36 @@ describe('Node finder', () => {
         expect(nodesOfTracks).toEqual(expectedTrackNodes);
     });
 
+    it('should find only one node when the segments are shared', () => {
+        // given
+        const trackCompositions: TrackComposition[] = [
+            { id: '1', name: 'A', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount: 200 },
+            { id: '2', name: 'B', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount: 300 },
+        ];
+
+        const expectedTrackNodes: TrackNode[] = [
+            {
+                segmentsBeforeNode: [
+                    { segmentId: 'A1', trackId: '1', amount: 200 },
+                    { segmentId: 'B1', trackId: '2', amount: 300 },
+                ],
+                segmentIdAfterNode: 'AB',
+            },
+        ];
+
+        // when
+        const nodesOfTracks = listAllNodesOfTracks(trackCompositions);
+
+        // then
+        expect(nodesOfTracks).toEqual(expectedTrackNodes);
+    });
+
     describe('findMultipleOccurrencesOfSegments', () => {
         it('should find segments occurring in multiple tracks', () => {
             // given
             const trackCompositions: TrackComposition[] = [
-                { id: '1', name: 'A', segmentIds: ['0', '1', '3'] },
-                { id: '2', name: 'B', segmentIds: ['2', '3'] },
+                { id: '1', name: 'A', segments: ['0', '1', '3'].map(getSegment) },
+                { id: '2', name: 'B', segments: ['2', '3'].map(getSegment) },
             ];
 
             const expectedTrackNodes: string[] = ['3'];
@@ -192,10 +245,10 @@ describe('Node finder', () => {
         it('should find a node of more than 2 tracks', () => {
             // given
             const trackCompositions: TrackComposition[] = [
-                { id: '1', name: 'A', segmentIds: ['0', '1', '3'] },
-                { id: '2', name: 'B', segmentIds: ['2', '3'] },
-                { id: '3', name: 'C', segmentIds: ['4', '3'] },
-                { id: '4', name: 'D', segmentIds: ['5', '3'] },
+                { id: '1', name: 'A', segments: ['0', '1', '3'].map(getSegment) },
+                { id: '2', name: 'B', segments: ['2', '3'].map(getSegment) },
+                { id: '3', name: 'C', segments: ['4', '3'].map(getSegment) },
+                { id: '4', name: 'D', segments: ['5', '3'].map(getSegment) },
             ];
 
             const expectedTrackNodes: string[] = ['3'];

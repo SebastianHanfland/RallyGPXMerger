@@ -32,7 +32,8 @@ export function findMultipleOccurrencesOfSegments(trackCompositions: TrackCompos
 
 export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): TrackNode[] {
     const segmentIdsUsedMultipleTimes = findMultipleOccurrencesOfSegments(trackCompositions);
-    return segmentIdsUsedMultipleTimes.map((segmentId) => {
+    const trackNodes: TrackNode[] = [];
+    segmentIdsUsedMultipleTimes.forEach((segmentId) => {
         const segmentsBeforeNode: TrackNodeSegment[] = [];
         trackCompositions.forEach((track) => {
             const segmentsWithoutBreaks = track.segments
@@ -55,7 +56,11 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): Tra
                 });
             }
         });
-
-        return { segmentIdAfterNode: segmentId, segmentsBeforeNode };
+        const segmentIdsBefore = segmentsBeforeNode.map((segment) => segment.segmentId);
+        const hasDifferentBeforeSegments = [...new Set(segmentIdsBefore)].length > 1;
+        if (hasDifferentBeforeSegments) {
+            trackNodes.push({ segmentIdAfterNode: segmentId, segmentsBeforeNode });
+        }
     });
+    return trackNodes;
 }
