@@ -14,5 +14,3 @@ export function instanceOfBreak(breakOrSegment: Break | ParsedGpxSegment): break
     const minutes = (breakOrSegment as Break).minutes;
     return minutes !== undefined;
 }
-
-export const BREAK_IDENTIFIER = '%%min-%%';

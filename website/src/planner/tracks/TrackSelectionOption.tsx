@@ -1,26 +1,22 @@
-import { BREAK_IDENTIFIER } from '../logic/calculate/types.ts';
 import { TrackSelectionBreakOption } from './TrackSelectionBreakOption.tsx';
 import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption.tsx';
+import { BREAK, TrackElement } from '../store/types.ts';
 
 interface Props {
     trackId: string;
-    segmentId: string;
+    trackElement: TrackElement;
     segmentName: string;
     fullGpxDelete: boolean;
 }
 
-function isABreak(segmentId: string) {
-    return segmentId.includes(BREAK_IDENTIFIER);
-}
-
-export function TrackSelectionOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
-    if (isABreak(segmentId)) {
-        return <TrackSelectionBreakOption trackId={trackId} segmentId={segmentId} segmentName={segmentName} />;
+export function TrackSelectionOption({ trackElement, segmentName, trackId, fullGpxDelete }: Props) {
+    if (trackElement.type === BREAK) {
+        return <TrackSelectionBreakOption trackId={trackId} trackElement={trackElement} segmentName={segmentName} />;
     }
 
     return (
         <TrackSelectionSegmentOption
-            segmentId={segmentId}
+            segmentId={trackElement.id}
             segmentName={segmentName}
             trackId={trackId}
             fullGpxDelete={fullGpxDelete}

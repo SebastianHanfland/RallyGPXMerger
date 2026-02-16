@@ -48,7 +48,7 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
                     return (
                         <TrackSelectionOption
                             key={trackElement.id}
-                            segmentId={trackElement.id}
+                            trackElement={trackElement}
                             trackId={id}
                             segmentName={segmentName ?? 'Currently blank'}
                             fullGpxDelete={!!fullGpxDelete}

@@ -1,24 +1,23 @@
 import { useDispatch } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
-import { BREAK_IDENTIFIER } from '../logic/calculate/types.ts';
 import { DraggableIcon } from './DraggableIcon.tsx';
+import { TrackBreak } from '../store/types.ts';
 
 interface Props {
     trackId: string;
-    segmentId: string;
+    trackElement: TrackBreak;
     segmentName: string;
 }
 
-function getPauseLabel(segmentId: string) {
-    const minutesBreak = Number(segmentId.split(BREAK_IDENTIFIER)[0]);
+function getPauseLabel(trackBreak: TrackBreak) {
+    const minutesBreak = trackBreak.minutes;
     return `${minutesBreak > 0 ? '+' : '-'} ${minutesBreak > 0 ? minutesBreak : -1 * minutesBreak} min`;
 }
 
-export function TrackSelectionBreakOption({ segmentId, segmentName, trackId }: Props) {
+export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
 
@@ -30,13 +29,13 @@ export function TrackSelectionBreakOption({ segmentId, segmentName, trackId }: P
                 borderColor: 'black',
                 cursor: 'pointer',
                 margin: '1px',
-                backgroundColor: getColorFromUuid(segmentId),
+                backgroundColor: 'white',
             }}
-            key={segmentId}
+            key={trackElement.id}
         >
             <DraggableIcon />
             <div className={'m-2'} title={segmentName}>
-                {getPauseLabel(segmentId)}
+                {getPauseLabel(trackElement)}
             </div>
             <div>
                 <Button
@@ -44,7 +43,7 @@ export function TrackSelectionBreakOption({ segmentId, segmentName, trackId }: P
                     size={'sm'}
                     className={'m-1'}
                     onClick={() => {
-                        dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
+                        dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId: trackElement.id }));
                     }}
                     title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
                 >
