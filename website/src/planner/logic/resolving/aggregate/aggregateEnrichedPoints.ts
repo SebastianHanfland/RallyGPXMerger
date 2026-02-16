@@ -1,5 +1,4 @@
 import date from 'date-and-time';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 import { AggregatedPoints, TrackWayPointType } from '../types.ts';
 import geoDistance from 'geo-distance-helper';
 import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
@@ -36,14 +35,23 @@ export function takeMostDetailedStreetName(streetName: string | null, lastStreet
 
 const extractLatLon = ({ b, l, t }: TimedPoint) => ({ lat: b, lon: l, time: t });
 
-function shiftEndTimeByParticipants(endDateTime: string, participants: number): string {
-    return date.addSeconds(new Date(endDateTime), participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
+function shiftEndTimeByParticipants(
+    endDateTime: string,
+    participants: number,
+    participantsDelayInSeconds: number
+): string {
+    return date.addSeconds(new Date(endDateTime), participants * participantsDelayInSeconds).toISOString();
 }
 
-function useLastKnownStreet(lastElement: AggregatedPoints, point: TimedPoint, participants: number) {
+function useLastKnownStreet(
+    lastElement: AggregatedPoints,
+    point: TimedPoint,
+    participants: number,
+    participantsDelayInSeconds: number
+) {
     return {
         ...lastElement,
-        backArrival: shiftEndTimeByParticipants(point.t, participants),
+        backArrival: shiftEndTimeByParticipants(point.t, participants, participantsDelayInSeconds),
         frontPassage: point.t,
         pointTo: extractLatLon(point),
     };
@@ -70,6 +78,7 @@ function isABreak(lastElement: AggregatedPoints, point: TimedPoint) {
 function createAggregatedPoint(
     point: TimedPoint,
     participants: number,
+    participantsDelayInSeconds: number,
     type: TrackWayPointType,
     streetLookup: Record<number, string | null>,
     districtLookup: Record<number, string | null>,
@@ -79,7 +88,7 @@ function createAggregatedPoint(
         streetName: streetLookup[point.s],
         district: districtLookup[point.s],
         postCode: postCodeLookup[point.s],
-        backArrival: shiftEndTimeByParticipants(point.t, participants),
+        backArrival: shiftEndTimeByParticipants(point.t, participants, participantsDelayInSeconds),
         frontPassage: point.t,
         frontArrival: point.t,
         pointFrom: extractLatLon(point),
@@ -111,6 +120,7 @@ function streetUnknownAndAPreviousPointHasAStreet(
 export function aggregateEnrichedPoints(
     enrichedPoints: TimedPoint[],
     participants: number,
+    participantsDelayInSeconds: number,
     nodePositions: NodePosition[],
     streetLookup: Record<number, string | null>,
     districtLookup: Record<number, string | null>,
@@ -126,6 +136,7 @@ export function aggregateEnrichedPoints(
                 createAggregatedPoint(
                     point,
                     participants,
+                    participantsDelayInSeconds,
                     TrackWayPointType.Track,
                     streetLookup,
                     districtLookup,
@@ -139,7 +150,12 @@ export function aggregateEnrichedPoints(
         const lastElement = aggregatedPoints[lastIndex];
 
         if (streetUnknownAndAPreviousPointHasAStreet(point, index, enrichedPoints, streetLookup)) {
-            aggregatedPoints[lastIndex] = useLastKnownStreet(lastElement, point, participants);
+            aggregatedPoints[lastIndex] = useLastKnownStreet(
+                lastElement,
+                point,
+                participants,
+                participantsDelayInSeconds
+            );
             return;
         }
 
@@ -151,7 +167,7 @@ export function aggregateEnrichedPoints(
                 streetName: streetLookup[point.s],
                 postCode: postCodeLookup[point.s],
                 district: districtLookup[point.s],
-                backArrival: shiftEndTimeByParticipants(point.t, participants),
+                backArrival: shiftEndTimeByParticipants(point.t, participants, participantsDelayInSeconds),
                 frontPassage: lastElement.frontArrival,
                 frontArrival: lastElement.frontArrival,
                 pointFrom: extractLatLon(point),
@@ -178,6 +194,7 @@ export function aggregateEnrichedPoints(
                     ...createAggregatedPoint(
                         point,
                         participants,
+                        participantsDelayInSeconds,
                         TrackWayPointType.Node,
                         streetLookup,
                         districtLookup,
@@ -197,7 +214,7 @@ export function aggregateEnrichedPoints(
             aggregatedPoints[lastIndex] = {
                 ...lastElement,
                 streetName: detailedStreetName,
-                backArrival: shiftEndTimeByParticipants(point.t, participants),
+                backArrival: shiftEndTimeByParticipants(point.t, participants, participantsDelayInSeconds),
                 frontPassage: point.t,
                 pointTo: extractLatLon(point),
                 distanceInKm: newDistance,
@@ -210,7 +227,7 @@ export function aggregateEnrichedPoints(
         } else {
             aggregatedPoints[lastIndex] = {
                 ...lastElement,
-                backArrival: shiftEndTimeByParticipants(point.t, participants),
+                backArrival: shiftEndTimeByParticipants(point.t, participants, participantsDelayInSeconds),
                 frontPassage: point.t,
                 pointTo: extractLatLon(point),
             };
@@ -218,6 +235,7 @@ export function aggregateEnrichedPoints(
                 createAggregatedPoint(
                     point,
                     participants,
+                    participantsDelayInSeconds,
                     TrackWayPointType.Track,
                     streetLookup,
                     districtLookup,
