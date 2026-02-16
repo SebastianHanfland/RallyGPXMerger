@@ -8,6 +8,8 @@ import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
 import { RallyComparisonWrapper } from '../../src/comparison/RallyComparisonWrapper';
 import { createComparisonStore } from '../../src/comparison/store/store';
+import { StateOld } from '../../src/planner/store/typesOld';
+import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
@@ -21,13 +23,13 @@ describe('Comparison Display integration test', () => {
     it('Render the map display and have different snakes at different times', async () => {
         // given
         const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
-        const state = JSON.parse(buffer) as State;
+        const state = JSON.parse(buffer) as StateOld;
         const buffer2 = '' + fs.readFileSync('./public/RideOfSilence2024.json');
-        const state2 = JSON.parse(buffer2) as State;
+        const state2 = JSON.parse(buffer2) as StateOld;
 
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id,planning-id2');
-        (getData as Mock).mockResolvedValue([{ data: state }, { data: state2 }]);
+        (getData as Mock).mockResolvedValue([migrateVersion1To2(state), migrateVersion1To2(state2)]);
         const store = createComparisonStore();
         const loadingPage = act(() =>
             render(

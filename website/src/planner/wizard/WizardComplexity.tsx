@@ -24,7 +24,6 @@ export const WizardsComplexity = () => {
     const continueAsComplexRally = () => {
         resetData(dispatch);
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
-        dispatch(trackMergeActions.setIsCalculationOnTheFly(false));
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(layoutActions.setHasSingleTrack(false));
         dispatch(layoutActions.setSelectedSidebarSection('segments'));

@@ -15,7 +15,5 @@ export function migrateTrackMerge(trackMerge: TrackMergeStateOld): TrackMergeSta
         segmentIdClipboard: trackMerge.segmentIdClipboard,
         trackIdForAddingABreak: trackMerge.trackIdForAddingABreak,
         isCalculationRunning: trackMerge.isCalculationRunning,
-        isCalculationOnTheFly: trackMerge.isCalculationOnTheFly,
-        changesSinceLastCalculation: trackMerge.changesSinceLastCalculation,
     };
 }

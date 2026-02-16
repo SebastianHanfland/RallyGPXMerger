@@ -8,7 +8,6 @@ export const simpleRallyThunk = (dispatch: AppDispatch) => {
     setTimeout(() => {
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
-        dispatch(trackMergeActions.setIsCalculationOnTheFly(true));
         dispatch(layoutActions.setSelectedSidebarSection('simpleTrack'));
     }, 10);
 };

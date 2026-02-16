@@ -8,8 +8,6 @@ import { errorNotification, successNotification, toastsActions } from './store/t
 import { AppDispatch } from './store/planningStore.ts';
 import { State } from './store/types.ts';
 import { trackMergeActions } from './store/trackMerge.reducer.ts';
-import { migrateVersion1To2 } from '../migrate/migrateVersion1To2.ts';
-import { isOldState } from '../migrate/types.ts';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
@@ -18,11 +16,7 @@ export function loadStateAndSetUpPlanner(
     adminToken?: string,
     planningPassword?: string
 ) {
-    if (isOldState(state)) {
-        dispatch({ payload: migrateVersion1To2(state), type: 'wholeState' });
-    } else {
-        dispatch({ payload: state, type: 'wholeState' });
-    }
+    dispatch({ payload: state, type: 'wholeState' });
 
     if (planningId) {
         dispatch(backendActions.setPlanningId(planningId));
@@ -46,8 +40,7 @@ export function useLoadPlanningFromServer() {
     useEffect(() => {
         if (planningId) {
             getData(planningId)
-                .then((data) => {
-                    const state = data.data;
+                .then((state) => {
                     loadStateAndSetUpPlanner(dispatch, state, planningId, adminToken, planningPassword);
                     successNotification(
                         dispatch,

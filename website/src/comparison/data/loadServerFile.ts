@@ -8,7 +8,6 @@ import { getStartAndEndOfParsedTracks } from '../../utils/parsedTracksUtil.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
-        .then((res) => res.data)
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
             const calculatedTracks = planning.calculatedTracks.tracks;

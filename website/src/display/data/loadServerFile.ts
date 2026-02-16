@@ -3,13 +3,13 @@ import { DisplayTrack } from '../../common/types.ts';
 import { State } from '../../planner/store/types.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { getPlanningLabel, getPlanningTitle } from '../../planner/store/trackMerge.reducer.ts';
-import { getBackupData, getData } from '../../api/api.ts';
+import { getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfos.ts';
 
-export async function loadServerFile(id: string, dispatch: Dispatch, isBackup: boolean = false) {
-    return (isBackup ? getBackupData() : getData(id).then((res) => res.data))
+export async function loadServerFile(id: string, dispatch: Dispatch) {
+    return getData(id)
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
             if (planningTitle) {

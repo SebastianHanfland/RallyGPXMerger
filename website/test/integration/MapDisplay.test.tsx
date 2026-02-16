@@ -12,6 +12,8 @@ import { getBikeSnakesForDisplayMap } from '../../src/display/map/dataReading';
 import { mapActions } from '../../src/display/store/map.reducer';
 import { getMessages } from '../../src/lang/getMessages';
 import userEvent from '@testing-library/user-event';
+import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
+import { StateOld } from '../../src/planner/store/typesOld';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
@@ -35,12 +37,12 @@ describe('Map Display integration test', () => {
     it('Render the map display and have different snakes at different times', async () => {
         // given
         const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
-        const state = JSON.parse(buffer) as State;
+        const state = JSON.parse(buffer) as StateOld;
         const user = userEvent.setup();
 
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
-        (getData as Mock).mockResolvedValue({ data: state });
+        (getData as Mock).mockResolvedValue(migrateVersion1To2(state));
         const store = createDisplayStore();
         const loadingPage = act(() =>
             render(
