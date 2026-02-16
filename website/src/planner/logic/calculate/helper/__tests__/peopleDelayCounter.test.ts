@@ -1,12 +1,17 @@
 import { sumUpAllPeopleWithHigherPriority } from '../peopleDelayCounter.ts';
 import { listAllNodesOfTracks } from '../nodeFinder.ts';
+import { SEGMENT } from '../../../../store/types.ts';
+
+function getSegment(id: string) {
+    return { id, segmentId: id, type: SEGMENT };
+}
 
 describe('peopleDelayCounter', () => {
     describe('should find the number of people that reach the end before track', () => {
         describe('Two branches', () => {
             const twoBranches = [
-                { id: '1', segmentIds: ['A1', 'AB'], peopleCount: 200 },
-                { id: '2', segmentIds: ['B1', 'AB'], peopleCount: 150 },
+                { id: '1', segments: ['A1', 'AB'].map(getSegment), peopleCount: 200 },
+                { id: '2', segments: ['B1', 'AB'].map(getSegment), peopleCount: 150 },
             ];
             const trackNode = listAllNodesOfTracks(twoBranches)[0];
             it('should add up to zero when index is zero', () => {
@@ -28,9 +33,9 @@ describe('peopleDelayCounter', () => {
 
         describe('Three branches meet at one point', () => {
             const threeBranches = [
-                { id: '1', segmentIds: ['A1', 'ABC'], peopleCount: 200 },
-                { id: '2', segmentIds: ['B1', 'ABC'], peopleCount: 150 },
-                { id: '3', segmentIds: ['C1', 'ABC'], peopleCount: 300 },
+                { id: '1', segments: ['A1', 'ABC'].map(getSegment), peopleCount: 200 },
+                { id: '2', segments: ['B1', 'ABC'].map(getSegment), peopleCount: 150 },
+                { id: '3', segments: ['C1', 'ABC'].map(getSegment), peopleCount: 300 },
             ];
             const trackNodes = listAllNodesOfTracks(threeBranches);
             it('the longest branch should reach first', () => {
@@ -60,9 +65,9 @@ describe('peopleDelayCounter', () => {
 
         describe('Two branched meet and then another', () => {
             const threeBranches = [
-                { id: '1', segmentIds: ['A1', 'AB', 'ABC'], peopleCount: 200 },
-                { id: '2', segmentIds: ['B1', 'AB', 'ABC'], peopleCount: 150 },
-                { id: '3', segmentIds: ['C1', 'C2', 'ABC'], peopleCount: 300 },
+                { id: '1', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount: 200 },
+                { id: '2', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount: 150 },
+                { id: '3', segments: ['C1', 'C2', 'ABC'].map(getSegment), peopleCount: 300 },
             ];
             const trackNodes = listAllNodesOfTracks(threeBranches);
             it('the longest branch should reach first', () => {
