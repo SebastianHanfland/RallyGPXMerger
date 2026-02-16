@@ -1,10 +1,14 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { comparisonActions } from '../store/tracks.reducer.ts';
 import { State } from '../../planner/store/types.ts';
-import { getPlanningTitle } from '../../planner/store/trackMerge.reducer.ts';
+import {
+    getParticipantsDelay,
+    getPlanningTitle,
+    getTrackCompositions,
+} from '../../planner/store/trackMerge.reducer.ts';
 import { getData } from '../../api/api.ts';
 import { mapActions } from '../store/map.reducer.ts';
-import { getStartAndEndOfParsedTracks } from '../../utils/parsedTracksUtil.ts';
+import { getStartAndEndPlanning } from '../../utils/parsedTracksUtil.ts';
 import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
@@ -12,10 +16,12 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
             const calculatedTracks = getCalculatedTracks(planning);
+            const tracks = getTrackCompositions(planning);
+            const delay = getParticipantsDelay(planning);
 
             dispatch(
                 mapActions.setStartAndEndTime({
-                    ...getStartAndEndOfParsedTracks(calculatedTracks),
+                    ...getStartAndEndPlanning(calculatedTracks, tracks, delay),
                     planningId: id,
                 })
             );
