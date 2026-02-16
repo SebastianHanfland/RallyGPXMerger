@@ -72,8 +72,6 @@ export interface TrackMergeState {
 
 export interface MapState {
     currentTime: number;
-    start?: string;
-    end?: string;
     showMapMarker?: boolean;
     showBlockStreets?: boolean;
     showCalculatedTracks?: boolean;
