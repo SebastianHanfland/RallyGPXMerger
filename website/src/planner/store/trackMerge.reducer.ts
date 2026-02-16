@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_IN_SECONDS } from './constants.ts';
 
-export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
-
 const initialState: TrackMergeState = {
     trackCompositions: [],
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,

@@ -1,6 +1,5 @@
 import { TrackComposition } from '../../../store/types.ts';
 import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from './nodeFinder.ts';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>
@@ -76,14 +75,18 @@ export function sumUpAllPeopleWithHigherPriority(
     return numberOfPeopleWithHigherPriority;
 }
 
-export function getExtraDelayOnTrack(track: TrackComposition, trackCompositions: TrackComposition[]): number {
+export function getExtraDelayOnTrack(
+    track: TrackComposition,
+    trackCompositions: TrackComposition[],
+    participantsDelayInSeconds: number
+): number {
     const trackNodes = listAllNodesOfTracks(trackCompositions);
     let delayForTrackInSeconds = 0;
     trackNodes.forEach((trackNode) => {
         const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);
         if (nodeInfluencesTrack) {
             const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(trackCompositions, trackNode, track.id);
-            delayForTrackInSeconds += peopleWithHigherPriority * PARTICIPANTS_DELAY_IN_SECONDS;
+            delayForTrackInSeconds += peopleWithHigherPriority * participantsDelayInSeconds;
         }
     });
     return -delayForTrackInSeconds;
