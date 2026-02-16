@@ -3,7 +3,6 @@ import { ParsedGpxSegment, TrackComposition } from '../../../store/types.ts';
 import { Mock } from 'vitest';
 
 import { assembleTrackFromSegments } from '../helper/assembleTrackFromSegments.ts';
-import { setParticipantsDelay } from '../../../store/trackMerge.reducer.ts';
 
 vi.mock('../../utils/SimpleGPX.ts');
 vi.mock('../helper/assembleTrackFromSegments.ts');
@@ -15,7 +14,6 @@ describe('with Peoples Solver', () => {
 
     it('merge A1 and AB to A and B1 and AB to B - Shifting time based on people on track', () => {
         // given
-        setParticipantsDelay(0.2);
         const gpxSegments: ParsedGpxSegment[] = [
             { id: '1', filename: 'A1', points: [], streetsResolved: false },
             { id: '2', filename: 'B1', points: [], streetsResolved: false },
@@ -52,7 +50,6 @@ describe('with Peoples Solver', () => {
 
     it('should merge A + B -> AB and AB + C -> ABC', () => {
         // given
-        setParticipantsDelay(0.2);
         const gpxSegments: ParsedGpxSegment[] = [
             { id: '1', filename: 'A1', points: [], streetsResolved: true },
             { id: '2', filename: 'B1', points: [], streetsResolved: true },

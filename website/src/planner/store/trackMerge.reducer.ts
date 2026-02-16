@@ -7,10 +7,6 @@ import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_
 
 export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
 
-export const setParticipantsDelay = (delay: number) => {
-    PARTICIPANTS_DELAY_IN_SECONDS = delay;
-};
-
 const initialState: TrackMergeState = {
     trackCompositions: [],
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,
