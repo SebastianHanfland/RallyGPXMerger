@@ -66,8 +66,6 @@ export interface TrackMergeState {
     segmentIdClipboard?: string[];
     trackIdForAddingABreak?: string;
     isCalculationRunning?: boolean;
-    isCalculationOnTheFly?: boolean;
-    changesSinceLastCalculation?: boolean;
 }
 
 export interface MapState {

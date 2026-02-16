@@ -2,7 +2,6 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getArrivalDateTime,
-    getHasChangesSinceLastCalculation,
     getHasDefaultArrivalDateTime,
     getPlanningTitle,
     getTrackCompositions,
@@ -21,7 +20,6 @@ export const useHelpingHook = (): [string, string, () => void] => {
     const planningTitle = useSelector(getPlanningTitle);
     const planningId = useSelector(getPlanningId);
     const hasSingleTrack = useSelector(getHasSingleTrack);
-    const hasChanges = useSelector(getHasChangesSinceLastCalculation);
     const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     function inform(topic: string, callBack: () => void = () => {}): [string, string, () => void] {
@@ -69,9 +67,6 @@ export const useHelpingHook = (): [string, string, () => void] => {
         }
         if (!planningTitle) {
             return inform('name', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
-        }
-        if (hasChanges) {
-            return inform('calculate', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
         }
         if (!planningId) {
             return inform('upload', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
