@@ -46,21 +46,3 @@ export function generateParsedPointsWithTimeInSeconds(avg: number, points: Omit<
         return { ...point, t: time };
     });
 }
-
-export function calculateSpeed(points: ParsedPoint[]): number {
-    const startPoint = { ...points[0] };
-    const endPoint = { ...points[points.length - 1] };
-
-    let distance = 0;
-    let lastPoint: ParsedPoint | null = null;
-    points.forEach((point) => {
-        if (lastPoint) {
-            distance += geoDistance(getLatLngFromParsedPoint(lastPoint), getLatLngFromParsedPoint(point)) as number;
-        }
-        lastPoint = point;
-    });
-
-    const timeInHours = (endPoint.t - startPoint.t) / 60 / 60;
-
-    return distance / timeInHours;
-}
