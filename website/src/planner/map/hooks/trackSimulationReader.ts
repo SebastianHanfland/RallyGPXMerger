@@ -1,5 +1,5 @@
 import { State, TrackComposition } from '../../store/types.ts';
-import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../store/map.reducer.ts';
+import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
@@ -10,6 +10,7 @@ import { extractSnakeTrackFromCalculatedTrack } from '../../../common/logic/extr
 import { CalculatedTrack } from '../../../common/types.ts';
 import { BikeSnake } from '../../../common/map/addSnakeWithBikeToMap.ts';
 import { getColorFromUuid } from '../../../utils/colorUtil.ts';
+import { getMapStartAndEndTime } from '../getMapStartAndEndTime.ts';
 
 const extractSnakeLocationForTimeStamp =
     (timeStampFront: string, trackCompositions: TrackComposition[]) =>
@@ -35,8 +36,7 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
         return;
     }
     const mapTime = getCurrenMapTime(state) ?? 0;
-    const start = getStartMapTime(state);
-    const end = getEndMapTime(state);
+    const { start, end } = getMapStartAndEndTime(state);
     if (!start || !end) {
         return undefined;
     }
