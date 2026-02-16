@@ -140,7 +140,7 @@ interface ToastsState {
     toasts: Toast[];
 }
 
-interface TrackComposition {
+export interface TrackCompositionOld {
     id: string;
     name?: string;
     segmentIds: string[];
@@ -169,7 +169,7 @@ interface GeoCodingRequestsState {
 }
 
 export interface TrackMergeStateOld {
-    trackCompositions: TrackComposition[];
+    trackCompositions: TrackCompositionOld[];
     filterTerm?: string;
     arrivalDateTime?: string;
     hasDefaultArrivalDate?: boolean;
