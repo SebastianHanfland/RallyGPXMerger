@@ -1,7 +1,7 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
-import { GpxFileAccess } from '../planner/logic/merge/types.ts';
+import { GpxFileAccess } from '../planner/logic/calculate/types.ts';
 import { getTimeDifferenceInSeconds } from './dateUtil.ts';
 import { Link, Metadata, Point, Route, Track, Waypoint } from './gpxTypes.ts';
 import { GpxParser } from './GpxParser.ts';

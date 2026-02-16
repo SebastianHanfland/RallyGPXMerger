@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
-import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
+import { BREAK_IDENTIFIER } from '../logic/calculate/types.ts';
 import { DraggableIcon } from './DraggableIcon.tsx';
 
 interface Props {

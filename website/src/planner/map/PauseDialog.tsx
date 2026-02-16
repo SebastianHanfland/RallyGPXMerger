@@ -6,7 +6,7 @@ import { getTrackCompositions, getTrackIdForAddingABreak, trackMergeActions } fr
 import { PauseDialogContent } from './PauseDialogContent.tsx';
 import { useEffect, useState } from 'react';
 import { TrackPause } from '../store/types.ts';
-import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
+import { BREAK_IDENTIFIER } from '../logic/calculate/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '../store/planningStore.ts';
 

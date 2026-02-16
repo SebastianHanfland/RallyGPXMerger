@@ -2,7 +2,7 @@ import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/to
 import { filterItems } from '../../utils/filterUtil.ts';
 import { ClickOnSegment, ParsedGpxSegment, ParsedPoint, SegmentDataState, State } from './types.ts';
 import { storage } from './storage.ts';
-import { generateParsedPointsWithTimeInSeconds } from '../logic/merge/speedSimulatorTimeInSeconds.ts';
+import { generateParsedPointsWithTimeInSeconds } from '../logic/calculate/speedSimulatorTimeInSeconds.ts';
 
 const initialState: SegmentDataState = {
     segments: [],

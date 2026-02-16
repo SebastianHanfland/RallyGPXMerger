@@ -1,6 +1,6 @@
 import { TrackComposition } from '../../../../store/types.ts';
 import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
-import { BREAK_IDENTIFIER } from '../../../merge/types.ts';
+import { BREAK_IDENTIFIER } from '../../types.ts';
 
 describe('Node finder', () => {
     it('should find a node', () => {

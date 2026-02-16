@@ -1,5 +1,5 @@
 import { TrackComposition } from '../../../store/types.ts';
-import { BREAK_IDENTIFIER } from '../../merge/types.ts';
+import { BREAK_IDENTIFIER } from '../types.ts';
 
 export interface TrackNodeSegment {
     segmentId: string;

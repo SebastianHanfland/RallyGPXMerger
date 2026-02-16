@@ -1,4 +1,4 @@
-import { BREAK_IDENTIFIER } from '../logic/merge/types.ts';
+import { BREAK_IDENTIFIER } from '../logic/calculate/types.ts';
 import { TrackSelectionBreakOption } from './TrackSelectionBreakOption.tsx';
 import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption.tsx';
 

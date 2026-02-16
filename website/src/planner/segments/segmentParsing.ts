@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { generateParsedPointsWithTimeInSeconds } from '../logic/merge/speedSimulatorTimeInSeconds.ts';
+import { generateParsedPointsWithTimeInSeconds } from '../logic/calculate/speedSimulatorTimeInSeconds.ts';
 import { ParsedGpxSegment, ParsedPoint } from '../store/types.ts';
 
 export function getPointsFromGpx(gpxString: string, averageSpeed: number): ParsedPoint[] {
