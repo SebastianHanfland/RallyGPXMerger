@@ -7,7 +7,7 @@ import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 
 const extractLatLon = ({ b, l, t }: TimedPoint) => ({ lat: b, lon: l, time: t });
 
-function shiftEndTimeByParticipants(
+export function shiftEndTimeByParticipants(
     endDateTime: string,
     participants: number,
     participantsDelayInSeconds: number

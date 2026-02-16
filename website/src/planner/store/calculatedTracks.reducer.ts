@@ -13,7 +13,7 @@ import { getParsedGpxSegments } from './segmentData.redux.ts';
 
 export const getCalculatedTracks = createSelector(
     [getArrivalDateTime, getTrackCompositions, getParsedGpxSegments, getParticipantsDelay],
-    (arrivalDate, trackCompositions, segments, participantsDelayInSeconds) => {
+    (arrivalDate, trackCompositions, segments, participantsDelayInSeconds): CalculatedTrack[] => {
         const calculatedTracks = calculateTracks(trackCompositions, segments, participantsDelayInSeconds);
         const arrivalDateTime = arrivalDate ?? '2025-06-01T10:11:55';
         return calculatedTracks.map((track) => ({
