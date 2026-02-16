@@ -3,16 +3,13 @@ import { State, TrackComposition, TrackMergeState } from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/merge/helper/config.ts';
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from './constants.ts';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_IN_SECONDS } from './constants.ts';
 
 export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
 
 export const setParticipantsDelay = (delay: number) => {
     PARTICIPANTS_DELAY_IN_SECONDS = delay;
 };
-
-export const DEFAULT_GAP_TOLERANCE = 0.01;
 
 const initialState: TrackMergeState = {
     trackCompositions: [],

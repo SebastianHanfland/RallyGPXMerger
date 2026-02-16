@@ -7,8 +7,7 @@ import {
     trackMergeActions,
 } from '../trackMerge.reducer.ts';
 
-import { DELAY_PER_PERSON_IN_SECONDS } from '../../logic/merge/helper/config.ts';
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../constants.ts';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DELAY_PER_PERSON_IN_SECONDS } from '../constants.ts';
 
 vi.mock('uuid', () => ({
     v4: () => '1',
