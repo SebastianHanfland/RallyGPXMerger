@@ -15,14 +15,20 @@ import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
+import { getParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
 
 const extractLocationDisplay =
-    (timeStampFront: string) =>
+    (timeStampFront: string, participantsDelayInSeconds: number) =>
     (parsedTrack: DisplayTrack): BikeSnake => {
         const participants = parsedTrack?.peopleCount ?? 0;
 
         return {
-            points: extractSnakeTrackFromCalculatedTrack(timeStampFront, participants, parsedTrack),
+            points: extractSnakeTrackFromCalculatedTrack(
+                timeStampFront,
+                participants,
+                parsedTrack,
+                participantsDelayInSeconds
+            ),
             title: parsedTrack.filename,
             color: parsedTrack.color ?? 'white',
             id: parsedTrack.id,
@@ -56,11 +62,12 @@ export const getDisplayTimeStamp = (state: DisplayState): string | undefined => 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
     getDisplayTracks,
-    (timeStamp, parsedTracks): BikeSnake[] => {
+    getParticipantsDelay,
+    (timeStamp, parsedTracks, participantsDelayInSeconds): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
 
-        return parsedTracks?.map(extractLocationDisplay(timeStamp)) ?? [];
+        return parsedTracks?.map(extractLocationDisplay(timeStamp, participantsDelayInSeconds)) ?? [];
     }
 );

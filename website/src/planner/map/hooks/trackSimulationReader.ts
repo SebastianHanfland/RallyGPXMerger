@@ -3,7 +3,7 @@ import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
+import { getParticipantsDelay, getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
 import { extractSnakeTrackFromCalculatedTrack } from '../../../common/logic/extractSnakeTrack.ts';
@@ -13,7 +13,7 @@ import { getColorFromUuid } from '../../../utils/colorUtil.ts';
 import { getMapStartAndEndTime } from '../getMapStartAndEndTime.ts';
 
 const extractSnakeLocationForTimeStamp =
-    (timeStampFront: string, trackCompositions: TrackComposition[]) =>
+    (timeStampFront: string, trackCompositions: TrackComposition[], participantsDelayInSeconds: number) =>
     (calculatedTrack: CalculatedTrack): BikeSnake => {
         const foundTrackComposition =
             trackCompositions.length > 0
@@ -23,7 +23,12 @@ const extractSnakeLocationForTimeStamp =
 
         const trackId = foundTrackComposition?.id;
         return {
-            points: extractSnakeTrackFromCalculatedTrack(timeStampFront, participants, calculatedTrack),
+            points: extractSnakeTrackFromCalculatedTrack(
+                timeStampFront,
+                participants,
+                calculatedTrack,
+                participantsDelayInSeconds
+            ),
             title: foundTrackComposition?.name ?? 'N/A',
             color: trackId ? getColorFromUuid(trackId) : 'white',
             id: trackId ?? 'id-not-found',
@@ -50,10 +55,15 @@ export const getBikeSnakesForPlanningMap = createSelector(
     getCurrentTimeStamp,
     getTrackCompositions,
     getCalculatedTracks,
-    (timeStamp, trackParticipants, parsedTracks): BikeSnake[] => {
+    getParticipantsDelay,
+    (timeStamp, trackParticipants, parsedTracks, participantsDelayInSeconds): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
-        return parsedTracks?.map(extractSnakeLocationForTimeStamp(timeStamp, trackParticipants)) ?? [];
+        return (
+            parsedTracks?.map(
+                extractSnakeLocationForTimeStamp(timeStamp, trackParticipants, participantsDelayInSeconds)
+            ) ?? []
+        );
     }
 );
