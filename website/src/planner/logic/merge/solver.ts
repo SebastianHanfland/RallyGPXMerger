@@ -18,7 +18,8 @@ export interface GpxMergeLogic {
     (
         gpxSegments: ParsedGpxSegment[],
         trackCompositions: TrackComposition[],
-        arrivalDateTime: string
+        arrivalDateTime: string,
+        participantsDelayInSeconds: number
     ): CalculatedTrack[];
 }
 
@@ -26,10 +27,20 @@ function isNotNull<T>(arg: T | null): arg is T {
     return arg !== null;
 }
 
-export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (gpxSegments, trackCompositions, arrivalDateTime: string) => {
+export const mergeAndDelayAndAdjustTimes: GpxMergeLogic = (
+    gpxSegments,
+    trackCompositions,
+    arrivalDateTime: string,
+    participantsDelayInSeconds: number
+) => {
     return trackCompositions
         .map((track) => {
-            const endDate = getAdjustedArrivalDateTime(arrivalDateTime, track, trackCompositions);
+            const endDate = getAdjustedArrivalDateTime(
+                arrivalDateTime,
+                track,
+                trackCompositions,
+                participantsDelayInSeconds
+            );
             return assembleTrackFromSegments(track, gpxSegments, endDate);
         })
         .filter(isNotNull);

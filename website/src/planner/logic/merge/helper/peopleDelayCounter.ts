@@ -1,7 +1,6 @@
 import { TrackComposition } from '../../../store/types.ts';
 import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from './nodeFinder.ts';
 import { shiftEndDate } from '../../../../utils/dateUtil.ts';
-import { PARTICIPANTS_DELAY_IN_SECONDS } from '../../../store/trackMerge.reducer.ts';
 
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>
@@ -80,7 +79,8 @@ export function sumUpAllPeopleWithHigherPriority(
 export function getAdjustedArrivalDateTime(
     arrivalDateTime: string,
     track: TrackComposition,
-    trackCompositions: TrackComposition[]
+    trackCompositions: TrackComposition[],
+    participantsDelayInSeconds: number
 ) {
     const trackNodes = listAllNodesOfTracks(trackCompositions);
     let delayForTrackInMinutes = 0;
@@ -88,7 +88,7 @@ export function getAdjustedArrivalDateTime(
         const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);
         if (nodeInfluencesTrack) {
             const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(trackCompositions, trackNode, track.id);
-            delayForTrackInMinutes += (peopleWithHigherPriority * PARTICIPANTS_DELAY_IN_SECONDS) / 60;
+            delayForTrackInMinutes += (peopleWithHigherPriority * participantsDelayInSeconds) / 60;
         }
     });
     return shiftEndDate(arrivalDateTime, -delayForTrackInMinutes);
