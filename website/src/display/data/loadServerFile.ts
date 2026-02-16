@@ -7,6 +7,7 @@ import { getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfos.ts';
+import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
@@ -20,7 +21,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             dispatch(displayTracksActions.setBlockStreetInfos(getBlockedStreetInfo(planning)));
             dispatch(displayTracksActions.setPlanningLabel(getPlanningLabel(planning)));
 
-            const calculatedTracks: DisplayTrack[] = planning.calculatedTracks.tracks.map((track) => ({
+            const calculatedTracks: DisplayTrack[] = getCalculatedTracks(planning).map((track) => ({
                 peopleCount: track.peopleCount,
                 filename: track.filename,
                 id: track.id,
