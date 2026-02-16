@@ -10,7 +10,7 @@ import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.re
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
-import { geoApifyFetchMapMatching } from '../../src/planner/logic/resolving/street-new/geoApifyMapMatching';
+import { geoApifyFetchMapMatching } from '../../src/planner/logic/resolving/streets/geoApifyMapMatching';
 
 const messages = getMessages('en');
 

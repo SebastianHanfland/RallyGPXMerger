@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
-import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
-import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/street-new/enrichWithPostCodeAndDistrict.ts';
+import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
 
 const fileTypes = ['GPX'];
 

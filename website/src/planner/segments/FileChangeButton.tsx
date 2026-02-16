@@ -10,7 +10,7 @@ import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
-import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 
 interface Props {
     id: string;

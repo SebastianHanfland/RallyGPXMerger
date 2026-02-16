@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
-import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/street-new/mapMatchingStreetResolver.ts';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { TrackComposition } from '../store/types.ts';
 
 const fileTypes = ['GPX'];
