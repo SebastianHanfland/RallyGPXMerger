@@ -1,35 +1,13 @@
-import { TimedPoint } from '../../../store/types.ts';
 import { TrackStreetInfo } from '../types.ts';
 import { aggregateEnrichedPoints } from './aggregateEnrichedPoints.ts';
-import geoDistance from 'geo-distance-helper';
 import { createSelector } from '@reduxjs/toolkit';
 import { getNodePositions } from '../selectors/getNodePositions.ts';
 import { CalculatedTrack } from '../../../../common/types.ts';
-import { getLatLng } from '../../../../utils/pointUtil.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
 import { getDistrictLookup, getPostCodeLookup, getStreetLookup } from '../../../store/segmentData.redux.ts';
-
-function calculateDistance(track: CalculatedTrack): number {
-    const points = track.points;
-    let lastPoint: TimedPoint | null = null;
-    let distance = 0;
-    points.forEach((point) => {
-        if (lastPoint === null) {
-            lastPoint = point;
-        } else {
-            distance += geoDistance(getLatLng(point), getLatLng(lastPoint)) as number;
-        }
-        lastPoint = point;
-
-        return {
-            ...point,
-            time: point.t,
-        };
-    });
-    return distance;
-}
+import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 
 export const getTrackStreetInfos = createSelector(
     [
@@ -43,7 +21,7 @@ export const getTrackStreetInfos = createSelector(
     (calculatedTracks, tracks, streetLookup, districtLookup, postCodeLookup, nodePositions) => {
         return calculatedTracks.map((track: CalculatedTrack): TrackStreetInfo => {
             const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
-            const distance = calculateDistance(track);
+            const distance = calculateDistanceInKm(track.points);
 
             const wayPoints = aggregateEnrichedPoints(
                 track.points,
