@@ -13,6 +13,10 @@ function shiftEndTimeByParticipants(endDateTime: string, participants: number): 
     return date.addSeconds(new Date(endDateTime), participants * PARTICIPANTS_DELAY_IN_SECONDS).toISOString();
 }
 
+function getConnectedPointWithTheSameStreetIndex(enrichedPoints: TimedPoint[], firstPoint: TimedPoint) {
+    return enrichedPoints.filter((point) => point.s === firstPoint.s);
+}
+
 export function aggregatePoints(
     enrichedPoints: TimedPoint[],
     participants: number,
@@ -28,7 +32,7 @@ export function aggregatePoints(
 
     while (pointIndex < enrichedPoints.length) {
         const firstPoint = enrichedPoints[pointIndex];
-        const pointsWithSameStreet = enrichedPoints.filter((point) => point.s === enrichedPoints[0].s);
+        const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(enrichedPoints, firstPoint);
         const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1];
 
         const distanceInKm = calculateDistanceInKm(pointsWithSameStreet);
@@ -43,7 +47,7 @@ export function aggregatePoints(
             pointFrom: extractLatLon(firstPoint),
             pointTo: extractLatLon(lastPoint),
             distanceInKm: distanceInKm,
-            speed: (distanceInKm / getTimeDifferenceInSeconds(firstPoint.t, lastPoint.t)) * 3600,
+            speed: (distanceInKm / getTimeDifferenceInSeconds(lastPoint.t, firstPoint.t)) * 3600,
             type: TrackWayPointType.Track,
         });
         pointIndex += pointsWithSameStreet.length;
