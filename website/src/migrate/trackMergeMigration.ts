@@ -1,5 +1,6 @@
 import { TrackCompositionOld, TrackMergeStateOld } from '../planner/store/typesOld.ts';
 import { BREAK, SEGMENT, TrackComposition, TrackMergeState } from '../planner/store/types.ts';
+import { v4 as uuidv4 } from 'uuid';
 
 export const BREAK_IDENTIFIER = '%%min-%%';
 
@@ -14,8 +15,8 @@ function convertTrackCompositions(trackCompositionsOld: TrackCompositionOld[]): 
         rounding: track.rounding,
         segments: track.segmentIds.map((segmentId) => {
             if (segmentId.includes(BREAK_IDENTIFIER)) {
-                const [minutes, id] = segmentId.split(BREAK_IDENTIFIER);
-                return { type: BREAK, id: id, minutes: Number(minutes) };
+                const minutes = segmentId.split(BREAK_IDENTIFIER)[0];
+                return { type: BREAK, id: uuidv4(), minutes: Number(minutes) };
             }
             return { type: SEGMENT, id: segmentId, segmentId: segmentId };
         }),
