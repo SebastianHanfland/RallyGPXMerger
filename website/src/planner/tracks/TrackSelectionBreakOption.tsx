@@ -23,7 +23,7 @@ export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }
 
     return (
         <div
-            className={' rounded-2 d-flex justify-content-between'}
+            className={'rounded-2 d-flex justify-content-between'}
             style={{
                 border: '1px solid transparent',
                 borderColor: 'black',

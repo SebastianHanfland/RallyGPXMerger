@@ -1,4 +1,4 @@
-import { SEGMENT, TrackComposition } from '../store/types.ts';
+import { TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 
@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
 import { TrackSegmentSelect } from './TrackSegmentSelect.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
+import { isDefined } from '../../utils/typeUtil.ts';
 
 interface Props {
     track: TrackComposition;
@@ -25,12 +26,10 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
     const setSegmentIds = (items: { id: string }[]) => {
         const mappedIds = items.map((item) => item.id).join();
         if (mappedIds !== segments.map((segment) => segment.id).join()) {
-            const newSegments = items.map((segmentOption) => ({
-                id: segmentOption.id,
-                type: SEGMENT,
-                segmentId: segmentOption.id,
-            }));
-            dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
+            const newSegments = items.map((segmentOption) =>
+                segments.find((trackElement) => trackElement.id === segmentOption.id)
+            );
+            dispatch(trackMergeActions.setSegments({ id, segments: newSegments.filter(isDefined) }));
         }
     };
 
