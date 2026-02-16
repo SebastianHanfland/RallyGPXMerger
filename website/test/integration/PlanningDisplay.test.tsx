@@ -125,7 +125,7 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment1'));
             await user.click(ui.segmentSelect());
             await user.click(screen.getByText('segment3'));
-            expect(getTrackCompositions(store.getState())[0].segmentIds).toHaveLength(2);
+            expect(getTrackCompositions(store.getState())[0].segments).toHaveLength(2);
 
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(2);
@@ -137,7 +137,7 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment2'));
             await user.click(ui.segmentSelect());
             await user.click(screen.getByText('segment3'));
-            expect(getTrackCompositions(store.getState())[1].segmentIds).toHaveLength(2);
+            expect(getTrackCompositions(store.getState())[1].segments).toHaveLength(2);
 
             await user.click(screen.getByText(/Calculate/));
             await waitFor(() => expect(getCalculatedTracks(store.getState())).toHaveLength(2));

@@ -59,7 +59,7 @@ export const useHelpingHook = (): [string, string, () => void] => {
         if (!tracks[0].name || tracks[0].name === intl.formatMessage({ id: 'msg.nn' })) {
             return inform('trackName', () => dispatch(layoutActions.setSelectedSidebarSection('tracks')));
         }
-        if (tracks[0].segmentIds.length === 0) {
+        if (tracks[0].segments.length === 0) {
             return inform('trackSegments', () => dispatch(layoutActions.setSelectedSidebarSection('tracks')));
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {

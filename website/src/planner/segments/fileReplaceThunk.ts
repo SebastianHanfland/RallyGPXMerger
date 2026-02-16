@@ -1,4 +1,4 @@
-import { State } from '../store/types.ts';
+import { SEGMENT, State } from '../store/types.ts';
 import { getAverageSpeedInKmH, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
@@ -23,9 +23,11 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
         const previousSegmentSpeed = getSegmentSpeeds(getState())[targetSegment];
         const replacementIds = replacementSegments.map((segment) => segment.id);
         trackCompositions.forEach((track) => {
-            if (track.segmentIds.includes(targetSegment)) {
-                const newSegments = track.segmentIds.flatMap((segmentId) =>
-                    segmentId === targetSegment ? [...replacementIds] : segmentId
+            if (track.segments.map((segment) => segment.id).includes(targetSegment)) {
+                const newSegments = track.segments.flatMap((segmentId) =>
+                    segmentId.id === targetSegment
+                        ? [...replacementIds.map((id) => ({ id: id, segmentId: id, type: SEGMENT }))]
+                        : segmentId
                 );
                 dispatch(trackMergeActions.setSegments({ id: track.id, segments: newSegments }));
             }

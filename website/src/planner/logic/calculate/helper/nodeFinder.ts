@@ -1,5 +1,4 @@
-import { TrackComposition } from '../../../store/types.ts';
-import { BREAK_IDENTIFIER } from '../types.ts';
+import { SEGMENT, TrackComposition } from '../../../store/types.ts';
 
 export interface TrackNodeSegment {
     segmentId: string;
@@ -18,13 +17,13 @@ export function findMultipleOccurrencesOfSegments(trackCompositions: TrackCompos
     const multipleSegmentIds: string[] = [];
 
     trackCompositions.forEach((track) => {
-        track.segmentIds
-            .filter((segmentId) => !segmentId.includes(BREAK_IDENTIFIER))
-            .forEach((segmentId) => {
-                if (occurredSegmentIds.includes(segmentId) && !multipleSegmentIds.includes(segmentId)) {
-                    multipleSegmentIds.push(segmentId);
+        track.segments
+            .filter((trackElement) => trackElement.type === SEGMENT)
+            .forEach((trackElement) => {
+                if (occurredSegmentIds.includes(trackElement.id) && !multipleSegmentIds.includes(trackElement.id)) {
+                    multipleSegmentIds.push(trackElement.id);
                 } else {
-                    occurredSegmentIds.push(segmentId);
+                    occurredSegmentIds.push(trackElement.id);
                 }
             });
     });
@@ -36,7 +35,9 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): Tra
     return segmentIdsUsedMultipleTimes.map((segmentId) => {
         const segmentsBeforeNode: TrackNodeSegment[] = [];
         trackCompositions.forEach((track) => {
-            const segmentsWithoutBreaks = track.segmentIds.filter((segmentId) => !segmentId.includes(BREAK_IDENTIFIER));
+            const segmentsWithoutBreaks = track.segments
+                .filter((trackElement) => trackElement.type === SEGMENT)
+                .map((element) => element.id);
             const indexOfSegment = segmentsWithoutBreaks.indexOf(segmentId);
             if (indexOfSegment > 0) {
                 const segmentIdBeforeNode = segmentsWithoutBreaks[indexOfSegment - 1];

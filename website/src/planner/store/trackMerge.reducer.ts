@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { State, TrackComposition, TrackMergeState } from './types.ts';
+import { State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
@@ -19,15 +19,15 @@ const trackMergeSlice = createSlice({
             if (action.payload) {
                 state.trackCompositions = [...state.trackCompositions, action.payload];
             } else {
-                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segmentIds: [], name: '' }];
+                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segments: [], name: '' }];
             }
         },
         removeTrackComposition: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.filter((track) => track.id !== action.payload);
         },
-        setSegments: (state: TrackMergeState, action: PayloadAction<{ id: string; segments: string[] }>) => {
+        setSegments: (state: TrackMergeState, action: PayloadAction<{ id: string; segments: TrackElement[] }>) => {
             state.trackCompositions = state.trackCompositions.map((track) =>
-                track.id === action.payload.id ? { ...track, segmentIds: action.payload.segments } : track
+                track.id === action.payload.id ? { ...track, segments: action.payload.segments } : track
             );
         },
         removeSegmentFromTrack: (state: TrackMergeState, action: PayloadAction<{ id: string; segmentId: string }>) => {
@@ -35,7 +35,7 @@ const trackMergeSlice = createSlice({
 
             state.trackCompositions = state.trackCompositions.map((track) =>
                 track.id === action.payload.id
-                    ? { ...track, segmentIds: track.segmentIds.filter((sId) => sId !== segmentId) }
+                    ? { ...track, segments: track.segments.filter((sId) => sId.id !== segmentId) }
                     : track
             );
         },
@@ -77,7 +77,7 @@ const trackMergeSlice = createSlice({
         removeGpxSegment: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.map((track) => ({
                 ...track,
-                segmentIds: track.segmentIds.filter((segmentId) => segmentId !== action.payload),
+                segments: track.segments.filter((segmentId) => segmentId.id !== action.payload),
             }));
         },
         setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
@@ -99,7 +99,7 @@ const trackMergeSlice = createSlice({
         setGapToleranceInKm: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
             state.gapToleranceInKm = action.payload;
         },
-        setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | string[]>) => {
+        setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | TrackElement[]>) => {
             state.segmentIdClipboard = action.payload;
         },
         setTrackCompositionFilterTerm: (state: TrackMergeState, action: PayloadAction<string>) => {

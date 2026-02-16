@@ -1,4 +1,4 @@
-import { TrackComposition } from '../store/types.ts';
+import { SEGMENT, TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 
@@ -18,14 +18,18 @@ interface Props {
 }
 
 export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Props) {
-    const { id, segmentIds } = track;
+    const { id, segments } = track;
     const dispatch: AppDispatch = useDispatch();
     const gpxSegments = useSelector(getParsedGpxSegments);
 
     const setSegmentIds = (items: { id: string }[]) => {
         const mappedIds = items.map((item) => item.id).join();
-        if (mappedIds !== segmentIds.join()) {
-            const newSegments = items.map((segmentOption) => segmentOption.id);
+        if (mappedIds !== segments.map((segment) => segment.id).join()) {
+            const newSegments = items.map((segmentOption) => ({
+                id: segmentOption.id,
+                type: SEGMENT,
+                segmentId: segmentOption.id,
+            }));
             dispatch(trackMergeActions.setSegments({ id, segments: newSegments }));
         }
     };
@@ -34,17 +38,17 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
         <div>
             <ReactSortable
                 delayOnTouchOnly={true}
-                list={segmentIds.map((segmentId) => ({ id: segmentId }))}
+                list={segments.map((segment) => ({ id: segment.id }))}
                 setList={setSegmentIds}
             >
-                {segmentIds.map((segmentId) => {
+                {segments.map((trackElement) => {
                     const segmentName = gpxSegments
-                        .find((segment) => segment.id === segmentId)
+                        .find((segment) => segment.id === trackElement.id)
                         ?.filename.replace('.gpx', '');
                     return (
                         <TrackSelectionOption
-                            key={segmentId}
-                            segmentId={segmentId}
+                            key={trackElement.id}
+                            segmentId={trackElement.id}
                             trackId={id}
                             segmentName={segmentName ?? 'Currently blank'}
                             fullGpxDelete={!!fullGpxDelete}

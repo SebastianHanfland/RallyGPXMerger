@@ -5,7 +5,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { TrackComposition } from '../store/types.ts';
+import { SEGMENT, TrackComposition } from '../store/types.ts';
 
 const fileTypes = ['GPX'];
 
@@ -20,7 +20,14 @@ export function GpxSegmentsUploadAndParseAndSetToTrack({ track }: { track: Track
             dispatch(
                 trackMergeActions.setSegments({
                     id: track.id,
-                    segments: [...track.segmentIds, ...newGpxSegments.map((segment) => segment.id)],
+                    segments: [
+                        ...track.segments,
+                        ...newGpxSegments.map((segment) => ({
+                            type: SEGMENT,
+                            segmentId: segment.id,
+                            id: segment.id,
+                        })),
+                    ],
                 })
             );
         });

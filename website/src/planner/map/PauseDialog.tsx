@@ -5,8 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { getTrackCompositions, getTrackIdForAddingABreak, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { PauseDialogContent } from './PauseDialogContent.tsx';
 import { useEffect, useState } from 'react';
-import { TrackPause } from '../store/types.ts';
-import { BREAK_IDENTIFIER } from '../logic/calculate/types.ts';
+import { BREAK, TrackPause } from '../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '../store/planningStore.ts';
 
@@ -24,7 +23,7 @@ export const PauseDialog = () => {
         if (!track || !values.minutes) {
             return;
         }
-        const segments = [...track.segmentIds, `${values.minutes}${BREAK_IDENTIFIER}${uuidv4()}`];
+        const segments = [...track.segments, { id: uuidv4(), type: BREAK, minutes: values.minutes }];
         dispatch(trackMergeActions.setSegments({ id: track.id, segments: segments }));
         closeModal();
     };

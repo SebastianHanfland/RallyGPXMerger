@@ -14,7 +14,7 @@ export function getUsagesOfSegment(trackCompositions: TrackComposition[], segmen
     let counter = 0;
     const tracks: string[] = [];
     trackCompositions.forEach((track) => {
-        if (track.segmentIds.includes(segmentId)) {
+        if (track.segments.map((segment) => segment.id).includes(segmentId)) {
             counter++;
             if (track.name) {
                 tracks.push(track.name);

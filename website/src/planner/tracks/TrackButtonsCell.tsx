@@ -44,7 +44,7 @@ export function TrackButtonsCell({ track }: Props) {
                     <FormattedMessage id={'msg.removeTrack'} />
                 </span>
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}>
+            <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segments))}>
                 <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} className="m-1" />
                 <span>
                     <FormattedMessage id={'msg.copySegments'} />

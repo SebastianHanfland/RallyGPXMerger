@@ -34,28 +34,30 @@ export interface ToastsState {
     toasts: Toast[];
 }
 
-enum TrackElementType {
-    Segment = 'SEGMENT',
-    Break = 'BREAK',
-    Node = 'NODE',
+export const SEGMENT = 'SEGMENT' as const;
+export const BREAK = 'BREAK' as const;
+export const NODE = 'NODE' as const;
+
+export type TrackElementType = typeof SEGMENT | typeof BREAK | typeof NODE;
+
+interface TrackElementBase {
+    id: string;
+    type: TrackElementType;
 }
 
-export interface TrackSegment {
-    id: string;
+export interface TrackSegment extends TrackElementBase {
     segmentId: string;
-    type: TrackElementType.Segment;
+    type: typeof SEGMENT;
 }
 
-export interface TrackBreak {
-    id: string;
+export interface TrackBreak extends TrackElementBase {
     minutes: number;
-    type: TrackElementType.Break;
+    type: typeof BREAK;
 }
 
-export interface TrackNode {
-    id: string;
+export interface TrackNode extends TrackElementBase {
     nodeId: string;
-    type: TrackElementType.Node;
+    type: typeof NODE;
 }
 
 export type TrackElement = TrackSegment | TrackBreak | TrackNode;
@@ -89,7 +91,7 @@ export interface TrackMergeState {
     participantDelay: number;
     averageSpeedInKmH?: number;
     gapToleranceInKm?: number;
-    segmentIdClipboard?: string[];
+    segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
     isCalculationRunning?: boolean;
 }

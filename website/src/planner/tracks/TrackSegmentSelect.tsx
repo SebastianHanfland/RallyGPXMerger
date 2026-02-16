@@ -1,4 +1,4 @@
-import { ParsedGpxSegment, TrackComposition } from '../store/types.ts';
+import { ParsedGpxSegment, SEGMENT, TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import Select, { SingleValue } from 'react-select';
@@ -19,15 +19,15 @@ function toOption(gpxSegment: ParsedGpxSegment): { value: string; label: string 
 
 export function TrackSegmentSelect({ track }: Props) {
     const intl = useIntl();
-    const { id, segmentIds } = track;
+    const { id, segments } = track;
     const dispatch: AppDispatch = useDispatch();
     const gpxSegments = useSelector(getParsedGpxSegments);
     const options = [...gpxSegments.map(toOption)];
 
     const addSegmentToTrack = (newValue: SingleValue<{ value: string }>) => {
         if (newValue) {
-            const segments = [...segmentIds, newValue.value];
-            dispatch(trackMergeActions.setSegments({ id, segments: segments }));
+            const trackElements = [...segments, { id: newValue.value, segmentId: newValue.value, type: SEGMENT }];
+            dispatch(trackMergeActions.setSegments({ id, segments: trackElements }));
         }
     };
 
@@ -37,7 +37,7 @@ export function TrackSegmentSelect({ track }: Props) {
             value={null}
             menuPlacement={'top'}
             placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
-            options={options.filter((option) => !segmentIds.includes(option.value))}
+            options={options.filter((option) => !segments.map((segment) => segment.id).includes(option.value))}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={addSegmentToTrack}
