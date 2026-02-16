@@ -11,8 +11,7 @@ import { aggregatePoints } from './aggregatePoints.ts';
 export const getTrackStreetInfos = createSelector(
     [getCalculatedTracks, getTrackCompositions, getStreetLookup, getDistrictLookup, getPostCodeLookup],
     (calculatedTracks, tracks, streetLookup, districtLookup, postCodeLookup) => {
-        const ts2 = new Date().getMilliseconds();
-        const trackStreetInfos = calculatedTracks.map((track: CalculatedTrack): TrackStreetInfo => {
+        return calculatedTracks.map((track: CalculatedTrack): TrackStreetInfo => {
             const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
             const distance = calculateDistanceInKm(track.points);
 
@@ -41,8 +40,5 @@ export const getTrackStreetInfos = createSelector(
                 wayPoints: wayPoints,
             };
         });
-        const ts3 = new Date().getMilliseconds();
-        console.log(`erstes Info ${ts3 - ts2} ${ts2}`);
-        return trackStreetInfos;
     }
 );
