@@ -93,7 +93,6 @@ export interface TrackMergeState {
     gapToleranceInKm?: number;
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
-    isCalculationRunning?: boolean;
 }
 
 export interface MapState {

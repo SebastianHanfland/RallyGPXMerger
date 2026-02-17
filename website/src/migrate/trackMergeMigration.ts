@@ -36,6 +36,5 @@ export function migrateTrackMerge(trackMerge: TrackMergeStateOld): TrackMergeSta
         gapToleranceInKm: trackMerge.gapToleranceInKm,
         segmentIdClipboard: undefined,
         trackIdForAddingABreak: trackMerge.trackIdForAddingABreak,
-        isCalculationRunning: trackMerge.isCalculationRunning,
     };
 }

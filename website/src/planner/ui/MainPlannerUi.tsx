@@ -4,7 +4,6 @@ import { PlannerSidebar } from './PlannerSidebar.tsx';
 import { MapContentSelection } from '../map/MapContentSelection.tsx';
 import { PlannerHomeButton } from './PlannerHomeButton.tsx';
 import { TimeSlider } from '../map/TimeSlider.tsx';
-import { CalculationIsRunning } from './CalculationIsRunning.tsx';
 import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
 import { HelpingTip } from './HelpingTip.tsx';
 
@@ -16,7 +15,6 @@ export const MainPlannerUi = () => {
                     <InteractionMap />
                 </Container>
                 <HelpingTip />
-                <CalculationIsRunning />
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />

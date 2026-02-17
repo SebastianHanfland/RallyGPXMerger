@@ -22,7 +22,6 @@ export function loadStateAndSetUpPlanner(
         dispatch(backendActions.setPlanningId(planningId));
     }
     dispatch(toastsActions.clearToasts());
-    dispatch(trackMergeActions.setIsCalculationRunning(false));
     const passwordToSet = adminToken ?? planningPassword;
     if (passwordToSet) {
         dispatch(backendActions.setPlanningPassword(passwordToSet));
