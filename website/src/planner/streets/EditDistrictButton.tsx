@@ -6,8 +6,8 @@ import Modal from 'react-bootstrap/Modal';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { geoCodingActions } from '../store/geoCoding.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
     waypoint: AggregatedPoints;
@@ -41,8 +41,7 @@ export function EditDistrictModal(props: Props & { closeModal: () => void }) {
     const [district, setDistrict] = useState(waypoint.district ?? '');
 
     const onConfirm = () => {
-        dispatch(geoCodingActions.setDistrictReplacementWaypoint({ ...waypoint, district: district }));
-        // dispatch(triggerAutomaticCalculation);
+        dispatch(segmentDataActions.addReplaceDistrictLookup({ [waypoint.s ?? -1]: district }));
         closeModal();
     };
 
