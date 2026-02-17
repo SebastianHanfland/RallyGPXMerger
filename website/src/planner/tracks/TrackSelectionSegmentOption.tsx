@@ -56,8 +56,16 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 <div className={'m-2'} title={segmentName}>
                     {segmentName}
                 </div>
-                {isNode && <div title={isNode.tracks.join('\n')}>{isNode.tracks.length} Node</div>}
                 <div>
+                    {isNode && (
+                        <span
+                            title={isNode.tracks.join('\n')}
+                            style={{ backgroundColor: 'white', padding: '5px' }}
+                            className={'rounded-2'}
+                        >
+                            {isNode.tracks.length} Node
+                        </span>
+                    )}
                     {flipped && <img src={flip} className="m-1" alt="flip" />}
                     <Button
                         variant="danger"
