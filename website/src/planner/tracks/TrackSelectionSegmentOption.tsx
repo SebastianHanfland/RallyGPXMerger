@@ -16,6 +16,7 @@ import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.r
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
 import { getUsagesOfSegment } from '../segments/segmentUsageCounter.ts';
+import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
 
 interface Props {
     trackId: string;
@@ -59,6 +60,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                     <span className={'m-1'}>{segmentName}</span>
                 </div>
                 <div>
+                    <TrackSelectionGapDisplay segmentId={segmentId} trackId={trackId} />
                     <TrackSelectionNodeButton segmentId={segmentId} />
                     {flipped && <img src={flip} className="m-1" alt="flip" />}
                     <Button
