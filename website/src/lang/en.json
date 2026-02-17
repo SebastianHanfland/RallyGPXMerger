@@ -203,6 +203,8 @@
     "msg.save": "Save",
     "msg.points": "Points",
     "msg.gaps": "Gaps",
+    "msg.gapOnTrack": "{count} gap on the track",
+    "msg.gapsOnTrack": "{count} gaps on the track",
     "msg.title": "Title",
     "msg.description": "Description",
     "msg.radius": "Radius in m",

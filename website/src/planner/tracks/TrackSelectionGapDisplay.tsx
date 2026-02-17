@@ -3,6 +3,7 @@ import arrowDown from '../../assets/arrow-down.svg';
 import arrowUp from '../../assets/arrow-up.svg';
 import { getGaps } from '../logic/calculate/calculatingGaps.ts';
 import { GapPoint } from '../store/types.ts';
+import { Warning } from '../layout/Warning.tsx';
 
 interface Props {
     segmentId: string;
@@ -32,6 +33,7 @@ export function TrackSelectionGapDisplay({ segmentId, trackId }: Props) {
                     className={'rounded-2'}
                 >
                     <span className={'mx-1'}>
+                        <Warning />
                         <img src={arrowUp} alt={'look up'} />
                     </span>
                 </span>
@@ -43,6 +45,7 @@ export function TrackSelectionGapDisplay({ segmentId, trackId }: Props) {
                     className={'rounded-2'}
                 >
                     <span className={'mx-1'}>
+                        <Warning />
                         <img src={arrowDown} alt={'look down'} />
                     </span>
                 </span>

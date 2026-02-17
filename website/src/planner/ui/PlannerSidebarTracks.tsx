@@ -5,20 +5,17 @@ import {
     getTrackCompositions,
     trackMergeActions,
 } from '../store/trackMerge.reducer.ts';
-import { Form } from 'react-bootstrap';
+import { Form, PageItem, Pagination } from 'react-bootstrap';
 import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
-import { PageItem, Pagination } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
-import { getGaps } from '../logic/calculate/calculatingGaps.ts';
-import { Warning } from '../layout/Warning.tsx';
+import { TrackGapWarning } from '../tracks/TrackGapWarning.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
     const filteredTracks = useSelector(getFilteredTrackCompositions);
-    const gaps = useSelector(getGaps);
     const dispatch = useDispatch();
     const intl = useIntl();
     const filterTerm = useSelector(getTrackCompositionFilterTerm);
@@ -55,7 +52,7 @@ export const PlannerSidebarTracks = () => {
                         active={selectedTrackId === track.id}
                         onClick={() => setSelectedTrackId(track.id)}
                     >
-                        {gaps.filter((gap) => gap.trackId === track.id).length > 0 ? <Warning /> : null}
+                        <TrackGapWarning trackId={track.id} />
                         {track.name || '---'}
                     </PageItem>
                 ))}
