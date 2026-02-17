@@ -92,6 +92,7 @@ export function aggregatePoints(
             distanceInKm: distanceInKm,
             speed: (distanceInKm / getTimeDifferenceInSeconds(lastPoint.t, correctedFirstPoint.t)) * 3600,
             type: TrackWayPointType.Track,
+            s: firstPoint.s,
         });
         pointIndex += pointsWithSameStreet.length;
     }

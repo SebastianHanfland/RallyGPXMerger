@@ -93,6 +93,7 @@ export interface AggregatedPoints {
     type?: TrackWayPointType;
     breakLength?: number;
     nodeTracks?: string[];
+    s?: number;
 }
 
 export interface ReplacementWayPoint {
