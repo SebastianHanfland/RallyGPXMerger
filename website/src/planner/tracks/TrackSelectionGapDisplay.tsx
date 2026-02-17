@@ -2,10 +2,15 @@ import { useSelector } from 'react-redux';
 import arrowDown from '../../assets/arrow-down.svg';
 import arrowUp from '../../assets/arrow-up.svg';
 import { getGaps } from '../logic/calculate/calculatingGaps.ts';
+import { GapPoint } from '../store/types.ts';
 
 interface Props {
     segmentId: string;
     trackId: string;
+}
+
+function getTitle(gapAfter: GapPoint) {
+    return gapAfter?.title + '\n' + gapAfter?.description;
 }
 
 export function TrackSelectionGapDisplay({ segmentId, trackId }: Props) {
@@ -22,7 +27,7 @@ export function TrackSelectionGapDisplay({ segmentId, trackId }: Props) {
         <>
             {gapBefore && (
                 <span
-                    title={gapBefore?.description}
+                    title={getTitle(gapBefore)}
                     style={{ backgroundColor: 'orange', padding: '5px' }}
                     className={'rounded-2'}
                 >
@@ -33,7 +38,7 @@ export function TrackSelectionGapDisplay({ segmentId, trackId }: Props) {
             )}
             {gapAfter && (
                 <span
-                    title={gapAfter?.description}
+                    title={getTitle(gapAfter)}
                     style={{ backgroundColor: 'orange', padding: '5px' }}
                     className={'rounded-2'}
                 >

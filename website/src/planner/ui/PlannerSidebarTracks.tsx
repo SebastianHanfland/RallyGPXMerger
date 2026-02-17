@@ -12,10 +12,13 @@ import { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
+import { getGaps } from '../logic/calculate/calculatingGaps.ts';
+import { Warning } from '../layout/Warning.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
     const filteredTracks = useSelector(getFilteredTrackCompositions);
+    const gaps = useSelector(getGaps);
     const dispatch = useDispatch();
     const intl = useIntl();
     const filterTerm = useSelector(getTrackCompositionFilterTerm);
@@ -52,6 +55,7 @@ export const PlannerSidebarTracks = () => {
                         active={selectedTrackId === track.id}
                         onClick={() => setSelectedTrackId(track.id)}
                     >
+                        {gaps.filter((gap) => gap.trackId === track.id).length > 0 ? <Warning /> : null}
                         {track.name || '---'}
                     </PageItem>
                 ))}
@@ -62,7 +66,7 @@ export const PlannerSidebarTracks = () => {
                         dispatch(
                             trackMergeActions.addTrackComposition({
                                 id: newTrackId,
-                                segmentIds: [],
+                                segments: [],
                                 name: intl.formatMessage({ id: 'msg.nn' }),
                             })
                         );

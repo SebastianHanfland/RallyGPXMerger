@@ -27,14 +27,19 @@ export const getGaps = createSelector(
                     if (distance > tolerance) {
                         const lat = (lastPoint.b + firstPointOfSegment.b) / 2;
                         const lng = (lastPoint.l + firstPointOfSegment.l) / 2;
+                        const lastSegment = segments.find((s) => s.id === lastSegmentId);
+
                         gaps.push({
                             id: uuidv4(),
                             lat,
                             lng,
                             type: PointOfInterestType.GAP,
                             radiusInM: (distance * 1000) / 2,
-                            title: '',
-                            description: 'Distance ' + distance * 1000,
+                            title: `Gap bigger than ${Math.round(tolerance * 1000)} m`,
+                            description:
+                                'Distance ' +
+                                Math.round(distance * 1000) +
+                                ` m between "${lastSegment?.filename ?? ''}" and "${foundSegment.filename}"`,
                             trackId: track.id,
                             segmentIdBefore: lastSegmentId,
                             segmentIdAfter: segment.segmentId,
