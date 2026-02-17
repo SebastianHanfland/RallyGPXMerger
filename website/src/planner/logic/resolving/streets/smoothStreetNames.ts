@@ -21,9 +21,9 @@ function smoothJunction(point: ParsedPoint, index: number, points: ParsedPoint[]
         return point;
     }
     if (index === 0) {
-        return { ...point, s: points[1].s };
+        return { ...point, s: points[1].s, o: point.s };
     }
-    return { ...point, s: points[index - 1].s };
+    return { ...point, s: points[index - 1].s, o: point.s };
 }
 
 const getCurrentPoints = (newPoints: ParsedPoint[], points: ParsedPoint[]): ParsedPoint[] => {
