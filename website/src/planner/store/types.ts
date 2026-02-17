@@ -1,4 +1,3 @@
-import { DistrictReplacementWayPoint, StreetNameReplacementWayPoint } from '../logic/resolving/types.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
@@ -80,8 +79,6 @@ export interface TrackComposition {
 export interface GeoCodingState {
     geoApifyKey?: string;
     bigDataCloudKey?: string;
-    streetReplacementWayPoints?: StreetNameReplacementWayPoint[];
-    districtReplacementWayPoints?: DistrictReplacementWayPoint[];
     onlyShowUnknown?: boolean;
 }
 

@@ -95,16 +95,3 @@ export interface AggregatedPoints {
     nodeTracks?: string[];
     s?: number;
 }
-
-export interface ReplacementWayPoint {
-    pointFrom: { lat: number; lon: number };
-    pointTo: { lat: number; lon: number };
-}
-
-export interface StreetNameReplacementWayPoint extends ReplacementWayPoint {
-    streetName: string;
-}
-
-export interface DistrictReplacementWayPoint extends ReplacementWayPoint {
-    district: string;
-}
