@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button, ButtonGroup, DropdownButton } from 'react-bootstrap';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
@@ -15,6 +15,7 @@ import { DraggableIcon } from './DraggableIcon.tsx';
 import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
+import { getUsagesOfSegment } from '../segments/segmentUsageCounter.ts';
 
 interface Props {
     trackId: string;
@@ -26,6 +27,9 @@ interface Props {
 export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
+
+    const trackCompositions = useSelector(getTrackCompositions);
+    const { tooltip } = getUsagesOfSegment(trackCompositions, segmentId, intl);
 
     const gpxSegment = useSelector(getParsedGpxSegments).find((segment) => segment.id === segmentId);
     if (!gpxSegment) {
@@ -50,7 +54,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 }}
                 key={segmentId}
             >
-                <div className={'m-2'} title={segmentName}>
+                <div className={'m-2'} title={segmentName + '\n' + tooltip}>
                     <DraggableIcon />
                     {segmentName}
                 </div>
