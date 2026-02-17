@@ -150,6 +150,7 @@
     "msg.streetListZip": "Straßenliste",
     "msg.streetOverview": "Straßenübersicht",
     "msg.nodePoints": "Knotenpunkte",
+    "msg.nodePoint": "Knotenpunkt: {counter} Routen",
     "msg.noNodePoints": "Auf dieser Route gibt es keine Knotenpunkte",
     "msg.breakPoints": "Pausenplätze",
     "msg.noBreakPoints": "Auf dieser Route gibt es keine Pausenplätze",
