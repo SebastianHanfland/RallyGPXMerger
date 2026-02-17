@@ -5,7 +5,7 @@ import { SidebarNavItem } from './SidebarNavItem.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { FormattedMessage } from 'react-intl';
 import { getHasChangesSinceLastUpload } from '../store/backend.reducer.ts';
-import { Warning } from '../layout/dashboard/Warning.tsx';
+import { Warning } from '../layout/Warning.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export const PlannerSidebarNavigation = () => {

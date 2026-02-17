@@ -4,7 +4,7 @@ import { getArrivalDateTime, getHasDefaultArrivalDateTime } from '../store/track
 import { CSSProperties } from 'react';
 import { formatDate } from '../../utils/dateUtil.ts';
 import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
-import { Warning } from '../layout/dashboard/Warning.tsx';
+import { Warning } from '../layout/Warning.tsx';
 
 const defaultTimeWarning: CSSProperties = {
     position: 'fixed',

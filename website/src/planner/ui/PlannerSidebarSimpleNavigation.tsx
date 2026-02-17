@@ -4,7 +4,7 @@ import { getSelectedSidebarSection } from '../store/layout.reducer.ts';
 import { SidebarNavItem } from './SidebarNavItem.tsx';
 import { FormattedMessage } from 'react-intl';
 import { getHasChangesSinceLastUpload } from '../store/backend.reducer.ts';
-import { Warning } from '../layout/dashboard/Warning.tsx';
+import { Warning } from '../layout/Warning.tsx';
 
 export const PlannerSidebarSimpleNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);

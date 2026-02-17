@@ -20,7 +20,7 @@ import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
-import { Warning } from './dashboard/Warning.tsx';
+import { Warning } from './Warning.tsx';
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);

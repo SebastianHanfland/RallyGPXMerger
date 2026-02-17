@@ -23,7 +23,7 @@ export const getGaps = createSelector(
                 if (lastPoint && lastSegmentId) {
                     const firstPointOfSegment = foundSegment.points[0];
                     const distance = Number(geoDistance(getLatLng(lastPoint), getLatLng(firstPointOfSegment)));
-                    console.log(distance);
+
                     if (distance > tolerance) {
                         const lat = (lastPoint.b + firstPointOfSegment.b) / 2;
                         const lng = (lastPoint.l + firstPointOfSegment.l) / 2;

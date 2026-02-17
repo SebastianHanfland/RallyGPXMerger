@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import { getLanguage } from '../../language.ts';
 import { useSelector } from 'react-redux';
-import { Warning } from '../layout/dashboard/Warning.tsx';
+import { Warning } from '../layout/Warning.tsx';
 import hand from '../../assets/hand.svg';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 

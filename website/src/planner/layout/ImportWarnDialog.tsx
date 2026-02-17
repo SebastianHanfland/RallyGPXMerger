@@ -4,7 +4,7 @@ import { resetData } from '../io/resetData.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { ExportStateJson } from '../io/ExportStateJson.tsx';
 import { useState } from 'react';
-import { Warning } from './dashboard/Warning.tsx';
+import { Warning } from './Warning.tsx';
 
 export function ImportWarnDialog(props: { closeModal: () => void; onConfirm?: () => void; importWarn: boolean }) {
     const dispatch = useDispatch();
