@@ -177,6 +177,12 @@ export interface PointOfInterest {
     radiusInM: number;
 }
 
+export interface GapPoint extends PointOfInterest {
+    trackId: string;
+    segmentIdBefore: string;
+    segmentIdAfter: string;
+}
+
 export enum PointOfInterestType {
     TOILET = 'TOILET',
     IMPEDIMENT = 'IMPEDIMENT',
