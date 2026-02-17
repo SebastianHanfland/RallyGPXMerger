@@ -8,6 +8,7 @@ import { getLatLon } from '../../../../utils/pointUtil.ts';
 export interface NodePosition {
     point: { lat: number; lon: number };
     tracks: string[];
+    segmentIdAfter: string;
 }
 
 function getTracks(segmentId: string, trackNodes: TrackNode[], trackCompositions: TrackComposition[]): string[] {
@@ -40,6 +41,7 @@ export const getNodePositions = createSelector(
                 nodePositions.push({
                     point: getLatLon(lastPointOfSegment),
                     tracks: getTracks(segmentId, trackNodes, trackCompositions),
+                    segmentIdAfter: segmentId,
                 });
             }
         });

@@ -14,6 +14,7 @@ import flip from '../../assets/flip.svg';
 import { DraggableIcon } from './DraggableIcon.tsx';
 import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
+import { getNodePositions } from '../logic/resolving/selectors/getNodePositions.ts';
 
 interface Props {
     trackId: string;
@@ -25,6 +26,8 @@ interface Props {
 export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
+    const nodes = useSelector(getNodePositions);
+    const isNode = nodes.find((node) => node.segmentIdAfter === segmentId);
 
     const gpxSegment = useSelector(getParsedGpxSegments).find((segment) => segment.id === segmentId);
     if (!gpxSegment) {
@@ -53,6 +56,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 <div className={'m-2'} title={segmentName}>
                     {segmentName}
                 </div>
+                {isNode && <div title={isNode.tracks.join('\n')}>{isNode.tracks.length} Node</div>}
                 <div>
                     {flipped && <img src={flip} className="m-1" alt="flip" />}
                     <Button
