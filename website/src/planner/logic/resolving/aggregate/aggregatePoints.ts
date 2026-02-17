@@ -15,8 +15,24 @@ export function shiftEndTimeByParticipants(
     return date.addSeconds(new Date(endDateTime), participants * participantsDelayInSeconds).toISOString();
 }
 
-function getConnectedPointWithTheSameStreetIndex(enrichedPoints: TimedPoint[], firstPoint: TimedPoint) {
-    return enrichedPoints.filter((point) => point.s === firstPoint.s);
+export function getConnectedPointWithTheSameStreetIndex(
+    enrichedPoints: TimedPoint[],
+    firstPoint: TimedPoint,
+    streetLookup: Record<number, string | null>
+): TimedPoint[] {
+    return enrichedPoints.filter((point, index) => {
+        if (point.s === firstPoint.s) {
+            return true;
+        }
+        if (index > 0) {
+            const previousStreet = streetLookup[enrichedPoints[index - 1].s];
+            const wantedStreet = streetLookup[firstPoint.s];
+            const currentStreet = streetLookup[enrichedPoints[index].s];
+            if (previousStreet === wantedStreet && currentStreet === wantedStreet) {
+                return true;
+            }
+        }
+    });
 }
 
 export function aggregatePoints(
@@ -32,7 +48,7 @@ export function aggregatePoints(
 
     while (pointIndex < enrichedPoints.length) {
         const firstPoint = enrichedPoints[pointIndex];
-        const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(enrichedPoints, firstPoint);
+        const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(enrichedPoints, firstPoint, streetLookup);
         const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1];
 
         const distanceInKm = calculateDistanceInKm(pointsWithSameStreet);
