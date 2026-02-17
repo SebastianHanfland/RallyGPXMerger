@@ -54,9 +54,9 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 }}
                 key={segmentId}
             >
-                <div className={'m-2'} title={segmentName + '\n' + tooltip}>
+                <div className={'my-2'} title={segmentName + '\n' + tooltip}>
                     <DraggableIcon />
-                    {segmentName}
+                    <span className={'m-1'}>{segmentName}</span>
                 </div>
                 <div>
                     <TrackSelectionNodeButton segmentId={segmentId} />
