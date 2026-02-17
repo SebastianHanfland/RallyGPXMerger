@@ -222,6 +222,7 @@
     "msg.speed": "Geschwindigkeit in km/h",
     "msg.changeStreetName": "Straßennamen ändern",
     "msg.changeDistrict": "Bezirk ändern",
+    "msg.changePostCode": "PLZ ändern",
     "msg.continuePlan": "Planung weiter bearbeiten",
     "msg.continuePlan.hint": "Öffnet den Planer für die letzte Planung",
     "msg.startWizard": "Assistent starten",

@@ -222,6 +222,7 @@
     "msg.speed": "Speed in km/h",
     "msg.changeStreetName": "Change street name",
     "msg.changeDistrict": "Change district",
+    "msg.changePostCode": "Change post code",
     "msg.continuePlan": "Continue planning",
     "msg.continuePlan.hint": "Opens last planning in planner",
     "msg.startWizard": "Start Wizard",
