@@ -26,6 +26,10 @@ function smoothJunction(point: ParsedPoint, index: number, points: ParsedPoint[]
     return { ...point, s: points[index - 1].s };
 }
 
+const getCurrentPoints = (newPoints: ParsedPoint[], points: ParsedPoint[]): ParsedPoint[] => {
+    return points.map((point, index) => (index < newPoints.length ? newPoints[index] : point));
+};
+
 export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<number, string>) {
     // When there is only one entry, replace it
     const occurrenceCount: Record<number, number> = {};
@@ -34,10 +38,15 @@ export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<nu
     });
     console.log(occurrenceCount);
 
-    return points.map((point, index) => {
-        if (isJunction(point, index, points)) {
-            return smoothJunction(point, index, points);
+    const newPoints: ParsedPoint[] = [];
+
+    points.forEach((point, index) => {
+        const currentPoints = getCurrentPoints(newPoints, points);
+        if (isJunction(point, index, currentPoints)) {
+            newPoints.push(smoothJunction(point, index, currentPoints));
+            return;
         }
-        return point;
+        newPoints.push(point);
     });
+    return newPoints;
 }

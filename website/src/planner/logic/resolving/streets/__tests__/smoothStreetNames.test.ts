@@ -38,14 +38,20 @@ describe('smoothStreetNames', () => {
 
     it('should smooth out a junction', () => {
         // given
-        const points: ParsedPoint[] = [getPoint(2, 1), getPoint(3, 1), getPoint(4, 2), getPoint(5, 3)];
+        const points: ParsedPoint[] = [getPoint(2, 1), getPoint(3, 1), getPoint(4, 2), getPoint(5, 3), getPoint(6, 3)];
         const streetLookUp = { 1: 'street', 2: 'junction', 3: 'street 2' };
 
         // when
         const smoothedPoints = smoothStreetNames(points, streetLookUp);
 
         // then
-        expect(smoothedPoints).toEqual([getPoint(3, 1), getPoint(3, 1), getPoint(4, 1), getPoint(5, 3)]);
+        expect(smoothedPoints).toEqual([
+            getPoint(2, 1),
+            getPoint(3, 1),
+            getPoint(4, 1),
+            getPoint(5, 3),
+            getPoint(6, 3),
+        ]);
     });
 
     it('should smooth out a junction', () => {
