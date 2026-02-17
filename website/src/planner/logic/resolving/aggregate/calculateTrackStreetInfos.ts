@@ -4,20 +4,14 @@ import { CalculatedTrack } from '../../../../common/types.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
 import { getParticipantsDelay, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { getDistrictLookup, getPostCodeLookup, getStreetLookup } from '../../../store/segmentData.redux.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 import { aggregatePoints } from './aggregatePoints.ts';
+import { getLookups } from '../selectors/getLookups.ts';
 
 export const getTrackStreetInfos = createSelector(
-    [
-        getCalculatedTracks,
-        getTrackCompositions,
-        getStreetLookup,
-        getDistrictLookup,
-        getPostCodeLookup,
-        getParticipantsDelay,
-    ],
-    (calculatedTracks, tracks, streetLookup, districtLookup, postCodeLookup, participantsDelayInSeconds) => {
+    [getCalculatedTracks, getTrackCompositions, getLookups, getParticipantsDelay],
+    (calculatedTracks, tracks, lookups, participantsDelayInSeconds) => {
+        const { streets, districts, postCodes } = lookups;
         return calculatedTracks.map((track: CalculatedTrack): TrackStreetInfo => {
             const trackComposition = tracks.find((trackComp) => trackComp.id === track.id);
             const distance = calculateDistanceInKm(track.points);
@@ -26,9 +20,9 @@ export const getTrackStreetInfos = createSelector(
                 track.points,
                 track.peopleCount ?? 0,
                 participantsDelayInSeconds,
-                streetLookup,
-                districtLookup,
-                postCodeLookup
+                streets,
+                districts,
+                postCodes
             );
 
             const startFront = wayPoints[0].frontArrival;

@@ -161,6 +161,9 @@ export interface SegmentDataState {
     streetLookup: Record<number, string | null>;
     postCodeLookup: Record<number, string | null>;
     districtLookup: Record<number, string | null>;
+    replaceStreetLookup: Record<number, string | null>;
+    replacePostCodeLookup: Record<number, string | null>;
+    replaceDistrictLookup: Record<number, string | null>;
 }
 
 export interface PointOfInterest {

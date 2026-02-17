@@ -12,6 +12,9 @@ const initialState: SegmentDataState = {
     streetLookup: {},
     postCodeLookup: {},
     districtLookup: {},
+    replaceStreetLookup: {},
+    replacePostCodeLookup: {},
+    replaceDistrictLookup: {},
 };
 
 const segmentDataSlice = createSlice({
@@ -29,6 +32,15 @@ const segmentDataSlice = createSlice({
         },
         addDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
             state.districtLookup = { ...state.districtLookup, ...action.payload };
+        },
+        addReplaceStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+            state.streetLookup = { ...state.replaceStreetLookup, ...action.payload };
+        },
+        addReplacePostCodeLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+            state.postCodeLookup = { ...state.replacePostCodeLookup, ...action.payload };
+        },
+        addReplaceDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+            state.districtLookup = { ...state.replaceDistrictLookup, ...action.payload };
         },
         removeGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
@@ -130,6 +142,9 @@ export const getParsedGpxSegments = (state: State) => getBase(state).segments;
 export const getStreetLookup = (state: State) => getBase(state).streetLookup;
 export const getPostCodeLookup = (state: State) => getBase(state).postCodeLookup;
 export const getDistrictLookup = (state: State) => getBase(state).districtLookup;
+export const getReplaceStreetLookup = (state: State) => getBase(state).replaceStreetLookup;
+export const getReplacePostCodeLookup = (state: State) => getBase(state).replacePostCodeLookup;
+export const getReplaceDistrictLookup = (state: State) => getBase(state).replaceDistrictLookup;
 
 // Older functions TODO: #223 tidy up
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
