@@ -21,9 +21,46 @@ function smoothJunction(point: ParsedPoint, index: number, points: ParsedPoint[]
         return point;
     }
     if (index === 0) {
-        return { ...point, s: points[1].s, o: point.s };
+        return { ...point, s: points[1].s };
     }
-    return { ...point, s: points[index - 1].s, o: point.s };
+    return { ...point, s: points[index - 1].s };
+}
+
+export const isSameStreet = (
+    point: ParsedPoint,
+    index: number,
+    points: ParsedPoint[],
+    streetLookUp: Record<number, string>
+): boolean => {
+    if (points.length <= 1 || index === 0) {
+        return false;
+    }
+
+    const previousPoint = points[index - 1];
+    const previousStreet = streetLookUp[previousPoint.s];
+    const street = streetLookUp[point.s];
+
+    return previousStreet === street;
+};
+
+function smoothSameStreet(
+    point: ParsedPoint,
+    index: number,
+    points: ParsedPoint[],
+    streetLookUp: Record<number, string>
+) {
+    if (points.length <= 1 || index === 0) {
+        return point;
+    }
+
+    const previousPoint = points[index - 1];
+    const previousStreet = streetLookUp[previousPoint.s];
+    const street = streetLookUp[point.s];
+
+    if (previousStreet === street) {
+        return { ...point, s: previousPoint.s };
+    }
+    return point;
 }
 
 const getCurrentPoints = (newPoints: ParsedPoint[], points: ParsedPoint[]): ParsedPoint[] => {
@@ -44,6 +81,10 @@ export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<nu
         const currentPoints = getCurrentPoints(newPoints, points);
         if (isJunction(point, index, currentPoints)) {
             newPoints.push(smoothJunction(point, index, currentPoints));
+            return;
+        }
+        if (isSameStreet(point, index, currentPoints, streetLookUp)) {
+            newPoints.push(smoothSameStreet(point, index, currentPoints, streetLookUp));
             return;
         }
         newPoints.push(point);
