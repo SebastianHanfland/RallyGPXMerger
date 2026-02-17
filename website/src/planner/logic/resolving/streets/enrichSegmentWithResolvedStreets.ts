@@ -1,5 +1,6 @@
 import { toKey } from '../helper/pointKeys.ts';
 import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../store/types.ts';
+import { smoothStreetNames } from './smoothStreetNames.ts';
 
 function getHighestFound(streetLookUp: Record<number, string>, resolvedStreetName: string): [string, string] | null {
     const entriesWithSameStreetName = Object.entries(streetLookUp).filter((entry) => entry[1] === resolvedStreetName);
@@ -48,7 +49,7 @@ export function enrichSegmentWithResolvedStreets(
     const segment = {
         ...segmentWithoutStreets,
         streetsResolved: true,
-        points: points,
+        points: smoothStreetNames(points, streetLookUp),
     };
     return { segment, streetLookUp: streetLookUp };
 }
