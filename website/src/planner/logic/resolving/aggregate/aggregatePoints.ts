@@ -28,9 +28,26 @@ export function getConnectedPointWithTheSameStreetIndex(
             const previousStreet = streetLookup[enrichedPoints[index - 1].s];
             const wantedStreet = streetLookup[firstPoint.s];
             const currentStreet = streetLookup[enrichedPoints[index].s];
-            if (previousStreet === wantedStreet && currentStreet === wantedStreet) {
-                return true;
+            if (previousStreet !== wantedStreet || currentStreet !== wantedStreet) {
+                return false;
             }
+
+            // find connection
+            let searchIndex = index;
+
+            while (searchIndex > 0) {
+                const previousPoint = enrichedPoints[searchIndex - 1];
+                const previousStreet = streetLookup[previousPoint.s];
+                const wantedStreet = streetLookup[firstPoint.s];
+                searchIndex = searchIndex - 1;
+                if (previousStreet !== wantedStreet) {
+                    return false;
+                }
+                if (previousPoint.s === firstPoint.s) {
+                    return true;
+                }
+            }
+            return false;
         }
     });
 }
