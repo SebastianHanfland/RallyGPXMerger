@@ -72,19 +72,25 @@ export function aggregatePoints(
         const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(enrichedPoints, firstPoint, streetLookup);
         const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1];
 
-        const distanceInKm = calculateDistanceInKm(pointsWithSameStreet);
+        const distanceInKm =
+            pointIndex > 0
+                ? calculateDistanceInKm([enrichedPoints[pointIndex - 1], ...pointsWithSameStreet])
+                : calculateDistanceInKm(pointsWithSameStreet);
+
+        const correctedFirstPoint = pointIndex > 0 ? enrichedPoints[pointIndex - 1] : firstPoint;
+
         aggregatedPoints.push({
             streetName: streetLookup[firstPoint.s],
             district: districtLookup[firstPoint.s],
             postCode: postCodeLookup[firstPoint.s],
-            backArrival: shiftEndTimeByParticipants(firstPoint.t, participants, participantsDelayInSeconds),
+            backArrival: shiftEndTimeByParticipants(correctedFirstPoint.t, participants, participantsDelayInSeconds),
             // TODO: Check if this is right
             frontPassage: lastPoint.t,
-            frontArrival: firstPoint.t,
-            pointFrom: extractLatLon(firstPoint),
+            frontArrival: correctedFirstPoint.t,
+            pointFrom: extractLatLon(correctedFirstPoint),
             pointTo: extractLatLon(lastPoint),
             distanceInKm: distanceInKm,
-            speed: (distanceInKm / getTimeDifferenceInSeconds(lastPoint.t, firstPoint.t)) * 3600,
+            speed: (distanceInKm / getTimeDifferenceInSeconds(lastPoint.t, correctedFirstPoint.t)) * 3600,
             type: TrackWayPointType.Track,
         });
         pointIndex += pointsWithSameStreet.length;
