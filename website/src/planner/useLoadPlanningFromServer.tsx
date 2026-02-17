@@ -7,7 +7,6 @@ import { backendActions, getPlanningPassword } from './store/backend.reducer.ts'
 import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
 import { AppDispatch } from './store/planningStore.ts';
 import { State } from './store/types.ts';
-import { trackMergeActions } from './store/trackMerge.reducer.ts';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
