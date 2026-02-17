@@ -12,15 +12,18 @@ const initialState: LayoutState = {
     selectedSidebarSection: 'segments',
 };
 
-function loadLayoutState() {
+function loadLayoutState(): LayoutState | undefined {
     const layoutState = storage.load()?.layout;
     const storedLanguage = layoutState?.language;
     if (storedLanguage) {
         setLanguage(storedLanguage);
-    } else {
-        setLanguage(getInitialLanguage());
+        return layoutState;
     }
-    return layoutState;
+    if (layoutState) {
+        setLanguage(getInitialLanguage());
+        return { ...layoutState, language: getInitialLanguage() };
+    }
+    return undefined;
 }
 
 const layoutSlice = createSlice({

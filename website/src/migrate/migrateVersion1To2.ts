@@ -3,6 +3,7 @@ import { migrateGeoCoding } from './geoCodingMigration.ts';
 import { migrateTrackMerge } from './trackMergeMigration.ts';
 import { StateVersion1, StateVersion2 } from './types.ts';
 import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../planner/store/constants.ts';
+import { getInitialLanguage } from '../language.ts';
 
 export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 {
     return {
@@ -11,7 +12,10 @@ export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 
             stateVersion1.geoCoding,
             stateVersion1.trackMerge.averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H
         ),
-        layout: stateVersion1.layout,
+        layout: {
+            ...stateVersion1.layout,
+            language: stateVersion1.layout.language ?? getInitialLanguage(),
+        },
         map: stateVersion1.map,
         trackMerge: migrateTrackMerge(stateVersion1.trackMerge),
         backend: stateVersion1.backend,
