@@ -35,7 +35,7 @@ function gpxSegmentToParsedSegmentAndResolve(gpxSegment: GpxSegmentOld): ParsedG
         flipped: gpxSegment.flipped,
         filename: gpxSegment.filename,
         color: undefined,
-        points: points,
+        points: gpxSegment.flipped ? points.reverse() : points,
     };
 }
 
