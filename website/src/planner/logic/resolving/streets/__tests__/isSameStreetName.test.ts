@@ -13,6 +13,7 @@ describe('isSameStreetName', () => {
     const testCases = [
         createTestCase('', '', true),
         createTestCase('Street', 'Street', true),
+        createTestCase(' Street', 'Street', true),
         createTestCase('B 2', 'B 2, E345', true),
         createTestCase('B 2R', '(Tunnel) B 2R', true),
     ];
