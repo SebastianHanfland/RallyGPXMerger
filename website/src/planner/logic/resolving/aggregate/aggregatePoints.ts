@@ -4,6 +4,7 @@ import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 
 import { TimedPoint } from '../../../store/types.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
+import { isSameStreetName } from '../streets/isSameStreetName.ts';
 
 const extractLatLon = ({ b, l, t }: TimedPoint) => ({ lat: b, lon: l, time: t });
 
@@ -28,7 +29,10 @@ export function getConnectedPointWithTheSameStreetIndex(
             const previousStreet = streetLookup[enrichedPoints[index - 1].s];
             const wantedStreet = streetLookup[firstPoint.s];
             const currentStreet = streetLookup[enrichedPoints[index].s];
-            if (previousStreet !== wantedStreet || currentStreet !== wantedStreet) {
+            if (
+                (previousStreet && wantedStreet && !isSameStreetName(previousStreet, wantedStreet)) ||
+                currentStreet !== wantedStreet
+            ) {
                 return false;
             }
 
@@ -40,7 +44,7 @@ export function getConnectedPointWithTheSameStreetIndex(
                 const previousStreet = streetLookup[previousPoint.s];
                 const wantedStreet = streetLookup[firstPoint.s];
                 searchIndex = searchIndex - 1;
-                if (previousStreet !== wantedStreet) {
+                if (previousStreet && wantedStreet && !isSameStreetName(previousStreet, wantedStreet)) {
                     return false;
                 }
                 if (previousPoint.s === firstPoint.s) {

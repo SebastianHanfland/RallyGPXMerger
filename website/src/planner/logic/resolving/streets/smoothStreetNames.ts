@@ -1,4 +1,5 @@
 import { ParsedPoint } from '../../../store/types.ts';
+import { isSameStreetName } from './isSameStreetName.ts';
 
 export const isJunction = (point: ParsedPoint, index: number, points: ParsedPoint[]): boolean => {
     if (points.length <= 1) {
@@ -40,7 +41,7 @@ export const isSameStreet = (
     const previousStreet = streetLookUp[previousPoint.s];
     const street = streetLookUp[point.s];
 
-    return previousStreet === street;
+    return isSameStreetName(previousStreet, street);
 };
 
 function smoothSameStreet(
@@ -57,7 +58,7 @@ function smoothSameStreet(
     const previousStreet = streetLookUp[previousPoint.s];
     const street = streetLookUp[point.s];
 
-    if (previousStreet === street) {
+    if (isSameStreetName(previousStreet, street)) {
         return { ...point, s: previousPoint.s };
     }
     return point;
@@ -68,13 +69,6 @@ const getCurrentPoints = (newPoints: ParsedPoint[], points: ParsedPoint[]): Pars
 };
 
 export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<number, string>) {
-    // When there is only one entry, replace it
-    const occurrenceCount: Record<number, number> = {};
-    points.forEach((point) => {
-        occurrenceCount[point.s] = (occurrenceCount[point.s] ?? 0) + 1;
-    });
-    console.log(occurrenceCount);
-
     const newPoints: ParsedPoint[] = [];
 
     points.forEach((point, index) => {
