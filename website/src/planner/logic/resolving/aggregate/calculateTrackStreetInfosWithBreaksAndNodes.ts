@@ -9,6 +9,8 @@ import { BREAK, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../..
 import { Break, instanceOfBreak, instanceOfNode } from '../../calculate/types.ts';
 import { getNodePositions, NodePosition } from '../selectors/getNodePositions.ts';
 import { aggregatePoints } from './aggregatePoints.ts';
+import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
+import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 
 export const getTrackStreetInfos = createSelector(
     [
@@ -18,10 +20,15 @@ export const getTrackStreetInfos = createSelector(
         getParticipantsDelay,
         getNodePositions,
         getArrivalDateTime,
+        getCalculatedTracks,
     ],
-    (segments, tracks, lookups, participantsDelayInSeconds, nodes, arrivalDateTime) => {
+    (segments, tracks, lookups, participantsDelayInSeconds, nodes, arrivalDateTime, calculatedTracks) => {
         const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds);
+
         return trackWithEndDelay.map((track) => {
+            const calculatedTrack = calculatedTracks.find((calcTrack) => calcTrack.id === track.id);
+            const distance = calculatedTrack ? calculateDistanceInKm(calculatedTrack.points) : 0;
+
             const wayPoints = getWayPointsOfTrack(
                 track,
                 segments,
@@ -38,12 +45,12 @@ export const getTrackStreetInfos = createSelector(
 
             return {
                 id: track.id,
-                name: track.name,
+                name: track.name ?? track.id,
                 startFront: startFront,
                 publicStart: publicStart,
                 arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
                 arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
-                distanceInKm: 0, // TODO calculate again, but it could also be calculated differently, like on segments
+                distanceInKm: distance,
                 peopleCount: track.peopleCount,
                 wayPoints: wayPoints,
             };
