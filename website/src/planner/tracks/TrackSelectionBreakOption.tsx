@@ -47,7 +47,10 @@ export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }
                     onClick={() => {
                         dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId: trackElement.id }));
                     }}
-                    title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
+                    title={intl.formatMessage(
+                        { id: 'msg.removeBreakSegment' },
+                        { breakName: getBreakLabel(trackElement) }
+                    )}
                 >
                     X
                 </Button>

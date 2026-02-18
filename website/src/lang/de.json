@@ -69,6 +69,7 @@
     "msg.selectTrackSegment": "Abschnitt zum Hinzufügen auswählen",
     "msg.filterTracks": "Routen filtern, Suchterme mit ',' trennen",
     "msg.removeTrackSegment": "Abschnitt \"{segmentName}\" von der Route entfernen",
+    "msg.removeTrackBreak": "Pause \"{breakName}\" von der Route entfernen",
     "msg.removeTrack": "Route entfernen",
     "msg.removeTrack.hint": "Route {name} entfernen",
     "msg.pasteSegments": "Abschnitt-Ids aus der Zwischenablage einfügen",

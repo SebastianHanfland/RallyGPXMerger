@@ -69,6 +69,7 @@
     "msg.selectTrackSegment": "Select next segment to add",
     "msg.filterTracks": "Filter tracks, separate term by ','",
     "msg.removeTrackSegment": "Remove segment \"{segmentName}\" from track",
+    "msg.removeTrackBreak": "Remove break \"{breakName}\" from track",
     "msg.removeTrack": "Remove track",
     "msg.removeTrack.hint": "`Remove track {name}",
     "msg.pasteSegments": "Paste segmentIds from clipboard",
