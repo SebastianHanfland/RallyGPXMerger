@@ -243,6 +243,7 @@
     "msg.calculate": "Berechnen",
     "msg.break": "Pause hinzufügen",
     "msg.editBreak": "Pause verändern",
+    "msg.editNode": "Knotenpunkt verändern",
     "msg.minutes": "Minuten",
     "msg.add": "Hinzufügen",
     "msg.minutes.details": "Minuten für die Pause auswählen",

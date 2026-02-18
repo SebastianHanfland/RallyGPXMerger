@@ -243,6 +243,7 @@
     "msg.calculate": "Calculate",
     "msg.break": "Add a break",
     "msg.editBreak": "Edit break",
+    "msg.editNode": "Edit node",
     "msg.minutes": "Minutes",
     "msg.add": "Add",
     "msg.minutes.details": "Select the minutes for the pause",

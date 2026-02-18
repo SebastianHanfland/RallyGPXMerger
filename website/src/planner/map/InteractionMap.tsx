@@ -22,6 +22,7 @@ import { getIsSidebarOpen } from '../store/layout.reducer.ts';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
 import { EditBreakDialog } from './EditBreakDialog.tsx';
+import { EditNodeDialog } from '../nodes/EditNodeDialog.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -113,6 +114,7 @@ export const InteractionMap = () => {
             <GpxSegmentDialog />
             <CreateBreakDialog />
             <EditBreakDialog />
+            <EditNodeDialog />
         </div>
     );
 };

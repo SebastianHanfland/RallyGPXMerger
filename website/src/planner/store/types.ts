@@ -93,6 +93,10 @@ export interface BreakEditInfo {
     trackId: string;
 }
 
+export interface NodeEditInfo {
+    segmentAfterId: string;
+}
+
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
@@ -106,6 +110,7 @@ export interface TrackMergeState {
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
     breakEditInfo?: BreakEditInfo;
+    nodeEditInfo?: NodeEditInfo;
 }
 
 export interface MapState {
