@@ -120,14 +120,14 @@ export function resolveGpxSegments(
     nodes: NodePosition[]
 ): (ParsedGpxSegment | Break | NodePosition)[] {
     const trackElements: (ParsedGpxSegment | Break | NodePosition)[] = [];
-    const nodesOfTrack = nodes.filter((node) => node.tracks.includes(track.id));
     track.segments.forEach((trackElement) => {
         if (trackElement.type === BREAK) {
             const minutes = trackElement.minutes;
             trackElements.push({ minutes });
         }
-        const foundNodeBefore = nodesOfTrack.find((node) => node.segmentIdAfter === trackElement.id);
+        const foundNodeBefore = nodes.find((node) => node.segmentIdAfter === trackElement.id);
         if (foundNodeBefore) {
+            console.log('This is called');
             trackElements.push(foundNodeBefore);
         }
         const gpxSegment = gpxSegments.find((segment) => segment.id === trackElement.id);

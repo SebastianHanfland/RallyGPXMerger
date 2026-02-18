@@ -6,7 +6,7 @@ import { getPlanningLabel, getPlanningTitle } from '../../planner/store/trackMer
 import { getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfos.ts';
+import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {

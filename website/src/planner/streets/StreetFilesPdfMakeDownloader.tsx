@@ -12,7 +12,7 @@ import { IntlShape, useIntl } from 'react-intl';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
-import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfos.ts';
+import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());
