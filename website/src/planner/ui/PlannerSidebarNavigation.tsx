@@ -16,21 +16,29 @@ export const PlannerSidebarNavigation = () => {
     const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     return (
-        <Nav fill variant="tabs" activeKey={selectedSection}>
-            <SidebarNavItem section={'segments'} count={segmentsCount} tabIndex={0}>
-                <FormattedMessage id={'msg.segments'} />({segmentsCount})
-            </SidebarNavItem>
-            <SidebarNavItem section={'tracks'} count={tracksCount} tabIndex={1}>
-                <TracksGapWarning />
-                <FormattedMessage id={'msg.tracks'} />({tracksCount})
-            </SidebarNavItem>
-            <SidebarNavItem section={'settings'} tabIndex={2}>
-                <FormattedMessage id={'msg.settings'} />
-            </SidebarNavItem>
-            <SidebarNavItem section={'documents'} tabIndex={3}>
-                {hasChangesSinceLastUpload && <Warning size={10} />}
-                <FormattedMessage id={'msg.documents'} />
-            </SidebarNavItem>
-        </Nav>
+        <div style={{ height: '40px', zIndex: 1000000, backgroundColor: 'white', display: 'flex' }}>
+            <Nav
+                fill
+                variant="tabs"
+                activeKey={selectedSection}
+                className={'shadow'}
+                style={{ position: 'fixed', zIndex: 1000000, width: '50%' }}
+            >
+                <SidebarNavItem section={'segments'} count={segmentsCount} tabIndex={0}>
+                    <FormattedMessage id={'msg.segments'} />({segmentsCount})
+                </SidebarNavItem>
+                <SidebarNavItem section={'tracks'} count={tracksCount} tabIndex={1}>
+                    <TracksGapWarning />
+                    <FormattedMessage id={'msg.tracks'} />({tracksCount})
+                </SidebarNavItem>
+                <SidebarNavItem section={'settings'} tabIndex={2}>
+                    <FormattedMessage id={'msg.settings'} />
+                </SidebarNavItem>
+                <SidebarNavItem section={'documents'} tabIndex={3}>
+                    {hasChangesSinceLastUpload && <Warning size={10} />}
+                    <FormattedMessage id={'msg.documents'} />
+                </SidebarNavItem>
+            </Nav>
+        </div>
     );
 };

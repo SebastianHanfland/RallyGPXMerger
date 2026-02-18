@@ -16,7 +16,7 @@ export function SidebarNavItem({ section, children, tabIndex }: Props) {
     const setSelectedSection = (section: SidebarSections) => dispatch(layoutActions.setSelectedSidebarSection(section));
 
     return (
-        <Nav.Item onClick={() => setSelectedSection(section)} tabIndex={tabIndex}>
+        <Nav.Item onClick={() => setSelectedSection(section)} tabIndex={tabIndex} style={{ backgroundColor: 'white' }}>
             <Nav.Link eventKey={section}>{children}</Nav.Link>
         </Nav.Item>
     );
