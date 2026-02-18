@@ -59,7 +59,7 @@ export const EditBreakDialog = () => {
         <Modal show={true} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.pause'} />
+                    <FormattedMessage id={'msg.editBreak'} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -70,7 +70,7 @@ export const EditBreakDialog = () => {
                     <FormattedMessage id={'msg.close'} />
                 </Button>
                 <Button variant="primary" onClick={addBreak} disabled={!values.minutes}>
-                    <FormattedMessage id={'msg.add'} />
+                    <FormattedMessage id={'msg.save'} />
                 </Button>
             </Modal.Footer>
         </Modal>

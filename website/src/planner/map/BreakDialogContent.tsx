@@ -34,7 +34,9 @@ export const BreakDialogContent = ({ values, setValues }: Props) => {
     return (
         <div>
             <Form.Group>
-                <Form.Label>Minutes</Form.Label>
+                <Form.Label>
+                    <FormattedMessage id={'msg.minutes'} />
+                </Form.Label>
                 <Select
                     name="segmentSelect"
                     value={breaks.find((option) => option.value === values.minutes)}
@@ -46,12 +48,14 @@ export const BreakDialogContent = ({ values, setValues }: Props) => {
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Description</Form.Label>
+                <Form.Label>
+                    <FormattedMessage id={'msg.description'} />
+                </Form.Label>
                 <Form.Control
                     type="text"
                     as="textarea"
                     rows={3}
-                    placeholder="Description"
+                    placeholder={intl.formatMessage({ id: 'msg.description' })}
                     value={values.description ?? ''}
                     onChange={(value) => setValues({ ...values, description: value.target.value })}
                 />
@@ -64,7 +68,6 @@ export const BreakDialogContent = ({ values, setValues }: Props) => {
                     type={'checkbox'}
                     label={
                         <span>
-                            Has a toilet
                             <img className={'mx-1'} src={wc} alt={'wc'} />
                         </span>
                     }

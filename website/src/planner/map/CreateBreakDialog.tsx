@@ -49,7 +49,7 @@ export const CreateBreakDialog = () => {
         <Modal show={true} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.pause'} />
+                    <FormattedMessage id={'msg.break'} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

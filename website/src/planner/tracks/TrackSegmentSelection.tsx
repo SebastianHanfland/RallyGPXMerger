@@ -65,7 +65,7 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
                 </div>
                 <div style={{ marginLeft: '10px' }}>
                     <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>
-                        <FormattedMessage id={'msg.pause'} />
+                        <FormattedMessage id={'msg.break'} />
                     </Button>
                 </div>
             </div>
