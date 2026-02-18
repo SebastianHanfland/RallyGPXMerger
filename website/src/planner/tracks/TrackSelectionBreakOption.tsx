@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { DraggableIcon } from './DraggableIcon.tsx';
 import { TrackBreak } from '../store/types.ts';
+import pencil from '../../assets/pencil.svg';
 
 interface Props {
     trackId: string;
@@ -31,6 +32,7 @@ export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }
                 margin: '1px',
                 backgroundColor: 'white',
             }}
+            title={trackElement.description}
             key={trackElement.id}
         >
             <DraggableIcon />
@@ -49,6 +51,18 @@ export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }
                 >
                     X
                 </Button>
+                <span className={'m-1'}>
+                    <img
+                        src={pencil}
+                        className="m-1"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                            dispatch(trackMergeActions.setBreakEditInfo({ breakId: trackElement.id, trackId: trackId }))
+                        }
+                        alt="upload file"
+                        color={'#ffffff'}
+                    />
+                </span>
             </div>
         </div>
     );

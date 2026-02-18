@@ -41,6 +41,10 @@ export const isTrackSegment = (trackElement: TrackElement): trackElement is Trac
     return trackElement.type === SEGMENT;
 };
 
+export const isTrackBreak = (trackElement: TrackElement): trackElement is TrackBreak => {
+    return trackElement.type === BREAK;
+};
+
 export type TrackElementType = typeof SEGMENT | typeof BREAK | typeof NODE;
 
 interface TrackElementBase {

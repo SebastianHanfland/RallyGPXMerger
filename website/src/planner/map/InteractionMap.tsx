@@ -21,6 +21,7 @@ import { CreateBreakDialog } from './CreateBreakDialog.tsx';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
+import { EditBreakDialog } from './EditBreakDialog.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -111,6 +112,7 @@ export const InteractionMap = () => {
             <PointsOfInterestModal />
             <GpxSegmentDialog />
             <CreateBreakDialog />
+            <EditBreakDialog />
         </div>
     );
 };
