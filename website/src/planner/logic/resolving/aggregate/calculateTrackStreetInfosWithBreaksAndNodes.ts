@@ -85,16 +85,40 @@ export function getWayPointsOfTrack(
             if (instanceOfBreak(gpxOrBreak)) {
                 arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
                 const trackBreak: AggregatedPoints = {
-                    ...trackPoints[0],
+                    streetName: trackPoints[0].streetName,
                     breakLength: gpxOrBreak.minutes,
                     type: TrackWayPointType.Break,
+                    pointTo: trackPoints[0].pointFrom,
+                    pointFrom: trackPoints[0].pointFrom,
+                    frontArrival: shiftDateBySeconds(trackPoints[0].frontArrival, -gpxOrBreak.minutes * 60),
+                    backArrival: shiftDateBySeconds(
+                        trackPoints[0].frontArrival,
+                        -gpxOrBreak.minutes * 60 + participantsDelayInSeconds * (track.peopleCount ?? 0)
+                    ),
+                    frontPassage: shiftDateBySeconds(trackPoints[0].frontArrival, -gpxOrBreak.minutes * 60),
+                    speed: undefined,
+                    postCode: '',
+                    distanceInKm: undefined,
+                    district: '',
                 };
                 trackPoints = [trackBreak, ...trackPoints];
             } else if (instanceOfNode(gpxOrBreak)) {
                 const trackNode: AggregatedPoints = {
                     ...trackPoints[0],
+                    streetName: trackPoints[0].streetName,
                     type: TrackWayPointType.Node,
                     nodeTracks: gpxOrBreak.tracks,
+                    pointTo: trackPoints[0].pointFrom,
+                    pointFrom: trackPoints[0].pointFrom,
+                    frontArrival: trackPoints[0].frontArrival,
+                    backArrival: shiftDateBySeconds(
+                        trackPoints[0].frontArrival,
+                        participantsDelayInSeconds * (track.peopleCount ?? 0)
+                    ),
+                    speed: undefined,
+                    postCode: '',
+                    distanceInKm: undefined,
+                    district: '',
                 };
                 trackPoints = [trackNode, ...trackPoints];
             } else {
@@ -134,7 +158,6 @@ export function resolveGpxSegments(
         }
         const foundNodeBefore = nodes.find((node) => node.segmentIdAfter === trackElement.id);
         if (foundNodeBefore) {
-            console.log('This is called');
             trackElements.push(foundNodeBefore);
         }
         const gpxSegment = gpxSegments.find((segment) => segment.id === trackElement.id);
