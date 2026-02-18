@@ -1,49 +1,52 @@
-import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../types.ts';
+import { AggregatedPoints, TrackWayPointType } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { CalculatedTrack } from '../../../../common/types.ts';
-import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
-import { getParticipantsDelay, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
-import { getLookups } from '../selectors/getLookups.ts';
+import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../../utils/dateUtil.ts';
+import { getArrivalDateTime, getParticipantsDelay, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { getLookups, Lookups } from '../selectors/getLookups.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { updateExtraDelayOnTracks } from '../../calculate/solver.ts';
 import { BREAK, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../store/types.ts';
 import { Break, instanceOfBreak, instanceOfNode } from '../../calculate/types.ts';
 import { getNodePositions, NodePosition } from '../selectors/getNodePositions.ts';
+import { aggregatePoints } from './aggregatePoints.ts';
 
 export const getTrackStreetInfos = createSelector(
-    [getParsedGpxSegments, getTrackCompositions, getLookups, getParticipantsDelay, getNodePositions],
-    (segments, tracks, lookups, participantsDelayInSeconds, nodes) => {
-        const { streets, districts, postCodes } = lookups;
-        // Calculating end time is one thing
-        // iterating through segments
-        // aggregation
-        // converting to track points
-
+    [
+        getParsedGpxSegments,
+        getTrackCompositions,
+        getLookups,
+        getParticipantsDelay,
+        getNodePositions,
+        getArrivalDateTime,
+    ],
+    (segments, tracks, lookups, participantsDelayInSeconds, nodes, arrivalDateTime) => {
         const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds);
         return trackWithEndDelay.map((track) => {
-            return tracks.map((track: CalculatedTrack): TrackStreetInfo => {
-                const distance = calculateDistanceInKm(track.points);
+            const wayPoints = getWayPointsOfTrack(
+                track,
+                segments,
+                nodes,
+                participantsDelayInSeconds,
+                lookups,
+                arrivalDateTime
+            );
 
-                const wayPoints = getWayPointsOfTrack(track, segments, nodes);
+            const startFront = wayPoints[0].frontArrival;
+            const publicStart = track
+                ? roundPublishedStartTimes(startFront, track.buffer ?? 0, track.rounding ?? 0)
+                : startFront;
 
-                const startFront = wayPoints[0].frontArrival;
-                const publicStart = trackComposition
-                    ? roundPublishedStartTimes(startFront, trackComposition.buffer ?? 0, trackComposition.rounding ?? 0)
-                    : startFront;
-
-                return {
-                    id: track.id,
-                    name: track.filename,
-                    startFront: startFront,
-                    publicStart: publicStart,
-                    arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
-                    arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
-                    distanceInKm: distance,
-                    peopleCount: track.peopleCount,
-                    wayPoints: wayPoints,
-                };
-            });
+            return {
+                id: track.id,
+                name: track.name,
+                startFront: startFront,
+                publicStart: publicStart,
+                arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
+                arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
+                distanceInKm: 0, // TODO calculate again, but it could also be calculated differently, like on segments
+                peopleCount: track.peopleCount,
+                wayPoints: wayPoints,
+            };
         });
     }
 );
@@ -58,7 +61,10 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
 export function getWayPointsOfTrack(
     track: TrackComposition,
     gpxSegments: ParsedGpxSegment[],
-    nodes: NodePosition[]
+    nodes: NodePosition[],
+    participantsDelayInSeconds: number,
+    lookups: Lookups,
+    arrivalDate: string | undefined
 ): AggregatedPoints[] {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
     let trackPoints: AggregatedPoints[] = [];
@@ -87,8 +93,21 @@ export function getWayPointsOfTrack(
             } else {
                 const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
                 arrivalTimeForPreviousSegment = shiftedPoint[0].t;
+                const arrivalDateTime = arrivalDate ?? '2025-06-01T10:11:55';
+                const points = shiftedPoint.map((point) => ({
+                    ...point,
+                    t: shiftDateBySeconds(arrivalDateTime, point.t),
+                }));
+                const aggregatedPoints = aggregatePoints(
+                    points,
+                    track.peopleCount ?? 0,
+                    participantsDelayInSeconds,
+                    lookups.streets,
+                    lookups.districts,
+                    lookups.postCodes
+                );
 
-                trackPoints = [...shiftedPoint, ...trackPoints];
+                trackPoints = [...aggregatedPoints, ...trackPoints];
             }
         });
 
