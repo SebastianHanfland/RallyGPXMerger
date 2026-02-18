@@ -12,7 +12,7 @@ interface Props {
     segmentName: string;
 }
 
-function getPauseLabel(trackBreak: TrackBreak) {
+function getBreakLabel(trackBreak: TrackBreak) {
     const minutesBreak = trackBreak.minutes;
     return `${minutesBreak > 0 ? '+' : '-'} ${minutesBreak > 0 ? minutesBreak : -1 * minutesBreak} min`;
 }
@@ -35,7 +35,7 @@ export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }
         >
             <DraggableIcon />
             <div className={'m-2'} title={segmentName}>
-                {getPauseLabel(trackElement)}
+                {getBreakLabel(trackElement)}
             </div>
             <div>
                 <Button

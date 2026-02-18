@@ -3,17 +3,17 @@ import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackCompositions, getTrackIdForAddingABreak, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { PauseDialogContent } from './PauseDialogContent.tsx';
+import { BreakDialogContent } from './BreakDialogContent.tsx';
 import { useEffect, useState } from 'react';
-import { BREAK, TrackPause } from '../store/types.ts';
+import { BREAK, TrackBreak } from '../store/types.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '../store/planningStore.ts';
 
-export const PauseDialog = () => {
+export const CreateBreakDialog = () => {
     const trackIdForBreak = useSelector(getTrackIdForAddingABreak);
     const track = useSelector(getTrackCompositions).find(({ id }) => id === trackIdForBreak);
     const dispatch: AppDispatch = useDispatch();
-    const [values, setValues] = useState<Partial<TrackPause>>({});
+    const [values, setValues] = useState<Partial<TrackBreak>>({});
 
     const closeModal = () => {
         dispatch(trackMergeActions.setTrackIdForAddingABreak(undefined));
@@ -23,7 +23,16 @@ export const PauseDialog = () => {
         if (!track || !values.minutes) {
             return;
         }
-        const segments = [...track.segments, { id: uuidv4(), type: BREAK, minutes: values.minutes }];
+        const segments = [
+            ...track.segments,
+            {
+                id: uuidv4(),
+                type: BREAK,
+                minutes: values.minutes,
+                description: values.description ?? '',
+                hasToilet: values.hasToilet ?? false,
+            },
+        ];
         dispatch(trackMergeActions.setSegments({ id: track.id, segments: segments }));
         closeModal();
     };
@@ -44,7 +53,7 @@ export const PauseDialog = () => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <PauseDialogContent values={values} setValues={setValues} />
+                <BreakDialogContent values={values} setValues={setValues} />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModal}>

@@ -1,12 +1,12 @@
 import { Form } from 'react-bootstrap';
-import { TrackPause } from '../store/types.ts';
+import { TrackBreak } from '../store/types.ts';
 import wc from '../../assets/wc.svg';
 import Select, { SingleValue } from 'react-select';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 interface Props {
-    values: Partial<TrackPause>;
-    setValues: (point: Partial<TrackPause>) => void;
+    values: Partial<TrackBreak>;
+    setValues: (point: Partial<TrackBreak>) => void;
 }
 
 const breaks = [
@@ -26,7 +26,7 @@ const breaks = [
     { value: -10, label: '- 10 min' },
 ];
 
-export const PauseDialogContent = ({ values, setValues }: Props) => {
+export const BreakDialogContent = ({ values, setValues }: Props) => {
     const intl = useIntl();
     const addSegmentToTrack = (newValue: SingleValue<{ value: number }>) => {
         setValues({ ...values, minutes: newValue?.value });

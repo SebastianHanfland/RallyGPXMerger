@@ -17,7 +17,7 @@ import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
 import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook.ts';
 import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
-import { PauseDialog } from './PauseDialog.tsx';
+import { CreateBreakDialog } from './CreateBreakDialog.tsx';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
@@ -110,7 +110,7 @@ export const InteractionMap = () => {
             <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
             <PointsOfInterestModal />
             <GpxSegmentDialog />
-            <PauseDialog />
+            <CreateBreakDialog />
         </div>
     );
 };

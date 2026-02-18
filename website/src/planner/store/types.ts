@@ -56,6 +56,8 @@ export interface TrackSegment extends TrackElementBase {
 export interface TrackBreak extends TrackElementBase {
     minutes: number;
     type: typeof BREAK;
+    description: string;
+    hasToilet: boolean;
 }
 
 export interface TrackNode extends TrackElementBase {
@@ -82,6 +84,11 @@ export interface GeoCodingState {
     onlyShowUnknown?: boolean;
 }
 
+export interface BreakEditInfo {
+    breakId: string;
+    trackId: string;
+}
+
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
@@ -94,6 +101,7 @@ export interface TrackMergeState {
     gapToleranceInKm?: number;
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
+    breakEditInfo?: BreakEditInfo;
 }
 
 export interface MapState {
@@ -105,12 +113,6 @@ export interface MapState {
     showConstructions?: boolean;
     showPointsOfInterest?: boolean;
     highlightedSegmentId?: string;
-}
-
-export interface TrackPause {
-    minutes: number;
-    description: string;
-    hasToilet: boolean;
 }
 
 export interface PointsState {
