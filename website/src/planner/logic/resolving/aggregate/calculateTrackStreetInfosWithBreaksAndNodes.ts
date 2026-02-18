@@ -65,16 +65,33 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
     return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
 }
 
+function getPreviousPoint(trackPoints: AggregatedPoints[], arrivalDate: string) {
+    if (trackPoints.length > 0) {
+        return trackPoints[0];
+    }
+    return {
+        streetName: null,
+        postCode: null,
+        district: null,
+        frontArrival: arrivalDate,
+        frontPassage: arrivalDate,
+        backArrival: arrivalDate,
+        pointFrom: { lat: 0, lon: 0, time: arrivalDate },
+        pointTo: { lat: 0, lon: 0, time: arrivalDate },
+    };
+}
+
 export function getWayPointsOfTrack(
     track: TrackComposition,
     gpxSegments: ParsedGpxSegment[],
     nodes: NodePosition[],
     participantsDelayInSeconds: number,
     lookups: Lookups,
-    arrivalDate: string | undefined
+    arrivalDateTime: string | undefined
 ): AggregatedPoints[] {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
     let trackPoints: AggregatedPoints[] = [];
+    const arrivalDate = arrivalDateTime ?? '2025-06-01T10:11:55';
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments, nodes);
 
@@ -85,17 +102,23 @@ export function getWayPointsOfTrack(
             if (instanceOfBreak(gpxOrBreak)) {
                 arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
                 const trackBreak: AggregatedPoints = {
-                    streetName: trackPoints[0].streetName,
+                    streetName: getPreviousPoint(trackPoints, arrivalDate).streetName,
                     breakLength: gpxOrBreak.minutes,
                     type: TrackWayPointType.Break,
-                    pointTo: trackPoints[0].pointFrom,
-                    pointFrom: trackPoints[0].pointFrom,
-                    frontArrival: shiftDateBySeconds(trackPoints[0].frontArrival, -gpxOrBreak.minutes * 60),
+                    pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
+                    pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
+                    frontArrival: shiftDateBySeconds(
+                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                        -gpxOrBreak.minutes * 60
+                    ),
                     backArrival: shiftDateBySeconds(
-                        trackPoints[0].frontArrival,
+                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                         -gpxOrBreak.minutes * 60 + participantsDelayInSeconds * (track.peopleCount ?? 0)
                     ),
-                    frontPassage: shiftDateBySeconds(trackPoints[0].frontArrival, -gpxOrBreak.minutes * 60),
+                    frontPassage: shiftDateBySeconds(
+                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                        -gpxOrBreak.minutes * 60
+                    ),
                     speed: undefined,
                     postCode: '',
                     distanceInKm: undefined,
@@ -104,15 +127,15 @@ export function getWayPointsOfTrack(
                 trackPoints = [trackBreak, ...trackPoints];
             } else if (instanceOfNode(gpxOrBreak)) {
                 const trackNode: AggregatedPoints = {
-                    ...trackPoints[0],
-                    streetName: trackPoints[0].streetName,
+                    ...getPreviousPoint(trackPoints, arrivalDate),
+                    streetName: getPreviousPoint(trackPoints, arrivalDate).streetName,
                     type: TrackWayPointType.Node,
                     nodeTracks: gpxOrBreak.tracks,
-                    pointTo: trackPoints[0].pointFrom,
-                    pointFrom: trackPoints[0].pointFrom,
-                    frontArrival: trackPoints[0].frontArrival,
+                    pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
+                    pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
+                    frontArrival: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                     backArrival: shiftDateBySeconds(
-                        trackPoints[0].frontArrival,
+                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                         participantsDelayInSeconds * (track.peopleCount ?? 0)
                     ),
                     speed: undefined,
@@ -124,10 +147,9 @@ export function getWayPointsOfTrack(
             } else {
                 const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
                 arrivalTimeForPreviousSegment = shiftedPoint[0].t;
-                const arrivalDateTime = arrivalDate ?? '2025-06-01T10:11:55';
                 const points = shiftedPoint.map((point) => ({
                     ...point,
-                    t: shiftDateBySeconds(arrivalDateTime, point.t),
+                    t: shiftDateBySeconds(arrivalDate, point.t),
                 }));
                 const aggregatedPoints = aggregatePoints(
                     points,
