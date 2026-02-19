@@ -39,6 +39,6 @@ export const getInitialTrackOffsetsAtNode = createSelector(
         countInfos.forEach((countInfo) => {
             initialOffsets[countInfo.id] = countInfo.initialOffset * participantsDelay;
         });
-        return { trackOffsets: initialOffsets, totalCount };
+        return { trackOffsets: initialOffsets, totalCount: totalCount * participantsDelay };
     }
 );
