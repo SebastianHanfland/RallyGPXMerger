@@ -2,17 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import nodeIcon from '../../assets/mergeTracks.svg';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { TrackNode, listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
-import { TrackComposition } from '../store/types.ts';
+import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
+import { getTracksAtNode } from '../nodes/getInitialOffsetForNodeInfo.tsx';
 
 interface Props {
     segmentId: string;
-}
-
-export function getTracksAtNode(foundNode: TrackNode, trackCompositions: TrackComposition[]): TrackComposition[] {
-    return trackCompositions.filter((track) =>
-        track.segments.map((segment) => segment.id).includes(foundNode.segmentIdAfterNode)
-    );
 }
 
 export function TrackSelectionNodeButton({ segmentId }: Props) {
