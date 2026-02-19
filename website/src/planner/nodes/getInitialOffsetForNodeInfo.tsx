@@ -1,4 +1,9 @@
-import { getNodeEditInfo, getParticipantsDelay, getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import {
+    getNodeEditInfo,
+    getNodeSpecifications,
+    getParticipantsDelay,
+    getTrackCompositions,
+} from '../store/trackMerge.reducer.ts';
 import { sumUpAllPeopleWithHigherPriority } from '../logic/calculate/helper/peopleDelayCounter.ts';
 import { listAllNodesOfTracks, TrackNode } from '../logic/calculate/helper/nodeFinder.ts';
 import { createSelector } from '@reduxjs/toolkit';
@@ -20,8 +25,18 @@ export const getInitialTrackOffsetsAtNode = createSelector(
     getNodeEditInfo,
     getTrackCompositions,
     getParticipantsDelay,
-    (nodeInfo, tracks, participantsDelay): NodeSpecifications | undefined => {
+    getNodeSpecifications,
+    (nodeInfo, tracks, participantsDelay, nodeSpecifications): NodeSpecifications | undefined => {
         const trackNodes = listAllNodesOfTracks(tracks);
+        if (nodeInfo?.segmentAfterId && nodeSpecifications) {
+            const nodeSpecification = nodeSpecifications[nodeInfo?.segmentAfterId];
+            console.log('here?');
+            if (nodeSpecification) {
+                console.log('here as well?');
+                return nodeSpecification;
+            }
+        }
+        console.log('or even here?');
         const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeInfo?.segmentAfterId);
         if (!foundTrackNode) {
             return;

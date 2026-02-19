@@ -1,5 +1,13 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { BreakEditInfo, NodeEditInfo, State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
+import {
+    BreakEditInfo,
+    NodeEditInfo,
+    NodeSpecifications,
+    State,
+    TrackComposition,
+    TrackElement,
+    TrackMergeState,
+} from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
@@ -118,6 +126,15 @@ const trackMergeSlice = createSlice({
         setNodeEditInfo: (state: TrackMergeState, action: PayloadAction<NodeEditInfo | undefined>) => {
             state.nodeEditInfo = action.payload;
         },
+        setNodeSpecification: (
+            state: TrackMergeState,
+            action: PayloadAction<{ segmentAfter?: string; nodeSpecs?: NodeSpecifications }>
+        ) => {
+            const { segmentAfter, nodeSpecs } = action.payload;
+            if (segmentAfter) {
+                state.nodeSpecifications = { ...(state.nodeSpecifications ?? {}), [segmentAfter]: nodeSpecs };
+            }
+        },
         clear: () => initialState,
     },
 });
@@ -138,6 +155,7 @@ export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdC
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
 export const getNodeEditInfo = (state: State) => getBase(state).nodeEditInfo;
+export const getNodeSpecifications = (state: State) => getBase(state).nodeSpecifications;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

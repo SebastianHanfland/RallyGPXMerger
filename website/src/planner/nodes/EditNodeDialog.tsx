@@ -8,14 +8,9 @@ import { Form, ProgressBar } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
 import { getInitialTrackOffsetsAtNode } from './getInitialOffsetForNodeInfo.tsx';
-import { getBranchesAtNode } from './getBranchesAtNode.ts';
+import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
-
-interface NodeSpecifications {
-    trackOffsets: Record<string, number>;
-    nodeInfo?: string;
-    totalCount: number;
-}
+import { NodeSpecifications } from '../store/types.ts';
 
 export const EditNodeDialog = () => {
     const intl = useIntl();
@@ -34,18 +29,27 @@ export const EditNodeDialog = () => {
     const closeModal = () => {
         dispatch(trackMergeActions.setNodeEditInfo(undefined));
     };
+
+    const saveNodeSpecifications = () => {
+        dispatch(trackMergeActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
+        closeModal();
+    };
+
     useEffect(() => {
         if (branchesAtNode) {
-            setNodeSpecs({ totalCount: branchesAtNode.totalCount, trackOffsets: branchesAtNode.branchOffsets });
+            setNodeSpecs({ totalCount: branchesAtNode.totalCount, trackOffsets: branchesAtNode?.trackOffsets });
         } else {
             setNodeSpecs(undefined);
         }
     }, [branchesAtNode]);
 
-    if (!nodeEditInfo || !foundTrackNode || !branchesAtNode || !nodeSpecs) {
+    if (!nodeEditInfo || !foundTrackNode || !branchesAtNode || !nodeSpecs || !nodeEditInfo.segmentAfterId) {
         return null;
     }
-    const { totalCount, branchTracks } = branchesAtNode;
+    const branchTracks = getBranchTracks(nodeEditInfo.segmentAfterId, trackCompositions);
+    if (!branchTracks) {
+        return null;
+    }
 
     return (
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
@@ -75,7 +79,7 @@ export const EditNodeDialog = () => {
                                 <Button size={'sm'}>{'<-'}</Button>
                                 <ProgressBar key={segmentId} className={'flex-fill'}>
                                     <ProgressBar
-                                        now={(nodeSpecs.trackOffsets[segmentId] / totalCount) * 100}
+                                        now={(nodeSpecs.trackOffsets[segmentId] / nodeSpecs.totalCount) * 100}
                                         variant={'gray'}
                                         className={'bg-transparent'}
                                         visuallyHidden
@@ -83,7 +87,7 @@ export const EditNodeDialog = () => {
                                     />
                                     {tracks.map((track) => (
                                         <ProgressBar
-                                            now={((track.peopleCount ?? 0) / totalCount) * 100}
+                                            now={((track.peopleCount ?? 0) / nodeSpecs.totalCount) * 100}
                                             title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
                                                 id: 'msg.trackPeople',
                                             })}`}
@@ -118,7 +122,7 @@ export const EditNodeDialog = () => {
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
                 </Button>
-                <Button variant="primary" onClick={() => 1}>
+                <Button variant="primary" onClick={saveNodeSpecifications}>
                     <FormattedMessage id={'msg.save'} />
                 </Button>
             </Modal.Footer>

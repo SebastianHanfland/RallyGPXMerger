@@ -97,6 +97,12 @@ export interface NodeEditInfo {
     segmentAfterId: string;
 }
 
+export interface NodeSpecifications {
+    trackOffsets: Record<string, number>;
+    nodeInfo?: string;
+    totalCount: number;
+}
+
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
@@ -111,6 +117,7 @@ export interface TrackMergeState {
     trackIdForAddingABreak?: string;
     breakEditInfo?: BreakEditInfo;
     nodeEditInfo?: NodeEditInfo;
+    nodeSpecifications?: Record<string, NodeSpecifications | undefined>;
 }
 
 export interface MapState {
