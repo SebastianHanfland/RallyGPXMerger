@@ -57,7 +57,7 @@ export const EditNodeDialog = () => {
             </Modal.Header>
             <Modal.Body>
                 {foundTrackNode &&
-                    countInfo.map((track, index) => {
+                    countInfo.map((track) => {
                         return (
                             <>
                                 <div>{track.name}</div>
@@ -65,7 +65,7 @@ export const EditNodeDialog = () => {
                                     <Button size={'sm'}>{'<-'}</Button>
                                     <ProgressBar key={track.name} className={'flex-fill'}>
                                         <ProgressBar
-                                            now={index * 3}
+                                            now={(track.initialOffset / totalCount) * 100}
                                             variant={'gray'}
                                             className={'bg-transparent'}
                                             visuallyHidden
