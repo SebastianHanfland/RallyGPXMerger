@@ -13,8 +13,6 @@ import { Form, ProgressBar } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
 import { getInitialTrackOffsetsAtNode, getTracksAtNode } from './getInitialOffsetForNodeInfo.tsx';
-import { debounceSettingOfPeople } from '../ui/TrackPeople.tsx';
-import { getCount } from '../../utils/inputUtil.ts';
 
 interface NodeSpecifications {
     trackOffsets: Record<string, number>;
@@ -28,7 +26,7 @@ export const EditNodeDialog = () => {
     const trackCompositions = useSelector(getTrackCompositions);
     const participantsDelay = useSelector(getParticipantsDelay);
     const initialOffset = useSelector(getInitialTrackOffsetsAtNode);
-    const [trackOffsets, setTrackOffsets] = useState<NodeSpecifications | undefined>(initialOffset);
+    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecifications | undefined>(initialOffset);
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
 
@@ -41,7 +39,7 @@ export const EditNodeDialog = () => {
         dispatch(trackMergeActions.setNodeEditInfo(undefined));
     };
     useEffect(() => {
-        setTrackOffsets(initialOffset);
+        setNodeSpecs(initialOffset);
     }, [initialOffset]);
 
     if (!nodeEditInfo || !foundTrackNode) {
@@ -54,7 +52,7 @@ export const EditNodeDialog = () => {
     // if specified use these times on the nodes instead of the ones originating from the people counter
     // allow displaying of merging tracks without time difference
 
-    console.log(trackOffsets);
+    console.log(nodeSpecs);
 
     return (
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
@@ -66,7 +64,7 @@ export const EditNodeDialog = () => {
             <Modal.Body>
                 {foundTrackNode &&
                     tracksAtNode.map((track) => {
-                        if (!trackOffsets) {
+                        if (!nodeSpecs) {
                             return null;
                         }
                         return (
@@ -76,7 +74,7 @@ export const EditNodeDialog = () => {
                                     <Button size={'sm'}>{'<-'}</Button>
                                     <ProgressBar key={track.name} className={'flex-fill'}>
                                         <ProgressBar
-                                            now={(trackOffsets.trackOffsets[track.id] / trackOffsets.totalCount) * 100}
+                                            now={(nodeSpecs.trackOffsets[track.id] / nodeSpecs.totalCount) * 100}
                                             variant={'gray'}
                                             className={'bg-transparent'}
                                             visuallyHidden
@@ -87,7 +85,7 @@ export const EditNodeDialog = () => {
                                             variant="success"
                                             now={
                                                 (((track.peopleCount ?? 0) * participantsDelay) /
-                                                    trackOffsets.totalCount) *
+                                                    nodeSpecs.totalCount) *
                                                 100
                                             }
                                             key={1}
@@ -99,9 +97,15 @@ export const EditNodeDialog = () => {
                                         <Form.Control
                                             type="text"
                                             placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                                            defaultValue={trackOffsets.trackOffsets[track.id].toString() ?? ''}
+                                            defaultValue={nodeSpecs.trackOffsets[track.id].toString() ?? ''}
                                             onChange={(value) => {
-                                                debounceSettingOfPeople(dispatch, getCount(value), track.id);
+                                                setNodeSpecs({
+                                                    ...nodeSpecs,
+                                                    trackOffsets: {
+                                                        ...nodeSpecs?.trackOffsets,
+                                                        [track.id]: Number(value.target.value),
+                                                    },
+                                                });
                                             }}
                                         />
                                     </div>
