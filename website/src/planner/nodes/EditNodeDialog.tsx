@@ -45,7 +45,7 @@ export const EditNodeDialog = () => {
     if (!nodeEditInfo || !foundTrackNode || !branchesAtNode || !nodeSpecs) {
         return null;
     }
-    const { totalCount, branchParticipants, branchTracks } = branchesAtNode;
+    const { totalCount, branchTracks } = branchesAtNode;
 
     return (
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
@@ -61,7 +61,10 @@ export const EditNodeDialog = () => {
                             <div key={segmentId} className={'my-4'}>
                                 {tracks.map((track) => (
                                     <span
-                                        style={{ backgroundColor: getColorFromUuid(track.id) }}
+                                        title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
+                                            id: 'msg.trackPeople',
+                                        })}`}
+                                        style={{ backgroundColor: getColorFromUuid(track.id), cursor: 'pointer' }}
                                         className={'rounded-2 p-1'}
                                     >
                                         {track.name}
@@ -78,13 +81,16 @@ export const EditNodeDialog = () => {
                                         visuallyHidden
                                         key={0}
                                     />
-                                    <ProgressBar
-                                        striped
-                                        variant="success"
-                                        now={(branchParticipants[segmentId] / totalCount) * 100}
-                                        key={1}
-                                        style={{ cursor: 'pointer' }}
-                                    />
+                                    {tracks.map((track) => (
+                                        <ProgressBar
+                                            now={((track.peopleCount ?? 0) / totalCount) * 100}
+                                            title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
+                                                id: 'msg.trackPeople',
+                                            })}`}
+                                            key={1}
+                                            style={{ cursor: 'pointer', background: getColorFromUuid(track.id) }}
+                                        />
+                                    ))}
                                 </ProgressBar>
                                 <Button size={'sm'}>{'->'}</Button>
                                 <div>
