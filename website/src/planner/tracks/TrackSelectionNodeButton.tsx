@@ -1,25 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { getNodePositions } from '../logic/resolving/selectors/getNodePositions.ts';
 import nodeIcon from '../../assets/mergeTracks.svg';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { TrackNode, listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
+import { TrackComposition } from '../store/types.ts';
 
 interface Props {
     segmentId: string;
 }
 
+export function getTracksAtNode(foundNode: TrackNode, trackCompositions: TrackComposition[]): TrackComposition[] {
+    return trackCompositions.filter((track) =>
+        track.segments.map((segment) => segment.id).includes(foundNode.segmentIdAfterNode)
+    );
+}
+
 export function TrackSelectionNodeButton({ segmentId }: Props) {
     const dispatch = useDispatch();
-    const nodes = useSelector(getNodePositions);
-    const foundNode = nodes.find((node) => node.segmentIdAfter === segmentId);
+    const tracks = useSelector(getTrackCompositions);
+    const trackNodes = listAllNodesOfTracks(tracks);
+    const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segmentId);
 
     if (!foundNode) {
         return null;
     }
 
+    const tracksAtNode = getTracksAtNode(foundNode, tracks);
+
     return (
         <span
-            title={foundNode.tracks.join('\n')}
+            title={tracksAtNode.map((track) => track.name).join('\n')}
             style={{ backgroundColor: 'white', padding: '5px' }}
             className={'rounded-2'}
             onClick={() => dispatch(trackMergeActions.setNodeEditInfo({ segmentAfterId: segmentId }))}
@@ -27,7 +37,7 @@ export function TrackSelectionNodeButton({ segmentId }: Props) {
             <span className={'mx-1'}>
                 <img src={nodeIcon} alt={'node'} />
             </span>
-            <FormattedMessage id={'msg.nodePoint'} values={{ counter: foundNode.tracks.length }} />
+            <FormattedMessage id={'msg.nodePoint'} values={{ counter: foundNode.segmentsBeforeNode.length }} />
         </span>
     );
 }

@@ -323,6 +323,7 @@
     "msg.showPlan": "Plan",
     "msg.publicTableLink": "Öffentlicher Link mit Tabelle",
     "msg.iframeTableExample": "Öffentlicher Link mit Tabelle im iframe",
+    "msg.removeBreakSegment": "Pause entfernen",
     "msg.nn": "nicht benannt",
     "msg.prio": "Priorität der Routen an Knoten",
     "msg.buffer": "Startpuffer in min",

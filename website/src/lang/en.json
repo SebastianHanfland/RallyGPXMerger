@@ -319,6 +319,7 @@
     "msg.help.calculate.message": "Click the orange Calculate button on the top left to calculate all tracks and documents. If the planning is not too big you can switch to automatic calculation",
     "msg.help.changes.title": "Changes not yet uploaded",
     "msg.help.changes.message": "There are changes which are not yet uploaded to the server",
+    "msg.removeBreakSegment": "Remove break",
     "msg.showLive": "Live",
     "msg.showPlan": "Plan",
     "msg.publicTableLink": "Public link with table",
