@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
 import { getInitialTrackOffsetsAtNode } from './getInitialOffsetForNodeInfo.tsx';
 import { getBranchesAtNode } from './getBranchesAtNode.ts';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
 
 interface NodeSpecifications {
     trackOffsets: Record<string, number>;
@@ -57,7 +58,16 @@ export const EditNodeDialog = () => {
                 {Object.entries(branchTracks).map(([segmentId, tracks]) => {
                     return (
                         <>
-                            <div key={segmentId}>{tracks.map((track) => track.name).join(', ')}</div>
+                            <div key={segmentId} className={'my-4'}>
+                                {tracks.map((track) => (
+                                    <span
+                                        style={{ backgroundColor: getColorFromUuid(track.id) }}
+                                        className={'rounded-2 p-1'}
+                                    >
+                                        {track.name}
+                                    </span>
+                                ))}
+                            </div>
                             <div key={segmentId + '2'} style={{ display: 'flex', justifyContent: 'row' }}>
                                 <Button size={'sm'}>{'<-'}</Button>
                                 <ProgressBar key={segmentId} className={'flex-fill'}>
