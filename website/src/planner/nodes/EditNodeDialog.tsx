@@ -76,7 +76,20 @@ export const EditNodeDialog = () => {
                                 ))}
                             </div>
                             <div key={segmentId + '2'} style={{ display: 'flex', justifyContent: 'row' }}>
-                                <Button size={'sm'}>{'<-'}</Button>
+                                <Button
+                                    size={'sm'}
+                                    onClick={() => {
+                                        setNodeSpecs({
+                                            ...nodeSpecs,
+                                            trackOffsets: {
+                                                ...nodeSpecs?.trackOffsets,
+                                                [segmentId]: nodeSpecs?.trackOffsets[segmentId] - 10,
+                                            },
+                                        });
+                                    }}
+                                >
+                                    {'<-'}
+                                </Button>
                                 <ProgressBar key={segmentId} className={'flex-fill'}>
                                     <ProgressBar
                                         now={(nodeSpecs.trackOffsets[segmentId] / nodeSpecs.totalCount) * 100}
@@ -96,12 +109,25 @@ export const EditNodeDialog = () => {
                                         />
                                     ))}
                                 </ProgressBar>
-                                <Button size={'sm'}>{'->'}</Button>
+                                <Button
+                                    size={'sm'}
+                                    onClick={() => {
+                                        setNodeSpecs({
+                                            ...nodeSpecs,
+                                            trackOffsets: {
+                                                ...nodeSpecs?.trackOffsets,
+                                                [segmentId]: nodeSpecs?.trackOffsets[segmentId] + 10,
+                                            },
+                                        });
+                                    }}
+                                >
+                                    {'->'}
+                                </Button>
                                 <div>
                                     <Form.Control
                                         type="text"
                                         placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                                        defaultValue={nodeSpecs.trackOffsets[segmentId]}
+                                        value={nodeSpecs.trackOffsets[segmentId]}
                                         onChange={(value) => {
                                             setNodeSpecs({
                                                 ...nodeSpecs,
