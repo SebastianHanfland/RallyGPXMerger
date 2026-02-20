@@ -1,5 +1,5 @@
-import warning from '../../assets/warning.svg';
 import warningW from '../../assets/warningW.svg';
+import warning from '../../assets/warning.svg';
 
 export function Warning({ size, white }: { size?: number; white?: boolean }) {
     return (

@@ -3,7 +3,8 @@ import arrowDown from '../../assets/arrow-down.svg';
 import arrowUp from '../../assets/arrow-up.svg';
 import { getGaps } from '../logic/calculate/calculatingGaps.ts';
 import { GapPoint } from '../store/types.ts';
-import { Warning } from '../layout/Warning.tsx';
+
+import { Warning } from '../../utils/icons/Warning.tsx';
 
 interface Props {
     segmentId: string;
