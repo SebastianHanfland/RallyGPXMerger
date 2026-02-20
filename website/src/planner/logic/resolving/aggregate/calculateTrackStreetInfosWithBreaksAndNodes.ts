@@ -1,4 +1,4 @@
-import { AggregatedPoints, TrackWayPointType } from '../types.ts';
+import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../../utils/dateUtil.ts';
 import {
@@ -37,7 +37,7 @@ export const getTrackStreetInfos = createSelector(
         arrivalDateTime,
         calculatedTracks,
         nodeSpecifications
-    ) => {
+    ): TrackStreetInfo[] => {
         const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
 
         return trackWithEndDelay.map((track) => {
@@ -53,7 +53,8 @@ export const getTrackStreetInfos = createSelector(
                 arrivalDateTime
             );
 
-            const startFront = wayPoints[0].frontArrival;
+            const backupDate = new Date().toISOString();
+            const startFront = wayPoints.length > 0 ? wayPoints[0].frontArrival : backupDate;
             const publicStart = track
                 ? roundPublishedStartTimes(startFront, track.buffer ?? 0, track.rounding ?? 0)
                 : startFront;
@@ -63,8 +64,8 @@ export const getTrackStreetInfos = createSelector(
                 name: track.name ?? track.id,
                 startFront: startFront,
                 publicStart: publicStart,
-                arrivalBack: wayPoints[wayPoints.length - 1].backArrival,
-                arrivalFront: wayPoints[wayPoints.length - 1].frontPassage,
+                arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backArrival : backupDate,
+                arrivalFront: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].frontPassage : backupDate,
                 distanceInKm: distance,
                 peopleCount: track.peopleCount,
                 wayPoints: wayPoints,

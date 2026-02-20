@@ -34,6 +34,9 @@ export function getStartAndEndPlanning(
 
     calculatedTracks.forEach((calculatedTrack) => {
         const foundTrack = tracks.find((track) => track.id === calculatedTrack.id);
+        if (calculatedTrack.points.length === 0) {
+            return;
+        }
         const startTimeOfTrack = calculatedTrack.points[0].t;
         if (startTimeOfTrack < startDate) {
             startDate = startTimeOfTrack;
