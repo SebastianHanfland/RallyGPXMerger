@@ -1,16 +1,16 @@
 import { Col, Container, Row } from 'react-bootstrap';
-import line from '../../assets/line.svg';
-import mergeTracks from '../../assets/mergeTracks.svg';
+import line from '../../../assets/line.svg';
+import mergeTracks from '../../../assets/mergeTracks.svg';
 import { WizardHeader } from './WizardHeader.tsx';
 import { useDispatch } from 'react-redux';
-import { layoutActions } from '../store/layout.reducer.ts';
+import { layoutActions } from '../../store/layout.reducer.ts';
 import { simpleRallyThunk } from './simpleRallyThunk.ts';
-import { AppDispatch } from '../store/planningStore.ts';
+import { AppDispatch } from '../../store/planningStore.ts';
 import { FormattedMessage } from 'react-intl';
-import { WizardCard } from '../layout/WizardCard.tsx';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { WizardCard } from './WizardCard.tsx';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { useNavigate } from 'react-router';
-import { resetData } from '../import/resetData.ts';
+import { resetData } from '../../import/resetData.ts';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();

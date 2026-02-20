@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { WizardHeader } from './WizardHeader.tsx';
-import { layoutActions } from '../store/layout.reducer.ts';
-import { Sections } from '../layout/types.ts';
-import { AppDispatch } from '../store/planningStore.ts';
+import { layoutActions } from '../../store/layout.reducer.ts';
+import { Sections } from '../../layout/types.ts';
+import { AppDispatch } from '../../store/planningStore.ts';
 import { FormattedMessage } from 'react-intl';
 
 export const WizardVersions = () => {

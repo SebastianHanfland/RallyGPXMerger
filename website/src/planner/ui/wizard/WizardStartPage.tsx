@@ -1,20 +1,20 @@
 import { Col, Container, Row } from 'react-bootstrap';
-import { Sections } from './types.ts';
-import stars from '../../assets/stars.svg';
-import fileUp from '../../assets/file-up.svg';
-import pencil from '../../assets/pencil.svg';
-import { WizardHeader } from '../wizard/WizardHeader.tsx';
+import { Sections } from '../../layout/types.ts';
+import stars from '../../../assets/stars.svg';
+import fileUp from '../../../assets/file-up.svg';
+import pencil from '../../../assets/pencil.svg';
+import { WizardHeader } from './WizardHeader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { layoutActions } from '../store/layout.reducer.ts';
-import { importHook } from '../import/importHook.ts';
+import { layoutActions } from '../../store/layout.reducer.ts';
+import { importHook } from '../../import/importHook.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
-import { DataLossDialog } from './DataLossDialog.tsx';
+import { DataLossDialog } from '../../layout/DataLossDialog.tsx';
 import { useState } from 'react';
-import { isPlanningInProgress } from '../store/planner.selector.ts';
-import { LanguageSelection } from './LanguageSelection.tsx';
+import { isPlanningInProgress } from '../../store/planner.selector.ts';
+import { LanguageSelection } from '../../layout/LanguageSelection.tsx';
 import { useNavigate } from 'react-router';
-import { getPlanningId } from '../store/backend.reducer.ts';
+import { getPlanningId } from '../../store/backend.reducer.ts';
 
 export const WizardStartPage = () => {
     const navigateTo = useNavigate();
