@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { getHasChangesSinceLastUpload } from '../../../store/backend.reducer.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { TracksGapWarning } from '../../../tracks/TracksGapWarning.tsx';
-import { Warning } from '../../../../utils/icons/Warning.tsx';
+import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
 
 export const PlannerSidebarNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
@@ -35,7 +35,7 @@ export const PlannerSidebarNavigation = () => {
                     <FormattedMessage id={'msg.settings'} />
                 </SidebarNavItem>
                 <SidebarNavItem section={'documents'} tabIndex={3}>
-                    {hasChangesSinceLastUpload && <Warning size={10} />}
+                    {hasChangesSinceLastUpload && <WarningIcon size={10} />}
                     <FormattedMessage id={'msg.documents'} />
                 </SidebarNavItem>
             </Nav>

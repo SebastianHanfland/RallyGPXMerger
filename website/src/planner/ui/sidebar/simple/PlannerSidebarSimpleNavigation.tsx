@@ -5,7 +5,7 @@ import { SidebarNavItem } from '../SidebarNavItem.tsx';
 import { FormattedMessage } from 'react-intl';
 import { getHasChangesSinceLastUpload } from '../../../store/backend.reducer.ts';
 
-import { Warning } from '../../../../utils/icons/Warning.tsx';
+import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
 
 export const PlannerSidebarSimpleNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
@@ -17,7 +17,7 @@ export const PlannerSidebarSimpleNavigation = () => {
                 <FormattedMessage id={'msg.simpleTrack'} />
             </SidebarNavItem>
             <SidebarNavItem section={'settings'} tabIndex={1}>
-                {hasChangesSinceLastUpload && <Warning size={10} />}
+                {hasChangesSinceLastUpload && <WarningIcon size={10} />}
                 <FormattedMessage id={'msg.settings'} />/
                 <FormattedMessage id={'msg.documents'} />
             </SidebarNavItem>

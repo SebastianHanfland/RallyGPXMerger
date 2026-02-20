@@ -1,6 +1,5 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import download from '../../assets/file-downB.svg';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { createBlockedStreetsPdf } from '../download/pdf/blockedStreetsPdf.ts';
 import { createTrackStreetPdf } from '../download/pdf/trackStreetsPdf.ts';
@@ -13,6 +12,7 @@ import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());
@@ -69,13 +69,7 @@ export const StreetFilesPdfMakeDownloader = () => {
             disabled={trackStreetInfos.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadPdf' })}
         >
-            <img
-                src={download}
-                className="m-1"
-                alt="download file"
-                color={'#ffffff'}
-                style={{ height: '20px', width: '20px' }}
-            />
+            <DownloadIcon size={20} />
             PDF
         </Button>
     );

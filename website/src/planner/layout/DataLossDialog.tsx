@@ -5,7 +5,7 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { ExportStateJson } from '../download/json/ExportStateJson.tsx';
 import { useState } from 'react';
 
-import { Warning } from '../../utils/icons/Warning.tsx';
+import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
 
 export function DataLossDialog(props: { closeModal: () => void; onConfirm?: () => void; importWarning: boolean }) {
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export function DataLossDialog(props: { closeModal: () => void; onConfirm?: () =
             body={
                 <div onClick={() => setDownloaded(true)} className={'text-center'}>
                     <div>
-                        <Warning size={50} />
+                        <WarningIcon size={50} />
                     </div>
                     <div className={'m-2 mb-4'}>
                         <FormattedMessage
@@ -39,7 +39,7 @@ export function DataLossDialog(props: { closeModal: () => void; onConfirm?: () =
                     {!downloaded && (
                         <p>
                             <b>
-                                <Warning />
+                                <WarningIcon />
                                 <FormattedMessage
                                     id={props.importWarning ? 'msg.importWarning.dataHint' : 'msg.backToStart.dataHint'}
                                 />

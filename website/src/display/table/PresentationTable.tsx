@@ -10,10 +10,10 @@ import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 import { Button, Table } from 'react-bootstrap';
-import download from '../../assets/file-down.svg';
 import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 export const isInIframe = window.location.search.includes('&iframe');
 
@@ -105,7 +105,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                             createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
                         }
                     >
-                        <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
+                        <DownloadIcon />
                         PDF
                     </Button>
                 )}

@@ -21,7 +21,7 @@ import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
 
-import { Warning } from '../../utils/icons/Warning.tsx';
+import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);
@@ -150,7 +150,7 @@ export function UploadDataButton() {
                     }
                 }}
             >
-                {hasChangesSinceLastUpload && <Warning white={true} />}
+                {hasChangesSinceLastUpload && <WarningIcon white={true} />}
                 <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.uploadCurrentPlanning' })}
             </Button>

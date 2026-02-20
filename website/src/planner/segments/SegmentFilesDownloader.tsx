@@ -1,10 +1,10 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import download from '../../assets/file-downB.svg';
 import { downloadFilesInZip } from '../tracks/CalculatedFilesDownloader.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 export const SegmentFilesDownloader = () => {
     const intl = useIntl();
@@ -24,13 +24,7 @@ export const SegmentFilesDownloader = () => {
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadSegments.hint' })}
         >
-            <img
-                src={download}
-                className="m-1"
-                alt="download file"
-                color={'#ffffff'}
-                style={{ height: '20px', width: '20px' }}
-            />
+            <DownloadIcon size={20} />
             <FormattedMessage id={'msg.downloadSegments'} />
         </Button>
     );

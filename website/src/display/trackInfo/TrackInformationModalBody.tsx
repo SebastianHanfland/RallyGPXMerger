@@ -5,7 +5,6 @@ import {
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
-import download from '../../assets/file-down.svg';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
 import { DisplayTrack } from '../../common/types.ts';
 import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
@@ -15,6 +14,7 @@ import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import L from 'leaflet';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 const cardStyle = {
     style: { width: '170px', height: '145px', cursor: 'default' },
@@ -58,7 +58,7 @@ function TrackInfo({ track }: { track: DisplayTrack }) {
                                 createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
                             }
                         >
-                            <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
+                            <DownloadIcon />
                             PDF
                         </Button>
                     )}

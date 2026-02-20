@@ -3,9 +3,9 @@ import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
-import download from '../../assets/file-downB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
@@ -41,13 +41,7 @@ export const CalculatedFilesDownloader = () => {
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadTracks.hint' })}
         >
-            <img
-                src={download}
-                className="m-1"
-                alt="download file"
-                color={'#ffffff'}
-                style={{ height: '20px', width: '20px' }}
-            />
+            <DownloadIcon size={20} />
             <FormattedMessage id={'msg.downloadTracks'} />
         </Button>
     );

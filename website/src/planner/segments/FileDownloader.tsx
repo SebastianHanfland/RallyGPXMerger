@@ -1,9 +1,8 @@
 import FileSaver from 'file-saver';
 import { Button, Dropdown } from 'react-bootstrap';
 import { getColor } from '../../utils/colorUtil.ts';
-import download from '../../assets/file-down.svg';
-import downloadB from '../../assets/file-downB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 interface Props {
     id: string;
@@ -46,7 +45,7 @@ export const FileDownloader = (props: Props) => {
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
             className={onlyIcon ? 'm-1' : undefined}
         >
-            {onlyIcon ? <img src={download} alt="download file" color={'#ffffff'} className={'m-1'} /> : name}
+            {onlyIcon ? <DownloadIcon /> : name}
             {!!label && label}
         </Button>
     );
@@ -59,7 +58,7 @@ export const FileDownloaderDropdownItem = ({ name, content }: DropdownProps) => 
             onClick={() => downloadFile(name, content)}
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
         >
-            <img src={downloadB} alt="download file" color={'#ffffff'} className="m-1" />
+            <DownloadIcon black={true} />
             <span>
                 <FormattedMessage id={'msg.downloadFile'} />
             </span>

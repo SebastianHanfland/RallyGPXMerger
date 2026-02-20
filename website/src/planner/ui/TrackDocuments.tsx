@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { downloadSinglePdfFiles } from '../streets/StreetFilesPdfMakeDownloader.tsx';
-import download from '../../assets/file-down.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { FileDownloader } from '../segments/FileDownloader.tsx';
@@ -12,6 +11,7 @@ import { useState } from 'react';
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const intl = useIntl();
@@ -34,7 +34,7 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
                 className={'m-1'}
                 onClick={() => dispatch(downloadSinglePdfFiles(intl, matchedTrackInfo?.id))}
             >
-                <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
+                <DownloadIcon />
                 PDF
             </Button>
             {calculatedTrack && (
