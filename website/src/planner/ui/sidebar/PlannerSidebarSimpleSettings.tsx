@@ -6,8 +6,13 @@ import { PlanningTitle } from '../../parameters/PlanningTitle.tsx';
 import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
 import { ArrivalDateTimePicker } from '../../parameters/ArrivalDateTimePicker.tsx';
 import { BlockTextDescription } from '../../layout/BlockTextDescription.tsx';
+import { ReactNode } from 'react';
 
 export const PlannerSidebarSimpleSettings = () => {
+    const accordionEntries: [string, ReactNode, string][] = [
+        ['msg.gapSetting', <GapFinderParameters />, '0'],
+        ['msg.ownApiKey', <ApiKeyInput />, '1'],
+    ];
     return (
         <div className={'m-2'}>
             <BlockTextDescription messageId={'msg.description.documents'} />
@@ -19,23 +24,15 @@ export const PlannerSidebarSimpleSettings = () => {
                 <PlanningTitle />
                 <ArrivalDateTimePicker />
             </div>
-            <Accordion defaultActiveKey={'2'}>
-                <Accordion.Item eventKey="2">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.gapSetting'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <GapFinderParameters />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="5">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.ownApiKey'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <ApiKeyInput />
-                    </Accordion.Body>
-                </Accordion.Item>
+            <Accordion defaultActiveKey={'0'}>
+                {accordionEntries.map(([title, component, key]) => (
+                    <Accordion.Item eventKey={key}>
+                        <Accordion.Header>
+                            <FormattedMessage id={title} />
+                        </Accordion.Header>
+                        <Accordion.Body>{component}</Accordion.Body>
+                    </Accordion.Item>
+                ))}
             </Accordion>
         </div>
     );

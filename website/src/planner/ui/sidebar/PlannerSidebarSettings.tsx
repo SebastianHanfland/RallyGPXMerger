@@ -8,68 +8,36 @@ import { PlanningTitle } from '../../parameters/PlanningTitle.tsx';
 import { TrackPriorityTable } from '../../parameters/TrackPriorityTable.tsx';
 import { StartTimeTable } from '../../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../../parameters/ArrivalDateTimePicker.tsx';
+import { ReactNode } from 'react';
 
 export const PlannerSidebarSettings = () => {
+    const accordionEntries: [string, ReactNode, string][] = [
+        [
+            'msg.titleOfPlanning',
+            <>
+                <PlanningTitle />
+                <ArrivalDateTimePicker />
+            </>,
+            '0',
+        ],
+        ['msg.trackSettings', <TrackMergeParameters />, '1'],
+        ['msg.gapSetting', <GapFinderParameters />, '2'],
+        ['msg.prio', <TrackPriorityTable />, '3'],
+        ['msg.communicatedStart', <StartTimeTable />, '4'],
+        ['msg.ownApiKey', <ApiKeyInput />, '5'],
+        ['msg.constructions.title', <ConstructionSites />, '6'],
+    ];
     return (
         <div className={'m-2'}>
             <Accordion defaultActiveKey={'0'}>
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.titleOfPlanning'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <PlanningTitle />
-                        <ArrivalDateTimePicker />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.trackSettings'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <TrackMergeParameters />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.gapSetting'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <GapFinderParameters />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="3">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.prio'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <TrackPriorityTable />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="4">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.communicatedStart'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <StartTimeTable />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="5">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.ownApiKey'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <ApiKeyInput />
-                    </Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="6">
-                    <Accordion.Header>
-                        <FormattedMessage id={'msg.constructions.title'} />
-                    </Accordion.Header>
-                    <Accordion.Body>
-                        <ConstructionSites />
-                    </Accordion.Body>
-                </Accordion.Item>
+                {accordionEntries.map(([title, component, key]) => (
+                    <Accordion.Item eventKey={key}>
+                        <Accordion.Header>
+                            <FormattedMessage id={title} />
+                        </Accordion.Header>
+                        <Accordion.Body>{component}</Accordion.Body>
+                    </Accordion.Item>
+                ))}
             </Accordion>
         </div>
     );
