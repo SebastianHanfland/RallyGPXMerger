@@ -61,5 +61,8 @@ export function migrateToSegmentData(
         postCodeLookup: postCodeLookup,
         districtLookup: districtLookup,
         segmentFilterTerm: state.segmentFilterTerm,
+        replaceDistrictLookup: {},
+        replacePostCodeLookup: {},
+        replaceStreetLookup: {},
     };
 }

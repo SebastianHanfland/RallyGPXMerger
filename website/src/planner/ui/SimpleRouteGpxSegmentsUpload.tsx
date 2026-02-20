@@ -6,6 +6,7 @@ import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.red
 import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { SEGMENT, TrackComposition } from '../store/types.ts';
+import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
 
 const fileTypes = ['GPX'];
 
@@ -16,7 +17,9 @@ export function GpxSegmentsUploadAndParseAndSetToTrack({ track }: { track: Track
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) => {
-            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments));
+            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
+                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+            );
             dispatch(
                 trackMergeActions.setSegments({
                     id: track.id,
