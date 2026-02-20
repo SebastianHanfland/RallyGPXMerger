@@ -1,13 +1,13 @@
 import { Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { getSelectedSidebarSection } from '../store/layout.reducer.ts';
-import { SidebarNavItem } from './SidebarNavItem.tsx';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getSelectedSidebarSection } from '../../../store/layout.reducer.ts';
+import { SidebarNavItem } from '../SidebarNavItem.tsx';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { FormattedMessage } from 'react-intl';
-import { getHasChangesSinceLastUpload } from '../store/backend.reducer.ts';
-import { Warning } from '../layout/Warning.tsx';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { TracksGapWarning } from '../tracks/TracksGapWarning.tsx';
+import { getHasChangesSinceLastUpload } from '../../../store/backend.reducer.ts';
+import { Warning } from '../../../layout/Warning.tsx';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
+import { TracksGapWarning } from '../../../tracks/TracksGapWarning.tsx';
 
 export const PlannerSidebarNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);

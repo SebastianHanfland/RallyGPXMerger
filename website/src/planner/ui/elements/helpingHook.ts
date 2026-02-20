@@ -5,10 +5,10 @@ import {
     getHasDefaultArrivalDateTime,
     getPlanningTitle,
     getTrackCompositions,
-} from '../store/trackMerge.reducer.ts';
-import { getHasChangesSinceLastUpload, getPlanningId } from '../store/backend.reducer.ts';
-import { getHasSingleTrack, layoutActions } from '../store/layout.reducer.ts';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
+} from '../../store/trackMerge.reducer.ts';
+import { getHasChangesSinceLastUpload, getPlanningId } from '../../store/backend.reducer.ts';
+import { getHasSingleTrack, layoutActions } from '../../store/layout.reducer.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 
 export const useHelpingHook = (): [string, string, () => void] => {
     const intl = useIntl();

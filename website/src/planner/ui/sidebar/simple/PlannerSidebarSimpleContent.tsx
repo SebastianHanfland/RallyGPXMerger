@@ -1,7 +1,7 @@
-import { PlannerSidebarSettings } from './PlannerSidebarSettings.tsx';
-import { SimpleFileUploadSection } from './SimpleFileUploadSection.tsx';
+import { SimpleFileUploadSection } from '../../SimpleFileUploadSection.tsx';
 import { useSelector } from 'react-redux';
-import { getSelectedSidebarSection } from '../store/layout.reducer.ts';
+import { getSelectedSidebarSection } from '../../../store/layout.reducer.ts';
+import { PlannerSidebarSimpleSettings } from '../PlannerSidebarSimpleSettings.tsx';
 
 export const PlannerSidebarSimpleContent = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
@@ -9,6 +9,6 @@ export const PlannerSidebarSimpleContent = () => {
         case 'simpleTrack':
             return <SimpleFileUploadSection />;
         case 'settings':
-            return <PlannerSidebarSettings />;
+            return <PlannerSidebarSimpleSettings />;
     }
 };

@@ -1,14 +1,14 @@
-import { UploadDataButton } from '../layout/UploadDataButton.tsx';
-import { RemoveUploadedDataButton } from '../layout/RemoveUploadedDataButton.tsx';
-import { PasswordButton } from '../layout/PasswordButton.tsx';
-import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
-import { CleanDataButton } from '../layout/CleanDataButton.tsx';
-import { DownloadDataButton } from '../layout/DownloadDataButton.tsx';
+import { UploadDataButton } from '../../layout/UploadDataButton.tsx';
+import { RemoveUploadedDataButton } from '../../layout/RemoveUploadedDataButton.tsx';
+import { PasswordButton } from '../../layout/PasswordButton.tsx';
+import { SharePlanningButton } from '../../layout/SharePlanningButton.tsx';
+import { CleanDataButton } from '../../layout/CleanDataButton.tsx';
+import { DownloadDataButton } from '../../layout/DownloadDataButton.tsx';
 import { Col, Row } from 'react-bootstrap';
-import { SegmentFilesDownloader } from '../segments/SegmentFilesDownloader.tsx';
-import { CalculatedFilesDownloader } from '../tracks/CalculatedFilesDownloader.tsx';
-import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
-import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
+import { SegmentFilesDownloader } from '../../segments/SegmentFilesDownloader.tsx';
+import { CalculatedFilesDownloader } from '../../tracks/CalculatedFilesDownloader.tsx';
+import { StreetFilesDownloader } from '../../streets/StreetFilesDownloader.tsx';
+import { StreetFilesPdfMakeDownloader } from '../../streets/StreetFilesPdfMakeDownloader.tsx';
 import { FormattedMessage } from 'react-intl';
 
 export const PlannerSidebarServerSection = () => {

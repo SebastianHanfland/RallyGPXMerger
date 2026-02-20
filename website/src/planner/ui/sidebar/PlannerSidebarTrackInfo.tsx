@@ -1,6 +1,6 @@
-import { TrackStreetInfo } from '../logic/resolving/types.ts';
+import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 import { Row } from 'react-bootstrap';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import { useIntl } from 'react-intl';
 
 interface Props {

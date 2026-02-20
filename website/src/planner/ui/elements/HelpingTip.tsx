@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { useHelpingHook } from './helpingHook.ts';
-import hand from '../../assets/hand.svg';
+import hand from '../../../assets/hand.svg';
 
 const helpingTipStyle: CSSProperties = {
     position: 'fixed',

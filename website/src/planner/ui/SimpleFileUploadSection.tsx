@@ -1,5 +1,5 @@
 import { SimpleGpxSegments } from './SimpleGpxSegments.tsx';
-import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo.tsx';
+import { PlannerSidebarTrackInfo } from './sidebar/PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { Col, Row } from 'react-bootstrap';

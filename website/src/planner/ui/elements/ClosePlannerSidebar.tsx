@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsSidebarOpen, layoutActions } from '../store/layout.reducer.ts';
+import { getIsSidebarOpen, layoutActions } from '../../store/layout.reducer.ts';
 import { CSSProperties } from 'react';
 
 const getStyle = (width: string): CSSProperties => ({

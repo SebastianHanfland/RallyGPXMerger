@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react';
 import { useIntl } from 'react-intl';
-import house from '../../assets/house.svg';
+import house from '../../../assets/house.svg';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import { getPlanningId } from '../store/backend.reducer.ts';
+import { getPlanningId } from '../../store/backend.reducer.ts';
 
 const homeStyle: CSSProperties = {
     position: 'fixed',
