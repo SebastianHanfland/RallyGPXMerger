@@ -69,7 +69,7 @@ export const StreetFilesPdfMakeDownloader = () => {
             disabled={trackStreetInfos.length === 0}
             title={intl.formatMessage({ id: 'msg.downloadPdf' })}
         >
-            <DownloadIcon size={20} />
+            <DownloadIcon size={20} black={true} />
             PDF
         </Button>
     );

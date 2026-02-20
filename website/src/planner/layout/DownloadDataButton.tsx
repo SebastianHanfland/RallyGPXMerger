@@ -17,7 +17,7 @@ export function DownloadDataButton() {
                     downloadFile(`RallyGPXMergeState-${new Date().toISOString()}.json`, JSON.stringify(state))
                 }
             >
-                <DownloadIcon size={20} />
+                <DownloadIcon size={20} black={true} />
                 {intl.formatMessage({ id: 'msg.downloadPlanning' })}
             </Button>
         </>

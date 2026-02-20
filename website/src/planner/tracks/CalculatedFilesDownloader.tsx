@@ -41,7 +41,7 @@ export const CalculatedFilesDownloader = () => {
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadTracks.hint' })}
         >
-            <DownloadIcon size={20} />
+            <DownloadIcon size={20} black={true} />
             <FormattedMessage id={'msg.downloadTracks'} />
         </Button>
     );

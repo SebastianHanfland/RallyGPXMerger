@@ -24,7 +24,7 @@ export const SegmentFilesDownloader = () => {
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadSegments.hint' })}
         >
-            <DownloadIcon size={20} />
+            <DownloadIcon size={20} black={true} />
             <FormattedMessage id={'msg.downloadSegments'} />
         </Button>
     );

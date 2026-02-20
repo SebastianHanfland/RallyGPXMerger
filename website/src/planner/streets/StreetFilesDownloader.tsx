@@ -43,7 +43,7 @@ export const StreetFilesDownloader = () => {
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadCsv' })}
         >
-            <DownloadIcon size={20} />
+            <DownloadIcon size={20} black={true} />
             CSV
         </Button>
     );
