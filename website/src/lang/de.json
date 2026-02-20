@@ -8,7 +8,7 @@
     "msg.detailsVersionGpx": "Detailsansicht für {versionName}",
     "msg.downloadVersionGpx": "GPX für {versionName} herunterladen",
     "msg.downloadPlanning": "Planung herunterladen",
-    "msg.dashboard": "Planung",
+    "msg.planning": "Planung",
     "msg.settings": "Einstellungen",
     "msg.segments": "Abschnitte",
     "msg.segment": "Abschnitt",

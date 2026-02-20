@@ -64,7 +64,7 @@ export function PlannerSidebar() {
                     </div>
                 ) : (
                     <span style={{ writingMode: 'vertical-lr' }} className={'my-3'}>
-                        <FormattedMessage id={'msg.dashboard'} />
+                        <FormattedMessage id={'msg.planning'} />
                     </span>
                 )}
             </div>
