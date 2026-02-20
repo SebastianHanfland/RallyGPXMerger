@@ -1,7 +1,7 @@
 import { UploadDataButton } from '../../layout/UploadDataButton.tsx';
 import { RemoveUploadedDataButton } from '../../layout/RemoveUploadedDataButton.tsx';
 import { PasswordButton } from '../../layout/PasswordButton.tsx';
-import { SharePlanningButton } from '../../layout/SharePlanningButton.tsx';
+import { SharePlanningButton } from '../../sharing/SharePlanningButton.tsx';
 import { CleanDataButton } from '../../layout/CleanDataButton.tsx';
 import { DownloadDataButton } from '../../layout/DownloadDataButton.tsx';
 import { Col, Row } from 'react-bootstrap';

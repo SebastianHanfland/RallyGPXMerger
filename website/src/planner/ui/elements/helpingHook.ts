@@ -35,7 +35,7 @@ export const useHelpingHook = (): [string, string, () => void] => {
             return inform('gpx', () => dispatch(layoutActions.setSelectedSidebarSection('simpleTrack')));
         }
         if (!arrivalDateTime || hasDefaultArrivalTime) {
-            return inform('timeSimple', () => dispatch(layoutActions.setSelectedSidebarSection('simpleTrack')));
+            return inform('timeSimple', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
         }
         if (!planningTitle) {
             return inform('name', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
