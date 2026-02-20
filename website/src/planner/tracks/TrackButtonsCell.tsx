@@ -79,7 +79,7 @@ export function TrackButtonsCell({ track }: Props) {
                         setShowColorModal(false);
                     }}
                     closeModal={() => setShowColorModal(false)}
-                    title={`Removing track ${track.name ?? ''}`}
+                    title={`${intl.formatMessage({ id: 'msg.setColor' })} ${track.name ?? ''}`}
                     body={<HexColorPicker color={color} onChange={setColor} />}
                 />
             )}

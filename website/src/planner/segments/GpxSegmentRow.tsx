@@ -15,6 +15,7 @@ import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
+import { EditSegmentColorButton } from './EditSegmentColor.tsx';
 
 interface Props {
     gpxSegment: ParsedGpxSegment;
@@ -69,6 +70,7 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
                     <FlipGpxButton id={id} name={filename} flipped={flipped} />
+                    <EditSegmentColorButton segment={gpxSegment} />
                     <ResetResolvedStreetsButton id={id} name={filename} />
                 </DropdownButton>
             </td>

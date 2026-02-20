@@ -90,6 +90,11 @@ const segmentDataSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, filename: action.payload.filename } : segment
             );
         },
+        setSegmentColor: (state: SegmentDataState, action: PayloadAction<{ id: string; color: string }>) => {
+            state.segments = state.segments.map((segment) =>
+                segment.id === action.payload.id ? { ...segment, color: action.payload.color } : segment
+            );
+        },
         setFilterTerm: (state: SegmentDataState, action: PayloadAction<string | undefined>) => {
             state.segmentFilterTerm = action.payload;
         },

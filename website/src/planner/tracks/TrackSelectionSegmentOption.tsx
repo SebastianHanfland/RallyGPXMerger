@@ -17,6 +17,7 @@ import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
 import { getUsagesOfSegment } from '../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
+import { EditSegmentColorButton } from '../segments/EditSegmentColor.tsx';
 
 interface Props {
     trackId: string;
@@ -85,10 +86,10 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                         title={''}
                     >
                         <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
-
                         <FileChangeButton id={id} name={filename} />
                         <RemoveFileButton id={id} name={filename} />
                         <FlipGpxButton id={id} name={filename} flipped={flipped} />
+                        <EditSegmentColorButton segment={gpxSegment} />
                         <ResetResolvedStreetsButton id={id} name={filename} />
                     </DropdownButton>
                 </div>
