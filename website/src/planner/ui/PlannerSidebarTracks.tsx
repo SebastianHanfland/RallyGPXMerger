@@ -13,7 +13,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
 import { TrackGapWarning } from '../tracks/TrackGapWarning.tsx';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { getColorOfTrack } from '../../utils/colorUtil.ts';
+import { ColorBlob } from '../../utils/ColorBlob.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -55,10 +56,7 @@ export const PlannerSidebarTracks = () => {
                         active={selectedTrackId === track.id}
                         onClick={() => setSelectedTrackId(track.id)}
                     >
-                        <span
-                            className={'rounded-2 px-2 mx-1'}
-                            style={{ backgroundColor: getColorFromUuid(track.id), color: getColorFromUuid(track.id) }}
-                        ></span>
+                        <ColorBlob color={getColorOfTrack(track)} />
                         <TrackGapWarning trackId={track.id} />
                         {track.name || '---'}
                     </PageItem>

@@ -53,6 +53,11 @@ const trackMergeSlice = createSlice({
             );
             state.filterTerm = undefined;
         },
+        setTrackColor: (state: TrackMergeState, action: PayloadAction<{ id: string; color: string | undefined }>) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, color: action.payload.color } : track
+            );
+        },
         setTrackPeopleCount: (
             state: TrackMergeState,
             action: PayloadAction<{ id: string; peopleCount: number | undefined }>

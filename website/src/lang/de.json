@@ -74,6 +74,7 @@
     "msg.removeTrack.hint": "Route {name} entfernen",
     "msg.pasteSegments": "Abschnitt-Ids aus der Zwischenablage einfügen",
     "msg.copySegments": "Abschnitt-Ids in die Zwischenablage kopieren",
+    "msg.setColor": "Farbe auswählen",
     "msg.customSpeed.title": "Angepasste Geschwindigkeit auf Abschnitten",
     "msg.importFile": "JSON Datei importieren",
     "msg.importFile.hint": "Alle aktuellen Daten werden überschrieben, wenn eine andere Datei importiert wird",

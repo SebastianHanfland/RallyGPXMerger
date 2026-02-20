@@ -74,6 +74,7 @@
     "msg.removeTrack.hint": "`Remove track {name}",
     "msg.pasteSegments": "Paste segmentIds from clipboard",
     "msg.copySegments": "Copy segmentIds to clipboard",
+    "msg.setColor": "Edit color",
     "msg.customSpeed.title": "Custom speed on segments",
     "msg.importFile": "Import JSON file",
     "msg.importFile.hint": "All current data is lost when importing another file",

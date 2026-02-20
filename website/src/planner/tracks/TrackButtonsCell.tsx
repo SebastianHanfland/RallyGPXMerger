@@ -11,6 +11,9 @@ import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
+import { getColorFromUuid, getColorOfTrack } from '../../utils/colorUtil.ts';
+import { HexColorPicker } from 'react-colorful';
+import { ColorBlob } from '../../utils/ColorBlob.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -21,6 +24,8 @@ export function TrackButtonsCell({ track }: Props) {
     const { id } = track;
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
+    const [showColorModal, setShowColorModal] = useState(false);
+    const [color, setColor] = useState(track.color ?? getColorFromUuid(id));
     const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
 
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
@@ -61,6 +66,24 @@ export function TrackButtonsCell({ track }: Props) {
                     <FormattedMessage id={'msg.pasteSegments'} />
                 </span>
             </Dropdown.Item>
+            <Dropdown.Item onClick={() => setShowColorModal(true)}>
+                <ColorBlob color={getColorOfTrack(track)} />
+                <span>
+                    <FormattedMessage id={'msg.setColor'} />
+                </span>
+            </Dropdown.Item>
+            {showColorModal && (
+                <ConfirmationModal
+                    onConfirm={() => {
+                        dispatch(trackMergeActions.setTrackColor({ id, color }));
+                        setShowColorModal(false);
+                    }}
+                    closeModal={() => setShowColorModal(false)}
+                    title={`Removing track ${track.name ?? ''}`}
+                    body={<HexColorPicker color={color} onChange={setColor} />}
+                />
+            )}
+
             {showModal && (
                 <ConfirmationModal
                     onConfirm={() => {
