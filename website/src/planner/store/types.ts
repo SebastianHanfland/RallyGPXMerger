@@ -78,6 +78,7 @@ export interface TrackComposition {
     peopleCount?: number;
     priority?: number;
     buffer?: number;
+    color?: string;
     rounding?: number;
     delayAtEndInSeconds?: number;
 }
