@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { WizardCard } from '../layout/WizardCard.tsx';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { useNavigate } from 'react-router';
-import { resetData } from '../io/resetData.ts';
+import { resetData } from '../import/resetData.ts';
 
 export const WizardsComplexity = () => {
     const dispatch: AppDispatch = useDispatch();

@@ -6,7 +6,7 @@ import pencil from '../../assets/pencil.svg';
 import { WizardHeader } from '../wizard/WizardHeader.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { layoutActions } from '../store/layout.reducer.ts';
-import { importHook } from '../io/importHook.ts';
+import { importHook } from '../import/importHook.ts';
 import { FormattedMessage } from 'react-intl';
 import { WizardCard } from './WizardCard.tsx';
 import { DataLossDialog } from './DataLossDialog.tsx';

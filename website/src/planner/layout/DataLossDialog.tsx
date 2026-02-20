@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { resetData } from '../io/resetData.ts';
+import { resetData } from '../import/resetData.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { ExportStateJson } from '../io/ExportStateJson.tsx';
+import { ExportStateJson } from '../download/json/ExportStateJson.tsx';
 import { useState } from 'react';
 import { Warning } from './Warning.tsx';
 

@@ -4,7 +4,7 @@ import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
 import { useIntl } from 'react-intl';
-import { resetData } from '../io/resetData.ts';
+import { resetData } from '../import/resetData.ts';
 import { useNavigate } from 'react-router';
 
 export function CleanDataButton() {
