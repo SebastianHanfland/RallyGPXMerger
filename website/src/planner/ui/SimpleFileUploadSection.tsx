@@ -10,7 +10,7 @@ import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
 import { TrackInfoDownloadButtons } from './TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
-import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
+import { BlockTextDescription } from '../../utils/layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 

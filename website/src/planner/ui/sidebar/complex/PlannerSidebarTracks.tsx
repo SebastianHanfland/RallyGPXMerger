@@ -11,7 +11,7 @@ import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
 import { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
-import { BlockTextDescription } from '../../../layout/BlockTextDescription.tsx';
+import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { TrackGapWarning } from '../../../tracks/TrackGapWarning.tsx';
 import { getColor } from '../../../../utils/colorUtil.ts';
 import { ColorBlob } from '../../../../utils/ColorBlob.tsx';

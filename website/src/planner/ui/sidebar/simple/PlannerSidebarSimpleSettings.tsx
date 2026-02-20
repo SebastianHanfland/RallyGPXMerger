@@ -5,7 +5,7 @@ import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { PlannerSidebarServerSection } from '../PlannerSidebarServerSection.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
-import { BlockTextDescription } from '../../../layout/BlockTextDescription.tsx';
+import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { ReactNode } from 'react';
 
 export const PlannerSidebarSimpleSettings = () => {

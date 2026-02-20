@@ -1,7 +1,7 @@
 import { GpxSegments } from './GpxSegments.tsx';
 import { GpxCreationHint } from './GpxCreationHint.tsx';
 import { useSelector } from 'react-redux';
-import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
+import { BlockTextDescription } from '../../utils/layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export function FileUploadSection() {

@@ -4,7 +4,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { TrackSegmentSelection } from '../tracks/TrackSegmentSelection.tsx';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { GpxCreationHint } from '../segments/GpxCreationHint.tsx';
-import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
+import { BlockTextDescription } from '../../utils/layout/BlockTextDescription.tsx';
 
 export function SimpleGpxSegments() {
     const dispatch: AppDispatch = useDispatch();
