@@ -1,6 +1,6 @@
 import { ButtonGroup, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { FileDownloaderDropdownItem } from './FileDownloader.tsx';
+import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 import { getUsagesOfSegment } from './segmentUsageCounter.ts';

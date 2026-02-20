@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
-import { TrackBreak } from '../store/types.ts';
-import pencil from '../../assets/pencil.svg';
-import { DraggableIcon } from '../../utils/icons/DraggableIcon.tsx';
+import { AppDispatch } from '../../store/planningStore.ts';
+import { TrackBreak } from '../../store/types.ts';
+import pencil from '../../../assets/pencil.svg';
+import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
 
 interface Props {
     trackId: string;

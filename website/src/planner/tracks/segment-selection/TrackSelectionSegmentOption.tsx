@@ -1,23 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { Button, ButtonGroup, DropdownButton } from 'react-bootstrap';
-import { getColor } from '../../utils/colorUtil.ts';
+import { getColor } from '../../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
-import { mapActions } from '../store/map.reducer.ts';
-import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
-import { FileChangeButton } from '../segments/FileChangeButton.tsx';
-import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
-import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
-import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
-import { AppDispatch } from '../store/planningStore.ts';
-import flip from '../../assets/flip.svg';
-import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
-import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
+import { mapActions } from '../../store/map.reducer.ts';
+import { FileDownloaderDropdownItem } from '../../download/FileDownloader.tsx';
+import { FileChangeButton } from '../../segments/FileChangeButton.tsx';
+import { RemoveFileButton } from '../../segments/RemoveFileButton.tsx';
+import { FlipGpxButton } from '../../segments/FlipGpxButton.tsx';
+import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsButton.tsx';
+import { AppDispatch } from '../../store/planningStore.ts';
+import flip from '../../../assets/flip.svg';
+import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
+import { useOnTheFlyCreatedGpx } from '../../../utils/gpxUtil.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
-import { getUsagesOfSegment } from '../segments/segmentUsageCounter.ts';
+import { getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
-import { EditSegmentColorButton } from '../segments/EditSegmentColor.tsx';
-import { DraggableIcon } from '../../utils/icons/DraggableIcon.tsx';
+import { EditSegmentColorButton } from '../../segments/EditSegmentColor.tsx';
+import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
 
 interface Props {
     trackId: string;

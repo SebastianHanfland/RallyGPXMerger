@@ -8,7 +8,7 @@ import { DisplayTrack } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
+import { FileDownloader } from '../../planner/download/FileDownloader.tsx';
 import { Button, Table } from 'react-bootstrap';
 import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';

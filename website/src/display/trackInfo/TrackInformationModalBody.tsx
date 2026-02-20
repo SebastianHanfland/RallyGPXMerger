@@ -7,7 +7,7 @@ import {
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
 import { DisplayTrack } from '../../common/types.ts';
-import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
+import { FileDownloader } from '../../planner/download/FileDownloader.tsx';
 import { useIntl } from 'react-intl';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';

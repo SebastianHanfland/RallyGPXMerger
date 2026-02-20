@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
+import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';

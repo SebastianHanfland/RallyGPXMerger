@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { downloadFile } from '../segments/FileDownloader.tsx';
+import { downloadFile } from '../download/FileDownloader.tsx';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 export function DownloadDataButton() {

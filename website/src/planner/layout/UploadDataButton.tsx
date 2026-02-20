@@ -15,7 +15,7 @@ import { createPlanning, updatePlanning } from '../../api/api.ts';
 import { State } from '../store/types.ts';
 import { UploadModalBody } from './UploadModalBody.tsx';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
-import { downloadFile } from '../segments/FileDownloader.tsx';
+import { downloadFile } from '../download/FileDownloader.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';

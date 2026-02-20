@@ -1,7 +1,7 @@
 import { TrackButtonsCell } from '../../../tracks/TrackButtonsCell.tsx';
 import { FormattedMessage } from 'react-intl';
 import { TrackComposition } from '../../../store/types.ts';
-import { TrackSegmentSelection } from '../../../tracks/TrackSegmentSelection.tsx';
+import { TrackSegmentSelection } from '../../../tracks/segment-selection/TrackSegmentSelection.tsx';
 import { PlannerSidebarTrackFormDetails } from './PlannerSidebarTrackFormDetails.tsx';
 import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';

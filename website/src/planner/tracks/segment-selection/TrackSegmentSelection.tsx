@@ -1,16 +1,16 @@
-import { TrackComposition } from '../store/types.ts';
+import { TrackComposition } from '../../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 
 import { ReactSortable } from 'react-sortablejs';
 import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { FormattedMessage } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
+import { AppDispatch } from '../../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
-import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/sidebar/simple/SimpleRouteGpxSegmentsUpload.tsx';
+import { GpxSegmentsUploadAndParseAndSetToTrack } from '../../ui/sidebar/simple/SimpleRouteGpxSegmentsUpload.tsx';
 import { TrackSegmentSelect } from './TrackSegmentSelect.tsx';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { isDefined } from '../../utils/typeUtil.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
+import { isDefined } from '../../../utils/typeUtil.ts';
 
 interface Props {
     track: TrackComposition;

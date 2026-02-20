@@ -1,7 +1,7 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { downloadFilesInZip } from '../../planner/tracks/CalculatedFilesDownloader.tsx';
+import { downloadFilesInZip } from '../../planner/download/gpx/CalculatedFilesDownloader.tsx';
 import { getDisplayTitle, getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';

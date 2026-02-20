@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
-import arrowDown from '../../assets/arrow-down.svg';
-import arrowUp from '../../assets/arrow-up.svg';
-import { getGaps } from '../logic/calculate/calculatingGaps.ts';
-import { GapPoint } from '../store/types.ts';
+import arrowDown from '../../../assets/arrow-down.svg';
+import arrowUp from '../../../assets/arrow-up.svg';
+import { getGaps } from '../../logic/calculate/calculatingGaps.ts';
+import { GapPoint } from '../../store/types.ts';
 
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { WarningIcon } from '../../../utils/icons/WarningIcon.tsx';
 
 interface Props {
     segmentId: string;

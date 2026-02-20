@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
+import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import trash from '../../assets/trashB.svg';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';

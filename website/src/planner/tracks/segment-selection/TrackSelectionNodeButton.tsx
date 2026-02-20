@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import nodeIcon from '../../assets/mergeTracks.svg';
-import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { listAllNodesOfTracks, TrackNode } from '../logic/calculate/helper/nodeFinder.ts';
-import { TrackComposition } from '../store/types.ts';
+import nodeIcon from '../../../assets/mergeTracks.svg';
+import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { listAllNodesOfTracks, TrackNode } from '../../logic/calculate/helper/nodeFinder.ts';
+import { TrackComposition } from '../../store/types.ts';
 
 interface Props {
     segmentId: string;

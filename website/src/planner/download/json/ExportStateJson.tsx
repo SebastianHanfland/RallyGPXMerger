@@ -1,4 +1,4 @@
-import { FileDownloader } from '../../segments/FileDownloader.tsx';
+import { FileDownloader } from '../FileDownloader.tsx';
 import { useSelector } from 'react-redux';
 
 export function ExportStateJson({ label }: { label: string }) {

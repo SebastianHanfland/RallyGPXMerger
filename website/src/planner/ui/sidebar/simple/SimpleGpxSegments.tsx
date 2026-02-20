@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { AppDispatch } from '../../../store/planningStore.ts';
-import { TrackSegmentSelection } from '../../../tracks/TrackSegmentSelection.tsx';
+import { TrackSegmentSelection } from '../../../tracks/segment-selection/TrackSegmentSelection.tsx';
 import { getTrackCompositions, trackMergeActions } from '../../../store/trackMerge.reducer.ts';
 import { GpxCreationHint } from '../../../segments/GpxCreationHint.tsx';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';

@@ -1,6 +1,6 @@
 import { TrackSelectionBreakOption } from './TrackSelectionBreakOption.tsx';
 import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption.tsx';
-import { BREAK, TrackElement } from '../store/types.ts';
+import { BREAK, TrackElement } from '../../store/types.ts';
 
 interface Props {
     trackId: string;

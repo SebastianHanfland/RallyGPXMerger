@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { downloadSinglePdfFiles } from '../../streets/StreetFilesPdfMakeDownloader.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../../store/planningStore.ts';
-import { FileDownloader } from '../../segments/FileDownloader.tsx';
+import { FileDownloader } from '../../download/FileDownloader.tsx';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { StreetInfoModal } from '../../ui/elements/StreetInfoModal.tsx';
 import { useState } from 'react';

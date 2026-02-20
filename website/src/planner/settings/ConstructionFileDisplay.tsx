@@ -1,4 +1,4 @@
-import { FileDownloader } from '../segments/FileDownloader.tsx';
+import { FileDownloader } from '../download/FileDownloader.tsx';
 import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
