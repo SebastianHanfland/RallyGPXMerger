@@ -11,13 +11,13 @@ import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
 import { AppDispatch } from '../store/planningStore.ts';
 import flip from '../../assets/flip.svg';
-import { DraggableIcon } from './DraggableIcon.tsx';
 import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
 import { getUsagesOfSegment } from '../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
 import { EditSegmentColorButton } from '../segments/EditSegmentColor.tsx';
+import { DraggableIcon } from '../../utils/icons/DraggableIcon.tsx';
 
 interface Props {
     trackId: string;
