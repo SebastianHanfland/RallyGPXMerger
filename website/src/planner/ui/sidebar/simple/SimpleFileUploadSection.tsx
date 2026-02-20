@@ -1,18 +1,18 @@
 import { SimpleGpxSegments } from './SimpleGpxSegments.tsx';
-import { PlannerSidebarTrackInfo } from './sidebar/PlannerSidebarTrackInfo.tsx';
+import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { Col, Row } from 'react-bootstrap';
-import { TrackName } from '../tracks/components/TrackName.tsx';
-import { ArrivalDateTimePicker } from '../parameters/ArrivalDateTimePicker.tsx';
-import { TrackPeople } from '../tracks/components/TrackPeople.tsx';
-import { AverageSpeedSetter } from '../parameters/AverageSpeedSetter.tsx';
-import { ParticipantsDelaySetter } from '../parameters/ParticipantsDelaySetter.tsx';
-import { TrackInfoDownloadButtons } from '../tracks/components/TrackInfoDownloadButtons.tsx';
+import { TrackName } from '../../../tracks/components/TrackName.tsx';
+import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
+import { TrackPeople } from '../../../tracks/components/TrackPeople.tsx';
+import { AverageSpeedSetter } from '../../../parameters/AverageSpeedSetter.tsx';
+import { ParticipantsDelaySetter } from '../../../parameters/ParticipantsDelaySetter.tsx';
+import { TrackInfoDownloadButtons } from '../../../tracks/components/TrackInfoDownloadButtons.tsx';
 import { FormattedMessage } from 'react-intl';
-import { BlockTextDescription } from '../../utils/layout/BlockTextDescription.tsx';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
+import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
+import { getTrackStreetInfos } from '../../../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);

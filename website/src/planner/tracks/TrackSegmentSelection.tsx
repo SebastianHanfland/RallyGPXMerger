@@ -7,7 +7,7 @@ import { TrackSelectionOption } from './TrackSelectionOption.tsx';
 import { FormattedMessage } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import Button from 'react-bootstrap/Button';
-import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/SimpleRouteGpxSegmentsUpload.tsx';
+import { GpxSegmentsUploadAndParseAndSetToTrack } from '../ui/sidebar/simple/SimpleRouteGpxSegmentsUpload.tsx';
 import { TrackSegmentSelect } from './TrackSegmentSelect.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { isDefined } from '../../utils/typeUtil.ts';

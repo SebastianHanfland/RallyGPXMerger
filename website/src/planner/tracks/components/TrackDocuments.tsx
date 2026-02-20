@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../../store/planningStore.ts';
 import { FileDownloader } from '../../segments/FileDownloader.tsx';
 import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
-import { StreetInfoModal } from '../../ui/StreetInfoModal.tsx';
+import { StreetInfoModal } from '../../ui/elements/StreetInfoModal.tsx';
 import { useState } from 'react';
 import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
