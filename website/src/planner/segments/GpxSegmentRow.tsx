@@ -10,7 +10,7 @@ import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
 import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
-import { SegmentSpeedCells } from '../settings/SegmentSpeedCells.tsx';
+import { SegmentSpeedCells } from './SegmentSpeedCells.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';

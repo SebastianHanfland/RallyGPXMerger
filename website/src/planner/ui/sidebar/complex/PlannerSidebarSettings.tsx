@@ -2,7 +2,7 @@ import { TrackMergeParameters } from '../../../parameters/TrackMergeParameters.t
 import { ApiKeyInput } from '../../../streets/ApiKeyInput.tsx';
 import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { ConstructionSites } from '../../../settings/ConstructionSites.tsx';
+import { ConstructionSites } from '../../../construction/ConstructionSites.tsx';
 import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
