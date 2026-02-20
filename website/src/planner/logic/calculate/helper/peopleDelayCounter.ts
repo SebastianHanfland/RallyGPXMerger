@@ -86,8 +86,27 @@ export function getExtraDelayOnTrack(
     trackNodes.forEach((trackNode) => {
         const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);
         if (nodeInfluencesTrack) {
-            const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(trackCompositions, trackNode, track.id);
-            delayForTrackInSeconds += peopleWithHigherPriority * participantsDelayInSeconds;
+            if (
+                nodeSpecifications &&
+                nodeSpecifications[trackNode.segmentIdAfterNode] &&
+                nodeSpecifications[trackNode.segmentIdAfterNode]?.trackOffsets
+            ) {
+                const nodeSpecification = nodeSpecifications[trackNode.segmentIdAfterNode];
+                const foundOffsetRecord = Object.entries(nodeSpecification?.trackOffsets ?? {}).find(([segmentId]) =>
+                    track.segments.map((segment) => segment.id).includes(segmentId)
+                );
+                if (foundOffsetRecord) {
+                    console.log('This offset is played');
+                    delayForTrackInSeconds += foundOffsetRecord[1] * participantsDelayInSeconds;
+                }
+            } else {
+                const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(
+                    trackCompositions,
+                    trackNode,
+                    track.id
+                );
+                delayForTrackInSeconds += peopleWithHigherPriority * participantsDelayInSeconds;
+            }
         }
     });
     return -delayForTrackInSeconds;
