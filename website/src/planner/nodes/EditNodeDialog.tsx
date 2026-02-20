@@ -7,7 +7,6 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { Form, ProgressBar } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
-import { getInitialTrackOffsetsAtNode } from './getInitialOffsetForNodeInfo.tsx';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
 import { NodeSpecification } from '../store/types.ts';
@@ -17,8 +16,7 @@ export const EditNodeDialog = () => {
     const nodeEditInfo = useSelector(getNodeEditInfo);
     const trackCompositions = useSelector(getTrackCompositions);
     const branchesAtNode = useSelector(getBranchesAtNode);
-    const initialOffset = useSelector(getInitialTrackOffsetsAtNode);
-    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(initialOffset);
+    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
 
