@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AppDispatch } from '../store/planningStore.ts';
 
 export const simpleRallyThunk = (dispatch: AppDispatch) => {
-    dispatch(trackMergeActions.addTrackComposition({ id: uuidv4(), segmentIds: [], name: '' }));
+    dispatch(trackMergeActions.addTrackComposition({ id: uuidv4(), segments: [], name: '' }));
     setTimeout(() => {
         dispatch(layoutActions.setIsSidebarOpen(true));
         dispatch(trackMergeActions.setDefaultArrivalDateTime());
