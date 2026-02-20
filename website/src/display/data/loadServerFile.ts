@@ -1,7 +1,7 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { DisplayTrack } from '../../common/types.ts';
 import { State } from '../../planner/store/types.ts';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 import { getPlanningLabel, getPlanningTitle } from '../../planner/store/trackMerge.reducer.ts';
 import { getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
@@ -26,7 +26,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                 filename: track.filename,
                 id: track.id,
                 version: id,
-                color: getColorFromUuid(track.id),
+                color: getColor(track),
                 points: track.points,
             }));
             dispatch(displayTracksActions.setDisplayTracks(calculatedTracks));

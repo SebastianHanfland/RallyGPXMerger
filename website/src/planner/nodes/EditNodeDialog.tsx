@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
 import { getInitialTrackOffsetsAtNode } from './getInitialOffsetForNodeInfo.tsx';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 import { NodeSpecification } from '../store/types.ts';
 
 export const EditNodeDialog = () => {
@@ -68,7 +68,7 @@ export const EditNodeDialog = () => {
                                         title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
                                             id: 'msg.trackPeople',
                                         })}`}
-                                        style={{ backgroundColor: getColorFromUuid(track.id), cursor: 'pointer' }}
+                                        style={{ backgroundColor: getColor(track), cursor: 'pointer' }}
                                         className={'rounded-2 p-1'}
                                     >
                                         {track.name}
@@ -105,7 +105,7 @@ export const EditNodeDialog = () => {
                                                 id: 'msg.trackPeople',
                                             })}`}
                                             key={1}
-                                            style={{ cursor: 'pointer', background: getColorFromUuid(track.id) }}
+                                            style={{ cursor: 'pointer', background: getColor(track) }}
                                         />
                                     ))}
                                 </ProgressBar>

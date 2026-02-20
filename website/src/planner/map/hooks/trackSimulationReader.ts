@@ -9,7 +9,7 @@ import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
 import { extractSnakeTrackFromCalculatedTrack } from '../../../common/logic/extractSnakeTrack.ts';
 import { CalculatedTrack } from '../../../common/types.ts';
 import { BikeSnake } from '../../../common/map/addSnakeWithBikeToMap.ts';
-import { getColorFromUuid } from '../../../utils/colorUtil.ts';
+import { getColor } from '../../../utils/colorUtil.ts';
 import { getMapStartAndEndTime } from '../getMapStartAndEndTime.ts';
 
 const extractSnakeLocationForTimeStamp =
@@ -30,7 +30,7 @@ const extractSnakeLocationForTimeStamp =
                 participantsDelayInSeconds
             ),
             title: foundTrackComposition?.name ?? 'N/A',
-            color: trackId ? getColorFromUuid(trackId) : 'white',
+            color: getColor(calculatedTrack),
             id: trackId ?? 'id-not-found',
         };
     };

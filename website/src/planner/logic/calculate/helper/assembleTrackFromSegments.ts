@@ -33,6 +33,7 @@ export function assembleTrackFromSegments(track: TrackComposition, gpxSegments: 
         id: track.id,
         filename: track.name!,
         points: trackPoints,
+        color: track.color,
         peopleCount: track.peopleCount ?? 0,
     };
 }

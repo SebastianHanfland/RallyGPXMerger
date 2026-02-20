@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Button, ButtonGroup, DropdownButton } from 'react-bootstrap';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
 import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
@@ -51,7 +51,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                     borderColor: 'black',
                     cursor: 'pointer',
                     margin: '1px',
-                    backgroundColor: getColorFromUuid(segmentId),
+                    backgroundColor: getColor(gpxSegment),
                 }}
                 key={segmentId}
             >

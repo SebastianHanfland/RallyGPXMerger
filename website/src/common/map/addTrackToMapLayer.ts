@@ -1,5 +1,5 @@
 import L, { LayerGroup, LeafletMouseEvent, Polyline } from 'leaflet';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { CalculatedTrack } from '../types.ts';
@@ -100,7 +100,7 @@ function drawTrackOnMap(
 ) {
     return L.polyline(trackPoints, {
         weight: options.weight ?? 8,
-        color: options.color ?? getColorFromUuid(parsedTrack.id),
+        color: options.color ?? getColor(parsedTrack),
         opacity: options.opacity ?? 0.6,
     }).bindTooltip(parsedTrack.filename, {
         sticky: true,

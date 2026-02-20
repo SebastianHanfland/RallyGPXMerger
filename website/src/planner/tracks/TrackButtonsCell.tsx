@@ -11,7 +11,7 @@ import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
-import { getColorFromUuid, getColorOfTrack } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 import { HexColorPicker } from 'react-colorful';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
 
@@ -25,7 +25,7 @@ export function TrackButtonsCell({ track }: Props) {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const [showColorModal, setShowColorModal] = useState(false);
-    const [color, setColor] = useState(track.color ?? getColorFromUuid(id));
+    const [color, setColor] = useState(getColor(track));
     const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
 
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
@@ -67,7 +67,7 @@ export function TrackButtonsCell({ track }: Props) {
                 </span>
             </Dropdown.Item>
             <Dropdown.Item onClick={() => setShowColorModal(true)}>
-                <ColorBlob color={getColorOfTrack(track)} />
+                <ColorBlob color={getColor(track)} />
                 <span>
                     <FormattedMessage id={'msg.setColor'} />
                 </span>
