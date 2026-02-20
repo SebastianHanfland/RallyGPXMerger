@@ -7,14 +7,13 @@ import {
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
 import { DisplayTrack } from '../../common/types.ts';
-import { FileDownloader } from '../../planner/download/FileDownloader.tsx';
 import { useIntl } from 'react-intl';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import L from 'leaflet';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
-import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 
 const cardStyle = {
     style: { width: '170px', height: '145px', cursor: 'default' },
@@ -41,15 +40,7 @@ function TrackInfo({ track }: { track: DisplayTrack }) {
             <p className={'p-0 m-0'}>{`Länge: ${formatNumber(foundInfo.distanceInKm)} km`}</p>
             <div>
                 <div>
-                    <FileDownloader
-                        name={`${track.filename}.gpx`}
-                        content={getGpxContentFromTimedPoints(track.points, track.filename)}
-                        id={track.id}
-                        color={track.color}
-                        label={'GPX'}
-                        onlyIcon={true}
-                        size={'sm'}
-                    />
+                    <TrackFileDownloader track={track} />
                     {foundInfo && (
                         <Button
                             size={'sm'}

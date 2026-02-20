@@ -8,12 +8,11 @@ import { DisplayTrack } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { FileDownloader } from '../../planner/download/FileDownloader.tsx';
 import { Button, Table } from 'react-bootstrap';
 import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
-import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 
 export const isInIframe = window.location.search.includes('&iframe');
 
@@ -88,15 +87,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
             </td>
             <td>{formatNumber(foundInfo.distanceInKm, 1)}</td>
             <td>
-                <FileDownloader
-                    name={`${track.filename}.gpx`}
-                    content={getGpxContentFromTimedPoints(track.points, track.filename!)}
-                    id={track.id}
-                    color={track.color}
-                    label={'GPX'}
-                    onlyIcon={true}
-                    size={'sm'}
-                />
+                <TrackFileDownloader track={track} />
                 {foundInfo && (
                     <Button
                         size={'sm'}
