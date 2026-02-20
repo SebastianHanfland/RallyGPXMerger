@@ -1,15 +1,19 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedSegmentId, getShowCalculatedTracks, getShowMapMarker } from '../../store/map.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { getHasSingleTrack, layoutActions } from '../../store/layout.reducer.ts';
 
 export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getFilteredCalculatedTracks);
     const showTracks = useSelector(getShowCalculatedTracks);
     const showMarker = useSelector(getShowMapMarker);
     const highlightedSegmentId = useSelector(getHighlightedSegmentId);
+    const hasSingleTrack = useSelector(getHasSingleTrack);
+    const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -17,6 +21,12 @@ export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObj
             showMarker: Boolean(showMarker),
             opacity: highlightedSegmentId ? 0.2 : 0.7,
             onlyShowBreaks: true,
+            clickCallBack: (track) => {
+                if (!hasSingleTrack) {
+                    dispatch(layoutActions.setSelectedSidebarSection('tracks'));
+                    dispatch(trackMergeActions.setSelectedTrackId(track.id));
+                }
+            },
         });
     }, [calculatedTracks, calculatedTracks.length, showTracks, showMarker, highlightedSegmentId]);
 }

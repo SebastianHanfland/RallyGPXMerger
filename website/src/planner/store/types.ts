@@ -120,6 +120,7 @@ export interface TrackMergeState {
     breakEditInfo?: BreakEditInfo;
     nodeEditInfo?: NodeEditInfo;
     nodeSpecifications?: NodeSpecifications;
+    selectedTrackId?: string;
 }
 
 export interface MapState {

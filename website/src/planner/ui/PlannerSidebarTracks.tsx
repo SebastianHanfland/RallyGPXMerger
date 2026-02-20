@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getFilteredTrackCompositions,
+    getSelectedTrackId,
     getTrackCompositionFilterTerm,
     getTrackCompositions,
     trackMergeActions,
 } from '../store/trackMerge.reducer.ts';
 import { Form, PageItem, Pagination } from 'react-bootstrap';
 import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
@@ -17,12 +18,13 @@ import { getColorFromUuid } from '../../utils/colorUtil.ts';
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
     const filteredTracks = useSelector(getFilteredTrackCompositions);
+    const selectedTrackId = useSelector(getSelectedTrackId);
     const dispatch = useDispatch();
     const intl = useIntl();
     const filterTerm = useSelector(getTrackCompositionFilterTerm);
     const setFilterTerm = (term: string) => dispatch(trackMergeActions.setTrackCompositionFilterTerm(term));
 
-    const [selectedTrackId, setSelectedTrackId] = useState<string | undefined>();
+    const setSelectedTrackId = (trackId: string | undefined) => dispatch(trackMergeActions.setSelectedTrackId(trackId));
     const selectedTrack = filteredTracks.find((track) => track.id === selectedTrackId);
 
     useEffect(() => {
