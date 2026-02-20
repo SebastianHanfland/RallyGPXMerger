@@ -1,6 +1,6 @@
 import FileSaver from 'file-saver';
 import { Button, Dropdown } from 'react-bootstrap';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 import download from '../../assets/file-down.svg';
 import downloadB from '../../assets/file-downB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -9,6 +9,7 @@ interface Props {
     id: string;
     content: string;
     name: string;
+    color?: string;
     onlyIcon?: boolean;
     label?: string;
     size?: 'lg' | 'sm';
@@ -34,12 +35,13 @@ export const downloadFile = (name: string, content: string) => {
     FileSaver.saveAs(blob, name);
 };
 
-export const FileDownloader = ({ id, name, content, onlyIcon, label, size }: Props) => {
+export const FileDownloader = (props: Props) => {
+    const { name, content, onlyIcon, label, size } = props;
     const intl = useIntl();
     return (
         <Button
             onClick={() => downloadFile(name, content)}
-            style={{ backgroundColor: getColorFromUuid(id) }}
+            style={{ backgroundColor: getColor(props) }}
             size={size}
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
             className={onlyIcon ? 'm-1' : undefined}

@@ -92,6 +92,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                     name={`${track.filename}.gpx`}
                     content={getGpxContentFromTimedPoints(track.points, track.filename!)}
                     id={track.id}
+                    color={track.color}
                     label={'GPX'}
                     onlyIcon={true}
                     size={'sm'}

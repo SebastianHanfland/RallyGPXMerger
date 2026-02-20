@@ -42,6 +42,7 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
                     name={`${calculatedTrack.filename}.gpx`}
                     content={content}
                     id={calculatedTrack.id}
+                    color={calculatedTrack.color}
                     label={'GPX'}
                     onlyIcon={true}
                     size={'sm'}
