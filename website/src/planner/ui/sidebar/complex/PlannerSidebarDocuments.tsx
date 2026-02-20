@@ -1,4 +1,4 @@
-import { PlannerSidebarStreetInfos } from '../PlannerSidebarStreetInfos.tsx';
+import { PlannerSidebarStreetInfos } from './PlannerSidebarStreetInfos.tsx';
 import { FormattedMessage } from 'react-intl';
 import { PlanningLabel } from '../../../parameters/PlanningLabel.tsx';
 import { PlannerSidebarServerSection } from '../PlannerSidebarServerSection.tsx';

@@ -1,11 +1,11 @@
-import { ApiKeyInput } from '../../streets/ApiKeyInput.tsx';
+import { ApiKeyInput } from '../../../streets/ApiKeyInput.tsx';
 import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { GapFinderParameters } from '../../parameters/GapFinderParameters.tsx';
-import { PlanningTitle } from '../../parameters/PlanningTitle.tsx';
-import { PlannerSidebarServerSection } from './PlannerSidebarServerSection.tsx';
-import { ArrivalDateTimePicker } from '../../parameters/ArrivalDateTimePicker.tsx';
-import { BlockTextDescription } from '../../layout/BlockTextDescription.tsx';
+import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
+import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
+import { PlannerSidebarServerSection } from '../PlannerSidebarServerSection.tsx';
+import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
+import { BlockTextDescription } from '../../../layout/BlockTextDescription.tsx';
 import { ReactNode } from 'react';
 
 export const PlannerSidebarSimpleSettings = () => {

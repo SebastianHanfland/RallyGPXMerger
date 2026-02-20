@@ -1,13 +1,13 @@
-import { TrackMergeParameters } from '../../parameters/TrackMergeParameters.tsx';
-import { ApiKeyInput } from '../../streets/ApiKeyInput.tsx';
+import { TrackMergeParameters } from '../../../parameters/TrackMergeParameters.tsx';
+import { ApiKeyInput } from '../../../streets/ApiKeyInput.tsx';
 import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { ConstructionSites } from '../../settings/ConstructionSites.tsx';
-import { GapFinderParameters } from '../../parameters/GapFinderParameters.tsx';
-import { PlanningTitle } from '../../parameters/PlanningTitle.tsx';
-import { TrackPriorityTable } from '../../parameters/TrackPriorityTable.tsx';
-import { StartTimeTable } from '../../parameters/StartTimeTable.tsx';
-import { ArrivalDateTimePicker } from '../../parameters/ArrivalDateTimePicker.tsx';
+import { ConstructionSites } from '../../../settings/ConstructionSites.tsx';
+import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
+import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
+import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
+import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
+import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
 
 export const PlannerSidebarSettings = () => {
