@@ -1,4 +1,4 @@
-import { TrackComposition } from '../../../store/types.ts';
+import { NodeSpecifications, TrackComposition } from '../../../store/types.ts';
 import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from './nodeFinder.ts';
 
 const sortByPeopleOnTrack =
@@ -78,7 +78,8 @@ export function sumUpAllPeopleWithHigherPriority(
 export function getExtraDelayOnTrack(
     track: TrackComposition,
     trackCompositions: TrackComposition[],
-    participantsDelayInSeconds: number
+    participantsDelayInSeconds: number,
+    nodeSpecifications: NodeSpecifications | undefined
 ): number {
     const trackNodes = listAllNodesOfTracks(trackCompositions);
     let delayForTrackInSeconds = 0;

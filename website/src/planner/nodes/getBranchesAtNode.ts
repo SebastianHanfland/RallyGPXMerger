@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getNodeEditInfo, getNodeSpecifications, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
-import { NodeSpecifications, TrackComposition } from '../store/types.ts';
+import { NodeSpecification, TrackComposition } from '../store/types.ts';
 
 export const getBranchTracks = (segmentAfterId: string, tracks: TrackComposition[]) => {
     const trackNodes = listAllNodesOfTracks(tracks);
@@ -24,7 +24,7 @@ export const getBranchesAtNode = createSelector(
     getNodeEditInfo,
     getTrackCompositions,
     getNodeSpecifications,
-    (nodeInfo, tracks, nodeSpecifications): NodeSpecifications | undefined => {
+    (nodeInfo, tracks, nodeSpecifications): NodeSpecification | undefined => {
         const trackNodes = listAllNodesOfTracks(tracks);
         const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeInfo?.segmentAfterId);
         if (nodeInfo?.segmentAfterId && nodeSpecifications) {

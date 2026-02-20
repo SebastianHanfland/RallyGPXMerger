@@ -1,7 +1,12 @@
 import { AggregatedPoints, TrackWayPointType } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../../utils/dateUtil.ts';
-import { getArrivalDateTime, getParticipantsDelay, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import {
+    getArrivalDateTime,
+    getNodeSpecifications,
+    getParticipantsDelay,
+    getTrackCompositions,
+} from '../../../store/trackMerge.reducer.ts';
 import { getLookups, Lookups } from '../selectors/getLookups.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { updateExtraDelayOnTracks } from '../../calculate/solver.ts';
@@ -21,9 +26,19 @@ export const getTrackStreetInfos = createSelector(
         getNodePositions,
         getArrivalDateTime,
         getCalculatedTracks,
+        getNodeSpecifications,
     ],
-    (segments, tracks, lookups, participantsDelayInSeconds, nodes, arrivalDateTime, calculatedTracks) => {
-        const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds);
+    (
+        segments,
+        tracks,
+        lookups,
+        participantsDelayInSeconds,
+        nodes,
+        arrivalDateTime,
+        calculatedTracks,
+        nodeSpecifications
+    ) => {
+        const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
 
         return trackWithEndDelay.map((track) => {
             const calculatedTrack = calculatedTracks.find((calcTrack) => calcTrack.id === track.id);

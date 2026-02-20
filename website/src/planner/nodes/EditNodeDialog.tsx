@@ -10,7 +10,7 @@ import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
 import { getInitialTrackOffsetsAtNode } from './getInitialOffsetForNodeInfo.tsx';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
-import { NodeSpecifications } from '../store/types.ts';
+import { NodeSpecification } from '../store/types.ts';
 
 export const EditNodeDialog = () => {
     const intl = useIntl();
@@ -18,7 +18,7 @@ export const EditNodeDialog = () => {
     const trackCompositions = useSelector(getTrackCompositions);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const initialOffset = useSelector(getInitialTrackOffsetsAtNode);
-    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecifications | undefined>(initialOffset);
+    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(initialOffset);
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
 

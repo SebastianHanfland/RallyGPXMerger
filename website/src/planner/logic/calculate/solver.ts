@@ -1,12 +1,18 @@
 import { getExtraDelayOnTrack } from './helper/peopleDelayCounter.ts';
-import { TrackComposition } from '../../store/types.ts';
+import { NodeSpecifications, TrackComposition } from '../../store/types.ts';
 
 export const updateExtraDelayOnTracks = (
     trackCompositions: TrackComposition[],
-    participantsDelayInSeconds: number
+    participantsDelayInSeconds: number,
+    nodeSpecifications: NodeSpecifications | undefined
 ): TrackComposition[] => {
     return trackCompositions.map((track) => ({
         ...track,
-        delayAtEndInSeconds: getExtraDelayOnTrack(track, trackCompositions, participantsDelayInSeconds),
+        delayAtEndInSeconds: getExtraDelayOnTrack(
+            track,
+            trackCompositions,
+            participantsDelayInSeconds,
+            nodeSpecifications
+        ),
     }));
 };

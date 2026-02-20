@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import {
     getArrivalDateTime,
+    getNodeSpecifications,
     getParticipantsDelay,
     getTrackCompositionFilterTerm,
     getTrackCompositions,
@@ -12,9 +13,14 @@ import { shiftDateBySeconds } from '../../utils/dateUtil.ts';
 import { getParsedGpxSegments } from './segmentData.redux.ts';
 
 export const getCalculatedTracks = createSelector(
-    [getArrivalDateTime, getTrackCompositions, getParsedGpxSegments, getParticipantsDelay],
-    (arrivalDate, trackCompositions, segments, participantsDelayInSeconds): CalculatedTrack[] => {
-        const calculatedTracks = calculateTracks(trackCompositions, segments, participantsDelayInSeconds);
+    [getArrivalDateTime, getTrackCompositions, getParsedGpxSegments, getParticipantsDelay, getNodeSpecifications],
+    (arrivalDate, trackCompositions, segments, participantsDelayInSeconds, nodeSpecifications): CalculatedTrack[] => {
+        const calculatedTracks = calculateTracks(
+            trackCompositions,
+            segments,
+            participantsDelayInSeconds,
+            nodeSpecifications
+        );
         const arrivalDateTime = arrivalDate ?? '2025-06-01T10:11:55';
         return calculatedTracks.map((track) => ({
             ...track,

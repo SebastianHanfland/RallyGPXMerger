@@ -2,7 +2,7 @@ import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/to
 import {
     BreakEditInfo,
     NodeEditInfo,
-    NodeSpecifications,
+    NodeSpecification,
     State,
     TrackComposition,
     TrackElement,
@@ -128,7 +128,7 @@ const trackMergeSlice = createSlice({
         },
         setNodeSpecification: (
             state: TrackMergeState,
-            action: PayloadAction<{ segmentAfter?: string; nodeSpecs?: NodeSpecifications }>
+            action: PayloadAction<{ segmentAfter?: string; nodeSpecs?: NodeSpecification }>
         ) => {
             const { segmentAfter, nodeSpecs } = action.payload;
             if (segmentAfter) {
