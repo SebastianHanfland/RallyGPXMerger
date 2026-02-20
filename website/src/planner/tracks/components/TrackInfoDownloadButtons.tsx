@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { Button, Col, Row } from 'react-bootstrap';
-import { downloadSinglePdfFiles } from '../streets/StreetFilesPdfMakeDownloader.tsx';
+import { downloadSinglePdfFiles } from '../../streets/StreetFilesPdfMakeDownloader.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
-import { FileDownloader } from '../segments/FileDownloader.tsx';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
-import { ExportStateJson } from '../download/json/ExportStateJson.tsx';
-import { StreetInfoModal } from './StreetInfoModal.tsx';
+import { AppDispatch } from '../../store/planningStore.ts';
+import { FileDownloader } from '../../segments/FileDownloader.tsx';
+import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { ExportStateJson } from '../../download/json/ExportStateJson.tsx';
+import { StreetInfoModal } from '../../ui/StreetInfoModal.tsx';
 import { useState } from 'react';
-import { TrackStreetInfo } from '../logic/resolving/types.ts';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { TrackStreetInfo } from '../../logic/resolving/types.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
+import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
+import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
 
 export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const intl = useIntl();

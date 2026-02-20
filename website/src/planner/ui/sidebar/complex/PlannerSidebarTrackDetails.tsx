@@ -5,7 +5,7 @@ import { TrackSegmentSelection } from '../../../tracks/TrackSegmentSelection.tsx
 import { PlannerSidebarTrackFormDetails } from './PlannerSidebarTrackFormDetails.tsx';
 import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
-import { TrackDocuments } from '../../TrackDocuments.tsx';
+import { TrackDocuments } from '../../../tracks/components/TrackDocuments.tsx';
 import { getTrackStreetInfos } from '../../../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {

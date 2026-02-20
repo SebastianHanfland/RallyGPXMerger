@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
-import { getCount } from '../../utils/inputUtil.ts';
+import { getCount } from '../../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
-import { TrackComposition } from '../store/types.ts';
-import { AppDispatch } from '../store/planningStore.ts';
+import { TrackComposition } from '../../store/types.ts';
+import { AppDispatch } from '../../store/planningStore.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 

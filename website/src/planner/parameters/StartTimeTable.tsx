@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useSelector } from 'react-redux';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
-import { TrackBuffer } from '../ui/TrackBuffer.tsx';
-import { TrackRounding } from '../ui/TrackRounding.tsx';
+import { TrackBuffer } from '../tracks/components/TrackBuffer.tsx';
+import { TrackRounding } from '../tracks/components/TrackRounding.tsx';
 import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 
 export const StartTimeTable = () => {
