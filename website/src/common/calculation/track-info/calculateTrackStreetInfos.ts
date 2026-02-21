@@ -1,7 +1,7 @@
 import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
 import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dateUtil.ts';
 import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.ts';
-import { updateExtraDelayOnTracks } from '../calculated-tracks/solver.ts';
+import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation.ts';
 import {
     BREAK,
     NodeSpecifications,

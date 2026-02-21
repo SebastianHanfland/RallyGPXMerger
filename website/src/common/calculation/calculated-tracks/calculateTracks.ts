@@ -1,6 +1,6 @@
 import { CalculatedTrack } from '../../types.ts';
 import { shiftDateBySeconds } from '../../../utils/dateUtil.ts';
-import { updateExtraDelayOnTracks } from './solver.ts';
+import { updateExtraDelayOnTracks } from './delayCalculation.ts';
 import { assembleTrackFromSegments } from './assembleTrackFromSegments.ts';
 import { NodeSpecifications, ParsedGpxSegment, TrackComposition } from '../../../planner/store/types.ts';
 
