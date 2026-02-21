@@ -9,10 +9,10 @@ import {
     ParsedPoint,
     TrackComposition,
 } from '../../../planner/store/types.ts';
-import { Break, instanceOfBreak, instanceOfNode } from '../../../planner/logic/calculate/types.ts';
+import { Break, instanceOfBreak, instanceOfNode } from '../types.ts';
 import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
-import { aggregatePoints } from '../../../planner/logic/resolving/aggregate/aggregatePoints.ts';
-import { calculateDistanceInKm } from '../../../planner/logic/resolving/aggregate/calculateDistanceInKm.ts';
+import { aggregatePoints } from '../aggregated-segments/aggregatePoints.ts';
+import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
 import { CalculatedTrack } from '../../types.ts';
 
 export const calculateTrackStreetInfos = (

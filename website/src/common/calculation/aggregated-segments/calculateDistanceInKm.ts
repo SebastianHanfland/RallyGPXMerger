@@ -1,6 +1,6 @@
-import { TimedPoint } from '../../../store/types.ts';
+import { TimedPoint } from '../../../planner/store/types.ts';
 import geoDistance from 'geo-distance-helper';
-import { getLatLng } from '../../../../utils/pointUtil.ts';
+import { getLatLng } from '../../../utils/pointUtil.ts';
 
 export function calculateDistanceInKm(points: TimedPoint[]): number {
     let lastPoint: TimedPoint | null = null;

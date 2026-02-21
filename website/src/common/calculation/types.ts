@@ -1,5 +1,5 @@
-import { ParsedGpxSegment } from '../../store/types.ts';
-import { NodePosition } from '../resolving/selectors/getNodePositions.ts';
+import { ParsedGpxSegment } from '../../planner/store/types.ts';
+import { NodePosition } from '../../planner/logic/resolving/selectors/getNodePositions.ts';
 
 export interface GpxFileAccess {
     shiftToArrivalTime: (arrival: string) => void;

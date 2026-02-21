@@ -1,5 +1,5 @@
 import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../planner/store/types.ts';
-import { instanceOfBreak } from '../../../planner/logic/calculate/types.ts';
+import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
 import { CalculatedTrack2 } from '../../types.ts';
 

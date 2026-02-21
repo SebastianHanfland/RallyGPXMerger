@@ -1,5 +1,5 @@
-import { TimedPoint } from '../../../../store/types.ts';
-import { getConnectedPointWithTheSameStreetIndex } from '../aggregatePoints.ts';
+import { TimedPoint } from '../../../planner/store/types.ts';
+import { getConnectedPointWithTheSameStreetIndex } from './aggregatePoints.ts';
 
 function getPoint(coordinate: number, streetIndex: number): TimedPoint {
     return {

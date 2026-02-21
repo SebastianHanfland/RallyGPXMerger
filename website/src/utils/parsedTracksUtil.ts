@@ -1,6 +1,6 @@
 import { CalculatedTrack } from '../common/types.ts';
 import { TrackComposition } from '../planner/store/types.ts';
-import { shiftEndTimeByParticipants } from '../planner/logic/resolving/aggregate/aggregatePoints.ts';
+import { shiftEndTimeByParticipants } from '../common/calculation/aggregated-segments/aggregatePoints.ts';
 
 export function getStartAndEndOfParsedTracks(calculatedTracks: CalculatedTrack[]): { start: string; end: string } {
     let endDate = '1990-10-14T10:09:57.000Z';

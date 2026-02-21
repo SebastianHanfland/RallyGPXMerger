@@ -1,10 +1,10 @@
 import date from 'date-and-time';
-import { AggregatedPoints, TrackWayPointType } from '../types.ts';
-import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
+import { AggregatedPoints, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
+import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 
-import { TimedPoint } from '../../../store/types.ts';
+import { TimedPoint } from '../../../planner/store/types.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
-import { isSameStreetName } from '../streets/isSameStreetName.ts';
+import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName.ts';
 
 const extractLatLon = ({ b, l, t }: TimedPoint) => ({ lat: b, lon: l, time: t });
 
