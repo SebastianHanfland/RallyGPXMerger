@@ -1,14 +1,4 @@
-import { DisplayTrack } from '../../common/types.ts';
-import { BlockedStreetInfo, TrackStreetInfo } from '../../planner/logic/resolving/types.ts';
-
-export interface DisplayTracksState {
-    tracks: DisplayTrack[];
-    blockedStreetInfos?: BlockedStreetInfo[];
-    trackInfos?: TrackStreetInfo[];
-    planningLabel?: string;
-    title?: string;
-    isLoading: boolean;
-}
+import { State } from '../../planner/store/types.ts';
 
 export interface MapState {
     currentTime: number;
@@ -20,9 +10,14 @@ export interface MapState {
     showSingleTrackInfo?: string;
     highlightedTrack?: string;
     isLive: boolean;
+    isLoading: boolean;
+}
+
+export interface PlanningState {
+    state: State | undefined;
 }
 
 export interface DisplayState {
-    tracks: DisplayTracksState;
-    map: MapState;
+    displayMap: MapState;
+    planning: PlanningState;
 }

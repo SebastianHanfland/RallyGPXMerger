@@ -2,6 +2,7 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { DisplayState, MapState } from './types';
 
 const initialState: MapState = {
+    isLoading: true,
     currentTime: 0,
     isLive: window.location.search.includes('&live'),
 };
@@ -32,12 +33,15 @@ const mapSlice = createSlice({
         setIsLive: (state: MapState, action: PayloadAction<boolean>) => {
             state.isLive = action.payload;
         },
+        setIsLoading: (state: MapState, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload;
+        },
     },
 });
 
-export const mapActions = mapSlice.actions;
-export const mapReducer: Reducer<MapState> = mapSlice.reducer;
-const getBase = (state: DisplayState) => state.map;
+export const displayMapActions = mapSlice.actions;
+export const displayMapReducer: Reducer<MapState> = mapSlice.reducer;
+const getBase = (state: DisplayState) => state.displayMap;
 export const getCurrenDisplayMapTime = (state: DisplayState) => getBase(state).currentTime;
 export const getCurrentRealTime = (state: DisplayState) => getBase(state).currentRealTime;
 export const getStartDisplayMapTime = (state: DisplayState) => getBase(state).start;
@@ -46,3 +50,4 @@ export const getShowTrackInfo = (state: DisplayState) => getBase(state).showTrac
 export const getShowSingleTrackInfo = (state: DisplayState) => getBase(state).showSingleTrackInfo;
 export const getHighlightedTrack = (state: DisplayState) => getBase(state).highlightedTrack;
 export const getIsLive = (state: DisplayState) => getBase(state).isLive;
+export const getIsDisplayMapLoading = (state: DisplayState) => getBase(state).isLoading;

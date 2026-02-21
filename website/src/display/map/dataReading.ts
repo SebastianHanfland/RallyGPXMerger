@@ -1,14 +1,14 @@
-import { DisplayTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { DisplayState } from '../store/types.ts';
 import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
+import { getDisplayParticipantsDelay, getDisplayTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,
     getCurrentRealTime,
     getEndDisplayMapTime,
     getIsLive,
     getStartDisplayMapTime,
-} from '../store/map.reducer.ts';
+} from '../store/displayMapReducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
@@ -19,7 +19,7 @@ import { getParticipantsDelay } from '../../planner/store/settings.reducer.ts';
 
 const extractLocationDisplay =
     (timeStampFront: string, participantsDelayInSeconds: number) =>
-    (parsedTrack: DisplayTrack): BikeSnake => {
+    (parsedTrack: CalculatedTrack): BikeSnake => {
         const participants = parsedTrack?.peopleCount ?? 0;
 
         return {
@@ -62,7 +62,7 @@ export const getDisplayTimeStamp = (state: DisplayState): string | undefined => 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
     getDisplayTracks,
-    getParticipantsDelay,
+    getDisplayParticipantsDelay,
     (timeStamp, parsedTracks, participantsDelayInSeconds): BikeSnake[] => {
         if (!timeStamp) {
             return [];

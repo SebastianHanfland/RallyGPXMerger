@@ -42,7 +42,9 @@ const settingsSlice = createSlice({
 export const settingsActions = settingsSlice.actions;
 export const settingsReducer: Reducer<SettingsState> = settingsSlice.reducer;
 const getBase = (state: State) => state.settings;
-export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
+export const getArrivalDateTime = (state: State) => {
+    return getBase(state).arrivalDateTime;
+};
 export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
 export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getPlanningTitle = (state: State) => getBase(state).planningTitle;

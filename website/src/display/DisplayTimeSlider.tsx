@@ -1,6 +1,6 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenDisplayMapTime, getIsLive, mapActions } from './store/map.reducer.ts';
+import { getCurrenDisplayMapTime, getIsLive, displayMapActions } from './store/displayMapReducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
 import { getDisplayTimeStamp } from './map/dataReading.ts';
 import { useIntl } from 'react-intl';
@@ -35,7 +35,7 @@ export function DisplayTimeSlider({ bigThumb, showPlayButton }: Props) {
         }
         if (playing) {
             interval = setInterval(
-                () => dispatch(mapActions.setCurrentTime((timeMirror + 500) % MAX_SLIDER_TIME)),
+                () => dispatch(displayMapActions.setCurrentTime((timeMirror + 500) % MAX_SLIDER_TIME)),
                 100
             );
         }
@@ -43,9 +43,9 @@ export function DisplayTimeSlider({ bigThumb, showPlayButton }: Props) {
 
     useEffect(() => {
         if (isLive) {
-            dispatch(mapActions.setCurrentRealTime());
+            dispatch(displayMapActions.setCurrentRealTime());
             setInterval(() => {
-                dispatch(mapActions.setCurrentRealTime());
+                dispatch(displayMapActions.setCurrentRealTime());
             }, 20 * 1000);
         }
     }, []);
@@ -75,7 +75,7 @@ export function DisplayTimeSlider({ bigThumb, showPlayButton }: Props) {
                             min={0}
                             max={MAX_SLIDER_TIME}
                             value={mapTime}
-                            onChange={(event) => dispatch(mapActions.setCurrentTime(Number(event.target.value)))}
+                            onChange={(event) => dispatch(displayMapActions.setCurrentTime(Number(event.target.value)))}
                             height={'100px'}
                             className={bigThumb ? 'bigThumb' : undefined}
                         />

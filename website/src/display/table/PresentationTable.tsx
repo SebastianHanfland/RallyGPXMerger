@@ -4,7 +4,7 @@ import {
     getDisplayTracks,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
-import { DisplayTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
@@ -49,7 +49,7 @@ export const PresentationTable = () => {
 
 const hideSeconds = true;
 
-function TrackInfoRow({ track }: { track: DisplayTrack }) {
+function TrackInfoRow({ track }: { track: CalculatedTrack }) {
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
     const planningLabel = useSelector(getDisplayPlanningLabel);
     if (!trackStreetInfos) {

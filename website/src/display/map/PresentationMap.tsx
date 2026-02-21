@@ -9,18 +9,18 @@ import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
 import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
 import { getMapConfiguration } from '../../common/map/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsLive, mapActions } from '../store/map.reducer.ts';
+import { displayMapActions, getIsLive } from '../store/displayMapReducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
 import { Munich } from '../../common/map/locations.ts';
-import { DisplayTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
 
-function getCenterPoint(parsedTracks: DisplayTrack[] | undefined): { lat: number; lng: number } {
+function getCenterPoint(parsedTracks: CalculatedTrack[] | undefined): { lat: number; lng: number } {
     if (!parsedTracks || parsedTracks.length === 0) {
         return Munich;
     }
@@ -67,7 +67,7 @@ export const PresentationMap = () => {
     criticalMapsHook(criticalMapsLayer);
 
     return (
-        <div onMouseLeave={() => dispatch(mapActions.setHighlightedTrack())}>
+        <div onMouseLeave={() => dispatch(displayMapActions.setHighlightedTrack())}>
             <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
         </div>
     );

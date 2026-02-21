@@ -5,8 +5,8 @@ import {
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
 import { Button, Card, Col, Row } from 'react-bootstrap';
-import { getShowSingleTrackInfo } from '../store/map.reducer.ts';
-import { DisplayTrack } from '../../common/types.ts';
+import { getShowSingleTrackInfo } from '../store/displayMapReducer.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
@@ -20,7 +20,7 @@ const cardStyle = {
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
-function TrackInfo({ track }: { track: DisplayTrack }) {
+function TrackInfo({ track }: { track: CalculatedTrack }) {
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
     const planningLabel = useSelector(getDisplayPlanningLabel);
     if (!trackStreetInfos) {

@@ -9,7 +9,7 @@ import { State } from '../../src/planner/store/types';
 import { createDisplayStore } from '../../src/display/store/store';
 import { RallyDisplayWrapper } from '../../src/display/RallyDisplayWrapper';
 import { getBikeSnakesForDisplayMap } from '../../src/display/map/dataReading';
-import { mapActions } from '../../src/display/store/map.reducer';
+import { displayMapActions } from '../../src/display/store/displayMapReducer';
 import { getMessages } from '../../src/lang/getMessages';
 import userEvent from '@testing-library/user-event';
 import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
@@ -60,7 +60,7 @@ describe('Map Display integration test', () => {
         expect(snakes[0].points).toHaveLength(1);
         expect(snakes[0].points[0]).toEqual({ lat: 48.141161, lng: 11.597148 });
 
-        act(() => store.dispatch(mapActions.setCurrentTime(10000)));
+        act(() => store.dispatch(displayMapActions.setCurrentTime(10000)));
         const snakes2 = getBikeSnakesForDisplayMap(store.getState());
         expect(snakes2[0].points).toHaveLength(3);
         expect(snakes2[0].points[0]).not.toEqual({ lat: 48.141161, lng: 11.597148 });

@@ -1,13 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { DisplayTrack } from '../../common/types.ts';
 import { State } from '../../planner/store/types.ts';
-import { getColor } from '../../utils/colorUtil.ts';
 import { getData } from '../../api/api.ts';
-import { displayTracksActions } from '../store/displayTracksReducer.ts';
-import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getPlanningLabel, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
-import { getTrackStreetInfos } from '../../planner/calculation/getTrackStreetInfos.ts';
-import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
+import { getPlanningTitle } from '../../planner/store/settings.reducer.ts';
+import { planningActions } from '../store/displayTracksReducer.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
@@ -16,20 +11,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             if (planningTitle) {
                 document.title = planningTitle;
             }
-            dispatch(displayTracksActions.setTitle(planningTitle));
-            dispatch(displayTracksActions.setEnrichedTrackStreetInfos(getTrackStreetInfos(planning)));
-            dispatch(displayTracksActions.setBlockStreetInfos(getBlockedStreetInfo(planning)));
-            dispatch(displayTracksActions.setPlanningLabel(getPlanningLabel(planning)));
-
-            const calculatedTracks: DisplayTrack[] = getCalculateTracks(planning).map((track) => ({
-                peopleCount: track.peopleCount,
-                filename: track.filename,
-                id: track.id,
-                version: id,
-                color: getColor(track),
-                points: track.points,
-            }));
-            dispatch(displayTracksActions.setDisplayTracks(calculatedTracks));
+            dispatch(planningActions.setPlanning(planning));
         })
         .catch(console.error)
         .finally();

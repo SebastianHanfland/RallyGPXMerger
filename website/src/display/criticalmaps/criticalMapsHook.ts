@@ -3,7 +3,7 @@ import L, { LayerGroup } from 'leaflet';
 import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
 import { blueBike } from '../../common/map/MapIcons.ts';
 import { useSelector } from 'react-redux';
-import { getIsLive } from '../store/map.reducer.ts';
+import { getIsLive } from '../store/displayMapReducer.ts';
 
 const EVERY_MINUTE = 60 * 1000;
 const convertToCoord = (latitude: number) => {

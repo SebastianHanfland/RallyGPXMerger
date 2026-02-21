@@ -32,12 +32,3 @@ export interface CalculatedTrack2 {
     color?: string;
     version?: string;
 }
-
-export interface DisplayTrack {
-    id: string;
-    filename: string;
-    peopleCount?: number;
-    points: TimedPoint[];
-    color?: string;
-    version: string;
-}

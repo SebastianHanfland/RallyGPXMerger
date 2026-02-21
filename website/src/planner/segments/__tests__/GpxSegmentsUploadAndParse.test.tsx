@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { Provider } from 'react-redux';
@@ -15,8 +15,8 @@ vi.mock('../../src/api/api');
 vi.mock('../../logic/resolving/street-new/geoApifyMapMatching.ts', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
-vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
-    addPostCodeToStreetInfos: () => Promise.resolve(),
+vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({
+    fetchPostCodeForCoordinate: () => () => Promise.resolve({ postCode: '1234' }),
 }));
 
 describe('GpxUpload and parse', () => {
@@ -33,9 +33,8 @@ describe('GpxUpload and parse', () => {
         );
 
         await ui.uploadGpxSegment('segment1');
-        const segments = getParsedGpxSegments(store.getState());
-        expect(segments).toHaveLength(1);
-        const points = segments[0].points;
+        await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1));
+        const points = getParsedGpxSegments(store.getState())[0].points;
         expect(points.length).toBeGreaterThan(10);
         expect(points[points.length - 1].t).toBeGreaterThan(200);
     });

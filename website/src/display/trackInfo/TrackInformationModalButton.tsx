@@ -1,7 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEndDisplayMapTime, getIsLive, getStartDisplayMapTime, mapActions } from '../store/map.reducer.ts';
+import {
+    getEndDisplayMapTime,
+    getIsLive,
+    getStartDisplayMapTime,
+    displayMapActions,
+} from '../store/displayMapReducer.ts';
 import { setStartAndEndTime } from '../data/loadFilesHook.ts';
 import { DisplayDispatch } from '../store/store.ts';
 
@@ -14,7 +19,7 @@ export function TrackInformationModalButton() {
         startTime?.startsWith(new Date().toISOString().substring(0, 10)) ||
         endTime?.startsWith(new Date().toISOString().substring(0, 10));
 
-    const setShowModal = (value: boolean) => dispatch(mapActions.setShowTrackInfo(value));
+    const setShowModal = (value: boolean) => dispatch(displayMapActions.setShowTrackInfo(value));
 
     return (
         <>
@@ -27,7 +32,7 @@ export function TrackInformationModalButton() {
                         if (isLive) {
                             dispatch(setStartAndEndTime);
                         }
-                        dispatch(mapActions.setIsLive(!isLive));
+                        dispatch(displayMapActions.setIsLive(!isLive));
                     }}
                     variant={'info'}
                     style={{ marginLeft: '10px' }}

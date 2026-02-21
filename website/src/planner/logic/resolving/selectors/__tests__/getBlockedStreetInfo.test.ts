@@ -4,7 +4,7 @@ import { BlockedStreetInfo, TrackStreetInfo } from '../../types.ts';
 import { State } from '../../../../store/types.ts';
 import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos.ts';
 
-vi.mock('../getEnrichedTrackStreetInfos.ts');
+vi.mock('../../../../calculation/getTrackStreetInfos.ts');
 
 describe('getBlockedStreetInfo', () => {
     it('should work with empty lists', () => {

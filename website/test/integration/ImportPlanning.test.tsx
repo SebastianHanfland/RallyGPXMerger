@@ -14,16 +14,18 @@ import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 
 import { calculateTracks } from '../../src/common/calculation/calculated-tracks/calculateTracks';
+import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 
 const messages = getMessages('en');
 
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/utils/linkUtil');
-vi.mock('../../src/versions/cache/readableTracks');
-vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
-vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
-    addPostCodeToStreetInfos: () => Promise.resolve(),
+vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
+    geoApifyFetchMapMatching: () => () => Promise.resolve({}),
+}));
+vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({
+    fetchPostCodeForCoordinate: () => () => Promise.resolve({ postCode: '1234' }),
 }));
 
 describe('Import planning', () => {
@@ -49,7 +51,7 @@ describe('Import planning', () => {
         file.text = () => Promise.resolve(JSON.stringify(state));
         await user.upload(ui.uploadNode(), file);
 
-        await waitFor(() => expect(calculateTracks(store.getState()) ?? []).toHaveLength(1));
+        await waitFor(() => expect(getCalculateTracks(store.getState()) ?? []).toHaveLength(1));
         expect(getTrackCompositions(store.getState())).toHaveLength(1);
         expect(getParsedGpxSegments(store.getState()) ?? []).toHaveLength(4);
     });
