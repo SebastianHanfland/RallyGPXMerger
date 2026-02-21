@@ -5,7 +5,7 @@ import { getShowPointsOfInterest } from '../../store/map.reducer.ts';
 import { getPoints, pointsActions } from '../../store/points.reducer.ts';
 import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
 import { wcIcon } from '../../../common/map/MapIcons.ts';
-import { getGaps } from '../../logic/calculate/calculatingGaps.ts';
+import { getGaps } from '../../calculation/getGaps.ts';
 
 function createPointOfInterest(point: PointOfInterest) {
     if (point.type === PointOfInterestType.TOILET) {
