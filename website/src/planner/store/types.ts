@@ -1,5 +1,4 @@
 import { CalculatedTrack } from '../../common/types.ts';
-import { Sections } from '../layout/types.ts';
 import { SupportedLanguages } from '../../language.ts';
 
 export interface CalculatedTracksState {
@@ -9,7 +8,6 @@ export interface CalculatedTracksState {
 export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
 
 export interface LayoutState {
-    selectedSection: Sections;
     language: SupportedLanguages;
     hasSingleTrack: boolean;
     isSidebarOpen: boolean;
