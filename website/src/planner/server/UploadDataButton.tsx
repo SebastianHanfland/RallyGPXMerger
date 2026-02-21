@@ -16,7 +16,7 @@ import { State } from '../store/types.ts';
 import { UploadModalBody } from './UploadModalBody.tsx';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
 import { downloadFile } from '../download/FileDownloader.tsx';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { getBaseUrl, useGetUrlParam } from '../../utils/linkUtil.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
 
@@ -32,6 +32,7 @@ export function UploadDataButton() {
     const planningPassword = useSelector(getPlanningPassword);
     const planningTitle = useSelector(getPlanningTitle);
     const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
+    const hasTestFlag = useGetUrlParam('test=');
 
     const planningState = useSelector((state: State) => state);
     const intl = useIntl();
@@ -39,6 +40,13 @@ export function UploadDataButton() {
     const uploadAllData = () => {
         if (!planningPassword) {
             return;
+        }
+        if (!hasTestFlag) {
+            errorNotification(
+                dispatch,
+                'Working on the project',
+                'currently it is not possible to store plannings, due to working on the data structure'
+            );
         }
         if (!isPlanningAlreadySaved || !planningId) {
             setShowModal(false);
@@ -111,9 +119,25 @@ export function UploadDataButton() {
                     <Spinner style={{ width: '30vh', height: '30vh' }} />
                 </div>
             </Modal>
+            <div style={{ color: 'red', fontWeight: 'bold' }}>
+                <div>
+                    <WarningIcon /> currently it is not possible to store plannings,
+                    <WarningIcon />
+                </div>
+                <div>
+                    <WarningIcon />
+                    due to working on the data structure.
+                    <WarningIcon />
+                </div>
+                <div>
+                    <WarningIcon />
+                    create a github issue in urgent cases
+                    <WarningIcon />
+                </div>
+            </div>
             <Button
                 variant="success"
-                disabled={isLoading}
+                disabled={isLoading || !hasTestFlag}
                 title={intl.formatMessage({ id: 'msg.uploadCurrentPlanning.hint' })}
                 onClick={() => {
                     if (!planningTitle) {

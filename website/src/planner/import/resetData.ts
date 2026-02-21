@@ -6,6 +6,7 @@ import { pointsActions } from '../store/points.reducer.ts';
 import { backendActions } from '../store/backend.reducer.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { nodesActions } from '../store/nodes.reducer.ts';
+import { settingsActions } from '../store/settings.reducer.ts';
 
 export function resetData(dispatch: Dispatch) {
     dispatch(trackMergeActions.clear());
@@ -15,6 +16,7 @@ export function resetData(dispatch: Dispatch) {
     dispatch(geoCodingActions.clear());
     dispatch(pointsActions.clear());
     dispatch(nodesActions.clear());
+    dispatch(settingsActions.clear());
     dispatch(backendActions.clear());
     dispatch(segmentDataActions.clear());
     localStorage.clear();
