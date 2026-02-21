@@ -3,10 +3,10 @@ import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
-import { PlannerSidebarServerSection } from '../PlannerSidebarServerSection.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { ReactNode } from 'react';
+import { PlannerSidebarServerSection } from '../../../server/ServerInteraction.tsx';
 
 export const PlannerSidebarSimpleSettings = () => {
     const accordionEntries: [string, ReactNode, string][] = [

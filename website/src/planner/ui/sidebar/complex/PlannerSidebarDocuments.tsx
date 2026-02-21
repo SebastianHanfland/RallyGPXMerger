@@ -1,8 +1,8 @@
 import { PlannerSidebarStreetInfos } from './PlannerSidebarStreetInfos.tsx';
 import { FormattedMessage } from 'react-intl';
 import { PlanningLabel } from '../../../parameters/PlanningLabel.tsx';
-import { PlannerSidebarServerSection } from '../PlannerSidebarServerSection.tsx';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
+import { PlannerSidebarServerSection } from '../../../server/ServerInteraction.tsx';
 
 export const PlannerSidebarDocuments = () => {
     return (
