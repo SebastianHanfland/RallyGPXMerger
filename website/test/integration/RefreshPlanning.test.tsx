@@ -11,7 +11,8 @@ import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer
 // The order of imports is important, the storage mock has to be set before the store is created
 import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
-import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
+
+import { calculateTracks } from '../../src/common/calculation/calculated-tracks/calculateTracks';
 
 const messages = getMessages('en');
 
@@ -48,7 +49,7 @@ describe('Refresh planning, when planning is in localStorage', () => {
             )
         );
 
-        await waitFor(() => expect(getCalculatedTracks(store.getState()) ?? []).toHaveLength(1));
+        await waitFor(() => expect(calculateTracks(store.getState()) ?? []).toHaveLength(1));
         expect(getTrackCompositions(store.getState())).toHaveLength(1);
         expect(getParsedGpxSegments(store.getState()) ?? []).toHaveLength(4);
     });

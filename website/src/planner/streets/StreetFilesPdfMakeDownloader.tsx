@@ -12,7 +12,7 @@ import FileSaver from 'file-saver';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { getPlanningLabel } from '../store/settings.reducer.ts';
-import { getTrackStreetInfos } from '../calculation/trackStreetInfos.ts';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());

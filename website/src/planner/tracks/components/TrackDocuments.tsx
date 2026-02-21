@@ -5,20 +5,20 @@ import { downloadSinglePdfFiles } from '../../streets/StreetFilesPdfMakeDownload
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../../store/planningStore.ts';
 import { FileDownloader } from '../../download/FileDownloader.tsx';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { StreetInfoModal } from '../../ui/elements/StreetInfoModal.tsx';
 import { useState } from 'react';
 import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
+import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
 
 export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
     const gpxSegments = useSelector(getParsedGpxSegments);
-    const calculatedTracks = useSelector(getCalculatedTracks);
+    const calculatedTracks = useSelector(getCalculateTracks);
 
     const [displayStreetInfo, setDisplayStreetInfo] = useState(false);
     if (trackCompositions.length === 0 || gpxSegments.length === 0 || !matchedTrackInfo) {

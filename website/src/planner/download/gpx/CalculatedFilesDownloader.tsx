@@ -2,10 +2,10 @@ import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
+import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
@@ -26,7 +26,7 @@ export const downloadFilesInZip = (calculatedTracks: { content: string; filename
 
 export const CalculatedFilesDownloader = () => {
     const intl = useIntl();
-    const calculatedTracks = useSelector(getCalculatedTracks);
+    const calculatedTracks = useSelector(getCalculateTracks);
 
     return (
         <Button

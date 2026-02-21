@@ -5,14 +5,14 @@ import { getTrackCompositions } from '../../planner/store/trackMerge.reducer.ts'
 import { getData } from '../../api/api.ts';
 import { mapActions } from '../store/map.reducer.ts';
 import { getStartAndEndPlanning } from '../../utils/parsedTracksUtil.ts';
-import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
 import { getParticipantsDelay, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
+import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
         .then((planning: State) => {
             const planningTitle = getPlanningTitle(planning);
-            const calculatedTracks = getCalculatedTracks(planning);
+            const calculatedTracks = getCalculateTracks(planning);
             const tracks = getTrackCompositions(planning);
             const delay = getParticipantsDelay(planning);
 

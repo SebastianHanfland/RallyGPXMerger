@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { TrackBuffer } from '../tracks/components/TrackBuffer.tsx';
 import { TrackRounding } from '../tracks/components/TrackRounding.tsx';
-import { getTrackStreetInfos } from '../calculation/trackStreetInfos.ts';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
 
 export const StartTimeTable = () => {
     const tracks = useSelector(getTrackCompositions);

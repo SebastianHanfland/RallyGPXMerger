@@ -4,9 +4,9 @@ import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getLookups } from '../logic/resolving/selectors/getLookups.ts';
 import { getArrivalDateTime, getParticipantsDelay } from '../store/settings.reducer.ts';
 import { getNodePositions } from '../logic/resolving/selectors/getNodePositions.ts';
-import { getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
 import { getNodeSpecifications } from '../store/nodes.reducer.ts';
 import { calculateTrackStreetInfos } from '../../common/calculation/track-info/calculateTrackStreetInfos.ts';
+import { getCalculateTracks } from './getCalculatedTracks.ts';
 
 export const getTrackStreetInfos = createSelector(
     [
@@ -16,7 +16,7 @@ export const getTrackStreetInfos = createSelector(
         getParticipantsDelay,
         getNodePositions,
         getArrivalDateTime,
-        getCalculatedTracks,
+        getCalculateTracks,
         getNodeSpecifications,
     ],
     calculateTrackStreetInfos

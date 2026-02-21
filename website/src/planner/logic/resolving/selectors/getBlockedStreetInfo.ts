@@ -1,6 +1,6 @@
 import { AggregatedPoints, BlockedStreetInfo } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackStreetInfos } from '../../../calculation/trackStreetInfos.ts';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 
 function takeLaterOne(end: string, to: string): string {
     return end >= to ? end : to;

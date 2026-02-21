@@ -5,10 +5,10 @@ import { getCurrenMapTime, getShowCalculatedTracks } from '../../store/map.reduc
 import { getBikeSnakesForPlanningMap } from './trackSimulationReader.ts';
 import { addBikeSnakesToLayer } from '../../../common/map/addSnakeWithBikeToMap.ts';
 import { CalculatedTrack } from '../../../common/types.ts';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
 
 export function snakeForPlanningMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
-    const calculatedTracks: CalculatedTrack[] = useSelector(getCalculatedTracks);
+    const calculatedTracks: CalculatedTrack[] = useSelector(getCalculateTracks);
 
     const showTracks = useSelector(getShowCalculatedTracks) ?? false;
     const currentMapTime = useSelector(getCurrenMapTime);

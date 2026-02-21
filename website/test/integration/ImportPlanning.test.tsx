@@ -12,7 +12,8 @@ import { plannerUi as ui } from './data/PlannerTestAccess';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
-import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
+
+import { calculateTracks } from '../../src/common/calculation/calculated-tracks/calculateTracks';
 
 const messages = getMessages('en');
 
@@ -48,7 +49,7 @@ describe('Import planning', () => {
         file.text = () => Promise.resolve(JSON.stringify(state));
         await user.upload(ui.uploadNode(), file);
 
-        await waitFor(() => expect(getCalculatedTracks(store.getState()) ?? []).toHaveLength(1));
+        await waitFor(() => expect(calculateTracks(store.getState()) ?? []).toHaveLength(1));
         expect(getTrackCompositions(store.getState())).toHaveLength(1);
         expect(getParsedGpxSegments(store.getState()) ?? []).toHaveLength(4);
     });

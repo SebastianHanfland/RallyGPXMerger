@@ -6,11 +6,11 @@ import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
-import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { geoApifyFetchMapMatching } from '../../src/planner/logic/resolving/streets/geoApifyMapMatching';
+import { calculateTracks } from '../../src/common/calculation/calculated-tracks/calculateTracks';
 
 const messages = getMessages('en');
 
@@ -87,7 +87,7 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment2');
 
             expect(getParsedGpxSegments(store.getState())).toHaveLength(2);
-            expect(getCalculatedTracks(store.getState())).toHaveLength(1);
+            expect(calculateTracks(store.getState())).toHaveLength(1);
 
             ui.pdfDownloadButton();
         });
@@ -112,7 +112,7 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment3');
 
             expect(getParsedGpxSegments(store.getState())).toHaveLength(3);
-            expect(getCalculatedTracks(store.getState())).toHaveLength(0);
+            expect(calculateTracks(store.getState())).toHaveLength(0);
 
             await user.click(ui.complexTracksTab(0));
             await user.click(ui.newTrackButton());
@@ -140,7 +140,7 @@ describe('Planner integration test', () => {
             expect(getTrackCompositions(store.getState())[1].segments).toHaveLength(2);
 
             await user.click(screen.getByText(/Calculate/));
-            await waitFor(() => expect(getCalculatedTracks(store.getState())).toHaveLength(2));
+            await waitFor(() => expect(calculateTracks(store.getState())).toHaveLength(2));
             ui.pdfDownloadButton();
         });
 
