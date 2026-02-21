@@ -25,7 +25,7 @@ export function TrackGapWarning({ trackId }: Props) {
                 { count: gapsOnTrack, distance: Math.round(gapTolerance * 1000) }
             )}
         >
-            <WarningIcon />
+            <WarningIcon size={13} />
         </span>
     );
 }
