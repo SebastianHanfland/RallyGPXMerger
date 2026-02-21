@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
 import { StreetInfoModal } from '../../elements/StreetInfoModal.tsx';
-import { getTrackStreetInfos } from '../../../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
+import { getTrackStreetInfos } from '../../../calculation/trackStreetInfos.ts';
 
 export const PlannerSidebarStreetInfos = () => {
     const trackStreetInfos = useSelector(getTrackStreetInfos);

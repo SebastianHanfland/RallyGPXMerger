@@ -5,9 +5,9 @@ import { getColor } from '../../utils/colorUtil.ts';
 import { getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
 import { getPlanningLabel, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
+import { getTrackStreetInfos } from '../../planner/calculation/trackStreetInfos.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)

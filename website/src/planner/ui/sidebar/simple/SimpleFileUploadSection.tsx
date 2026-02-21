@@ -12,7 +12,7 @@ import { TrackInfoDownloadButtons } from '../../../tracks/components/TrackInfoDo
 import { FormattedMessage } from 'react-intl';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { getTrackStreetInfos } from '../../../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
+import { getTrackStreetInfos } from '../../../calculation/trackStreetInfos.ts';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);

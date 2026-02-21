@@ -7,8 +7,8 @@ import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStr
 import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv.ts';
 import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
 import { IntlShape, useIntl } from 'react-intl';
-import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { getTrackStreetInfos } from '../calculation/trackStreetInfos.ts';
 
 function createCsv(csv: string) {
     return new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], { type: 'csv;charset=utf-8' });

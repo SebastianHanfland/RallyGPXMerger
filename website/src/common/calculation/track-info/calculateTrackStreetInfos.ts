@@ -1,75 +1,64 @@
-import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../types.ts';
-import { createSelector } from '@reduxjs/toolkit';
-import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../../utils/dateUtil.ts';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { getLookups, Lookups } from '../selectors/getLookups.ts';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { updateExtraDelayOnTracks } from '../../calculate/solver.ts';
-import { BREAK, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../store/types.ts';
-import { Break, instanceOfBreak, instanceOfNode } from '../../calculate/types.ts';
-import { getNodePositions, NodePosition } from '../selectors/getNodePositions.ts';
-import { aggregatePoints } from './aggregatePoints.ts';
-import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
-import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
-import { getNodeSpecifications } from '../../../store/nodes.reducer.ts';
-import { getArrivalDateTime, getParticipantsDelay } from '../../../store/settings.reducer.ts';
+import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
+import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dateUtil.ts';
+import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.ts';
+import { updateExtraDelayOnTracks } from '../../../planner/logic/calculate/solver.ts';
+import {
+    BREAK,
+    NodeSpecifications,
+    ParsedGpxSegment,
+    ParsedPoint,
+    TrackComposition,
+} from '../../../planner/store/types.ts';
+import { Break, instanceOfBreak, instanceOfNode } from '../../../planner/logic/calculate/types.ts';
+import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
+import { aggregatePoints } from '../../../planner/logic/resolving/aggregate/aggregatePoints.ts';
+import { calculateDistanceInKm } from '../../../planner/logic/resolving/aggregate/calculateDistanceInKm.ts';
+import { CalculatedTrack } from '../../types.ts';
 
-export const getTrackStreetInfos = createSelector(
-    [
-        getParsedGpxSegments,
-        getTrackCompositions,
-        getLookups,
-        getParticipantsDelay,
-        getNodePositions,
-        getArrivalDateTime,
-        getCalculatedTracks,
-        getNodeSpecifications,
-    ],
-    (
-        segments,
-        tracks,
-        lookups,
-        participantsDelayInSeconds,
-        nodes,
-        arrivalDateTime,
-        calculatedTracks,
-        nodeSpecifications
-    ): TrackStreetInfo[] => {
-        const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
+export const calculateTrackStreetInfos = (
+    segments: ParsedGpxSegment[],
+    tracks: TrackComposition[],
+    lookups: Lookups,
+    participantsDelayInSeconds: number,
+    nodes: NodePosition[],
+    arrivalDateTime: string | undefined,
+    calculatedTracks: CalculatedTrack[],
+    nodeSpecifications: NodeSpecifications | undefined
+): TrackStreetInfo[] => {
+    const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
 
-        return trackWithEndDelay.map((track) => {
-            const calculatedTrack = calculatedTracks.find((calcTrack) => calcTrack.id === track.id);
-            const distance = calculatedTrack ? calculateDistanceInKm(calculatedTrack.points) : 0;
+    return trackWithEndDelay.map((track) => {
+        const calculatedTrack = calculatedTracks.find((calcTrack) => calcTrack.id === track.id);
+        const distance = calculatedTrack ? calculateDistanceInKm(calculatedTrack.points) : 0;
 
-            const wayPoints = getWayPointsOfTrack(
-                track,
-                segments,
-                nodes,
-                participantsDelayInSeconds,
-                lookups,
-                arrivalDateTime
-            );
+        const wayPoints = getWayPointsOfTrack(
+            track,
+            segments,
+            nodes,
+            participantsDelayInSeconds,
+            lookups,
+            arrivalDateTime
+        );
 
-            const backupDate = new Date().toISOString();
-            const startFront = wayPoints.length > 0 ? wayPoints[0].frontArrival : backupDate;
-            const publicStart = track
-                ? roundPublishedStartTimes(startFront, track.buffer ?? 0, track.rounding ?? 0)
-                : startFront;
+        const backupDate = new Date().toISOString();
+        const startFront = wayPoints.length > 0 ? wayPoints[0].frontArrival : backupDate;
+        const publicStart = track
+            ? roundPublishedStartTimes(startFront, track.buffer ?? 0, track.rounding ?? 0)
+            : startFront;
 
-            return {
-                id: track.id,
-                name: track.name ?? track.id,
-                startFront: startFront,
-                publicStart: publicStart,
-                arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backArrival : backupDate,
-                arrivalFront: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].frontPassage : backupDate,
-                distanceInKm: distance,
-                peopleCount: track.peopleCount,
-                wayPoints: wayPoints,
-            };
-        });
-    }
-);
+        return {
+            id: track.id,
+            name: track.name ?? track.id,
+            startFront: startFront,
+            publicStart: publicStart,
+            arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backArrival : backupDate,
+            arrivalFront: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].frontPassage : backupDate,
+            distanceInKm: distance,
+            peopleCount: track.peopleCount,
+            wayPoints: wayPoints,
+        };
+    });
+};
 
 function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
     const points = gpxOrBreak.points;
