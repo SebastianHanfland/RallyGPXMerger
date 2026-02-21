@@ -6,7 +6,7 @@ import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
-import { extractSnakeTrackFromCalculatedTrack } from '../../../common/logic/extractSnakeTrack.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../../common/calculation/snake/extractSnakeTrack.ts';
 import { CalculatedTrack } from '../../../common/types.ts';
 import { BikeSnake } from '../../../common/map/addSnakeWithBikeToMap.ts';
 import { getColor } from '../../../utils/colorUtil.ts';

@@ -1,6 +1,6 @@
 import { CalculatedTrack } from '../../common/types.ts';
 import { ComparisonTrackState } from '../store/types.ts';
-import { extractSnakeTrackFromCalculatedTrack } from '../../common/logic/extractSnakeTrack.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
 import {
     getComparisonParsedTracks,
     getPlanningIds,

@@ -1,6 +1,6 @@
 import { DisplayTrack } from '../../common/types.ts';
 import { DisplayState } from '../store/types.ts';
-import { extractSnakeTrackFromCalculatedTrack } from '../../common/logic/extractSnakeTrack.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
 import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,

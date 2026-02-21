@@ -1,9 +1,9 @@
-import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
-import { CalculatedTrack } from '../types.ts';
-import { getLatLng } from '../../utils/pointUtil.ts';
+import { CalculatedTrack } from '../../types.ts';
+import { getLatLng } from '../../../utils/pointUtil.ts';
 
-import { TimedPoint } from '../../planner/store/types.ts';
+import { TimedPoint } from '../../../planner/store/types.ts';
 
 function interpolatePosition(previous: TimedPoint, next: TimedPoint, timeStamp: string) {
     const nextTime = next.t;
