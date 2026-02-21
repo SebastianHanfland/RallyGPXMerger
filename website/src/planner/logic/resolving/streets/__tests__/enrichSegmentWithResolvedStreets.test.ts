@@ -34,7 +34,7 @@ describe('enrichSegmentWithResolvedStreets', () => {
     it('should resolve the street on one point', () => {
         // given
         const segmentWithoutStreets: ParsedGpxSegment = {
-            points: [createPoint(3, 2), createPoint(4, 2), createPoint(5, 2)],
+            points: [createPoint(3, 2), createPoint(4, 2), createPoint(5, 2), createPoint(6, 2)],
             filename: 'fname',
             id: '123',
             streetsResolved: false,
@@ -43,6 +43,7 @@ describe('enrichSegmentWithResolvedStreets', () => {
             [getKey(3, 2)]: 'Main road',
             [getKey(4, 2)]: 'Main road',
             [getKey(5, 2)]: 'Small road',
+            [getKey(6, 2)]: 'Small road',
         };
 
         // when
@@ -53,7 +54,7 @@ describe('enrichSegmentWithResolvedStreets', () => {
         );
 
         // then
-        expect(segment.points.map(({ s }) => s)).toEqual([1001, 1001, 1002]);
+        expect(segment.points.map(({ s }) => s)).toEqual([1001, 1001, 1002, 1002]);
         expect(streetLookUp).toEqual({ 1001: 'Main road', 1002: 'Small road' });
     });
 });
