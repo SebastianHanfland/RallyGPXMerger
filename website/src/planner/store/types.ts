@@ -108,6 +108,12 @@ export type NodeSpecifications = Record<string, NodeSpecification | undefined>;
 export interface TrackMergeState {
     trackCompositions: TrackComposition[];
     filterTerm?: string;
+    segmentIdClipboard?: TrackElement[];
+    trackIdForAddingABreak?: string;
+    breakEditInfo?: BreakEditInfo;
+}
+
+export interface SettingsState {
     arrivalDateTime?: string;
     hasDefaultArrivalDate?: boolean;
     planningLabel?: string;
@@ -115,9 +121,6 @@ export interface TrackMergeState {
     participantDelay: number;
     averageSpeedInKmH?: number;
     gapToleranceInKm?: number;
-    segmentIdClipboard?: TrackElement[];
-    trackIdForAddingABreak?: string;
-    breakEditInfo?: BreakEditInfo;
 }
 
 export interface NodesState {
@@ -223,6 +226,7 @@ export interface State {
     segmentData: SegmentDataState;
     trackMerge: TrackMergeState;
     nodes: NodesState;
+    settings: SettingsState;
     map: MapState;
     points: PointsState;
     geoCoding: GeoCodingState;

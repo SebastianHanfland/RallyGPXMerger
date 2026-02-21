@@ -3,12 +3,9 @@ import { BreakEditInfo, State, TrackComposition, TrackElement, TrackMergeState }
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_IN_SECONDS } from './constants.ts';
 
 const initialState: TrackMergeState = {
     trackCompositions: [],
-    participantDelay: DELAY_PER_PERSON_IN_SECONDS,
-    gapToleranceInKm: DEFAULT_GAP_TOLERANCE,
 };
 
 const trackMergeSlice = createSlice({
@@ -85,34 +82,11 @@ const trackMergeSlice = createSlice({
                 segments: track.segments.filter((segmentId) => segmentId.id !== action.payload),
             }));
         },
-        setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.hasDefaultArrivalDate = false;
-            state.arrivalDateTime = action.payload;
-        },
-        setPlanningLabel: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.planningLabel = action.payload;
-        },
-        setPlanningTitle: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.planningTitle = action.payload;
-        },
-        setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
-            state.participantDelay = action.payload;
-        },
-        setAverageSpeed: (state: TrackMergeState, action: PayloadAction<number>) => {
-            state.averageSpeedInKmH = action.payload;
-        },
-        setGapToleranceInKm: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
-            state.gapToleranceInKm = action.payload;
-        },
         setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | TrackElement[]>) => {
             state.segmentIdClipboard = action.payload;
         },
         setTrackCompositionFilterTerm: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.filterTerm = action.payload;
-        },
-        setDefaultArrivalDateTime: (state: TrackMergeState) => {
-            state.hasDefaultArrivalDate = true;
-            state.arrivalDateTime = new Date().toISOString();
         },
         setTrackIdForAddingABreak: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.trackIdForAddingABreak = action.payload;
@@ -129,13 +103,6 @@ export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reduc
 const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
-export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
-export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
-export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
-export const getPlanningTitle = (state: State) => getBase(state).planningTitle;
-export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
-export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
-export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
