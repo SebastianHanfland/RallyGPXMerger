@@ -24,7 +24,7 @@ export interface CalculatedTrack {
     version?: string;
 }
 
-export interface CalculatedTrack2 {
+export interface PreCalculatedTrack {
     id: string;
     filename: string;
     peopleCount?: number;

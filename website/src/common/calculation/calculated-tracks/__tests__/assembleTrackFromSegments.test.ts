@@ -8,7 +8,7 @@ import {
     TrackComposition,
     TrackSegment,
 } from '../../../../planner/store/types.ts';
-import { CalculatedTrack2 } from '../../../types.ts';
+import { PreCalculatedTrack } from '../../../types.ts';
 
 function getPoint(lat: number, time: number): ParsedPoint {
     return { s: -1, t: time, e: 0, b: lat, l: 0 };
@@ -36,7 +36,7 @@ describe('assembleTrackFromSegments', () => {
             peopleCount: 0,
         };
 
-        const expectedCalculatedTrack: CalculatedTrack2 = {
+        const expectedCalculatedTrack: PreCalculatedTrack = {
             id: '1',
             filename: 'A',
             points: [getPoint(1, -30), getPoint(2, -20), getPoint(5, -20), getPoint(6, 0)],
@@ -54,7 +54,7 @@ describe('assembleTrackFromSegments', () => {
         // given
         const track: TrackComposition = { id: '1', name: 'A', segments: [getSegment('1')], delayAtEndInSeconds: 45 };
 
-        const expectedCalculatedTracks: CalculatedTrack2 = {
+        const expectedCalculatedTracks: PreCalculatedTrack = {
             id: '1',
             filename: 'A',
             points: [getPoint(1, -55), getPoint(2, -45)],
@@ -77,7 +77,7 @@ describe('assembleTrackFromSegments', () => {
             delayAtEndInSeconds: 5,
         };
 
-        const expectedCalculatedTrack: CalculatedTrack2 = {
+        const expectedCalculatedTrack: PreCalculatedTrack = {
             id: '1',
             filename: 'A',
             points: [getPoint(1, -140), getPoint(2, -130), getPoint(3, -10), getPoint(4, -5)],

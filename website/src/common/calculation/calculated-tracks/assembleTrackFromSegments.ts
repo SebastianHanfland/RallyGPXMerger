@@ -1,7 +1,7 @@
 import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../planner/store/types.ts';
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
-import { CalculatedTrack2 } from '../../types.ts';
+import { PreCalculatedTrack } from '../../types.ts';
 
 function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
     const points = gpxOrBreak.points;
@@ -10,7 +10,10 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
     return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
 }
 
-export function assembleTrackFromSegments(track: TrackComposition, gpxSegments: ParsedGpxSegment[]): CalculatedTrack2 {
+export function assembleTrackFromSegments(
+    track: TrackComposition,
+    gpxSegments: ParsedGpxSegment[]
+): PreCalculatedTrack {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ? -track.delayAtEndInSeconds : 0;
     let trackPoints: ParsedPoint[] = [];
 
