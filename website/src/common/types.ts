@@ -1,5 +1,8 @@
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { Point } from '../utils/gpxTypes.ts';
+import { ParsedPoint, TimedPoint } from '../planner/store/types.ts';
+
+/*
+List of domain objects that are used
+ */
 
 export interface GpxFile {
     id: string;
@@ -12,29 +15,20 @@ export interface GpxSegment extends GpxFile {
     streetsResolved?: boolean;
 }
 
-export interface ResolvedGpxSegment {
+export interface CalculatedTrack {
     id: string;
     filename: string;
-    content: SimpleGPX;
-    flipped?: boolean;
-    streetsResolved?: boolean;
-}
-
-export interface CalculatedTrack extends GpxFile {
     peopleCount?: number;
-}
-
-export interface DisplayTrack extends GpxFile {
-    version: string;
+    points: TimedPoint[];
     color?: string;
-    peopleCount?: number;
+    version?: string;
 }
 
-export interface ParsedTrack {
+export interface PreCalculatedTrack {
     id: string;
     filename: string;
-    points: Point[];
-    version: string;
-    color?: string;
     peopleCount?: number;
+    points: ParsedPoint[];
+    color?: string;
+    version?: string;
 }

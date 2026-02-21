@@ -1,4 +1,4 @@
-import { TrackWayPoint } from '../logic/resolving/types.ts';
+import { AggregatedPoints } from '../logic/resolving/types.ts';
 import Button from 'react-bootstrap/Button';
 import pencil from '../../assets/pencil.svg';
 import { useState } from 'react';
@@ -6,12 +6,11 @@ import Modal from 'react-bootstrap/Modal';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { geoCodingActions } from '../store/geoCoding.reducer.ts';
-import { triggerAutomaticCalculation } from '../logic/automaticCalculation.ts';
 import { AppDispatch } from '../store/planningStore.ts';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
-    waypoint: TrackWayPoint;
+    waypoint: AggregatedPoints;
 }
 
 export function EditStreetNameButton(props: Props) {
@@ -42,8 +41,7 @@ export function EditStreetNameModal(props: Props & { closeModal: () => void }) {
     const [streetName, setStreetName] = useState(waypoint.streetName ?? '');
 
     const onConfirm = () => {
-        dispatch(geoCodingActions.setStreetNameReplacementWaypoint({ ...waypoint, streetName }));
-        dispatch(triggerAutomaticCalculation);
+        dispatch(segmentDataActions.addReplaceStreetLookup({ [waypoint.s ?? -1]: streetName }));
         closeModal();
     };
 

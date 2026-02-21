@@ -1,5 +1,5 @@
 import L, { LayerGroup } from 'leaflet';
-import { bikeIcon } from '../MapIcons.ts';
+import { bikeIcon } from './MapIcons.ts';
 
 export interface BikeSnake {
     points: { lat: number; lng: number }[];

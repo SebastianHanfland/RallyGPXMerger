@@ -1,0 +1,3 @@
+export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
+export const DEFAULT_GAP_TOLERANCE = 0.01;
+export const DELAY_PER_PERSON_IN_SECONDS = 0.2;

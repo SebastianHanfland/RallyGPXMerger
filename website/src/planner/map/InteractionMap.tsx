@@ -9,19 +9,20 @@ import { snakeForPlanningMapHook } from './hooks/snakeForPlanningMapHook.ts';
 import { blockedStreetsDisplayHook } from './hooks/blockedStreetsDisplayHook.ts';
 import { centerPointHook } from './hooks/centerPointHook.tsx';
 import { constructionsDisplayHook } from './hooks/constructionsDisplayHook.ts';
-import { getMapConfiguration } from '../../common/mapConfig.ts';
-import { Munich } from '../../common/locations.ts';
+import { getMapConfiguration } from '../../common/map/mapConfig.ts';
+import { Munich } from '../../common/map/locations.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { pointsActions } from '../store/points.reducer.ts';
 import { PointsOfInterestModal } from './points/PointsOfInterestModal.tsx';
 import { pointsOfInterestDisplayHook } from './hooks/pointsOfInterestDisplayHook.ts';
 import { nodePointsDisplayHook } from './hooks/nodePointsDisplayHook.ts';
 import { GpxSegmentDialog } from './GpxSegmentDialog.tsx';
-import { PauseDialog } from './PauseDialog.tsx';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { toLatLng } from '../../utils/pointUtil.ts';
+import { CreateBreakDialog } from './CreateBreakDialog.tsx';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
+import { getLatLng } from '../../utils/pointUtil.ts';
+import { EditBreakDialog } from './EditBreakDialog.tsx';
+import { EditNodeDialog } from '../nodes/EditNodeDialog.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -35,23 +36,23 @@ const shiftStartPoint = (point: { lat: number; lng: number }, sideBarOpen: boole
 export const InteractionMap = () => {
     const dispatch = useDispatch();
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
-    const gpxSegments = useSelector(getGpxSegments);
+    const gpxSegments = useSelector(getParsedGpxSegments);
     const isSidebarOpen = useSelector(getIsSidebarOpen);
 
     useEffect(() => {
         if (gpxSegments.length > 1 && myMap) {
-            const simpleGPX = SimpleGPX.fromString(gpxSegments[gpxSegments.length - 1].content);
-            const startPoint = toLatLng(simpleGPX.getStartPoint());
-            myMap.setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
+            const lastSegment = gpxSegments[gpxSegments.length - 1];
+            if (lastSegment.points.length > 0) {
+                const point = lastSegment.points[0];
+                const startPoint = getLatLng(point);
+                myMap.setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
+            }
         }
     }, []);
 
     useEffect(() => {
         if (!myMap) {
-            const startPoint =
-                gpxSegments.length > 0
-                    ? toLatLng(SimpleGPX.fromString(gpxSegments[0].content).getStartPoint())
-                    : Munich;
+            const startPoint = gpxSegments.length > 0 ? getLatLng(gpxSegments[0].points[0]) : Munich;
             myMap = L.map('mapid').setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             myMap.on('contextmenu', (event: LeafletMouseEvent) => {
@@ -111,7 +112,9 @@ export const InteractionMap = () => {
             <div id="mapid" style={{ height: '100vh', zIndex: 0 }} />
             <PointsOfInterestModal />
             <GpxSegmentDialog />
-            <PauseDialog />
+            <CreateBreakDialog />
+            <EditBreakDialog />
+            <EditNodeDialog />
         </div>
     );
 };

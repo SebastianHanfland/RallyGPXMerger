@@ -1,26 +1,26 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
-import { AppDispatch, createPlanningStore } from '../../src/planner/store/planningStore';
-import { getGpxSegments, gpxSegmentsActions } from '../../src/planner/store/gpxSegments.reducer';
-import * as fs from 'node:fs';
-import { splitGpxAtPosition } from '../../src/planner/segments/splitSegmentThunk';
-import { getCalculatedTracks } from '../../src/planner/store/calculatedTracks.reducer';
+import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';
+import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
+import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 
 const messages = getMessages('en');
 
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
-vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
-vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
-    addPostCodeToStreetInfos: () => Promise.resolve(),
+vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({
+    fetchPostCodeForCoordinate: () => () => Promise.resolve({ postCode: '1234' }),
+}));
+vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
+    geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 
 describe('Planner integration test', () => {
@@ -84,10 +84,10 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment1');
             await ui.uploadGpxSegment('segment2');
 
-            expect(getGpxSegments(store.getState())).toHaveLength(2);
-            expect(getCalculatedTracks(store.getState())).toHaveLength(1);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2));
+            expect(getCalculateTracks(store.getState())).toHaveLength(1);
 
-            ui.pdfDownloadButton();
+            await waitFor(() => ui.pdfDownloadButton());
         });
     });
 
@@ -109,8 +109,8 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
 
-            expect(getGpxSegments(store.getState())).toHaveLength(3);
-            expect(getCalculatedTracks(store.getState())).toHaveLength(0);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3));
+            expect(getCalculateTracks(store.getState())).toHaveLength(0);
 
             await user.click(ui.complexTracksTab(0));
             await user.click(ui.newTrackButton());
@@ -123,7 +123,7 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment1'));
             await user.click(ui.segmentSelect());
             await user.click(screen.getByText('segment3'));
-            expect(getTrackCompositions(store.getState())[0].segmentIds).toHaveLength(2);
+            expect(getTrackCompositions(store.getState())[0].segments).toHaveLength(2);
 
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(2);
@@ -135,10 +135,9 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment2'));
             await user.click(ui.segmentSelect());
             await user.click(screen.getByText('segment3'));
-            expect(getTrackCompositions(store.getState())[1].segmentIds).toHaveLength(2);
+            expect(getTrackCompositions(store.getState())[1].segments).toHaveLength(2);
 
-            await user.click(screen.getByText(/Calculate/));
-            await waitFor(() => expect(getCalculatedTracks(store.getState())).toHaveLength(2));
+            await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2));
             ui.pdfDownloadButton();
         });
 
@@ -152,15 +151,14 @@ describe('Planner integration test', () => {
             await user.click(ui.startButton());
             await user.click(ui.complexButton());
             await ui.uploadGpxSegment('segment1');
-            const listWithFirstSegment = getGpxSegments(store.getState());
-            expect(listWithFirstSegment).toHaveLength(1);
-            const firstSegment = listWithFirstSegment[0];
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1));
+            const firstSegment = getParsedGpxSegments(store.getState())[0];
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
-            expect(getGpxSegments(store.getState())).toHaveLength(3);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3));
 
             await ui.splitSegment(firstSegment.id, store.dispatch);
-            expect(getGpxSegments(store.getState())).toHaveLength(4);
+            expect(getParsedGpxSegments(store.getState())).toHaveLength(4);
         });
     });
 });

@@ -1,5 +1,5 @@
-import { WizardStartPage } from './WizardStartPage.tsx';
-import { WizardsComplexity } from '../wizard/WizardComplexity.tsx';
+import { WizardStartPage } from '../ui/wizard/WizardStartPage.tsx';
+import { WizardsComplexity } from '../ui/wizard/WizardComplexity.tsx';
 import { MainPlannerUi } from '../ui/MainPlannerUi.tsx';
 import { useLoadPlanningFromServer } from '../useLoadPlanningFromServer.tsx';
 import { useGetUrlParam } from '../../utils/linkUtil.ts';

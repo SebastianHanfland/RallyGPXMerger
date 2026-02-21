@@ -4,17 +4,15 @@ import {
     getDisplayTracks,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
-import { DisplayTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { useIntl } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { FileDownloader } from '../../planner/segments/FileDownloader.tsx';
 import { Button, Table } from 'react-bootstrap';
-import download from '../../assets/file-down.svg';
 import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
-
-export const isInIframe = window.location.search.includes('&iframe');
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 
 export const PresentationTable = () => {
     const tracks = useSelector(getDisplayTracks);
@@ -49,7 +47,7 @@ export const PresentationTable = () => {
 
 const hideSeconds = true;
 
-function TrackInfoRow({ track }: { track: DisplayTrack }) {
+function TrackInfoRow({ track }: { track: CalculatedTrack }) {
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
     const planningLabel = useSelector(getDisplayPlanningLabel);
     if (!trackStreetInfos) {
@@ -87,14 +85,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
             </td>
             <td>{formatNumber(foundInfo.distanceInKm, 1)}</td>
             <td>
-                <FileDownloader
-                    name={`${track.filename}.gpx`}
-                    content={track.content}
-                    id={track.id}
-                    label={'GPX'}
-                    onlyIcon={true}
-                    size={'sm'}
-                />
+                <TrackFileDownloader track={track} />
                 {foundInfo && (
                     <Button
                         size={'sm'}
@@ -103,7 +94,7 @@ function TrackInfoRow({ track }: { track: DisplayTrack }) {
                             createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
                         }
                     >
-                        <img src={download} alt="download file" className={'m-1'} color={'#ffffff'} />
+                        <DownloadIcon />
                         PDF
                     </Button>
                 )}

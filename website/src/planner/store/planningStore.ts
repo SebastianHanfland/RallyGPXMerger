@@ -1,35 +1,33 @@
 import { Action, AnyAction, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
 import reduceReducer from 'reduce-reducers';
 import { State } from './types.ts';
-import { gpxSegmentsReducer } from './gpxSegments.reducer.ts';
 import { trackMergeReducer } from './trackMerge.reducer.ts';
-import { calculatedTracksReducer } from './calculatedTracks.reducer.ts';
 import { mapReducer } from './map.reducer.ts';
 import { geoCodingReducer } from './geoCoding.reducer.ts';
-import { geoCodingRequestsReducer } from './geoCodingRequests.reducer.ts';
 import { storage } from './storage.ts';
 import { layoutReducer } from './layout.reducer.ts';
 import { pointsReducer } from './points.reducer.ts';
 import { backendReducer } from './backend.reducer.ts';
 import { toastsReducer } from './toast.reducer.ts';
-import { parsedTracksReducer } from './parsedTracks.reducer.ts';
+import { segmentDataReducer } from './segmentData.redux.ts';
+import { nodesReducer } from './nodes.reducer.ts';
+import { settingsReducer } from './settings.reducer.ts';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,
     layout: layoutReducer,
-    gpxSegments: gpxSegmentsReducer,
+    segmentData: segmentDataReducer,
     trackMerge: trackMergeReducer,
-    calculatedTracks: calculatedTracksReducer,
+    settings: settingsReducer,
+    nodes: nodesReducer,
     map: mapReducer,
     points: pointsReducer,
     geoCoding: geoCodingReducer,
-    geoCodingRequests: geoCodingRequestsReducer,
     toasts: toastsReducer,
-    parsedTracks: parsedTracksReducer,
 });
 const storingReducer: Reducer = (state: State) => {
     if (state) {
-        storage.save({ ...state, parsedTracks: undefined });
+        storage.save({ ...state });
     }
     return state;
 };

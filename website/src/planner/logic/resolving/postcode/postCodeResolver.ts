@@ -1,86 +1,35 @@
 import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
-import {
-    geoCodingActions,
-    getBigDataCloudKey,
-    getResolvedPostCodes,
-    getTrackStreetInfos,
-} from '../../../store/geoCoding.reducer.ts';
-import { createSelector, Dispatch } from '@reduxjs/toolkit';
-import { State } from '../../../store/types.ts';
-import { geoCodingRequestsActions } from '../../../store/geoCodingRequests.reducer.ts';
-import { fromKey, getWayPointKey } from '../helper/pointKeys.ts';
+import { Dispatch } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
+import { segmentDataActions } from '../../../store/segmentData.redux.ts';
 
-const getUniquePostCodeEntries = createSelector([getTrackStreetInfos], (infos) => {
-    const uniquePostCodeKeys: string[] = [];
+const correctionTuples: [string, string][] = [
+    ['constituency for the Bundestag election ', ''],
+    ['Bundestagswahlkreis ', ''],
+    ['Wahlkreis ', ''],
+    ['Munchen', 'München'],
+    ['Munich', 'München'],
+];
 
-    infos?.forEach((info) =>
-        info.wayPoints.forEach((wayPoint) => {
-            const postCodeKey = getWayPointKey(wayPoint).postCodeKey;
-            if (!uniquePostCodeKeys.includes(postCodeKey)) {
-                uniquePostCodeKeys.push(postCodeKey);
-            }
-        })
-    );
-    return uniquePostCodeKeys;
-});
+function correctDistrict(district: string): string {
+    let correctDistrict = district;
+    correctionTuples.forEach(([find, replacement]) => (correctDistrict = correctDistrict.replace(find, replacement)));
+    return correctDistrict;
+}
 
-export const getUnresolvedPostCodeEntries = (state: State) => {
-    const uniquePostCodeEntries = getUniquePostCodeEntries(state);
-    const postCodes = getResolvedPostCodes(state) ?? {};
-    return uniquePostCodeEntries.filter(
-        (postCodeKey) => postCodes[postCodeKey] === undefined || postCodes[postCodeKey] === -1
-    );
-};
-
-async function fetchAndStorePostCodeAndDistrict(bigDataCloudKey: string, postCodeKey: string, dispatch: Dispatch) {
-    const { lon, lat } = fromKey(postCodeKey);
-
+export async function fetchAndStorePostCodeAndDistrict(
+    bigDataCloudKey: string,
+    streetIndex: number,
+    dispatch: Dispatch,
+    lat: number,
+    lon: number
+) {
     return fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
         batch(() => {
-            dispatch(geoCodingActions.saveResolvedPostCodes({ [postCodeKey]: postCode }));
+            dispatch(segmentDataActions.addPostCodeLookup({ [streetIndex]: `${postCode}` }));
             if (district) {
-                dispatch(
-                    geoCodingActions.saveResolvedDistricts({
-                        [postCodeKey]: district
-                            .replace('constituency for the Bundestag election ', '')
-                            .replace('Bundestagswahlkreis ', '')
-                            .replace('Wahlkreis', '')
-                            .replace('Munchen', 'München')
-                            .replace('Munich', 'München'),
-                    })
-                );
+                dispatch(segmentDataActions.addDistrictLookup({ [streetIndex]: correctDistrict(district) }));
             }
         });
     });
 }
-
-export const addPostCodeToStreetInfos = async (dispatch: Dispatch, getState: () => State) => {
-    const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
-    if (!bigDataCloudKey) {
-        return Promise.resolve();
-    }
-    dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(true));
-
-    const unresolvedPostCodeKeys = getUnresolvedPostCodeEntries(getState());
-    const postCodeRequests = unresolvedPostCodeKeys.map((postCodeKey) =>
-        fetchAndStorePostCodeAndDistrict(bigDataCloudKey, postCodeKey, dispatch)
-    );
-    return Promise.all(postCodeRequests)
-        .then(() => dispatch(geoCodingRequestsActions.setIsLoadingPostCodeData(false)))
-        .then();
-};
-
-export const getPostCodeRequestProgress = createSelector(
-    [getUniquePostCodeEntries, getResolvedPostCodes],
-    (uniquePostCode, resolvedPostCodes) => {
-        const numberOfUniquePostCodeEntries = uniquePostCode.length;
-        const numberOfResolvedPostCodeEntries = Object.keys(resolvedPostCodes ?? {}).length;
-
-        if (numberOfUniquePostCodeEntries === 0) {
-            return 0;
-        }
-
-        return (numberOfResolvedPostCodeEntries / numberOfUniquePostCodeEntries) * 100;
-    }
-);

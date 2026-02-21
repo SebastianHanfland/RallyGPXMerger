@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { ComparisonTrackState, ComparisonState } from './types';
-import { ParsedTrack } from '../../common/types.ts';
+import { ComparisonState, ComparisonTrackState } from './types';
+import { CalculatedTrack } from '../../common/types.ts';
 
 const initialState: ComparisonState = {
     parsedTracks: {},
     trackInfo: {},
+    participantsDelay: {},
     planningIds: [],
     selectedTracks: {},
     selectedVersions: [],
@@ -17,7 +18,7 @@ const comparisonTracksSlice = createSlice({
     reducers: {
         setComparisonParsedTracks: (
             state: ComparisonState,
-            action: PayloadAction<{ version: string; tracks: ParsedTrack[] }>
+            action: PayloadAction<{ version: string; tracks: CalculatedTrack[] }>
         ) => {
             const { version, tracks } = action.payload;
             state.parsedTracks[version] = tracks;
@@ -46,6 +47,13 @@ const comparisonTracksSlice = createSlice({
             const { version, selectedTracks } = action.payload;
             state.selectedTracks[version] = selectedTracks;
         },
+        setParticipantsDelay: (
+            state: ComparisonState,
+            action: PayloadAction<{ version: string; participantsDelay: number | undefined }>
+        ) => {
+            const { version, participantsDelay } = action.payload;
+            state.participantsDelay[version] = participantsDelay;
+        },
         setDisplayInformation: (
             state: ComparisonState,
             action: PayloadAction<{ version: string; versionTitle: string | undefined }>
@@ -68,3 +76,4 @@ export const getIsComparisonLoading = (state: ComparisonTrackState) => getBase(s
 export const getSelectedVersions = (state: ComparisonTrackState) => getBase(state).selectedVersions;
 export const getSelectedTracks = (state: ComparisonTrackState) => getBase(state).selectedTracks;
 export const getComparisonTrackTitles = (state: ComparisonTrackState) => getBase(state).trackInfo;
+export const getComparisonParticipantsDelay = (state: ComparisonTrackState) => getBase(state).participantsDelay;

@@ -1,37 +1,43 @@
-import { ParsedTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 import { DisplayState } from '../store/types.ts';
-import { extractSnakeTrackFromParsedTrack } from '../../common/logic/extractSnakeTrack.ts';
-import { getParsedTracks } from '../store/displayTracksReducer.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
+import { getDisplayParticipantsDelay, getDisplayTracks } from '../store/displayTracksReducer.ts';
 import {
     getCurrenDisplayMapTime,
     getCurrentRealTime,
     getEndDisplayMapTime,
     getIsLive,
     getStartDisplayMapTime,
-} from '../store/map.reducer.ts';
+} from '../store/displayMapReducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 
 const extractLocationDisplay =
-    (timeStampFront: string) =>
-    (parsedTrack: ParsedTrack): BikeSnake => {
+    (timeStampFront: string, participantsDelayInSeconds: number) =>
+    (parsedTrack: CalculatedTrack): BikeSnake => {
         const participants = parsedTrack?.peopleCount ?? 0;
 
         return {
-            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
+            points: extractSnakeTrackFromCalculatedTrack(
+                timeStampFront,
+                participants,
+                parsedTrack,
+                participantsDelayInSeconds
+            ),
             title: parsedTrack.filename,
-            color: parsedTrack.color ?? 'white',
+            color: getColor(parsedTrack),
             id: parsedTrack.id,
         };
     };
 
 export const getCurrentDisplayTimeStamp = (state: DisplayState): string | undefined => {
-    const calculatedTracks = getParsedTracks(state);
-    if (Object.keys(calculatedTracks).length === 0) {
+    const displayTracks = getDisplayTracks(state);
+    if (Object.keys(displayTracks).length === 0) {
         return;
     }
     const mapTime = getCurrenDisplayMapTime(state) ?? 0;
@@ -55,12 +61,13 @@ export const getDisplayTimeStamp = (state: DisplayState): string | undefined => 
 
 export const getBikeSnakesForDisplayMap = createSelector(
     getDisplayTimeStamp,
-    getParsedTracks,
-    (timeStamp, parsedTracks): BikeSnake[] => {
+    getDisplayTracks,
+    getDisplayParticipantsDelay,
+    (timeStamp, parsedTracks, participantsDelayInSeconds): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
 
-        return parsedTracks?.map(extractLocationDisplay(timeStamp)) ?? [];
+        return parsedTracks?.map(extractLocationDisplay(timeStamp, participantsDelayInSeconds)) ?? [];
     }
 );

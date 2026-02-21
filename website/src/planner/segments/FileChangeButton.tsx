@@ -1,15 +1,16 @@
 import { Dropdown, Table } from 'react-bootstrap';
 import exchange from '../../assets/exchange.svg';
-import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
-import { toGpxSegment } from './GpxSegments.tsx';
 import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
+import { toParsedGpxSegment } from './segmentParsing.ts';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 
 interface Props {
     id: string;
@@ -35,14 +36,16 @@ export function FileChangeButton({ id, name }: Props) {
     };
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toGpxSegment)).then((replacementSegments) =>
+        Promise.all([...newFiles].map(toParsedGpxSegment)).then((replacementSegments) => {
+            // TODO 223 see if that works, maybe also writing an integration test...
+            dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments));
             dispatch(
-                gpxSegmentsActions.setReplaceProcess({
+                segmentDataActions.setReplaceProcess({
                     targetSegment: replaceProcess!.targetSegment,
                     replacementSegments: [...replaceProcess!.replacementSegments, ...replacementSegments],
                 })
-            )
-        );
+            );
+        });
     };
 
     return (
@@ -50,7 +53,7 @@ export function FileChangeButton({ id, name }: Props) {
             <Dropdown.Item
                 onClick={() => {
                     setShowModal(true);
-                    dispatch(gpxSegmentsActions.setReplaceProcess({ targetSegment: id, replacementSegments: [] }));
+                    dispatch(segmentDataActions.setReplaceProcess({ targetSegment: id, replacementSegments: [] }));
                 }}
                 title={intl.formatMessage({ id: 'msg.replaceFile.hint' }, { name })}
             >

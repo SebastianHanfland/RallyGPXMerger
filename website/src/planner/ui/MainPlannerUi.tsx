@@ -1,13 +1,11 @@
 import { Container } from 'react-bootstrap';
 import { InteractionMap } from '../map/InteractionMap.tsx';
-import { PlannerSidebar } from './PlannerSidebar.tsx';
+import { PlannerSidebar } from './sidebar/PlannerSidebar.tsx';
 import { MapContentSelection } from '../map/MapContentSelection.tsx';
-import { PlannerHomeButton } from './PlannerHomeButton.tsx';
+import { PlannerHomeButton } from './elements/PlannerHomeButton.tsx';
 import { TimeSlider } from '../map/TimeSlider.tsx';
-import { CalculationIsRunning } from './CalculationIsRunning.tsx';
-import { CalculationOnTheFly } from './CalculationOnTheFly.tsx';
-import { SharePlanningButton } from '../layout/SharePlanningButton.tsx';
-import { HelpingTip } from './HelpingTip.tsx';
+import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
+import { HelpingTip } from './elements/HelpingTip.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -17,8 +15,6 @@ export const MainPlannerUi = () => {
                     <InteractionMap />
                 </Container>
                 <HelpingTip />
-                <CalculationIsRunning />
-                <CalculationOnTheFly />
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />

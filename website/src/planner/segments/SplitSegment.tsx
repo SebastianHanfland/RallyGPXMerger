@@ -2,9 +2,9 @@ import { Dropdown } from 'react-bootstrap';
 import scissors from '../../assets/scissors.svg';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClickOnSegment, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { splitGpxAtPosition } from './splitSegmentThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
+import { getClickOnSegment, segmentDataActions } from '../store/segmentData.redux.ts';
 
 export const SplitSegmentDropdownItem = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -16,7 +16,7 @@ export const SplitSegmentDropdownItem = () => {
         <Dropdown.Item
             onClick={() => {
                 dispatch(splitGpxAtPosition);
-                dispatch(gpxSegmentsActions.setClickOnSegment(undefined));
+                dispatch(segmentDataActions.setClickOnSegment(undefined));
             }}
         >
             <img src={scissors} alt="split segment" color={'#ffffff'} className="m-1" />

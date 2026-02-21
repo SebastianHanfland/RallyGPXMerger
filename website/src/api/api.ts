@@ -1,4 +1,7 @@
 import { State } from '../planner/store/types.ts';
+import { isOldState } from '../migrate/types.ts';
+import { migrateVersion1To2 } from '../migrate/migrateVersion1To2.ts';
+import { StateOld } from '../planner/store/typesOld.ts';
 
 // const baseUrl = 'http://localhost:3000';
 const baseUrl = 'https://hase.uber.space/bike';
@@ -23,13 +26,14 @@ export const deletePlanning = (id: string, adminToken: string) => {
     return fetch(`${baseUrl}/${id}/${adminToken}`, { method: 'delete' });
 };
 
-export const getData = (id: string) => {
+const getDataFromServer = (id: string) => {
     return fetch(`${baseUrl}/${id}`, { method: 'get' }).then((res) => res.json());
 };
 
-const backupUrl = `https://raw.githubusercontent.com/SebastianHanfland/RallyGPXMerger/refs/heads/main/data/Leo.json`;
-export const getBackupData = () => {
-    return fetch(backupUrl, {
-        method: 'get',
-    }).then((res) => res.json());
+export const getData = (id: string): Promise<State> => {
+    return getDataFromServer(id)
+        .then((res) => res.data)
+        .then((state: State | StateOld) => {
+            return isOldState(state) ? migrateVersion1To2(state) : state;
+        });
 };

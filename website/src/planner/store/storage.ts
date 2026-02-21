@@ -1,7 +1,10 @@
 import { State } from './types.ts';
 
 import { optionallyCompress } from './compressHelper.ts';
-import { CalculatedTrack, GpxSegment } from '../../common/types.ts';
+import { GpxSegment } from '../../common/types.ts';
+import { StateOld } from './typesOld.ts';
+import { isOldState } from '../../migrate/types.ts';
+import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
 
 const localStorage = window.localStorage;
 
@@ -9,15 +12,14 @@ const stateKey = `gpxMerger.state`;
 
 const save = (value: State) => {
     try {
-        const { layout, gpxSegments, calculatedTracks, geoCoding, trackMerge, map, points, backend } = value;
+        const { layout, geoCoding, trackMerge, map, points, backend, segmentData } = value;
         localStorage.setItem(stateKey + '.layout', JSON.stringify(layout));
-        localStorage.setItem(stateKey + '.gpxSegments', JSON.stringify(gpxSegments));
         localStorage.setItem(stateKey + '.map', JSON.stringify(map));
         localStorage.setItem(stateKey + '.points', JSON.stringify(points));
         localStorage.setItem(stateKey + '.trackMerge', JSON.stringify(trackMerge));
         localStorage.setItem(stateKey + '.geoCoding', JSON.stringify(geoCoding));
-        localStorage.setItem(stateKey + '.calculatedTracks', JSON.stringify(calculatedTracks));
         localStorage.setItem(stateKey + '.backend', JSON.stringify(backend));
+        localStorage.setItem(stateKey + '.segmentData', JSON.stringify(segmentData));
     } catch (error) {
         console.log(error);
     }
@@ -33,10 +35,13 @@ const load = (): State | undefined => {
         let gpxSegments = undefined;
         let map = undefined;
         let points = undefined;
+        let settings = undefined;
+        let nodes = undefined;
         let trackMerge = undefined;
         let geoCoding = undefined;
         let calculatedTracks = undefined;
         let backend = undefined;
+        let segmentData = undefined;
 
         const layoutString = localStorage.getItem(stateKey + '.layout');
         if (isDefined(layoutString)) {
@@ -60,6 +65,14 @@ const load = (): State | undefined => {
         if (isDefined(pointsStringified)) {
             points = JSON.parse(pointsStringified);
         }
+        const settingsStringified = localStorage.getItem(stateKey + '.settings');
+        if (isDefined(settingsStringified)) {
+            settings = JSON.parse(settingsStringified);
+        }
+        const nodesStringified = localStorage.getItem(stateKey + '.nodes');
+        if (isDefined(nodesStringified)) {
+            nodes = JSON.parse(nodesStringified);
+        }
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');
         if (isDefined(trackMergeStringified)) {
             trackMerge = JSON.parse(trackMergeStringified);
@@ -72,26 +85,31 @@ const load = (): State | undefined => {
         if (isDefined(backendStringified)) {
             backend = JSON.parse(backendStringified);
         }
+        const segmentDataStringified = localStorage.getItem(stateKey + '.segmentData');
+        if (isDefined(segmentDataStringified)) {
+            segmentData = JSON.parse(segmentDataStringified);
+        }
         const calculatedTracksStringified = localStorage.getItem(stateKey + '.calculatedTracks');
         if (isDefined(calculatedTracksStringified)) {
-            const parsedTracks = JSON.parse(calculatedTracksStringified);
-            const compressedTracks =
-                parsedTracks.tracks?.map((segment: CalculatedTrack) => ({
-                    ...segment,
-                    content: optionallyCompress(segment.content),
-                })) ?? [];
-            calculatedTracks = { ...parsedTracks, tracks: compressedTracks };
+            calculatedTracks = JSON.parse(calculatedTracksStringified);
         }
-        return {
+        const readState: State | StateOld = {
             layout,
             gpxSegments,
             map,
             points,
+            settings,
+            nodes,
             trackMerge,
             geoCoding,
             calculatedTracks,
             backend,
-        } as State;
+            segmentData,
+        };
+        if (isOldState(readState)) {
+            return migrateVersion1To2(readState);
+        }
+        return readState;
     } catch (error) {
         console.log(error);
         return undefined;
@@ -108,6 +126,7 @@ const clear = () => {
         localStorage.removeItem(stateKey + '.geoCoding');
         localStorage.removeItem(stateKey + '.calculatedTracks');
         localStorage.removeItem(stateKey + '.backend');
+        localStorage.removeItem(stateKey + '.segmentData');
     } catch (error) {
         console.log(error);
     }

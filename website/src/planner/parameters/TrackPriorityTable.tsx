@@ -2,7 +2,7 @@ import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useSelector } from 'react-redux';
-import { TrackPrio } from '../ui/TrackPrio.tsx';
+import { TrackPrio } from '../tracks/components/TrackPrio.tsx';
 
 export const TrackPriorityTable = () => {
     const tracks = useSelector(getTrackCompositions);

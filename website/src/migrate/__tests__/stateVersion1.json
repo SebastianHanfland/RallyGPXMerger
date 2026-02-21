@@ -1,0 +1,341 @@
+{
+    "backend": { "isPlanningAlreadySaved": false, "hasChangesSinceLastUpload": true },
+    "layout": {
+        "language": "de",
+        "selectedSection": "menu",
+        "showDashboard": true,
+        "isSidebarOpen": true,
+        "selectedSidebarSection": "documents",
+        "hasSingleTrack": false
+    },
+    "gpxSegments": {
+        "segments": [
+            {
+                "id": "05b3ea78-3f9d-4127-8281-74458d04da00",
+                "filename": "B1",
+                "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<gpx creator=\"https://gpx.studio\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.topografix.com/GPX/gpx_style/0/2 http://www.topografix.com/GPX/gpx_style/0/2/gpx_style.xsd\" xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1\" xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\" xmlns:gpxpx=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\" xmlns:gpx_style=\"http://www.topografix.com/GPX/gpx_style/0/2\">\n<metadata>\n<name>New file 2</name>\n<author>\n<name>gpx.studio</name>\n<link href=\"https://gpx.studio\"/>\n</author>\n</metadata>\n<trk>\n<name>New file 2</name>\n<trkseg>\n<trkpt lat=\"48.154063\" lon=\"11.466677\">\n<ele>526</ele>\n\n\n\n<reversedirection>yes</reversedirection>\n<highway>residential</highway>\n\n<smoothness>good</smoothness>\n<route_bicycle_lcn>yes</route_bicycle_lcn>\n\n\n\n</trkpt>\n<trkpt lat=\"48.15399\" lon=\"11.465217\">\n<ele>526</ele>\n</trkpt>\n</trkseg>\n</trk>\n</gpx>\n",
+                "streetsResolved": true
+            },
+            {
+                "id": "9c555c2b-3e6a-4f2d-898f-befbca56e33d",
+                "filename": "AB",
+                "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<gpx creator=\"https://gpx.studio\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.topografix.com/GPX/gpx_style/0/2 http://www.topografix.com/GPX/gpx_style/0/2/gpx_style.xsd\" xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1\" xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\" xmlns:gpxpx=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\" xmlns:gpx_style=\"http://www.topografix.com/GPX/gpx_style/0/2\">\n<metadata>\n<name>New file 3</name>\n<author>\n<name>gpx.studio</name>\n<link href=\"https://gpx.studio\"/>\n</author>\n</metadata>\n<trk>\n<name>New file 3</name>\n<trkseg>\n<trkpt lat=\"48.154015\" lon=\"11.4652\">\n<ele>526</ele>\n\n\n\n<reversedirection>yes</reversedirection>\n<highway>residential</highway>\n\n\n\n\n</trkpt>\n<trkpt lat=\"48.155063\" lon=\"11.46535\">\n<ele>526.75</ele>\n</trkpt>\n</trkseg>\n</trk>\n</gpx>\n",
+                "streetsResolved": true
+            },
+            {
+                "id": "c0159819-ffe3-4704-9e55-7af374fb4851",
+                "filename": "A1",
+                "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<gpx creator=\"https://gpx.studio\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.topografix.com/GPX/gpx_style/0/2 http://www.topografix.com/GPX/gpx_style/0/2/gpx_style.xsd\" xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1\" xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\" xmlns:gpxpx=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\" xmlns:gpx_style=\"http://www.topografix.com/GPX/gpx_style/0/2\">\n<metadata>\n<name>New file 1</name>\n<author>\n<name>gpx.studio</name>\n<link href=\"https://gpx.studio\"/>\n</author>\n</metadata>\n<trk>\n<name>New file 1</name>\n<trkseg>\n<trkpt lat=\"48.154026\" lon=\"11.463795\">\n<ele>527</ele>\n\n\n\n<highway>residential</highway>\n\n<smoothness>good</smoothness>\n<route_bicycle_lcn>yes</route_bicycle_lcn>\n\n\n\n</trkpt>\n<trkpt lat=\"48.153975\" lon=\"11.464553\">\n<ele>526.75</ele>\n\n\n\n<highway>residential</highway>\n\n<smoothness>good</smoothness>\n<route_bicycle_lcn>yes</route_bicycle_lcn>\n\n\n\n</trkpt>\n<trkpt lat=\"48.15398\" lon=\"11.464802\">\n<ele>526.5</ele>\n\n\n\n<highway>residential</highway>\n\n<smoothness>good</smoothness>\n<route_bicycle_lcn>yes</route_bicycle_lcn>\n\n\n\n</trkpt>\n<trkpt lat=\"48.153989\" lon=\"11.465197\">\n<ele>526</ele>\n\n\n\n<highway>residential</highway>\n\n\n\n\n</trkpt>\n<trkpt lat=\"48.153987\" lon=\"11.465196\">\n<ele>526.75</ele>\n</trkpt>\n</trkseg>\n</trk>\n</gpx>\n",
+                "streetsResolved": true
+            }
+        ],
+        "segmentSpeeds": { "05b3ea78-3f9d-4127-8281-74458d04da00": 16, "9c555c2b-3e6a-4f2d-898f-befbca56e33d": 20 }
+    },
+    "trackMerge": {
+        "trackCompositions": [
+            {
+                "id": "83e9e663-937c-438a-9062-9c3ca805ce50",
+                "segmentIds": ["05b3ea78-3f9d-4127-8281-74458d04da00", "9c555c2b-3e6a-4f2d-898f-befbca56e33d"],
+                "name": "200",
+                "peopleCount": 200
+            },
+            {
+                "id": "c1fb4db8-a7ee-4b65-a584-53f7ad5acbae",
+                "segmentIds": ["c0159819-ffe3-4704-9e55-7af374fb4851", "9c555c2b-3e6a-4f2d-898f-befbca56e33d"],
+                "name": "150",
+                "peopleCount": 150
+            }
+        ],
+        "participantDelay": 1,
+        "gapToleranceInKm": 0.01,
+        "hasDefaultArrivalDate": false,
+        "arrivalDateTime": "2026-02-16T06:32:40.000Z",
+        "isCalculationOnTheFly": false,
+        "isCalculationRunning": false,
+        "changesSinceLastCalculation": false,
+        "planningTitle": "Planning Test",
+        "averageSpeedInKmH": 3
+    },
+    "calculatedTracks": {
+        "tracks": [
+            {
+                "id": "83e9e663-937c-438a-9062-9c3ca805ce50",
+                "content": "༇ୠ㘀䁮԰ᎁ鰉恻ǘក䐂〇䀃Ḱ▀옘ɦ阃鯠⪀⨁蠋䀇ḠϠԌᆀܰォ⁀Ⴠஆ⓸ƚ전怕쨂ꔀ맅若괔嫉쨥䦗™׊䊅蔾\u0016诐ẇ쁷䂢䔱ె⑙ᔴ〢ᨈἀ焀Ԁടɴ읨᜽ぴ睏漿䃿≿f∥䘟&ሒಔ聙\u0019e⨷Ј央ؔ祙樄䝴㴔⺞\ud956谪ԛʯ开ꂐ낈ꢘ룄퓴ཥ豐豸貌쌢㳚㱡᠘怈С\uda05奷蟓鍼Ѐ㤄㾆Ԓ耠悵怏萖ਐ粑\udf5f뿐ᰇ鄠Ö胴䨡Ċ蓃䳰쑲㐚䭅΀塍Н䲀蛉셈ꙋ⶟佅⠄⌈郈ᖉᴼ鼀š¬늒\r鲮䊃懰Ѣⲵ偨β᫞粠稡܈ራ檪ꑥ꺞漶惺궫艅ꥰࢪ똚꽎倡䑽䀓者꒏銻ᵎ飁≚⿥✥특䊠袯⮇쎚ཚꦴ၍⦆䎺\udb6f땚췎\ud8dbꯚ곷筽ﻕ恶Ꞡ‫쌤奴柈\udf8f㮇榊㔨剦锪盋ꬌ靪ꚧ敪퍫듸꯵녜恎穽纀拏믚⏷ܱꏁ蹍㿅\ude1e咬喪㕒싅矔獅䍴\udd3e⫇爡൅嚵ᰓᇘ孳쎲ᕔ聨蝄⧷ᱟ礔噼蔑庖綄⑐쀐耀",
+                "filename": "200",
+                "peopleCount": 200
+            },
+            {
+                "id": "c1fb4db8-a7ee-4b65-a584-53f7ad5acbae",
+                "content": "༇ୠ㘀䁮԰ᎁ鰉恻ǘក䐂〇䀃Ḱ▀옘ɦ阃鯠⪀⨁蠋䀇ḠϠԌᆀܰォ⁀Ⴠஆ⓸ƚ전怕쨂ꔀ맅若괔嫉쨥䦗™׊䊅蔾\u0016诐ẇ쁷䂢䔱ె⑙ᔴ〢ᨈἀ焀Ԁടɴ읨᜽ぴ睏漿䃿≿f∥䘟&ሒಔ聙\u0019e⨷Ј央ؔ祙樄䝴㴔⺞\ud956谪ԛʯ开ꂐ낈ꢘ룄퓴ཥ豐豸貌쌢㳚㱡᠘怈С\uda05奷蟓鍼Ѐ㤄㾆Ԓ耠怄怏萖ਐ粑\udf5f뿐ᰇ鄠Ö胴䨡Ċ蓃䳰쑲㐚䭅΀塍Н䲀蛉셈ꙋ⶟佅⠄⌈郈ᖉᴼ鼀š¬늒ⵀێ䊃懰Ѣⲭ幐ΰĹᕯ㹐㴐莄क땃刺흌뙛煨ぽ嵕압瀈檶ऍ垧⮕荪ꈬ냒䀁椣기䢖诹⧉璮储∫쫆썙꩝갡닅幼틨攻淪ꈡ燓梶믣ổ媻\udb55ρ\ud95e陙吴놟㭱㫬鱦펟煦慍驗엛⺢㹙ꬵ쾝滞᱗㞧䦩삓헙́꽂䑕ᇊИ\udc61㼾俣厭藃㊕霼ṕ嶍Ḙ퓔䬭\udf54合˟熭耣\udd53㷧繛뭞\udef6ಟ犁呕赣䉴밀\udfdfᝠ♕ɳ㳂వꃍ첷莍ൃ఼浣통㱼㫀ೂ㬯図ȡ嘴䡙䲎ﰨ\ud9cf缚⬷ꊕᕗㅢ甶㚢䊓吭坂蒅쬌믟둽茩♋鍑搱䪢⼠ⵋͳ䕐㜩듒\udb73쳍⸥ৢᬦ쁉氏匤䦼筋⇲చ刁Ꭓ콴䧎刭忈儕\ud842䔌Ĉ\u0000",
+                "filename": "150",
+                "peopleCount": 150
+            }
+        ],
+        "trackParticipants": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    "map": {
+        "currentTime": 47926,
+        "showCalculatedTracks": true,
+        "start": "2026-02-16T06:31:54.469Z",
+        "end": "2026-02-16T06:36:00.000Z",
+        "showConstructions": false,
+        "showGpxSegments": true,
+        "showMapMarker": false,
+        "showPointsOfInterest": false,
+        "showBlockStreets": false
+    },
+    "points": { "points": [] },
+    "geoCoding": {
+        "resolvedPositions": {
+            "lat:48.1540630000-lng:11.4666770000": "Orthstraße",
+            "lat:48.1539900000-lng:11.4652170000": "Orthstraße",
+            "lat:48.1540260000-lng:11.4637950000": "Orthstraße",
+            "lat:48.1539750000-lng:11.4645530000": "Orthstraße",
+            "lat:48.1539800000-lng:11.4648020000": "Orthstraße",
+            "lat:48.1539890000-lng:11.4651970000": "Orthstraße",
+            "lat:48.1539870000-lng:11.4651960000": "Orthstraße",
+            "lat:48.1540150000-lng:11.4652000000": "Chopinstraße",
+            "lat:48.1550630000-lng:11.4653500000": "Chopinstraße"
+        },
+        "trackStreetInfos": [
+            {
+                "id": "83e9e663-937c-438a-9062-9c3ca805ce50",
+                "name": "200",
+                "startFront": "2026-02-16T06:31:54.469Z",
+                "publicStart": "2026-02-16T06:31:54.469Z",
+                "arrivalBack": "2026-02-16T06:36:00.000Z",
+                "arrivalFront": "2026-02-16T06:32:40.000Z",
+                "distanceInKm": 0.22871282813274846,
+                "peopleCount": 200,
+                "wayPoints": [
+                    {
+                        "streetName": "Orthstraße",
+                        "backArrival": "2026-02-16T06:35:14.469Z",
+                        "frontPassage": "2026-02-16T06:31:54.469Z",
+                        "frontArrival": "2026-02-16T06:31:54.469Z",
+                        "pointFrom": { "lat": 48.154063, "lon": 11.466677, "time": "2026-02-16T06:31:54.469Z" },
+                        "pointTo": { "lat": 48.154063, "lon": 11.466677, "time": "2026-02-16T06:31:54.469Z" },
+                        "type": "TRACK"
+                    },
+                    {
+                        "streetName": "Orthstraße",
+                        "backArrival": "2026-02-16T06:35:38.904Z",
+                        "frontPassage": "2026-02-16T06:32:18.904Z",
+                        "frontArrival": "2026-02-16T06:32:18.904Z",
+                        "pointFrom": { "lat": 48.15399, "lon": 11.465217, "time": "2026-02-16T06:32:18.904Z" },
+                        "pointTo": { "lat": 48.154015, "lon": 11.4652, "time": "2026-02-16T06:32:18.904Z" },
+                        "type": "NODE",
+                        "nodeTracks": ["200", "150"]
+                    },
+                    {
+                        "streetName": "Chopinstraße",
+                        "backArrival": "2026-02-16T06:36:00.000Z",
+                        "frontPassage": "2026-02-16T06:32:40.000Z",
+                        "frontArrival": "2026-02-16T06:32:18.904Z",
+                        "pointFrom": { "lat": 48.154015, "lon": 11.4652, "time": "2026-02-16T06:32:18.904Z" },
+                        "pointTo": { "lat": 48.155063, "lon": 11.46535, "time": "2026-02-16T06:32:40.000Z" },
+                        "type": "TRACK",
+                        "distanceInKm": 0.11705671227818841,
+                        "speed": 19.97554817033932
+                    }
+                ]
+            },
+            {
+                "id": "c1fb4db8-a7ee-4b65-a584-53f7ad5acbae",
+                "name": "150",
+                "startFront": "2026-02-16T06:33:36.470Z",
+                "publicStart": "2026-02-16T06:33:36.470Z",
+                "arrivalBack": "2026-02-16T06:38:30.000Z",
+                "arrivalFront": "2026-02-16T06:36:00.000Z",
+                "distanceInKm": 0.22472436171299043,
+                "peopleCount": 150,
+                "wayPoints": [
+                    {
+                        "streetName": "Orthstraße",
+                        "backArrival": "2026-02-16T06:36:06.470Z",
+                        "frontPassage": "2026-02-16T06:33:36.470Z",
+                        "frontArrival": "2026-02-16T06:33:36.470Z",
+                        "pointFrom": { "lat": 48.154026, "lon": 11.463795, "time": "2026-02-16T06:33:36.470Z" },
+                        "pointTo": { "lat": 48.154026, "lon": 11.463795, "time": "2026-02-16T06:33:36.470Z" },
+                        "type": "TRACK"
+                    },
+                    {
+                        "streetName": "Orthstraße",
+                        "backArrival": "2026-02-16T06:37:35.310Z",
+                        "frontPassage": "2026-02-16T06:35:05.310Z",
+                        "frontArrival": "2026-02-16T06:33:36.470Z",
+                        "pointFrom": { "lat": 48.153975, "lon": 11.464553, "time": "2026-02-16T06:34:43.788Z" },
+                        "pointTo": { "lat": 48.15398, "lon": 11.464802, "time": "2026-02-16T06:35:05.310Z" },
+                        "type": "BREAK",
+                        "distanceInKm": 0,
+                        "breakLength": 1.1219666666666666
+                    },
+                    {
+                        "streetName": "Orthstraße",
+                        "backArrival": "2026-02-16T06:38:08.599Z",
+                        "frontPassage": "2026-02-16T06:35:38.599Z",
+                        "frontArrival": "2026-02-16T06:35:05.310Z",
+                        "pointFrom": { "lat": 48.15398, "lon": 11.464802, "time": "2026-02-16T06:35:05.310Z" },
+                        "pointTo": { "lat": 48.153989, "lon": 11.465197, "time": "2026-02-16T06:35:38.599Z" },
+                        "type": "TRACK",
+                        "distanceInKm": 0.02931746229453099,
+                        "speed": 3.1705026963955527
+                    },
+                    {
+                        "streetName": "Orthstraße",
+                        "backArrival": "2026-02-16T06:38:08.904Z",
+                        "frontPassage": "2026-02-16T06:35:38.904Z",
+                        "frontArrival": "2026-02-16T06:35:38.904Z",
+                        "pointFrom": { "lat": 48.153987, "lon": 11.465196, "time": "2026-02-16T06:35:38.904Z" },
+                        "pointTo": { "lat": 48.154015, "lon": 11.4652, "time": "2026-02-16T06:35:38.904Z" },
+                        "type": "NODE",
+                        "nodeTracks": ["200", "150"]
+                    },
+                    {
+                        "streetName": "Chopinstraße",
+                        "backArrival": "2026-02-16T06:38:30.000Z",
+                        "frontPassage": "2026-02-16T06:36:00.000Z",
+                        "frontArrival": "2026-02-16T06:35:38.904Z",
+                        "pointFrom": { "lat": 48.154015, "lon": 11.4652, "time": "2026-02-16T06:35:38.904Z" },
+                        "pointTo": { "lat": 48.155063, "lon": 11.46535, "time": "2026-02-16T06:36:00.000Z" },
+                        "type": "TRACK",
+                        "distanceInKm": 0.11705671227818841,
+                        "speed": 19.97554817033932
+                    }
+                ]
+            }
+        ],
+        "resolvedPostCodes": {
+            "lat:48.1540265000-lng:11.4659470000": "81245",
+            "lat:48.1540065000-lng:11.4644955000": "81245",
+            "lat:48.1545390000-lng:11.4652750000": "81245",
+            "lat:48.1540205000-lng:11.4644975000": "81245",
+            "lat:48.1540630000-lng:11.4666770000": "81245",
+            "lat:48.1540025000-lng:11.4652085000": "81245",
+            "lat:48.1540075000-lng:11.4644960000": "81245",
+            "lat:48.1540010000-lng:11.4651980000": "81245",
+            "lat:48.1539775000-lng:11.4646775000": "81245",
+            "lat:48.1540260000-lng:11.4637950000": "81245",
+            "lat:48.1539845000-lng:11.4649995000": "81245"
+        },
+        "resolvedDistricts": {
+            "lat:48.1540265000-lng:11.4659470000": "München",
+            "lat:48.1540065000-lng:11.4644955000": "München",
+            "lat:48.1545390000-lng:11.4652750000": "München",
+            "lat:48.1540205000-lng:11.4644975000": "München",
+            "lat:48.1540630000-lng:11.4666770000": "München",
+            "lat:48.1540025000-lng:11.4652085000": "München",
+            "lat:48.1540075000-lng:11.4644960000": "München",
+            "lat:48.1540010000-lng:11.4651980000": "München",
+            "lat:48.1539775000-lng:11.4646775000": "München",
+            "lat:48.1540260000-lng:11.4637950000": "München",
+            "lat:48.1539845000-lng:11.4649995000": "München"
+        }
+    },
+    "geoCodingRequests": { "isAggregating": false, "isLoadingStreetData": false, "isLoadingPostCodeData": false },
+    "toasts": { "toasts": [] },
+    "parsedTracks": {
+        "parsedTracks": [
+            {
+                "id": "83e9e663-937c-438a-9062-9c3ca805ce50",
+                "filename": "200",
+                "peopleCount": 200,
+                "version": "current",
+                "color": "#83e9e6",
+                "points": [
+                    { "ele": 526, "time": "2026-02-16T06:31:54.469Z", "lat": 48.154063, "lon": 11.466677 },
+                    { "ele": 526, "time": "2026-02-16T06:32:18.904Z", "lat": 48.15399, "lon": 11.465217 },
+                    { "ele": 526, "time": "2026-02-16T06:32:18.904Z", "lat": 48.154015, "lon": 11.4652 },
+                    { "ele": 526.75, "time": "2026-02-16T06:32:40.000Z", "lat": 48.155063, "lon": 11.46535 }
+                ]
+            },
+            {
+                "id": "c1fb4db8-a7ee-4b65-a584-53f7ad5acbae",
+                "filename": "150",
+                "peopleCount": 150,
+                "version": "current",
+                "color": "#c1fb4d",
+                "points": [
+                    { "ele": 527, "time": "2026-02-16T06:33:36.470Z", "lat": 48.154026, "lon": 11.463795 },
+                    { "ele": 526.75, "time": "2026-02-16T06:34:43.788Z", "lat": 48.153975, "lon": 11.464553 },
+                    { "ele": 526.5, "time": "2026-02-16T06:35:05.310Z", "lat": 48.15398, "lon": 11.464802 },
+                    { "ele": 526, "time": "2026-02-16T06:35:38.599Z", "lat": 48.153989, "lon": 11.465197 },
+                    { "ele": 526.75, "time": "2026-02-16T06:35:38.904Z", "lat": 48.153987, "lon": 11.465196 },
+                    { "ele": 526, "time": "2026-02-16T06:35:38.904Z", "lat": 48.154015, "lon": 11.4652 },
+                    { "ele": 526.75, "time": "2026-02-16T06:36:00.000Z", "lat": 48.155063, "lon": 11.46535 }
+                ]
+            }
+        ],
+        "parsedSegments": [
+            {
+                "id": "05b3ea78-3f9d-4127-8281-74458d04da00",
+                "filename": "B1",
+                "version": "current",
+                "color": "#05b3ea",
+                "points": [
+                    {
+                        "ele": 526,
+                        "reversedirection": "yes",
+                        "highway": "residential",
+                        "smoothness": "good",
+                        "route_bicycle_lcn": "yes",
+                        "lat": 48.154063,
+                        "lon": 11.466677
+                    },
+                    { "ele": 526, "lat": 48.15399, "lon": 11.465217 }
+                ]
+            },
+            {
+                "id": "9c555c2b-3e6a-4f2d-898f-befbca56e33d",
+                "filename": "AB",
+                "version": "current",
+                "color": "#9c555c",
+                "points": [
+                    {
+                        "ele": 526,
+                        "reversedirection": "yes",
+                        "highway": "residential",
+                        "lat": 48.154015,
+                        "lon": 11.4652
+                    },
+                    { "ele": 526.75, "lat": 48.155063, "lon": 11.46535 }
+                ]
+            },
+            {
+                "id": "c0159819-ffe3-4704-9e55-7af374fb4851",
+                "filename": "A1",
+                "version": "current",
+                "color": "#c01598",
+                "points": [
+                    {
+                        "ele": 527,
+                        "highway": "residential",
+                        "smoothness": "good",
+                        "route_bicycle_lcn": "yes",
+                        "lat": 48.154026,
+                        "lon": 11.463795
+                    },
+                    {
+                        "ele": 526.75,
+                        "highway": "residential",
+                        "smoothness": "good",
+                        "route_bicycle_lcn": "yes",
+                        "lat": 48.153975,
+                        "lon": 11.464553
+                    },
+                    {
+                        "ele": 526.5,
+                        "highway": "residential",
+                        "smoothness": "good",
+                        "route_bicycle_lcn": "yes",
+                        "lat": 48.15398,
+                        "lon": 11.464802
+                    },
+                    { "ele": 526, "highway": "residential", "lat": 48.153989, "lon": 11.465197 },
+                    { "ele": 526.75, "lat": 48.153987, "lon": 11.465196 }
+                ]
+            }
+        ],
+        "parsedConstructionSegments": []
+    }
+}

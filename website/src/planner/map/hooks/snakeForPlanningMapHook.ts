@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getCurrenMapTime, getShowCalculatedTracks } from '../../store/map.reducer.ts';
 import { getBikeSnakesForPlanningMap } from './trackSimulationReader.ts';
 import { addBikeSnakesToLayer } from '../../../common/map/addSnakeWithBikeToMap.ts';
+import { CalculatedTrack } from '../../../common/types.ts';
+import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
 
 export function snakeForPlanningMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
-    const calculatedTracks = useSelector(getCalculatedTracks);
+    const calculatedTracks: CalculatedTrack[] = useSelector(getCalculateTracks);
+
     const showTracks = useSelector(getShowCalculatedTracks) ?? false;
     const currentMapTime = useSelector(getCurrenMapTime);
     const snakesToDisplay = useSelector(getBikeSnakesForPlanningMap);

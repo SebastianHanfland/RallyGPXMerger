@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trashB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
     id: string;
@@ -17,7 +17,7 @@ export function RemoveFileButton({ id, name }: Props) {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const removeGpxSegment = () => {
-        dispatch(gpxSegmentsActions.removeGpxSegment(id));
+        dispatch(segmentDataActions.removeGpxSegment(id));
         dispatch(trackMergeActions.removeGpxSegment(id));
     };
     return (

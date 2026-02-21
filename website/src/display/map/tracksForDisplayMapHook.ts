@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
-import { getHighlightedTrack, mapActions } from '../store/map.reducer.ts';
-import { getParsedTracks } from '../store/displayTracksReducer.ts';
+import { getHighlightedTrack, displayMapActions } from '../store/displayMapReducer.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
 export function tracksForDisplayMapHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
-    const displayTracks = useSelector(getParsedTracks);
+    const displayTracks = useSelector(getDisplayTracks);
     const highlightedTrack = useSelector(getHighlightedTrack);
     const dispatch = useDispatch();
 
@@ -18,14 +18,14 @@ export function tracksForDisplayMapHook(calculatedTracksLayer: MutableRefObject<
             opacity: highlightedTrack ? 0.2 : 0.7,
             highlightedId: highlightedTrack,
             clickCallBack: (track) => {
-                dispatch(mapActions.setShowTrackInfo(true));
-                dispatch(mapActions.setShowSingleTrackInfo(track.id));
+                dispatch(displayMapActions.setShowTrackInfo(true));
+                dispatch(displayMapActions.setShowSingleTrackInfo(track.id));
             },
             mouseInCallBack: (track) => {
-                dispatch(mapActions.setHighlightedTrack(track.id));
+                dispatch(displayMapActions.setHighlightedTrack(track.id));
             },
             mouseOutCallBack: () => {
-                dispatch(mapActions.setHighlightedTrack());
+                dispatch(displayMapActions.setHighlightedTrack());
             },
         });
     }, [displayTracks, displayTracks.length, highlightedTrack]);

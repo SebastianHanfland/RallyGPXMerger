@@ -1,0 +1,62 @@
+import { Col, Container, Row } from 'react-bootstrap';
+import line from '../../../assets/line.svg';
+import mergeTracks from '../../../assets/mergeTracks.svg';
+import { WizardHeader } from './WizardHeader.tsx';
+import { useDispatch } from 'react-redux';
+import { layoutActions } from '../../store/layout.reducer.ts';
+import { simpleRallyThunk } from './simpleRallyThunk.ts';
+import { AppDispatch } from '../../store/planningStore.ts';
+import { FormattedMessage } from 'react-intl';
+import { WizardCard } from './WizardCard.tsx';
+import { useNavigate } from 'react-router';
+import { resetData } from '../../import/resetData.ts';
+import { settingsActions } from '../../store/settings.reducer.ts';
+
+export const WizardsComplexity = () => {
+    const dispatch: AppDispatch = useDispatch();
+    const navigateTo = useNavigate();
+    const continueAsSimpleRally = () => {
+        resetData(dispatch);
+        dispatch(simpleRallyThunk);
+        dispatch(layoutActions.setHasSingleTrack(true));
+        navigateTo('?section=gps', { replace: true });
+    };
+    const continueAsComplexRally = () => {
+        resetData(dispatch);
+        dispatch(settingsActions.setDefaultArrivalDateTime());
+        dispatch(layoutActions.setIsSidebarOpen(true));
+        dispatch(layoutActions.setHasSingleTrack(false));
+        dispatch(layoutActions.setSelectedSidebarSection('segments'));
+        navigateTo('?section=gps', { replace: true });
+    };
+
+    return (
+        <Container>
+            <WizardHeader />
+            <h5 className={'mb-5'}>
+                <FormattedMessage id={'msg.choose'} />:
+            </h5>
+            <Row>
+                <Col>
+                    <WizardCard
+                        onClick={continueAsSimpleRally}
+                        title={<FormattedMessage id={'msg.simple'} />}
+                        text={<FormattedMessage id={'msg.simple.hint'} />}
+                        icon={line}
+                    />
+                </Col>
+                <Col>
+                    <WizardCard
+                        onClick={continueAsComplexRally}
+                        title={<FormattedMessage id={'msg.complex'} />}
+                        text={<FormattedMessage id={'msg.complex.hint'} />}
+                        icon={mergeTracks}
+                    />
+                </Col>
+            </Row>
+            <h5 className={'mt-5'}>
+                <FormattedMessage id={'msg.helpButton.hint'} />
+            </h5>
+        </Container>
+    );
+};

@@ -1,6 +1,7 @@
 import { State } from './types.ts';
-import { getArrivalDateTime, getTrackCompositions } from './trackMerge.reducer.ts';
-import { getGpxSegments } from './gpxSegments.reducer.ts';
+import { getTrackCompositions } from './trackMerge.reducer.ts';
+import { getParsedGpxSegments } from './segmentData.redux.ts';
+import { getArrivalDateTime } from './settings.reducer.ts';
 
 export const isPlanningInProgress = (state: State) =>
-    !!getArrivalDateTime(state) || getGpxSegments(state).length > 0 || getTrackCompositions(state).length > 0;
+    !!getArrivalDateTime(state) || getParsedGpxSegments(state).length > 0 || getTrackCompositions(state).length > 0;

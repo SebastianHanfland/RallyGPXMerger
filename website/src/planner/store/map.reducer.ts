@@ -13,13 +13,6 @@ const mapSlice = createSlice({
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
-        setStartAndEndTime: (state: MapState, action: PayloadAction<{ start: string; end: string }>) => {
-            state.start = action.payload.start;
-            state.end = action.payload.end;
-        },
-        setCenterPoint: (state: MapState, action: PayloadAction<{ lat: number; lng: number; zoom: number }>) => {
-            state.centerPoint = action.payload;
-        },
         setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
             state.showMapMarker = action.payload;
         },
@@ -48,9 +41,6 @@ export const mapActions = mapSlice.actions;
 export const mapReducer: Reducer<MapState> = mapSlice.reducer;
 const getBase = (state: State) => state.map;
 export const getCurrenMapTime = (state: State) => getBase(state).currentTime;
-export const getStartMapTime = (state: State) => getBase(state).start ?? '2023-04-23T07:00:00.000Z';
-export const getEndMapTime = (state: State) => getBase(state).end ?? '2023-04-23T16:00:00.000Z';
-export const getCenterPoint = (state: State) => getBase(state).centerPoint;
 export const getShowMapMarker = (state: State) => getBase(state).showMapMarker;
 export const getShowBlockStreets = (state: State) => getBase(state).showBlockStreets;
 export const getShowCalculatedTracks = (state: State) => getBase(state).showCalculatedTracks;

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { getReplaceProcess, gpxSegmentsActions } from '../store/gpxSegments.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
+import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
     id: string;
@@ -19,7 +19,7 @@ export function RemoveReplaceFileButton({ id, name }: Props) {
             return;
         }
         dispatch(
-            gpxSegmentsActions.setReplaceProcess({
+            segmentDataActions.setReplaceProcess({
                 ...replacementProcess,
                 replacementSegments: replacementProcess.replacementSegments.filter((segment) => segment.id !== id),
             })

@@ -4,7 +4,7 @@ import { createInfoTable } from './infoTablePdf.ts';
 import { createBreakOverviewTable } from './breakOverviewPdf.ts';
 import { createNodeOverviewTable } from './nodeOverviewTablePdf.ts';
 import { createStreetTable } from './trackStreetTablePdf.ts';
-import * as pdfMake from 'pdfmake/build/pdfmake';
+import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
 import { IntlShape } from 'react-intl';
 
@@ -34,5 +34,5 @@ export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) =>
         ],
         styles,
     };
-    return pdfMake.createPdf(docDefinition);
+    return createPdf(docDefinition);
 };

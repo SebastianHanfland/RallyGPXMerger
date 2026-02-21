@@ -1,37 +1,37 @@
 import { useEffect, useRef } from 'react';
 
 import 'leaflet/dist/leaflet.css';
+import 'leaflet/dist/leaflet.js';
 import { LocateControl } from 'leaflet.locatecontrol';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
-import 'leaflet/dist/leaflet.js';
 import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
 import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
-import { getMapConfiguration } from '../../common/mapConfig.ts';
+import { getMapConfiguration } from '../../common/map/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsLive, mapActions } from '../store/map.reducer.ts';
+import { displayMapActions, getIsLive } from '../store/displayMapReducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { getParsedTracks } from '../store/displayTracksReducer.ts';
-import { toLatLng } from '../../utils/pointUtil.ts';
-import { Munich } from '../../common/locations.ts';
-import { ParsedTrack } from '../../common/types.ts';
+import { getLatLng } from '../../utils/pointUtil.ts';
+import { Munich } from '../../common/map/locations.ts';
+import { CalculatedTrack } from '../../common/types.ts';
+import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
 
-function getCenterPoint(parsedTracks: ParsedTrack[] | undefined) {
+function getCenterPoint(parsedTracks: CalculatedTrack[] | undefined): { lat: number; lng: number } {
     if (!parsedTracks || parsedTracks.length === 0) {
         return Munich;
     }
     const point = parsedTracks[0].points[parsedTracks[0].points.length - 1];
-    return toLatLng(point);
+    return getLatLng(point);
 }
 
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
     const dispatch = useDispatch();
-    const parsedTracks = useSelector(getParsedTracks);
+    const parsedTracks = useSelector(getDisplayTracks);
     const isLive = useSelector(getIsLive);
 
     useEffect(() => {
@@ -69,7 +69,7 @@ export const PresentationMap = () => {
     criticalMapsHook(criticalMapsLayer);
 
     return (
-        <div onMouseLeave={() => dispatch(mapActions.setHighlightedTrack())}>
+        <div onMouseLeave={() => dispatch(displayMapActions.setHighlightedTrack())}>
             <div id="mapid" style={{ height: '100vh', zIndex: 0, width: '100vw' }} />
         </div>
     );

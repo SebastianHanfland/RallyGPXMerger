@@ -4,12 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { FileDownloaderDropdownItem } from '../segments/FileDownloader.tsx';
-import { calculatedTracksActions, getCalculatedTracks } from '../store/calculatedTracks.reducer.ts';
+import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import trash from '../../assets/trashB.svg';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
+import { getColor } from '../../utils/colorUtil.ts';
+import { HexColorPicker } from 'react-colorful';
+import { ColorBlob } from '../../utils/ColorBlob.tsx';
+import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
 
 interface Props {
     track: TrackComposition;
@@ -20,8 +24,13 @@ export function TrackButtonsCell({ track }: Props) {
     const { id } = track;
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
-    const calculatedTrack = useSelector(getCalculatedTracks).find((track) => track.id === id);
+    const [showColorModal, setShowColorModal] = useState(false);
+    const [color, setColor] = useState(getColor(track));
+    const calculatedTrack = useSelector(getCalculateTracks).find((track) => track.id === id);
+
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
+
+    const content = getGpxContentFromTimedPoints(calculatedTrack?.points ?? [], calculatedTrack?.filename ?? 'Track');
 
     return (
         <DropdownButton
@@ -40,7 +49,7 @@ export function TrackButtonsCell({ track }: Props) {
                     <FormattedMessage id={'msg.removeTrack'} />
                 </span>
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segmentIds))}>
+            <Dropdown.Item onClick={() => dispatch(trackMergeActions.setSegmentIdClipboard(track.segments))}>
                 <img src={copyToClipboard} alt="copy to clipboard" color={'#ffffff'} className="m-1" />
                 <span>
                     <FormattedMessage id={'msg.copySegments'} />
@@ -57,10 +66,27 @@ export function TrackButtonsCell({ track }: Props) {
                     <FormattedMessage id={'msg.pasteSegments'} />
                 </span>
             </Dropdown.Item>
+            <Dropdown.Item onClick={() => setShowColorModal(true)}>
+                <ColorBlob color={getColor(track)} />
+                <span>
+                    <FormattedMessage id={'msg.setColor'} />
+                </span>
+            </Dropdown.Item>
+            {showColorModal && (
+                <ConfirmationModal
+                    onConfirm={() => {
+                        dispatch(trackMergeActions.setTrackColor({ id, color }));
+                        setShowColorModal(false);
+                    }}
+                    closeModal={() => setShowColorModal(false)}
+                    title={`${intl.formatMessage({ id: 'msg.setColor' })} ${track.name ?? ''}`}
+                    body={<HexColorPicker color={color} onChange={setColor} />}
+                />
+            )}
+
             {showModal && (
                 <ConfirmationModal
                     onConfirm={() => {
-                        dispatch(calculatedTracksActions.removeSingleCalculatedTrack(id));
                         dispatch(trackMergeActions.removeTrackComposition(id));
                     }}
                     closeModal={() => setShowModal(false)}
@@ -69,10 +95,7 @@ export function TrackButtonsCell({ track }: Props) {
                 />
             )}
             {calculatedTrack && (
-                <FileDownloaderDropdownItem
-                    content={calculatedTrack.content}
-                    name={calculatedTrack.filename + '.gpx'}
-                />
+                <FileDownloaderDropdownItem content={content} name={calculatedTrack.filename + '.gpx'} />
             )}
         </DropdownButton>
     );

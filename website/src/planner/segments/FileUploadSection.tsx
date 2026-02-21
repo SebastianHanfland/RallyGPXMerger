@@ -1,11 +1,11 @@
 import { GpxSegments } from './GpxSegments.tsx';
 import { GpxCreationHint } from './GpxCreationHint.tsx';
 import { useSelector } from 'react-redux';
-import { getGpxSegments } from '../store/gpxSegments.reducer.ts';
-import { BlockTextDescription } from '../layout/BlockTextDescription.tsx';
+import { BlockTextDescription } from '../../utils/layout/BlockTextDescription.tsx';
+import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 
 export function FileUploadSection() {
-    const hasNoGPXSegments = useSelector(getGpxSegments).length === 0;
+    const hasNoGPXSegments = useSelector(getParsedGpxSegments).length === 0;
 
     return (
         <div className={'p-2 shadow'} style={{ height: '100vh', overflow: 'auto' }}>

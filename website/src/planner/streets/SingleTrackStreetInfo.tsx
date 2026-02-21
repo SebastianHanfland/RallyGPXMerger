@@ -9,6 +9,7 @@ import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { EditStreetNameButton } from './EditStreetNameButton.tsx';
 import { EditDistrictButton } from './EditDistrictButton.tsx';
+import { EditPostCodeButton } from './EditPostCodeButton.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -125,6 +126,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? unknown} />
+                                        <EditPostCodeButton waypoint={waypoint} />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={district?.toString() ?? unknown} />

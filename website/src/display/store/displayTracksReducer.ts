@@ -1,52 +1,52 @@
+import { getTrackStreetInfos } from '../../planner/calculation/getTrackStreetInfos.ts';
+import { getParticipantsDelay, getPlanningLabel, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
+import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
+import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { DisplayState, DisplayTracksState } from './types';
-import { DisplayTrack, ParsedTrack } from '../../common/types.ts';
-import { BlockedStreetInfo, TrackStreetInfo } from '../../planner/logic/resolving/types.ts';
+import { DisplayState, PlanningState } from './types.ts';
+import { State } from '../../planner/store/types.ts';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
 
-const initialState: DisplayTracksState = {
-    tracks: [],
-    parsedTracks: [],
-    isLoading: true,
+const initialState: PlanningState = {
+    state: undefined,
 };
 
-const displayTrackSlice = createSlice({
-    name: 'displayTracks',
+const planningSlice = createSlice({
+    name: 'planning',
     initialState: initialState,
     reducers: {
-        setDisplayTracks: (state: DisplayTracksState, action: PayloadAction<DisplayTrack[]>) => {
-            state.tracks = action.payload;
-        },
-        setParsedTracks: (state: DisplayTracksState, action: PayloadAction<ParsedTrack[]>) => {
-            state.parsedTracks = action.payload;
-        },
-        setTitle: (state: DisplayTracksState, action: PayloadAction<string | undefined>) => {
-            state.title = action.payload;
-        },
-        setEnrichedTrackStreetInfos: (state: DisplayTracksState, action: PayloadAction<TrackStreetInfo[]>) => {
-            state.trackInfos = action.payload;
-        },
-        setBlockStreetInfos: (state: DisplayTracksState, action: PayloadAction<BlockedStreetInfo[]>) => {
-            state.blockedStreetInfos = action.payload;
-        },
-        setPlanningLabel: (state: DisplayTracksState, action: PayloadAction<string | undefined>) => {
-            state.planningLabel = action.payload;
-        },
-        setIsLoading: (state: DisplayTracksState, action: PayloadAction<boolean>) => {
-            state.isLoading = action.payload;
-        },
-        removeDisplayTracks: (state: DisplayTracksState) => {
-            state.tracks = [];
+        setPlanning: (state: PlanningState, action: PayloadAction<State>) => {
+            state.state = action.payload;
         },
     },
 });
 
-export const displayTracksActions = displayTrackSlice.actions;
-export const displayTracksReducer: Reducer<DisplayTracksState> = displayTrackSlice.reducer;
-const getBase = (state: DisplayState) => state.tracks;
-export const getDisplayTracks = (state: DisplayState) => getBase(state).tracks;
-export const getParsedTracks = (state: DisplayState) => getBase(state).parsedTracks;
-export const getDisplayTitle = (state: DisplayState) => getBase(state).title;
-export const getIsDisplayLoading = (state: DisplayState) => getBase(state).isLoading;
-export const getDisplayPlanningLabel = (state: DisplayState) => getBase(state).planningLabel;
-export const getDisplayBlockedStreets = (state: DisplayState) => getBase(state).blockedStreetInfos;
-export const getDisplayTrackStreetInfos = (state: DisplayState) => getBase(state).trackInfos;
+export const planningActions = planningSlice.actions;
+export const planningReducer: Reducer<PlanningState> = planningSlice.reducer;
+const getBase = (state: DisplayState) => state.planning;
+export const getPlanningState = (state: DisplayState) => getBase(state).state;
+
+export const getDisplayTracks = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getCalculateTracks(planningState) : [];
+};
+export const getDisplayTitle = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getPlanningTitle(planningState) : '';
+};
+export const getDisplayPlanningLabel = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getPlanningLabel(planningState) : '';
+};
+export const getDisplayBlockedStreets = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getBlockedStreetInfo(planningState) : [];
+};
+export const getDisplayTrackStreetInfos = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getTrackStreetInfos(planningState) : [];
+};
+export const getDisplayParticipantsDelay = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getParticipantsDelay(planningState) : DELAY_PER_PERSON_IN_SECONDS;
+};

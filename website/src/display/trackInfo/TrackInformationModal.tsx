@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { batch, useDispatch, useSelector } from 'react-redux';
-import { getShowSingleTrackInfo, getShowTrackInfo, mapActions } from '../store/map.reducer.ts';
+import { getShowSingleTrackInfo, getShowTrackInfo, displayMapActions } from '../store/displayMapReducer.ts';
 import { TrackInformationModalBody } from './TrackInformationModalBody.tsx';
 import { ZipFilesDownloader } from './TracksDownload.tsx';
 import { downloadPdfFilesPure } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
@@ -22,13 +22,13 @@ export function TrackInformationModal() {
     const blockedStreetInfos = useSelector(getDisplayBlockedStreets);
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
 
-    const setShowModal = (value: boolean) => dispatch(mapActions.setShowTrackInfo(value));
+    const setShowModal = (value: boolean) => dispatch(displayMapActions.setShowTrackInfo(value));
 
     const close = () => {
         batch(() => {
             setShowModal(false);
             setTimeout(() => {
-                dispatch(mapActions.setShowSingleTrackInfo(undefined));
+                dispatch(displayMapActions.setShowSingleTrackInfo(undefined));
             }, 200);
         });
     };

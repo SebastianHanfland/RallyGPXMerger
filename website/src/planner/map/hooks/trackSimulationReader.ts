@@ -1,41 +1,48 @@
 import { State, TrackComposition } from '../../store/types.ts';
-import { getCurrenMapTime, getEndMapTime, getStartMapTime } from '../../store/map.reducer.ts';
+import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import date from 'date-and-time';
-import { getCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
-import { extractSnakeTrackFromParsedTrack } from '../../../common/logic/extractSnakeTrack.ts';
-import { ParsedTrack } from '../../../common/types.ts';
+import { extractSnakeTrackFromCalculatedTrack } from '../../../common/calculation/snake/extractSnakeTrack.ts';
+import { CalculatedTrack } from '../../../common/types.ts';
 import { BikeSnake } from '../../../common/map/addSnakeWithBikeToMap.ts';
-import { getColorFromUuid } from '../../../utils/colorUtil.ts';
-import { getParsedTracks } from '../../store/parsedTracks.reducer.ts';
+import { getColor } from '../../../utils/colorUtil.ts';
+import { getMapStartAndEndTime } from '../getMapStartAndEndTime.ts';
+import { getParticipantsDelay } from '../../store/settings.reducer.ts';
+import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
 
 const extractSnakeLocationForTimeStamp =
-    (timeStampFront: string, trackCompositions: TrackComposition[]) =>
-    (parsedTrack: ParsedTrack): BikeSnake => {
+    (timeStampFront: string, trackCompositions: TrackComposition[], participantsDelayInSeconds: number) =>
+    (calculatedTrack: CalculatedTrack): BikeSnake => {
         const foundTrackComposition =
-            trackCompositions.length > 0 ? trackCompositions.find((track) => track.id === parsedTrack.id) : undefined;
+            trackCompositions.length > 0
+                ? trackCompositions.find((track) => track.id === calculatedTrack.id)
+                : undefined;
         const participants = foundTrackComposition?.peopleCount ?? 0;
 
         const trackId = foundTrackComposition?.id;
         return {
-            points: extractSnakeTrackFromParsedTrack(timeStampFront, participants, parsedTrack),
+            points: extractSnakeTrackFromCalculatedTrack(
+                timeStampFront,
+                participants,
+                calculatedTrack,
+                participantsDelayInSeconds
+            ),
             title: foundTrackComposition?.name ?? 'N/A',
-            color: trackId ? getColorFromUuid(trackId) : 'white',
+            color: getColor(calculatedTrack),
             id: trackId ?? 'id-not-found',
         };
     };
 
 export const getCurrentTimeStamp = (state: State): string | undefined => {
-    const calculatedTracks = getCalculatedTracks(state);
+    const calculatedTracks = getCalculateTracks(state);
     if (calculatedTracks.length === 0) {
         return;
     }
     const mapTime = getCurrenMapTime(state) ?? 0;
-    const start = getStartMapTime(state);
-    const end = getEndMapTime(state);
+    const { start, end } = getMapStartAndEndTime(state);
     if (!start || !end) {
         return undefined;
     }
@@ -48,11 +55,16 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
 export const getBikeSnakesForPlanningMap = createSelector(
     getCurrentTimeStamp,
     getTrackCompositions,
-    getParsedTracks,
-    (timeStamp, trackParticipants, parsedTracks): BikeSnake[] => {
+    getCalculateTracks,
+    getParticipantsDelay,
+    (timeStamp, trackParticipants, calculatedTracks, participantsDelayInSeconds): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
-        return parsedTracks?.map(extractSnakeLocationForTimeStamp(timeStamp, trackParticipants)) ?? [];
+        return (
+            calculatedTracks?.map(
+                extractSnakeLocationForTimeStamp(timeStamp, trackParticipants, participantsDelayInSeconds)
+            ) ?? []
+        );
     }
 );

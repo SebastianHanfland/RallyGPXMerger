@@ -13,15 +13,15 @@ const mapSlice = createSlice({
         setCurrentTime: (state: MapState, action: PayloadAction<number>) => {
             state.currentTime = action.payload;
         },
+        setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showMapMarker = action.payload;
+        },
         setStartAndEndTime: (
             state: MapState,
             action: PayloadAction<{ start: string; end: string; planningId: string }>
         ) => {
             const { start, end, planningId } = action.payload;
             state.startAndEndTimes[planningId] = { start, end };
-        },
-        setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
-            state.showMapMarker = action.payload;
         },
         setShowTrackInfo: (state: MapState, action: PayloadAction<boolean>) => {
             state.showTrackInfo = action.payload;

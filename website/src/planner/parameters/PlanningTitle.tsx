@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlanningTitle, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { getPlanningTitle, settingsActions } from '../store/settings.reducer.ts';
 
 export function PlanningTitle() {
     const intl = useIntl();
@@ -16,7 +16,7 @@ export function PlanningTitle() {
                 type="text"
                 placeholder={intl.formatMessage({ id: 'msg.titleOfPlanning' })}
                 value={planningTitle ?? ''}
-                onChange={(value) => dispatch(trackMergeActions.setPlanningTitle(value.target.value))}
+                onChange={(value) => dispatch(settingsActions.setPlanningTitle(value.target.value))}
             />
         </div>
     );

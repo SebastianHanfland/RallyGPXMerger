@@ -2,13 +2,13 @@ import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import download from '../../assets/file-downB.svg';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getEnrichedTrackStreetInfos } from '../logic/resolving/selectors/getEnrichedTrackStreetInfos.ts';
 import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv.ts';
 import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
 import { IntlShape, useIntl } from 'react-intl';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
 
 function createCsv(csv: string) {
     return new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], { type: 'csv;charset=utf-8' });
@@ -34,7 +34,7 @@ const downloadFiles = (
 
 export const StreetFilesDownloader = () => {
     const intl = useIntl();
-    const trackStreetInfos = useSelector(getEnrichedTrackStreetInfos);
+    const trackStreetInfos = useSelector(getTrackStreetInfos);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     return (
         <Button
@@ -43,13 +43,7 @@ export const StreetFilesDownloader = () => {
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadCsv' })}
         >
-            <img
-                src={download}
-                className="m-1"
-                alt="download file"
-                color={'#ffffff'}
-                style={{ height: '20px', width: '20px' }}
-            />
+            <DownloadIcon size={20} black={true} />
             CSV
         </Button>
     );

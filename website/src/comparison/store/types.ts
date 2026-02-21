@@ -1,8 +1,9 @@
-import { ParsedTrack } from '../../common/types.ts';
+import { CalculatedTrack } from '../../common/types.ts';
 
 export interface ComparisonState {
-    parsedTracks: Record<string, ParsedTrack[] | undefined>;
+    parsedTracks: Record<string, CalculatedTrack[] | undefined>;
     trackInfo: Record<string, string | undefined>;
+    participantsDelay: Record<string, number | undefined>;
     planningIds: string[];
     selectedTracks: Record<string, string[] | undefined>;
     selectedVersions: string[];

@@ -1,24 +1,11 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { State, TrackComposition, TrackMergeState } from './types.ts';
+import { BreakEditInfo, State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../logic/merge/helper/config.ts';
-
-export let PARTICIPANTS_DELAY_IN_SECONDS = DELAY_PER_PERSON_IN_SECONDS;
-
-export const setParticipantsDelay = (delay: number) => {
-    PARTICIPANTS_DELAY_IN_SECONDS = delay;
-};
-
-export const DEFAULT_AVERAGE_SPEED_IN_KM_H = 12;
-
-export const DEFAULT_GAP_TOLERANCE = 0.01;
 
 const initialState: TrackMergeState = {
     trackCompositions: [],
-    participantDelay: DELAY_PER_PERSON_IN_SECONDS,
-    gapToleranceInKm: DEFAULT_GAP_TOLERANCE,
 };
 
 const trackMergeSlice = createSlice({
@@ -29,15 +16,15 @@ const trackMergeSlice = createSlice({
             if (action.payload) {
                 state.trackCompositions = [...state.trackCompositions, action.payload];
             } else {
-                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segmentIds: [], name: '' }];
+                state.trackCompositions = [...state.trackCompositions, { id: uuidv4(), segments: [], name: '' }];
             }
         },
         removeTrackComposition: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.filter((track) => track.id !== action.payload);
         },
-        setSegments: (state: TrackMergeState, action: PayloadAction<{ id: string; segments: string[] }>) => {
+        setSegments: (state: TrackMergeState, action: PayloadAction<{ id: string; segments: TrackElement[] }>) => {
             state.trackCompositions = state.trackCompositions.map((track) =>
-                track.id === action.payload.id ? { ...track, segmentIds: action.payload.segments } : track
+                track.id === action.payload.id ? { ...track, segments: action.payload.segments } : track
             );
         },
         removeSegmentFromTrack: (state: TrackMergeState, action: PayloadAction<{ id: string; segmentId: string }>) => {
@@ -45,7 +32,7 @@ const trackMergeSlice = createSlice({
 
             state.trackCompositions = state.trackCompositions.map((track) =>
                 track.id === action.payload.id
-                    ? { ...track, segmentIds: track.segmentIds.filter((sId) => sId !== segmentId) }
+                    ? { ...track, segments: track.segments.filter((sId) => sId.id !== segmentId) }
                     : track
             );
         },
@@ -54,6 +41,11 @@ const trackMergeSlice = createSlice({
                 track.id === action.payload.id ? { ...track, name: action.payload.trackName } : track
             );
             state.filterTerm = undefined;
+        },
+        setTrackColor: (state: TrackMergeState, action: PayloadAction<{ id: string; color: string | undefined }>) => {
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === action.payload.id ? { ...track, color: action.payload.color } : track
+            );
         },
         setTrackPeopleCount: (
             state: TrackMergeState,
@@ -87,49 +79,20 @@ const trackMergeSlice = createSlice({
         removeGpxSegment: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.trackCompositions = state.trackCompositions.map((track) => ({
                 ...track,
-                segmentIds: track.segmentIds.filter((segmentId) => segmentId !== action.payload),
+                segments: track.segments.filter((segmentId) => segmentId.id !== action.payload),
             }));
         },
-        setArrivalDateTime: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.hasDefaultArrivalDate = false;
-            state.arrivalDateTime = action.payload;
-        },
-        setPlanningLabel: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.planningLabel = action.payload;
-        },
-        setPlanningTitle: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.planningTitle = action.payload;
-        },
-        setParticipantsDelays: (state: TrackMergeState, action: PayloadAction<number>) => {
-            state.participantDelay = action.payload;
-        },
-        setAverageSpeed: (state: TrackMergeState, action: PayloadAction<number>) => {
-            state.averageSpeedInKmH = action.payload;
-        },
-        setGapToleranceInKm: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
-            state.gapToleranceInKm = action.payload;
-        },
-        setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | string[]>) => {
+        setSegmentIdClipboard: (state: TrackMergeState, action: PayloadAction<undefined | TrackElement[]>) => {
             state.segmentIdClipboard = action.payload;
         },
         setTrackCompositionFilterTerm: (state: TrackMergeState, action: PayloadAction<string>) => {
             state.filterTerm = action.payload;
         },
-        setDefaultArrivalDateTime: (state: TrackMergeState) => {
-            state.hasDefaultArrivalDate = true;
-            state.arrivalDateTime = new Date().toISOString();
-        },
         setTrackIdForAddingABreak: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.trackIdForAddingABreak = action.payload;
         },
-        setIsCalculationRunning: (state: TrackMergeState, action: PayloadAction<boolean | undefined>) => {
-            state.isCalculationRunning = action.payload;
-        },
-        setIsCalculationOnTheFly: (state: TrackMergeState, action: PayloadAction<boolean>) => {
-            state.isCalculationOnTheFly = action.payload;
-        },
-        setHasChangesSinceLastCalculation: (state: TrackMergeState, action: PayloadAction<boolean>) => {
-            state.changesSinceLastCalculation = action.payload;
+        setBreakEditInfo: (state: TrackMergeState, action: PayloadAction<BreakEditInfo | undefined>) => {
+            state.breakEditInfo = action.payload;
         },
         clear: () => initialState,
     },
@@ -140,18 +103,9 @@ export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reduc
 const getBase = (state: State) => state.trackMerge;
 export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
-export const getArrivalDateTime = (state: State) => getBase(state).arrivalDateTime;
-export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
-export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
-export const getPlanningTitle = (state: State) => getBase(state).planningTitle;
-export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
-export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
-export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
-export const getIsCalculationRunning = (state: State) => getBase(state).isCalculationRunning;
-export const getIsCalculationOnTheFly = (state: State) => getBase(state).isCalculationOnTheFly;
-export const getHasChangesSinceLastCalculation = (state: State) => getBase(state).changesSinceLastCalculation;
+export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

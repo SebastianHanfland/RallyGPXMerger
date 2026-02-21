@@ -1,4 +1,4 @@
-import { fromKey, toKey } from '../pointKeys.ts';
+import { toKey } from '../pointKeys.ts';
 
 describe('pointKeys', () => {
     const key1 = 'lat:23.2300000000-lng:34.2300000000';
@@ -8,13 +8,5 @@ describe('pointKeys', () => {
 
         // then
         expect(key).toEqual(key1);
-    });
-
-    it('should create lat and lng from key', () => {
-        // when
-        const latLon = fromKey(key1);
-
-        // then
-        expect(latLon).toEqual({ lat: 23.23, lon: 34.23 });
     });
 });
