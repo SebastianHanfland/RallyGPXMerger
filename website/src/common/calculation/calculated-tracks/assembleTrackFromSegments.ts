@@ -11,7 +11,7 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
 }
 
 export function assembleTrackFromSegments(track: TrackComposition, gpxSegments: ParsedGpxSegment[]): CalculatedTrack2 {
-    let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
+    let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ? -track.delayAtEndInSeconds : 0;
     let trackPoints: ParsedPoint[] = [];
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments);
