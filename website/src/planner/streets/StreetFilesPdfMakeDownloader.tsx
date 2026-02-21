@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { createBlockedStreetsPdf } from '../download/pdf/blockedStreetsPdf.ts';
 import { createTrackStreetPdf } from '../download/pdf/trackStreetsPdf.ts';
-import { getPlanningLabel } from '../store/trackMerge.reducer.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { State } from '../store/types.ts';
 import { AppDispatch } from '../store/planningStore.ts';
@@ -13,6 +12,7 @@ import FileSaver from 'file-saver';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { getTrackStreetInfos } from '../logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { getPlanningLabel } from '../store/settings.reducer.ts';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
     const trackStreetInfos = getTrackStreetInfos(getState());

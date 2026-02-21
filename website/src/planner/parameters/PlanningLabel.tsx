@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlanningLabel, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
+import { getPlanningLabel, settingsActions } from '../store/settings.reducer.ts';
 
 export function PlanningLabel() {
     const intl = useIntl();
@@ -20,7 +20,7 @@ export function PlanningLabel() {
                 rows={5}
                 value={planningLabel}
                 onChange={(value) => {
-                    dispatch(trackMergeActions.setPlanningLabel(value.target.value));
+                    dispatch(settingsActions.setPlanningLabel(value.target.value));
                 }}
             />
         </div>

@@ -68,6 +68,11 @@ export interface TrackStreetInfo {
     peopleCount?: number;
 }
 
+export interface ReplacementWayPoint {
+    pointFrom: { lat: number; lon: number };
+    pointTo: { lat: number; lon: number };
+}
+
 export interface BlockedStreetInfo {
     streetName: string | null;
     postCode: string | null;

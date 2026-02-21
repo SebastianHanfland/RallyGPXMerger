@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getAverageSpeedInKmH, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { AppDispatch } from '../store/planningStore.ts';
+import { getAverageSpeedInKmH, settingsActions } from '../store/settings.reducer.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
 export function debounceSettingOfSpeed(dispatch: AppDispatch, newSpeed: number) {
     clearTimeout(constructTimeout);
     constructTimeout = setTimeout(() => {
-        dispatch(trackMergeActions.setAverageSpeed(newSpeed));
+        dispatch(settingsActions.setAverageSpeed(newSpeed));
         dispatch(segmentDataActions.adjustTimesOfAllSegments(newSpeed));
     }, 500);
 }

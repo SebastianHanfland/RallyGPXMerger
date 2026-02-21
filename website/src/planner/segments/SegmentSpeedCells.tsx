@@ -1,4 +1,3 @@
-import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
@@ -6,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
+import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 

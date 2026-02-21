@@ -2,11 +2,12 @@ import { TrackStreetInfo } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { CalculatedTrack } from '../../../../common/types.ts';
 import { roundPublishedStartTimes } from '../../../../utils/dateUtil.ts';
-import { getParticipantsDelay, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 import { aggregatePoints } from './aggregatePoints.ts';
 import { getLookups } from '../selectors/getLookups.ts';
+import { getParticipantsDelay } from '../../../store/settings.reducer.ts';
 
 export const getTrackStreetInfos = createSelector(
     [getCalculatedTracks, getTrackCompositions, getLookups, getParticipantsDelay],

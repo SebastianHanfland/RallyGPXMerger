@@ -16,7 +16,7 @@ import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
-import { getParticipantsDelay } from '../../planner/store/trackMerge.reducer.ts';
+import { getParticipantsDelay } from '../../planner/store/settings.reducer.ts';
 
 const extractLocationComparison =
     (timeStampsFront: Record<string, string>, participantsDelayInSeconds: number) =>

@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { getGaps } from '../logic/calculate/calculatingGaps.ts';
-import { getGapToleranceInKm } from '../store/trackMerge.reducer.ts';
 import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { getGapToleranceInKm } from '../store/settings.reducer.ts';
 
 export function TracksGapWarning() {
     const intl = useIntl();

@@ -1,17 +1,14 @@
 import { createPlanningStore } from '../planningStore.ts';
-import {
-    getArrivalDateTime,
-    getAverageSpeedInKmH,
-    getParticipantsDelay,
-    getTrackCompositions,
-    trackMergeActions,
-} from '../trackMerge.reducer.ts';
-
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DELAY_PER_PERSON_IN_SECONDS } from '../constants.ts';
+import { getTrackCompositions, trackMergeActions } from '../trackMerge.reducer.ts';
+import { SEGMENT } from '../types.ts';
 
 vi.mock('uuid', () => ({
     v4: () => '1',
 }));
+
+function getSegment(id: string) {
+    return { id, segmentId: id, type: SEGMENT };
+}
 
 describe('TrackMerge reducer', () => {
     it('should create an empty composition and fill it', () => {
@@ -22,19 +19,23 @@ describe('TrackMerge reducer', () => {
 
         // when & then
         store.dispatch(trackMergeActions.addTrackComposition());
-        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', segmentIds: [], name: '' }]);
+        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', segments: [], name: '' }]);
 
         // when & then
         store.dispatch(trackMergeActions.setTrackName({ id: '1', trackName }));
-        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', name: trackName, segmentIds: [] }]);
+        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', name: trackName, segments: [] }]);
 
         // when & then
-        store.dispatch(trackMergeActions.setSegments({ id: '1', segments: ['3', '4'] }));
-        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', name: trackName, segmentIds: ['3', '4'] }]);
+        store.dispatch(trackMergeActions.setSegments({ id: '1', segments: [getSegment('3'), getSegment('4')] }));
+        expect(getTrackCompositions(store.getState())).toEqual([
+            { id: '1', name: trackName, segments: ['3', '4'].map(getSegment) },
+        ]);
 
         // when & then
         store.dispatch(trackMergeActions.removeGpxSegment('3'));
-        expect(getTrackCompositions(store.getState())).toEqual([{ id: '1', name: trackName, segmentIds: ['4'] }]);
+        expect(getTrackCompositions(store.getState())).toEqual([
+            { id: '1', name: trackName, segments: [getSegment('4')] },
+        ]);
 
         // when & then
         store.dispatch(trackMergeActions.removeTrackComposition('1'));
@@ -43,7 +44,7 @@ describe('TrackMerge reducer', () => {
 
     it('should initialize full track', () => {
         // given
-        const track = { id: '1', name: 'abc', segmentIds: ['2'] };
+        const track = { id: '1', name: 'abc', segments: [getSegment('2')] };
         const store = createPlanningStore();
         expect(getTrackCompositions(store.getState())).toEqual([]);
 
@@ -52,48 +53,5 @@ describe('TrackMerge reducer', () => {
 
         // then
         expect(getTrackCompositions(store.getState())).toEqual([track]);
-    });
-
-    it('should set and remove arrival date', () => {
-        // given
-        const arrivalDate = 'arrivalDate';
-        const store = createPlanningStore();
-        expect(getArrivalDateTime(store.getState())).toEqual(undefined);
-
-        // when & then
-        store.dispatch(trackMergeActions.setArrivalDateTime(arrivalDate));
-        expect(getArrivalDateTime(store.getState())).toEqual(arrivalDate);
-
-        // when & then
-        store.dispatch(trackMergeActions.clear());
-        expect(getArrivalDateTime(store.getState())).toEqual(undefined);
-    });
-
-    it('should set and reset participants delay', () => {
-        // given
-        const store = createPlanningStore();
-        expect(getParticipantsDelay(store.getState())).toEqual(DELAY_PER_PERSON_IN_SECONDS);
-
-        // when & then
-        store.dispatch(trackMergeActions.setParticipantsDelays(0.4));
-        expect(getParticipantsDelay(store.getState())).toEqual(0.4);
-
-        // when & then
-        store.dispatch(trackMergeActions.clear());
-        expect(getParticipantsDelay(store.getState())).toEqual(DELAY_PER_PERSON_IN_SECONDS);
-    });
-
-    it('should set and reset average speed', () => {
-        // given
-        const store = createPlanningStore();
-        expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
-
-        // when & then
-        store.dispatch(trackMergeActions.setAverageSpeed(15));
-        expect(getAverageSpeedInKmH(store.getState())).toEqual(15);
-
-        // when & then
-        store.dispatch(trackMergeActions.clear());
-        expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
     });
 });

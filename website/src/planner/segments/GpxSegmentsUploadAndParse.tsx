@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { getAverageSpeedInKmH } from '../store/trackMerge.reducer.ts';
 import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
+import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
 
 const fileTypes = ['GPX'];
 

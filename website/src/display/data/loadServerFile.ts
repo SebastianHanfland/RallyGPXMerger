@@ -2,12 +2,12 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { DisplayTrack } from '../../common/types.ts';
 import { State } from '../../planner/store/types.ts';
 import { getColor } from '../../utils/colorUtil.ts';
-import { getPlanningLabel, getPlanningTitle } from '../../planner/store/trackMerge.reducer.ts';
 import { getData } from '../../api/api.ts';
 import { displayTracksActions } from '../store/displayTracksReducer.ts';
 import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getTrackStreetInfos } from '../../planner/logic/resolving/aggregate/calculateTrackStreetInfosWithBreaksAndNodes.ts';
 import { getCalculatedTracks } from '../../planner/store/calculatedTracks.reducer.ts';
+import { getPlanningLabel, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)

@@ -1,7 +1,8 @@
 import { SEGMENT, State } from '../store/types.ts';
-import { getAverageSpeedInKmH, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
+import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
 
 export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());

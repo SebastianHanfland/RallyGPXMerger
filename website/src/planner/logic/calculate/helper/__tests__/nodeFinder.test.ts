@@ -1,12 +1,12 @@
-import { BREAK, SEGMENT, TrackComposition, TrackElement } from '../../../../store/types.ts';
+import { BREAK, SEGMENT, TrackBreak, TrackComposition, TrackElement } from '../../../../store/types.ts';
 import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };
 }
 
-function getBreak(id: string, minutes: number) {
-    return { id: id, type: BREAK, minutes: minutes };
+function getBreak(id: string, minutes: number): TrackBreak {
+    return { id: id, type: BREAK, minutes: minutes, description: '', hasToilet: false };
 }
 
 describe('Node finder', () => {

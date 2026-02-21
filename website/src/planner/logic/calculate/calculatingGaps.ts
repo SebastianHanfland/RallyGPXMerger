@@ -1,10 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getGapToleranceInKm, getTrackCompositions } from '../../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import geoDistance from 'geo-distance-helper';
 import { GapPoint, isTrackSegment, ParsedPoint, PointOfInterestType } from '../../store/types.ts';
 import { getLatLng } from '../../../utils/pointUtil.ts';
 import { v4 as uuidv4 } from 'uuid';
+import { getGapToleranceInKm } from '../../store/settings.reducer.ts';
 
 export const getGaps = createSelector(
     getTrackCompositions,

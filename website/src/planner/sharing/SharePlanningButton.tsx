@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
 import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
-import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
+import { getPlanningTitle } from '../store/settings.reducer.ts';
 
 const sharePlanningStyle1: CSSProperties = {
     position: 'fixed',

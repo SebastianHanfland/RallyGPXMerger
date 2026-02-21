@@ -1,16 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
-import {
-    getArrivalDateTime,
-    getParticipantsDelay,
-    getTrackCompositionFilterTerm,
-    getTrackCompositions,
-} from './trackMerge.reducer.ts';
+import { getTrackCompositionFilterTerm, getTrackCompositions } from './trackMerge.reducer.ts';
 import { filterItems } from '../../utils/filterUtil.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 import { calculateTracks } from '../logic/calculate/calculateTracks.ts';
 import { shiftDateBySeconds } from '../../utils/dateUtil.ts';
 import { getParsedGpxSegments } from './segmentData.redux.ts';
 import { getNodeSpecifications } from './nodes.reducer.ts';
+import { getArrivalDateTime, getParticipantsDelay } from './settings.reducer.ts';
 
 export const getCalculatedTracks = createSelector(
     [getArrivalDateTime, getTrackCompositions, getParsedGpxSegments, getParticipantsDelay, getNodeSpecifications],
@@ -30,8 +26,7 @@ export const getCalculatedTracks = createSelector(
 );
 
 export const getFilteredCalculatedTracks = createSelector(
-    getCalculatedTracks,
-    getTrackCompositionFilterTerm,
+    [getCalculatedTracks, getTrackCompositionFilterTerm],
     (tracks, filterTerm) => {
         return filterItems(filterTerm, tracks, (track: CalculatedTrack) => track.filename);
     }

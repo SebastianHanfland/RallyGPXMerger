@@ -17,11 +17,11 @@ import { UploadModalBody } from './UploadModalBody.tsx';
 import { errorNotification, successNotification } from '../store/toast.reducer.ts';
 import { downloadFile } from '../download/FileDownloader.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
-import { getPlanningTitle } from '../store/trackMerge.reducer.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
 
 import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { getPlanningTitle } from '../store/settings.reducer.ts';
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);

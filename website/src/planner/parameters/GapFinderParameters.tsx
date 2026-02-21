@@ -1,8 +1,8 @@
 import { Form } from 'react-bootstrap';
 import { getCount } from '../../utils/inputUtil.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getGapToleranceInKm, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
+import { getGapToleranceInKm, settingsActions } from '../store/settings.reducer.ts';
 
 export const GapFinderParameters = () => {
     const intl = useIntl();
@@ -20,7 +20,7 @@ export const GapFinderParameters = () => {
                     step={0.01}
                     title={intl.formatMessage({ id: 'msg.gapTolerance.hint' })}
                     value={gapToleranceInKm?.toString() ?? ''}
-                    onChange={(value) => dispatch(trackMergeActions.setGapToleranceInKm(getCount(value)))}
+                    onChange={(value) => dispatch(settingsActions.setGapToleranceInKm(getCount(value)))}
                 />
             </Form>
         </div>
