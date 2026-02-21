@@ -4,7 +4,7 @@ import geoDistance from 'geo-distance-helper';
 import { ContentTable, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
-import * as pdfMake from 'pdfmake/build/pdfmake';
+import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
 import { IntlShape } from 'react-intl';
 import { toLatLng } from '../../../utils/pointUtil.ts';
@@ -61,5 +61,5 @@ export function createBlockedStreetsPdf(
         ],
         styles,
     };
-    return pdfMake.createPdf(docDefinition);
+    return createPdf(docDefinition);
 }
