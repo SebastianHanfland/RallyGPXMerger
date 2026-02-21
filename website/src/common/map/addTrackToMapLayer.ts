@@ -1,6 +1,6 @@
 import L, { LayerGroup, LeafletMouseEvent, Polyline } from 'leaflet';
 import { getColor } from '../../utils/colorUtil.ts';
-import { breakIcon, endIcon, startIcon } from '../MapIcons.ts';
+import { breakIcon, endIcon, startIcon } from './MapIcons.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { CalculatedTrack } from '../types.ts';
 import { getLanguage } from '../../language.ts';

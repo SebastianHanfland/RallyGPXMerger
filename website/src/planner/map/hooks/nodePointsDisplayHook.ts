@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowPointsOfInterest } from '../../store/map.reducer.ts';
-import { nodeMergeIcon } from '../../../common/MapIcons.ts';
+import { nodeMergeIcon } from '../../../common/map/MapIcons.ts';
 import { getNodePositions } from '../../logic/resolving/selectors/getNodePositions.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 

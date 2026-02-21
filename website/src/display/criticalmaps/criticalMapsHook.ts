@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
-import { blueBike } from '../../common/MapIcons.ts';
+import { blueBike } from '../../common/map/MapIcons.ts';
 import { useSelector } from 'react-redux';
 import { getIsLive } from '../store/map.reducer.ts';
 

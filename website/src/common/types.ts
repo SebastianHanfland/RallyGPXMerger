@@ -1,5 +1,9 @@
 import { ParsedPoint, TimedPoint } from '../planner/store/types.ts';
 
+/*
+List of domain objects that are used
+ */
+
 export interface GpxFile {
     id: string;
     filename: string;

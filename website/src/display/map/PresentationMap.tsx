@@ -7,12 +7,12 @@ import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
 import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
 import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
-import { getMapConfiguration } from '../../common/mapConfig.ts';
+import { getMapConfiguration } from '../../common/map/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLive, mapActions } from '../store/map.reducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
-import { Munich } from '../../common/locations.ts';
+import { Munich } from '../../common/map/locations.ts';
 import { DisplayTrack } from '../../common/types.ts';
 import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 
