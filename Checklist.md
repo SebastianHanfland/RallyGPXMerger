@@ -1,5 +1,9 @@
 # Checking when deploying a new version
 
+-[ ] Checking download of pdfs in locally started one
+-[ ] Checking download of pdfs in compiled local one (build -> preview)
+
+
 * [ ] Simple Version
   * [ ] Planner
     * [ ] Segment upload

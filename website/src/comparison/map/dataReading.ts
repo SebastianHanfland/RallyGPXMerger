@@ -3,6 +3,7 @@ import { ComparisonTrackState } from '../store/types.ts';
 import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
 import {
     getComparisonParsedTracks,
+    getComparisonParticipantsDelay,
     getPlanningIds,
     getSelectedTracks,
     getSelectedVersions,
@@ -16,10 +17,10 @@ import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
-import { getParticipantsDelay } from '../../planner/store/settings.reducer.ts';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
 
 const extractLocationComparison =
-    (timeStampsFront: Record<string, string>, participantsDelayInSeconds: number) =>
+    (timeStampsFront: Record<string, string>, participantsDelayInSeconds: Record<string, number | undefined>) =>
     (parsedTrack: CalculatedTrack): BikeSnake => {
         const participants = parsedTrack.peopleCount ?? 0;
         return {
@@ -27,7 +28,7 @@ const extractLocationComparison =
                 timeStampsFront[parsedTrack.version!],
                 participants,
                 parsedTrack,
-                participantsDelayInSeconds
+                participantsDelayInSeconds[parsedTrack.version!] ?? DELAY_PER_PERSON_IN_SECONDS
             ),
             title: parsedTrack?.filename ?? 'N/A',
             color: parsedTrack?.color ?? 'white',
@@ -64,7 +65,7 @@ export const getBikeSnakesForDisplayMap = createSelector(
     getComparisonParsedTracks,
     getSelectedTracks,
     getSelectedVersions,
-    getParticipantsDelay,
+    getComparisonParticipantsDelay,
     (
         timeStamps,
         planningIds,

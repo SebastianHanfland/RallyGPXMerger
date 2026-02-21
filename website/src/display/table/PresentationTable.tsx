@@ -14,8 +14,6 @@ import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 
-export const isInIframe = window.location.search.includes('&iframe');
-
 export const PresentationTable = () => {
     const tracks = useSelector(getDisplayTracks);
 

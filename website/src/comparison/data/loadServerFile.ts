@@ -22,6 +22,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                     planningId: id,
                 })
             );
+            dispatch(comparisonActions.setParticipantsDelay({ version: id, participantsDelay: delay }));
             dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: calculatedTracks }));
             dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
             dispatch(comparisonActions.setSelectVersions([id]));
