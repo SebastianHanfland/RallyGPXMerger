@@ -22,7 +22,7 @@ vi.mock('../../src/api/api');
 vi.mock('../../src/planner/store/storage', () => ({
     storage: {
         load: () => {
-            const buffer = '' + fs.readFileSync('./public/RideOfSilence2024-2.json');
+            const buffer = '' + fs.readFileSync('./test/integration/data/RideOfSilence2024-2.json');
             return JSON.parse(buffer) as State;
         },
         save: () => {},

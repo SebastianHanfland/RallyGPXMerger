@@ -36,7 +36,7 @@ const ui = {
 describe('Map Display integration test', () => {
     it('Render the map display and have different snakes at different times', async () => {
         // given
-        const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
+        const buffer = '' + fs.readFileSync('./test/integration/data/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as StateOld;
         const user = userEvent.setup();
 

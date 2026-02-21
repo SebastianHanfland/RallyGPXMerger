@@ -30,7 +30,7 @@ vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate',
 
 describe('Import planning', () => {
     it('import a simple planning and check that everything is properly set', async () => {
-        const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
+        const buffer = '' + fs.readFileSync('./test/integration/data/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as State;
         const user = userEvent.setup();
 

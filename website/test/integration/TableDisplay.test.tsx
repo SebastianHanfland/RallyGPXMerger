@@ -33,7 +33,7 @@ const ui = {
 describe('Table integration test', () => {
     it('Render a table and ensure the presence of fields', async () => {
         // given
-        const buffer = '' + fs.readFileSync('./public/RideOfSilence2024.json');
+        const buffer = '' + fs.readFileSync('./test/integration/data/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as StateOld;
 
         (getLanguage as Mock).mockImplementation(() => 'en');
