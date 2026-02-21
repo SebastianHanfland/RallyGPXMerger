@@ -14,6 +14,7 @@ export interface LayoutState {
     hasSingleTrack: boolean;
     isSidebarOpen: boolean;
     selectedSidebarSection: SidebarSections;
+    selectedTrackId?: string;
 }
 export interface BackendState {
     planningId?: string;
@@ -119,7 +120,6 @@ export interface TrackMergeState {
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
     breakEditInfo?: BreakEditInfo;
-    selectedTrackId?: string;
 }
 
 export interface NodesState {

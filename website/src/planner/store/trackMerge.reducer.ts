@@ -120,9 +120,6 @@ const trackMergeSlice = createSlice({
         setBreakEditInfo: (state: TrackMergeState, action: PayloadAction<BreakEditInfo | undefined>) => {
             state.breakEditInfo = action.payload;
         },
-        setSelectedTrackId: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
-            state.selectedTrackId = action.payload;
-        },
         clear: () => initialState,
     },
 });
@@ -142,7 +139,6 @@ export const getGapToleranceInKm = (state: State) => getBase(state).gapTolerance
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
-export const getSelectedTrackId = (state: State) => getBase(state).selectedTrackId;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,

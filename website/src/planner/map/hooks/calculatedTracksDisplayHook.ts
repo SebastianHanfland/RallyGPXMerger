@@ -4,7 +4,6 @@ import { LayerGroup } from 'leaflet';
 import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedSegmentId, getShowCalculatedTracks, getShowMapMarker } from '../../store/map.reducer.ts';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { getHasSingleTrack, layoutActions } from '../../store/layout.reducer.ts';
 
 export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObject<LayerGroup | null>) {
@@ -24,7 +23,7 @@ export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObj
             clickCallBack: (track) => {
                 if (!hasSingleTrack) {
                     dispatch(layoutActions.setSelectedSidebarSection('tracks'));
-                    dispatch(trackMergeActions.setSelectedTrackId(track.id));
+                    dispatch(layoutActions.setSelectedTrackId(track.id));
                 }
             },
         });

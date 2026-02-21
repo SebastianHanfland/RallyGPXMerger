@@ -46,6 +46,9 @@ const layoutSlice = createSlice({
         setSelectedSidebarSection: (state: LayoutState, action: PayloadAction<SidebarSections>) => {
             state.selectedSidebarSection = action.payload;
         },
+        setSelectedTrackId: (state: LayoutState, action: PayloadAction<string | undefined>) => {
+            state.selectedTrackId = action.payload;
+        },
     },
 });
 
@@ -58,3 +61,4 @@ export const getDisplayLanguage = (state: State) => getBase(state).language;
 export const getHasSingleTrack = (state: State) => getBase(state).hasSingleTrack;
 export const getIsSidebarOpen = (state: State) => getBase(state).isSidebarOpen;
 export const getSelectedSidebarSection = (state: State) => getBase(state).selectedSidebarSection;
+export const getSelectedTrackId = (state: State) => getBase(state).selectedTrackId;

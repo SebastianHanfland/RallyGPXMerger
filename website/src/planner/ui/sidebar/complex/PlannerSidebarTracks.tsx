@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getFilteredTrackCompositions,
-    getSelectedTrackId,
     getTrackCompositionFilterTerm,
     getTrackCompositions,
     trackMergeActions,
@@ -15,6 +14,7 @@ import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescript
 import { TrackGapWarning } from '../../../tracks/TrackGapWarning.tsx';
 import { getColor } from '../../../../utils/colorUtil.ts';
 import { ColorBlob } from '../../../../utils/ColorBlob.tsx';
+import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer.ts';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -25,7 +25,7 @@ export const PlannerSidebarTracks = () => {
     const filterTerm = useSelector(getTrackCompositionFilterTerm);
     const setFilterTerm = (term: string) => dispatch(trackMergeActions.setTrackCompositionFilterTerm(term));
 
-    const setSelectedTrackId = (trackId: string | undefined) => dispatch(trackMergeActions.setSelectedTrackId(trackId));
+    const setSelectedTrackId = (trackId: string | undefined) => dispatch(layoutActions.setSelectedTrackId(trackId));
     const selectedTrack = filteredTracks.find((track) => track.id === selectedTrackId);
 
     useEffect(() => {
