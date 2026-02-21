@@ -11,11 +11,13 @@ import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
 import { NodeSpecification } from '../store/types.ts';
+import { getParticipantsDelay } from '../store/settings.reducer.ts';
 
 export const EditNodeDialog = () => {
     const intl = useIntl();
     const nodeEditInfo = useSelector(getNodeEditInfo);
     const trackCompositions = useSelector(getTrackCompositions);
+    const participantsDelay = useSelector(getParticipantsDelay);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
 
@@ -61,7 +63,7 @@ export const EditNodeDialog = () => {
                 {Object.entries(branchTracks).map(([segmentId, tracks]) => {
                     return (
                         <>
-                            <div key={segmentId} className={'my-4'}>
+                            <div key={segmentId} className={'mt-5'}>
                                 {tracks.map((track) => (
                                     <span
                                         title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
@@ -73,27 +75,39 @@ export const EditNodeDialog = () => {
                                         {track.name}
                                     </span>
                                 ))}
+                                <span className={'mx-3'}>
+                                    <FormattedMessage
+                                        id={'msg.offsetByXs'}
+                                        values={{ seconds: nodeSpecs.trackOffsets[segmentId] * participantsDelay }}
+                                    />
+                                </span>
                             </div>
-                            <div key={segmentId + '2'} style={{ display: 'flex', justifyContent: 'row' }}>
-                                <Button
-                                    size={'sm'}
-                                    onClick={() => {
-                                        setNodeSpecs({
-                                            ...nodeSpecs,
-                                            trackOffsets: {
-                                                ...nodeSpecs?.trackOffsets,
-                                                [segmentId]: nodeSpecs?.trackOffsets[segmentId] - 10,
-                                            },
-                                        });
-                                    }}
-                                >
-                                    {'<-'}
-                                </Button>
-                                <ProgressBar key={segmentId} className={'flex-fill'}>
+                            <div
+                                key={segmentId + '2'}
+                                style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
+                            >
+                                <div>
+                                    <Button
+                                        size={'sm'}
+                                        onClick={() => {
+                                            setNodeSpecs({
+                                                ...nodeSpecs,
+                                                trackOffsets: {
+                                                    ...nodeSpecs?.trackOffsets,
+                                                    [segmentId]: nodeSpecs?.trackOffsets[segmentId] - 10,
+                                                },
+                                            });
+                                        }}
+                                    >
+                                        {'<-'}
+                                    </Button>
+                                </div>
+                                <ProgressBar key={segmentId} className={'flex-fill mx-2'} style={{ height: '30px' }}>
                                     <ProgressBar
                                         now={(nodeSpecs.trackOffsets[segmentId] / nodeSpecs.totalCount) * 100}
                                         variant={'gray'}
                                         className={'bg-transparent'}
+                                        style={{ height: '20px' }}
                                         visuallyHidden
                                         key={0}
                                     />
@@ -108,35 +122,42 @@ export const EditNodeDialog = () => {
                                         />
                                     ))}
                                 </ProgressBar>
-                                <Button
-                                    size={'sm'}
-                                    onClick={() => {
-                                        setNodeSpecs({
-                                            ...nodeSpecs,
-                                            trackOffsets: {
-                                                ...nodeSpecs?.trackOffsets,
-                                                [segmentId]: nodeSpecs?.trackOffsets[segmentId] + 10,
-                                            },
-                                        });
-                                    }}
-                                >
-                                    {'->'}
-                                </Button>
                                 <div>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                                        value={nodeSpecs.trackOffsets[segmentId]}
-                                        onChange={(value) => {
+                                    <Button
+                                        size={'sm'}
+                                        onClick={() => {
                                             setNodeSpecs({
                                                 ...nodeSpecs,
                                                 trackOffsets: {
                                                     ...nodeSpecs?.trackOffsets,
-                                                    [segmentId]: Number(value.target.value),
+                                                    [segmentId]: nodeSpecs?.trackOffsets[segmentId] + 10,
                                                 },
                                             });
                                         }}
-                                    />
+                                    >
+                                        {'->'}
+                                    </Button>
+                                </div>
+                                <div className={'mx-2'}>
+                                    <Form.Group>
+                                        <Form.Label>
+                                            <FormattedMessage id={'msg.nodeOffset'} />
+                                        </Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
+                                            value={nodeSpecs.trackOffsets[segmentId]}
+                                            onChange={(value) => {
+                                                setNodeSpecs({
+                                                    ...nodeSpecs,
+                                                    trackOffsets: {
+                                                        ...nodeSpecs?.trackOffsets,
+                                                        [segmentId]: Number(value.target.value),
+                                                    },
+                                                });
+                                            }}
+                                        />
+                                    </Form.Group>
                                 </div>
                             </div>
                         </>

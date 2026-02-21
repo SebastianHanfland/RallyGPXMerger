@@ -13,6 +13,8 @@
     "msg.segments": "Abschnitte",
     "msg.segment": "Abschnitt",
     "msg.tracks": "Routen",
+    "msg.nodeOffset": "Verschiebung am Knoten",
+    "msg.offsetByXs": "Verschiebung um {seconds} Sekunden",
     "msg.calculateTracks": "Routen berechnen",
     "msg.triggerAll": "Alle starten",
     "msg.externalInfo": "Externe Informationen",

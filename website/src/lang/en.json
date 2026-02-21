@@ -13,6 +13,8 @@
     "msg.segments": "Segments",
     "msg.segment": "Segment",
     "msg.tracks": "Tracks",
+    "msg.nodeOffset": "Node offset",
+    "msg.offsetByXs": "Offset by {seconds} seconds",
     "msg.calculateTracks": "Calculate tracks",
     "msg.triggerAll": "Trigger all",
     "msg.externalInfo": "External info",
