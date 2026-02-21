@@ -38,7 +38,6 @@ export const PresentationMap = () => {
         if (!myMap) {
             const noSingleScroll = { tap: !L.Browser.mobile, dragging: !L.Browser.mobile };
             myMap = L.map('mapid', isInIframe ? noSingleScroll : undefined);
-            console.log('HEEEEERREE', myMap, L);
 
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
             if (isLive && L.Browser.mobile && !isInIframe) {
