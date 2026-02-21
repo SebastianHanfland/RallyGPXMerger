@@ -1,6 +1,14 @@
 import { ParsedGpxSegment } from '../planner/store/types.ts';
 import { GeoCodingStateOld } from '../planner/store/typesOld.ts';
-import { getWayPointKey } from '../planner/logic/resolving/helper/pointKeys.ts';
+import { toKey } from '../planner/logic/resolving/helper/pointKeys.ts';
+import { ReplacementWayPoint } from '../planner/logic/resolving/types.ts';
+
+export function getWayPointKey(wayPoint: ReplacementWayPoint) {
+    const lat = (wayPoint.pointTo.lat + wayPoint.pointFrom.lat) / 2;
+    const lon = (wayPoint.pointTo.lon + wayPoint.pointFrom.lon) / 2;
+    const postCodeKey = toKey({ lat, lon });
+    return { lat, lon, postCodeKey };
+}
 
 export const createPostCodeAndDistrictLookups = (
     parsedSegments: ParsedGpxSegment[],
