@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import {
     getArrivalDateTime,
-    getNodeSpecifications,
     getParticipantsDelay,
     getTrackCompositionFilterTerm,
     getTrackCompositions,
@@ -11,6 +10,7 @@ import { CalculatedTrack } from '../../common/types.ts';
 import { calculateTracks } from '../logic/calculate/calculateTracks.ts';
 import { shiftDateBySeconds } from '../../utils/dateUtil.ts';
 import { getParsedGpxSegments } from './segmentData.redux.ts';
+import { getNodeSpecifications } from './nodes.reducer.ts';
 
 export const getCalculatedTracks = createSelector(
     [getArrivalDateTime, getTrackCompositions, getParsedGpxSegments, getParticipantsDelay, getNodeSpecifications],

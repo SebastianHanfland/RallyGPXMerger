@@ -1,13 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import {
-    BreakEditInfo,
-    NodeEditInfo,
-    NodeSpecification,
-    State,
-    TrackComposition,
-    TrackElement,
-    TrackMergeState,
-} from './types.ts';
+import { BreakEditInfo, State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
@@ -128,18 +120,6 @@ const trackMergeSlice = createSlice({
         setBreakEditInfo: (state: TrackMergeState, action: PayloadAction<BreakEditInfo | undefined>) => {
             state.breakEditInfo = action.payload;
         },
-        setNodeEditInfo: (state: TrackMergeState, action: PayloadAction<NodeEditInfo | undefined>) => {
-            state.nodeEditInfo = action.payload;
-        },
-        setNodeSpecification: (
-            state: TrackMergeState,
-            action: PayloadAction<{ segmentAfter?: string; nodeSpecs?: NodeSpecification }>
-        ) => {
-            const { segmentAfter, nodeSpecs } = action.payload;
-            if (segmentAfter) {
-                state.nodeSpecifications = { ...(state.nodeSpecifications ?? {}), [segmentAfter]: nodeSpecs };
-            }
-        },
         setSelectedTrackId: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.selectedTrackId = action.payload;
         },
@@ -162,8 +142,6 @@ export const getGapToleranceInKm = (state: State) => getBase(state).gapTolerance
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
-export const getNodeEditInfo = (state: State) => getBase(state).nodeEditInfo;
-export const getNodeSpecifications = (state: State) => getBase(state).nodeSpecifications;
 export const getSelectedTrackId = (state: State) => getBase(state).selectedTrackId;
 
 export const getFilteredTrackCompositions = createSelector(

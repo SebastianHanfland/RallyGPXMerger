@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import nodeIcon from '../../../assets/mergeTracks.svg';
-import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { listAllNodesOfTracks, TrackNode } from '../../logic/calculate/helper/nodeFinder.ts';
 import { TrackComposition } from '../../store/types.ts';
+import { nodesActions } from '../../store/nodes.reducer.ts';
 
 interface Props {
     segmentId: string;
@@ -32,7 +33,7 @@ export function TrackSelectionNodeButton({ segmentId }: Props) {
             title={tracksAtNode.map((track) => track.name).join('\n')}
             style={{ backgroundColor: 'white', padding: '5px' }}
             className={'rounded-2'}
-            onClick={() => dispatch(trackMergeActions.setNodeEditInfo({ segmentAfterId: segmentId }))}
+            onClick={() => dispatch(nodesActions.setNodeEditInfo({ segmentAfterId: segmentId }))}
         >
             <span className={'mx-1'}>
                 <img src={nodeIcon} alt={'node'} />

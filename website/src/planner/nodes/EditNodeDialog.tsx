@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getNodeEditInfo, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getNodeEditInfo, nodesActions } from '../store/nodes.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { Form, ProgressBar } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
@@ -25,11 +26,11 @@ export const EditNodeDialog = () => {
     const dispatch: AppDispatch = useDispatch();
 
     const closeModal = () => {
-        dispatch(trackMergeActions.setNodeEditInfo(undefined));
+        dispatch(nodesActions.setNodeEditInfo(undefined));
     };
 
     const saveNodeSpecifications = () => {
-        dispatch(trackMergeActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
+        dispatch(nodesActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
         closeModal();
     };
 

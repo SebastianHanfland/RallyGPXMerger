@@ -35,6 +35,7 @@ const load = (): State | undefined => {
         let gpxSegments = undefined;
         let map = undefined;
         let points = undefined;
+        let nodes = undefined;
         let trackMerge = undefined;
         let geoCoding = undefined;
         let calculatedTracks = undefined;
@@ -63,6 +64,10 @@ const load = (): State | undefined => {
         if (isDefined(pointsStringified)) {
             points = JSON.parse(pointsStringified);
         }
+        const nodesStringified = localStorage.getItem(stateKey + '.nodes');
+        if (isDefined(nodesStringified)) {
+            nodes = JSON.parse(nodesStringified);
+        }
         const trackMergeStringified = localStorage.getItem(stateKey + '.trackMerge');
         if (isDefined(trackMergeStringified)) {
             trackMerge = JSON.parse(trackMergeStringified);
@@ -88,6 +93,7 @@ const load = (): State | undefined => {
             gpxSegments,
             map,
             points,
+            nodes,
             trackMerge,
             geoCoding,
             calculatedTracks,

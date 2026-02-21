@@ -1,12 +1,7 @@
 import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../../utils/dateUtil.ts';
-import {
-    getArrivalDateTime,
-    getNodeSpecifications,
-    getParticipantsDelay,
-    getTrackCompositions,
-} from '../../../store/trackMerge.reducer.ts';
+import { getArrivalDateTime, getParticipantsDelay, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { getLookups, Lookups } from '../selectors/getLookups.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { updateExtraDelayOnTracks } from '../../calculate/solver.ts';
@@ -16,6 +11,7 @@ import { getNodePositions, NodePosition } from '../selectors/getNodePositions.ts
 import { aggregatePoints } from './aggregatePoints.ts';
 import { getCalculatedTracks } from '../../../store/calculatedTracks.reducer.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
+import { getNodeSpecifications } from '../../../store/nodes.reducer.ts';
 
 export const getTrackStreetInfos = createSelector(
     [

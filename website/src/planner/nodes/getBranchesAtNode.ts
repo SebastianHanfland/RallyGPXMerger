@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getNodeEditInfo, getNodeSpecifications, getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getNodeEditInfo, getNodeSpecifications } from '../store/nodes.reducer.ts';
 import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
 import { NodeSpecification, TrackComposition } from '../store/types.ts';
 

@@ -119,9 +119,12 @@ export interface TrackMergeState {
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
     breakEditInfo?: BreakEditInfo;
+    selectedTrackId?: string;
+}
+
+export interface NodesState {
     nodeEditInfo?: NodeEditInfo;
     nodeSpecifications?: NodeSpecifications;
-    selectedTrackId?: string;
 }
 
 export interface MapState {
@@ -221,6 +224,7 @@ export interface State {
     backend?: BackendState;
     segmentData: SegmentDataState;
     trackMerge: TrackMergeState;
+    nodes: NodesState;
     map: MapState;
     points: PointsState;
     geoCoding: GeoCodingState;

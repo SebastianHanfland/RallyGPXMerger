@@ -10,12 +10,14 @@ import { pointsReducer } from './points.reducer.ts';
 import { backendReducer } from './backend.reducer.ts';
 import { toastsReducer } from './toast.reducer.ts';
 import { segmentDataReducer } from './segmentData.redux.ts';
+import { nodesReducer } from './nodes.reducer.ts';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,
     layout: layoutReducer,
     segmentData: segmentDataReducer,
     trackMerge: trackMergeReducer,
+    nodes: nodesReducer,
     map: mapReducer,
     points: pointsReducer,
     geoCoding: geoCodingReducer,
