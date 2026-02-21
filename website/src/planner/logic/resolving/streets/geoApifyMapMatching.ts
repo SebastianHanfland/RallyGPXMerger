@@ -19,7 +19,6 @@ export const geoApifyFetchMapMatching =
         return fetch(`https://api.geoapify.com/v1/mapmatching?apiKey=${apiKey}`, postRequest(body))
             .then((response) => response.json())
             .then((result) => {
-                console.log(result);
                 return mapToPositionMap(result);
             })
             .catch((error) => {

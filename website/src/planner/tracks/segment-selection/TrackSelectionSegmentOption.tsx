@@ -34,11 +34,12 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
     const { tooltip } = getUsagesOfSegment(trackCompositions, segmentId, intl);
 
     const gpxSegment = useSelector(getParsedGpxSegments).find((segment) => segment.id === segmentId);
+    const content = useOnTheFlyCreatedGpx(gpxSegment);
+
     if (!gpxSegment) {
         return null;
     }
     const { id, filename, flipped } = gpxSegment;
-    const content = useOnTheFlyCreatedGpx(gpxSegment);
 
     return (
         <div

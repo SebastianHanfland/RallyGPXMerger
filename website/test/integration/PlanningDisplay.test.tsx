@@ -9,17 +9,15 @@ import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
-import { geoApifyFetchMapMatching } from '../../src/planner/logic/resolving/streets/geoApifyMapMatching';
-import { calculateTracks } from '../../src/common/calculation/calculated-tracks/calculateTracks';
+import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 
 const messages = getMessages('en');
 
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
-vi.mock('../../src/planner/logic/resolving/streets/mapMatchingStreetResolver');
-vi.mock('../../src/planner/logic/resolving/postcode/postCodeResolver', () => ({
-    addPostCodeToStreetInfos: () => Promise.resolve(),
+vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({
+    fetchPostCodeForCoordinate: () => () => Promise.resolve({ postCode: '1234' }),
 }));
 vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
@@ -86,10 +84,10 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment1');
             await ui.uploadGpxSegment('segment2');
 
-            expect(getParsedGpxSegments(store.getState())).toHaveLength(2);
-            expect(calculateTracks(store.getState())).toHaveLength(1);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2));
+            expect(getCalculateTracks(store.getState())).toHaveLength(1);
 
-            ui.pdfDownloadButton();
+            await waitFor(() => ui.pdfDownloadButton());
         });
     });
 
@@ -111,8 +109,8 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
 
-            expect(getParsedGpxSegments(store.getState())).toHaveLength(3);
-            expect(calculateTracks(store.getState())).toHaveLength(0);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3));
+            expect(getCalculateTracks(store.getState())).toHaveLength(0);
 
             await user.click(ui.complexTracksTab(0));
             await user.click(ui.newTrackButton());
@@ -139,8 +137,7 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment3'));
             expect(getTrackCompositions(store.getState())[1].segments).toHaveLength(2);
 
-            await user.click(screen.getByText(/Calculate/));
-            await waitFor(() => expect(calculateTracks(store.getState())).toHaveLength(2));
+            await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2));
             ui.pdfDownloadButton();
         });
 
@@ -154,12 +151,11 @@ describe('Planner integration test', () => {
             await user.click(ui.startButton());
             await user.click(ui.complexButton());
             await ui.uploadGpxSegment('segment1');
-            const listWithFirstSegment = getParsedGpxSegments(store.getState());
-            expect(listWithFirstSegment).toHaveLength(1);
-            const firstSegment = listWithFirstSegment[0];
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1));
+            const firstSegment = getParsedGpxSegments(store.getState())[0];
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
-            expect(getParsedGpxSegments(store.getState())).toHaveLength(3);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3));
 
             await ui.splitSegment(firstSegment.id, store.dispatch);
             expect(getParsedGpxSegments(store.getState())).toHaveLength(4);
