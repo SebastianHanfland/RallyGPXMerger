@@ -1,6 +1,6 @@
 import { sumUpAllPeopleWithHigherPriority } from '../peopleDelayCounter.ts';
-import { listAllNodesOfTracks } from '../nodeFinder.ts';
-import { SEGMENT } from '../../../../store/types.ts';
+import { listAllNodesOfTracks } from '../../nodes/nodeFinder.ts';
+import { SEGMENT } from '../../../../planner/store/types.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };

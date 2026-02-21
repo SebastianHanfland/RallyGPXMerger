@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { listAllNodesOfTracks, TrackNode } from '../../calculate/helper/nodeFinder.ts';
+import { listAllNodesOfTracks, TrackNode } from '../../../../common/calculation/nodes/nodeFinder.ts';
 import { TrackComposition } from '../../../store/types.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { getLatLon } from '../../../../utils/pointUtil.ts';

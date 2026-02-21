@@ -1,5 +1,5 @@
-import { NodeSpecifications, TrackComposition } from '../../../store/types.ts';
-import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from './nodeFinder.ts';
+import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
+import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from '../nodes/nodeFinder.ts';
 
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>

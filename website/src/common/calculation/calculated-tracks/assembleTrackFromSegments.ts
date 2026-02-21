@@ -1,7 +1,7 @@
-import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../store/types.ts';
-import { instanceOfBreak } from '../types.ts';
+import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../planner/store/types.ts';
+import { instanceOfBreak } from '../../../planner/logic/calculate/types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
-import { CalculatedTrack2 } from '../../../../common/types.ts';
+import { CalculatedTrack2 } from '../../types.ts';
 
 function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
     const points = gpxOrBreak.points;

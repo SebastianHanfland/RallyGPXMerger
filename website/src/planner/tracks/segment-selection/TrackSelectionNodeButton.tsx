@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import nodeIcon from '../../../assets/mergeTracks.svg';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { listAllNodesOfTracks, TrackNode } from '../../logic/calculate/helper/nodeFinder.ts';
+import { listAllNodesOfTracks, TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
 import { TrackComposition } from '../../store/types.ts';
 import { nodesActions } from '../../store/nodes.reducer.ts';
 

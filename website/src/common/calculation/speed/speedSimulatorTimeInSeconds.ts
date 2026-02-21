@@ -1,6 +1,6 @@
 import geoDistance from 'geo-distance-helper';
 
-import { ParsedPoint } from '../../store/types.ts';
+import { ParsedPoint } from '../../../planner/store/types.ts';
 
 function slopeFactor(slope: number): number {
     const max_slope = 100;

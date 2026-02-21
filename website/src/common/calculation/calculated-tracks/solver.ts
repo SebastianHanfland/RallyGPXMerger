@@ -1,5 +1,5 @@
-import { getExtraDelayOnTrack } from './helper/peopleDelayCounter.ts';
-import { NodeSpecifications, TrackComposition } from '../../store/types.ts';
+import { getExtraDelayOnTrack } from './peopleDelayCounter.ts';
+import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
 
 export const updateExtraDelayOnTracks = (
     trackCompositions: TrackComposition[],

@@ -7,7 +7,7 @@ import { getNodeEditInfo, nodesActions } from '../store/nodes.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { Form, ProgressBar } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { listAllNodesOfTracks } from '../logic/calculate/helper/nodeFinder.ts';
+import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
 import { NodeSpecification } from '../store/types.ts';

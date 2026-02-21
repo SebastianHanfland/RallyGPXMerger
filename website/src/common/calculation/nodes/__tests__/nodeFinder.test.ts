@@ -1,4 +1,4 @@
-import { BREAK, SEGMENT, TrackBreak, TrackComposition, TrackElement } from '../../../../store/types.ts';
+import { BREAK, SEGMENT, TrackBreak, TrackComposition, TrackElement } from '../../../../planner/store/types.ts';
 import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
 
 function getSegment(id: string) {

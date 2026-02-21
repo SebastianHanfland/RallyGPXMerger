@@ -1,7 +1,7 @@
 import { CalculatedTrack } from '../../types.ts';
 import { shiftDateBySeconds } from '../../../utils/dateUtil.ts';
-import { updateExtraDelayOnTracks } from '../../../planner/logic/calculate/solver.ts';
-import { assembleTrackFromSegments } from '../../../planner/logic/calculate/helper/assembleTrackFromSegments.ts';
+import { updateExtraDelayOnTracks } from './solver.ts';
+import { assembleTrackFromSegments } from './assembleTrackFromSegments.ts';
 import { NodeSpecifications, ParsedGpxSegment, TrackComposition } from '../../../planner/store/types.ts';
 
 export const calculateTracks = (

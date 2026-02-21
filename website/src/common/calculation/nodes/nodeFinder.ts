@@ -1,4 +1,4 @@
-import { SEGMENT, TrackComposition } from '../../../store/types.ts';
+import { SEGMENT, TrackComposition } from '../../../planner/store/types.ts';
 
 export interface TrackNodeSegment {
     segmentId: string;
