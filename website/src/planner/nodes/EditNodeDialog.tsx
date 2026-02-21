@@ -10,8 +10,37 @@ import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
-import { NodeSpecification } from '../store/types.ts';
+import { NodeSpecification, TrackComposition } from '../store/types.ts';
 import { getParticipantsDelay } from '../store/settings.reducer.ts';
+import { getCount } from '../../utils/inputUtil.ts';
+
+const getAllParticipants = (tracks: TrackComposition[]): number => {
+    let count = 0;
+    tracks.forEach((track) => {
+        count += track.peopleCount ?? 0;
+    });
+    return count;
+};
+
+function getNodeDelayValue(
+    value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    nodeSpecs: {
+        trackOffsets: Record<string, number> | undefined;
+        nodeInfo?: string | undefined;
+        totalCount: number | undefined;
+    },
+    tracks: TrackComposition[]
+) {
+    const numberValue = getCount(value) ?? 0;
+    const maximum = (nodeSpecs?.totalCount ?? 0) - getAllParticipants(tracks);
+    if (numberValue > maximum) {
+        return maximum;
+    }
+    if (numberValue < 0) {
+        return 0;
+    }
+    return numberValue;
+}
 
 export const EditNodeDialog = () => {
     const intl = useIntl();
@@ -152,7 +181,7 @@ export const EditNodeDialog = () => {
                                                     ...nodeSpecs,
                                                     trackOffsets: {
                                                         ...nodeSpecs?.trackOffsets,
-                                                        [segmentId]: Number(value.target.value),
+                                                        [segmentId]: getNodeDelayValue(value, nodeSpecs, tracks),
                                                     },
                                                 });
                                             }}
