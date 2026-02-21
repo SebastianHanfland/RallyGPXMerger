@@ -97,7 +97,7 @@ export function getExtraDelayOnTrack(
                 );
                 if (foundOffsetRecord) {
                     console.log('This offset is played');
-                    delayForTrackInSeconds += foundOffsetRecord[1] * participantsDelayInSeconds;
+                    delayForTrackInSeconds -= foundOffsetRecord[1] * participantsDelayInSeconds;
                 }
             } else {
                 const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(
