@@ -1,137 +1,93 @@
-// import { TrackComposition } from '../../../../store/types.ts';
-// import { Mock } from 'vitest';
-// import { BREAK_IDENTIFIER, GpxFileAccess } from '../../types.ts';
-//
-// import { mergeSimpleGPXs, SimpleGPX } from '../../../../../utils/SimpleGPX.ts';
-// import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
-// import { CalculatedTrack, GpxSegment } from '../../../../../common/types.ts';
-//
-// vi.mock('../../../../../utils/SimpleGPX.ts');
-// vi.mock('../../../../store/store.ts');
-// vi.mock('../../../../store/points.reducer.ts');
-//
-// // TODO: #131 make this test run again, maybe the structure has to be different as well
-// describe.skip('assembleTrackFromSegments', () => {
-//     afterEach(() => {
-//         vi.clearAllMocks();
-//         vi.resetAllMocks();
-//     });
-//
-//     const arrivalDateTime = '2023-10-17T22:00:00.000Z';
-//
-//     function createMock(content: string): GpxFileAccess & { content: string } {
-//         return {
-//             getStart: () => `start-${content}`,
-//             toString: () => content,
-//             shiftToArrivalTime: vi.fn(),
-//             content,
-//         };
-//     }
-//
-//     // given
-//     const a1Mock = createMock('cA1');
-//     const abMock = createMock('cAB');
-//     const aMock = createMock('cA');
-//
-//     beforeEach(() => {
-//         (mergeSimpleGPXs as Mock).mockImplementation((list: GpxFileAccess[]) => {
-//             if (list.length === 1) {
-//                 return list[0];
-//             }
-//             const a = list[0];
-//             const b = list[1];
-//             if (a.toString() === a1Mock.toString() && b.toString() === abMock.toString()) {
-//                 return aMock;
-//             }
-//             expect({ a: a, b: b }).toBeUndefined();
-//         });
-//
-//         (SimpleGPX.fromString as Mock).mockImplementation((content: string): GpxFileAccess => {
-//             switch (content) {
-//                 case 'cA1':
-//                     return a1Mock;
-//                 case 'cAB':
-//                     return abMock;
-//                 default:
-//                     expect({ content }).toBeUndefined();
-//             }
-//             return a1Mock;
-//         });
-//     });
-//
-//     it('merge A1 and AB to A - Ignoring People and Time shift', () => {
-//         // given
-//         const gpxSegments: GpxSegment[] = [
-//             { id: '1', filename: 'A1', content: 'cA1' },
-//             { id: '2', filename: 'B1', content: 'cB1' },
-//             { id: '3', filename: 'AB', content: 'cAB' },
-//         ];
-//         const trackComposition: TrackComposition = { id: '1', name: 'A', segmentIds: ['1', '3'] };
-//
-//         const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA', peopleCount: 0 };
-//
-//         // when
-//         const calculatedTracks = assembleTrackFromSegments(trackComposition, gpxSegments, arrivalDateTime);
-//
-//         // then
-//         expect(calculatedTracks).toEqual(expectedCalculatedTrack);
-//     });
-//
-//     it('should set arrival date for one segment - one track', () => {
-//         // given
-//         const gpxSegments: GpxSegment[] = [{ id: '1', filename: 'A1', content: 'cA1' }];
-//         const track: TrackComposition = { id: '1', name: 'A', segmentIds: ['1'] };
-//
-//         const expectedCalculatedTracks: CalculatedTrack = { id: '1', filename: 'A', content: 'cA1', peopleCount: 0 };
-//
-//         // when
-//         const calculatedTrack = assembleTrackFromSegments(track, gpxSegments, arrivalDateTime);
-//
-//         // then
-//         expect(a1Mock.shiftToArrivalTime).toHaveBeenCalledWith(arrivalDateTime);
-//         expect(calculatedTrack).toEqual(expectedCalculatedTracks);
-//     });
-//
-//     it('should set arrival date for two segments - one track', () => {
-//         // given
-//         const gpxSegments: GpxSegment[] = [
-//             { id: '1', filename: 'A1', content: 'cA1' },
-//             { id: '2', filename: 'AB', content: 'cAB' },
-//         ];
-//         const track: TrackComposition = { id: '1', name: 'A', segmentIds: ['1', '2'] };
-//
-//         const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA', peopleCount: 0 };
-//
-//         // when
-//         const calculatedTrack = assembleTrackFromSegments(track, gpxSegments, arrivalDateTime);
-//
-//         // then
-//         expect(a1Mock.shiftToArrivalTime).toHaveBeenCalledWith(abMock.getStart());
-//         expect(abMock.shiftToArrivalTime).toHaveBeenCalledWith(arrivalDateTime);
-//         expect(calculatedTrack).toEqual(expectedCalculatedTrack);
-//     });
-//
-//     it('should set arrival date for one segment and one break - one track', () => {
-//         // given
-//         const gpxSegments: GpxSegment[] = [{ id: '1', filename: 'A1', content: 'cA1' }];
-//         const track: TrackComposition = { id: '1', name: 'A', segmentIds: ['1', `30${BREAK_IDENTIFIER}1`] };
-//         const arrivalDateTime30min = '2023-10-17T21:30:00.000Z';
-//
-//         const expectedCalculatedTrack: CalculatedTrack = { id: '1', filename: 'A', content: 'cA1', peopleCount: 0 };
-//
-//         // when
-//         const calculatedTracks = assembleTrackFromSegments(track, gpxSegments, arrivalDateTime);
-//
-//         // then
-//         expect(a1Mock.shiftToArrivalTime).toHaveBeenCalledWith(arrivalDateTime30min);
-//         expect(calculatedTracks).toEqual(expectedCalculatedTrack);
-//     });
-// });
+import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
+import {
+    BREAK,
+    ParsedGpxSegment,
+    ParsedPoint,
+    SEGMENT,
+    TrackBreak,
+    TrackComposition,
+    TrackSegment,
+} from '../../../../planner/store/types.ts';
+import { CalculatedTrack2 } from '../../../types.ts';
 
-describe.skip('No tests', () => {
-    it('should be fixed, local storage annoys here', () => {
+function getPoint(lat: number, time: number): ParsedPoint {
+    return { s: -1, t: time, e: 0, b: lat, l: 0 };
+}
+function getSegment(id: string): TrackSegment {
+    return { type: SEGMENT, segmentId: id, id };
+}
+function getBreak(minutes: number): TrackBreak {
+    return { type: BREAK, minutes, id: `${minutes}`, description: '', hasToilet: false };
+}
+
+describe('assembleTrackFromSegments', () => {
+    const gpxSegments: ParsedGpxSegment[] = [
+        { id: '1', filename: 'A1', points: [getPoint(1, 0), getPoint(2, 10)], streetsResolved: false },
+        { id: '2', filename: 'B1', points: [getPoint(3, 0), getPoint(4, 5)], streetsResolved: false },
+        { id: '3', filename: 'AB', points: [getPoint(5, 0), getPoint(6, 20)], streetsResolved: false },
+    ];
+
+    it('merge A1 and AB to A - Ignoring People and Time shift', () => {
         // given
+        const trackComposition: TrackComposition = {
+            id: '1',
+            name: 'A',
+            segments: [getSegment('1'), getSegment('3')],
+            peopleCount: 0,
+        };
+
+        const expectedCalculatedTrack: CalculatedTrack2 = {
+            id: '1',
+            filename: 'A',
+            points: [getPoint(1, -30), getPoint(2, -20), getPoint(5, -20), getPoint(6, 0)],
+            peopleCount: 0,
+        };
+
         // when
+        const calculatedTracks = assembleTrackFromSegments(trackComposition, gpxSegments);
+
         // then
+        expect(calculatedTracks).toEqual(expectedCalculatedTrack);
+    });
+
+    it('should set arrival date for one segment - one track', () => {
+        // given
+        const track: TrackComposition = { id: '1', name: 'A', segments: [getSegment('1')], delayAtEndInSeconds: 45 };
+
+        const expectedCalculatedTracks: CalculatedTrack2 = {
+            id: '1',
+            filename: 'A',
+            points: [getPoint(1, -55), getPoint(2, -45)],
+            peopleCount: 0,
+        };
+
+        // when
+        const calculatedTrack = assembleTrackFromSegments(track, gpxSegments);
+
+        // then
+        expect(calculatedTrack).toEqual(expectedCalculatedTracks);
+    });
+
+    it('should set arrival date for one segment and one break - one track', () => {
+        // given
+        const track: TrackComposition = {
+            id: '1',
+            name: 'A',
+            segments: [getSegment('1'), getBreak(2), getSegment('2')],
+            delayAtEndInSeconds: 5,
+        };
+
+        const expectedCalculatedTrack: CalculatedTrack2 = {
+            id: '1',
+            filename: 'A',
+            points: [getPoint(1, -140), getPoint(2, -130), getPoint(3, -10), getPoint(4, -5)],
+            peopleCount: 0,
+        };
+
+        // when
+        const calculatedTracks = assembleTrackFromSegments(track, gpxSegments);
+
+        // then
+        expect(calculatedTracks).toEqual(expectedCalculatedTrack);
     });
 });
