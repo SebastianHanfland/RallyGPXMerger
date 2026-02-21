@@ -15,6 +15,7 @@ import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 
 const extractLocationDisplay =
     (timeStampFront: string, participantsDelayInSeconds: number) =>
@@ -29,7 +30,7 @@ const extractLocationDisplay =
                 participantsDelayInSeconds
             ),
             title: parsedTrack.filename,
-            color: parsedTrack.color ?? 'white',
+            color: getColor(parsedTrack),
             id: parsedTrack.id,
         };
     };

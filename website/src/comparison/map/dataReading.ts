@@ -18,6 +18,7 @@ import date from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
+import { getColor } from '../../utils/colorUtil.ts';
 
 const extractLocationComparison =
     (timeStampsFront: Record<string, string>, participantsDelayInSeconds: Record<string, number | undefined>) =>
@@ -31,7 +32,7 @@ const extractLocationComparison =
                 participantsDelayInSeconds[parsedTrack.version!] ?? DELAY_PER_PERSON_IN_SECONDS
             ),
             title: parsedTrack?.filename ?? 'N/A',
-            color: parsedTrack?.color ?? 'white',
+            color: getColor(parsedTrack),
             id: parsedTrack?.id ?? 'id-not-found',
         };
     };
