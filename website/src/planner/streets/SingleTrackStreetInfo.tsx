@@ -10,6 +10,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { EditStreetNameButton } from './EditStreetNameButton.tsx';
 import { EditDistrictButton } from './EditDistrictButton.tsx';
 import { EditPostCodeButton } from './EditPostCodeButton.tsx';
+import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -24,6 +25,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
     return (
         <div>
             <h5>{name}</h5>
+            <OnlyShowUnknownCheckBox />
             <div className={'d-flex justify-content-between'}>
                 <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.distance' })}: ${distanceInKm.toFixed(
                     2
@@ -119,7 +121,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 speed,
                             } = waypoint;
                             return (
-                                <tr key={backPassage + streetName + frontArrival}>
+                                <tr key={backPassage + streetName + frontArrival + type}>
                                     <td>
                                         <HighlightUnknown value={streetName ?? unknown} />
                                         <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
