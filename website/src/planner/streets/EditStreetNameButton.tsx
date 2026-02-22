@@ -1,4 +1,4 @@
-import { AggregatedPoints } from '../logic/resolving/types.ts';
+import { WayPoint } from '../logic/resolving/types.ts';
 import Button from 'react-bootstrap/Button';
 import pencil from '../../assets/pencil.svg';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 
 interface Props {
-    waypoint: AggregatedPoints;
+    waypoint: WayPoint;
 }
 
 export function EditStreetNameButton(props: Props) {

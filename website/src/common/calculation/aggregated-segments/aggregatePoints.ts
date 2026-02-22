@@ -1,5 +1,5 @@
 import date from 'date-and-time';
-import { AggregatedPoints, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
+import { WayPoint, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 
 import { TimedPoint } from '../../../planner/store/types.ts';
@@ -63,9 +63,9 @@ export function aggregatePoints(
     streetLookup: Record<number, string | null>,
     districtLookup: Record<number, string | null>,
     postCodeLookup: Record<number, string | null>
-): AggregatedPoints[] {
+): WayPoint[] {
     let pointIndex = 0;
-    const aggregatedPoints: AggregatedPoints[] = [];
+    const aggregatedPoints: WayPoint[] = [];
 
     while (pointIndex < enrichedPoints.length) {
         const firstPoint = enrichedPoints[pointIndex];

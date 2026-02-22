@@ -1,4 +1,4 @@
-import { AggregatedPoints, TrackStreetInfo, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
+import { WayPoint, TrackStreetInfo, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
 import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dateUtil.ts';
 import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.ts';
 import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation.ts';
@@ -68,7 +68,7 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
     return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
 }
 
-function getPreviousPoint(trackPoints: AggregatedPoints[], arrivalDate: string) {
+function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
     if (trackPoints.length > 0) {
         return trackPoints[0];
     }
@@ -91,9 +91,9 @@ export function getWayPointsOfTrack(
     participantsDelayInSeconds: number,
     lookups: Lookups,
     arrivalDateTime: string | undefined
-): AggregatedPoints[] {
+): WayPoint[] {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
-    let trackPoints: AggregatedPoints[] = [];
+    let trackPoints: WayPoint[] = [];
     const arrivalDate = arrivalDateTime ?? '2025-06-01T10:11:55';
 
     const gpxSegmentContents = resolveGpxSegments(track, gpxSegments, nodes);
@@ -104,7 +104,7 @@ export function getWayPointsOfTrack(
         .forEach((gpxOrBreak) => {
             if (instanceOfBreak(gpxOrBreak)) {
                 arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
-                const trackBreak: AggregatedPoints = {
+                const trackBreak: WayPoint = {
                     streetName: getPreviousPoint(trackPoints, arrivalDate).streetName,
                     breakLength: gpxOrBreak.minutes,
                     type: TrackWayPointType.Break,
@@ -126,7 +126,7 @@ export function getWayPointsOfTrack(
                 };
                 trackPoints = [trackBreak, ...trackPoints];
             } else if (instanceOfNode(gpxOrBreak)) {
-                const trackNode: AggregatedPoints = {
+                const trackNode: WayPoint = {
                     ...getPreviousPoint(trackPoints, arrivalDate),
                     streetName: getPreviousPoint(trackPoints, arrivalDate).streetName,
                     type: TrackWayPointType.Node,

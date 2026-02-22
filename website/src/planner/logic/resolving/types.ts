@@ -64,7 +64,7 @@ export interface TrackStreetInfo {
     arrivalBack: string;
     arrivalFront: string;
     distanceInKm: number;
-    wayPoints: AggregatedPoints[];
+    wayPoints: WayPoint[];
     peopleCount?: number;
 }
 
@@ -84,7 +84,7 @@ export interface BlockedStreetInfo {
     // Maybe also which tracks pass through here?
 }
 
-export interface AggregatedPoints {
+export interface WayPoint {
     streetName: string | null;
     postCode: string | null;
     district: string | null;

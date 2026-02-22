@@ -1,4 +1,4 @@
-import { AggregatedPoints, BlockedStreetInfo } from '../types.ts';
+import { WayPoint, BlockedStreetInfo } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 
@@ -10,7 +10,7 @@ function takeEarlierOne(start: string, from: string): string {
     return start <= from ? start : from;
 }
 
-function streetAndPostCodeMatch(waypoint: AggregatedPoints, info: BlockedStreetInfo) {
+function streetAndPostCodeMatch(waypoint: WayPoint, info: BlockedStreetInfo) {
     return info.streetName === waypoint.streetName && info.postCode === waypoint.postCode;
 }
 
