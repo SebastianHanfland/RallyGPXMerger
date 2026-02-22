@@ -36,9 +36,12 @@ export function ReplacementSegmentSelect() {
             value={null}
             menuPlacement={'top'}
             placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
-            options={options.filter(
-                (option) => !replaceProcess?.replacementSegments.map((segment) => segment.id).includes(option.value)
-            )}
+            options={options.filter((option) => {
+                if (option.value === replaceProcess?.targetSegment) {
+                    return false;
+                }
+                return !replaceProcess?.replacementSegments.map((segment) => segment.id).includes(option.value);
+            })}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={addSegmentToReplacement}

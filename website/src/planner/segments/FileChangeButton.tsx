@@ -3,12 +3,12 @@ import exchange from '../../assets/exchange.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ReplacementSegmentSelect } from './ReplacementSegmentSelect.tsx';
+import { executeGpxSegmentReplacementWithExisting } from './fileReplaceWithExistingThunk.ts';
 
 interface Props {
     id: string;
@@ -29,7 +29,7 @@ export function FileChangeButton({ id, name }: Props) {
     }, [isLoading]);
 
     const replaceGpxSegment = () => {
-        dispatch(executeGpxSegmentReplacementWithUpload);
+        dispatch(executeGpxSegmentReplacementWithExisting);
         setShowModal(false);
     };
 
