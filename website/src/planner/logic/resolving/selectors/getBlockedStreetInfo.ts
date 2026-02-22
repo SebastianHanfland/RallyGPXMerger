@@ -22,7 +22,7 @@ export const getBlockedStreetInfo = createSelector(getTrackStreetInfos, (trackSt
                 blockedStreetsInfo.push({
                     streetName: waypoint.streetName,
                     frontArrival: waypoint.frontArrival,
-                    backPassage: waypoint.backArrival,
+                    backPassage: waypoint.backPassage,
                     postCode: waypoint.postCode,
                     district: waypoint.district,
                     pointFrom: waypoint.pointFrom,
@@ -34,7 +34,7 @@ export const getBlockedStreetInfo = createSelector(getTrackStreetInfos, (trackSt
                 streetAndPostCodeMatch(waypoint, info)
                     ? {
                           ...info,
-                          backPassage: takeLaterOne(info.backPassage, waypoint.backArrival),
+                          backPassage: takeLaterOne(info.backPassage, waypoint.backPassage),
                           frontArrival: takeEarlierOne(info.frontArrival, waypoint.frontArrival),
                       }
                     : info
