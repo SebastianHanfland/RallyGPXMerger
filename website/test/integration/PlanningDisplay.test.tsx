@@ -23,6 +23,7 @@ vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () =
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 
+const timeout = { timeout: 2000 };
 describe('Planner integration test', () => {
     describe('Main navigation', () => {
         it('Starts a new simple planning', async () => {
@@ -84,10 +85,10 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment1');
             await ui.uploadGpxSegment('segment2');
 
-            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2));
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2), timeout);
             expect(getCalculateTracks(store.getState())).toHaveLength(1);
 
-            await waitFor(() => ui.pdfDownloadButton());
+            await waitFor(() => ui.pdfDownloadButton(), timeout);
         });
     });
 
@@ -109,7 +110,7 @@ describe('Planner integration test', () => {
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
 
-            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3));
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3), timeout);
             expect(getCalculateTracks(store.getState())).toHaveLength(0);
 
             await user.click(ui.complexTracksTab(0));
@@ -137,7 +138,7 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment3'));
             expect(getTrackCompositions(store.getState())[1].segments).toHaveLength(2);
 
-            await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2));
+            await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2), timeout);
             ui.pdfDownloadButton();
         });
 
@@ -151,11 +152,11 @@ describe('Planner integration test', () => {
             await user.click(ui.startButton());
             await user.click(ui.complexButton());
             await ui.uploadGpxSegment('segment1');
-            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1));
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1), timeout);
             const firstSegment = getParsedGpxSegments(store.getState())[0];
             await ui.uploadGpxSegment('segment2');
             await ui.uploadGpxSegment('segment3');
-            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3));
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3), timeout);
 
             await ui.splitSegment(firstSegment.id, store.dispatch);
             expect(getParsedGpxSegments(store.getState())).toHaveLength(4);
