@@ -12,6 +12,7 @@ import { EditDistrictButton } from './EditDistrictButton.tsx';
 import { EditPostCodeButton } from './EditPostCodeButton.tsx';
 import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox.tsx';
 import { wayPointHasUnknown } from './unknownUtil.ts';
+import { formatNumber } from '../../utils/numberUtil.ts';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -139,11 +140,13 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                         <HighlightUnknown value={district?.toString() ?? unknown} />
                                         <EditDistrictButton waypoint={waypoint} />
                                     </td>
-                                    <td>{(distanceInKm ?? 0).toFixed(2)} km</td>
-                                    <td>{(speed ?? 0).toFixed(1)} km/h</td>
+                                    <td>{formatNumber(distanceInKm ?? 0, 2)} km</td>
+                                    <td>{formatNumber(speed ?? 0, 1)} km/h</td>
                                     <td>
-                                        {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
-                                        {(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60).toFixed(1)} min)
+                                        {formatNumber(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60, 1)}{' '}
+                                        min (
+                                        {formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)}{' '}
+                                        min)
                                     </td>
                                     <td>{formatTimeOnly(frontArrival)}</td>
                                     <td>{formatTimeOnly(frontPassage)}</td>

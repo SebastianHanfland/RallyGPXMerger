@@ -12,6 +12,10 @@ export const styles = {
     linkStyle: {
         color: 'blue',
     },
+    boldLinkStyle: {
+        color: 'blue',
+        bold: true,
+    },
     headerStyle: {
         bold: true,
     },
