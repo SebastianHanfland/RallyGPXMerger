@@ -3,15 +3,12 @@ import exchange from '../../assets/exchange.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { FileUploader } from 'react-drag-drop-files';
 import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
-import { toParsedGpxSegment } from './segmentParsing.ts';
-import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { ReplacementSegmentSelect } from './ReplacementSegmentSelect.tsx';
 
 interface Props {
     id: string;
@@ -22,7 +19,6 @@ export function FileChangeButton({ id, name }: Props) {
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const replaceProcess = useSelector(getReplaceProcess);
-    const averageSpeed = useSelector(getAverageSpeedInKmH);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -35,18 +31,6 @@ export function FileChangeButton({ id, name }: Props) {
     const replaceGpxSegment = () => {
         dispatch(executeGpxSegmentReplacement);
         setShowModal(false);
-    };
-
-    const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((replacementSegments) => {
-            dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments));
-            dispatch(
-                segmentDataActions.setReplaceProcess({
-                    targetSegment: replaceProcess!.targetSegment,
-                    replacementSegments: [...replaceProcess!.replacementSegments, ...replacementSegments],
-                })
-            );
-        });
     };
 
     return (
@@ -92,14 +76,7 @@ export function FileChangeButton({ id, name }: Props) {
                                     </tbody>
                                 </Table>
                             )}
-                            <FileUploader
-                                style={{ width: '100px' }}
-                                handleChange={handleChange}
-                                name="file"
-                                types={['GPX']}
-                                multiple={true}
-                                label={intl.formatMessage({ id: 'msg.uploadFile' })}
-                            />
+                            <ReplacementSegmentSelect />
                         </div>
                     }
                     confirmDisabled={(replaceProcess?.replacementSegments.length || 0) === 0}
