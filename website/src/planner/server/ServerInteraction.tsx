@@ -10,6 +10,7 @@ import { CalculatedFilesDownloader } from '../download/gpx/CalculatedFilesDownlo
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { CleanDataButton } from './CleanDataButton.tsx';
+import { DownloadDataForCopyButton } from './DownloadDataForCopyButton.tsx';
 
 export const PlannerSidebarServerSection = () => {
     const className = 'm-1';
@@ -45,6 +46,9 @@ export const PlannerSidebarServerSection = () => {
                     </Row>
                     <Row className={className}>
                         <DownloadDataButton />
+                    </Row>
+                    <Row className={className}>
+                        <DownloadDataForCopyButton />
                     </Row>
 
                     <Row className={className}>

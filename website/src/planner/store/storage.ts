@@ -122,6 +122,9 @@ const clear = () => {
         localStorage.removeItem(stateKey + '.layout');
         localStorage.removeItem(stateKey + '.gpxSegments');
         localStorage.removeItem(stateKey + '.map');
+        localStorage.removeItem(stateKey + '.points');
+        localStorage.removeItem(stateKey + '.settings');
+        localStorage.removeItem(stateKey + '.nodes');
         localStorage.removeItem(stateKey + '.trackMerge');
         localStorage.removeItem(stateKey + '.geoCoding');
         localStorage.removeItem(stateKey + '.calculatedTracks');
