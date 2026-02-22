@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ParsedGpxSegment, State } from '../store/types.ts';
 import { splitGpx } from '../../utils/gpxSplitUtil.ts';
-import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
+import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getClickOnSegment, getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 
@@ -21,5 +21,5 @@ export const splitGpxAtPosition = (dispatch: AppDispatch, getState: () => State)
         { ...clickedSegment, points: pointsAfter, id: uuidv4(), filename: `${clickedSegment.filename}-2` },
     ];
     dispatch(segmentDataActions.setReplaceProcess({ targetSegment: clickedSegment.id, replacementSegments }));
-    dispatch(executeGpxSegmentReplacement);
+    dispatch(executeGpxSegmentReplacementWithUpload);
 };

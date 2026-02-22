@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileUploader } from 'react-drag-drop-files';
-import { executeGpxSegmentReplacement } from './fileReplaceThunk.ts';
+import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadThunk.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -33,7 +33,7 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
     }, [isLoading]);
 
     const replaceGpxSegment = () => {
-        dispatch(executeGpxSegmentReplacement);
+        dispatch(executeGpxSegmentReplacementWithUpload);
         setShowModal(false);
     };
 

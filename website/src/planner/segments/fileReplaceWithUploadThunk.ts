@@ -4,7 +4,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
 
-export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: () => State) => {
+export const executeGpxSegmentReplacementWithUpload = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
     const trackCompositions = getTrackCompositions(getState());
     const averageSpeed = getAverageSpeedInKmH(getState());
@@ -17,7 +17,7 @@ export const executeGpxSegmentReplacement = (dispatch: AppDispatch, getState: ()
     if (replacementSegments.length === 1) {
         const newSegment = replacementSegments[0];
         const payload = { id: targetSegment, newPoints: newSegment.points };
-        // TODO: 223 street resolving
+
         dispatch(segmentDataActions.changeGpxSegmentPoints(payload));
         dispatch(segmentDataActions.setFilename({ id: targetSegment, filename: newSegment.filename }));
     } else {
