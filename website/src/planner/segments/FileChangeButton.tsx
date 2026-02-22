@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
+import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
 
 interface Props {
     id: string;
@@ -21,6 +22,7 @@ export function FileChangeButton({ id, name }: Props) {
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const replaceProcess = useSelector(getReplaceProcess);
+    const averageSpeed = useSelector(getAverageSpeedInKmH);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -36,8 +38,7 @@ export function FileChangeButton({ id, name }: Props) {
     };
 
     const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map(toParsedGpxSegment)).then((replacementSegments) => {
-            // TODO 223 see if that works, maybe also writing an integration test...
+        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((replacementSegments) => {
             dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments));
             dispatch(
                 segmentDataActions.setReplaceProcess({
