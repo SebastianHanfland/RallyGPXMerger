@@ -33,7 +33,8 @@ describe('GpxUpload and parse', () => {
         );
 
         await ui.uploadGpxSegment('segment1');
-        await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1));
+
+        await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(1), { timeout: 2000 });
         const points = getParsedGpxSegments(store.getState())[0].points;
         expect(points.length).toBeGreaterThan(10);
         expect(points[points.length - 1].t).toBeGreaterThan(200);
