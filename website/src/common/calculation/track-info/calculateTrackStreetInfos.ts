@@ -7,6 +7,7 @@ import {
     NodeSpecifications,
     ParsedGpxSegment,
     ParsedPoint,
+    SEGMENT,
     TrackComposition,
 } from '../../../planner/store/types.ts';
 import { Break, instanceOfBreak, instanceOfNode } from '../types.ts';
@@ -176,8 +177,11 @@ export function resolveGpxSegments(
         if (trackElement.type === BREAK) {
             const minutes = trackElement.minutes;
             trackElements.push({ minutes });
+            return;
         }
-        const foundNodeBefore = nodes.find((node) => node.segmentIdAfter === trackElement.id);
+        const foundNodeBefore = nodes.find(
+            (node) => node.segmentIdAfter === trackElement.id && trackElement.type === SEGMENT
+        );
         if (foundNodeBefore) {
             trackElements.push(foundNodeBefore);
         }
