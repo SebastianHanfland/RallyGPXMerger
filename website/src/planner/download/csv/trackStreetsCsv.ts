@@ -33,6 +33,7 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo, intl: IntlShape): 
                     frontPassage,
                     backPassage,
                     pointFrom,
+                    speed,
                     pointTo,
                     type,
                     nodeTracks,
@@ -46,6 +47,7 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo, intl: IntlShape): 
                     `${postCode ?? ''};` +
                     `${district ?? ''};` +
                     `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +
+                    `${speed ? formatNumber(speed) : ''};` +
                     `${formatNumber(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60, 1)};` +
                     `${formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)};` +
                     `${formatTimeOnly(frontArrival)};` +

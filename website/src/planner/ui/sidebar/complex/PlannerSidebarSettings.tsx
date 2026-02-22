@@ -31,7 +31,7 @@ export const PlannerSidebarSettings = () => {
         <div className={'m-2'}>
             <Accordion defaultActiveKey={'0'}>
                 {accordionEntries.map(([title, component, key]) => (
-                    <Accordion.Item eventKey={key}>
+                    <Accordion.Item eventKey={key} key={key}>
                         <Accordion.Header>
                             <FormattedMessage id={title} />
                         </Accordion.Header>
