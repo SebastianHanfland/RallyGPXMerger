@@ -18,6 +18,7 @@ import { getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
 import { EditSegmentColorButton } from '../../segments/EditSegmentColor.tsx';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
+import { FileChangeButton } from '../../segments/FileChangeButton.tsx';
 
 interface Props {
     trackId: string;
@@ -88,6 +89,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                     >
                         <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
                         <FileChangeWithUploadButton id={id} name={filename} />
+                        <FileChangeButton id={id} name={filename} />
                         <RemoveFileButton id={id} name={filename} />
                         <FlipGpxButton id={id} name={filename} flipped={flipped} />
                         <EditSegmentColorButton segment={gpxSegment} />

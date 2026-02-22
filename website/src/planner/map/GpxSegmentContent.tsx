@@ -8,6 +8,7 @@ import { SplitSegmentDropdownItem } from '../segments/SplitSegment.tsx';
 import { getClickOnSegment, getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { EditSegmentColorButton } from '../segments/EditSegmentColor.tsx';
+import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 
 export const GpxSegmentContent = () => {
     const clickOnSegment = useSelector(getClickOnSegment);
@@ -26,6 +27,7 @@ export const GpxSegmentContent = () => {
             <SplitSegmentDropdownItem />
 
             <FileChangeWithUploadButton id={id} name={filename} />
+            <FileChangeButton id={id} name={filename} />
             <RemoveFileButton id={id} name={filename} />
             <FlipGpxButton id={id} name={filename} flipped={flipped} />
             <EditSegmentColorButton segment={clickedSegment} />

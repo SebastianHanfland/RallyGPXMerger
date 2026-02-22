@@ -17,7 +17,7 @@ interface Props {
     id: string;
     name: string;
 }
-export function FileChangeWithUploadButton({ id, name }: Props) {
+export function FileChangeButton({ id, name }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -56,11 +56,11 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
                     setShowModal(true);
                     dispatch(segmentDataActions.setReplaceProcess({ targetSegment: id, replacementSegments: [] }));
                 }}
-                title={intl.formatMessage({ id: 'msg.replaceFileWithUpload.hint' }, { name })}
+                title={intl.formatMessage({ id: 'msg.replaceFileWithExisting.hint' }, { name })}
             >
                 <img src={exchange} alt="exchange" className="m-1" />
                 <span>
-                    <FormattedMessage id={'msg.replaceFileWithUpload'} />
+                    <FormattedMessage id={'msg.replaceFileWithExisting'} />
                 </span>
             </Dropdown.Item>
             {showModal && (
