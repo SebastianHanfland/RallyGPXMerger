@@ -9,6 +9,7 @@ import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
 import { IntlShape, useIntl } from 'react-intl';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
+import { getPlanningTitle } from '../store/settings.reducer.ts';
 
 function createCsv(csv: string) {
     return new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], { type: 'csv;charset=utf-8' });
@@ -17,7 +18,8 @@ function createCsv(csv: string) {
 const downloadFiles = (
     trackStreetInfos: TrackStreetInfo[],
     blockedStreetInfos: BlockedStreetInfo[],
-    intl: IntlShape
+    intl: IntlShape,
+    planningTitle: string
 ) => {
     const zip = new JSZip();
     trackStreetInfos.forEach((track) => {
@@ -28,7 +30,10 @@ const downloadFiles = (
         createCsv(convertStreetInfoToCsv(blockedStreetInfos, intl))
     );
     zip.generateAsync({ type: 'blob' }).then(function (content) {
-        FileSaver.saveAs(content, `${intl.formatMessage({ id: 'msg.streetListZip' })}-${new Date().toISOString()}.zip`);
+        FileSaver.saveAs(
+            content,
+            `${planningTitle}-${intl.formatMessage({ id: 'msg.streetListZip' })}-${new Date().toISOString()}.zip`
+        );
     });
 };
 
@@ -36,9 +41,11 @@ export const StreetFilesDownloader = () => {
     const intl = useIntl();
     const trackStreetInfos = useSelector(getTrackStreetInfos);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
+    const planningTitle = useSelector(getPlanningTitle) ?? 'RallyGPXMergeState';
+
     return (
         <Button
-            onClick={() => downloadFiles(trackStreetInfos, blockedStreetInfos, intl)}
+            onClick={() => downloadFiles(trackStreetInfos, blockedStreetInfos, intl, planningTitle)}
             disabled={trackStreetInfos.length === 0}
             variant={'info'}
             title={intl.formatMessage({ id: 'msg.downloadCsv' })}

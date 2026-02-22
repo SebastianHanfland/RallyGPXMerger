@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
 import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
+import { getPlanningTitle } from '../../store/settings.reducer.ts';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();
@@ -27,6 +28,7 @@ export const downloadFilesInZip = (calculatedTracks: { content: string; filename
 export const CalculatedFilesDownloader = () => {
     const intl = useIntl();
     const calculatedTracks = useSelector(getCalculateTracks);
+    const planningTitle = useSelector(getPlanningTitle) ?? 'RallyGPXMergeState';
 
     return (
         <Button
@@ -35,7 +37,7 @@ export const CalculatedFilesDownloader = () => {
                     filename: track.filename,
                     content: getGpxContentFromTimedPoints(track.points, track.filename!),
                 }));
-                downloadFilesInZip(trackWithContent, 'RallySimulation');
+                downloadFilesInZip(trackWithContent, `${planningTitle}-RallySimulation`);
             }}
             disabled={calculatedTracks.length === 0}
             variant={'info'}

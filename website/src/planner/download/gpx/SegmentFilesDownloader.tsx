@@ -5,10 +5,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
+import { getPlanningTitle } from '../../store/settings.reducer.ts';
 
 export const SegmentFilesDownloader = () => {
     const intl = useIntl();
     const segments = useSelector(getParsedGpxSegments);
+    const planningTitle = useSelector(getPlanningTitle) ?? 'RallyGPXMergeState';
+
     return (
         <Button
             onClick={() =>
@@ -17,7 +20,7 @@ export const SegmentFilesDownloader = () => {
                         content: getGpxContentStringFromParsedSegment(segment),
                         filename: segment.filename,
                     })),
-                    'Segments'
+                    `${planningTitle}-Segments`
                 )
             }
             disabled={segments.length === 0}

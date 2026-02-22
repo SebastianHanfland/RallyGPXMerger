@@ -11,7 +11,7 @@ import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
-import { getPlanningLabel } from '../store/settings.reducer.ts';
+import { getPlanningLabel, getPlanningTitle } from '../store/settings.reducer.ts';
 import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
 
 export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
@@ -25,6 +25,7 @@ export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispa
 export function downloadPdfFilesPure(
     intl: IntlShape,
     planningLabel: string,
+    planningTitle: string,
     trackStreetInfos: TrackStreetInfo[],
     blockedStreetInfos: BlockedStreetInfo[]
 ) {
@@ -42,7 +43,9 @@ export function downloadPdfFilesPure(
         zip.generateAsync({ type: 'blob' }).then(function (content) {
             FileSaver.saveAs(
                 content,
-                `${intl.formatMessage({ id: 'msg.streetListZip' })}-pdf-${new Date().toISOString()}.zip`
+                `${planningTitle}-${intl.formatMessage({
+                    id: 'msg.streetListZip',
+                })}-pdf-${new Date().toISOString()}.zip`
             );
         });
     }, 500);
@@ -52,13 +55,16 @@ export const downloadPdfFiles = (intl: IntlShape) => (_: Dispatch, getState: () 
     const trackStreetInfos = getTrackStreetInfos(getState());
     const blockedStreetInfos = getBlockedStreetInfo(getState());
     const planningLabel = getPlanningLabel(getState()) ?? '';
-    downloadPdfFilesPure(intl, planningLabel, trackStreetInfos, blockedStreetInfos);
+    const planningTitle = getPlanningTitle(getState()) ?? 'RallyGPXMergeState';
+
+    downloadPdfFilesPure(intl, planningLabel, planningTitle, trackStreetInfos, blockedStreetInfos);
 };
 
 export const StreetFilesPdfMakeDownloader = () => {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const trackStreetInfos = useSelector(getTrackStreetInfos);
+
     return (
         <Button
             onClick={(event) => {

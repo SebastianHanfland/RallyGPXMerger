@@ -10,6 +10,7 @@ import L from 'leaflet';
 import {
     getDisplayBlockedStreets,
     getDisplayPlanningLabel,
+    getDisplayTitle,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
 
@@ -19,6 +20,7 @@ export function TrackInformationModal() {
     const showModal = useSelector(getShowTrackInfo);
     const singleTrackId = useSelector(getShowSingleTrackInfo);
     const planningLabel = useSelector(getDisplayPlanningLabel) ?? '';
+    const planningTitle = useSelector(getDisplayTitle) ?? '';
     const blockedStreetInfos = useSelector(getDisplayBlockedStreets);
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
 
@@ -54,7 +56,13 @@ export function TrackInformationModal() {
                         <Button
                             variant="success"
                             onClick={() =>
-                                downloadPdfFilesPure(intl, planningLabel, trackStreetInfos, blockedStreetInfos)
+                                downloadPdfFilesPure(
+                                    intl,
+                                    planningLabel,
+                                    planningTitle,
+                                    trackStreetInfos,
+                                    blockedStreetInfos
+                                )
                             }
                         >
                             Alle PDF herunterladen
