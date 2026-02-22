@@ -42,6 +42,11 @@ const stateSettingReducer: Reducer = (state: State, action: AnyAction) => {
 export const createPlanningStore = () =>
     configureStore({
         reducer: reduceReducer(...[rootReducer, storingReducer, stateSettingReducer]),
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                immutableCheck: false,
+                serializableCheck: false,
+            }),
     });
 
 export const planningStore = createPlanningStore();
