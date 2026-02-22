@@ -17,7 +17,7 @@ interface Props {
     id: string;
     name: string;
 }
-export function FileChangeButton({ id, name }: Props) {
+export function FileChangeWithUploadButton({ id, name }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);

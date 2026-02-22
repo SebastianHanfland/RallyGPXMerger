@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
-import { FileChangeButton } from '../segments/FileChangeButton.tsx';
+import { FileChangeWithUploadButton } from '../segments/FileChangeWithUploadButton.tsx';
 import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
@@ -25,7 +25,7 @@ export const GpxSegmentContent = () => {
             <FileDownloaderDropdownItem content={gpxContent} name={`${filename}.gpx`} />
             <SplitSegmentDropdownItem />
 
-            <FileChangeButton id={id} name={filename} />
+            <FileChangeWithUploadButton id={id} name={filename} />
             <RemoveFileButton id={id} name={filename} />
             <FlipGpxButton id={id} name={filename} flipped={flipped} />
             <EditSegmentColorButton segment={clickedSegment} />

@@ -1,7 +1,7 @@
 import { ButtonGroup, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
-import { FileChangeButton } from './FileChangeButton.tsx';
+import { FileChangeWithUploadButton } from './FileChangeWithUploadButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 import { getUsagesOfSegment } from './segmentUsageCounter.ts';
 import { useIntl } from 'react-intl';
@@ -67,7 +67,7 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
                 >
                     <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
 
-                    {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
+                    {!hideChangeButton && <FileChangeWithUploadButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
                     <FlipGpxButton id={id} name={filename} flipped={flipped} />
                     <EditSegmentColorButton segment={gpxSegment} />

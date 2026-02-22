@@ -5,7 +5,7 @@ import { getColor } from '../../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../../store/map.reducer.ts';
 import { FileDownloaderDropdownItem } from '../../download/FileDownloader.tsx';
-import { FileChangeButton } from '../../segments/FileChangeButton.tsx';
+import { FileChangeWithUploadButton } from '../../segments/FileChangeWithUploadButton.tsx';
 import { RemoveFileButton } from '../../segments/RemoveFileButton.tsx';
 import { FlipGpxButton } from '../../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsButton.tsx';
@@ -87,7 +87,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                         title={''}
                     >
                         <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
-                        <FileChangeButton id={id} name={filename} />
+                        <FileChangeWithUploadButton id={id} name={filename} />
                         <RemoveFileButton id={id} name={filename} />
                         <FlipGpxButton id={id} name={filename} flipped={flipped} />
                         <EditSegmentColorButton segment={gpxSegment} />
