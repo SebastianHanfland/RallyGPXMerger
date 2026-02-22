@@ -90,7 +90,7 @@ export interface AggregatedPoints {
     district: string | null;
     frontArrival: string;
     frontPassage: string;
-    backArrival: string;
+    backPassage: string;
     pointFrom: { lat: number; lon: number; time: string };
     pointTo: { lat: number; lon: number; time: string };
     speed?: number;

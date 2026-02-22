@@ -41,10 +41,10 @@ export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape
         `${formatNumber(waypoint.distanceInKm ?? 0, 2)}`,
         `${formatNumber(waypoint.speed ?? 0, 1)}`,
         `${formatNumber(getTimeDifferenceInSeconds(waypoint.frontPassage, waypoint.frontArrival) / 60, 1)}`,
-        `${formatNumber(getTimeDifferenceInSeconds(waypoint.backArrival, waypoint.frontArrival) / 60, 1)}`,
+        `${formatNumber(getTimeDifferenceInSeconds(waypoint.backPassage, waypoint.frontArrival) / 60, 1)}`,
         `${formatTimeOnly(waypoint.frontArrival)}`,
         `${formatTimeOnly(waypoint.frontPassage)}`,
-        `${formatTimeOnly(waypoint.backArrival)}`,
+        `${formatTimeOnly(waypoint.backPassage)}`,
     ]);
     return {
         layout: 'lightHorizontalLines', // optional

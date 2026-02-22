@@ -83,8 +83,7 @@ export function aggregatePoints(
             streetName: streetLookup[firstPoint.s],
             district: districtLookup[firstPoint.s],
             postCode: postCodeLookup[firstPoint.s],
-            backArrival: shiftEndTimeByParticipants(correctedFirstPoint.t, participants, participantsDelayInSeconds),
-            // TODO: Check if this is right
+            backPassage: shiftEndTimeByParticipants(lastPoint.t, participants, participantsDelayInSeconds),
             frontPassage: lastPoint.t,
             frontArrival: correctedFirstPoint.t,
             pointFrom: extractLatLon(correctedFirstPoint),

@@ -151,7 +151,6 @@ export const getReplaceStreetLookup = (state: State) => getBase(state).replaceSt
 export const getReplacePostCodeLookup = (state: State) => getBase(state).replacePostCodeLookup;
 export const getReplaceDistrictLookup = (state: State) => getBase(state).replaceDistrictLookup;
 
-// Older functions TODO: #223 tidy up
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;

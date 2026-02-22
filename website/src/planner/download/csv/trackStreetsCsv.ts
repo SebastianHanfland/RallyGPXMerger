@@ -31,7 +31,7 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo, intl: IntlShape): 
                     district,
                     frontArrival,
                     frontPassage,
-                    backArrival,
+                    backPassage,
                     pointFrom,
                     pointTo,
                     type,
@@ -47,10 +47,10 @@ export function convertTrackInfoToCsv(track: TrackStreetInfo, intl: IntlShape): 
                     `${district ?? ''};` +
                     `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +
                     `${formatNumber(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60, 1)};` +
-                    `${formatNumber(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60, 1)};` +
+                    `${formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)};` +
                     `${formatTimeOnly(frontArrival)};` +
                     `${formatTimeOnly(frontPassage)};` +
-                    `${formatTimeOnly(backArrival)}`
+                    `${formatTimeOnly(backPassage)}`
             )
             .join('\n')
     );

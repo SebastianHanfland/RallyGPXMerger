@@ -51,7 +51,7 @@ export const calculateTrackStreetInfos = (
             name: track.name ?? track.id,
             startFront: startFront,
             publicStart: publicStart,
-            arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backArrival : backupDate,
+            arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backPassage : backupDate,
             arrivalFront: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].frontPassage : backupDate,
             distanceInKm: distance,
             peopleCount: track.peopleCount,
@@ -113,14 +113,11 @@ export function getWayPointsOfTrack(
                         getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                         -gpxOrBreak.minutes * 60
                     ),
-                    backArrival: shiftDateBySeconds(
+                    backPassage: shiftDateBySeconds(
                         getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                        -gpxOrBreak.minutes * 60 + participantsDelayInSeconds * (track.peopleCount ?? 0)
+                        participantsDelayInSeconds * (track.peopleCount ?? 0)
                     ),
-                    frontPassage: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                        -gpxOrBreak.minutes * 60
-                    ),
+                    frontPassage: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                     speed: undefined,
                     postCode: '',
                     distanceInKm: undefined,
@@ -136,8 +133,8 @@ export function getWayPointsOfTrack(
                     pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
                     pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
                     frontArrival: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                    backArrival: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                    backPassage: shiftDateBySeconds(
+                        getPreviousPoint(trackPoints, arrivalDate).frontPassage,
                         participantsDelayInSeconds * (track.peopleCount ?? 0)
                     ),
                     speed: undefined,

@@ -43,6 +43,17 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 <div className={'m-3'}>{`#${intl.formatMessage({ id: 'msg.people' })}: ${peopleCount ?? '---'}`}</div>
             </div>
             <Table striped bordered hover style={{ width: '100%' }}>
+                <colgroup>
+                    <col span={1} style={{ width: '20%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '12%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '9%' }} />
+                </colgroup>
                 <thead>
                     <tr>
                         <th>
@@ -61,14 +72,14 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                             <FormattedMessage id={'msg.speed'} />
                         </th>
                         <th>
-                            <span title={intl.formatMessage({ id: 'msg.duration.hint' })}>
+                            <div title={intl.formatMessage({ id: 'msg.duration.hint' })}>
                                 <FormattedMessage id={'msg.duration'} />
                                 <img src={info} className={'m-1'} alt="help" />
-                            </span>{' '}
-                            <span title={intl.formatMessage({ id: 'msg.blockage.hint' })}>
+                            </div>
+                            <div title={intl.formatMessage({ id: 'msg.blockage.hint' })}>
                                 ( <FormattedMessage id={'msg.blockage'} />
                                 <img src={info} className={'m-1'} alt="help" />)
-                            </span>
+                            </div>
                         </th>
                         <th>
                             <FormattedMessage id={'msg.arrivalOfFront'} />
@@ -94,7 +105,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         .map((waypoint) => {
                             const {
                                 streetName,
-                                backArrival,
+                                backPassage,
                                 frontArrival,
                                 frontPassage,
                                 postCode,
@@ -108,7 +119,7 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 speed,
                             } = waypoint;
                             return (
-                                <tr key={backArrival + streetName + frontArrival}>
+                                <tr key={backPassage + streetName + frontArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName ?? unknown} />
                                         <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
@@ -136,11 +147,11 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                     <td>{(speed ?? 0).toFixed(1)} km/h</td>
                                     <td>
                                         {(getTimeDifferenceInSeconds(frontPassage, frontArrival) / 60).toFixed(1)} min (
-                                        {(getTimeDifferenceInSeconds(backArrival, frontArrival) / 60).toFixed(1)} min)
+                                        {(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60).toFixed(1)} min)
                                     </td>
                                     <td>{formatTimeOnly(frontArrival)}</td>
                                     <td>{formatTimeOnly(frontPassage)}</td>
-                                    <td>{formatTimeOnly(backArrival)}</td>
+                                    <td>{formatTimeOnly(backPassage)}</td>
                                 </tr>
                             );
                         })}
