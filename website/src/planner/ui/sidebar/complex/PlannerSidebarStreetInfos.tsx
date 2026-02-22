@@ -3,6 +3,7 @@ import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
 import { StreetInfoModal } from '../../elements/StreetInfoModal.tsx';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { UnknownWarning } from '../../../streets/UnknownWarning.tsx';
 
 export const PlannerSidebarStreetInfos = () => {
     const trackStreetInfos = useSelector(getTrackStreetInfos);
@@ -19,6 +20,7 @@ export const PlannerSidebarStreetInfos = () => {
                         active={selectedTrackId === track.id}
                         onClick={() => setSelectedTrackId(track.id)}
                     >
+                        <UnknownWarning trackId={track.id} />
                         {track.name || 'N.N.'}
                     </PageItem>
                 ))}

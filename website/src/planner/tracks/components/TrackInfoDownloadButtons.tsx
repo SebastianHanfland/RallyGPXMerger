@@ -13,6 +13,7 @@ import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
 import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
 import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
+import { UnknownWarning } from '../../streets/UnknownWarning.tsx';
 
 export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const intl = useIntl();
@@ -64,6 +65,7 @@ export function TrackInfoDownloadButtons({ matchedTrackInfo }: { matchedTrackInf
                 {matchedTrackInfo && (
                     <Col>
                         <Button size={'sm'} className={'m-1'} onClick={() => setDisplayStreetInfo(true)}>
+                            <UnknownWarning trackId={matchedTrackInfo.id} />
                             <FormattedMessage id={'msg.trackStreetInfo'} />
                         </Button>
                         {displayStreetInfo && (

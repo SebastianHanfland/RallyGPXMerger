@@ -14,6 +14,7 @@ export const OnlyShowUnknownCheckBox = () => {
             className={'m-3'}
             label={<FormattedMessage id={'msg.onlyUnknown'} />}
             checked={onlyShowUnknown}
+            readOnly={true}
             onClick={() => dispatch(geoCodingActions.toggleOnlyShowUnknown())}
         ></Form.Check>
     );

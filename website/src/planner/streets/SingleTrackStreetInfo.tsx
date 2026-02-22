@@ -1,4 +1,4 @@
-import { WayPoint, TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
@@ -11,18 +11,10 @@ import { EditStreetNameButton } from './EditStreetNameButton.tsx';
 import { EditDistrictButton } from './EditDistrictButton.tsx';
 import { EditPostCodeButton } from './EditPostCodeButton.tsx';
 import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox.tsx';
+import { wayPointHasUnknown } from './unknownUtil.ts';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
-}
-
-function wayPointHasUnknown(wayPoint: WayPoint, unknown: string) {
-    return (
-        wayPoint.streetName === unknown ||
-        !wayPoint.streetName ||
-        wayPoint.postCode === undefined ||
-        wayPoint.district === undefined
-    );
 }
 
 export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {

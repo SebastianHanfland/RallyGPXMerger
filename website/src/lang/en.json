@@ -126,6 +126,7 @@
     "msg.allEntries": "Show all entries",
     "msg.onlyUnknown": "Only show \"Unknown\"",
     "msg.unknown": "Unknown",
+    "msg.numberOfUnknown": "There are {amount} unknown elements",
     "msg.blockedStreets": "Blocked Streets",
     "msg.postCode": "Post code",
     "msg.district": "District",
