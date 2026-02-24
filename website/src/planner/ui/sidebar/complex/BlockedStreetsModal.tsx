@@ -1,6 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { BlockedStreetsModalContent } from './BlockedStreetsModalContent.tsx';
 
 interface Props {
     onHide: () => void;
@@ -14,7 +15,9 @@ export const BlockedStreetsModal = ({ onHide }: Props) => {
                     <FormattedMessage id={'msg.blockedStreets'} />
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>{/*<SingleTrackStreetInfo trackStreetInfo={selectedTrack} />*/}</Modal.Body>
+            <Modal.Body>
+                <BlockedStreetsModalContent />
+            </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>
                     <FormattedMessage id={'msg.close'} />
