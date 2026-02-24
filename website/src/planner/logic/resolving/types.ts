@@ -79,6 +79,7 @@ export interface BlockedStreetInfo {
     district: string | null;
     frontArrival: string;
     backPassage: string;
+    distanceInKm?: number;
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
     // Maybe also which tracks pass through here?

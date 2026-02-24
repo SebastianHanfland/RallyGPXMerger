@@ -20,8 +20,9 @@ export const BlockedStreetsModalContent = () => {
                     <col span={1} style={{ width: '20%' }} />
                     <col span={1} style={{ width: '9%' }} />
                     <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '12%' }} />
                     <col span={1} style={{ width: '9%' }} />
-                    <col span={1} style={{ width: '9%' }} />
+                    <col span={1} style={{ width: '12%' }} />
                     <col span={1} style={{ width: '12%' }} />
                 </colgroup>
                 <thead>
@@ -36,9 +37,12 @@ export const BlockedStreetsModalContent = () => {
                             <FormattedMessage id={'msg.district'} />
                         </th>
                         <th>
+                            <FormattedMessage id={'msg.length'} />
+                        </th>
+                        <th>
                             <div title={intl.formatMessage({ id: 'msg.blockage.hint' })}>
-                                ( <FormattedMessage id={'msg.blockage'} />
-                                <img src={info} className={'m-1'} alt="help" />)
+                                <FormattedMessage id={'msg.blockage'} />
+                                <img src={info} className={'m-1'} alt="help" />
                             </div>
                         </th>
                         <th>
@@ -54,8 +58,16 @@ export const BlockedStreetsModalContent = () => {
                         .filter((street) => !wayPointHasUnknown(street, unknown))
                         .sort((a, b) => ((a.streetName ?? '') > (b.streetName ?? '') ? 1 : -1))
                         .map((street) => {
-                            const { streetName, backPassage, frontArrival, postCode, district, pointTo, pointFrom } =
-                                street;
+                            const {
+                                streetName,
+                                backPassage,
+                                frontArrival,
+                                postCode,
+                                district,
+                                pointTo,
+                                pointFrom,
+                                distanceInKm,
+                            } = street;
                             return (
                                 <tr key={backPassage + streetName + frontArrival}>
                                     <td>
@@ -68,7 +80,7 @@ export const BlockedStreetsModalContent = () => {
                                     <td>
                                         <HighlightUnknown value={district?.toString() ?? unknown} />
                                     </td>
-                                    {/*<td>{formatNumber(distanceInKm ?? 0, 2)} km</td>*/}
+                                    <td>{formatNumber(distanceInKm ?? 0, 2)} km</td>
                                     <td>
                                         {formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)}{' '}
                                         min

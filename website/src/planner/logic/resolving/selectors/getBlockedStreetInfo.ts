@@ -27,6 +27,7 @@ export const getBlockedStreetInfo = createSelector(getTrackStreetInfos, (trackSt
                         backPassage: waypoint.backPassage,
                         postCode: waypoint.postCode,
                         district: waypoint.district,
+                        distanceInKm: waypoint.distanceInKm,
                         pointFrom: waypoint.pointFrom,
                         pointTo: waypoint.pointTo,
                     });
