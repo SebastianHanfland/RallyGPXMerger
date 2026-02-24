@@ -106,7 +106,7 @@
     "msg.arrivalDate.title": "Ankunft der Routen",
     "msg.arrivalDate.hint": "Wann die ersten Routen am Ziel ankommen sollen:",
     "msg.label.title": "Weitere Angaben zur Planung",
-    "msg.label.hint": "Dieser Text kann als Versionsbezeichnung benutzt werden. Er taucht in den Dokumenten auf",
+    "msg.label.hint": "Dieser Text wird am Anfang der PDF Dokumente hinzugefügt",
     "msg.aLot": "Viel",
     "msg.none": "Keine",
     "msg.participantsDelay.title": "Ausdehnung der Teilnehmenden",
