@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { PlanningLabel } from '../../../parameters/PlanningLabel.tsx';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { PlannerSidebarServerSection } from '../../../server/ServerInteraction.tsx';
+import { PlannerSidebarBlockedStreets } from './PlannerSidebarBlockedStreets.tsx';
 
 export const PlannerSidebarDocuments = () => {
     return (
@@ -19,6 +20,7 @@ export const PlannerSidebarDocuments = () => {
                 </h3>
                 <PlannerSidebarStreetInfos />
             </div>
+            <PlannerSidebarBlockedStreets />
             <div>
                 <PlanningLabel />
             </div>
