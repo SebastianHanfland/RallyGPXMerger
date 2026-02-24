@@ -16,7 +16,7 @@ let timeMirror = 0;
 
 const sliderStyle: CSSProperties = {
     position: 'fixed',
-    width: '390px',
+    width: 'calc(50vw - 70px)',
     height: '45px',
     borderRadius: '10px',
     left: 60,
@@ -65,7 +65,7 @@ export function TimeSlider() {
                 <div className={'mx-1'} style={{ width: '120px' }}>
                     {dateValue ? formatTimeOnly(dateValue) : intl.formatMessage({ id: 'msg.noCalculatedTracks' })}
                 </div>
-                <div className={'d-flex mx-2 my-1'}>
+                <div className={'d-flex mx-2 my-1 flex-fill'}>
                     <Form.Range
                         min={0}
                         max={MAX_SLIDER_TIME}
