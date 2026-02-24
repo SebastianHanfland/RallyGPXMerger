@@ -14,6 +14,7 @@ export const getBlockedStreetsHeader = (intl: IntlShape) => {
         'msg.blockageInMin',
         'msg.blockedFrom',
         'msg.blockedUntil',
+        'msg.people',
     ];
     return headerKeys.map((key) => intl.formatMessage({ id: key })).join(';');
 };
@@ -24,14 +25,28 @@ export function convertStreetInfoToCsv(blockedStreets: BlockedStreetInfo[], intl
         '\n' +
         blockedStreets
             .map(
-                ({ postCode, district, streetName, frontArrival, backPassage, pointTo, pointFrom }) =>
+                ({
+                    postCode,
+                    district,
+                    streetName,
+                    frontArrival,
+                    backPassage,
+                    pointTo,
+                    pointFrom,
+                    distanceInKm,
+                    peopleCount,
+                }) =>
                     `${postCode ?? ''};` +
                     `${district ?? ''};` +
                     `${streetName ?? intl.formatMessage({ id: 'msg.unknown' })};` +
-                    `${formatNumber(geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number, 2)};` +
+                    `${formatNumber(
+                        distanceInKm ?? (geoDistance(toLatLng(pointFrom), toLatLng(pointTo)) as number),
+                        2
+                    )};` +
                     `${formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)};` +
                     `${formatTimeOnly(frontArrival)};` +
-                    `${formatTimeOnly(backPassage)}`
+                    `${formatTimeOnly(backPassage)};` +
+                    `${formatNumber(peopleCount)}`
             )
             .join('\n')
     );

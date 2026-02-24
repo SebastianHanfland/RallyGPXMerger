@@ -4,8 +4,8 @@ import geoDistance from 'geo-distance-helper';
 import { ContentTable, TDocumentDefinitions } from 'pdfmake/interfaces';
 import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
-import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
+import { createPdf } from 'pdfmake/build/pdfmake';
 import { IntlShape } from 'react-intl';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
@@ -26,10 +26,15 @@ export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[], intl
             style: 'linkStyle',
             link: getLink(streetPoint),
         },
-        `${formatNumber(geoDistance(toLatLng(streetPoint.pointFrom), toLatLng(streetPoint.pointTo)) as number, 2)}`,
+        `${formatNumber(
+            streetPoint.distanceInKm ??
+                (geoDistance(toLatLng(streetPoint.pointFrom), toLatLng(streetPoint.pointTo)) as number),
+            2
+        )}`,
         `${formatNumber(getTimeDifferenceInSeconds(streetPoint.backPassage, streetPoint.frontArrival) / 60, 1)}`,
         `${formatTimeOnly(streetPoint.frontArrival)}`,
         `${formatTimeOnly(streetPoint.backPassage)}`,
+        `${formatNumber(streetPoint.peopleCount)}`,
     ]);
     return {
         layout: 'lightHorizontalLines', // optional
@@ -37,7 +42,7 @@ export function createBlockedStreetTable(trackStreets: BlockedStreetInfo[], intl
             // headers are automatically repeated if the table spans over multiple pages
             // you can declare how many rows should be treated as headers
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
             body: [tableHeader, ...wayPointRows],
         },
     };
