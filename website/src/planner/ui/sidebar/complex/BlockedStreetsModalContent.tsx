@@ -51,6 +51,9 @@ export const BlockedStreetsModalContent = () => {
                         <th>
                             <FormattedMessage id={'msg.passageOfBack'} />
                         </th>
+                        <th>
+                            <FormattedMessage id={'msg.passageOfBack'} />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +70,7 @@ export const BlockedStreetsModalContent = () => {
                                 pointTo,
                                 pointFrom,
                                 distanceInKm,
+                                peopleCount,
                             } = street;
                             return (
                                 <tr key={backPassage + streetName + frontArrival}>
@@ -87,6 +91,7 @@ export const BlockedStreetsModalContent = () => {
                                     </td>
                                     <td>{formatTimeOnly(frontArrival)}</td>
                                     <td>{formatTimeOnly(backPassage)}</td>
+                                    <td>{peopleCount}</td>
                                 </tr>
                             );
                         })}

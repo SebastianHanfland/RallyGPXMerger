@@ -82,7 +82,8 @@ export interface BlockedStreetInfo {
     distanceInKm?: number;
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
-    // Maybe also which tracks pass through here?
+    peopleCount: number;
+    tracksIds: string[];
 }
 
 export interface WayPoint {
