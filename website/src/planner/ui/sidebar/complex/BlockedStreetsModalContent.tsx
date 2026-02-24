@@ -7,6 +7,7 @@ import { HighlightUnknown } from '../../../streets/HighlightUnknown.tsx';
 import { StreetMapLink } from '../../../streets/StreetMapLink.tsx';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { getBlockedStreetInfo } from '../../../logic/resolving/selectors/getBlockedStreetInfo.ts';
+import { wayPointHasUnknown } from '../../../streets/unknownUtil.ts';
 
 export const BlockedStreetsModalContent = () => {
     const intl = useIntl();
@@ -49,31 +50,34 @@ export const BlockedStreetsModalContent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/*// .filter((wayPoint) => (onlyShowUnknown ? wayPointHasUnknown(wayPoint, unknown) : true))*/}
-                    {blockedStreetInfos.map((street) => {
-                        const { streetName, backPassage, frontArrival, postCode, district, pointTo, pointFrom } =
-                            street;
-                        return (
-                            <tr key={backPassage + streetName + frontArrival}>
-                                <td>
-                                    <HighlightUnknown value={streetName ?? unknown} />
-                                    <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
-                                </td>
-                                <td>
-                                    <HighlightUnknown value={postCode?.toString() ?? unknown} />
-                                </td>
-                                <td>
-                                    <HighlightUnknown value={district?.toString() ?? unknown} />
-                                </td>
-                                {/*<td>{formatNumber(distanceInKm ?? 0, 2)} km</td>*/}
-                                <td>
-                                    {formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)} min
-                                </td>
-                                <td>{formatTimeOnly(frontArrival)}</td>
-                                <td>{formatTimeOnly(backPassage)}</td>
-                            </tr>
-                        );
-                    })}
+                    {blockedStreetInfos
+                        .filter((street) => !wayPointHasUnknown(street, unknown))
+                        .sort((a, b) => ((a.streetName ?? '') > (b.streetName ?? '') ? 1 : -1))
+                        .map((street) => {
+                            const { streetName, backPassage, frontArrival, postCode, district, pointTo, pointFrom } =
+                                street;
+                            return (
+                                <tr key={backPassage + streetName + frontArrival}>
+                                    <td>
+                                        <HighlightUnknown value={streetName ?? unknown} />
+                                        <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
+                                    </td>
+                                    <td>
+                                        <HighlightUnknown value={postCode?.toString() ?? unknown} />
+                                    </td>
+                                    <td>
+                                        <HighlightUnknown value={district?.toString() ?? unknown} />
+                                    </td>
+                                    {/*<td>{formatNumber(distanceInKm ?? 0, 2)} km</td>*/}
+                                    <td>
+                                        {formatNumber(getTimeDifferenceInSeconds(backPassage, frontArrival) / 60, 1)}{' '}
+                                        min
+                                    </td>
+                                    <td>{formatTimeOnly(frontArrival)}</td>
+                                    <td>{formatTimeOnly(backPassage)}</td>
+                                </tr>
+                            );
+                        })}
                 </tbody>
             </Table>
         </div>

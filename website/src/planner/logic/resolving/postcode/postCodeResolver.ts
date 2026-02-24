@@ -7,6 +7,7 @@ const correctionTuples: [string, string][] = [
     ['constituency for the Bundestag election ', ''],
     ['Bundestagswahlkreis ', ''],
     ['Wahlkreis ', ''],
+    ['District of  ', ''],
     ['Munchen', 'München'],
     ['Munich', 'München'],
 ];
