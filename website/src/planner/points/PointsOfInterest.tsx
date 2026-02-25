@@ -18,11 +18,14 @@ export function PointsOfInterest() {
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>
-                        <th style={{ width: '30%' }}>
+                        <th style={{ width: '20%' }}>
                             <FormattedMessage id={'msg.title'} />
                         </th>
                         <th style={{ width: '70%', minWidth: '150px' }}>
                             <FormattedMessage id={'msg.description'} />
+                        </th>
+                        <th style={{ width: '10%', minWidth: '100px' }}>
+                            <FormattedMessage id={'msg.actions'} />
                         </th>
                     </tr>
                 </thead>
@@ -38,11 +41,14 @@ export function PointsOfInterest() {
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>
-                        <th style={{ width: '30%' }}>
+                        <th style={{ width: '20%' }}>
                             <FormattedMessage id={'msg.title'} />
                         </th>
                         <th style={{ width: '70%', minWidth: '150px' }}>
                             <FormattedMessage id={'msg.description'} />
+                        </th>
+                        <th style={{ width: '10%', minWidth: '100px' }}>
+                            <FormattedMessage id={'msg.actions'} />
                         </th>
                     </tr>
                 </thead>

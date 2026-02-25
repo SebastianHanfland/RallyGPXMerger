@@ -9,8 +9,8 @@ export function moveCenterPointHook(map: L.Map | undefined) {
 
     useEffect(() => {
         if (pointToCenter && map) {
-            const { lat, lon, zoom } = pointToCenter;
-            map.setView({ lat: lat, lng: lon }, zoom);
+            const { lat, lng, zoom } = pointToCenter;
+            map.setView({ lat: lat, lng: lng }, zoom);
             dispatch(mapActions.setPointToCenter(undefined));
         }
     }, [pointToCenter]);
