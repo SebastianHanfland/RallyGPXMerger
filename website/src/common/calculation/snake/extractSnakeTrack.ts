@@ -19,11 +19,15 @@ function interpolatePosition(previous: TimedPoint, next: TimedPoint, timeStamp: 
 }
 
 export function extractSnakeTrackFromCalculatedTrack(
-    timeStampFront: string,
+    timeStampFront: string | undefined,
     participants: number,
     track: CalculatedTrack,
     participantsDelayInSeconds: number
 ): { lat: number; lng: number }[] {
+    if (!timeStampFront) {
+        return [];
+    }
+    console.log({ timeStampFront, participants, participantsDelayInSeconds });
     const timeStampEnd = date
         .addSeconds(new Date(timeStampFront), -participants * participantsDelayInSeconds)
         .toISOString();

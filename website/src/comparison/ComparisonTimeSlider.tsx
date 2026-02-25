@@ -49,7 +49,7 @@ export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: 
                             : intl.formatMessage({ id: 'msg.time' });
 
                         return (
-                            <div>
+                            <div key={planningId}>
                                 {formattedTimeStamp}
                                 {` (${trackInfo[planningId]})`}
                             </div>
