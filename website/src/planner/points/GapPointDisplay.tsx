@@ -15,7 +15,7 @@ export function GapPointDisplay({ gapPoint }: { gapPoint: GapPoint }) {
             <td key={'description'}>
                 <div>{description}</div>
             </td>
-            <td key={'description'}>
+            <td key={'actions'}>
                 <div onClick={() => dispatch(mapActions.setPointToCenter(gapPoint))}>
                     <GeoLinkIcon />
                 </div>
