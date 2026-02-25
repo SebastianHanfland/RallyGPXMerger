@@ -131,6 +131,7 @@ export interface NodesState {
 export interface MapState {
     currentTime: number;
     showMapMarker?: boolean;
+    showBreakMarker?: boolean;
     showBlockStreets?: boolean;
     showCalculatedTracks?: boolean;
     showGpxSegments?: boolean;

@@ -2,6 +2,7 @@ import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getShowBlockStreets,
+    getShowBreakMarker,
     getShowCalculatedTracks,
     getShowConstructions,
     getShowGpxSegments,
@@ -30,6 +31,7 @@ const mapContentStyle: CSSProperties = {
 export function MapContentSelection() {
     const intl = useIntl();
     const showMapMarker = useSelector(getShowMapMarker);
+    const showBreakMarker = useSelector(getShowBreakMarker);
     const showPointsOfInterest = useSelector(getShowPointsOfInterest);
     const showConstructions = useSelector(getShowConstructions);
     const hasConstructions = (useSelector(getConstructionSegments) ?? [])?.length > 0;
@@ -92,6 +94,17 @@ export function MapContentSelection() {
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                     >
                         {intl.formatMessage({ id: 'msg.marker' })}
+                    </Button>
+                    <Button
+                        id={'break'}
+                        title={intl.formatMessage({
+                            id: showBreakMarker ? 'msg.hideBreakMarker' : 'msg.showBreakMarker',
+                        })}
+                        variant={showBreakMarker ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowBreakMarker(!showBreakMarker))}
+                    >
+                        {intl.formatMessage({ id: 'msg.breaks' })}
                     </Button>
                     <Button
                         id={'points'}
