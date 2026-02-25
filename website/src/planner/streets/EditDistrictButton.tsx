@@ -1,6 +1,5 @@
 import { WayPoint } from '../logic/resolving/types.ts';
 import Button from 'react-bootstrap/Button';
-import pencil from '../../assets/pencil.svg';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Form } from 'react-bootstrap';
@@ -8,6 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/planningStore.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
+import { EditIcon } from '../../utils/icons/EditIcon.tsx';
 
 interface Props {
     waypoint: WayPoint;
@@ -23,14 +23,9 @@ export function EditDistrictButton(props: Props) {
 
     return (
         <>
-            <img
-                src={pencil}
-                className="m-1"
-                style={{ cursor: 'pointer' }}
-                onClick={() => setShowModal(true)}
-                alt="upload file"
-                color={'#ffffff'}
-            />
+            <span onClick={() => setShowModal(true)}>
+                <EditIcon />
+            </span>
             {showModal && <EditDistrictModal waypoint={waypoint} closeModal={() => setShowModal(false)} />}
         </>
     );
