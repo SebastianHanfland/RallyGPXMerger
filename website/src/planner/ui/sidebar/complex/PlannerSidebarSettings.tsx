@@ -9,6 +9,7 @@ import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
 import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
+import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 
 export const PlannerSidebarSettings = () => {
     const accordionEntries: [string, ReactNode, string][] = [
@@ -26,6 +27,7 @@ export const PlannerSidebarSettings = () => {
         ['msg.communicatedStart', <StartTimeTable />, '4'],
         ['msg.ownApiKey', <ApiKeyInput />, '5'],
         ['msg.constructions.title', <ConstructionSites />, '6'],
+        ['msg.points', <PointsOfInterest />, '7'],
     ];
     return (
         <div className={'m-2'}>
