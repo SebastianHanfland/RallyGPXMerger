@@ -293,6 +293,7 @@
     "msg.fileSaved.success.message": "Eine Datei mit allen wichtigen Infos zur Planung wurde heruntergeladen. Damit können Sie wieder auf die Planung zugreifen",
     "msg.publicLink": "Öffentlicher Link",
     "msg.planningLink": "Planungslink",
+    "msg.compareLink": "Link zum Vergleich mit anderen Planungen",
     "msg.iframeExample": "Beispiel für iframe Code Integration",
     "msg.planningLinkWithAdmin": "Planungslink zum Editieren",
     "msg.planningPassword": "Passwort für den Planungslink",

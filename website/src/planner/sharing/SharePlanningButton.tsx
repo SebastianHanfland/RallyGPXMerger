@@ -73,6 +73,7 @@ const SharingModalBody = () => {
     const password = useSelector(getPlanningPassword);
     const planningId = useSelector(getPlanningId);
     const planningTitle = useSelector(getPlanningTitle);
+    const compareLink = `${getBaseUrl()}?comparison=${planningId},<other-planning-id>`;
     const displayLink = `${getBaseUrl()}?display=${planningId}`;
     const tableLink = `${getBaseUrl()}?table=${planningId}`;
     const planningLink = `${getBaseUrl()}?section=gps&planning=${planningId}`;
@@ -98,6 +99,12 @@ const SharingModalBody = () => {
                     <FormattedMessage id={'msg.planningLink'} />: <b>{planningLink}</b>
                 </span>
                 <CopyToClipboardButton text={planningLink} />
+            </div>
+            <div style={entryStyle}>
+                <span>
+                    <FormattedMessage id={'msg.compareLink'} />: <b>{compareLink}</b>
+                </span>
+                <CopyToClipboardButton text={compareLink} />
             </div>
             <div style={entryStyle}>
                 <span>

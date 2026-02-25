@@ -293,6 +293,7 @@
     "msg.fileSaved.success.message": "A file with all relevant information was downloaded. With it, you can access the planning again",
     "msg.publicLink": "Public link",
     "msg.planningLink": "Link for planning",
+    "msg.compareLink": "Link for comparing planning with other plannings",
     "msg.iframeExample": "Example for iframe code integration",
     "msg.planningLinkWithAdmin": "Link for editing planning",
     "msg.planningPassword": "Password for the planning link",
