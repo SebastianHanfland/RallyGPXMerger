@@ -128,6 +128,12 @@ export interface NodesState {
     nodeSpecifications?: NodeSpecifications;
 }
 
+export interface PointToCenter {
+    lat: number;
+    lon: number;
+    zoom: number;
+}
+
 export interface MapState {
     currentTime: number;
     showMapMarker?: boolean;
@@ -138,6 +144,7 @@ export interface MapState {
     showConstructions?: boolean;
     showPointsOfInterest?: boolean;
     highlightedSegmentId?: string;
+    pointToCenter?: PointToCenter;
 }
 
 export interface PointsState {

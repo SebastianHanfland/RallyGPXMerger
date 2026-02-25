@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { MapState, State } from './types.ts';
+import { MapState, PointToCenter, State } from './types.ts';
 import { storage } from './storage.ts';
 
 const initialState: MapState = {
@@ -37,6 +37,9 @@ const mapSlice = createSlice({
         setHighlightedSegmentId: (state: MapState, action: PayloadAction<string | undefined>) => {
             state.highlightedSegmentId = action.payload;
         },
+        setPointToCenter: (state: MapState, action: PayloadAction<PointToCenter | undefined>) => {
+            state.pointToCenter = action.payload;
+        },
     },
 });
 
@@ -52,3 +55,4 @@ export const getShowGpxSegments = (state: State) => getBase(state).showGpxSegmen
 export const getShowConstructions = (state: State) => getBase(state).showConstructions;
 export const getShowPointsOfInterest = (state: State) => getBase(state).showPointsOfInterest ?? true;
 export const getHighlightedSegmentId = (state: State) => getBase(state).highlightedSegmentId;
+export const getPointToCenter = (state: State) => getBase(state).pointToCenter;

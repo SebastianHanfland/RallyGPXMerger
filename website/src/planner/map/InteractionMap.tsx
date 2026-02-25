@@ -23,6 +23,7 @@ import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
 import { EditBreakDialog } from './EditBreakDialog.tsx';
 import { EditNodeDialog } from '../nodes/EditNodeDialog.tsx';
+import { moveCenterPointHook } from './hooks/moveCenterPointHook.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -70,6 +71,7 @@ export const InteractionMap = () => {
     }, []);
 
     centerPointHook(myMap, startZoom);
+    moveCenterPointHook(myMap);
 
     const gpxSegmentsLayer = useRef<LayerGroup>(null);
     const blockedStreetLayer = useRef<LayerGroup>(null);
