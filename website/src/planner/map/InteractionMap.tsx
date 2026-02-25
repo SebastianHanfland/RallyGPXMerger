@@ -24,6 +24,7 @@ import { getLatLng } from '../../utils/pointUtil.ts';
 import { EditBreakDialog } from './EditBreakDialog.tsx';
 import { EditNodeDialog } from '../nodes/EditNodeDialog.tsx';
 import { moveCenterPointHook } from './hooks/moveCenterPointHook.tsx';
+import { breakPointsDisplayHook } from './hooks/breakPointsDisplayHook.ts';
 
 let myMap: L.Map | undefined;
 
@@ -80,6 +81,7 @@ export const InteractionMap = () => {
     const constructionsLayer = useRef<LayerGroup>(null);
     const pointsOfInterestLayer = useRef<LayerGroup>(null);
     const nodePointsLayer = useRef<LayerGroup>(null);
+    const breakPointsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -99,6 +101,8 @@ export const InteractionMap = () => {
         pointsOfInterestLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         nodePointsLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        breakPointsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     blockedStreetsDisplayHook(blockedStreetLayer);
@@ -106,6 +110,7 @@ export const InteractionMap = () => {
     snakeForPlanningMapHook(snakeLayer);
     constructionsDisplayHook(constructionsLayer);
     pointsOfInterestDisplayHook(pointsOfInterestLayer);
+    breakPointsDisplayHook(breakPointsLayer);
     nodePointsDisplayHook(nodePointsLayer);
     gpxSegmentDisplayHook(gpxSegmentsLayer);
 
