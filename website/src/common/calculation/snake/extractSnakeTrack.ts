@@ -27,7 +27,6 @@ export function extractSnakeTrackFromCalculatedTrack(
     if (!timeStampFront) {
         return [];
     }
-    console.log({ timeStampFront, participants, participantsDelayInSeconds });
     const timeStampEnd = date
         .addSeconds(new Date(timeStampFront), -participants * participantsDelayInSeconds)
         .toISOString();
