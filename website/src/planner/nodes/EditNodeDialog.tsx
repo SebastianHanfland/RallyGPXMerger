@@ -95,6 +95,7 @@ export const EditNodeDialog = () => {
                             <div key={segmentId} className={'mt-5'}>
                                 {tracks.map((track) => (
                                     <span
+                                        key={track.id}
                                         title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
                                             id: 'msg.trackPeople',
                                         })}`}
@@ -146,7 +147,7 @@ export const EditNodeDialog = () => {
                                             title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
                                                 id: 'msg.trackPeople',
                                             })}`}
-                                            key={1}
+                                            key={track.id}
                                             style={{ cursor: 'pointer', background: getColor(track) }}
                                         />
                                     ))}

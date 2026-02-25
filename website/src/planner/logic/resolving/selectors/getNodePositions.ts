@@ -28,16 +28,14 @@ export const getNodePositions = createSelector(
     getParsedGpxSegments,
     (trackCompositions, parsedTracks): NodePosition[] => {
         const trackNodes = listAllNodesOfTracks(trackCompositions);
-        const segmentIdsBeforeNode = trackNodes.flatMap((trackNode) =>
-            trackNode.segmentsBeforeNode.map((tr) => tr.segmentId)
-        );
+        const segmentIdsAfterNode = trackNodes.map((trackNode) => trackNode.segmentIdAfterNode);
 
         const nodePositions: NodePosition[] = [];
 
-        segmentIdsBeforeNode.forEach((segmentId) => {
+        segmentIdsAfterNode.forEach((segmentId) => {
             const foundSegment = parsedTracks?.find((gpxSegment) => gpxSegment.id === segmentId);
             if (foundSegment) {
-                const lastPointOfSegment = foundSegment.points[foundSegment.points.length - 1];
+                const lastPointOfSegment = foundSegment.points[0];
                 nodePositions.push({
                     point: getLatLon(lastPointOfSegment),
                     tracks: getTracks(segmentId, trackNodes, trackCompositions),
