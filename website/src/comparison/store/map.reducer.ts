@@ -45,4 +45,4 @@ export const getCurrenMapTime = (state: ComparisonTrackState) => getBase(state).
 export const getComparisonMapStartAndEndTimes = (state: ComparisonTrackState) => getBase(state).startAndEndTimes;
 export const getShowMapMarker = (state: ComparisonTrackState) => getBase(state).showMapMarker ?? false;
 export const getHighlightedTrack = (state: ComparisonTrackState) => getBase(state).highlightedTrack;
-export const getShowConstructions = (state: ComparisonTrackState) => getBase(state).showConstructions;
+export const getShowComparisonMapConstructions = (state: ComparisonTrackState) => getBase(state).showConstructions;

@@ -82,4 +82,4 @@ export const getSelectedVersions = (state: ComparisonTrackState) => getBase(stat
 export const getSelectedTracks = (state: ComparisonTrackState) => getBase(state).selectedTracks;
 export const getComparisonTrackTitles = (state: ComparisonTrackState) => getBase(state).trackInfo;
 export const getComparisonParticipantsDelay = (state: ComparisonTrackState) => getBase(state).participantsDelay;
-export const getConstructions = (state: ComparisonTrackState) => getBase(state).constructions;
+export const getComparisonMapConstructions = (state: ComparisonTrackState) => getBase(state).constructions;

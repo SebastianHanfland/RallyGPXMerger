@@ -5,7 +5,7 @@ import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } fro
 import { getBikeSnakesForDisplayMap, getCurrentComparisonTimeStamps } from './dataReading.ts';
 import { addBikeSnakesToLayer } from '../../common/map/addSnakeWithBikeToMap.ts';
 
-export function snakeForDisplayMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
+export function snakeForComparisonMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
     const comparisonParsedTracks = useSelector(getComparisonParsedTracks);
     const currentMapTime = useSelector(getCurrentComparisonTimeStamps);
     const selectedTracks = useSelector(getSelectedTracks);

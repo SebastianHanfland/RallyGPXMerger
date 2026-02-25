@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowConstructions, getShowMapMarker, mapActions } from './store/map.reducer.ts';
+import { getShowComparisonMapConstructions, getShowMapMarker, mapActions } from './store/map.reducer.ts';
 import {
     getSelectedTracks,
     getSelectedVersions,
@@ -8,7 +8,7 @@ import {
     comparisonActions,
     getPlanningIds,
     getComparisonParsedTracks,
-    getConstructions,
+    getComparisonMapConstructions,
 } from './store/tracks.reducer.ts';
 import Select from 'react-select';
 import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
@@ -17,12 +17,12 @@ import { getBaseUrl } from '../utils/linkUtil.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
-    const showConstructions = useSelector(getShowConstructions);
+    const showConstructions = useSelector(getShowComparisonMapConstructions);
     const comparisonParsedTracks = useSelector(getComparisonParsedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const trackInfo = useSelector(getComparisonTrackTitles);
-    const constructions = useSelector(getConstructions);
+    const constructions = useSelector(getComparisonMapConstructions);
     const planningIds = useSelector(getPlanningIds);
     const dispatch = useDispatch();
     const intl = useIntl();
