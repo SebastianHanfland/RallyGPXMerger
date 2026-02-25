@@ -7,6 +7,7 @@ import { getInitialLanguage } from '../language.ts';
 import { migrateSettings } from './settingsMigration.ts';
 
 export function migrateVersion1To2(stateVersion1: StateVersion1): StateVersion2 {
+    console.log('migrating from old to new state');
     return {
         segmentData: migrateToSegmentData(
             stateVersion1.gpxSegments,
