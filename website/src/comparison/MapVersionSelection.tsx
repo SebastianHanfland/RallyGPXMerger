@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowMapMarker, mapActions } from './store/map.reducer.ts';
+import { getShowConstructions, getShowMapMarker, mapActions } from './store/map.reducer.ts';
 import {
     getSelectedTracks,
     getSelectedVersions,
@@ -8,6 +8,7 @@ import {
     comparisonActions,
     getPlanningIds,
     getComparisonParsedTracks,
+    getConstructions,
 } from './store/tracks.reducer.ts';
 import Select from 'react-select';
 import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
@@ -16,10 +17,12 @@ import { getBaseUrl } from '../utils/linkUtil.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
+    const showConstructions = useSelector(getShowConstructions);
     const comparisonParsedTracks = useSelector(getComparisonParsedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const trackInfo = useSelector(getComparisonTrackTitles);
+    const constructions = useSelector(getConstructions);
     const planningIds = useSelector(getPlanningIds);
     const dispatch = useDispatch();
     const intl = useIntl();
@@ -108,6 +111,17 @@ export function MapVersionSelection() {
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                     ></Form.Check>
                     <ComparisonTimeSlider />
+                    {constructions.length > 0 && (
+                        <Form.Check
+                            type={'checkbox'}
+                            id={'constructions'}
+                            className={'m-3'}
+                            label={intl.formatMessage({ id: 'msg.showConstructions' })}
+                            checked={showConstructions}
+                            readOnly
+                            onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
+                        ></Form.Check>
+                    )}
                 </div>
             </Form>
         </Form.Group>

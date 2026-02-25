@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ComparisonState, ComparisonTrackState } from './types';
 import { CalculatedTrack } from '../../common/types.ts';
+import { ParsedGpxSegment } from '../../planner/store/types.ts';
 
 const initialState: ComparisonState = {
     parsedTracks: {},
@@ -9,6 +10,7 @@ const initialState: ComparisonState = {
     planningIds: [],
     selectedTracks: {},
     selectedVersions: [],
+    constructions: [],
     isLoading: true,
 };
 
@@ -47,6 +49,9 @@ const comparisonTracksSlice = createSlice({
             const { version, selectedTracks } = action.payload;
             state.selectedTracks[version] = selectedTracks;
         },
+        addConstructions: (state: ComparisonState, action: PayloadAction<ParsedGpxSegment[]>) => {
+            state.constructions = [...state.constructions, ...action.payload];
+        },
         setParticipantsDelay: (
             state: ComparisonState,
             action: PayloadAction<{ version: string; participantsDelay: number | undefined }>
@@ -77,3 +82,4 @@ export const getSelectedVersions = (state: ComparisonTrackState) => getBase(stat
 export const getSelectedTracks = (state: ComparisonTrackState) => getBase(state).selectedTracks;
 export const getComparisonTrackTitles = (state: ComparisonTrackState) => getBase(state).trackInfo;
 export const getComparisonParticipantsDelay = (state: ComparisonTrackState) => getBase(state).participantsDelay;
+export const getConstructions = (state: ComparisonTrackState) => getBase(state).constructions;

@@ -16,6 +16,9 @@ const mapSlice = createSlice({
         setShowMapMarker: (state: MapState, action: PayloadAction<boolean>) => {
             state.showMapMarker = action.payload;
         },
+        setShowConstructions: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showConstructions = action.payload;
+        },
         setStartAndEndTime: (
             state: MapState,
             action: PayloadAction<{ start: string; end: string; planningId: string }>
@@ -42,3 +45,4 @@ export const getCurrenMapTime = (state: ComparisonTrackState) => getBase(state).
 export const getComparisonMapStartAndEndTimes = (state: ComparisonTrackState) => getBase(state).startAndEndTimes;
 export const getShowMapMarker = (state: ComparisonTrackState) => getBase(state).showMapMarker ?? false;
 export const getHighlightedTrack = (state: ComparisonTrackState) => getBase(state).highlightedTrack;
+export const getShowConstructions = (state: ComparisonTrackState) => getBase(state).showConstructions;

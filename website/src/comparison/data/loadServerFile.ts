@@ -7,6 +7,7 @@ import { mapActions } from '../store/map.reducer.ts';
 import { getStartAndEndPlanning } from '../../utils/parsedTracksUtil.ts';
 import { getParticipantsDelay, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
 import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
+import { getConstructionSegments } from '../../planner/store/segmentData.redux.ts';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)
@@ -24,6 +25,7 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             );
             dispatch(comparisonActions.setParticipantsDelay({ version: id, participantsDelay: delay }));
             dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: calculatedTracks }));
+            dispatch(comparisonActions.addConstructions(getConstructionSegments(planning)));
             dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
             dispatch(comparisonActions.setSelectVersions([id]));
         })

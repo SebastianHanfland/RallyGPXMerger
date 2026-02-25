@@ -95,6 +95,7 @@
     "msg.play.fast": "Sternfahrtsimulation schnell abspielen",
     "msg.play.stop": "Sternfahrtsimulation stoppen",
     "msg.constructions.title": "Baustellen für die Anzeige",
+    "msg.showConstructions": "Baustellen anzeigen",
     "msg.uploadConstructionFile": "Hier bitte die Baustellen als GPX Dateien hochladen",
     "msg.removeConstruction.modalTitle": "Baustellendatei entfernen",
     "msg.removeConstruction.modalBody": "Möchten Sie wirklich die Baustellendatei \"{name}\" entfernen?",

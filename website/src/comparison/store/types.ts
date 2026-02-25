@@ -1,4 +1,5 @@
 import { CalculatedTrack } from '../../common/types.ts';
+import { ParsedGpxSegment } from '../../planner/store/types.ts';
 
 export interface ComparisonState {
     parsedTracks: Record<string, CalculatedTrack[] | undefined>;
@@ -6,6 +7,7 @@ export interface ComparisonState {
     participantsDelay: Record<string, number | undefined>;
     planningIds: string[];
     selectedTracks: Record<string, string[] | undefined>;
+    constructions: ParsedGpxSegment[];
     selectedVersions: string[];
     isLoading: boolean;
 }
@@ -16,6 +18,7 @@ export interface MapState {
     startAndEndTimes: Record<string, { start: string; end: string } | undefined>;
     showMapMarker?: boolean;
     showTrackInfo?: boolean;
+    showConstructions?: boolean;
     showSingleTrackInfo?: string;
     highlightedTrack?: string;
 }
