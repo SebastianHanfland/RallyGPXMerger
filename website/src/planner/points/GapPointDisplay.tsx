@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { mapActions } from '../store/map.reducer.ts';
 
 export function GapPointDisplay({ gapPoint }: { gapPoint: GapPoint }) {
-    const { title, description, lng, lat } = gapPoint;
+    const { title, description } = gapPoint;
     const dispatch = useDispatch();
 
     return (
@@ -16,7 +16,7 @@ export function GapPointDisplay({ gapPoint }: { gapPoint: GapPoint }) {
                 <div>{description}</div>
             </td>
             <td key={'description'}>
-                <div onClick={() => dispatch(mapActions.setPointToCenter({ lat, lng: lng + 0.02, zoom: 14 }))}>
+                <div onClick={() => dispatch(mapActions.setPointToCenter(gapPoint))}>
                     <GeoLinkIcon />
                 </div>
             </td>

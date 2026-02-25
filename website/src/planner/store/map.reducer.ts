@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { MapState, PointToCenter, State } from './types.ts';
+import { MapState, State } from './types.ts';
 import { storage } from './storage.ts';
 
 const initialState: MapState = {
@@ -37,8 +37,13 @@ const mapSlice = createSlice({
         setHighlightedSegmentId: (state: MapState, action: PayloadAction<string | undefined>) => {
             state.highlightedSegmentId = action.payload;
         },
-        setPointToCenter: (state: MapState, action: PayloadAction<PointToCenter | undefined>) => {
-            state.pointToCenter = action.payload;
+        setPointToCenter: (state: MapState, action: PayloadAction<{ lat: number; lng: number } | undefined>) => {
+            const point = action.payload;
+            if (point) {
+                state.pointToCenter = { lat: point.lat, lng: point.lng + 0.01, zoom: 15 };
+            } else {
+                state.pointToCenter = undefined;
+            }
         },
     },
 });
