@@ -34,7 +34,7 @@ export const breakIcon = L.icon({
 export const nodeMergeIcon = L.icon({
     iconUrl: 'nodeMerge.svg',
     iconSize: [MARKER_SIZE, MARKER_SIZE], // size of the icon
-    iconAnchor: [MARKER_SIZE * 2, MARKER_SIZE * 2], // point of the icon which will correspond to marker's location
+    iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2], // point of the icon which will correspond to marker's location
 });
 
 export const blueBike = L.icon({

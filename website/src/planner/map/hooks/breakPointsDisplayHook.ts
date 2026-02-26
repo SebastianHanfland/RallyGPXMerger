@@ -6,6 +6,7 @@ import { breakIcon, wcIcon } from '../../../common/map/MapIcons.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { getBreakPositions } from '../../logic/resolving/selectors/getBreakPositions.ts';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { layoutActions } from '../../store/layout.reducer.ts';
 
 export function breakPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const breakPoints = useSelector(getBreakPositions);
@@ -25,9 +26,10 @@ export function breakPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerG
                     icon: breakPoint.hasToilet ? wcIcon : breakIcon,
                 }).bindTooltip(breakPoint.description + ` break ${breakPoint.minutes} minutes`, { sticky: true });
                 breakPointMarker.on('click', () => {
-                    dispatch(
-                        trackMergeActions.setBreakEditInfo({ breakId: breakPoint.breakId, trackId: breakPoint.trackId })
-                    );
+                    const breakInfo = { breakId: breakPoint.breakId, trackId: breakPoint.trackId };
+                    dispatch(trackMergeActions.setBreakEditInfo(breakInfo));
+                    dispatch(layoutActions.setSelectedSidebarSection('tracks'));
+                    dispatch(layoutActions.setSelectedTrackId(breakPoint.trackId));
                 });
                 breakPointMarker.addTo(current);
             });

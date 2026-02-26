@@ -12,6 +12,7 @@ import { getColor } from '../../../utils/colorUtil.ts';
 import { getMapStartAndEndTime } from '../getMapStartAndEndTime.ts';
 import { getParticipantsDelay } from '../../store/settings.reducer.ts';
 import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
+import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
 
 const extractSnakeLocationForTimeStamp =
     (timeStampFront: string, trackCompositions: TrackComposition[], participantsDelayInSeconds: number) =>
@@ -55,15 +56,15 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
 export const getBikeSnakesForPlanningMap = createSelector(
     getCurrentTimeStamp,
     getTrackCompositions,
-    getCalculateTracks,
+    getFilteredCalculatedTracks,
     getParticipantsDelay,
-    (timeStamp, trackParticipants, calculatedTracks, participantsDelayInSeconds): BikeSnake[] => {
+    (timeStamp, trackCompositions, calculatedTracks, participantsDelayInSeconds): BikeSnake[] => {
         if (!timeStamp) {
             return [];
         }
         return (
             calculatedTracks?.map(
-                extractSnakeLocationForTimeStamp(timeStamp, trackParticipants, participantsDelayInSeconds)
+                extractSnakeLocationForTimeStamp(timeStamp, trackCompositions, participantsDelayInSeconds)
             ) ?? []
         );
     }

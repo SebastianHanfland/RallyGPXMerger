@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { getFilteredTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { BREAK, ParsedGpxSegment, TrackElement } from '../../../store/types.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 
@@ -38,7 +38,7 @@ const getBreakPosition = (
 };
 
 export const getBreakPositions = createSelector(
-    getTrackCompositions,
+    getFilteredTrackCompositions,
     getParsedGpxSegments,
     (trackCompositions, parsedSegments): BreakPosition[] => {
         const breakPoints: BreakPosition[] = [];
