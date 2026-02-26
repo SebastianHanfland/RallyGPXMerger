@@ -1,6 +1,6 @@
 import { TrackSelectionBreakOption } from './TrackSelectionBreakOption.tsx';
 import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption.tsx';
-import { BREAK, TrackElement } from '../../store/types.ts';
+import { isTrackBreak, isTrackEntry, TrackElement } from '../../store/types.ts';
 
 interface Props {
     trackId: string;
@@ -10,8 +10,11 @@ interface Props {
 }
 
 export function TrackSelectionOption({ trackElement, segmentName, trackId, fullGpxDelete }: Props) {
-    if (trackElement.type === BREAK) {
+    if (isTrackBreak(trackElement)) {
         return <TrackSelectionBreakOption trackId={trackId} trackElement={trackElement} segmentName={segmentName} />;
+    }
+    if (isTrackEntry(trackElement)) {
+        return <div>{trackElement.streetName}</div>;
     }
 
     return (
