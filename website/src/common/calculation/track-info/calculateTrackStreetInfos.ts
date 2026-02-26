@@ -3,15 +3,17 @@ import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dat
 import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.ts';
 import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation.ts';
 import {
-    BREAK,
+    isTrackBreak,
+    isTrackEntry,
     NodeSpecifications,
     ParsedGpxSegment,
     ParsedPoint,
     SEGMENT,
     TrackBreak,
     TrackComposition,
+    TrackEntry,
 } from '../../../planner/store/types.ts';
-import { instanceOfBreak, instanceOfNode } from '../types.ts';
+import { instanceOfBreak, instanceOfEntry, instanceOfNode } from '../types.ts';
 import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
 import { aggregatePoints } from '../aggregated-segments/aggregatePoints.ts';
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
@@ -127,6 +129,25 @@ export function getWayPointsOfTrack(
                     breakId: gpxOrBreak.id,
                 };
                 trackPoints = [trackBreak, ...trackPoints];
+            } else if (instanceOfEntry(gpxOrBreak)) {
+                const trackNode: WayPoint = {
+                    streetName: gpxOrBreak.streetName,
+                    type: TrackWayPointType.Entry,
+                    pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
+                    pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
+                    frontArrival: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                    backPassage: shiftDateBySeconds(
+                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                        participantsDelayInSeconds * (track.peopleCount ?? 0)
+                    ),
+                    frontPassage: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                    speed: undefined,
+                    postCode: '',
+                    distanceInKm: undefined,
+                    district: '',
+                    entryId: gpxOrBreak.id,
+                };
+                trackPoints = [trackNode, ...trackPoints];
             } else if (instanceOfNode(gpxOrBreak)) {
                 const trackNode: WayPoint = {
                     ...getPreviousPoint(trackPoints, arrivalDate),
@@ -173,10 +194,14 @@ export function resolveGpxSegments(
     track: TrackComposition,
     gpxSegments: ParsedGpxSegment[],
     nodes: NodePosition[]
-): (ParsedGpxSegment | TrackBreak | NodePosition)[] {
-    const trackElements: (ParsedGpxSegment | TrackBreak | NodePosition)[] = [];
+): (ParsedGpxSegment | TrackBreak | TrackEntry | NodePosition)[] {
+    const trackElements: (ParsedGpxSegment | TrackBreak | TrackEntry | NodePosition)[] = [];
     track.segments.forEach((trackElement) => {
-        if (trackElement.type === BREAK) {
+        if (isTrackBreak(trackElement)) {
+            trackElements.push(trackElement);
+            return;
+        }
+        if (isTrackEntry(trackElement)) {
             trackElements.push(trackElement);
             return;
         }

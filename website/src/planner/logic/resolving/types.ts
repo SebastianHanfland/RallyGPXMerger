@@ -54,6 +54,7 @@ export enum TrackWayPointType {
     Track = 'TRACK',
     Break = 'BREAK',
     Node = 'NODE',
+    Entry = 'ENTRY',
 }
 
 export interface TrackStreetInfo {
@@ -102,4 +103,5 @@ export interface WayPoint {
     nodeTracks?: string[];
     s?: number;
     breakId?: string;
+    entryId?: string;
 }

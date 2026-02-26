@@ -1,4 +1,4 @@
-import { ParsedGpxSegment, TrackBreak } from '../../planner/store/types.ts';
+import { BREAK, ENTRY, ParsedGpxSegment, TrackBreak, TrackEntry } from '../../planner/store/types.ts';
 import { NodePosition } from '../../planner/logic/resolving/selectors/getNodePositions.ts';
 
 export interface GpxFileAccess {
@@ -8,10 +8,15 @@ export interface GpxFileAccess {
 }
 
 export function instanceOfBreak(
-    breakOrSegment: TrackBreak | ParsedGpxSegment | NodePosition
+    breakOrSegment: TrackBreak | TrackEntry | ParsedGpxSegment | NodePosition
 ): breakOrSegment is TrackBreak {
-    const minutes = (breakOrSegment as TrackBreak).minutes;
-    return minutes !== undefined;
+    return (breakOrSegment as TrackBreak).type === BREAK;
+}
+
+export function instanceOfEntry(
+    breakOrSegment: TrackEntry | ParsedGpxSegment | NodePosition
+): breakOrSegment is TrackEntry {
+    return (breakOrSegment as TrackEntry).type === ENTRY;
 }
 
 export function instanceOfNode(breakOrSegment: ParsedGpxSegment | NodePosition): breakOrSegment is NodePosition {
