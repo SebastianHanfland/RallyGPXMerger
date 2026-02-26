@@ -28,8 +28,9 @@
 }
 
 .leaflet-tooltip {
-    width: 250px;
-    white-space: break-spaces;
+    width: auto;
+    white-space: normal;
+    line-break: anywhere;
 }
 
 .nav-menu {

@@ -8,9 +8,10 @@ import {
     ParsedGpxSegment,
     ParsedPoint,
     SEGMENT,
+    TrackBreak,
     TrackComposition,
 } from '../../../planner/store/types.ts';
-import { Break, instanceOfBreak, instanceOfNode } from '../types.ts';
+import { instanceOfBreak, instanceOfNode } from '../types.ts';
 import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
 import { aggregatePoints } from '../aggregated-segments/aggregatePoints.ts';
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
@@ -123,6 +124,7 @@ export function getWayPointsOfTrack(
                     postCode: '',
                     distanceInKm: undefined,
                     district: '',
+                    breakId: gpxOrBreak.id,
                 };
                 trackPoints = [trackBreak, ...trackPoints];
             } else if (instanceOfNode(gpxOrBreak)) {
@@ -171,12 +173,11 @@ export function resolveGpxSegments(
     track: TrackComposition,
     gpxSegments: ParsedGpxSegment[],
     nodes: NodePosition[]
-): (ParsedGpxSegment | Break | NodePosition)[] {
-    const trackElements: (ParsedGpxSegment | Break | NodePosition)[] = [];
+): (ParsedGpxSegment | TrackBreak | NodePosition)[] {
+    const trackElements: (ParsedGpxSegment | TrackBreak | NodePosition)[] = [];
     track.segments.forEach((trackElement) => {
         if (trackElement.type === BREAK) {
-            const minutes = trackElement.minutes;
-            trackElements.push({ minutes });
+            trackElements.push(trackElement);
             return;
         }
         const foundNodeBefore = nodes.find(
