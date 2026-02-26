@@ -136,7 +136,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                                 ? `${nodeLabel}${nodeTracks ? ':  ' + nodeTracks.join(', ') : ''}`
                                                 : null}
                                         </b>
-                                        <EditStreetNameButton waypoint={waypoint} />
+                                        {/*TODO: #190 add more description*/}
+                                        <EditStreetNameButton waypoint={waypoint} trackId={trackStreetInfo.id} />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? unknown} />

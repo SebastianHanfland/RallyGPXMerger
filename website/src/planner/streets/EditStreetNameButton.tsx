@@ -1,4 +1,4 @@
-import { WayPoint } from '../logic/resolving/types.ts';
+import { TrackWayPointType, WayPoint } from '../logic/resolving/types.ts';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -8,15 +8,28 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/planningStore.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { EditIcon } from '../../utils/icons/EditIcon.tsx';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 
 interface Props {
     waypoint: WayPoint;
+    trackId: string;
 }
 
 export function EditStreetNameButton(props: Props) {
-    const { waypoint } = props;
+    const { waypoint, trackId } = props;
+    const dispatch = useDispatch();
 
     const [showModal, setShowModal] = useState(false);
+
+    const entryId = waypoint.entryId;
+    if (waypoint.type === TrackWayPointType.Entry && entryId) {
+        const payload = { entryPointId: entryId, trackId: trackId };
+        return (
+            <span onClick={() => dispatch(trackMergeActions.setEntryPointEditInfo(payload))}>
+                <EditIcon />
+            </span>
+        );
+    }
 
     return (
         <>
@@ -28,7 +41,12 @@ export function EditStreetNameButton(props: Props) {
     );
 }
 
-export function EditStreetNameModal(props: Props & { closeModal: () => void }) {
+interface ModalProps {
+    waypoint: WayPoint;
+    closeModal: () => void;
+}
+
+export function EditStreetNameModal(props: ModalProps) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const { waypoint, closeModal } = props;
