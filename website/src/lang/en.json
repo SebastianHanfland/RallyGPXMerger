@@ -257,6 +257,7 @@
     "msg.break": "Add a break",
     "msg.addEntryPoint": "Add an entry point",
     "msg.editEntryPoint": "Edit entry point",
+    "msg.jumpToBreak": "Jump to break",
     "msg.editBreak": "Edit break",
     "msg.editNode": "Edit node",
     "msg.minutes": "Minutes",

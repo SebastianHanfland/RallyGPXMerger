@@ -93,6 +93,7 @@
     "msg.breaks": "Pausen",
     "msg.addEntryPoint": "Einstiegspunkt hinzufügen",
     "msg.editEntryPoint": "Einstiegspunkt ändern",
+    "msg.jumpToBreak": "Zur Pause springen",
     "msg.showBreakMarker": "Pausen anzeigen",
     "msg.hideBreakMarker": "Pausen verstecken",
     "msg.play.normal": "Sternfahrtsimulation abspielen",
