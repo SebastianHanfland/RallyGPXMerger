@@ -6,6 +6,7 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { DisplayState, PlanningState } from './types.ts';
 import { State } from '../../planner/store/types.ts';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
+import { getBreakPositions } from '../../planner/logic/resolving/selectors/getBreakPositions.ts';
 
 const initialState: PlanningState = {
     state: undefined,
@@ -26,6 +27,10 @@ export const planningReducer: Reducer<PlanningState> = planningSlice.reducer;
 const getBase = (state: DisplayState) => state.planning;
 export const getPlanningState = (state: DisplayState) => getBase(state).state;
 
+export const getDisplayBreaks = (state: DisplayState) => {
+    const planningState = getPlanningState(state);
+    return planningState ? getBreakPositions(planningState) : [];
+};
 export const getDisplayTracks = (state: DisplayState) => {
     const planningState = getPlanningState(state);
     return planningState ? getCalculateTracks(planningState) : [];
