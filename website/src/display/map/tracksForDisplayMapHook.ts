@@ -14,7 +14,6 @@ export function tracksForDisplayMapHook(calculatedTracksLayer: MutableRefObject<
     useEffect(() => {
         addTracksToLayer(calculatedTracksLayer, displayTracks, true, {
             showMarker: true,
-            onlyShowBreaks: true,
             opacity: highlightedTrack ? 0.2 : 0.7,
             highlightedId: highlightedTrack,
             clickCallBack: (track) => {

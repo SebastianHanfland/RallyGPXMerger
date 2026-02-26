@@ -19,7 +19,6 @@ export function calculatedTracksDisplayHook(calculatedTracksLayer: MutableRefObj
         addTracksToLayer(calculatedTracksLayer, calculatedTracks, Boolean(showTracks), {
             showMarker: Boolean(showMarker),
             opacity: highlightedSegmentId ? 0.2 : 0.7,
-            onlyShowBreaks: true,
             clickCallBack: (track) => {
                 if (!hasSingleTrack) {
                     dispatch(layoutActions.setSelectedSidebarSection('tracks'));

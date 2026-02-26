@@ -35,7 +35,6 @@ export function comparisonTracksDisplayHook(
 
         addTracksToLayer(calculatedTracksLayer, sortedTracks, true, {
             showMarker,
-            onlyShowBreaks: true,
             opacity: highlightedTrack ? 0.2 : 0.7,
             highlightedId: highlightedTrack,
             clickCallBack: (track) => {
