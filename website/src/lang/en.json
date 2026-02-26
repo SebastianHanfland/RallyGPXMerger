@@ -260,6 +260,7 @@
     "msg.minutes": "Minutes",
     "msg.add": "Add",
     "msg.minutes.details": "Select the minutes for the pause",
+    "msg.toilets": "Toilets",
     "msg.toiletAtPause": "Toilets at pause place",
     "msg.simpleTrack": "Track planning",
     "msg.uploadCurrentPlanning.hint": "Upload current planning and thus make it publicly available. A file with relevant info is downloaded after the upload",
