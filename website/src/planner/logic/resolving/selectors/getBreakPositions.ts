@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getFilteredTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { BREAK, ParsedGpxSegment, TrackElement } from '../../../store/types.ts';
+import { BREAK, ParsedGpxSegment, SEGMENT, TrackElement } from '../../../store/types.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 
 export interface BreakPosition {
@@ -12,27 +12,39 @@ export interface BreakPosition {
     hasToilet: boolean;
 }
 
+function getSegment(
+    possibleTrackElement: TrackElement,
+    parsedSegments: ParsedGpxSegment[]
+): ParsedGpxSegment | undefined {
+    if (possibleTrackElement.type !== SEGMENT) {
+        return undefined;
+    }
+    const foundSegment = parsedSegments.find((segment) => segment.id === possibleTrackElement.id);
+    if (foundSegment && foundSegment.points.length > 0) {
+        return foundSegment;
+    }
+    return undefined;
+}
+
 const getBreakPosition = (
     segments: TrackElement[],
     parsedSegments: ParsedGpxSegment[],
     index: number
 ): { lat: number; lon: number } | undefined => {
-    if (segments.length > index + 1) {
-        // TODO: Check that it is a segment and not something else
-        const segmentId = segments[index + 1].id;
-        const foundSegment = parsedSegments.find((segment) => segment.id === segmentId);
-        if (foundSegment && (foundSegment?.points.length ?? 0) > 0) {
-            const firstPointOfSegmentAfterBreak = foundSegment.points[0];
-            return { lat: firstPointOfSegmentAfterBreak.b, lon: firstPointOfSegmentAfterBreak.l };
+    for (let searchDistance = 1; searchDistance <= 4; searchDistance++) {
+        if (segments.length > index + searchDistance) {
+            const foundSegment = getSegment(segments[index + searchDistance], parsedSegments);
+            if (foundSegment) {
+                const firstPointOfSegmentAfterBreak = foundSegment.points[0];
+                return { lat: firstPointOfSegmentAfterBreak.b, lon: firstPointOfSegmentAfterBreak.l };
+            }
         }
-    }
-    if (segments.length > index - 1 && index - 1 > 0) {
-        // TODO: Check that it is a segment and not something else
-        const segmentId = segments[index - 1].id;
-        const foundSegment = parsedSegments.find((segment) => segment.id === segmentId);
-        if (foundSegment && (foundSegment?.points.length ?? 0) > 0) {
-            const firstPointOfSegmentAfterBreak = foundSegment.points[foundSegment.points.length - 1];
-            return { lat: firstPointOfSegmentAfterBreak.b, lon: firstPointOfSegmentAfterBreak.l };
+        if (segments.length > index - searchDistance && index - searchDistance > 0) {
+            const foundSegment = getSegment(segments[index + searchDistance], parsedSegments);
+            if (foundSegment) {
+                const firstPointOfSegmentAfterBreak = foundSegment.points[foundSegment.points.length - 1];
+                return { lat: firstPointOfSegmentAfterBreak.b, lon: firstPointOfSegmentAfterBreak.l };
+            }
         }
     }
 };
