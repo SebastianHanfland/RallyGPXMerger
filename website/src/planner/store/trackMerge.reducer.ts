@@ -91,6 +91,9 @@ const trackMergeSlice = createSlice({
         setTrackIdForAddingABreak: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.trackIdForAddingABreak = action.payload;
         },
+        setTrackIdForEntryPoint: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
+            state.trackIdForAddingAnEntryPoint = action.payload;
+        },
         setBreakEditInfo: (state: TrackMergeState, action: PayloadAction<BreakEditInfo | undefined>) => {
             state.breakEditInfo = action.payload;
         },
@@ -105,6 +108,7 @@ export const getTrackCompositions = (state: State) => getBase(state).trackCompos
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
+export const getTrackIdForAddingAnEntryPoint = (state: State) => getBase(state).trackIdForAddingAnEntryPoint;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
 
 export const getFilteredTrackCompositions = createSelector(

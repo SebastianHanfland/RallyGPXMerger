@@ -35,6 +35,7 @@ export interface ToastsState {
 export const SEGMENT = 'SEGMENT' as const;
 export const BREAK = 'BREAK' as const;
 export const NODE = 'NODE' as const;
+export const ENTRY = 'NODE' as const;
 
 export const isTrackSegment = (trackElement: TrackElement): trackElement is TrackSegment => {
     return trackElement.type === SEGMENT;
@@ -68,7 +69,12 @@ export interface TrackNode extends TrackElementBase {
     type: typeof NODE;
 }
 
-export type TrackElement = TrackSegment | TrackBreak | TrackNode;
+export interface TrackEntry extends TrackElementBase {
+    nodeId: string;
+    type: typeof ENTRY;
+}
+
+export type TrackElement = TrackSegment | TrackBreak | TrackNode | TrackEntry;
 
 export interface TrackComposition {
     id: string;
@@ -110,6 +116,7 @@ export interface TrackMergeState {
     filterTerm?: string;
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
+    trackIdForAddingAnEntryPoint?: string;
     breakEditInfo?: BreakEditInfo;
 }
 
