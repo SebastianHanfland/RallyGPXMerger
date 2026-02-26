@@ -24,6 +24,11 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
     const { name, wayPoints, distanceInKm, startFront, arrivalBack, arrivalFront, peopleCount } = trackStreetInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
     const unknown = intl.formatMessage({ id: 'msg.unknown' });
+
+    const breakLabel = intl.formatMessage({ id: 'msg.break' });
+    const nodeLabel = intl.formatMessage({ id: 'msg.node' });
+    const entryPointLabel = intl.formatMessage({ id: 'msg.entryPoint' });
+
     return (
         <div>
             <h5>{name}</h5>
@@ -122,12 +127,13 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                         <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
                                         <b>
                                             {type === TrackWayPointType.Break
-                                                ? `Pause${breakLength ? ` (${breakLength} min)` : ''}`
+                                                ? `${breakLabel}${breakLength ? ` (${breakLength} min)` : ''}`
                                                 : null}
+                                            {type === TrackWayPointType.Entry ? entryPointLabel : null}
                                         </b>
                                         <b>
                                             {type === TrackWayPointType.Node
-                                                ? `Knoten${nodeTracks ? ':  ' + nodeTracks.join(', ') : ''}`
+                                                ? `${nodeLabel}${nodeTracks ? ':  ' + nodeTracks.join(', ') : ''}`
                                                 : null}
                                         </b>
                                         <EditStreetNameButton waypoint={waypoint} />
