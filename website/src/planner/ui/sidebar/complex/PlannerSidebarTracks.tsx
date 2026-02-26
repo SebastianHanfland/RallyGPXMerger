@@ -29,7 +29,7 @@ export const PlannerSidebarTracks = () => {
     const selectedTrack = filteredTracks.find((track) => track.id === selectedTrackId);
 
     useEffect(() => {
-        if (filteredTracks.length > 0) {
+        if (!selectedTrackId && filteredTracks.length > 0) {
             setSelectedTrackId(filteredTracks[0].id);
         }
     }, []);
