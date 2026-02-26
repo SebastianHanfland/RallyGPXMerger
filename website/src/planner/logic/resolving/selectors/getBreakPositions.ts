@@ -2,6 +2,8 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getFilteredTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { isTrackBreak } from '../../../store/types.ts';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { getLanguage } from '../../../../language.ts';
+import { formatTimeOnly } from '../../../../utils/dateUtil.ts';
 
 export interface BreakPosition {
     point: { lat: number; lon: number };
@@ -11,6 +13,15 @@ export interface BreakPosition {
     description: string;
     hasToilet: boolean;
     at: string;
+}
+
+export function getBreakTooltip(breakPoint: BreakPosition) {
+    return (
+        breakPoint.minutes +
+        (getLanguage() === 'de' ? ' min Pause um ' : ' min Break at ') +
+        formatTimeOnly(breakPoint.at, true) +
+        `${breakPoint.description ? '. ' + breakPoint.description : ''}`
+    );
 }
 
 export const getBreakPositions = createSelector(
