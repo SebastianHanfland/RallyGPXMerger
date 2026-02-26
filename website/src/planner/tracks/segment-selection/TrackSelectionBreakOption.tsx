@@ -6,11 +6,12 @@ import { AppDispatch } from '../../store/planningStore.ts';
 import { TrackBreak } from '../../store/types.ts';
 import pencil from '../../../assets/pencil.svg';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
+import { BreakIcon } from '../../../utils/icons/BreakIcon.tsx';
+import { WcIcon } from '../../../utils/icons/WcIcon.tsx';
 
 interface Props {
     trackId: string;
     trackElement: TrackBreak;
-    segmentName: string;
 }
 
 function getBreakLabel(trackBreak: TrackBreak) {
@@ -18,7 +19,7 @@ function getBreakLabel(trackBreak: TrackBreak) {
     return `${minutesBreak > 0 ? '+' : '-'} ${minutesBreak > 0 ? minutesBreak : -1 * minutesBreak} min`;
 }
 
-export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }: Props) {
+export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
 
@@ -36,7 +37,8 @@ export function TrackSelectionBreakOption({ trackElement, segmentName, trackId }
             key={trackElement.id}
         >
             <DraggableIcon />
-            <div className={'m-2'} title={segmentName}>
+            <div className={'m-2'}>
+                {trackElement.hasToilet ? <WcIcon /> : <BreakIcon />}
                 {getBreakLabel(trackElement)}
             </div>
             <div>

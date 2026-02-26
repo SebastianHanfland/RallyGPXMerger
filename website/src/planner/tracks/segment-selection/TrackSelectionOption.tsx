@@ -11,7 +11,7 @@ interface Props {
 
 export function TrackSelectionOption({ trackElement, segmentName, trackId, fullGpxDelete }: Props) {
     if (isTrackBreak(trackElement)) {
-        return <TrackSelectionBreakOption trackId={trackId} trackElement={trackElement} segmentName={segmentName} />;
+        return <TrackSelectionBreakOption trackId={trackId} trackElement={trackElement} />;
     }
     if (isTrackEntry(trackElement)) {
         return <div>{trackElement.streetName}</div>;
