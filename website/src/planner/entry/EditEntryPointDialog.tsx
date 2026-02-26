@@ -24,7 +24,7 @@ export const EditEntryPointDialog = () => {
     });
 
     const closeModal = () => {
-        dispatch(trackMergeActions.setBreakEditInfo(undefined));
+        dispatch(trackMergeActions.setEntryPointEditInfo(undefined));
     };
 
     const saveEntryPoint = () => {
