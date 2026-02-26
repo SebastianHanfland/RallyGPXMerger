@@ -35,7 +35,6 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
 
     return (
         <div>
-            <Button onClick={() => dispatch(trackMergeActions.setTrackIdForEntryPoint(track.id))}>Entry</Button>
             <ReactSortable
                 delayOnTouchOnly={true}
                 list={segments.map((segment) => ({ id: segment.id }))}
@@ -63,6 +62,11 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
                     ) : (
                         <GpxSegmentsUploadAndParseAndSetToTrack track={track} />
                     )}
+                </div>
+                <div style={{ marginLeft: '10px' }}>
+                    <Button onClick={() => dispatch(trackMergeActions.setTrackIdForEntryPoint(track.id))}>
+                        <FormattedMessage id={'msg.addEntryPoint'} />
+                    </Button>
                 </div>
                 <div style={{ marginLeft: '10px' }}>
                     <Button onClick={() => dispatch(trackMergeActions.setTrackIdForAddingABreak(track.id))}>
