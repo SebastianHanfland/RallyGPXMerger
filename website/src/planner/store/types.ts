@@ -137,6 +137,7 @@ export interface PointToCenter {
 export interface MapState {
     currentTime: number;
     showMapMarker?: boolean;
+    showNodeMarker?: boolean;
     showBreakMarker?: boolean;
     showBlockStreets?: boolean;
     showCalculatedTracks?: boolean;

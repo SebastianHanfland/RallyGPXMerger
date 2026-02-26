@@ -161,6 +161,7 @@
     "msg.blockedStreetsFileName": "Blocked-Streets",
     "msg.streetListZip": "StreetList",
     "msg.streetOverview": "Street overview",
+    "msg.nodes": "Nodes",
     "msg.nodePoints": "Node locations",
     "msg.nodePoint": "Node: {counter} tracks",
     "msg.noNodePoints": "There are no node locations on this track",

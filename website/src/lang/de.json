@@ -161,6 +161,7 @@
     "msg.blockedStreetsFileName": "Blockierte-Straßen",
     "msg.streetListZip": "Straßenliste",
     "msg.streetOverview": "Straßenübersicht",
+    "msg.nodes": "Knoten",
     "msg.nodePoints": "Knotenpunkte",
     "msg.nodePoint": "Knotenpunkt: {counter} Routen",
     "msg.noNodePoints": "Auf dieser Route gibt es keine Knotenpunkte",

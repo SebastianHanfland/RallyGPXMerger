@@ -7,6 +7,7 @@ import {
     getShowConstructions,
     getShowGpxSegments,
     getShowMapMarker,
+    getShowNodeMarker,
     getShowPointsOfInterest,
     mapActions,
 } from '../store/map.reducer.ts';
@@ -18,7 +19,7 @@ import { getConstructionSegments, getFilteredGpxSegments, getParsedGpxSegments }
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
     width: '130px',
-    height: '275px',
+    height: '375px',
     borderRadius: '2px',
     left: 10,
     top: 130,
@@ -32,6 +33,7 @@ export function MapContentSelection() {
     const intl = useIntl();
     const showMapMarker = useSelector(getShowMapMarker);
     const showBreakMarker = useSelector(getShowBreakMarker);
+    const showNodeMarker = useSelector(getShowNodeMarker);
     const showPointsOfInterest = useSelector(getShowPointsOfInterest);
     const showConstructions = useSelector(getShowConstructions);
     const hasConstructions = (useSelector(getConstructionSegments) ?? [])?.length > 0;
@@ -94,6 +96,15 @@ export function MapContentSelection() {
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
                     >
                         {intl.formatMessage({ id: 'msg.marker' })}
+                    </Button>{' '}
+                    <Button
+                        id={'nodes'}
+                        title={showNodeMarker ? 'Hide nodes' : 'Show nodes'}
+                        variant={showNodeMarker ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowNodeMarker(!showNodeMarker))}
+                    >
+                        {intl.formatMessage({ id: 'msg.nodes' })}
                     </Button>
                     <Button
                         id={'break'}
@@ -117,7 +128,7 @@ export function MapContentSelection() {
                     </Button>
                     {hasConstructions && (
                         <Button
-                            id={'marker'}
+                            id={'constructions'}
                             title={'Constructions'}
                             variant={showConstructions ? 'info' : 'light'}
                             className={className}

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getShowMapMarker } from '../../store/map.reducer.ts';
+import { getShowNodeMarker } from '../../store/map.reducer.ts';
 import { nodeMergeIcon } from '../../../common/map/MapIcons.ts';
 import { getNodePositions } from '../../logic/resolving/selectors/getNodePositions.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
@@ -9,7 +9,7 @@ import { nodesActions } from '../../store/nodes.reducer.ts';
 
 export function nodePointsDisplayHook(pointsOfInterestLayer: MutableRefObject<LayerGroup | null>) {
     const nodes = useSelector(getNodePositions);
-    const showMapMarker = useSelector(getShowMapMarker);
+    const showMapMarker = useSelector(getShowNodeMarker);
     const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
