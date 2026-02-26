@@ -255,6 +255,8 @@
     "msg.onTheFly": "Automatic",
     "msg.calculate": "Calculate",
     "msg.break": "Add a break",
+    "msg.addEntryPoint": "Add an entry point",
+    "msg.editEntryPoint": "Edit entry point",
     "msg.editBreak": "Edit break",
     "msg.editNode": "Edit node",
     "msg.minutes": "Minutes",

@@ -52,7 +52,7 @@ export const CreateEntryPointDialog = () => {
         <Modal show={true} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.break'} />
+                    <FormattedMessage id={'msg.addEntryPoint'} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

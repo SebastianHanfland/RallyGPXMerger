@@ -91,6 +91,8 @@
     "msg.imports": "Imports",
     "msg.marker": "Marker",
     "msg.breaks": "Pausen",
+    "msg.addEntryPoint": "Einstiegspunkt hinzufügen",
+    "msg.editEntryPoint": "Einstiegspunkt ändern",
     "msg.showBreakMarker": "Pausen anzeigen",
     "msg.hideBreakMarker": "Pausen verstecken",
     "msg.play.normal": "Sternfahrtsimulation abspielen",

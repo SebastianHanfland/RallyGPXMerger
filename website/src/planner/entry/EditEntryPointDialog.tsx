@@ -65,7 +65,7 @@ export const EditEntryPointDialog = () => {
         <Modal show={true} onHide={closeModal} backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.editBreak'} />
+                    <FormattedMessage id={'msg.editEntryPoint'} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
