@@ -25,6 +25,8 @@ import { EditBreakDialog } from '../break/EditBreakDialog.tsx';
 import { EditNodeDialog } from '../nodes/EditNodeDialog.tsx';
 import { moveCenterPointHook } from './hooks/moveCenterPointHook.tsx';
 import { breakPointsDisplayHook } from './hooks/breakPointsDisplayHook.ts';
+import { CreateEntryPointDialog } from '../entry/CreateEntryPointDialog.tsx';
+import { EditEntryPointDialog } from '../entry/EditEntryPointDialog.tsx';
 
 let myMap: L.Map | undefined;
 
@@ -122,6 +124,8 @@ export const InteractionMap = () => {
             <CreateBreakDialog />
             <EditBreakDialog />
             <EditNodeDialog />
+            <CreateEntryPointDialog />
+            <EditEntryPointDialog />
         </div>
     );
 };

@@ -44,6 +44,9 @@ export const isTrackSegment = (trackElement: TrackElement): trackElement is Trac
 export const isTrackBreak = (trackElement: TrackElement): trackElement is TrackBreak => {
     return trackElement.type === BREAK;
 };
+export const isTrackEntry = (trackElement: TrackElement): trackElement is TrackEntry => {
+    return trackElement.type === ENTRY;
+};
 
 export type TrackElementType = typeof SEGMENT | typeof BREAK | typeof NODE;
 
@@ -70,7 +73,10 @@ export interface TrackNode extends TrackElementBase {
 }
 
 export interface TrackEntry extends TrackElementBase {
-    nodeId: string;
+    streetName: string;
+    buffer?: number;
+    rounding?: number;
+    extraInfo?: string;
     type: typeof ENTRY;
 }
 
@@ -99,6 +105,11 @@ export interface BreakEditInfo {
     trackId: string;
 }
 
+export interface EntryPointEditInfo {
+    entryPointId: string;
+    trackId: string;
+}
+
 export interface NodeEditInfo {
     segmentAfterId: string;
 }
@@ -118,6 +129,7 @@ export interface TrackMergeState {
     trackIdForAddingABreak?: string;
     trackIdForAddingAnEntryPoint?: string;
     breakEditInfo?: BreakEditInfo;
+    entryPointEditInfo?: EntryPointEditInfo;
 }
 
 export interface SettingsState {

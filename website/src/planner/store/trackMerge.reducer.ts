@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { BreakEditInfo, State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
+import { BreakEditInfo, EntryPointEditInfo, State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
@@ -97,6 +97,9 @@ const trackMergeSlice = createSlice({
         setBreakEditInfo: (state: TrackMergeState, action: PayloadAction<BreakEditInfo | undefined>) => {
             state.breakEditInfo = action.payload;
         },
+        setEntryPointEditInfo: (state: TrackMergeState, action: PayloadAction<EntryPointEditInfo | undefined>) => {
+            state.entryPointEditInfo = action.payload;
+        },
         clear: () => initialState,
     },
 });
@@ -110,6 +113,7 @@ export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdC
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getTrackIdForAddingAnEntryPoint = (state: State) => getBase(state).trackIdForAddingAnEntryPoint;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
+export const getEntryPointEditInfo = (state: State) => getBase(state).entryPointEditInfo;
 
 export const getFilteredTrackCompositions = createSelector(
     getTrackCompositions,
