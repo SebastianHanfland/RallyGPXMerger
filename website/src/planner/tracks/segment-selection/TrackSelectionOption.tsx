@@ -1,6 +1,7 @@
 import { TrackSelectionBreakOption } from './TrackSelectionBreakOption.tsx';
 import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption.tsx';
 import { isTrackBreak, isTrackEntry, TrackElement } from '../../store/types.ts';
+import { TrackSelectionEntryPointOption } from './TrackSelectionEntryPointOption.tsx';
 
 interface Props {
     trackId: string;
@@ -14,7 +15,7 @@ export function TrackSelectionOption({ trackElement, segmentName, trackId, fullG
         return <TrackSelectionBreakOption trackId={trackId} trackElement={trackElement} />;
     }
     if (isTrackEntry(trackElement)) {
-        return <div>{trackElement.streetName}</div>;
+        return <TrackSelectionEntryPointOption trackId={trackId} trackElement={trackElement} />;
     }
 
     return (

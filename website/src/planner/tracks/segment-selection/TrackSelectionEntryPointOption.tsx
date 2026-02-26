@@ -3,23 +3,21 @@ import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../../store/planningStore.ts';
-import { TrackBreak } from '../../store/types.ts';
+import { TrackEntry } from '../../store/types.ts';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
-import { BreakIcon } from '../../../utils/icons/BreakIcon.tsx';
-import { WcIcon } from '../../../utils/icons/WcIcon.tsx';
+import { ArrowRightIcon } from '../../../utils/icons/ArrowRightIcon.tsx';
 import { EditIcon } from '../../../utils/icons/EditIcon.tsx';
 
 interface Props {
     trackId: string;
-    trackElement: TrackBreak;
+    trackElement: TrackEntry;
 }
 
-function getBreakLabel(trackBreak: TrackBreak) {
-    const minutesBreak = trackBreak.minutes;
-    return `${minutesBreak > 0 ? '+' : '-'} ${minutesBreak > 0 ? minutesBreak : -1 * minutesBreak} min`;
+function getEntryPointLabel(trackEntry: TrackEntry) {
+    return trackEntry.streetName;
 }
 
-export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
+export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
 
@@ -33,13 +31,13 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                 margin: '1px',
                 backgroundColor: 'white',
             }}
-            title={trackElement.description}
+            title={trackElement.extraInfo}
             key={trackElement.id}
         >
             <DraggableIcon />
             <div className={'m-2'}>
-                {trackElement.hasToilet ? <WcIcon /> : <BreakIcon />}
-                {getBreakLabel(trackElement)}
+                <ArrowRightIcon />
+                {getEntryPointLabel(trackElement)}
             </div>
             <div>
                 <Button
@@ -51,7 +49,7 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                     }}
                     title={intl.formatMessage(
                         { id: 'msg.removeBreakSegment' },
-                        { breakName: getBreakLabel(trackElement) }
+                        { breakName: getEntryPointLabel(trackElement) }
                     )}
                 >
                     X
@@ -59,7 +57,7 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                 <span
                     className={'m-1'}
                     onClick={() =>
-                        dispatch(trackMergeActions.setBreakEditInfo({ breakId: trackElement.id, trackId: trackId }))
+                        dispatch(trackMergeActions.setEntryPointEditInfo({ entryPointId: trackElement.id, trackId }))
                     }
                 >
                     <EditIcon />
