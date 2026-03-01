@@ -8,9 +8,10 @@ export function createEntryPointOverviewTable(
     trackStreets: TrackStreetInfo,
     intl: IntlShape
 ): (ContentTable | Content)[] {
-    const breaks = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Entry);
+    const entryPoints = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Entry);
+    const startingPoint = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Track)[0];
 
-    if (breaks.length === 0) {
+    if (entryPoints.length === 0) {
         return [];
     }
 
@@ -27,7 +28,16 @@ export function createEntryPointOverviewTable(
                     ['msg.location', 'msg.collectionTime', 'msg.startingTime'].map((key) =>
                         intl.formatMessage({ id: key })
                     ),
-                    ...breaks.map((entryPoint) => [
+                    [
+                        {
+                            text: startingPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' }),
+                            link: getLink(startingPoint),
+                            style: 'linkStyle',
+                        },
+                        `${formatTimeOnly(trackStreets.publicStart ?? startingPoint.frontArrival)}`,
+                        formatTimeOnly(startingPoint.frontArrival),
+                    ],
+                    ...entryPoints.map((entryPoint) => [
                         {
                             text: entryPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' }),
                             link: getLink(entryPoint),
