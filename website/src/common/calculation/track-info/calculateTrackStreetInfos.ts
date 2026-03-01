@@ -131,23 +131,26 @@ export function getWayPointsOfTrack(
                 };
                 trackPoints = [trackBreak, ...trackPoints];
             } else if (instanceOfEntry(gpxOrBreak)) {
+                const frontArrival = getPreviousPoint(trackPoints, arrivalDate).frontArrival;
                 const trackNode: WayPoint = {
                     streetName: gpxOrBreak.streetName,
                     type: TrackWayPointType.Entry,
                     pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
                     pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    frontArrival: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                    frontArrival: roundPublishedStartTimes(
+                        frontArrival,
+                        gpxOrBreak.buffer ?? 0,
+                        gpxOrBreak.rounding ?? 0
+                    ),
                     backPassage: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                        frontArrival,
                         participantsDelayInSeconds * (track.peopleCount ?? 0)
                     ),
-                    frontPassage: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                    frontPassage: frontArrival,
                     speed: undefined,
                     postCode: '',
                     distanceInKm: undefined,
                     district: '',
-                    rounding: gpxOrBreak.rounding,
-                    buffer: gpxOrBreak.buffer,
                     entryId: gpxOrBreak.id,
                 };
                 trackPoints = [trackNode, ...trackPoints];

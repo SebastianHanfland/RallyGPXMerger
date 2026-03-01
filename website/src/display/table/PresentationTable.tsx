@@ -6,7 +6,7 @@ import {
 } from '../store/displayTracksReducer.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { formatTimeOnly, roundPublishedStartTimes } from '../../utils/dateUtil.ts';
+import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { Button, Table } from 'react-bootstrap';
 import { getLink } from '../../utils/linkUtil.ts';
@@ -98,14 +98,9 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                 <td>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         {entryPoints.map((entryPoint) => {
-                            const startTime = roundPublishedStartTimes(
-                                entryPoint.frontArrival,
-                                entryPoint.buffer ?? 0,
-                                entryPoint.rounding ?? 0
-                            );
                             return (
                                 <div className={'mx-2'}>
-                                    <div>{formatTimeOnly(startTime, hideSeconds)}</div>
+                                    <div>{formatTimeOnly(entryPoint.frontArrival, hideSeconds)}</div>
                                     <div>
                                         <a href={getLink(entryPoint)} target={'_blank'} referrerPolicy={'no-referrer'}>
                                             {entryPoint.streetName}

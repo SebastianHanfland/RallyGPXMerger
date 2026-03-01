@@ -1,7 +1,7 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
 import { Content, ContentTable } from 'pdfmake/interfaces';
 import { getLink } from '../../../utils/linkUtil.ts';
-import { formatTimeOnly, roundPublishedStartTimes } from '../../../utils/dateUtil.ts';
+import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
 
 export function createEntryPointOverviewTable(
@@ -46,14 +46,8 @@ export function createEntryPointOverviewTable(
                             link: getLink(entryPoint),
                             style: 'linkStyle',
                         },
-                        `${formatTimeOnly(
-                            roundPublishedStartTimes(
-                                entryPoint.frontArrival,
-                                entryPoint.buffer ?? 0,
-                                entryPoint.rounding ?? 0
-                            )
-                        )}`,
-                        formatTimeOnly(entryPoint.frontArrival),
+                        `${formatTimeOnly(entryPoint.frontArrival)}`,
+                        formatTimeOnly(entryPoint.frontPassage),
                     ]),
                 ],
             },
