@@ -53,7 +53,6 @@ export function migrateToSegmentData(
     return {
         segmentSpeeds: state.segmentSpeeds ?? {},
         segments: segmentsWithTiming,
-        pois: [],
         clickOnSegment: state.clickOnSegment,
         constructionSegments: state.constructionSegments?.map((segment) => gpxSegmentToParsedSegment(segment)) ?? [],
         replaceProcess: undefined,
