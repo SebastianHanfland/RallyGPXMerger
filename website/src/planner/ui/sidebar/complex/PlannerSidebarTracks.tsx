@@ -15,6 +15,8 @@ import { TrackGapWarning } from '../../../tracks/TrackGapWarning.tsx';
 import { getColor } from '../../../../utils/colorUtil.ts';
 import { ColorBlob } from '../../../../utils/ColorBlob.tsx';
 import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer.ts';
+import { isDefined } from '../../../../utils/typeUtil.ts';
+import { ReactSortable } from 'react-sortablejs';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -34,6 +36,16 @@ export const PlannerSidebarTracks = () => {
         }
     }, []);
 
+    const setTrackIds = (items: { id: string }[]) => {
+        const mappedIds = items.map((item) => item.id).join();
+        if (mappedIds !== trackCompositions.map((track) => track.id).join()) {
+            const newTracks = items.map((trackOption) =>
+                trackCompositions.find((trackElement) => trackElement.id === trackOption.id)
+            );
+            dispatch(trackMergeActions.setTracks(newTracks.filter(isDefined)));
+        }
+    };
+
     return (
         <div>
             <div className={'m-2'}>
@@ -50,17 +62,24 @@ export const PlannerSidebarTracks = () => {
                 </div>
             )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>
-                {filteredTracks.map((track) => (
-                    <PageItem
-                        key={track.id}
-                        active={selectedTrackId === track.id}
-                        onClick={() => setSelectedTrackId(track.id)}
-                    >
-                        <ColorBlob color={getColor(track)} />
-                        <TrackGapWarning trackId={track.id} />
-                        {track.name || '---'}
-                    </PageItem>
-                ))}
+                <ReactSortable
+                    style={{ flexFlow: 'wrap', display: 'flex' }}
+                    delayOnTouchOnly={true}
+                    list={trackCompositions.map((segment) => ({ id: segment.id }))}
+                    setList={setTrackIds}
+                >
+                    {filteredTracks.map((track) => (
+                        <PageItem
+                            key={track.id}
+                            active={selectedTrackId === track.id}
+                            onClick={() => setSelectedTrackId(track.id)}
+                        >
+                            <ColorBlob color={getColor(track)} />
+                            <TrackGapWarning trackId={track.id} />
+                            {track.name || '---'}
+                        </PageItem>
+                    ))}
+                </ReactSortable>
                 <PageItem
                     key={'new track'}
                     onClick={() => {
