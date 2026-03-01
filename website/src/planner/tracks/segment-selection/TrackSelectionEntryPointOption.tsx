@@ -31,8 +31,6 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
 
     const foundPosition = entryPointPositions.find((position) => position.id === trackElement.id);
 
-    console.log(foundPosition, trackElement, entryPointPositions);
-
     return (
         <div
             className={'rounded-2 d-flex justify-content-between'}
