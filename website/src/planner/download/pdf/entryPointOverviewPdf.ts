@@ -30,7 +30,10 @@ export function createEntryPointOverviewTable(
                     ),
                     [
                         {
-                            text: startingPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' }),
+                            text:
+                                trackStreets.startName ??
+                                startingPoint.streetName ??
+                                intl.formatMessage({ id: 'msg.unknown' }),
                             link: getLink(startingPoint),
                             style: 'linkStyle',
                         },

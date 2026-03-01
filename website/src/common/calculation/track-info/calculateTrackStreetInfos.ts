@@ -53,6 +53,7 @@ export const calculateTrackStreetInfos = (
         return {
             id: track.id,
             name: track.name ?? track.id,
+            startName: track.startName,
             startFront: startFront,
             publicStart: publicStart,
             arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backPassage : backupDate,

@@ -10,6 +10,7 @@ import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
+import { StartNameOverwriteTable } from '../../../parameters/StartNameOverwriteTable.tsx';
 
 export const PlannerSidebarSettings = () => {
     const accordionEntries: [string, ReactNode, string][] = [
@@ -25,9 +26,10 @@ export const PlannerSidebarSettings = () => {
         ['msg.gapSetting', <GapFinderParameters />, '2'],
         ['msg.prio', <TrackPriorityTable />, '3'],
         ['msg.communicatedStart', <StartTimeTable />, '4'],
-        ['msg.ownApiKey', <ApiKeyInput />, '5'],
-        ['msg.constructions.title', <ConstructionSites />, '6'],
-        ['msg.points', <PointsOfInterest />, '7'],
+        ['msg.startNameOverwrite', <StartNameOverwriteTable />, '5'],
+        ['msg.ownApiKey', <ApiKeyInput />, '6'],
+        ['msg.constructions.title', <ConstructionSites />, '7'],
+        ['msg.points', <PointsOfInterest />, '8'],
     ];
     return (
         <div className={'m-2'}>

@@ -90,6 +90,7 @@ export interface TrackComposition {
     priority?: number;
     buffer?: number;
     color?: string;
+    startName?: string;
     rounding?: number;
     delayAtEndInSeconds?: number;
 }

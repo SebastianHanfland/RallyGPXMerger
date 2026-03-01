@@ -90,7 +90,7 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                 {formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront, hideSeconds)}{' '}
                 <div>
                     <a href={startLink} target={'_blank'} referrerPolicy={'no-referrer'}>
-                        {startStreetName}
+                        {foundInfo?.startName ?? startStreetName}
                     </a>
                 </div>
             </td>
