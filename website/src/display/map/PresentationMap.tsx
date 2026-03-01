@@ -16,6 +16,7 @@ import { Munich } from '../../common/map/locations.ts';
 import { CalculatedTrack } from '../../common/types.ts';
 import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { breaksForDisplayMapHook } from './breaksForDisplayMapHook.ts';
+import { entryPointsForDisplayMapHook } from './entryPointsForDisplayMapHook.ts';
 
 let myMap: L.Map;
 
@@ -51,12 +52,15 @@ export const PresentationMap = () => {
         }
     }, []);
 
+    const entryPointLayer = useRef<LayerGroup>(null);
     const breakLayer = useRef<LayerGroup>(null);
     const trackLayer = useRef<LayerGroup>(null);
     const snakeLayer = useRef<LayerGroup>(null);
     const criticalMapsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
+        // @ts-ignore
+        entryPointLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         breakLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
@@ -69,6 +73,7 @@ export const PresentationMap = () => {
 
     tracksForDisplayMapHook(trackLayer);
     breaksForDisplayMapHook(breakLayer);
+    entryPointsForDisplayMapHook(entryPointLayer);
     snakeForDisplayMapHook(snakeLayer);
     criticalMapsHook(criticalMapsLayer);
 

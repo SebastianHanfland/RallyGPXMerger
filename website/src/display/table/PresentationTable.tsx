@@ -13,7 +13,7 @@ import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
-import { TrackWayPointType, WayPoint } from '../../planner/logic/resolving/types.ts';
+import { TrackWayPointType } from '../../planner/logic/resolving/types.ts';
 
 export const PresentationTable = () => {
     const tracks = useSelector(getDisplayTracks);
