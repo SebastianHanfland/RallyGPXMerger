@@ -91,6 +91,7 @@
     "msg.imports": "Imports",
     "msg.marker": "Marker",
     "msg.breaks": "Pausen",
+    "msg.entryPoints": "Einstiegspunkte",
     "msg.addEntryPoint": "Einstiegspunkt hinzufügen",
     "msg.editEntryPoint": "Einstiegspunkt ändern",
     "msg.jumpToBreak": "Zur Pause springen",

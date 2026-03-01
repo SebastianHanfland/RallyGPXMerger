@@ -5,6 +5,7 @@ import {
     getShowBreakMarker,
     getShowCalculatedTracks,
     getShowConstructions,
+    getShowEntryPointMarker,
     getShowGpxSegments,
     getShowMapMarker,
     getShowNodeMarker,
@@ -18,8 +19,8 @@ import { getConstructionSegments, getFilteredGpxSegments, getParsedGpxSegments }
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
-    width: '130px',
-    height: '375px',
+    width: '140px',
+    height: '410px',
     borderRadius: '2px',
     left: 10,
     top: 130,
@@ -36,6 +37,7 @@ export function MapContentSelection() {
     const showNodeMarker = useSelector(getShowNodeMarker);
     const showPointsOfInterest = useSelector(getShowPointsOfInterest);
     const showConstructions = useSelector(getShowConstructions);
+    const showEntryPointMarker = useSelector(getShowEntryPointMarker);
     const hasConstructions = (useSelector(getConstructionSegments) ?? [])?.length > 0;
     const showBlockStreets = useSelector(getShowBlockStreets);
     const showCalculatedTracks = useSelector(getShowCalculatedTracks);
@@ -116,6 +118,15 @@ export function MapContentSelection() {
                         onClick={() => dispatch(mapActions.setShowBreakMarker(!showBreakMarker))}
                     >
                         {intl.formatMessage({ id: 'msg.breaks' })}
+                    </Button>
+                    <Button
+                        id={'entryPoints'}
+                        title={showEntryPointMarker ? 'Hide Points' : 'Show Points'}
+                        variant={showEntryPointMarker ? 'info' : 'light'}
+                        className={className}
+                        onClick={() => dispatch(mapActions.setShowEntryPointMarker(!showEntryPointMarker))}
+                    >
+                        {intl.formatMessage({ id: 'msg.entryPoints' })}
                     </Button>
                     <Button
                         id={'points'}
