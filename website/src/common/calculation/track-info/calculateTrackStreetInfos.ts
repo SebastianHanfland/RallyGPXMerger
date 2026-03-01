@@ -4,7 +4,7 @@ import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.t
 import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation.ts';
 import {
     isTrackBreak,
-    isTrackEntry,
+    isTrackEntryPoint,
     NodeSpecifications,
     ParsedGpxSegment,
     ParsedPoint,
@@ -201,7 +201,7 @@ export function resolveGpxSegments(
             trackElements.push(trackElement);
             return;
         }
-        if (isTrackEntry(trackElement)) {
+        if (isTrackEntryPoint(trackElement)) {
             trackElements.push(trackElement);
             return;
         }

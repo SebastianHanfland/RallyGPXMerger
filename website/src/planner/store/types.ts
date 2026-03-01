@@ -35,7 +35,7 @@ export interface ToastsState {
 export const SEGMENT = 'SEGMENT' as const;
 export const BREAK = 'BREAK' as const;
 export const NODE = 'NODE' as const;
-export const ENTRY = 'NODE' as const;
+export const ENTRY = 'ENTRY' as const;
 
 export const isTrackSegment = (trackElement: TrackElement): trackElement is TrackSegment => {
     return trackElement.type === SEGMENT;
@@ -44,11 +44,11 @@ export const isTrackSegment = (trackElement: TrackElement): trackElement is Trac
 export const isTrackBreak = (trackElement: TrackElement): trackElement is TrackBreak => {
     return trackElement.type === BREAK;
 };
-export const isTrackEntry = (trackElement: TrackElement): trackElement is TrackEntry => {
+export const isTrackEntryPoint = (trackElement: TrackElement): trackElement is TrackEntry => {
     return trackElement.type === ENTRY;
 };
 
-export type TrackElementType = typeof SEGMENT | typeof BREAK | typeof NODE;
+export type TrackElementType = typeof SEGMENT | typeof BREAK | typeof NODE | typeof ENTRY;
 
 interface TrackElementBase {
     id: string;

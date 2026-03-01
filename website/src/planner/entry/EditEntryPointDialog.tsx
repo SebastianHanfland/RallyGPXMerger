@@ -5,14 +5,14 @@ import Button from 'react-bootstrap/Button';
 import { getEntryPointEditInfo, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { EntryPointDialogContent } from './EntryPointDialogContent.tsx';
 import { useEffect, useState } from 'react';
-import { ENTRY, isTrackEntry, TrackEntry } from '../store/types.ts';
+import { ENTRY, isTrackEntryPoint, TrackEntry } from '../store/types.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 
 export const EditEntryPointDialog = () => {
     const entryPointEditInfo = useSelector(getEntryPointEditInfo);
     const track = useSelector(getTrackCompositions).find(({ id }) => id === entryPointEditInfo?.trackId);
     const foundEntryPoint = track?.segments
-        .filter(isTrackEntry)
+        .filter(isTrackEntryPoint)
         .find((element) => element.id === entryPointEditInfo?.entryPointId);
 
     const dispatch: AppDispatch = useDispatch();
