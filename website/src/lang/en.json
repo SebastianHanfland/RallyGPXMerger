@@ -155,6 +155,7 @@
     "msg.start": "Start",
     "msg.arrival": "Arrival",
     "msg.end": "End",
+    "msg.files": "Files",
     "msg.lengthInKm": "Length in km",
     "msg.blockageInMin": "Blockage in min",
     "msg.blockedFrom": "Blocked from",

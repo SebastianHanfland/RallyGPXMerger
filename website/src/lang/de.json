@@ -91,6 +91,7 @@
     "msg.imports": "Imports",
     "msg.marker": "Marker",
     "msg.breaks": "Pausen",
+    "msg.files": "Dateien",
     "msg.entryPoints": "Einstiegspunkte",
     "msg.addEntryPoint": "Einstiegspunkt hinzufügen",
     "msg.editEntryPoint": "Einstiegspunkt ändern",

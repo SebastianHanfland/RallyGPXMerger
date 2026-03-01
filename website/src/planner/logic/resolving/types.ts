@@ -101,6 +101,8 @@ export interface WayPoint {
     type?: TrackWayPointType;
     breakLength?: number;
     nodeTracks?: string[];
+    rounding?: number;
+    buffer?: number;
     s?: number;
     breakId?: string;
     entryId?: string;

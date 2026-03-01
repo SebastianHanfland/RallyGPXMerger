@@ -145,6 +145,8 @@ export function getWayPointsOfTrack(
                     postCode: '',
                     distanceInKm: undefined,
                     district: '',
+                    rounding: gpxOrBreak.rounding,
+                    buffer: gpxOrBreak.buffer,
                     entryId: gpxOrBreak.id,
                 };
                 trackPoints = [trackNode, ...trackPoints];
