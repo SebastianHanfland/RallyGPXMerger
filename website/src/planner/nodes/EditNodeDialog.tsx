@@ -116,7 +116,7 @@ export const EditNodeDialog = () => {
                                 key={segmentId + '2'}
                                 style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
                             >
-                                <div>
+                                <div key={segmentId + '3'}>
                                     <Button
                                         size={'sm'}
                                         onClick={() => {
@@ -152,7 +152,7 @@ export const EditNodeDialog = () => {
                                         />
                                     ))}
                                 </ProgressBar>
-                                <div>
+                                <div key={segmentId + '4'}>
                                     <Button
                                         size={'sm'}
                                         onClick={() => {

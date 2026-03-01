@@ -12,9 +12,7 @@ export interface NodePosition {
 }
 
 function getTracks(segmentId: string, trackNodes: TrackNode[], trackCompositions: TrackComposition[]): string[] {
-    const foundTrackNode = trackNodes.find((node) =>
-        node.segmentsBeforeNode.map((beforeNode) => beforeNode.segmentId).includes(segmentId)
-    );
+    const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === segmentId);
     return (
         foundTrackNode?.segmentsBeforeNode.map((beforeNode) => {
             const foundTrackComposition = trackCompositions.find((track) => track.id === beforeNode.trackId);
