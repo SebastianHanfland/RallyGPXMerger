@@ -44,7 +44,9 @@ export const PresentationTable = () => {
                                 <FormattedMessage id={'msg.entryPoints'} />
                             </th>
                         )}
-                        <th>Ziel</th>
+                        <th>
+                            <FormattedMessage id={'msg.destination'} />
+                        </th>
                         <th>
                             <FormattedMessage id={'msg.distanceInKm'} />
                         </th>

@@ -113,6 +113,7 @@
     "msg.label.hint": "This text will be added at the start of the pdf documents",
     "msg.aLot": "A lot",
     "msg.none": "None",
+    "msg.destination": "Destination",
     "msg.participantsDelay.title": "Expansion of participants",
     "msg.participantsDelay": "Delay of one participant: ",
     "msg.participantsLength": "Length of 100 people (based on {speed} km/h): ",

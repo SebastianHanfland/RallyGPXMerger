@@ -118,6 +118,7 @@
     "msg.label.hint": "Dieser Text wird am Anfang der PDF Dokumente hinzugefügt",
     "msg.aLot": "Viel",
     "msg.none": "Keine",
+    "msg.destination": "Ziel",
     "msg.participantsDelay.title": "Ausdehnung der Teilnehmenden",
     "msg.participantsDelay": "Verzögerung durch einen Teilnehmenden: ",
     "msg.participantsLength": "Länge von 100 Leuten (basierend auf {speed} km/h): ",
