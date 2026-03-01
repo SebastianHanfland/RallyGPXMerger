@@ -13,7 +13,7 @@ import { getLink } from '../../utils/linkUtil.ts';
 import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
 import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
-import { TrackWayPointType } from '../../planner/logic/resolving/types.ts';
+import { TrackWayPointType, WayPoint } from '../../planner/logic/resolving/types.ts';
 
 export const PresentationTable = () => {
     const tracks = useSelector(getDisplayTracks);
@@ -96,7 +96,7 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
             </td>
             {hasEntryPoints && (
                 <td>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         {entryPoints.map((entryPoint) => {
                             const startTime = roundPublishedStartTimes(
                                 entryPoint.frontArrival,
@@ -104,7 +104,7 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                                 entryPoint.rounding ?? 0
                             );
                             return (
-                                <div>
+                                <div className={'mx-2'}>
                                     <div>{formatTimeOnly(startTime, hideSeconds)}</div>
                                     <div>
                                         <a href={getLink(entryPoint)} target={'_blank'} referrerPolicy={'no-referrer'}>
