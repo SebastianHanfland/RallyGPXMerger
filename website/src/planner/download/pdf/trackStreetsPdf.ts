@@ -7,6 +7,7 @@ import { createStreetTable } from './trackStreetTablePdf.ts';
 import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles } from './pdfUtil.ts';
 import { IntlShape } from 'react-intl';
+import { createEntryPointOverviewTable } from './entryPointOverviewPdf.ts';
 
 export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) => (trackStreets: TrackStreetInfo) => {
     const docDefinition: TDocumentDefinitions = {
@@ -20,6 +21,9 @@ export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) =>
             { text: intl.formatMessage({ id: 'msg.trackInfo' }), style: 'titleStyle' },
             ' ',
             createInfoTable(trackStreets, intl),
+            ' ',
+            ' ',
+            ...createEntryPointOverviewTable(trackStreets, intl),
             ' ',
             ' ',
             ...createBreakOverviewTable(trackStreets, intl),

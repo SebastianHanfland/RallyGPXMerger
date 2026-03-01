@@ -173,6 +173,8 @@
     "msg.noBreakPoints": "There are no break locations on this track",
     "msg.location": "Location",
     "msg.breakStart": "Break start",
+    "msg.collectionTime": "Please appear at",
+    "msg.startingTime": "Planned departure",
     "msg.breakLength": "Break length",
     "msg.pointInTime": "Time",
     "msg.otherTracks": "Other tracks",

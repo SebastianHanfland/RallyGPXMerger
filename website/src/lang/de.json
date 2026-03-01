@@ -177,6 +177,8 @@
     "msg.noBreakPoints": "Auf dieser Route gibt es keine Pausenplätze",
     "msg.location": "Ort",
     "msg.breakStart": "Pausenstart",
+    "msg.collectionTime": "Bitte Erscheinen um",
+    "msg.startingTime": "Geplante Abfahrt",
     "msg.breakLength": "Pausenlänge",
     "msg.pointInTime": "Zeitpunkt",
     "msg.otherTracks": "Andere Routen",
