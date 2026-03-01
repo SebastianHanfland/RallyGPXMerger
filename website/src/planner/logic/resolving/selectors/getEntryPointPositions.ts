@@ -31,7 +31,7 @@ export const getEntryPointPositions = createSelector(
         trackCompositions.forEach((track) => {
             track.segments.filter(isTrackEntryPoint).forEach((segment) => {
                 const foundTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
-                const foundBreak = foundTrackInfo?.wayPoints.find((wayPoint) => wayPoint.breakId === segment.id);
+                const foundBreak = foundTrackInfo?.wayPoints.find((wayPoint) => wayPoint.entryId === segment.id);
                 if (foundBreak) {
                     breakPoints.push({
                         point: foundBreak.pointFrom,

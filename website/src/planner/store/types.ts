@@ -158,6 +158,7 @@ export interface MapState {
     showMapMarker?: boolean;
     showNodeMarker?: boolean;
     showBreakMarker?: boolean;
+    showEntryPointMarker?: boolean;
     showBlockStreets?: boolean;
     showCalculatedTracks?: boolean;
     showGpxSegments?: boolean;

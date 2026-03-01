@@ -22,6 +22,9 @@ const mapSlice = createSlice({
         setShowBreakMarker: (state: MapState, action: PayloadAction<boolean>) => {
             state.showBreakMarker = action.payload;
         },
+        setShowEntryPointMarker: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showEntryPointMarker = action.payload;
+        },
         setShowBlockStreets: (state: MapState, action: PayloadAction<boolean>) => {
             state.showBlockStreets = action.payload;
         },
@@ -58,6 +61,7 @@ export const getCurrenMapTime = (state: State) => getBase(state).currentTime;
 export const getShowMapMarker = (state: State) => getBase(state).showMapMarker;
 export const getShowNodeMarker = (state: State) => getBase(state).showNodeMarker;
 export const getShowBreakMarker = (state: State) => getBase(state).showBreakMarker;
+export const getShowEntryPointMarker = (state: State) => getBase(state).showEntryPointMarker;
 export const getShowBlockStreets = (state: State) => getBase(state).showBlockStreets;
 export const getShowCalculatedTracks = (state: State) => getBase(state).showCalculatedTracks;
 export const getShowGpxSegments = (state: State) => getBase(state).showGpxSegments;
