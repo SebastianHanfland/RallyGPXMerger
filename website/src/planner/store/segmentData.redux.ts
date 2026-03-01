@@ -6,7 +6,6 @@ import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/
 
 const initialState: SegmentDataState = {
     segments: [],
-    pois: [],
     constructionSegments: [],
     segmentSpeeds: {},
     streetLookup: {},

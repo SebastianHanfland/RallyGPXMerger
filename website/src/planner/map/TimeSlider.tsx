@@ -9,23 +9,26 @@ import fast from '../../assets/fast.svg';
 import stop from '../../assets/stop.svg';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { useIntl } from 'react-intl';
+import { getIsSidebarOpen } from '../store/layout.reducer.ts';
 
 let interval: NodeJS.Timeout | undefined;
 
 let timeMirror = 0;
 
-const sliderStyle: CSSProperties = {
-    position: 'fixed',
-    width: 'calc(50vw - 70px)',
-    height: '45px',
-    borderRadius: '10px',
-    left: 60,
-    bottom: 10,
-    zIndex: 10,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    cursor: 'pointer',
-};
+function getSliderStyle(isSidebarOpen: boolean): CSSProperties {
+    return {
+        position: 'fixed',
+        width: isSidebarOpen ? 'calc(50vw - 70px)' : 'calc(100vw - 100px)',
+        height: '45px',
+        borderRadius: '10px',
+        left: 60,
+        bottom: 10,
+        zIndex: 10,
+        backgroundColor: 'white',
+        overflow: 'hidden',
+        cursor: 'pointer',
+    };
+}
 
 const buttonStyle: CSSProperties = {
     height: '24px',
@@ -38,6 +41,7 @@ export function TimeSlider() {
     const intl = useIntl();
     const mapTime = useSelector(getCurrenMapTime);
     const dateValue = useSelector(getCurrentTimeStamp);
+    const isSidebarOpen = useSelector(getIsSidebarOpen);
     timeMirror = mapTime;
     const dispatch = useDispatch();
 
@@ -60,7 +64,7 @@ export function TimeSlider() {
     }
 
     return (
-        <div style={sliderStyle}>
+        <div style={getSliderStyle(isSidebarOpen)}>
             <Form.Group className={'m-2 d-flex'}>
                 <div className={'mx-1'} style={{ width: '120px' }}>
                     {dateValue ? formatTimeOnly(dateValue) : intl.formatMessage({ id: 'msg.noCalculatedTracks' })}
