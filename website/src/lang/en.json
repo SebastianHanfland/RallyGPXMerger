@@ -15,7 +15,7 @@
     "msg.segments": "Segments",
     "msg.segment": "Segment",
     "msg.tracks": "Tracks",
-    "msg.nodeOffset": "Node offset",
+    "msg.nodeOffset": "Node offset in participants",
     "msg.offsetByXs": "Offset by {seconds} seconds",
     "msg.calculateTracks": "Calculate tracks",
     "msg.triggerAll": "Trigger all",

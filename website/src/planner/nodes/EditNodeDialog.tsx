@@ -13,6 +13,7 @@ import { getColor } from '../../utils/colorUtil.ts';
 import { NodeSpecification, TrackComposition } from '../store/types.ts';
 import { getParticipantsDelay } from '../store/settings.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
+import { formatNumber } from '../../utils/numberUtil.ts';
 
 const getAllParticipants = (tracks: TrackComposition[]): number => {
     let count = 0;
@@ -23,7 +24,7 @@ const getAllParticipants = (tracks: TrackComposition[]): number => {
 };
 
 function getNodeDelayValue(
-    value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    numberValue: number,
     nodeSpecs: {
         trackOffsets: Record<string, number> | undefined;
         nodeInfo?: string | undefined;
@@ -31,7 +32,6 @@ function getNodeDelayValue(
     },
     tracks: TrackComposition[]
 ) {
-    const numberValue = getCount(value) ?? 0;
     const maximum = (nodeSpecs?.totalCount ?? 0) - getAllParticipants(tracks);
     if (numberValue > maximum) {
         return maximum;
@@ -90,6 +90,17 @@ export const EditNodeDialog = () => {
             </Modal.Header>
             <Modal.Body>
                 {Object.entries(branchTracks).map(([segmentId, tracks]) => {
+                    const shiftOffset = (offSet: number) => () => {
+                        const newValue = getNodeDelayValue(
+                            (nodeSpecs?.trackOffsets[segmentId] ?? 0) + offSet,
+                            nodeSpecs,
+                            tracks
+                        );
+                        setNodeSpecs({
+                            ...nodeSpecs,
+                            trackOffsets: { ...nodeSpecs?.trackOffsets, [segmentId]: newValue },
+                        });
+                    };
                     return (
                         <>
                             <div key={segmentId} className={'mt-5'}>
@@ -108,7 +119,12 @@ export const EditNodeDialog = () => {
                                 <span className={'mx-3'}>
                                     <FormattedMessage
                                         id={'msg.offsetByXs'}
-                                        values={{ seconds: nodeSpecs.trackOffsets[segmentId] * participantsDelay }}
+                                        values={{
+                                            seconds: formatNumber(
+                                                nodeSpecs.trackOffsets[segmentId] * participantsDelay,
+                                                0
+                                            ),
+                                        }}
                                     />
                                 </span>
                             </div>
@@ -117,18 +133,7 @@ export const EditNodeDialog = () => {
                                 style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
                             >
                                 <div key={segmentId + '3'}>
-                                    <Button
-                                        size={'sm'}
-                                        onClick={() => {
-                                            setNodeSpecs({
-                                                ...nodeSpecs,
-                                                trackOffsets: {
-                                                    ...nodeSpecs?.trackOffsets,
-                                                    [segmentId]: nodeSpecs?.trackOffsets[segmentId] - 10,
-                                                },
-                                            });
-                                        }}
-                                    >
+                                    <Button size={'sm'} onClick={shiftOffset(-100000000)}>
                                         {'<-'}
                                     </Button>
                                 </div>
@@ -153,18 +158,7 @@ export const EditNodeDialog = () => {
                                     ))}
                                 </ProgressBar>
                                 <div key={segmentId + '4'}>
-                                    <Button
-                                        size={'sm'}
-                                        onClick={() => {
-                                            setNodeSpecs({
-                                                ...nodeSpecs,
-                                                trackOffsets: {
-                                                    ...nodeSpecs?.trackOffsets,
-                                                    [segmentId]: nodeSpecs?.trackOffsets[segmentId] + 10,
-                                                },
-                                            });
-                                        }}
-                                    >
+                                    <Button size={'sm'} onClick={shiftOffset(100000000)}>
                                         {'->'}
                                     </Button>
                                 </div>
@@ -178,12 +172,14 @@ export const EditNodeDialog = () => {
                                             placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
                                             value={nodeSpecs.trackOffsets[segmentId]}
                                             onChange={(value) => {
+                                                const newValue = getNodeDelayValue(
+                                                    getCount(value) ?? 0,
+                                                    nodeSpecs,
+                                                    tracks
+                                                );
                                                 setNodeSpecs({
                                                     ...nodeSpecs,
-                                                    trackOffsets: {
-                                                        ...nodeSpecs?.trackOffsets,
-                                                        [segmentId]: getNodeDelayValue(value, nodeSpecs, tracks),
-                                                    },
+                                                    trackOffsets: { ...nodeSpecs?.trackOffsets, [segmentId]: newValue },
                                                 });
                                             }}
                                         />
