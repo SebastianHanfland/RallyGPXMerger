@@ -4,6 +4,17 @@ import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedSegmentId, getShowGpxSegments, getShowMapMarker, mapActions } from '../../store/map.reducer.ts';
 import { getFilteredGpxSegments, getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
+import { AppDispatch } from '../../store/planningStore.ts';
+import { State } from '../../store/types.ts';
+
+const setMarkHighlightedTrackPlain =
+    (trackId: string | undefined) => (dispatch: AppDispatch, getState: () => State) => {
+        if (getHighlightedSegmentId(getState()) === trackId) {
+            return;
+        }
+
+        dispatch(mapActions.setHighlightedSegmentId(trackId));
+    };
 
 export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
     const filteredGpxSegments = useSelector(getFilteredGpxSegments);
@@ -11,7 +22,7 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
     const highlightedSegmentId = useSelector(getHighlightedSegmentId);
     const showSegments = useSelector(getShowGpxSegments) || !!highlightedSegmentId;
     const showMarker = useSelector(getShowMapMarker) ?? false;
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     useEffect(() => {
         dispatch(mapActions.setHighlightedSegmentId());
@@ -28,10 +39,11 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
             opacity: highlightedSegmentId ? 100 : undefined,
             weight: highlightedSegmentId ? 15 : undefined,
             mouseInCallBack: (track) => {
-                dispatch(mapActions.setHighlightedSegmentId(track.id));
+                dispatch(setMarkHighlightedTrackPlain(track.id));
+                setTimeout(() => dispatch(setMarkHighlightedTrackPlain(undefined)), 2000);
             },
             mouseOutCallBack: () => {
-                dispatch(mapActions.setHighlightedSegmentId());
+                dispatch(setMarkHighlightedTrackPlain(undefined));
             },
             clickCallBack: (gpxSegment, event) => {
                 if (event) {
