@@ -5,11 +5,11 @@ import { getCurrentTimeStamp } from './hooks/trackSimulationReader.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { CSSProperties, useEffect, useState } from 'react';
 import play from '../../assets/play.svg';
-import fast from '../../assets/fast.svg';
 import stop from '../../assets/stop.svg';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { useIntl } from 'react-intl';
 import { getIsSidebarOpen } from '../store/layout.reducer.ts';
+import { getCount } from '../../utils/inputUtil.ts';
 
 let interval: NodeJS.Timeout | undefined;
 
@@ -45,19 +45,20 @@ export function TimeSlider() {
     timeMirror = mapTime;
     const dispatch = useDispatch();
 
-    const [playSpeed, setPlaySpeed] = useState<number>();
+    const [playSpeed, setPlaySpeed] = useState<number>(100);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
     useEffect(() => {
         if (interval) {
             clearInterval(interval);
         }
-        if (playSpeed !== undefined) {
+        if (isPlaying && playSpeed !== undefined) {
             interval = setInterval(
-                () => dispatch(mapActions.setCurrentTime((timeMirror + playSpeed * 100) % MAX_SLIDER_TIME)),
+                () => dispatch(mapActions.setCurrentTime((timeMirror + playSpeed) % MAX_SLIDER_TIME)),
                 100
             );
         }
-    }, [playSpeed]);
+    }, [playSpeed, isPlaying]);
 
     if (!dateValue) {
         return null;
@@ -78,39 +79,45 @@ export function TimeSlider() {
                     />
                 </div>
                 <div className={'mx-1 d-flex'}>
-                    <Button
-                        size={'sm'}
-                        variant={'success'}
-                        className={'m-1'}
-                        style={buttonStyle}
-                        disabled={playSpeed === 1}
-                        onClick={() => setPlaySpeed(1)}
-                        title={intl.formatMessage({ id: 'msg.play.normal' })}
+                    {!isPlaying ? (
+                        <Button
+                            size={'sm'}
+                            variant={'success'}
+                            className={'m-1'}
+                            style={buttonStyle}
+                            onClick={() => setIsPlaying(true)}
+                            title={intl.formatMessage({ id: 'msg.play.normal' })}
+                        >
+                            <img src={play} className="m-0" alt="open file" />
+                        </Button>
+                    ) : (
+                        <Button
+                            size={'sm'}
+                            variant={'danger'}
+                            className={'m-1'}
+                            style={buttonStyle}
+                            onClick={() => setIsPlaying(false)}
+                            title={intl.formatMessage({ id: 'msg.play.stop' })}
+                        >
+                            <img src={stop} className="m-1" alt="open file" />
+                        </Button>
+                    )}
+                    <div
+                        style={{ marginTop: '-4px', width: '90px', marginRight: '-8px', marginLeft: '5px' }}
+                        title={intl.formatMessage({ id: 'msg.speedCounter' })}
                     >
-                        <img src={play} className="m-0" alt="open file" />
-                    </Button>
-                    <Button
-                        size={'sm'}
-                        variant={'warning'}
-                        className={'m-1'}
-                        style={buttonStyle}
-                        disabled={playSpeed === 5}
-                        onClick={() => setPlaySpeed(5)}
-                        title={intl.formatMessage({ id: 'msg.play.fast' })}
-                    >
-                        <img src={fast} className="m-0" alt="open file" />
-                    </Button>
-                    <Button
-                        size={'sm'}
-                        variant={'danger'}
-                        className={'m-1'}
-                        style={buttonStyle}
-                        disabled={!playSpeed}
-                        onClick={() => setPlaySpeed(undefined)}
-                        title={intl.formatMessage({ id: 'msg.play.stop' })}
-                    >
-                        <img src={stop} className="m-1" alt="open file" />
-                    </Button>
+                        <Form.Control
+                            type="number"
+                            step={1}
+                            min={1}
+                            max={1000}
+                            value={playSpeed ?? ''}
+                            onChange={(value) => {
+                                const extractedValue = getCount(value);
+                                extractedValue ? setPlaySpeed(extractedValue) : setPlaySpeed(1);
+                            }}
+                        />
+                    </div>
                 </div>
             </Form.Group>
         </div>
