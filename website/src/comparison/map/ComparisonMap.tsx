@@ -8,11 +8,15 @@ import { snakeForComparisonMapHook } from './snakeForComparisonMapHook.ts';
 import { getMapConfiguration } from '../../common/map/mapConfig.ts';
 import { Munich } from '../../common/map/locations.ts';
 import { constructionsForComparisonMapHook } from './constructionsForComparisonMapHook.ts';
+import { useSelector } from 'react-redux';
+import { getComparisonParsedTracks } from '../store/tracks.reducer.ts';
+import { getCenterPoint } from '../../common/map/centerUtil.ts';
 
 let myMap: L.Map;
 
 export const ComparisonMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
+    const parsedTracks = useSelector(getComparisonParsedTracks);
 
     useEffect(() => {
         if (!myMap) {
@@ -20,6 +24,21 @@ export const ComparisonMap = () => {
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
     }, []);
+
+    useEffect(() => {
+        if (myMap) {
+            const centerPoints = Object.values(parsedTracks).map((tracks) => getCenterPoint(tracks));
+            let lat = 0;
+            let lng = 0;
+            console.log(centerPoints);
+            centerPoints.forEach((point) => {
+                lat += point.lat / centerPoints.length;
+                lng += point.lng / centerPoints.length;
+            });
+
+            myMap.setView({ lat, lng }, startZoom);
+        }
+    }, [Object.keys(parsedTracks).length]);
 
     const trackLayer = useRef<LayerGroup>(null);
     const snakeLayer = useRef<LayerGroup>(null);

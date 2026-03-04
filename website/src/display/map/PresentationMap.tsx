@@ -11,24 +11,14 @@ import { getMapConfiguration } from '../../common/map/mapConfig.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { displayMapActions, getIsLive } from '../store/displayMapReducer.ts';
 import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { getLatLng } from '../../utils/pointUtil.ts';
-import { Munich } from '../../common/map/locations.ts';
-import { CalculatedTrack } from '../../common/types.ts';
 import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { breaksForDisplayMapHook } from './breaksForDisplayMapHook.ts';
 import { entryPointsForDisplayMapHook } from './entryPointsForDisplayMapHook.ts';
+import { getCenterPoint } from '../../common/map/centerUtil.ts';
 
 let myMap: L.Map;
 
 export const isInIframe = window.location.search.includes('&iframe');
-
-function getCenterPoint(parsedTracks: CalculatedTrack[] | undefined): { lat: number; lng: number } {
-    if (!parsedTracks || parsedTracks.length === 0) {
-        return Munich;
-    }
-    const point = parsedTracks[0].points[parsedTracks[0].points.length - 1];
-    return getLatLng(point);
-}
 
 export const PresentationMap = () => {
     const { tileUrlTemplate, getOptions } = getMapConfiguration();
