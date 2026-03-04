@@ -8,7 +8,6 @@ import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
 import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
-import check from '../../assets/check-circle.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from './SegmentSpeedCells.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
@@ -24,7 +23,7 @@ interface Props {
 }
 
 export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
-    const { id, filename, flipped, streetsResolved } = gpxSegment;
+    const { id, filename, flipped } = gpxSegment;
     const content = useOnTheFlyCreatedGpx(gpxSegment);
     const intl = useIntl();
     const dispatch = useDispatch();
@@ -51,14 +50,6 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
             <SegmentSpeedCells gpxSegment={gpxSegment} />
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 {flipped && <img src={flip} className="m-1" alt="flip" />}
-                {streetsResolved && (
-                    <img
-                        src={check}
-                        className="m-1"
-                        alt="check"
-                        title={intl.formatMessage({ id: 'msg.streetsResolved' })}
-                    />
-                )}
                 <DropdownButton
                     as={ButtonGroup}
                     key={'primary'}

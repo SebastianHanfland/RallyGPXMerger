@@ -22,9 +22,9 @@ function getBreak(minutes: number): TrackBreak {
 
 describe('assembleTrackFromSegments', () => {
     const gpxSegments: ParsedGpxSegment[] = [
-        { id: '1', filename: 'A1', points: [getPoint(1, 0), getPoint(2, 10)], streetsResolved: false },
-        { id: '2', filename: 'B1', points: [getPoint(3, 0), getPoint(4, 5)], streetsResolved: false },
-        { id: '3', filename: 'AB', points: [getPoint(5, 0), getPoint(6, 20)], streetsResolved: false },
+        { id: '1', filename: 'A1', points: [getPoint(1, 0), getPoint(2, 10)] },
+        { id: '2', filename: 'B1', points: [getPoint(3, 0), getPoint(4, 5)] },
+        { id: '3', filename: 'AB', points: [getPoint(5, 0), getPoint(6, 20)] },
     ];
 
     it('merge A1 and AB to A - Ignoring People and Time shift', () => {

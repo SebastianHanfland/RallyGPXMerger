@@ -17,13 +17,11 @@ describe('enrichSegmentWithResolvedStreets', () => {
             points: [],
             filename: 'fname',
             id: '123',
-            streetsResolved: false,
         };
         // when
         const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(segmentWithoutStreets, {}, 1);
 
         // then
-        expect(segment.streetsResolved).toBeTruthy();
         expect(segment.filename).toEqual(segmentWithoutStreets.filename);
         expect(segment.id).toEqual(segmentWithoutStreets.id);
         expect(segment.points.length).toEqual(segmentWithoutStreets.points.length);
@@ -37,7 +35,6 @@ describe('enrichSegmentWithResolvedStreets', () => {
             points: [createPoint(3, 2), createPoint(4, 2), createPoint(5, 2), createPoint(6, 2)],
             filename: 'fname',
             id: '123',
-            streetsResolved: false,
         };
         const allResolvedStreetNames = {
             [getKey(3, 2)]: 'Main road',

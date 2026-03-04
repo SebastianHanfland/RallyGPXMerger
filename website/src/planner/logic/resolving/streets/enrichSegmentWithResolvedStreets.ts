@@ -48,7 +48,6 @@ export function enrichSegmentWithResolvedStreets(
 
     const segment = {
         ...segmentWithoutStreets,
-        streetsResolved: true,
         points: smoothStreetNames(points, streetLookUp),
     };
     return { segment, streetLookUp: streetLookUp };

@@ -16,7 +16,6 @@ export async function toParsedGpxSegment(file: File, averageSpeed: number): Prom
             id: uuidv4(),
             filename: file.name.replace('.gpx', ''),
             flipped: false,
-            streetsResolved: false,
             points: getPointsFromGpx(gpxString, averageSpeed),
         };
     });

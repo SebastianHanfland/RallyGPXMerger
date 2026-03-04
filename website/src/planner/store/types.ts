@@ -199,7 +199,6 @@ export interface TimedPoint {
 
 export interface ParsedGpxSegment {
     flipped?: boolean;
-    streetsResolved: boolean;
     id: string;
     filename: string;
     color?: string;

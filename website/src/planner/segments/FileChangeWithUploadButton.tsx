@@ -12,6 +12,7 @@ import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redu
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
 
 interface Props {
     id: string;
@@ -39,7 +40,9 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
 
     const handleChange = (newFiles: FileList) => {
         Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((replacementSegments) => {
-            dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments));
+            dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments)).then(() =>
+                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+            );
             dispatch(
                 segmentDataActions.setReplaceProcess({
                     targetSegment: replaceProcess!.targetSegment,

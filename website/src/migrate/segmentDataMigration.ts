@@ -10,7 +10,6 @@ import { setTimingsForSegments } from './segmentTimingResolver.ts';
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegmentOld): ParsedGpxSegment {
     return {
         id: gpxSegment.id,
-        streetsResolved: gpxSegment.streetsResolved ?? false,
         flipped: gpxSegment.flipped,
         filename: gpxSegment.filename,
         color: undefined,
@@ -31,7 +30,6 @@ function gpxSegmentToParsedSegmentAndResolve(gpxSegment: GpxSegmentOld): ParsedG
 
     return {
         id: gpxSegment.id,
-        streetsResolved: gpxSegment.streetsResolved ?? false,
         flipped: gpxSegment.flipped,
         filename: gpxSegment.filename,
         color: undefined,

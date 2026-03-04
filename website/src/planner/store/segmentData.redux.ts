@@ -68,16 +68,6 @@ const segmentDataSlice = createSlice({
                 segment.id === action.payload.id ? { ...segment, points: action.payload.newPoints } : segment
             );
         },
-        setSegmentStreetsResolved: (
-            state: SegmentDataState,
-            action: PayloadAction<{ id: string; streetsResolved: boolean }>
-        ) => {
-            state.segments = state.segments.map((segment) =>
-                segment.id === action.payload.id
-                    ? { ...segment, streetsResolved: action.payload.streetsResolved }
-                    : segment
-            );
-        },
         setReplaceProcess: (
             state: SegmentDataState,
             action: PayloadAction<{ targetSegment: string; replacementSegments: ParsedGpxSegment[] } | undefined>
@@ -126,9 +116,6 @@ const segmentDataSlice = createSlice({
         },
         removeConstructionSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.constructionSegments = state.constructionSegments?.filter((segment) => segment.id !== action.payload);
-        },
-        setAllSegmentsToUnresolved: (state: SegmentDataState) => {
-            state.segments = state.segments.map((segment) => ({ ...segment, streetsResolved: false }));
         },
         setClickOnSegment: (state: SegmentDataState, action: PayloadAction<ClickOnSegment | undefined>) => {
             state.clickOnSegment = action.payload;
