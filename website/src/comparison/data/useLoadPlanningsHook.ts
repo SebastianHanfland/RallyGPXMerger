@@ -8,13 +8,18 @@ export function useLoadPlanningsHook(planningIds: string[]) {
     const trackTitles = useSelector(getComparisonTrackTitles);
 
     useEffect(() => {
-        dispatch(comparisonActions.setIsLoading(true));
         dispatch(comparisonActions.setPlanningIds(planningIds));
 
-        Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))]).then(() =>
-            dispatch(comparisonActions.setIsLoading(false))
-        );
+        Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))]);
     }, []);
+
+    useEffect(() => {
+        if (Object.keys(trackTitles).length !== planningIds.length) {
+            dispatch(comparisonActions.setIsLoading(true));
+        } else {
+            dispatch(comparisonActions.setIsLoading(false));
+        }
+    }, [Object.keys(trackTitles).length]);
 
     useEffect(() => {
         document.title = `Vergleich: ${Object.values(trackTitles).join(', ')}`;
