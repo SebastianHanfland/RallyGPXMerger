@@ -53,7 +53,7 @@ export const InteractionMap = () => {
                 myMap.setView(shiftStartPoint(startPoint, isSidebarOpen), startZoom);
             }
         }
-    }, []);
+    }, [gpxSegments.length]);
 
     useEffect(() => {
         if (!myMap) {
