@@ -2,7 +2,7 @@ import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import { TrackComposition } from '../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import trash from '../../assets/trashB.svg';
@@ -31,6 +31,10 @@ export function TrackButtonsCell({ track }: Props) {
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
 
     const content = getGpxContentFromTimedPoints(calculatedTrack?.points ?? [], calculatedTrack?.filename ?? 'Track');
+
+    useEffect(() => {
+        setColor(getColor(track));
+    }, [track.id]);
 
     return (
         <DropdownButton
