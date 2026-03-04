@@ -45,7 +45,7 @@ export const InteractionMap = () => {
     const isSidebarOpen = useSelector(getIsSidebarOpen);
 
     useEffect(() => {
-        if (gpxSegments.length > 1 && myMap) {
+        if (gpxSegments.length >= 1 && myMap) {
             const lastSegment = gpxSegments[gpxSegments.length - 1];
             if (lastSegment.points.length > 0) {
                 const point = lastSegment.points[0];
