@@ -2,8 +2,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
-import { getHighlightedTrack, getShowMapMarker, mapActions } from '../store/map.reducer.ts';
+import { getHighlightedTrack, getShowMapMarker, getUseVersionColor, mapActions } from '../store/map.reducer.ts';
 import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer.ts';
+import { getColorFromUuid } from '../../utils/colorUtil.ts';
+import { CalculatedTrack } from '../../common/types.ts';
+
+function setColor(track: CalculatedTrack, useVersionColor: boolean, version: string) {
+    return {
+        ...track,
+        color: useVersionColor ? getColorFromUuid(version) : track.color,
+    };
+}
 
 export function comparisonTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
@@ -11,6 +20,7 @@ export function comparisonTracksDisplayHook(
 ) {
     const parsedTracks = useSelector(getComparisonParsedTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
+    const useVersionColor = useSelector(getUseVersionColor);
     const selectedVersions = useSelector(getSelectedVersions);
     const selectedTracks = useSelector(getSelectedTracks);
     const highlightedTrack = useSelector(getHighlightedTrack);
@@ -19,7 +29,10 @@ export function comparisonTracksDisplayHook(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const tracks = selectedVersions.flatMap((version) => {
-            const tracksOfVersion = parsedTracks[version] ?? [];
+            const tracksOfVersion = (parsedTracks[version] ?? []).map((track) =>
+                setColor(track, useVersionColor, version)
+            );
+
             if ((selectedTracks[version]?.length ?? 0) === 0) {
                 return tracksOfVersion;
             }
@@ -48,5 +61,13 @@ export function comparisonTracksDisplayHook(
                 dispatch(mapActions.setHighlightedTrack());
             },
         });
-    }, [parsedTracks, parsedTracks.length, selectedTracks, selectedVersions, showMarker, highlightedTrack]);
+    }, [
+        parsedTracks,
+        parsedTracks.length,
+        selectedTracks,
+        selectedVersions,
+        showMarker,
+        highlightedTrack,
+        useVersionColor,
+    ]);
 }

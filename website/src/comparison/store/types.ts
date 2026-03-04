@@ -17,6 +17,7 @@ export interface MapState {
     currentRealTime?: string;
     startAndEndTimes: Record<string, { start: string; end: string } | undefined>;
     showMapMarker?: boolean;
+    versionColor?: boolean;
     showTrackInfo?: boolean;
     showConstructions?: boolean;
     showSingleTrackInfo?: string;

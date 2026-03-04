@@ -1,6 +1,11 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getShowComparisonMapConstructions, getShowMapMarker, mapActions } from './store/map.reducer.ts';
+import {
+    getShowComparisonMapConstructions,
+    getShowMapMarker,
+    getUseVersionColor,
+    mapActions,
+} from './store/map.reducer.ts';
 import {
     getSelectedTracks,
     getSelectedVersions,
@@ -14,9 +19,12 @@ import Select from 'react-select';
 import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getBaseUrl } from '../utils/linkUtil.ts';
+import { ColorBlob } from '../utils/ColorBlob.tsx';
+import { getColorFromUuid } from '../utils/colorUtil.ts';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
+    const useVersionColor = useSelector(getUseVersionColor);
     const showConstructions = useSelector(getShowComparisonMapConstructions);
     const comparisonParsedTracks = useSelector(getComparisonParsedTracks);
     const selectedVersions = useSelector(getSelectedVersions);
@@ -56,12 +64,18 @@ export function MapVersionSelection() {
                                 type={'checkbox'}
                                 id={planningId}
                                 className={'m-3'}
-                                label={<span>{versionName}</span>}
+                                label={
+                                    <span>
+                                        <ColorBlob color={getColorFromUuid(planningId)} />
+                                        {versionName}
+                                    </span>
+                                }
                                 title={versionName}
                                 checked={selectedVersions.includes(planningId)}
                                 readOnly
                                 onClick={() => dispatch(comparisonActions.selectVersion(planningId))}
                             ></Form.Check>
+
                             <Select
                                 name="version"
                                 value={optionsMap[planningId]?.find((opt) =>
@@ -104,11 +118,20 @@ export function MapVersionSelection() {
                         type={'checkbox'}
                         id={'marker'}
                         className={'m-3'}
-                        label={intl.formatMessage({ id: 'msg.showBreakMarker' })}
+                        label={intl.formatMessage({ id: 'msg.showMarker' })}
                         title={intl.formatMessage({ id: showMapMarker ? 'msg.hideMarker' : 'msg.showMarker' })}
                         checked={showMapMarker}
                         readOnly
                         onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
+                    ></Form.Check>
+                    <Form.Check
+                        type={'checkbox'}
+                        id={'verisonColor'}
+                        className={'m-3'}
+                        label={intl.formatMessage({ id: 'msg.colorVersions' })}
+                        checked={useVersionColor}
+                        readOnly
+                        onClick={() => dispatch(mapActions.setUseVersionColor(!useVersionColor))}
                     ></Form.Check>
                     <ComparisonTimeSlider />
                     {constructions.length > 0 && (
