@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { getComparisonParsedTracks } from '../store/tracks.reducer.ts';
 import { getCenterPoint } from '../../common/map/centerUtil.ts';
 
-let myMap: L.Map;
+let myMap: L.Map | undefined;
 
 export const ComparisonMap = () => {
     const { tileUrlTemplate, startZoom, getOptions } = getMapConfiguration();
@@ -23,6 +23,10 @@ export const ComparisonMap = () => {
             myMap = L.map('mapid').setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
+        return () => {
+            myMap?.remove();
+            myMap = undefined;
+        };
     }, []);
 
     useEffect(() => {

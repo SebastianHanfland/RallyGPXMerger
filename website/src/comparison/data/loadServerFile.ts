@@ -23,8 +23,9 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
                     planningId: id,
                 })
             );
+            const tracksWithVersion = calculatedTracks.map((track) => ({ ...track, version: id }));
             dispatch(comparisonActions.setParticipantsDelay({ version: id, participantsDelay: delay }));
-            dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: calculatedTracks }));
+            dispatch(comparisonActions.setComparisonParsedTracks({ version: id, tracks: tracksWithVersion }));
             dispatch(comparisonActions.addConstructions(getConstructionSegments(planning)));
             dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
             dispatch(comparisonActions.setSelectVersions([id]));

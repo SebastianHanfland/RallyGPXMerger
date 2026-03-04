@@ -60,7 +60,7 @@ export const getCurrentComparisonTimeStamps = (state: ComparisonTrackState): Rec
     return timeForPlanningIds;
 };
 
-export const getBikeSnakesForDisplayMap = createSelector(
+export const getBikeSnakesForComparisonMap = createSelector(
     getCurrentComparisonTimeStamps,
     getPlanningIds,
     getComparisonParsedTracks,
