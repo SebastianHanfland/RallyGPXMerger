@@ -21,7 +21,16 @@ const segmentDataSlice = createSlice({
     initialState: storage.load()?.segmentData ?? initialState,
     reducers: {
         addGpxSegments: (state: SegmentDataState, action: PayloadAction<ParsedGpxSegment[]>) => {
-            state.segments = [...state.segments, ...action.payload];
+            const usedSegmentIds = state.segments.map((segment) => segment.id);
+            const alreadyInUse = action.payload.filter((segment) => usedSegmentIds.includes(segment.id));
+            const newSegments = action.payload.filter((segment) => !usedSegmentIds.includes(segment.id));
+
+            state.segments = [
+                ...state.segments.map(
+                    (segment) => alreadyInUse.find((alreadySegment) => alreadySegment.id === segment.id) ?? segment
+                ),
+                ...newSegments,
+            ];
         },
         addStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
             state.streetLookup = { ...state.streetLookup, ...action.payload };

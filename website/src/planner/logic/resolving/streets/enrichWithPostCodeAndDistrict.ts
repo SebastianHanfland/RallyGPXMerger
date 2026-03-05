@@ -8,7 +8,10 @@ import { getLookups } from '../selectors/getLookups.ts';
 function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: number; lon: number } | null {
     const segmentsWithStreetIndex = segments.filter((segment) => segment.points.find((point) => `${point.s}` === key));
     if (segmentsWithStreetIndex.length !== 1) {
-        console.error('Expected only one segment to contain information here');
+        console.error(
+            'Expected only one segment to contain information here, but got ',
+            segmentsWithStreetIndex.length
+        );
         return null;
     }
     const relevantSegment = segmentsWithStreetIndex[0];

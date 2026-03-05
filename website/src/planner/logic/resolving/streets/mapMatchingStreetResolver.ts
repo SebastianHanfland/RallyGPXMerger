@@ -69,8 +69,6 @@ const enrichOneGpxSegment =
             })
         );
 
-        console.log(resolvedPositions);
-
         return Promise.all(resolvedPositions).then((streetNames) => {
             const allResolvedStreetNames = combineStreetNames(streetNames);
             const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(
