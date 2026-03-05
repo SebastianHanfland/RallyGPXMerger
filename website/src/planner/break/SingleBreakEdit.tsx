@@ -1,11 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'react-bootstrap/Modal';
+import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getColor } from '../../utils/colorUtil.ts';
 import { BreakPosition } from '../logic/resolving/selectors/getBreakPositions.ts';
-import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
+import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { getCount } from '../../utils/inputUtil.ts';
@@ -25,7 +22,7 @@ export const SingleBreakEdit = ({ breakInfo }: Props) => {
     };
 
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }} className={'mx-2'}>
             <Form.Group>
                 <Form.Label>
                     <FormattedMessage id={'msg.minutes'} />
@@ -33,14 +30,17 @@ export const SingleBreakEdit = ({ breakInfo }: Props) => {
                 <Form.Control
                     type="number"
                     step={1}
+                    style={{ width: '100px' }}
                     title={intl.formatMessage({ id: 'msg.minutes.details' })}
                     value={minutes ?? 0}
                     onChange={(value) => setMinutes(getCount(value) ?? 0)}
                 />
             </Form.Group>
-            <Button variant="primary" onClick={changeMinutes}>
-                <FormattedMessage id={'msg.save'} />
-            </Button>
+            <div className={'mx-1'}>
+                <Button variant="primary" onClick={changeMinutes}>
+                    <FormattedMessage id={'msg.save'} />
+                </Button>
+            </div>
         </div>
     );
 };

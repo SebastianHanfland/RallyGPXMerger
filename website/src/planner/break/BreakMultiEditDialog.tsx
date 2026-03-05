@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getColor } from '../../utils/colorUtil.ts';
 import { BreakPosition } from '../logic/resolving/selectors/getBreakPositions.ts';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { Form } from 'react-bootstrap';
 import { SingleBreakEdit } from './SingleBreakEdit.tsx';
 
 interface Props {
@@ -15,7 +14,6 @@ interface Props {
 }
 
 export const BreakMultiEditDialog = ({ breaks, closeModal }: Props) => {
-    const intl = useIntl();
     const tracks = useSelector(getTrackCompositions);
 
     return (
@@ -32,17 +30,23 @@ export const BreakMultiEditDialog = ({ breaks, closeModal }: Props) => {
                         return null;
                     }
                     return (
-                        <div key={foundTrack.id} className={'mt-5'}>
-                            <div>
-                                <ColorBlob color={getColor(foundTrack)} />
-                                {foundTrack.name}
+                        <>
+                            <div
+                                key={foundTrack.id}
+                                style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                            >
+                                <span>
+                                    <ColorBlob color={getColor(foundTrack)} />
+                                    {foundTrack.name}
+                                </span>
+                                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                    {breaks.map((breakInfo) => (
+                                        <SingleBreakEdit breakInfo={breakInfo} />
+                                    ))}
+                                </div>
                             </div>
-                            <div>
-                                {breaks.map((breakInfo) => (
-                                    <SingleBreakEdit breakInfo={breakInfo} />
-                                ))}
-                            </div>
-                        </div>
+                            <hr />
+                        </>
                     );
                 })}
             </Modal.Body>
