@@ -12,7 +12,7 @@ interface Props {
 
 export const BreakDialogContent = ({ values, setValues }: Props) => {
     const intl = useIntl();
-    const addSegmentToTrack = (event: ChangeEvent<HTMLInputElement>) => {
+    const setMinutes = (event: ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, minutes: getCount(event) });
     };
     return (
@@ -26,7 +26,7 @@ export const BreakDialogContent = ({ values, setValues }: Props) => {
                     step={1}
                     title={intl.formatMessage({ id: 'msg.minutes.details' })}
                     value={values.minutes ?? 0}
-                    onChange={addSegmentToTrack}
+                    onChange={setMinutes}
                 />
             </Form.Group>
             <Form.Group>

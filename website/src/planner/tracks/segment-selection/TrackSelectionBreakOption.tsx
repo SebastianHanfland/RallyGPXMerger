@@ -13,7 +13,7 @@ import { mapActions } from '../../store/map.reducer.ts';
 import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
-import { BreakAtPositionEdit } from './BreakAtPositionEdit.tsx';
+import { BreakAtPositionEdit } from '../../break/BreakAtPositionEdit.tsx';
 
 interface Props {
     trackId: string;

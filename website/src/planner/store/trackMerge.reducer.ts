@@ -111,6 +111,22 @@ const trackMergeSlice = createSlice({
         setEntryPointEditInfo: (state: TrackMergeState, action: PayloadAction<EntryPointEditInfo | undefined>) => {
             state.entryPointEditInfo = action.payload;
         },
+        setMinutesForBreak: (
+            state: TrackMergeState,
+            action: PayloadAction<{ minutes: number; breakId: string; trackId: string }>
+        ) => {
+            const { minutes, trackId, breakId } = action.payload;
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id === trackId
+                    ? {
+                          ...track,
+                          segments: track.segments.map((segment) =>
+                              segment.id === breakId ? { ...segment, minutes } : segment
+                          ),
+                      }
+                    : track
+            );
+        },
         clear: () => initialState,
     },
 });
