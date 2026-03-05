@@ -13,6 +13,7 @@ import { mapActions } from '../../store/map.reducer.ts';
 import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
+import { BreakAtPositionEdit } from './BreakAtPositionEdit.tsx';
 
 interface Props {
     trackId: string;
@@ -51,6 +52,7 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
             <div className={'m-2'}>
                 {trackElement.hasToilet ? <WcIcon /> : <BreakIcon />}
                 {getBreakLabel(trackElement, foundBreak)}
+                <BreakAtPositionEdit trackElement={trackElement} />
             </div>
             <div>
                 {foundBreak && (
