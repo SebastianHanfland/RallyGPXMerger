@@ -6,6 +6,7 @@ import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { getCount } from '../../utils/inputUtil.ts';
+import { successNotification } from '../store/toast.reducer.ts';
 
 interface Props {
     breakInfo: BreakPosition;
@@ -15,10 +16,12 @@ export const SingleBreakEdit = ({ breakInfo }: Props) => {
     const intl = useIntl();
     const dispatch = useDispatch();
     const [minutes, setMinutes] = useState(breakInfo.minutes);
+    const message = intl.formatMessage({ id: 'msg.breakAdjusted' });
     const changeMinutes = () => {
         dispatch(
             trackMergeActions.setMinutesForBreak({ minutes, breakId: breakInfo.breakId, trackId: breakInfo.trackId })
         );
+        successNotification(dispatch, message, message);
     };
 
     return (

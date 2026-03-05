@@ -20,7 +20,7 @@ export const BreakMultiEditDialog = ({ breaks, closeModal }: Props) => {
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.editNode'} />
+                    <FormattedMessage id={'msg.editBreak'} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

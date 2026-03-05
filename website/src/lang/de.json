@@ -370,5 +370,6 @@
     "msg.localData": "Lokale Daten",
     "msg.moreIds": "Bitte mindestens 2 Planungs Ids angeben, damit der Vergleich durchgeführt werden kann",
     "msg.speedCounter": "Faktor für die Abspielgeschwindigkeit zwischen 1 und 1000",
-    "msg.colorVersions": "Gleiche Farbe für alle Routen einer Version"
+    "msg.colorVersions": "Gleiche Farbe für alle Routen einer Version",
+    "msg.breakAdjusted": "Pausenlänge angepasst"
 }
