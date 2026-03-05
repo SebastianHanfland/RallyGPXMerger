@@ -62,7 +62,7 @@ const enrichOneGpxSegment =
         const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
         const points = segmentWithoutStreets.points;
 
-        const resolvedPositions = splitListIntoSections(points, 1000).flatMap((points) =>
+        const resolvedPositions = splitListIntoSections(points, 700).flatMap((points) =>
             geoApifyFetchMapMatching(geoApifyKey)(toGeoApifyMapMatchingBody(points.map(toPoint))).catch((error) => {
                 errorNotification(dispatch, 'GeoApify Error', error.toString());
                 return {};
