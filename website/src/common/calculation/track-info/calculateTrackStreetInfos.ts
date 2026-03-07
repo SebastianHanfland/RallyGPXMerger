@@ -188,7 +188,6 @@ export function getWayPointsOfTrack(
                 const aggregatedPoints = aggregatedSegmentStreets[gpxOrBreak.id];
                 arrivalTimeForPreviousSegment = shiftedPoint[0].t;
 
-                console.time('aggr');
                 const wayPoints: WayPoint[] = aggregatedPoints.map((point) => ({
                     streetName: lookups.streets[point.s],
                     district: lookups.districts[point.s],
@@ -206,8 +205,6 @@ export function getWayPointsOfTrack(
                     type: TrackWayPointType.Track,
                     s: point.s,
                 }));
-
-                console.timeEnd('aggr');
 
                 trackPoints = [...wayPoints, ...trackPoints];
             }
