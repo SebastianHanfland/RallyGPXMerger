@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getNodeEditInfo, nodesActions } from '../store/nodes.reducer.ts';
+import { getNodeEditInfo, getNodeSpecifications, nodesActions } from '../store/nodes.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { Form, ProgressBar } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
@@ -49,6 +49,10 @@ export const EditNodeDialog = () => {
     const participantsDelay = useSelector(getParticipantsDelay);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
+    const storedNodeSpecs = useSelector(getNodeSpecifications);
+
+    const foundNodeSpec =
+        storedNodeSpecs && nodeEditInfo?.segmentAfterId ? storedNodeSpecs[nodeEditInfo?.segmentAfterId] : undefined;
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
 
@@ -63,6 +67,14 @@ export const EditNodeDialog = () => {
     const saveNodeSpecifications = () => {
         dispatch(nodesActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
         closeModal();
+    };
+    const resetNodeSpecs = () => {
+        dispatch(
+            nodesActions.setNodeSpecification({
+                segmentAfter: nodeEditInfo?.segmentAfterId,
+                nodeSpecs: undefined,
+            })
+        );
     };
 
     useEffect(() => {
@@ -85,7 +97,10 @@ export const EditNodeDialog = () => {
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.editNode'} />
+                    <div>
+                        <FormattedMessage id={'msg.editNode'} />
+                        {foundNodeSpec && <FormattedMessage id={'msg.nodeSpecActive'} />}
+                    </div>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -191,6 +206,9 @@ export const EditNodeDialog = () => {
                 })}
             </Modal.Body>
             <Modal.Footer>
+                <Button variant="danger" onClick={resetNodeSpecs}>
+                    <FormattedMessage id={'msg.reset'} />
+                </Button>
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
                 </Button>

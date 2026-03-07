@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { TrackPrio } from '../tracks/components/TrackPrio.tsx';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getColor } from '../../utils/colorUtil.ts';
+import { TrackPeople } from '../tracks/components/TrackPeople.tsx';
 
 export const TrackPriorityTable = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -31,7 +32,9 @@ export const TrackPriorityTable = () => {
                                 <ColorBlob color={getColor(track)} />
                                 {track.name}
                             </td>
-                            <td>{track.peopleCount ?? 0}</td>
+                            <td>
+                                <TrackPeople track={track} />
+                            </td>
                             <td>
                                 <TrackPrio track={track} />
                             </td>

@@ -371,5 +371,7 @@
     "msg.moreIds": "Please provide more planning ids for a proper comparison",
     "msg.speedCounter": "Factor for the simulation speed, between 1 and 1000",
     "msg.colorVersions": "Same color for all tracks of a version",
-    "msg.breakAdjusted": "Break size adjusted"
+    "msg.breakAdjusted": "Break size adjusted",
+    "msg.reset": "Reset",
+    "msg.nodeSpecActive": "(Overwriting default behavior)"
 }
