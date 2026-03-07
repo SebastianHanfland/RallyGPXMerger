@@ -38,7 +38,7 @@ function getSegmentInfo(aggregatedInfo: AggregatedPoints[]) {
     });
     const speed = seconds > 0 ? (distance / seconds) * 3600 : undefined;
     console.log({ aggregatedInfo, seconds, speed, distance });
-    return { distance, speed };
+    return { distance, speed, seconds };
 }
 
 export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
@@ -62,6 +62,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
 
     const speedString = info.speed ? `, ${formatNumber(info.speed)} km/h` : '';
 
+    const minutesString = `${formatNumber(info.seconds / 60, 1)} min`;
     return (
         <div
             onMouseEnter={() => dispatch(mapActions.setHighlightedSegmentId(segmentId))}
@@ -81,7 +82,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 <div className={'my-2'} title={segmentName + '\n' + tooltip}>
                     <DraggableIcon />
                     <span className={'m-1'}>{segmentName}</span>
-                    <span>{`(${formatNumber(info.distance, 2)} km${speedString})`}</span>
+                    <span>{`(${formatNumber(info.distance, 2)} km${speedString}, ${minutesString})`}</span>
                 </div>
                 <div>
                     <TrackSelectionGapDisplay segmentId={segmentId} trackId={trackId} />
