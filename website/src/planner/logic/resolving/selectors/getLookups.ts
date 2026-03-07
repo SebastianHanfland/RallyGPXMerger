@@ -14,6 +14,13 @@ export interface Lookups {
     districts: Record<number, string | null>;
 }
 
+export const getCorrectStreetLookup = createSelector(
+    [getStreetLookup, getReplaceStreetLookup],
+    (streets, replaceStreets): Record<number, string | null> => {
+        return { ...streets, ...replaceStreets };
+    }
+);
+
 export const getLookups = createSelector(
     [
         getStreetLookup,

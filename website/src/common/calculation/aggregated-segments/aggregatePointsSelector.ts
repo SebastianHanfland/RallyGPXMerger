@@ -3,7 +3,8 @@ import { ParsedPoint } from '../../../planner/store/types.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName.ts';
 import { createSelector } from '@reduxjs/toolkit';
-import { getParsedGpxSegments, getStreetLookup } from '../../../planner/store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../../../planner/store/segmentData.redux.ts';
+import { getCorrectStreetLookup } from '../../../planner/logic/resolving/selectors/getLookups.ts';
 
 export function getConnectedPointWithTheSameStreetIndex(
     enrichedPoints: ParsedPoint[],
@@ -46,7 +47,7 @@ export function getConnectedPointWithTheSameStreetIndex(
 }
 
 export const aggregateStreetsInSegments = createSelector(
-    [getParsedGpxSegments, getStreetLookup],
+    [getParsedGpxSegments, getCorrectStreetLookup],
     (segments, streetLookup): Record<string, AggregatedPoints[]> => {
         const aggregatedPointsForSegments: Record<string, AggregatedPoints[]> = {};
         segments.forEach((segment) => {
