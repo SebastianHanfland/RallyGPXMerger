@@ -22,6 +22,7 @@ import { instanceOfBreak, instanceOfEntry, instanceOfNode } from '../types.ts';
 import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
 import { CalculatedTrack } from '../../types.ts';
+import { joinWayPointsAtSegmentsBorders } from './joinWayPointsAtSegmentsBorders.ts';
 
 const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     lat: b,
@@ -97,10 +98,6 @@ function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
         pointFrom: { lat: 0, lon: 0, time: arrivalDate },
         pointTo: { lat: 0, lon: 0, time: arrivalDate },
     };
-}
-
-function joinWayPointsAtSegmentsBorders(wayPoints: WayPoint[], trackPoints: WayPoint[]) {
-    return [...wayPoints, ...trackPoints];
 }
 
 export function getWayPointsOfTrack(
