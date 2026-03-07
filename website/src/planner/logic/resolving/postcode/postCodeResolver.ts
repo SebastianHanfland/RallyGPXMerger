@@ -1,7 +1,4 @@
 import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
-import { Dispatch } from '@reduxjs/toolkit';
-import { batch } from 'react-redux';
-import { segmentDataActions } from '../../../store/segmentData.redux.ts';
 
 const correctionTuples: [string, string][] = [
     ['constituency for the Bundestag election ', ''],
@@ -12,7 +9,10 @@ const correctionTuples: [string, string][] = [
     ['Munich', 'München'],
 ];
 
-function correctDistrict(district: string): string {
+function correctDistrict(district: string | undefined): string | undefined {
+    if (!district) {
+        return undefined;
+    }
     let correctDistrict = district;
     correctionTuples.forEach(([find, replacement]) => (correctDistrict = correctDistrict.replace(find, replacement)));
     return correctDistrict;
@@ -21,16 +21,10 @@ function correctDistrict(district: string): string {
 export async function fetchAndStorePostCodeAndDistrict(
     bigDataCloudKey: string,
     streetIndex: number,
-    dispatch: Dispatch,
     lat: number,
     lon: number
-) {
+): Promise<{ district: string | undefined; postCode: string; key: number }> {
     return fetchPostCodeForCoordinate(bigDataCloudKey)(lat, lon).then(({ postCode, district }) => {
-        batch(() => {
-            dispatch(segmentDataActions.addPostCodeLookup({ [streetIndex]: `${postCode}` }));
-            if (district) {
-                dispatch(segmentDataActions.addDistrictLookup({ [streetIndex]: correctDistrict(district) }));
-            }
-        });
+        return { key: streetIndex, district: correctDistrict(district), postCode: `${postCode}` };
     });
 }

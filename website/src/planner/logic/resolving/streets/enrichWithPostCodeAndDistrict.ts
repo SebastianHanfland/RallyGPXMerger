@@ -1,7 +1,7 @@
 import { ParsedGpxSegment, State } from '../../../store/types.ts';
 import { getBigDataCloudKey } from '../../../store/geoCoding.reducer.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
+import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { fetchAndStorePostCodeAndDistrict } from '../postcode/postCodeResolver.ts';
 import { getLookups } from '../selectors/getLookups.ts';
 
@@ -41,22 +41,36 @@ export const enrichGpxSegmentsWithPostCodesAndDistricts = async (
         return Promise.resolve();
     }
 
-    const postCodeRequests: Promise<void>[] = Object.keys(streets).map((key) => {
-        if (postCodes[Number(key)] && districts[Number(key)]) {
-            return Promise.resolve();
-        }
-        const positionForKey = getPositionForKey(key, segments);
-        if (!positionForKey) {
-            return Promise.resolve();
-        }
-        return fetchAndStorePostCodeAndDistrict(
-            bigDataCloudKey,
-            Number(key),
-            dispatch,
-            positionForKey.lat,
-            positionForKey.lon
-        );
-    });
+    const postCodeRequests: Promise<{ district: string | undefined; postCode: string; key: number } | undefined>[] =
+        Object.keys(streets).map((key) => {
+            if (postCodes[Number(key)] && districts[Number(key)]) {
+                return Promise.resolve(undefined);
+            }
+            const positionForKey = getPositionForKey(key, segments);
+            if (!positionForKey) {
+                return Promise.resolve(undefined);
+            }
+            return fetchAndStorePostCodeAndDistrict(
+                bigDataCloudKey,
+                Number(key),
+                positionForKey.lat,
+                positionForKey.lon
+            );
+        });
 
-    return Promise.all(postCodeRequests).then();
+    return Promise.all(postCodeRequests).then((results) => {
+        const districts: Record<number, string> = {};
+        const postCodes: Record<number, string> = {};
+        results.forEach((result) => {
+            if (result) {
+                const { key, district, postCode } = result;
+                if (district) {
+                    districts[key] = district;
+                }
+                postCodes[key] = postCode;
+            }
+        });
+        dispatch(segmentDataActions.addPostCodeLookup(postCodes));
+        dispatch(segmentDataActions.addDistrictLookup(districts));
+    });
 };
