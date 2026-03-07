@@ -13,7 +13,7 @@ export function getWayPointKey(wayPoint: ReplacementWayPoint) {
 export const createPostCodeAndDistrictLookups = (
     parsedSegments: ParsedGpxSegment[],
     geoCoding: GeoCodingStateOld,
-    streetLookup: Record<number, string>
+    streetLookup: Record<number, string | undefined>
 ): { postCodeLookup: Record<number, string>; districtLookup: Record<number, string> } => {
     let postCodeLookup: Record<number, string> = {};
     let districtLookup: Record<number, string> = {};

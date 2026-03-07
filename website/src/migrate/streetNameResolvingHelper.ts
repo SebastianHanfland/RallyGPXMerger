@@ -5,9 +5,9 @@ import { GeoCodingStateOld } from '../planner/store/typesOld.ts';
 export const enrichGpxSegmentsWithStreetNames = (
     parsedSegments: ParsedGpxSegment[],
     geoCoding: GeoCodingStateOld
-): { segments: ParsedGpxSegment[]; streetLookUp: Record<number, string> } => {
+): { segments: ParsedGpxSegment[]; streetLookUp: Record<number, string | undefined> } => {
     const segments: ParsedGpxSegment[] = [];
-    let collectedStreetLookUp: Record<number, string> = {};
+    let collectedStreetLookUp: Record<number, string | undefined> = {};
 
     parsedSegments.forEach((parsedSegment, segmentIndex) => {
         const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(

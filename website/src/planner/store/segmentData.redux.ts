@@ -32,7 +32,7 @@ const segmentDataSlice = createSlice({
                 ...newSegments,
             ];
         },
-        addStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+        addStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string | undefined>>) => {
             state.streetLookup = { ...state.streetLookup, ...action.payload };
         },
         addPostCodeLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
