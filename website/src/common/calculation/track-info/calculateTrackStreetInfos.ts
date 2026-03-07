@@ -23,7 +23,11 @@ import { NodePosition } from '../../../planner/logic/resolving/selectors/getNode
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
 import { CalculatedTrack } from '../../types.ts';
 
-const extractLatLon = ({ b, l }: ParsedPoint, arrivalDate: string) => ({ lat: b, lon: l, time: arrivalDate });
+const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string, timeShift: number) => ({
+    lat: b,
+    lon: l,
+    time: shiftDateBySeconds(arrivalDate, t + timeShift),
+});
 
 export const calculateTrackStreetInfos = (
     segments: ParsedGpxSegment[],
@@ -194,12 +198,12 @@ export function getWayPointsOfTrack(
                     postCode: lookups.postCodes[point.s],
                     backPassage: shiftDateBySeconds(
                         arrivalDate,
-                        point.frontPassage + participantsDelayInSeconds * (track.peopleCount ?? 0)
+                        point.frontPassage + participantsDelayInSeconds * (track.peopleCount ?? 0) + shiftedPoint[0].t
                     ),
-                    frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage),
-                    frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival),
-                    pointFrom: extractLatLon(point.pointFrom, arrivalDate),
-                    pointTo: extractLatLon(point.pointTo, arrivalDate),
+                    frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage + shiftedPoint[0].t),
+                    frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival + shiftedPoint[0].t),
+                    pointFrom: extractLatLon(point.pointFrom, arrivalDate, shiftedPoint[0].t),
+                    pointTo: extractLatLon(point.pointTo, arrivalDate, shiftedPoint[0].t),
                     distanceInKm: point.distanceInKm,
                     speed: point.speed,
                     type: TrackWayPointType.Track,
