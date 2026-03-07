@@ -18,6 +18,9 @@ const sortByPeopleOnTrack =
         if (!segmentB) {
             return -1;
         }
+        if (peopleOnBranch[segmentA] === peopleOnBranch[segmentB]) {
+            return 0;
+        }
         return peopleOnBranch[segmentA] > peopleOnBranch[segmentB] ? -1 : 1;
     };
 

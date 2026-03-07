@@ -188,7 +188,40 @@ describe('peopleDelayCounter', () => {
             ].forEach(executeTest);
         });
 
-        describe('with people and priority', () => {});
+        describe('with people and priority', () => {
+            [
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
+                    [-0, -10, -30],
+                    {},
+                    '2 has more people than 1, but 1 as higher prio, they are before 3'
+                ),
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(25, 1)],
+                    [-45, -25, -0],
+                    {},
+                    '2 has more people than 1, they are after 3 because of prio not people'
+                ),
+                createTestCase(
+                    [createTrack1(10, 3), createTrack2(10, 2), createTrack3(10, 1)],
+                    [-0, -10, -20],
+                    {},
+                    'priorities rule out people, higher prio means first'
+                ),
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(10, 2), createTrack3(10, 3)],
+                    [-20, -10, -0],
+                    {},
+                    'priorities rule out people, higher even is first when it is a later branch'
+                ),
+                createTestCase(
+                    [createTrack1(10, 4), createTrack2(10, 2), createTrack3(10, 3)],
+                    [-0, -10, -20],
+                    {},
+                    'earlier merge values higher priority of branch for later nodes'
+                ),
+            ].forEach(executeTest);
+        });
 
         describe('with people and node specifications', () => {});
 
