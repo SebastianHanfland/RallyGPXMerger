@@ -162,16 +162,28 @@ describe('peopleDelayCounter', () => {
         describe('only with people', () => {
             [
                 createTestCase(
-                    [createTrack1(10), createTrack2(20), createTrack3(30)],
+                    [createTrack1(10), createTrack2(20), createTrack3(25)],
                     [-20, -0, -30],
                     {},
                     '2 has more people than 1, they are before 3'
                 ),
                 createTestCase(
-                    [createTrack1(30), createTrack2(20), createTrack3(10)],
+                    [createTrack1(10), createTrack2(20), createTrack3(35)],
+                    [-55, -35, -0],
+                    {},
+                    '2 has more people than 1, they are after 3'
+                ),
+                createTestCase(
+                    [createTrack1(30), createTrack2(20), createTrack3(35)],
                     [-0, -30, -50],
                     {},
                     '1 has more people than 2, they are before 3'
+                ),
+                createTestCase(
+                    [createTrack1(30), createTrack2(20), createTrack3(55)],
+                    [-55, -85, -0],
+                    {},
+                    '1 has more people than 2, they are after 3'
                 ),
             ].forEach(executeTest);
         });
