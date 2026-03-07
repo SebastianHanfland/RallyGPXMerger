@@ -30,6 +30,14 @@ export function formatTimeOnly(dateString: string, noSecond = false): string {
     return date.format(new Date(dateString), TIME_FORMAT);
 }
 
+export function shiftEndTimeByParticipants(
+    endDateTime: string,
+    participants: number,
+    participantsDelayInSeconds: number
+): string {
+    return date.addSeconds(new Date(endDateTime), participants * participantsDelayInSeconds).toISOString();
+}
+
 export const DateTimeFormat: FormatDateOptions = {
     hour: '2-digit',
     minute: '2-digit',

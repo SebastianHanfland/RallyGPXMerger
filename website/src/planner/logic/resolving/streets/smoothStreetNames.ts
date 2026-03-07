@@ -31,7 +31,7 @@ export const isSameStreet = (
     point: ParsedPoint,
     index: number,
     points: ParsedPoint[],
-    streetLookUp: Record<number, string>
+    streetLookUp: Record<number, string | undefined>
 ): boolean => {
     if (points.length <= 1 || index === 0) {
         return false;
@@ -48,7 +48,7 @@ function smoothSameStreet(
     point: ParsedPoint,
     index: number,
     points: ParsedPoint[],
-    streetLookUp: Record<number, string>
+    streetLookUp: Record<number, string | undefined>
 ) {
     if (points.length <= 1 || index === 0) {
         return point;
@@ -68,7 +68,7 @@ const getCurrentPoints = (newPoints: ParsedPoint[], points: ParsedPoint[]): Pars
     return points.map((point, index) => (index < newPoints.length ? newPoints[index] : point));
 };
 
-export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<number, string>) {
+export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<number, string | undefined>) {
     const newPoints: ParsedPoint[] = [];
 
     points.forEach((point, index) => {

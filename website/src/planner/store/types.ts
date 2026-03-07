@@ -212,12 +212,12 @@ export interface SegmentDataState {
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;
-    streetLookup: Record<number, string | null>;
-    postCodeLookup: Record<number, string | null>;
-    districtLookup: Record<number, string | null>;
-    replaceStreetLookup: Record<number, string | null>;
-    replacePostCodeLookup: Record<number, string | null>;
-    replaceDistrictLookup: Record<number, string | null>;
+    streetLookup: Record<number, string | undefined>;
+    postCodeLookup: Record<number, string | undefined>;
+    districtLookup: Record<number, string | undefined>;
+    replaceStreetLookup: Record<number, string | undefined>;
+    replacePostCodeLookup: Record<number, string | undefined>;
+    replaceDistrictLookup: Record<number, string | undefined>;
 }
 
 export interface PointOfInterest {

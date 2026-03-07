@@ -9,14 +9,14 @@ import {
 } from '../../../store/segmentData.redux.ts';
 
 export interface Lookups {
-    streets: Record<number, string | null>;
-    postCodes: Record<number, string | null>;
-    districts: Record<number, string | null>;
+    streets: Record<number, string | undefined>;
+    postCodes: Record<number, string | undefined>;
+    districts: Record<number, string | undefined>;
 }
 
 export const getCorrectStreetLookup = createSelector(
     [getStreetLookup, getReplaceStreetLookup],
-    (streets, replaceStreets): Record<number, string | null> => {
+    (streets, replaceStreets): Record<number, string | undefined> => {
         return { ...streets, ...replaceStreets };
     }
 );
