@@ -46,7 +46,7 @@ export function getConnectedPointWithTheSameStreetIndex(
     });
 }
 
-export const aggregateStreetsInSegments = createSelector(
+export const getAggregateStreetsInSegments = createSelector(
     [getParsedGpxSegments, getCorrectStreetLookup],
     (segments, streetLookup): Record<string, AggregatedPoints[]> => {
         const aggregatedPointsForSegments: Record<string, AggregatedPoints[]> = {};

@@ -7,7 +7,7 @@ import { getNodePositions } from '../logic/resolving/selectors/getNodePositions.
 import { getNodeSpecifications } from '../store/nodes.reducer.ts';
 import { calculateTrackStreetInfos } from '../../common/calculation/track-info/calculateTrackStreetInfos.ts';
 import { getCalculateTracks } from './getCalculatedTracks.ts';
-import { aggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
+import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
 
 export const getTrackStreetInfos = createSelector(
     [
@@ -19,7 +19,7 @@ export const getTrackStreetInfos = createSelector(
         getArrivalDateTime,
         getCalculateTracks,
         getNodeSpecifications,
-        aggregateStreetsInSegments,
+        getAggregateStreetsInSegments,
     ],
     calculateTrackStreetInfos
 );

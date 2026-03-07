@@ -19,6 +19,9 @@ import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
 import { EditSegmentColorButton } from '../../segments/EditSegmentColor.tsx';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
 import { FileChangeButton } from '../../segments/FileChangeButton.tsx';
+import { getAggregateStreetsInSegments } from '../../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
+import { AggregatedPoints } from '../../logic/resolving/types.ts';
+import { formatNumber } from '../../../utils/numberUtil.ts';
 
 interface Props {
     trackId: string;
@@ -27,9 +30,24 @@ interface Props {
     fullGpxDelete: boolean;
 }
 
+function getSegmentInfo(aggregatedInfo: AggregatedPoints[]) {
+    let distance = 0;
+    const seconds = aggregatedInfo[aggregatedInfo.length - 1].frontPassage;
+    aggregatedInfo.forEach((info) => {
+        distance += info.distanceInKm ?? 0;
+    });
+    const speed = seconds > 0 ? (distance / seconds) * 3600 : undefined;
+    console.log({ aggregatedInfo, seconds, speed, distance });
+    return { distance, speed };
+}
+
 export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
+    const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
+    const aggregatedInfo = aggregatedSegments[segmentId];
+
+    const info = getSegmentInfo(aggregatedInfo);
 
     const trackCompositions = useSelector(getTrackCompositions);
     const { tooltip } = getUsagesOfSegment(trackCompositions, segmentId, intl);
@@ -41,6 +59,8 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
         return null;
     }
     const { id, filename, flipped } = gpxSegment;
+
+    const speedString = info.speed ? `, ${formatNumber(info.speed)} km/h` : '';
 
     return (
         <div
@@ -61,6 +81,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 <div className={'my-2'} title={segmentName + '\n' + tooltip}>
                     <DraggableIcon />
                     <span className={'m-1'}>{segmentName}</span>
+                    <span>{`(${formatNumber(info.distance, 2)} km${speedString})`}</span>
                 </div>
                 <div>
                     <TrackSelectionGapDisplay segmentId={segmentId} trackId={trackId} />

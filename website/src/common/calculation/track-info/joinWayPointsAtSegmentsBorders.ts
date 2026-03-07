@@ -5,7 +5,6 @@ import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 function mergePoints(matchedWayPoint: WayPoint, matchedTrackPoint: WayPoint): WayPoint {
     const totalDistance = (matchedWayPoint.distanceInKm ?? 0) + (matchedTrackPoint.distanceInKm ?? 0);
     const totalTime = getTimeDifferenceInSeconds(matchedTrackPoint.frontPassage, matchedWayPoint.frontArrival);
-    console.log({ totalTime, totalDistance });
     return {
         ...matchedTrackPoint,
         frontArrival: matchedWayPoint.frontArrival,
