@@ -9,7 +9,7 @@ import { getCorrectStreetLookup } from '../../../planner/logic/resolving/selecto
 export function getConnectedPointWithTheSameStreetIndex(
     enrichedPoints: ParsedPoint[],
     firstPoint: ParsedPoint,
-    streetLookup: Record<number, string | null>
+    streetLookup: Record<number, string | undefined>
 ): ParsedPoint[] {
     return enrichedPoints.filter((point, index) => {
         if (point.s === firstPoint.s) {

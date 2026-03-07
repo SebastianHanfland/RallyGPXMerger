@@ -23,10 +23,10 @@ import { NodePosition } from '../../../planner/logic/resolving/selectors/getNode
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
 import { CalculatedTrack } from '../../types.ts';
 
-const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string, timeShift: number) => ({
+const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     lat: b,
     lon: l,
-    time: shiftDateBySeconds(arrivalDate, t + timeShift),
+    time: shiftDateBySeconds(arrivalDate, t),
 });
 
 export const calculateTrackStreetInfos = (
@@ -190,23 +190,25 @@ export function getWayPointsOfTrack(
                 const aggregatedPoints = aggregatedSegmentStreets[gpxOrBreak.id];
                 arrivalTimeForPreviousSegment = shiftedPoint[0].t;
 
-                const wayPoints: WayPoint[] = aggregatedPoints.map((point) => ({
-                    streetName: lookups.streets[point.s] ?? null,
-                    district: lookups.districts[point.s] ?? null,
-                    postCode: lookups.postCodes[point.s] ?? null,
-                    backPassage: shiftDateBySeconds(
-                        arrivalDate,
-                        point.frontPassage + participantsDelayInSeconds * (track.peopleCount ?? 0) + shiftedPoint[0].t
-                    ),
-                    frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage + shiftedPoint[0].t),
-                    frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival + shiftedPoint[0].t),
-                    pointFrom: extractLatLon(point.pointFrom, arrivalDate, shiftedPoint[0].t),
-                    pointTo: extractLatLon(point.pointTo, arrivalDate, shiftedPoint[0].t),
-                    distanceInKm: point.distanceInKm,
-                    speed: point.speed,
-                    type: TrackWayPointType.Track,
-                    s: point.s,
-                }));
+                const wayPoints: WayPoint[] = aggregatedPoints.map((point) => {
+                    return {
+                        streetName: lookups.streets[point.s] ?? null,
+                        district: lookups.districts[point.s] ?? null,
+                        postCode: lookups.postCodes[point.s] ?? null,
+                        backPassage: shiftDateBySeconds(
+                            arrivalDate,
+                            point.frontPassage + participantsDelayInSeconds * (track.peopleCount ?? 0)
+                        ),
+                        frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage),
+                        frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival),
+                        pointFrom: extractLatLon(point.pointFrom, arrivalDate),
+                        pointTo: extractLatLon(point.pointTo, arrivalDate),
+                        distanceInKm: point.distanceInKm,
+                        speed: point.speed,
+                        type: TrackWayPointType.Track,
+                        s: point.s,
+                    };
+                });
 
                 trackPoints = [...wayPoints, ...trackPoints];
             }
