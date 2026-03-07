@@ -1,6 +1,6 @@
-import { sumUpAllPeopleWithHigherPriority } from '../peopleDelayCounter.ts';
+import { getExtraDelayOnTrack, sumUpAllPeopleWithHigherPriority } from '../peopleDelayCounter.ts';
 import { listAllNodesOfTracks } from '../../nodes/nodeFinder.ts';
-import { SEGMENT } from '../../../../planner/store/types.ts';
+import { SEGMENT, TrackComposition, TrackSegment } from '../../../../planner/store/types.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };
@@ -119,6 +119,31 @@ describe('peopleDelayCounter', () => {
                 // then
                 expect(number).toEqual(350);
             });
+        });
+    });
+
+    describe('getExtraDelayOnTrack', () => {
+        function createSegment(segmentId: string): TrackSegment {
+            return { id: segmentId, segmentId: segmentId, type: SEGMENT };
+        }
+
+        it('update delay accordingly', () => {
+            // given
+            const tracks: TrackComposition[] = [
+                { id: '1', segments: ['A1', 'AB', 'ABC'].map(createSegment), peopleCount: 10 },
+                { id: '2', segments: ['B1', 'AB', 'ABC'].map(createSegment), peopleCount: 20 },
+                { id: '3', segments: ['C1', 'ABC'].map(createSegment), peopleCount: 30 },
+            ] as TrackComposition[];
+            const delay = 0.2;
+            const nodeSpecifications = {};
+
+            // when
+            const delay1 = getExtraDelayOnTrack(tracks[0], tracks, delay, nodeSpecifications);
+            const delay2 = getExtraDelayOnTrack(tracks[1], tracks, delay, nodeSpecifications);
+            const delay3 = getExtraDelayOnTrack(tracks[2], tracks, delay, nodeSpecifications);
+
+            // then
+            expect([delay1, delay2, delay3]).toEqual([-4, -0, -6]);
         });
     });
 });
