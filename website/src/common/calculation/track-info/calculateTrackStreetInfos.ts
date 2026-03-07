@@ -1,4 +1,9 @@
-import { WayPoint, TrackStreetInfo, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
+import {
+    AggregatedPoints,
+    TrackStreetInfo,
+    TrackWayPointType,
+    WayPoint,
+} from '../../../planner/logic/resolving/types.ts';
 import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dateUtil.ts';
 import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.ts';
 import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation.ts';
@@ -15,9 +20,10 @@ import {
 } from '../../../planner/store/types.ts';
 import { instanceOfBreak, instanceOfEntry, instanceOfNode } from '../types.ts';
 import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
-import { aggregatePoints } from '../aggregated-segments/aggregatePoints.ts';
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
 import { CalculatedTrack } from '../../types.ts';
+
+const extractLatLon = ({ b, l }: ParsedPoint, arrivalDate: string) => ({ lat: b, lon: l, time: arrivalDate });
 
 export const calculateTrackStreetInfos = (
     segments: ParsedGpxSegment[],
@@ -27,7 +33,8 @@ export const calculateTrackStreetInfos = (
     nodes: NodePosition[],
     arrivalDateTime: string | undefined,
     calculatedTracks: CalculatedTrack[],
-    nodeSpecifications: NodeSpecifications | undefined
+    nodeSpecifications: NodeSpecifications | undefined,
+    aggregatedSegmentStreets: Record<string, AggregatedPoints[]>
 ): TrackStreetInfo[] => {
     const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
 
@@ -41,7 +48,8 @@ export const calculateTrackStreetInfos = (
             nodes,
             participantsDelayInSeconds,
             lookups,
-            arrivalDateTime
+            arrivalDateTime,
+            aggregatedSegmentStreets
         );
         console.timeEnd('waypoint');
 
@@ -95,7 +103,8 @@ export function getWayPointsOfTrack(
     nodes: NodePosition[],
     participantsDelayInSeconds: number,
     lookups: Lookups,
-    arrivalDateTime: string | undefined
+    arrivalDateTime: string | undefined,
+    aggregatedSegmentStreets: Record<string, AggregatedPoints[]>
 ): WayPoint[] {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
     let trackPoints: WayPoint[] = [];
@@ -176,23 +185,31 @@ export function getWayPointsOfTrack(
                 trackPoints = [trackNode, ...trackPoints];
             } else {
                 const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
+                const aggregatedPoints = aggregatedSegmentStreets[gpxOrBreak.id];
                 arrivalTimeForPreviousSegment = shiftedPoint[0].t;
-                const points = shiftedPoint.map((point) => ({
-                    ...point,
-                    t: shiftDateBySeconds(arrivalDate, point.t),
-                }));
+
                 console.time('aggr');
-                const aggregatedPoints = aggregatePoints(
-                    points,
-                    track.peopleCount ?? 0,
-                    participantsDelayInSeconds,
-                    lookups.streets,
-                    lookups.districts,
-                    lookups.postCodes
-                );
+                const wayPoints: WayPoint[] = aggregatedPoints.map((point) => ({
+                    streetName: lookups.streets[point.s],
+                    district: lookups.districts[point.s],
+                    postCode: lookups.postCodes[point.s],
+                    backPassage: shiftDateBySeconds(
+                        arrivalDate,
+                        point.frontPassage + participantsDelayInSeconds * (track.peopleCount ?? 0)
+                    ),
+                    frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage),
+                    frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival),
+                    pointFrom: extractLatLon(point.pointFrom, arrivalDate),
+                    pointTo: extractLatLon(point.pointTo, arrivalDate),
+                    distanceInKm: point.distanceInKm,
+                    speed: point.speed,
+                    type: TrackWayPointType.Track,
+                    s: point.s,
+                }));
+
                 console.timeEnd('aggr');
 
-                trackPoints = [...aggregatedPoints, ...trackPoints];
+                trackPoints = [...wayPoints, ...trackPoints];
             }
         });
 

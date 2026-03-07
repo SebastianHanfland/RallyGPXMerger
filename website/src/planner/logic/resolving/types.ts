@@ -97,7 +97,7 @@ export interface AggregatedPoints {
     pointTo: ParsedPoint;
     speed?: number;
     distanceInKm?: number;
-    s?: number;
+    s: number;
 }
 
 export interface WayPoint {
