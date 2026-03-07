@@ -1,6 +1,6 @@
 import { getExtraDelayOnTrack, sumUpAllPeopleWithHigherPriority } from '../peopleDelayCounter.ts';
 import { listAllNodesOfTracks } from '../../nodes/nodeFinder.ts';
-import { SEGMENT, TrackComposition, TrackSegment } from '../../../../planner/store/types.ts';
+import { NodeSpecifications, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };
@@ -123,27 +123,63 @@ describe('peopleDelayCounter', () => {
     });
 
     describe('getExtraDelayOnTrack', () => {
-        function createSegment(segmentId: string): TrackSegment {
-            return { id: segmentId, segmentId: segmentId, type: SEGMENT };
+        interface TestCase {
+            tracks: TrackComposition[];
+            expectedDelays: number[];
+            nodeSpecifications: NodeSpecifications | undefined;
+            description: string;
         }
 
-        it('update delay accordingly', () => {
-            // given
-            const tracks: TrackComposition[] = [
-                { id: '1', segments: ['A1', 'AB', 'ABC'].map(createSegment), peopleCount: 10 },
-                { id: '2', segments: ['B1', 'AB', 'ABC'].map(createSegment), peopleCount: 20 },
-                { id: '3', segments: ['C1', 'ABC'].map(createSegment), peopleCount: 30 },
-            ] as TrackComposition[];
-            const delay = 0.2;
-            const nodeSpecifications = {};
+        const createTrack1 = (peopleCount: number, priority?: number) =>
+            ({ id: '1', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+        const createTrack2 = (peopleCount: number, priority?: number) =>
+            ({ id: '2', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+        const createTrack3 = (peopleCount: number, priority?: number) =>
+            ({ id: '3', segments: ['C1', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
 
-            // when
-            const delay1 = getExtraDelayOnTrack(tracks[0], tracks, delay, nodeSpecifications);
-            const delay2 = getExtraDelayOnTrack(tracks[1], tracks, delay, nodeSpecifications);
-            const delay3 = getExtraDelayOnTrack(tracks[2], tracks, delay, nodeSpecifications);
+        const createTestCase = (
+            tracks: TrackComposition[],
+            expectedDealy: number[],
+            nodeSpecifications: NodeSpecifications | undefined,
+            description: string
+        ): TestCase => ({ tracks, expectedDelays: expectedDealy, nodeSpecifications, description });
 
-            // then
-            expect([delay1, delay2, delay3]).toEqual([-4, -0, -6]);
+        const executeTest = (testCase: TestCase) =>
+            it(testCase.description, () => {
+                const { tracks, expectedDelays, nodeSpecifications } = testCase;
+
+                const delay = 1;
+
+                // when
+                const delay1 = getExtraDelayOnTrack(tracks[0], tracks, delay, nodeSpecifications);
+                const delay2 = getExtraDelayOnTrack(tracks[1], tracks, delay, nodeSpecifications);
+                const delay3 = getExtraDelayOnTrack(tracks[2], tracks, delay, nodeSpecifications);
+
+                // then
+                expect([delay1, delay2, delay3]).toEqual(expectedDelays);
+            });
+
+        describe('only with people', () => {
+            [
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(30)],
+                    [-20, -0, -30],
+                    {},
+                    '2 has more people than 1, they are before 3'
+                ),
+                createTestCase(
+                    [createTrack1(30), createTrack2(20), createTrack3(10)],
+                    [-0, -30, -50],
+                    {},
+                    '1 has more people than 2, they are before 3'
+                ),
+            ].forEach(executeTest);
         });
+
+        describe('with people and priority', () => {});
+
+        describe('with people and node specifications', () => {});
+
+        describe('with people, priority and node specifications', () => {});
     });
 });
