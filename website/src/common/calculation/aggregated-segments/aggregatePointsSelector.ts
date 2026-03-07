@@ -1,26 +1,15 @@
-import date from 'date-and-time';
-import { WayPoint, TrackWayPointType } from '../../../planner/logic/resolving/types.ts';
-import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-
-import { TimedPoint } from '../../../planner/store/types.ts';
+import { AggregatedPoints } from '../../../planner/logic/resolving/types.ts';
+import { ParsedPoint } from '../../../planner/store/types.ts';
 import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
 import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName.ts';
-
-const extractLatLon = ({ b, l, t }: TimedPoint) => ({ lat: b, lon: l, time: t });
-
-export function shiftEndTimeByParticipants(
-    endDateTime: string,
-    participants: number,
-    participantsDelayInSeconds: number
-): string {
-    return date.addSeconds(new Date(endDateTime), participants * participantsDelayInSeconds).toISOString();
-}
+import { createSelector } from '@reduxjs/toolkit';
+import { getParsedGpxSegments, getStreetLookup } from '../../../planner/store/segmentData.redux.ts';
 
 export function getConnectedPointWithTheSameStreetIndex(
-    enrichedPoints: TimedPoint[],
-    firstPoint: TimedPoint,
+    enrichedPoints: ParsedPoint[],
+    firstPoint: ParsedPoint,
     streetLookup: Record<number, string | null>
-): TimedPoint[] {
+): ParsedPoint[] {
     return enrichedPoints.filter((point, index) => {
         if (point.s === firstPoint.s) {
             return true;
@@ -56,45 +45,43 @@ export function getConnectedPointWithTheSameStreetIndex(
     });
 }
 
-export function aggregatePoints(
-    enrichedPoints: TimedPoint[],
-    participants: number,
-    participantsDelayInSeconds: number,
-    streetLookup: Record<number, string | null>,
-    districtLookup: Record<number, string | null>,
-    postCodeLookup: Record<number, string | null>
-): WayPoint[] {
-    let pointIndex = 0;
-    const aggregatedPoints: WayPoint[] = [];
+export const aggregateStreetsInSegments = createSelector(
+    [getParsedGpxSegments, getStreetLookup],
+    (segments, streetLookup): Record<string, AggregatedPoints[]> => {
+        const aggregatedPointsForSegments: Record<string, AggregatedPoints[]> = {};
+        segments.forEach((segment) => {
+            let pointIndex = 0;
+            const aggregatedPoints: AggregatedPoints[] = [];
 
-    while (pointIndex < enrichedPoints.length) {
-        const firstPoint = enrichedPoints[pointIndex];
-        const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(enrichedPoints, firstPoint, streetLookup);
-        const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1];
+            while (pointIndex < segment.points.length) {
+                const firstPoint = segment.points[pointIndex];
+                const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(
+                    segment.points,
+                    firstPoint,
+                    streetLookup
+                );
+                const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1];
 
-        const distanceInKm =
-            pointIndex > 0
-                ? calculateDistanceInKm([enrichedPoints[pointIndex - 1], ...pointsWithSameStreet])
-                : calculateDistanceInKm(pointsWithSameStreet);
+                const distanceInKm =
+                    pointIndex > 0
+                        ? calculateDistanceInKm([segment.points[pointIndex - 1], ...pointsWithSameStreet])
+                        : calculateDistanceInKm(pointsWithSameStreet);
 
-        const correctedFirstPoint = pointIndex > 0 ? enrichedPoints[pointIndex - 1] : firstPoint;
+                const correctedFirstPoint = pointIndex > 0 ? segment.points[pointIndex - 1] : firstPoint;
 
-        aggregatedPoints.push({
-            streetName: streetLookup[firstPoint.s],
-            district: districtLookup[firstPoint.s],
-            postCode: postCodeLookup[firstPoint.s],
-            backPassage: shiftEndTimeByParticipants(lastPoint.t, participants, participantsDelayInSeconds),
-            frontPassage: lastPoint.t,
-            frontArrival: correctedFirstPoint.t,
-            pointFrom: extractLatLon(correctedFirstPoint),
-            pointTo: extractLatLon(lastPoint),
-            distanceInKm: distanceInKm,
-            speed: (distanceInKm / getTimeDifferenceInSeconds(lastPoint.t, correctedFirstPoint.t)) * 3600,
-            type: TrackWayPointType.Track,
-            s: firstPoint.s,
+                aggregatedPoints.push({
+                    frontPassage: lastPoint.t,
+                    frontArrival: correctedFirstPoint.t,
+                    pointFrom: correctedFirstPoint,
+                    pointTo: lastPoint,
+                    distanceInKm: distanceInKm,
+                    speed: (distanceInKm / (lastPoint.t - correctedFirstPoint.t)) * 3600,
+                    s: firstPoint.s,
+                });
+                pointIndex += pointsWithSameStreet.length;
+            }
+            aggregatedPointsForSegments[segment.id] = aggregatedPoints;
         });
-        pointIndex += pointsWithSameStreet.length;
+        return aggregatedPointsForSegments;
     }
-
-    return aggregatedPoints;
-}
+);

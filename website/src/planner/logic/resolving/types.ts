@@ -1,3 +1,5 @@
+import { ParsedPoint } from '../../store/types.ts';
+
 export interface GeoApifyLegStep {
     osm_way_id: number;
     speed: number;
@@ -86,6 +88,16 @@ export interface BlockedStreetInfo {
     pointTo: { lat: number; lon: number };
     peopleCount: number;
     tracksIds: string[];
+}
+
+export interface AggregatedPoints {
+    frontArrival: number;
+    frontPassage: number;
+    pointFrom: ParsedPoint;
+    pointTo: ParsedPoint;
+    speed?: number;
+    distanceInKm?: number;
+    s?: number;
 }
 
 export interface WayPoint {
