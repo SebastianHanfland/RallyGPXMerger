@@ -34,7 +34,7 @@ export const calculateTrackStreetInfos = (
     return trackWithEndDelay.map((track) => {
         const calculatedTrack = calculatedTracks.find((calcTrack) => calcTrack.id === track.id);
         const distance = calculatedTrack ? calculateDistanceInKm(calculatedTrack.points) : 0;
-
+        console.time('waypoint');
         const wayPoints = getWayPointsOfTrack(
             track,
             segments,
@@ -43,6 +43,7 @@ export const calculateTrackStreetInfos = (
             lookups,
             arrivalDateTime
         );
+        console.timeEnd('waypoint');
 
         const backupDate = new Date().toISOString();
         const startFront = wayPoints.length > 0 ? wayPoints[0].frontArrival : backupDate;
@@ -180,6 +181,7 @@ export function getWayPointsOfTrack(
                     ...point,
                     t: shiftDateBySeconds(arrivalDate, point.t),
                 }));
+                console.time('aggr');
                 const aggregatedPoints = aggregatePoints(
                     points,
                     track.peopleCount ?? 0,
@@ -188,6 +190,7 @@ export function getWayPointsOfTrack(
                     lookups.districts,
                     lookups.postCodes
                 );
+                console.timeEnd('aggr');
 
                 trackPoints = [...aggregatedPoints, ...trackPoints];
             }
