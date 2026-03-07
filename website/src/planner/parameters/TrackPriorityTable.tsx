@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useSelector } from 'react-redux';
 import { TrackPrio } from '../tracks/components/TrackPrio.tsx';
+import { ColorBlob } from '../../utils/ColorBlob.tsx';
+import { getColor } from '../../utils/colorUtil.ts';
 
 export const TrackPriorityTable = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -25,7 +27,10 @@ export const TrackPriorityTable = () => {
                 <tbody>
                     {tracks.map((track) => (
                         <tr key={track.id}>
-                            <td>{track.name}</td>
+                            <td>
+                                <ColorBlob color={getColor(track)} />
+                                {track.name}
+                            </td>
                             <td>{track.peopleCount ?? 0}</td>
                             <td>
                                 <TrackPrio track={track} />
