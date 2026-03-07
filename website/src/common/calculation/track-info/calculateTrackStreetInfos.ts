@@ -39,7 +39,7 @@ export const calculateTrackStreetInfos = (
     arrivalDateTime: string | undefined,
     calculatedTracks: CalculatedTrack[],
     nodeSpecifications: NodeSpecifications | undefined,
-    aggregatedSegmentStreets: Record<string, AggregatedPoints[]>
+    aggregatedSegmentStreets: Record<string, AggregatedPoints[] | undefined>
 ): TrackStreetInfo[] => {
     const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
 
@@ -107,7 +107,7 @@ export function getWayPointsOfTrack(
     participantsDelayInSeconds: number,
     lookups: Lookups,
     arrivalDateTime: string | undefined,
-    aggregatedSegmentStreets: Record<string, AggregatedPoints[]>
+    aggregatedSegmentStreets: Record<string, AggregatedPoints[] | undefined>
 ): WayPoint[] {
     let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
     let trackPoints: WayPoint[] = [];
@@ -191,7 +191,7 @@ export function getWayPointsOfTrack(
                 const aggregatedPoints = aggregatedSegmentStreets[gpxOrBreak.id];
                 arrivalTimeForPreviousSegment = shiftedPoint[0].t;
 
-                const wayPoints: WayPoint[] = aggregatedPoints.map((point) => {
+                const wayPoints: WayPoint[] = (aggregatedPoints ?? []).map((point) => {
                     return {
                         streetName: lookups.streets[point.s] ?? null,
                         district: lookups.districts[point.s] ?? null,

@@ -48,7 +48,7 @@ export function getConnectedPointWithTheSameStreetIndex(
 
 export const getAggregateStreetsInSegments = createSelector(
     [getParsedGpxSegments, getCorrectStreetLookup],
-    (segments, streetLookup): Record<string, AggregatedPoints[]> => {
+    (segments, streetLookup): Record<string, AggregatedPoints[] | undefined> => {
         const aggregatedPointsForSegments: Record<string, AggregatedPoints[]> = {};
         segments.forEach((segment) => {
             let pointIndex = 0;
