@@ -99,6 +99,10 @@ function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
     };
 }
 
+function joinWayPointsAtSegmentsBorders(wayPoints: WayPoint[], trackPoints: WayPoint[]) {
+    return [...wayPoints, ...trackPoints];
+}
+
 export function getWayPointsOfTrack(
     track: TrackComposition,
     gpxSegments: ParsedGpxSegment[],
@@ -210,7 +214,7 @@ export function getWayPointsOfTrack(
                     };
                 });
 
-                trackPoints = [...wayPoints, ...trackPoints];
+                trackPoints = joinWayPointsAtSegmentsBorders(wayPoints, trackPoints);
             }
         });
 
