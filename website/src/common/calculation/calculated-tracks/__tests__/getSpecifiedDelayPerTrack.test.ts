@@ -1,4 +1,11 @@
-import { NodeSpecifications, PEOPLE, PRIORITY, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
+import {
+    NODE_SPEC,
+    NodeSpecifications,
+    PEOPLE,
+    PRIORITY,
+    SEGMENT,
+    TrackComposition,
+} from '../../../../planner/store/types.ts';
 import { getDelaysOfTracks, TrackDelayDetails } from '../getSpecifiedDelayPerTrack.ts';
 
 function getSegment(id: string) {
@@ -251,21 +258,53 @@ describe('getSpecifiedDelayPerTrack', () => {
 
         describe('with people and node specifications', () => {
             [
-                // createTestCase(
-                //     [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
-                //     [-0, -0, -20],
-                //     {
-                //         AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } },
-                //         ABC: { totalCount: 30, trackOffsets: { AB: 0, C1: 0 } },
-                //     },
-                //     'No delay when all node specification give no extra delay'
-                // ),
-                // createTestCase(
-                //     [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
-                //     [-0, -0, -20],
-                //     { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } } },
-                //     'When A and B merges without delay, the maximum (20) is taken for delay for C'
-                // ),
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(25)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 0, by: NODE_SPEC },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 0, by: NODE_SPEC },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: NODE_SPEC }] },
+                    ],
+                    {
+                        AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } },
+                        ABC: { totalCount: 30, trackOffsets: { AB: 0, C1: 0 } },
+                    },
+                    'No delay when all node specification give no extra delay'
+                ),
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(25)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 30, by: PEOPLE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 30, by: PEOPLE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: PEOPLE }] },
+                    ],
+                    { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } } },
+                    'When A and B merges without delay, the maximum (20) is taken for check for C, so C goes first'
+                ),
                 // createTestCase(
                 //     [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
                 //     [-0, -0, -20],
