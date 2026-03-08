@@ -1,6 +1,7 @@
 import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
-import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from '../nodes/nodeFinder.ts';
+import { TrackNode, TrackNodeSegment } from '../nodes/nodeFinder.ts';
 import { getBranchTracks } from '../../../planner/nodes/getBranchesAtNode.ts';
+import { getDelaysOfTracks } from './getSpecifiedDelayPerTrack.ts';
 
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>
@@ -154,32 +155,14 @@ export function getExtraDelayOnTrack(
     participantsDelayInSeconds: number,
     nodeSpecifications: NodeSpecifications | undefined
 ): number {
-    const trackNodes = listAllNodesOfTracks(trackCompositions);
-    let delayForTrackInSeconds = 0;
-    trackNodes.forEach((trackNode) => {
-        const nodeInfluencesTrack = trackNode.segmentsBeforeNode.map((segments) => segments.trackId).includes(track.id);
-        if (nodeInfluencesTrack) {
-            if (
-                nodeSpecifications &&
-                nodeSpecifications[trackNode.segmentIdAfterNode] &&
-                nodeSpecifications[trackNode.segmentIdAfterNode]?.trackOffsets
-            ) {
-                const nodeSpecification = nodeSpecifications[trackNode.segmentIdAfterNode];
-                const foundOffsetRecord = Object.entries(nodeSpecification?.trackOffsets ?? {}).find(([segmentId]) =>
-                    track.segments.map((segment) => segment.id).includes(segmentId)
-                );
-                if (foundOffsetRecord) {
-                    delayForTrackInSeconds -= foundOffsetRecord[1] * participantsDelayInSeconds;
-                }
-            } else {
-                const peopleWithHigherPriority = sumUpAllPeopleWithHigherPriority(
-                    trackCompositions,
-                    trackNode,
-                    track.id
-                );
-                delayForTrackInSeconds += peopleWithHigherPriority * participantsDelayInSeconds;
-            }
-        }
+    const delaysOfTracks = getDelaysOfTracks(trackCompositions, participantsDelayInSeconds, nodeSpecifications);
+    const delaysOfTrack = delaysOfTracks.find((delays) => delays.trackId === track.id);
+    if (!delaysOfTrack) {
+        return 0;
+    }
+    let countDelay = 0;
+    delaysOfTrack.delays.forEach((delay) => {
+        countDelay += delay.extraDelay;
     });
-    return -delayForTrackInSeconds;
+    return -countDelay;
 }
