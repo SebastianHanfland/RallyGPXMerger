@@ -133,17 +133,44 @@ export const getDelaysOfTracks = (
                     branchOfTrack,
                     peopleCounter
                 );
-                trackDelays = setDelay(trackDelays, track.id, segment.id, PRIORITY, delayByPriority);
+                trackDelays = setDelay(trackDelays, track.id, segment.id, PRIORITY, delayByPriority * delayPerPerson);
             } else if (branchOfTrack) {
                 let peopleOnOtherBranches = 0;
+                const otherBranches: string[] = [];
                 Object.entries(peopleCounter).forEach(([branch, people]) => {
                     if (branch !== branchOfTrack) {
                         peopleOnOtherBranches += people;
+                        otherBranches.push(branch);
                     }
                 });
                 const peopleOfBranch = peopleCounter[branchOfTrack];
-                const resultingDela = peopleOfBranch > peopleOnOtherBranches ? 0 : peopleOnOtherBranches;
-                trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingDela);
+                if (peopleOfBranch === peopleOnOtherBranches) {
+                    if (otherBranches.length === 1) {
+                        const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
+                        trackDelays = setDelay(
+                            trackDelays,
+                            track.id,
+                            segment.id,
+                            PEOPLE,
+                            resultingOffset * delayPerPerson
+                        );
+                    } else {
+                        // TODO: 286 How to handle a merge of three branches?
+                        if (otherBranches.length === 1) {
+                            const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
+                            trackDelays = setDelay(
+                                trackDelays,
+                                track.id,
+                                segment.id,
+                                PEOPLE,
+                                resultingOffset * delayPerPerson
+                            );
+                        }
+                    }
+                } else {
+                    const resultingOffset = peopleOfBranch >= peopleOnOtherBranches ? 0 : peopleOnOtherBranches;
+                    trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingOffset * delayPerPerson);
+                }
             }
         });
     });

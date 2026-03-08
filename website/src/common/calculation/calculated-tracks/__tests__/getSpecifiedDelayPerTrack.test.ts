@@ -73,6 +73,28 @@ describe('getSpecifiedDelayPerTrack', () => {
                     '2 has more people than 1, they are before 3'
                 ),
                 createTestCase(
+                    [createTrack1(10), createTrack2(10), createTrack3(20)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 10, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 20, by: PEOPLE }] },
+                    ],
+                    {},
+                    'should choose any track when size is the same'
+                ),
+                createTestCase(
                     [createTrack1(10), createTrack2(20), createTrack3(35)],
                     [
                         {
