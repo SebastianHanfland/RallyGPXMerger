@@ -112,7 +112,7 @@ export function sumUpAllPeopleWithHigherPriority(
                   .includes(segmentId)
           )
         : undefined;
-    if (branchOfTrack) {
+    if (branchOfTrack && priorityCounter[branchOfTrack] > 0) {
         return getPeopleFromBranchesWithHigherPriority(priorityCounter, branchOfTrack, peopleCounter);
     }
 
