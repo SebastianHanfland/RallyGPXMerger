@@ -113,62 +113,53 @@ export const getDelaysOfTracks = (
         // Node Spec
         //////////////////////////
         if (foundNodeSpec) {
-            Object.entries(foundNodeSpec.trackOffsets).forEach(([segmentId, offset]) => {
+            Object.entries(foundNodeSpec.trackOffsets).forEach(([segId, offset]) => {
                 const tracksWithSegment = trackCompositions.filter((track) =>
-                    track.segments.map((segment) => segment.id).includes(segmentId)
+                    track.segments.map((segment) => segment.id).includes(segId)
                 );
                 tracksWithSegment.forEach((track) => {
                     trackDelays = setDelay(trackDelays, track.id, segmentId, NODE_SPEC, offset);
                 });
             });
+        } else if (hasPrioritiesSet(priorityCounter)) {
             ///////////////////////////
             // Priority
             //////////////////////////
-        } else if (branchOfTrack && hasPrioritiesSet(priorityCounter)) {
-            // People have to be calculated by previous nodes
-            const delayByPriority = getPeopleFromBranchesWithHigherPriority(
-                priorityCounter,
-                branchOfTrack,
-                peopleCounter
+            const tracksWithSegment = trackCompositions.filter((track) =>
+                track.segments.map((segment) => segment.id).includes(segmentId)
             );
-            trackDelays = setDelay(trackDelays, track.id, segment.id, PRIORITY, delayByPriority * delayPerPerson);
+            tracksWithSegment.forEach((track) => {
+                // People have to be calculated by previous nodes
+                const delayByPriority = getPeopleFromBranchesWithHigherPriority(
+                    priorityCounter,
+                    track.id,
+                    peopleLengthOnSegment
+                );
+                trackDelays = setDelay(trackDelays, track.id, segmentId, PRIORITY, delayByPriority * delayPerPerson);
+            });
+        } else {
             ///////////////////////////
             // People counter
             //////////////////////////
-        } else if (branchOfTrack) {
             // People have to be calculated by previous nodes on all tracks
-            let peopleOnOtherBranches = 0;
-            const otherBranches: string[] = [];
-            Object.entries(peopleCounter).forEach(([branch, people]) => {
-                if (branch !== branchOfTrack) {
-                    peopleOnOtherBranches += people;
-                    otherBranches.push(branch);
-                }
-            });
-            const peopleOfBranch = peopleCounter[branchOfTrack];
-            if (peopleOfBranch === peopleOnOtherBranches) {
-                if (otherBranches.length === 1) {
-                    const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
-                    trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingOffset * delayPerPerson);
-                } else {
-                    // TODO: 286 How to handle a merge of three branches?
-                    if (otherBranches.length === 1) {
-                        const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
-                        trackDelays = setDelay(
-                            trackDelays,
-                            track.id,
-                            segment.id,
-                            PEOPLE,
-                            resultingOffset * delayPerPerson
-                        );
+            const tracksWithSegment = trackCompositions.filter((track) =>
+                track.segments.map((segment) => segment.id).includes(segmentId)
+            );
+            tracksWithSegment.forEach((track) => {
+                let peopleOnOtherBranches = 0;
+                const otherBranches: string[] = [];
+                Object.entries(peopleOnOtherBranches).forEach(([branch, people]) => {
+                    if (branch !== track.id) {
+                        peopleOnOtherBranches += people;
+                        otherBranches.push(branch);
                     }
-                }
-            } else {
+                });
+                const peopleOfBranch = peopleLengthOnSegment[track.id];
+
                 const resultingOffset = peopleOfBranch >= peopleOnOtherBranches ? 0 : peopleOnOtherBranches;
-                trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingOffset * delayPerPerson);
-            }
+                trackDelays = setDelay(trackDelays, track.id, segmentId, PEOPLE, resultingOffset * delayPerPerson);
+            });
         }
-        trackDelays = setDelay(trackDelays, track.id, segment.id, NODE_SPEC, delayByNodeSpec);
     });
 
     return trackDelays;
