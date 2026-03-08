@@ -1,5 +1,5 @@
-import { NodeSpecifications, PEOPLE, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
-import { getDelaysOfTrack, TrackDelay } from '../getSpecifiedDelayPerTrack.ts';
+import { NODE, NodeSpecifications, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
+import { getDelaysOfTracks, TrackDelay } from '../getSpecifiedDelayPerTrack.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };
@@ -9,7 +9,7 @@ describe('getSpecifiedDelayPerTrack', () => {
     describe('getDelaysOfTrack', () => {
         interface TestCase {
             tracks: TrackComposition[];
-            expectedDelays: TrackDelay[][];
+            expectedDelays: { trackId: string; delays: TrackDelay[] }[];
             nodeSpecifications: NodeSpecifications | undefined;
             description: string;
         }
@@ -23,7 +23,7 @@ describe('getSpecifiedDelayPerTrack', () => {
 
         const createTestCase = (
             tracks: TrackComposition[],
-            expectedDealy: TrackDelay[][],
+            expectedDealy: { trackId: string; delays: TrackDelay[] }[],
             nodeSpecifications: NodeSpecifications | undefined,
             description: string
         ): TestCase => ({ tracks, expectedDelays: expectedDealy, nodeSpecifications, description });
@@ -35,12 +35,10 @@ describe('getSpecifiedDelayPerTrack', () => {
                 const delay = 1;
 
                 // when
-                const delay1 = getDelaysOfTrack(tracks[0], tracks, delay, nodeSpecifications);
-                const delay2 = getDelaysOfTrack(tracks[1], tracks, delay, nodeSpecifications);
-                const delay3 = getDelaysOfTrack(tracks[2], tracks, delay, nodeSpecifications);
+                const delay1 = getDelaysOfTracks(tracks, delay, nodeSpecifications);
 
                 // then
-                expect([delay1, delay2, delay3]).toEqual(expectedDelays);
+                expect(delay1).toEqual(expectedDelays);
             });
 
         describe('only with people', () => {
@@ -48,9 +46,21 @@ describe('getSpecifiedDelayPerTrack', () => {
                 createTestCase(
                     [createTrack1(10), createTrack2(20), createTrack3(25)],
                     [
-                        [{ segmentId: 'A', extraDelay: -20, by: PEOPLE }],
-                        [{ segmentId: 'A', extraDelay: -20, by: PEOPLE }],
-                        [{ segmentId: 'A', extraDelay: -20, by: PEOPLE }],
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: -20, by: NODE },
+                                { segmentId: 'ABC', extraDelay: -20, by: NODE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: -20, by: NODE },
+                                { segmentId: 'ABC', extraDelay: -20, by: NODE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'A', extraDelay: -20, by: NODE }] },
                     ],
                     {},
                     '2 has more people than 1, they are before 3'

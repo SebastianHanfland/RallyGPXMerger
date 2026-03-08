@@ -35,6 +35,7 @@ export interface ToastsState {
 export const SEGMENT = 'SEGMENT' as const;
 export const BREAK = 'BREAK' as const;
 export const NODE = 'NODE' as const;
+export const NODE_SPEC = 'NODE_SPEC' as const;
 export const PRIORITY = 'PRIORITY' as const;
 export const PEOPLE = 'PEOPLE' as const;
 export const ENTRY = 'ENTRY' as const;
