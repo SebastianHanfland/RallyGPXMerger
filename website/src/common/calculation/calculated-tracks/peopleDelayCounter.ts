@@ -1,5 +1,6 @@
 import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
 import { listAllNodesOfTracks, TrackNode, TrackNodeSegment } from '../nodes/nodeFinder.ts';
+import { getBranchTracks } from '../../../planner/nodes/getBranchesAtNode.ts';
 
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>
@@ -45,16 +46,76 @@ function countPeopleOnSegments(segmentsBeforeNode: TrackNodeSegment[]) {
     return peopleOnBranch;
 }
 
+function getHighestPriorityOfTrack(tracks: TrackComposition[]): number {
+    let highestPriority = 0;
+    tracks.forEach((track) => {
+        if ((track.priority ?? 0) > highestPriority) {
+            highestPriority = track.priority ?? 0;
+        }
+    });
+    console.log({ tracks, highestPriority });
+    return highestPriority;
+}
+
+function getPeopleOnTrack(tracks: TrackComposition[]): number {
+    let count = 0;
+    tracks.forEach((track) => {
+        count += track.peopleCount ?? 0;
+    });
+    return count;
+}
+
+function getPeopleFromBranchesWithHigherPriority(
+    priorityCounter: Record<string, number>,
+    branchOfTrack: string,
+    peopleCounter: Record<string, number>
+) {
+    // Priority check
+    const trackPriority = priorityCounter[branchOfTrack];
+    const segmentIdsWithHigherPriority = Object.entries(priorityCounter)
+        .filter(([segmentId, prio]) => segmentId !== branchOfTrack && prio > trackPriority)
+        .map((entry) => entry[0]);
+
+    let counter = 0;
+    segmentIdsWithHigherPriority.forEach((segmentId) => {
+        counter += peopleCounter[segmentId];
+    });
+    return counter;
+}
+
 export function sumUpAllPeopleWithHigherPriority(
     trackCompositions: TrackComposition[],
     trackNode: TrackNode,
     trackId: string
 ): number {
-    const { segmentsBeforeNode } = trackNode;
+    const { segmentsBeforeNode, segmentIdAfterNode } = trackNode;
 
     if (!segmentsBeforeNode.find((seg) => seg.trackId === trackId)) {
         return 0;
     }
+    const branchTracks = getBranchTracks(segmentIdAfterNode, trackCompositions);
+    const peopleCounter: Record<string, number> = {};
+    const priorityCounter: Record<string, number> = {};
+    if (branchTracks) {
+        Object.entries(branchTracks).map(([segmentId, tracks]) => {
+            const highestPriorityOfTrack = getHighestPriorityOfTrack(tracks);
+            priorityCounter[segmentId] = highestPriorityOfTrack;
+            peopleCounter[segmentId] = getPeopleOnTrack(tracks);
+        });
+    }
+    console.log({ priorityCounter, peopleCounter });
+    const branchOfTrack = branchTracks
+        ? Object.keys(branchTracks).find((segmentId) =>
+              trackCompositions
+                  .find((track) => track.id === trackId)
+                  ?.segments.map((segment) => segment.id)
+                  .includes(segmentId)
+          )
+        : undefined;
+    if (branchOfTrack) {
+        return getPeopleFromBranchesWithHigherPriority(priorityCounter, branchOfTrack, peopleCounter);
+    }
+
     const peopleOnSegments = countPeopleOnSegments(segmentsBeforeNode);
 
     const trackCompositionsCopy = [...trackCompositions].filter(isRelevantForTrack(segmentsBeforeNode, trackId));
