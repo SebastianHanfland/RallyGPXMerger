@@ -65,7 +65,7 @@ function getPeopleOnTrack(tracks: TrackComposition[]): number {
     return count;
 }
 
-function getPeopleFromBranchesWithHigherPriority(
+export function getPeopleFromBranchesWithHigherPriority(
     priorityCounter: Record<string, number>,
     branchOfTrack: string,
     peopleCounter: Record<string, number>
@@ -83,16 +83,7 @@ function getPeopleFromBranchesWithHigherPriority(
     return counter;
 }
 
-export function sumUpAllPeopleWithHigherPriority(
-    trackCompositions: TrackComposition[],
-    trackNode: TrackNode,
-    trackId: string
-): number {
-    const { segmentsBeforeNode, segmentIdAfterNode } = trackNode;
-
-    if (!segmentsBeforeNode.find((seg) => seg.trackId === trackId)) {
-        return 0;
-    }
+export function getBranchInfo(segmentIdAfterNode: string, trackCompositions: TrackComposition[], trackId: string) {
     const branchTracks = getBranchTracks(segmentIdAfterNode, trackCompositions);
     const peopleCounter: Record<string, number> = {};
     const priorityCounter: Record<string, number> = {};
@@ -112,6 +103,24 @@ export function sumUpAllPeopleWithHigherPriority(
                   .includes(segmentId)
           )
         : undefined;
+    return { peopleCounter, priorityCounter, branchOfTrack };
+}
+
+export function sumUpAllPeopleWithHigherPriority(
+    trackCompositions: TrackComposition[],
+    trackNode: TrackNode,
+    trackId: string
+): number {
+    const { segmentsBeforeNode, segmentIdAfterNode } = trackNode;
+
+    if (!segmentsBeforeNode.find((seg) => seg.trackId === trackId)) {
+        return 0;
+    }
+    const { peopleCounter, priorityCounter, branchOfTrack } = getBranchInfo(
+        segmentIdAfterNode,
+        trackCompositions,
+        trackId
+    );
     if (branchOfTrack && priorityCounter[branchOfTrack] > 0) {
         return getPeopleFromBranchesWithHigherPriority(priorityCounter, branchOfTrack, peopleCounter);
     }
