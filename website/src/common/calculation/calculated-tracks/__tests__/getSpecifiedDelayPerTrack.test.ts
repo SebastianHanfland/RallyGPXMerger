@@ -49,18 +49,18 @@ describe('getSpecifiedDelayPerTrack', () => {
                         {
                             trackId: '1',
                             delays: [
-                                { segmentId: 'AB', extraDelay: -20, by: NODE },
-                                { segmentId: 'ABC', extraDelay: -20, by: NODE },
+                                { segmentId: 'AB', extraDelay: -Infinity, by: NODE },
+                                { segmentId: 'ABC', extraDelay: -Infinity, by: NODE },
                             ],
                         },
                         {
                             trackId: '2',
                             delays: [
-                                { segmentId: 'AB', extraDelay: -20, by: NODE },
-                                { segmentId: 'ABC', extraDelay: -20, by: NODE },
+                                { segmentId: 'AB', extraDelay: -Infinity, by: NODE },
+                                { segmentId: 'ABC', extraDelay: -Infinity, by: NODE },
                             ],
                         },
-                        { trackId: '3', delays: [{ segmentId: 'A', extraDelay: -20, by: NODE }] },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: -Infinity, by: NODE }] },
                     ],
                     {},
                     '2 has more people than 1, they are before 3'
