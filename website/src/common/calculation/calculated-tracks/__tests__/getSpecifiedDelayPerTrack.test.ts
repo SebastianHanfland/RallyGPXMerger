@@ -87,18 +87,50 @@ describe('getSpecifiedDelayPerTrack', () => {
                     {},
                     '2 has more people than 1, they are after 3'
                 ),
-                // createTestCase(
-                //     [createTrack1(30), createTrack2(20), createTrack3(35)],
-                //     [-0, -30, -50],
-                //     {},
-                //     '1 has more people than 2, they are before 3'
-                // ),
-                // createTestCase(
-                //     [createTrack1(30), createTrack2(20), createTrack3(55)],
-                //     [-55, -85, -0],
-                //     {},
-                //     '1 has more people than 2, they are after 3'
-                // ),
+                createTestCase(
+                    [createTrack1(30), createTrack2(20), createTrack3(35)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 30, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 50, by: PEOPLE }] },
+                    ],
+                    {},
+                    '1 has more people than 2, they are before 3'
+                ),
+                createTestCase(
+                    [createTrack1(30), createTrack2(20), createTrack3(55)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 55, by: PEOPLE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 30, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 55, by: PEOPLE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: PEOPLE }] },
+                    ],
+                    {},
+                    '1 has more people than 2, they are after 3'
+                ),
             ].forEach(executeTest);
         });
 
