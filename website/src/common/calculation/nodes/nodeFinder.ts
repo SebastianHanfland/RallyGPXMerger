@@ -30,6 +30,12 @@ export function findMultipleOccurrencesOfSegments(trackCompositions: TrackCompos
     return multipleSegmentIds;
 }
 
+export const trackNodesBySegmentSize = (trackCompositions: TrackComposition[]): TrackNode[] => {
+    return listAllNodesOfTracks(trackCompositions).sort((a, b) =>
+        a.segmentsBeforeNode.length > b.segmentsBeforeNode.length ? 1 : -1
+    );
+};
+
 export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): TrackNode[] {
     const segmentIdsUsedMultipleTimes = findMultipleOccurrencesOfSegments(trackCompositions);
     const trackNodes: TrackNode[] = [];

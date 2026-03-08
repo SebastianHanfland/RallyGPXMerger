@@ -8,8 +8,9 @@ import {
     PRIORITY,
     TrackComposition,
 } from '../../../planner/store/types.ts';
-import { listAllNodesOfTracks, TrackNode } from '../nodes/nodeFinder.ts';
-import { getBranchInfo, getPeopleFromBranchesWithHigherPriority } from './peopleDelayCounter.ts';
+import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
+import { getBranchInfo2, getPeopleFromBranchesWithHigherPriority } from './peopleDelayCounter.ts';
+import { getBranchNumbers } from './nodeSpecResultingBranchSize.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 
@@ -98,53 +99,59 @@ export const getDelaysOfTracks = (
     delayPerPerson: number,
     nodeSpecifications: NodeSpecifications | undefined
 ): TrackDelayDetails[] => {
-    const trackNodes = listAllNodesOfTracks(trackCompositions);
+    const trackNodes = trackNodesBySegmentSize(trackCompositions);
+    const branchNumbers = getBranchNumbers(nodeSpecifications ?? {}, trackCompositions);
 
     let trackDelays: TrackDelayDetails[] = trackCompositions.map(initializeTrackDelayDetails(trackNodes));
 
-    trackCompositions.forEach((track) => {
-        track.segments.forEach((segment) => {
-            const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segment.id);
-            if (!foundNode) {
-                return;
-            }
-            const trackIdsAtNode = foundNode.segmentsBeforeNode.map((beforeNode) => beforeNode.trackId);
-            const { branchOfTrack, priorityCounter, peopleCounter } = getBranchInfo(
-                foundNode.segmentIdAfterNode,
-                trackCompositions,
-                track.id
-            );
-            console.log(trackIdsAtNode, 'for later for the node lookup');
-            console.log({ branchOfTrack, priorityCounter, peopleCounter, bP: priorityCounter[branchOfTrack!] });
+    trackNodes.forEach((trackNode) => {
+        const segmentId = trackNode.segmentIdAfterNode;
+        const { peopleLengthOnSegment, priorityCounter } = getBranchInfo2(branchNumbers, segmentId, trackCompositions);
+        const foundNodeSpec = getPossibleNodeSpecification(nodeSpecifications, segmentId);
 
-            const foundNodeSpec = getPossibleNodeSpecification(nodeSpecifications, foundNode.segmentIdAfterNode);
-            if (foundNodeSpec) {
-                foundNodeSpec.trackOffsets;
-                const foundOffsetRecord = Object.entries(foundNodeSpec.trackOffsets).find(([segmentId]) =>
+        ///////////////////////////
+        // Node Spec
+        //////////////////////////
+        if (foundNodeSpec) {
+            Object.entries(foundNodeSpec.trackOffsets).forEach(([segmentId, offset]) => {
+                const tracksWithSegment = trackCompositions.filter((track) =>
                     track.segments.map((segment) => segment.id).includes(segmentId)
                 );
-                if (foundOffsetRecord) {
-                    const delayByNodeSpec = foundOffsetRecord[1] * delayPerPerson;
-                    trackDelays = setDelay(trackDelays, track.id, segment.id, NODE_SPEC, delayByNodeSpec);
-                }
-            } else if (branchOfTrack && hasPrioritiesSet(priorityCounter)) {
-                const delayByPriority = getPeopleFromBranchesWithHigherPriority(
-                    priorityCounter,
-                    branchOfTrack,
-                    peopleCounter
-                );
-                trackDelays = setDelay(trackDelays, track.id, segment.id, PRIORITY, delayByPriority * delayPerPerson);
-            } else if (branchOfTrack) {
-                let peopleOnOtherBranches = 0;
-                const otherBranches: string[] = [];
-                Object.entries(peopleCounter).forEach(([branch, people]) => {
-                    if (branch !== branchOfTrack) {
-                        peopleOnOtherBranches += people;
-                        otherBranches.push(branch);
-                    }
+                tracksWithSegment.forEach((track) => {
+                    trackDelays = setDelay(trackDelays, track.id, segmentId, NODE_SPEC, offset);
                 });
-                const peopleOfBranch = peopleCounter[branchOfTrack];
-                if (peopleOfBranch === peopleOnOtherBranches) {
+            });
+            ///////////////////////////
+            // Priority
+            //////////////////////////
+        } else if (branchOfTrack && hasPrioritiesSet(priorityCounter)) {
+            // People have to be calculated by previous nodes
+            const delayByPriority = getPeopleFromBranchesWithHigherPriority(
+                priorityCounter,
+                branchOfTrack,
+                peopleCounter
+            );
+            trackDelays = setDelay(trackDelays, track.id, segment.id, PRIORITY, delayByPriority * delayPerPerson);
+            ///////////////////////////
+            // People counter
+            //////////////////////////
+        } else if (branchOfTrack) {
+            // People have to be calculated by previous nodes on all tracks
+            let peopleOnOtherBranches = 0;
+            const otherBranches: string[] = [];
+            Object.entries(peopleCounter).forEach(([branch, people]) => {
+                if (branch !== branchOfTrack) {
+                    peopleOnOtherBranches += people;
+                    otherBranches.push(branch);
+                }
+            });
+            const peopleOfBranch = peopleCounter[branchOfTrack];
+            if (peopleOfBranch === peopleOnOtherBranches) {
+                if (otherBranches.length === 1) {
+                    const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
+                    trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingOffset * delayPerPerson);
+                } else {
+                    // TODO: 286 How to handle a merge of three branches?
                     if (otherBranches.length === 1) {
                         const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
                         trackDelays = setDelay(
@@ -154,28 +161,15 @@ export const getDelaysOfTracks = (
                             PEOPLE,
                             resultingOffset * delayPerPerson
                         );
-                    } else {
-                        // TODO: 286 How to handle a merge of three branches?
-                        if (otherBranches.length === 1) {
-                            const resultingOffset = branchOfTrack < otherBranches[0] ? 0 : peopleOnOtherBranches;
-                            trackDelays = setDelay(
-                                trackDelays,
-                                track.id,
-                                segment.id,
-                                PEOPLE,
-                                resultingOffset * delayPerPerson
-                            );
-                        }
                     }
-                } else {
-                    const resultingOffset = peopleOfBranch >= peopleOnOtherBranches ? 0 : peopleOnOtherBranches;
-                    trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingOffset * delayPerPerson);
                 }
+            } else {
+                const resultingOffset = peopleOfBranch >= peopleOnOtherBranches ? 0 : peopleOnOtherBranches;
+                trackDelays = setDelay(trackDelays, track.id, segment.id, PEOPLE, resultingOffset * delayPerPerson);
             }
-        });
+        }
+        trackDelays = setDelay(trackDelays, track.id, segment.id, NODE_SPEC, delayByNodeSpec);
     });
-
-    console.log({ nodeSpecifications, delayPerPerson, trackNodes, trackDelays });
 
     return trackDelays;
 };
