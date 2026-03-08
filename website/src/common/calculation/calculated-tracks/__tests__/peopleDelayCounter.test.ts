@@ -223,7 +223,37 @@ describe('peopleDelayCounter', () => {
             ].forEach(executeTest);
         });
 
-        describe('with people and node specifications', () => {});
+        describe('with people and node specifications', () => {
+            [
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
+                    [-0, -0, -20],
+                    {
+                        AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } },
+                        ABC: { totalCount: 30, trackOffsets: { AB: 0, C1: 0 } },
+                    },
+                    'No delay when all node specification give no extra delay'
+                ),
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
+                    [-0, -0, -20],
+                    { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } } },
+                    'When A and B merges without delay, the maximum (20) is taken for delay for C'
+                ),
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
+                    [-0, -0, -20],
+                    { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 10 } } },
+                    'When the delay of A does not increase the length, the maximum (20) is taken for delay for C'
+                ),
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
+                    [-0, -0, -25],
+                    { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 15 } } },
+                    'When the delay of A increases the length, the maximum (10 + 15 = 25) is taken for delay for C'
+                ),
+            ].forEach(executeTest);
+        });
 
         describe('with people, priority and node specifications', () => {});
     });

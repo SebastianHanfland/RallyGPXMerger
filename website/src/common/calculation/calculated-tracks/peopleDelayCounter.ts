@@ -160,7 +160,6 @@ export function getExtraDelayOnTrack(
                     track.segments.map((segment) => segment.id).includes(segmentId)
                 );
                 if (foundOffsetRecord) {
-                    console.log('This offset is played');
                     delayForTrackInSeconds -= foundOffsetRecord[1] * participantsDelayInSeconds;
                 }
             } else {
