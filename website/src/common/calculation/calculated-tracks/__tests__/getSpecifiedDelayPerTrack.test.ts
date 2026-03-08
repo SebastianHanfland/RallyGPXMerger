@@ -158,30 +158,94 @@ describe('getSpecifiedDelayPerTrack', () => {
                     {},
                     '2 has more people than 1, but 1 as higher prio, they are before 3'
                 ),
-                // createTestCase(
-                //     [createTrack1(10), createTrack2(20), createTrack3(25, 1)],
-                //     [-45, -25, -0],
-                //     {},
-                //     '2 has more people than 1, they are after 3 because of prio not people'
-                // ),
-                // createTestCase(
-                //     [createTrack1(10, 3), createTrack2(10, 2), createTrack3(10, 1)],
-                //     [-0, -10, -20],
-                //     {},
-                //     'priorities rule out people, higher prio means first'
-                // ),
-                // createTestCase(
-                //     [createTrack1(10, 1), createTrack2(10, 2), createTrack3(10, 3)],
-                //     [-20, -10, -0],
-                //     {},
-                //     'priorities rule out people, higher even is first when it is a later branch'
-                // ),
-                // createTestCase(
-                //     [createTrack1(10, 4), createTrack2(10, 2), createTrack3(10, 3)],
-                //     [-0, -10, -20],
-                //     {},
-                //     'earlier merge values higher priority of branch for later nodes'
-                // ),
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(25, 1)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 20, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 25, by: PRIORITY },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 25, by: PRIORITY },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: PRIORITY }] },
+                    ],
+                    {},
+                    '2 has more people than 1, they are after 3 because of prio not people'
+                ),
+                createTestCase(
+                    [createTrack1(10, 3), createTrack2(10, 2), createTrack3(10, 1)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 0, by: PRIORITY },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 10, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 0, by: PRIORITY },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 20, by: PRIORITY }] },
+                    ],
+                    {},
+                    'priorities rule out people, higher prio means first'
+                ),
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(10, 2), createTrack3(10, 3)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 10, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 10, by: PRIORITY },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 10, by: PRIORITY },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: PRIORITY }] },
+                    ],
+                    {},
+                    'priorities rule out people, higher even is first when it is a later branch'
+                ),
+                createTestCase(
+                    [createTrack1(10, 4), createTrack2(10, 2), createTrack3(10, 3)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 0, by: PRIORITY },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 10, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 0, by: PRIORITY },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 20, by: PRIORITY }] },
+                    ],
+                    {},
+                    'earlier merge values higher priority of branch for later nodes'
+                ),
             ].forEach(executeTest);
         });
 
