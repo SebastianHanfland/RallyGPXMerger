@@ -2,6 +2,7 @@ import {
     BREAK,
     NODE,
     NODE_SPEC,
+    NodeSpecification,
     NodeSpecifications,
     PEOPLE,
     PRIORITY,
@@ -82,6 +83,16 @@ function hasPrioritiesSet(priorityCounter: Record<string, number>): boolean {
     return Object.values(priorityCounter).some((counter) => counter > 0);
 }
 
+const getPossibleNodeSpecification = (
+    nodeSpecifications: NodeSpecifications | undefined,
+    segmentIdAfter: string
+): NodeSpecification | undefined => {
+    if (!nodeSpecifications) {
+        return undefined;
+    }
+    return nodeSpecifications[segmentIdAfter];
+};
+
 export const getDelaysOfTracks = (
     trackCompositions: TrackComposition[],
     delayPerPerson: number,
@@ -106,7 +117,17 @@ export const getDelaysOfTracks = (
             console.log(trackIdsAtNode, 'for later for the node lookup');
             console.log({ branchOfTrack, priorityCounter, peopleCounter, bP: priorityCounter[branchOfTrack!] });
 
-            if (branchOfTrack && hasPrioritiesSet(priorityCounter)) {
+            const foundNodeSpec = getPossibleNodeSpecification(nodeSpecifications, foundNode.segmentIdAfterNode);
+            if (foundNodeSpec) {
+                foundNodeSpec.trackOffsets;
+                const foundOffsetRecord = Object.entries(foundNodeSpec.trackOffsets).find(([segmentId]) =>
+                    track.segments.map((segment) => segment.id).includes(segmentId)
+                );
+                if (foundOffsetRecord) {
+                    const delayByNodeSpec = foundOffsetRecord[1] * delayPerPerson;
+                    trackDelays = setDelay(trackDelays, track.id, segment.id, NODE_SPEC, delayByNodeSpec);
+                }
+            } else if (branchOfTrack && hasPrioritiesSet(priorityCounter)) {
                 const delayByPriority = getPeopleFromBranchesWithHigherPriority(
                     priorityCounter,
                     branchOfTrack,
