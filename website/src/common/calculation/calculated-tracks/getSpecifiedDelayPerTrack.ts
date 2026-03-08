@@ -78,6 +78,10 @@ function setDelay(
     });
 }
 
+function hasPrioritiesSet(priorityCounter: Record<string, number>): boolean {
+    return Object.values(priorityCounter).some((counter) => counter > 0);
+}
+
 export const getDelaysOfTracks = (
     trackCompositions: TrackComposition[],
     delayPerPerson: number,
@@ -94,22 +98,22 @@ export const getDelaysOfTracks = (
                 return;
             }
             const trackIdsAtNode = foundNode.segmentsBeforeNode.map((beforeNode) => beforeNode.trackId);
-            console.log(trackIdsAtNode, 'for later for the node lookup');
             const { branchOfTrack, priorityCounter, peopleCounter } = getBranchInfo(
                 foundNode.segmentIdAfterNode,
                 trackCompositions,
                 track.id
             );
+            console.log(trackIdsAtNode, 'for later for the node lookup');
+            console.log({ branchOfTrack, priorityCounter, peopleCounter, bP: priorityCounter[branchOfTrack!] });
 
-            if (branchOfTrack && priorityCounter[branchOfTrack] > 0) {
+            if (branchOfTrack && hasPrioritiesSet(priorityCounter)) {
                 const delayByPriority = getPeopleFromBranchesWithHigherPriority(
                     priorityCounter,
                     branchOfTrack,
                     peopleCounter
                 );
                 trackDelays = setDelay(trackDelays, track.id, segment.id, PRIORITY, delayByPriority);
-            }
-            if (branchOfTrack) {
+            } else if (branchOfTrack) {
                 let peopleOnOtherBranches = 0;
                 Object.entries(peopleCounter).forEach(([branch, people]) => {
                     if (branch !== branchOfTrack) {

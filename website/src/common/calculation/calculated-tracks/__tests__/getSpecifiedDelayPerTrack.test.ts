@@ -1,4 +1,4 @@
-import { NodeSpecifications, PEOPLE, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
+import { NodeSpecifications, PEOPLE, PRIORITY, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
 import { getDelaysOfTracks, TrackDelayDetails } from '../getSpecifiedDelayPerTrack.ts';
 
 function getSegment(id: string) {
@@ -136,12 +136,28 @@ describe('getSpecifiedDelayPerTrack', () => {
 
         describe('with people and priority', () => {
             [
-                // createTestCase(
-                //     [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
-                //     [-0, -10, -30],
-                //     {},
-                //     '2 has more people than 1, but 1 as higher prio, they are before 3'
-                // ),
+                createTestCase(
+                    [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 0, by: PRIORITY },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 10, by: PRIORITY },
+                                { segmentId: 'ABC', extraDelay: 0, by: PRIORITY },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 30, by: PRIORITY }] },
+                    ],
+                    {},
+                    '2 has more people than 1, but 1 as higher prio, they are before 3'
+                ),
                 // createTestCase(
                 //     [createTrack1(10), createTrack2(20), createTrack3(25, 1)],
                 //     [-45, -25, -0],
