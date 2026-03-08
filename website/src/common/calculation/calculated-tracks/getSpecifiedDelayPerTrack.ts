@@ -7,7 +7,7 @@ import {
     PRIORITY,
     TrackComposition,
 } from '../../../planner/store/types.ts';
-import { listAllNodesOfTracks } from '../nodes/nodeFinder.ts';
+import { listAllNodesOfTracks, TrackNode } from '../nodes/nodeFinder.ts';
 
 export interface TrackDelay {
     segmentId: string;
@@ -40,6 +40,20 @@ export interface TrackDelayDetails {
 //     // for displaying and UI purpose
 // };
 
+const initializeTrackDelayDetails = (trackNodes: TrackNode[]) => (track: TrackComposition) => {
+    const delays: TrackDelay[] = [];
+    track.segments.forEach((segment) => {
+        const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segment.id);
+        if (foundNode) {
+            delays.push({ segmentId: segment.id, by: NODE, extraDelay: -Infinity });
+        }
+        if (segment.type === BREAK) {
+            delays.push({ segmentId: segment.id, by: BREAK, extraDelay: segment.minutes });
+        }
+    });
+    return { trackId: track.id, delays };
+};
+
 export const getDelaysOfTracks = (
     trackCompositions: TrackComposition[],
     delayPerPerson: number,
@@ -47,19 +61,7 @@ export const getDelaysOfTracks = (
 ): TrackDelayDetails[] => {
     const trackNodes = listAllNodesOfTracks(trackCompositions);
 
-    const trackDelays: TrackDelayDetails[] = trackCompositions.map((track) => {
-        const delays: TrackDelay[] = [];
-        track.segments.forEach((segment) => {
-            const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segment.id);
-            if (foundNode) {
-                delays.push({ segmentId: segment.id, by: NODE, extraDelay: -Infinity });
-            }
-            if (segment.type === BREAK) {
-                delays.push({ segmentId: segment.id, by: BREAK, extraDelay: segment.minutes });
-            }
-        });
-        return { trackId: track.id, delays };
-    });
+    const trackDelays: TrackDelayDetails[] = trackCompositions.map(initializeTrackDelayDetails(trackNodes));
 
     console.log({ nodeSpecifications, delayPerPerson, trackNodes, trackDelays });
 
