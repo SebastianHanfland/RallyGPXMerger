@@ -15,6 +15,10 @@ export interface TrackDelay {
     by: typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 }
 
+export interface TrackDelayDetails {
+    trackId: string;
+    delays: TrackDelay[];
+}
 // export const getSpecifiedDelayPerTrack = () => {
 //     const segemtIdAfterNode = '123';
 //     const involvedTracks: TrackComposition[] = [];
@@ -40,10 +44,10 @@ export const getDelaysOfTracks = (
     trackCompositions: TrackComposition[],
     delayPerPerson: number,
     nodeSpecifications: NodeSpecifications | undefined
-): { trackId: string; delays: TrackDelay[] }[] => {
+): TrackDelayDetails[] => {
     const trackNodes = listAllNodesOfTracks(trackCompositions);
 
-    const trackDelays: { trackId: string; delays: TrackDelay[] }[] = trackCompositions.map((track) => {
+    const trackDelays: TrackDelayDetails[] = trackCompositions.map((track) => {
         const delays: TrackDelay[] = [];
         track.segments.forEach((segment) => {
             const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segment.id);

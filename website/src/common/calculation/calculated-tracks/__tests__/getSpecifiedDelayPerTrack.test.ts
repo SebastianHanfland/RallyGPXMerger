@@ -1,5 +1,5 @@
 import { NODE, NodeSpecifications, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
-import { getDelaysOfTracks, TrackDelay } from '../getSpecifiedDelayPerTrack.ts';
+import { getDelaysOfTracks, TrackDelayDetails } from '../getSpecifiedDelayPerTrack.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };
@@ -9,7 +9,7 @@ describe('getSpecifiedDelayPerTrack', () => {
     describe('getDelaysOfTrack', () => {
         interface TestCase {
             tracks: TrackComposition[];
-            expectedDelays: { trackId: string; delays: TrackDelay[] }[];
+            expectedDelays: TrackDelayDetails[];
             nodeSpecifications: NodeSpecifications | undefined;
             description: string;
         }
@@ -23,7 +23,7 @@ describe('getSpecifiedDelayPerTrack', () => {
 
         const createTestCase = (
             tracks: TrackComposition[],
-            expectedDealy: { trackId: string; delays: TrackDelay[] }[],
+            expectedDealy: TrackDelayDetails[],
             nodeSpecifications: NodeSpecifications | undefined,
             description: string
         ): TestCase => ({ tracks, expectedDelays: expectedDealy, nodeSpecifications, description });
