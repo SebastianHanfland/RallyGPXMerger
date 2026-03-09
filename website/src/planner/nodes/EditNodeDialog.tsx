@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
-import { NodeSpecification, TrackComposition } from '../store/types.ts';
+import { NodeSpecification } from '../store/types.ts';
 import { getParticipantsDelay } from '../store/settings.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
@@ -19,16 +19,8 @@ import {
     getBranchNumbersSelector,
 } from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 
-const getAllParticipants = (tracks: TrackComposition[]): number => {
-    let count = 0;
-    tracks.forEach((track) => {
-        count += track.peopleCount ?? 0;
-    });
-    return count;
-};
-
-function getNodeDelayValue(numberValue: number, tracks: TrackComposition[], total: number) {
-    const maximum = (total ?? 0) - getAllParticipants(tracks);
+function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
+    const maximum = (total ?? 0) - branchParticipants;
     if (numberValue > maximum) {
         return maximum;
     }
@@ -116,7 +108,7 @@ export const EditNodeDialog = () => {
                     const shiftOffset = (offSet: number) => () => {
                         const newValue = getNodeDelayValue(
                             (nodeSpecs?.trackOffsets[segmentId] ?? 0) + offSet,
-                            tracks,
+                            branchNumbers[getBranchId(tracks.map(({ id }) => id))],
                             total
                         );
                         setNodeSpecs({
@@ -207,7 +199,11 @@ export const EditNodeDialog = () => {
                                             placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
                                             value={nodeSpecs.trackOffsets[segmentId]}
                                             onChange={(value) => {
-                                                const newValue = getNodeDelayValue(getCount(value) ?? 0, tracks, total);
+                                                const newValue = getNodeDelayValue(
+                                                    getCount(value) ?? 0,
+                                                    branchNumbers[getBranchId(tracks.map(({ id }) => id))],
+                                                    total
+                                                );
                                                 setNodeSpecs({
                                                     ...nodeSpecs,
                                                     trackOffsets: { ...nodeSpecs?.trackOffsets, [segmentId]: newValue },
