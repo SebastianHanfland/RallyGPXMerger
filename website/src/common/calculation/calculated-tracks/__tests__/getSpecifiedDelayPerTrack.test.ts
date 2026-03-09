@@ -78,18 +78,18 @@ describe('getSpecifiedDelayPerTrack', () => {
                         {
                             trackId: '1',
                             delays: [
-                                { segmentId: 'AB', extraDelay: 0, by: PEOPLE },
-                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'AB', extraDelay: 10, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 20, by: PEOPLE },
                             ],
                         },
                         {
                             trackId: '2',
                             delays: [
-                                { segmentId: 'AB', extraDelay: 10, by: PEOPLE },
-                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'AB', extraDelay: 0, by: PEOPLE },
+                                { segmentId: 'ABC', extraDelay: 20, by: PEOPLE },
                             ],
                         },
-                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 20, by: PEOPLE }] },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: PEOPLE }] },
                     ],
                     {},
                     'should choose any track when size is the same'
