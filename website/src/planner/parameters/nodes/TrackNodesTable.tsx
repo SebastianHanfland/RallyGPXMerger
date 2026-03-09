@@ -5,6 +5,7 @@ import { trackNodesBySegmentSizeSelector } from '../../../common/calculation/nod
 import { TrackNodesBranchCell } from './TrackNodesBranchCell.tsx';
 import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell.tsx';
 import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton.tsx';
+import { NodeOverviewButton } from './NodeOverviewButton.tsx';
 
 export const TrackNodesTable = () => {
     const trackNodes = useSelector(trackNodesBySegmentSizeSelector);
@@ -34,7 +35,10 @@ export const TrackNodesTable = () => {
                     ))}
                 </tbody>
             </Table>
-            <ResetAllNodeSpecsButton />
+            <div>
+                <ResetAllNodeSpecsButton />
+                <NodeOverviewButton />
+            </div>
         </div>
     );
 };

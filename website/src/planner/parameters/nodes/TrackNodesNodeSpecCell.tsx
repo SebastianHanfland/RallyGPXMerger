@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
 import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer.ts';
-import nodeIcon from '../../../assets/mergeTracks.svg';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { TrashIcon } from '../../../utils/icons/TrashIcon.tsx';
+import { NodeIcon } from '../../../utils/icons/NodeIcon.tsx';
 
 interface Props {
     trackNode: TrackNode;
@@ -30,7 +30,7 @@ export const TrackNodesNodeSpecCell = ({ trackNode }: Props) => {
                     <span className={'mx-1'}>
                         <FormattedMessage id={'msg.add'} />
                     </span>
-                    <img src={nodeIcon} alt={'node'} />
+                    <NodeIcon />
                 </Button>
             </span>
         );
@@ -42,7 +42,7 @@ export const TrackNodesNodeSpecCell = ({ trackNode }: Props) => {
                 <span className={'mx-1'}>
                     <FormattedMessage id={'msg.nodeSpec'} />
                 </span>
-                <img src={nodeIcon} alt={'node'} />
+                <NodeIcon />
             </Button>
             <Button className={'mx-1 rounded-2 p-0'} variant={'danger'} onClick={resetNodeSpec}>
                 <span className={'mx-1'}>

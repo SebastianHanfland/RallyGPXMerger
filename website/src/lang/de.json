@@ -377,5 +377,6 @@
     "msg.nodeSpecActive": "(Überschreibt Standardverhalten)",
     "msg.nodeSpec": "Überschrieben",
     "msg.branches": "Äste",
-    "msg.customBehavior": "Benutzerdefiniertes Verhalten"
+    "msg.customBehavior": "Benutzerdefiniertes Verhalten",
+    "msg.nodesOverview": "Knotenübersicht"
 }

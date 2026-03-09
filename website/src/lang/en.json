@@ -377,5 +377,6 @@
     "msg.nodeSpecActive": "(Overwriting default behavior)",
     "msg.nodeSpec": "Overwritten",
     "msg.branches": "Branches",
-    "msg.customBehavior": "Custom behavior"
+    "msg.customBehavior": "Custom behavior",
+    "msg.nodesOverview": "Nodes Overview"
 }
