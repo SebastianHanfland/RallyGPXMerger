@@ -12,11 +12,14 @@ interface Props {
 export const TrackNodesBranchCell = ({ trackNode }: Props) => {
     const tracks = useSelector(getTrackCompositions);
     const branchTrackIds = getBranchTrackIds(trackNode);
-    Object.values(branchTrackIds);
 
     function getColorOfTrackId(trackId: string) {
         const foundTrack = tracks.find((track) => track.id === trackId);
         return getColor(foundTrack ?? { id: trackId });
+    }
+
+    function getNameOfTrackId(trackId: string) {
+        return tracks.find((track) => track.id === trackId)?.name ?? trackId;
     }
 
     return (
@@ -25,7 +28,9 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
                 <span>
                     (
                     {trackIds?.map((trackId) => (
-                        <ColorBlob color={getColorOfTrackId(trackId)} />
+                        <span title={getNameOfTrackId(trackId)}>
+                            <ColorBlob color={getColorOfTrackId(trackId)} />
+                        </span>
                     ))}
                     )
                 </span>
