@@ -14,7 +14,7 @@ function initiallyFillWithSingleTrackPeople(trackCompositions: TrackComposition[
     return correctedSegmentPeople;
 }
 
-function getBranchTracks(trackNode: TrackNode) {
+export function getBranchTrackIds(trackNode: TrackNode): Record<string, string[] | undefined> {
     const branchTracks: Record<string, string[] | undefined> = {};
     trackNode.segmentsBeforeNode.forEach((beforeSegment) => {
         branchTracks[beforeSegment.segmentId] = [
@@ -37,7 +37,7 @@ export const getBranchNumbers = (
 
     trackNodes.forEach((trackNode) => {
         const nodeSpec = nodeSpecs[trackNode.segmentIdAfterNode];
-        const branchTracks = getBranchTracks(trackNode);
+        const branchTracks = getBranchTrackIds(trackNode);
         if (!nodeSpec) {
             let afterNodeTrackIds: string[] = [];
             let peopleCounter = 0;
