@@ -23,7 +23,7 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
     }
 
     return (
-        <td>
+        <>
             {Object.values(branchTrackIds).map((trackIds) => (
                 <span>
                     (
@@ -35,6 +35,6 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
                     )
                 </span>
             ))}
-        </td>
+        </>
     );
 };

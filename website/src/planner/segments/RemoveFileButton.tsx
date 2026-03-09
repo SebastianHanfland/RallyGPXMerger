@@ -3,9 +3,9 @@ import { Dropdown } from 'react-bootstrap';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { useState } from 'react';
-import trash from '../../assets/trashB.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
+import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
 
 interface Props {
     id: string;
@@ -26,7 +26,7 @@ export function RemoveFileButton({ id, name }: Props) {
                 title={intl.formatMessage({ id: 'msg.removeFile.hint' }, { name })}
                 onClick={() => setShowModal(true)}
             >
-                <img src={trash} className="m-1" alt="trash" />
+                <TrashIcon />
                 <span>
                     <FormattedMessage id={'msg.removeFile'} />
                 </span>

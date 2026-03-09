@@ -5,7 +5,6 @@ import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.re
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
-import trash from '../../assets/trashB.svg';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -14,6 +13,7 @@ import { getColor } from '../../utils/colorUtil.ts';
 import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
+import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -48,7 +48,7 @@ export function TrackButtonsCell({ track }: Props) {
                 onClick={() => setShowModal(true)}
                 title={intl.formatMessage({ id: 'msg.removeTrack.hint' }, { name: track.name ?? '' })}
             >
-                <img src={trash} className="m-1" alt="trash" />
+                <TrashIcon />
                 <span>
                     <FormattedMessage id={'msg.removeTrack'} />
                 </span>

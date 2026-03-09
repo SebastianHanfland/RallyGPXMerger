@@ -373,5 +373,6 @@
     "msg.colorVersions": "Same color for all tracks of a version",
     "msg.breakAdjusted": "Break size adjusted",
     "msg.reset": "Reset",
-    "msg.nodeSpecActive": "(Overwriting default behavior)"
+    "msg.nodeSpecActive": "(Overwriting default behavior)",
+    "msg.nodeSpec": "Overwritten"
 }

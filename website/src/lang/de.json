@@ -373,5 +373,6 @@
     "msg.colorVersions": "Gleiche Farbe für alle Routen einer Version",
     "msg.breakAdjusted": "Pausenlänge angepasst",
     "msg.reset": "Zurücksetzen",
-    "msg.nodeSpecActive": "(Überschreibt Standardverhalten)"
+    "msg.nodeSpecActive": "(Überschreibt Standardverhalten)",
+    "msg.nodeSpec": "Überschrieben"
 }
