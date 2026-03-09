@@ -9,7 +9,7 @@ import {
     TrackComposition,
 } from '../../../planner/store/types.ts';
 import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
-import { getBranchInfo2, getPeopleFromBranchesWithHigherPriority } from './peopleDelayCounter.ts';
+import { getBranchInfo2 } from './peopleDelayCounter.ts';
 import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
@@ -24,26 +24,6 @@ export interface TrackDelayDetails {
     trackId: string;
     delays: TrackDelay[];
 }
-// export const getSpecifiedDelayPerTrack = () => {
-//     const segemtIdAfterNode = '123';
-//     const involvedTracks: TrackComposition[] = [];
-//
-//     // for each track involved
-//     involvedTracks.map(() => {
-//         return {
-//             trackId: '1',
-//             delaysBeforeSegments: [
-//                 { segmentId: '23', extraDelay: 20, by: NODE },
-//                 { segmentId: '23', extraDelay: 20, by: BREAK },
-//                 { segmentId: '12', extraDelay: 20, by: NODE },
-//                 { segmentId: '12', extraDelay: 20, by: PRIORITY },
-//                 { segmentId: '12', extraDelay: 20, by: PEOPLE },
-//             ],
-//         };
-//     });
-//     // summing up delay for extra delay -> Calculation done
-//     // for displaying and UI purpose
-// };
 
 const initializeTrackDelayDetails = (trackNodes: TrackNode[]) => (track: TrackComposition) => {
     const delays: TrackDelay[] = [];
@@ -106,7 +86,7 @@ export const getDelaysOfTracks = (
 
     trackNodes.forEach((trackNode) => {
         const segmentId = trackNode.segmentIdAfterNode;
-        const { peopleLengthOnSegment, priorityCounter } = getBranchInfo2(branchNumbers, segmentId, trackCompositions);
+        const { priorityCounter } = getBranchInfo2(branchNumbers, segmentId, trackCompositions);
         const foundNodeSpec = getPossibleNodeSpecification(nodeSpecifications, segmentId);
 
         ///////////////////////////
@@ -125,17 +105,32 @@ export const getDelaysOfTracks = (
             ///////////////////////////
             // Priority
             //////////////////////////
-            const tracksWithSegment = trackCompositions.filter((track) =>
-                track.segments.map((segment) => segment.id).includes(segmentId)
-            );
-            tracksWithSegment.forEach((track) => {
-                // People have to be calculated by previous nodes
-                const delayByPriority = getPeopleFromBranchesWithHigherPriority(
-                    priorityCounter,
-                    track.id,
-                    peopleLengthOnSegment
-                );
-                trackDelays = setDelay(trackDelays, track.id, segmentId, PRIORITY, delayByPriority * delayPerPerson);
+            const branchTrackIds = getBranchTrackIds(trackNode);
+
+            const branchPeopleOnSegment: { segmentId: string; people: number; trackIds: string[]; priority: number }[] =
+                [];
+            Object.entries(branchTrackIds).forEach(([segId, trackIds]) => {
+                if (trackIds) {
+                    const people = branchNumbers[getBranchId(trackIds)];
+                    const priority = priorityCounter[segId];
+                    branchPeopleOnSegment.push({ segmentId: segId, people, trackIds, priority });
+                }
+            });
+
+            let previousBranchesPeopleCounter = 0;
+            const sortedBranches = branchPeopleOnSegment.sort((a, b) => (a.priority < b.priority ? 1 : -1));
+            sortedBranches.forEach((branch) => {
+                console.log(branch);
+                branch.trackIds.forEach((trackId) => {
+                    trackDelays = setDelay(
+                        trackDelays,
+                        trackId,
+                        segmentId,
+                        PRIORITY,
+                        previousBranchesPeopleCounter * delayPerPerson
+                    );
+                });
+                previousBranchesPeopleCounter += branch.people;
             });
         } else {
             ///////////////////////////
@@ -153,7 +148,6 @@ export const getDelaysOfTracks = (
             });
 
             let previousBranchesPeopleCounter = 0;
-            console.log({ branchPeopleOnSegment });
             const sortedBranches = branchPeopleOnSegment.sort((a, b) => (a.people < b.people ? 1 : -1));
             sortedBranches.forEach((branch) => {
                 console.log(branch);

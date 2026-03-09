@@ -55,7 +55,6 @@ function getHighestPriorityOfTrack(tracks: TrackComposition[]): number {
             highestPriority = track.priority ?? 0;
         }
     });
-    console.log({ tracks, highestPriority });
     return highestPriority;
 }
 
@@ -168,6 +167,7 @@ export function getBranchInfo2(
     const peopleLengthOnSegment: Record<string, number> = {};
     Object.entries(branchTracks ?? {}).forEach(([segmentId, tracks]) => {
         const branchId = getBranchId(tracks.map(({ id }) => id));
+        peopleLengthOnSegment[branchId] = branchPeople[branchId];
         peopleLengthOnSegment[segmentId] = branchPeople[branchId];
     });
 
