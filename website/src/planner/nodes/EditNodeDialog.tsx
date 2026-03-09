@@ -50,6 +50,7 @@ export const EditNodeDialog = () => {
     const branchesAtNode = useSelector(getBranchesAtNode);
     const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
     const storedNodeSpecs = useSelector(getNodeSpecifications);
+    const direction = intl.formatMessage({ id: 'msg.direction' });
 
     const foundNodeSpec =
         storedNodeSpecs && nodeEditInfo?.segmentAfterId ? storedNodeSpecs[nodeEditInfo?.segmentAfterId] : undefined;
@@ -104,6 +105,7 @@ export const EditNodeDialog = () => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <div>{`<= ${direction}`}</div>
                 {Object.entries(branchTracks).map(([segmentId, tracks]) => {
                     const shiftOffset = (offSet: number) => () => {
                         const newValue = getNodeDelayValue(
