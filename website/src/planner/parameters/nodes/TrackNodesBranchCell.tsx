@@ -8,6 +8,7 @@ import {
     getBranchNumbersSelector,
     getBranchTrackIds,
 } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
+import { isDefined } from '../../../utils/typeUtil.ts';
 
 interface Props {
     trackNode: TrackNode;
@@ -26,6 +27,9 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
     function getNameOfTrackId(trackId: string) {
         return tracks.find((track) => track.id === trackId)?.name ?? trackId;
     }
+    const trackIdsAfterNode = Object.values(branchTrackIds)
+        .filter(isDefined)
+        .flatMap((ids) => ids);
 
     return (
         <>
@@ -40,6 +44,7 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
                     {trackIds && branchNumbers[getBranchId(trackIds)]})
                 </span>
             ))}
+            <span>{`=> ${branchNumbers[getBranchId(trackIdsAfterNode)]}`}</span>
         </>
     );
 };
