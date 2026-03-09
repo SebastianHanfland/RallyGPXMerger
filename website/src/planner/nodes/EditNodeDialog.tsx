@@ -14,6 +14,10 @@ import { NodeSpecification, TrackComposition } from '../store/types.ts';
 import { getParticipantsDelay } from '../store/settings.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
+import {
+    getBranchId,
+    getBranchNumbersSelector,
+} from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 
 const getAllParticipants = (tracks: TrackComposition[]): number => {
     let count = 0;
@@ -23,16 +27,8 @@ const getAllParticipants = (tracks: TrackComposition[]): number => {
     return count;
 };
 
-function getNodeDelayValue(
-    numberValue: number,
-    nodeSpecs: {
-        trackOffsets: Record<string, number> | undefined;
-        nodeInfo?: string | undefined;
-        totalCount: number | undefined;
-    },
-    tracks: TrackComposition[]
-) {
-    const maximum = (nodeSpecs?.totalCount ?? 0) - getAllParticipants(tracks);
+function getNodeDelayValue(numberValue: number, tracks: TrackComposition[], total: number) {
+    const maximum = (total ?? 0) - getAllParticipants(tracks);
     if (numberValue > maximum) {
         return maximum;
     }
@@ -48,6 +44,8 @@ export const EditNodeDialog = () => {
     const trackCompositions = useSelector(getTrackCompositions);
     const participantsDelay = useSelector(getParticipantsDelay);
     const branchesAtNode = useSelector(getBranchesAtNode);
+    const branchNumbers = useSelector(getBranchNumbersSelector);
+
     const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
     const storedNodeSpecs = useSelector(getNodeSpecifications);
     const direction = intl.formatMessage({ id: 'msg.direction' });
@@ -64,6 +62,8 @@ export const EditNodeDialog = () => {
     const closeModal = () => {
         dispatch(nodesActions.setNodeEditInfo(undefined));
     };
+
+    const aggregated = true;
 
     const saveNodeSpecifications = () => {
         dispatch(nodesActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
@@ -94,6 +94,12 @@ export const EditNodeDialog = () => {
         return null;
     }
 
+    let total = 0;
+    Object.values(branchTracks).forEach((bTracks) => {
+        total += branchNumbers[getBranchId(bTracks.map(({ id }) => id))];
+    });
+    console.log({ total });
+
     return (
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
             <Modal.Header closeButton>
@@ -110,8 +116,8 @@ export const EditNodeDialog = () => {
                     const shiftOffset = (offSet: number) => () => {
                         const newValue = getNodeDelayValue(
                             (nodeSpecs?.trackOffsets[segmentId] ?? 0) + offSet,
-                            nodeSpecs,
-                            tracks
+                            tracks,
+                            total
                         );
                         setNodeSpecs({
                             ...nodeSpecs,
@@ -156,23 +162,35 @@ export const EditNodeDialog = () => {
                                 </div>
                                 <ProgressBar key={segmentId} className={'flex-fill mx-2'} style={{ height: '30px' }}>
                                     <ProgressBar
-                                        now={(nodeSpecs.trackOffsets[segmentId] / nodeSpecs.totalCount) * 100}
+                                        now={(nodeSpecs.trackOffsets[segmentId] / total) * 100}
                                         variant={'gray'}
                                         className={'bg-transparent'}
                                         style={{ height: '20px' }}
                                         visuallyHidden
                                         key={0}
                                     />
-                                    {tracks.map((track) => (
+                                    {aggregated && (
                                         <ProgressBar
-                                            now={((track.peopleCount ?? 0) / nodeSpecs.totalCount) * 100}
-                                            title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
-                                                id: 'msg.trackPeople',
-                                            })}`}
-                                            key={track.id}
-                                            style={{ cursor: 'pointer', background: getColor(track) }}
+                                            now={
+                                                ((branchNumbers[getBranchId(tracks.map(({ id }) => id))] ?? 0) /
+                                                    total) *
+                                                100
+                                            }
+                                            style={{ cursor: 'pointer', background: getColor({ id: segmentId }) }}
                                         />
-                                    ))}
+                                    )}
+
+                                    {!aggregated &&
+                                        tracks.map((track) => (
+                                            <ProgressBar
+                                                now={((track.peopleCount ?? 0) / total) * 100}
+                                                title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
+                                                    id: 'msg.trackPeople',
+                                                })}`}
+                                                key={track.id}
+                                                style={{ cursor: 'pointer', background: getColor(track) }}
+                                            />
+                                        ))}
                                 </ProgressBar>
                                 <div key={segmentId + '4'}>
                                     <Button size={'sm'} onClick={shiftOffset(100000000)}>
@@ -189,11 +207,7 @@ export const EditNodeDialog = () => {
                                             placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
                                             value={nodeSpecs.trackOffsets[segmentId]}
                                             onChange={(value) => {
-                                                const newValue = getNodeDelayValue(
-                                                    getCount(value) ?? 0,
-                                                    nodeSpecs,
-                                                    tracks
-                                                );
+                                                const newValue = getNodeDelayValue(getCount(value) ?? 0, tracks, total);
                                                 setNodeSpecs({
                                                     ...nodeSpecs,
                                                     trackOffsets: { ...nodeSpecs?.trackOffsets, [segmentId]: newValue },
