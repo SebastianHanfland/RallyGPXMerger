@@ -342,6 +342,12 @@ describe('getSpecifiedDelayPerTrack', () => {
             ].forEach(executeTest);
         });
 
-        describe('with people, priority and node specifications', () => {});
+        describe('with people, priority and node specifications', () => {
+            it('should just pass', () => {
+                // given
+                // when
+                // then
+            });
+        });
     });
 });
