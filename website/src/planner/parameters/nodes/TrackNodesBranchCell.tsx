@@ -1,9 +1,9 @@
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { useSelector } from 'react-redux';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { getColor } from '../../utils/colorUtil.ts';
-import { TrackNode } from '../../common/calculation/nodes/nodeFinder.ts';
-import { getBranchTrackIds } from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
+import { ColorBlob } from '../../../utils/ColorBlob.tsx';
+import { getColor } from '../../../utils/colorUtil.ts';
+import { TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
+import { getBranchTrackIds } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 
 interface Props {
     trackNode: TrackNode;

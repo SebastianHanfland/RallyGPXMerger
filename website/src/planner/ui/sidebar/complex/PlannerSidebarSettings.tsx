@@ -11,7 +11,7 @@ import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker
 import { ReactNode } from 'react';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 import { StartNameOverwriteTable } from '../../../parameters/StartNameOverwriteTable.tsx';
-import { TrackNodesTable } from '../../../parameters/TrackNodesTable.tsx';
+import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
 
 export const PlannerSidebarSettings = () => {
     const accordionEntries: [string, ReactNode][] = [

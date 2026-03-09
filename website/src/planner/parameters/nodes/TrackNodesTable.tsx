@@ -1,7 +1,7 @@
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { trackNodesBySegmentSizeSelector } from '../../common/calculation/nodes/nodeFinder.ts';
+import { trackNodesBySegmentSizeSelector } from '../../../common/calculation/nodes/nodeFinder.ts';
 import { TrackNodesBranchCell } from './TrackNodesBranchCell.tsx';
 import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell.tsx';
 import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton.tsx';

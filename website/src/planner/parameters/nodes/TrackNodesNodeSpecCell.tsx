@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { TrackNode } from '../../common/calculation/nodes/nodeFinder.ts';
-import { getNodeSpecifications, nodesActions } from '../store/nodes.reducer.ts';
-import nodeIcon from '../../assets/mergeTracks.svg';
+import { TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
+import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer.ts';
+import nodeIcon from '../../../assets/mergeTracks.svg';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
-import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
+import { TrashIcon } from '../../../utils/icons/TrashIcon.tsx';
 
 interface Props {
     trackNode: TrackNode;
