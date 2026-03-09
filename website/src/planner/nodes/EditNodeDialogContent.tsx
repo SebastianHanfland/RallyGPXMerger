@@ -2,10 +2,9 @@ import { useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { Form, ProgressBar } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
-import { getColor } from '../../utils/colorUtil.ts';
 import { NodeEditInfo, NodeSpecification } from '../store/types.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 import {
@@ -13,6 +12,7 @@ import {
     getBranchNumbersSelector,
 } from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
+import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar.tsx';
 
 function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
     const maximum = (total ?? 0) - branchParticipants;
@@ -41,8 +41,6 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
     const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeEditInfo.segmentAfterId);
-
-    const aggregated = false;
 
     if (!foundTrackNode || !branchesAtNode || !nodeEditInfo.segmentAfterId) {
         return null;
@@ -89,37 +87,12 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                     {'<-'}
                                 </Button>
                             </div>
-                            <ProgressBar key={segmentId} className={'flex-fill mx-2'} style={{ height: '30px' }}>
-                                <ProgressBar
-                                    now={(nodeSpecs.trackOffsets[segmentId] / total) * 100}
-                                    variant={'gray'}
-                                    className={'bg-transparent'}
-                                    style={{ height: '20px' }}
-                                    visuallyHidden
-                                    key={0}
-                                />
-                                {aggregated && (
-                                    <ProgressBar
-                                        now={
-                                            ((branchNumbers[getBranchId(tracks.map(({ id }) => id))] ?? 0) / total) *
-                                            100
-                                        }
-                                        style={{ cursor: 'pointer', background: getColor({ id: segmentId }) }}
-                                    />
-                                )}
-
-                                {!aggregated &&
-                                    tracks.map((track) => (
-                                        <ProgressBar
-                                            now={((track.peopleCount ?? 0) / total) * 100}
-                                            title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
-                                                id: 'msg.trackPeople',
-                                            })}`}
-                                            key={track.id}
-                                            style={{ cursor: 'pointer', background: getColor(track) }}
-                                        />
-                                    ))}
-                            </ProgressBar>
+                            <EditNodeDialogTrackProgressbar
+                                segmentId={segmentId}
+                                tracks={tracks}
+                                total={total}
+                                offset={nodeSpecs.trackOffsets[segmentId]}
+                            />
                             <div key={segmentId + '4'}>
                                 <Button size={'sm'} onClick={shiftOffset(100000000)}>
                                     {'->'}

@@ -7,7 +7,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { useEffect, useState } from 'react';
 import { getBranchesAtNode } from './getBranchesAtNode.ts';
 import { NodeSpecification } from '../store/types.ts';
-import { EditNodeDialogContent } from './EditNodeDialogConten.tsx';
+import { EditNodeDialogContent } from './EditNodeDialogContent.tsx';
 
 export const EditNodeDialog = () => {
     const nodeEditInfo = useSelector(getNodeEditInfo);
