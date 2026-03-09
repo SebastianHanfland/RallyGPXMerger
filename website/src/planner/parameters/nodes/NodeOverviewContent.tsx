@@ -1,9 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getDelaysOfTracksSelector } from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
-// import { getColor } from '../../../utils/colorUtil.ts';
-// import { FormattedMessage } from 'react-intl';
-// import { formatNumber } from '../../../utils/numberUtil.ts';
-// import { Form, ProgressBar } from 'react-bootstrap';
+import { getColor } from '../../../utils/colorUtil.ts';
+import { ProgressBar } from 'react-bootstrap';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getParticipantsDelay } from '../../store/settings.reducer.ts';
 import {
@@ -26,11 +24,31 @@ export const NodeOverviewContent = () => {
                     <div>
                         <div>{foundTrack?.name ?? ''}</div>
                         <div>
-                            {trackDelay.delays.map((delay) => (
-                                <span className={'mx-1'}>{delay.extraDelay / participantsDelay}</span>
-                            ))}
-                            <span className={'mx-1'}>{foundTrack?.peopleCount}</span>
-                            <span className={'mx-1'}>{totalSize}</span>
+                            <ProgressBar
+                                key={trackDelay.trackId}
+                                className={'flex-fill mx-2'}
+                                style={{ height: '30px' }}
+                            >
+                                {trackDelay.delays.map((delay) => (
+                                    <ProgressBar
+                                        striped={true}
+                                        now={(delay.extraDelay / participantsDelay / totalSize) * 100}
+                                        key={delay.segmentId}
+                                        className={'bg-transparent text-dark'}
+                                        label={delay.extraDelay / participantsDelay}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                ))}
+                                <ProgressBar
+                                    now={((foundTrack?.peopleCount ?? 0) / totalSize) * 100}
+                                    title={foundTrack?.name}
+                                    label={foundTrack?.peopleCount}
+                                    className={'text-light'}
+                                    style={{ height: '30px', background: foundTrack ? getColor(foundTrack) : 'white' }}
+                                    visuallyHidden
+                                    key={0}
+                                />
+                            </ProgressBar>
                         </div>
                     </div>
                 );
