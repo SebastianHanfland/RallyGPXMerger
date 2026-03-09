@@ -9,8 +9,8 @@ import {
     TrackComposition,
 } from '../../../planner/store/types.ts';
 import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
-import { getBranchPriorities } from './peopleDelayCounter.ts';
 import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
+import { getBranchPriorities } from './getBranchPriorities.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 
