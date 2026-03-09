@@ -12,9 +12,10 @@ const stateKey = `gpxMerger.state`;
 
 const save = (value: State) => {
     try {
-        const { layout, geoCoding, trackMerge, map, points, backend, segmentData } = value;
+        const { layout, geoCoding, trackMerge, map, points, backend, segmentData, nodes } = value;
         localStorage.setItem(stateKey + '.layout', JSON.stringify(layout));
         localStorage.setItem(stateKey + '.map', JSON.stringify(map));
+        localStorage.setItem(stateKey + '.nodes', JSON.stringify(nodes));
         localStorage.setItem(stateKey + '.points', JSON.stringify(points));
         localStorage.setItem(stateKey + '.trackMerge', JSON.stringify(trackMerge));
         localStorage.setItem(stateKey + '.geoCoding', JSON.stringify(geoCoding));
