@@ -30,9 +30,7 @@ export const getBranchesAtNode = createSelector(
         const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeInfo?.segmentAfterId);
         if (nodeInfo?.segmentAfterId && nodeSpecifications) {
             const nodeSpecification = nodeSpecifications[nodeInfo?.segmentAfterId];
-            console.log('here?');
             if (nodeSpecification) {
-                console.log('here as well?');
                 return nodeSpecification;
             }
         }

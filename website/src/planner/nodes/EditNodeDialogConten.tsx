@@ -2,12 +2,11 @@ import { useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getNodeEditInfo } from '../store/nodes.reducer.ts';
 import { Form, ProgressBar } from 'react-bootstrap';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
-import { NodeSpecification } from '../store/types.ts';
+import { NodeEditInfo, NodeSpecification } from '../store/types.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 import {
     getBranchId,
@@ -27,13 +26,13 @@ function getNodeDelayValue(numberValue: number, branchParticipants: number, tota
 }
 
 interface Props {
-    nodeSpecs: NodeSpecification | undefined;
-    setNodeSpecs: (nodeSpecs: NodeSpecification | undefined) => void;
+    nodeSpecs: NodeSpecification;
+    setNodeSpecs: (nodeSpecs: NodeSpecification) => void;
+    nodeEditInfo: NodeEditInfo;
 }
 
-export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs }: Props) => {
+export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }: Props) => {
     const intl = useIntl();
-    const nodeEditInfo = useSelector(getNodeEditInfo);
     const trackCompositions = useSelector(getTrackCompositions);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const branchNumbers = useSelector(getBranchNumbersSelector);
@@ -41,12 +40,11 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs }: Props) => {
     const direction = intl.formatMessage({ id: 'msg.direction' });
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
-
-    const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeEditInfo?.segmentAfterId);
+    const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeEditInfo.segmentAfterId);
 
     const aggregated = false;
 
-    if (!nodeEditInfo || !foundTrackNode || !branchesAtNode || !nodeSpecs || !nodeEditInfo.segmentAfterId) {
+    if (!foundTrackNode || !branchesAtNode || !nodeEditInfo.segmentAfterId) {
         return null;
     }
     const branchTracks = getBranchTracks(nodeEditInfo.segmentAfterId, trackCompositions);
@@ -72,7 +70,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs }: Props) => {
                     );
                     setNodeSpecs({
                         ...nodeSpecs,
-                        trackOffsets: { ...nodeSpecs?.trackOffsets, [segmentId]: newValue },
+                        trackOffsets: { ...nodeSpecs.trackOffsets, [segmentId]: newValue },
                     });
                 };
                 return (
@@ -144,7 +142,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs }: Props) => {
                                             );
                                             setNodeSpecs({
                                                 ...nodeSpecs,
-                                                trackOffsets: { ...nodeSpecs?.trackOffsets, [segmentId]: newValue },
+                                                trackOffsets: { ...nodeSpecs.trackOffsets, [segmentId]: newValue },
                                             });
                                         }}
                                     />

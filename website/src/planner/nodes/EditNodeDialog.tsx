@@ -2,52 +2,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getNodeEditInfo, getNodeSpecifications, nodesActions } from '../store/nodes.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
 import { useEffect, useState } from 'react';
-import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
-import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
+import { getBranchesAtNode } from './getBranchesAtNode.ts';
 import { NodeSpecification } from '../store/types.ts';
-import {
-    getBranchId,
-    getBranchNumbersSelector,
-} from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 import { EditNodeDialogContent } from './EditNodeDialogConten.tsx';
 
 export const EditNodeDialog = () => {
     const nodeEditInfo = useSelector(getNodeEditInfo);
-    const trackCompositions = useSelector(getTrackCompositions);
     const branchesAtNode = useSelector(getBranchesAtNode);
-    const branchNumbers = useSelector(getBranchNumbersSelector);
-
-    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
     const storedNodeSpecs = useSelector(getNodeSpecifications);
-
-    const foundNodeSpec =
-        storedNodeSpecs && nodeEditInfo?.segmentAfterId ? storedNodeSpecs[nodeEditInfo?.segmentAfterId] : undefined;
-
-    const trackNodes = listAllNodesOfTracks(trackCompositions);
-
-    const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeEditInfo?.segmentAfterId);
-
+    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
     const dispatch: AppDispatch = useDispatch();
+
+    const segmentAfter = nodeEditInfo?.segmentAfterId;
+
+    const foundNodeSpec = storedNodeSpecs && segmentAfter ? storedNodeSpecs[segmentAfter] : undefined;
 
     const closeModal = () => {
         dispatch(nodesActions.setNodeEditInfo(undefined));
     };
 
     const saveNodeSpecifications = () => {
-        dispatch(nodesActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
+        dispatch(nodesActions.setNodeSpecification({ segmentAfter, nodeSpecs }));
         closeModal();
     };
     const resetNodeSpecs = () => {
-        dispatch(
-            nodesActions.setNodeSpecification({
-                segmentAfter: nodeEditInfo?.segmentAfterId,
-                nodeSpecs: undefined,
-            })
-        );
+        dispatch(nodesActions.setNodeSpecification({ segmentAfter, nodeSpecs: undefined }));
     };
 
     useEffect(() => {
@@ -58,19 +40,9 @@ export const EditNodeDialog = () => {
         }
     }, [branchesAtNode]);
 
-    if (!nodeEditInfo || !foundTrackNode || !branchesAtNode || !nodeSpecs || !nodeEditInfo.segmentAfterId) {
+    if (!nodeEditInfo || !branchesAtNode || !nodeSpecs || !nodeEditInfo.segmentAfterId) {
         return null;
     }
-    const branchTracks = getBranchTracks(nodeEditInfo.segmentAfterId, trackCompositions);
-    if (!branchTracks) {
-        return null;
-    }
-
-    let total = 0;
-    Object.values(branchTracks).forEach((bTracks) => {
-        total += branchNumbers[getBranchId(bTracks.map(({ id }) => id))];
-    });
-    console.log({ total });
 
     return (
         <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
@@ -83,7 +55,7 @@ export const EditNodeDialog = () => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <EditNodeDialogContent nodeSpecs={nodeSpecs} setNodeSpecs={setNodeSpecs} />
+                <EditNodeDialogContent nodeSpecs={nodeSpecs} setNodeSpecs={setNodeSpecs} nodeEditInfo={nodeEditInfo} />
             </Modal.Body>
             <Modal.Footer>
                 {foundNodeSpec && (
