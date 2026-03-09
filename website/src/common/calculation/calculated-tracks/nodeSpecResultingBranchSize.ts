@@ -37,8 +37,8 @@ export const getBranchNumbers = (
 
     trackNodes.forEach((trackNode) => {
         const nodeSpec = nodeSpecs[trackNode.segmentIdAfterNode];
+        const branchTracks = getBranchTracks(trackNode);
         if (!nodeSpec) {
-            const branchTracks = getBranchTracks(trackNode);
             let afterNodeTrackIds: string[] = [];
             let peopleCounter = 0;
             Object.values(branchTracks).forEach((trackIds) => {
@@ -49,20 +49,19 @@ export const getBranchNumbers = (
             });
             correctedSegmentPeople[getBranchId(afterNodeTrackIds)] = peopleCounter;
         } else {
-            // TODO: handle node specs
+            let afterNodeTrackIds: string[] = [];
+            let peopleSizeCounter: number[] = [];
+            Object.entries(branchTracks).forEach(([segmentId, trackIds]) => {
+                if (trackIds) {
+                    afterNodeTrackIds = [...afterNodeTrackIds, ...trackIds];
+                    const offset = nodeSpec.trackOffsets[segmentId] ?? 0;
+                    const peopleSize = offset + correctedSegmentPeople[getBranchId(trackIds)];
+                    peopleSizeCounter = [...peopleSizeCounter, peopleSize];
+                }
+            });
+            correctedSegmentPeople[getBranchId(afterNodeTrackIds)] = Math.max(...peopleSizeCounter);
         }
     });
 
-    console.log(correctedSegmentPeople);
     return correctedSegmentPeople;
 };
-//
-// if (trackNode.segmentsBeforeNode.length === 2) {
-//     const segment1 = trackNode.segmentsBeforeNode[0];
-//     const segment2 = trackNode.segmentsBeforeNode[1];
-//     const size1 =
-//         (nodeSpec.trackOffsets[segment1.segmentId] ?? 0) + correctedSegmentPeople[segment1.trackId];
-//     const size2 =
-//         (nodeSpec.trackOffsets[segment2.segmentId] ?? 0) + correctedSegmentPeople[segment2.trackId];
-//     correctedSegmentPeople[getBranchId([segment1.trackId, segment2.trackId])] = Math.max(size1, size2);
-// }

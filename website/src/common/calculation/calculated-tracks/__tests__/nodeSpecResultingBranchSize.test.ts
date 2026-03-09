@@ -27,6 +27,12 @@ describe('test block', () => {
             expectedBranchNumbers: { '1': 10, '2': 20, '3': 30, '1-2': 30, '1-2-3': 60 },
             description: 'should just fill all track occurrences with plain numbers of tracks',
         },
+        {
+            tracks: [createTrack1(10), createTrack2(20), createTrack3(30)],
+            nodeSpecs: { AB: { trackOffsets: { '1': 0, '2': 0 }, totalCount: 0 } },
+            expectedBranchNumbers: { '1': 10, '2': 20, '3': 30, '1-2': 20, '1-2-3': 50 },
+            description: 'should just fill all track occurrences with plain numbers of tracks',
+        },
     ];
 
     testCases.forEach((testCase) =>
