@@ -10,7 +10,7 @@ import {
 } from '../../../planner/store/types.ts';
 import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
 import { getBranchInfo2, getPeopleFromBranchesWithHigherPriority } from './peopleDelayCounter.ts';
-import { getBranchNumbers } from './nodeSpecResultingBranchSize.ts';
+import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 
@@ -142,22 +142,31 @@ export const getDelaysOfTracks = (
             // People counter
             //////////////////////////
             // People have to be calculated by previous nodes on all tracks
-            const tracksWithSegment = trackCompositions.filter((track) =>
-                track.segments.map((segment) => segment.id).includes(segmentId)
-            );
-            tracksWithSegment.forEach((track) => {
-                let peopleOnOtherBranches = 0;
-                const otherBranches: string[] = [];
-                Object.entries(peopleOnOtherBranches).forEach(([branch, people]) => {
-                    if (branch !== track.id) {
-                        peopleOnOtherBranches += people;
-                        otherBranches.push(branch);
-                    }
-                });
-                const peopleOfBranch = peopleLengthOnSegment[track.id];
+            const branchTrackIds = getBranchTrackIds(trackNode);
 
-                const resultingOffset = peopleOfBranch >= peopleOnOtherBranches ? 0 : peopleOnOtherBranches;
-                trackDelays = setDelay(trackDelays, track.id, segmentId, PEOPLE, resultingOffset * delayPerPerson);
+            const branchPeopleOnSegment: { segmentId: string; people: number; trackIds: string[] }[] = [];
+            Object.entries(branchTrackIds).forEach(([segId, trackIds]) => {
+                if (trackIds) {
+                    const people = branchNumbers[getBranchId(trackIds)];
+                    branchPeopleOnSegment.push({ segmentId: segId, people, trackIds });
+                }
+            });
+
+            let previousBranchesPeopleCounter = 0;
+            console.log({ branchPeopleOnSegment });
+            const sortedBranches = branchPeopleOnSegment.sort((a, b) => (a.people < b.people ? 1 : -1));
+            sortedBranches.forEach((branch) => {
+                console.log(branch);
+                branch.trackIds.forEach((trackId) => {
+                    trackDelays = setDelay(
+                        trackDelays,
+                        trackId,
+                        segmentId,
+                        PEOPLE,
+                        previousBranchesPeopleCounter * delayPerPerson
+                    );
+                });
+                previousBranchesPeopleCounter += branch.people;
             });
         }
     });
