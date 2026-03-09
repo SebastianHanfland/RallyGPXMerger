@@ -12,7 +12,6 @@ interface Props {
 
 export const TrackNodesNodeSpecCell = ({ trackNode }: Props) => {
     const nodeSpecifications = useSelector(getNodeSpecifications);
-    console.log(nodeSpecifications, 'rendered');
     const dispatch = useDispatch();
 
     if (!nodeSpecifications) {

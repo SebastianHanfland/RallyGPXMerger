@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { trackNodesBySegmentSizeSelector } from '../../common/calculation/nodes/nodeFinder.ts';
 import { TrackNodesBranchCell } from './TrackNodesBranchCell.tsx';
 import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell.tsx';
+import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton.tsx';
 
 export const TrackNodesTable = () => {
     const trackNodes = useSelector(trackNodesBySegmentSizeSelector);
@@ -13,10 +14,10 @@ export const TrackNodesTable = () => {
                 <thead>
                     <tr>
                         <th>
-                            <FormattedMessage id={'msg.trackName'} />
+                            <FormattedMessage id={'msg.branches'} />
                         </th>
                         <th>
-                            <FormattedMessage id={'msg.trackPeople'} />
+                            <FormattedMessage id={'msg.customBehavior'} />
                         </th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@ export const TrackNodesTable = () => {
                     ))}
                 </tbody>
             </Table>
+            <ResetAllNodeSpecsButton />
         </div>
     );
 };
