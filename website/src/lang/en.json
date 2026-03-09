@@ -378,5 +378,6 @@
     "msg.nodeSpec": "Overwritten",
     "msg.branches": "Branches",
     "msg.customBehavior": "Custom behavior",
-    "msg.nodesOverview": "Nodes Overview"
+    "msg.nodesOverview": "Nodes Overview",
+    "msg.direction": "Driving directions"
 }

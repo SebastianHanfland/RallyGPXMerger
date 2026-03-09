@@ -8,21 +8,27 @@ import {
     getBranchId,
     getBranchNumbersSelector,
 } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
+import { useIntl } from 'react-intl';
 
 export const NodeOverviewContent = () => {
+    const intl = useIntl();
     const delaysOfTracks = useSelector(getDelaysOfTracksSelector);
     const tracks = useSelector(getTrackCompositions);
     const participantsDelay = useSelector(getParticipantsDelay);
     const branchNumbers = useSelector(getBranchNumbersSelector);
     const totalSize = branchNumbers[getBranchId(tracks.map(({ id }) => id))];
+    const people = intl.formatMessage({ id: 'msg.people' });
+    const direction = intl.formatMessage({ id: 'msg.direction' });
 
     return (
         <>
+            <div>{`<= ${direction}`}</div>
             {delaysOfTracks.map((trackDelay) => {
                 const foundTrack = tracks.find((track) => track.id === trackDelay.trackId);
+                console.log({ foundTrack });
                 return (
                     <div>
-                        <div>{foundTrack?.name ?? ''}</div>
+                        <div>{`${foundTrack?.name ?? ''} (${foundTrack?.peopleCount} ${people})`}</div>
                         <div>
                             <ProgressBar
                                 key={trackDelay.trackId}
@@ -35,7 +41,11 @@ export const NodeOverviewContent = () => {
                                         now={(delay.extraDelay / participantsDelay / totalSize) * 100}
                                         key={delay.segmentId}
                                         className={'bg-transparent text-dark'}
-                                        label={delay.extraDelay / participantsDelay}
+                                        label={
+                                            (delay.extraDelay / participantsDelay / totalSize) * 100 > 10
+                                                ? delay.extraDelay / participantsDelay
+                                                : undefined
+                                        }
                                         style={{ cursor: 'pointer' }}
                                     />
                                 ))}
@@ -55,71 +65,4 @@ export const NodeOverviewContent = () => {
             })}
         </>
     );
-    // {
-    //     Object.entries(branchTracks).map(([segmentId, tracks]) => {
-    //         return (
-    //             <>
-    //                 <div key={segmentId} className={'mt-5'}>
-    //                     {tracks.map((track) => (
-    //                         <span
-    //                             key={track.id}
-    //                             title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
-    //                                 id: 'msg.trackPeople',
-    //                             })}`}
-    //                             style={{ backgroundColor: getColor(track), cursor: 'pointer' }}
-    //                             className={'rounded-2 p-1'}
-    //                         >
-    //                             {track.name}
-    //                         </span>
-    //                     ))}
-    //                     <span className={'mx-3'}>
-    //                         <FormattedMessage
-    //                             id={'msg.offsetByXs'}
-    //                             values={{
-    //                                 seconds: formatNumber(nodeSpecs.trackOffsets[segmentId] * participantsDelay, 0),
-    //                             }}
-    //                         />
-    //                     </span>
-    //                 </div>
-    //                 <div
-    //                     key={segmentId + '2'}
-    //                     style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
-    //                 >
-    //                     <ProgressBar key={segmentId} className={'flex-fill mx-2'} style={{ height: '30px' }}>
-    //                         <ProgressBar
-    //                             now={(nodeSpecs.trackOffsets[segmentId] / nodeSpecs.totalCount) * 100}
-    //                             variant={'gray'}
-    //                             className={'bg-transparent'}
-    //                             style={{ height: '20px' }}
-    //                             visuallyHidden
-    //                             key={0}
-    //                         />
-    //                         {tracks.map((track) => (
-    //                             <ProgressBar
-    //                                 now={((track.peopleCount ?? 0) / nodeSpecs.totalCount) * 100}
-    //                                 title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
-    //                                     id: 'msg.trackPeople',
-    //                                 })}`}
-    //                                 key={track.id}
-    //                                 style={{ cursor: 'pointer', background: getColor(track) }}
-    //                             />
-    //                         ))}
-    //                     </ProgressBar>
-    //                     <div className={'mx-2'}>
-    //                         <Form.Group>
-    //                             <Form.Label>
-    //                                 <FormattedMessage id={'msg.nodeOffset'} />
-    //                             </Form.Label>
-    //                             <Form.Control
-    //                                 type="text"
-    //                                 placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-    //                                 value={nodeSpecs.trackOffsets[segmentId]}
-    //                             />
-    //                         </Form.Group>
-    //                     </div>
-    //                 </div>
-    //             </>
-    //         );
-    //     });
-    // }
 };

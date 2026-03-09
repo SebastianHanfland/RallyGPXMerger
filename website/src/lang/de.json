@@ -378,5 +378,6 @@
     "msg.nodeSpec": "Überschrieben",
     "msg.branches": "Äste",
     "msg.customBehavior": "Benutzerdefiniertes Verhalten",
-    "msg.nodesOverview": "Knotenübersicht"
+    "msg.nodesOverview": "Knotenübersicht",
+    "msg.direction": "Fahrtrichtung"
 }
