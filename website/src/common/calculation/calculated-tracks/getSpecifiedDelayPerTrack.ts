@@ -37,7 +37,7 @@ const initializeTrackDelayDetails = (trackNodes: TrackNode[]) => (track: TrackCo
             delays.push({ segmentId: segment.id, by: NODE, extraDelay: -Infinity });
         }
         if (segment.type === BREAK) {
-            delays.push({ segmentId: segment.id, by: BREAK, extraDelay: segment.minutes });
+            delays.push({ segmentId: segment.id, by: BREAK, extraDelay: segment.minutes * 60 });
         }
     });
     return { trackId: track.id, delays };
