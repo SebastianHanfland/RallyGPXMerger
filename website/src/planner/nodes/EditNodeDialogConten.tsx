@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getNodeEditInfo } from '../store/nodes.reducer.ts';
 import { Form, ProgressBar } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
@@ -27,14 +26,18 @@ function getNodeDelayValue(numberValue: number, branchParticipants: number, tota
     return numberValue;
 }
 
-export const EditNodeDialogContent = () => {
+interface Props {
+    nodeSpecs: NodeSpecification | undefined;
+    setNodeSpecs: (nodeSpecs: NodeSpecification | undefined) => void;
+}
+
+export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs }: Props) => {
     const intl = useIntl();
     const nodeEditInfo = useSelector(getNodeEditInfo);
     const trackCompositions = useSelector(getTrackCompositions);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const branchNumbers = useSelector(getBranchNumbersSelector);
 
-    const [nodeSpecs, setNodeSpecs] = useState<NodeSpecification | undefined>(undefined);
     const direction = intl.formatMessage({ id: 'msg.direction' });
 
     const trackNodes = listAllNodesOfTracks(trackCompositions);
@@ -42,14 +45,6 @@ export const EditNodeDialogContent = () => {
     const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeEditInfo?.segmentAfterId);
 
     const aggregated = false;
-
-    useEffect(() => {
-        if (branchesAtNode) {
-            setNodeSpecs({ totalCount: branchesAtNode.totalCount, trackOffsets: branchesAtNode?.trackOffsets });
-        } else {
-            setNodeSpecs(undefined);
-        }
-    }, [branchesAtNode]);
 
     if (!nodeEditInfo || !foundTrackNode || !branchesAtNode || !nodeSpecs || !nodeEditInfo.segmentAfterId) {
         return null;
