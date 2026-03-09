@@ -9,7 +9,7 @@ import {
     TrackComposition,
 } from '../../../planner/store/types.ts';
 import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
-import { getBranchInfo2 } from './peopleDelayCounter.ts';
+import { getBranchPriorities } from './peopleDelayCounter.ts';
 import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
@@ -86,7 +86,7 @@ export const getDelaysOfTracks = (
 
     trackNodes.forEach((trackNode) => {
         const segmentId = trackNode.segmentIdAfterNode;
-        const { priorityCounter } = getBranchInfo2(branchNumbers, segmentId, trackCompositions);
+        const priorityCounter = getBranchPriorities(segmentId, trackCompositions);
         const foundNodeSpec = getPossibleNodeSpecification(nodeSpecifications, segmentId);
 
         ///////////////////////////

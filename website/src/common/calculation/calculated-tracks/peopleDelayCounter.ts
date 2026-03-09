@@ -2,7 +2,6 @@ import { NodeSpecifications, TrackComposition } from '../../../planner/store/typ
 import { TrackNode, TrackNodeSegment } from '../nodes/nodeFinder.ts';
 import { getBranchTracks } from '../../../planner/nodes/getBranchesAtNode.ts';
 import { getDelaysOfTracks } from './getSpecifiedDelayPerTrack.ts';
-import { getBranchId } from './nodeSpecResultingBranchSize.ts';
 
 const sortByPeopleOnTrack =
     (segmentsBeforeNode: TrackNodeSegment[], peopleOnBranch: Record<string, number>) =>
@@ -149,29 +148,20 @@ export function sumUpAllPeopleWithHigherPriority(
     return numberOfPeopleWithHigherPriority;
 }
 
-export function getBranchInfo2(
-    branchPeople: Record<string, number>,
+export function getBranchPriorities(
     segmentIdAfterNode: string,
     trackCompositions: TrackComposition[]
-) {
+): Record<string, number> {
     const branchTracks = getBranchTracks(segmentIdAfterNode, trackCompositions);
 
     const priorityCounter: Record<string, number> = {};
     if (branchTracks) {
         Object.entries(branchTracks).map(([segmentId, tracks]) => {
-            const highestPriorityOfTrack = getHighestPriorityOfTrack(tracks);
-            priorityCounter[segmentId] = highestPriorityOfTrack;
+            priorityCounter[segmentId] = getHighestPriorityOfTrack(tracks);
         });
     }
 
-    const peopleLengthOnSegment: Record<string, number> = {};
-    Object.entries(branchTracks ?? {}).forEach(([segmentId, tracks]) => {
-        const branchId = getBranchId(tracks.map(({ id }) => id));
-        peopleLengthOnSegment[branchId] = branchPeople[branchId];
-        peopleLengthOnSegment[segmentId] = branchPeople[branchId];
-    });
-
-    return { priorityCounter, peopleLengthOnSegment };
+    return priorityCounter;
 }
 
 export function getExtraDelayOnTrack(
