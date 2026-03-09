@@ -11,13 +11,12 @@ import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { getColor } from '../../utils/colorUtil.ts';
 import { NodeSpecification } from '../store/types.ts';
-import { getParticipantsDelay } from '../store/settings.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
 import {
     getBranchId,
     getBranchNumbersSelector,
 } from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
+import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
 
 function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
     const maximum = (total ?? 0) - branchParticipants;
@@ -34,7 +33,6 @@ export const EditNodeDialog = () => {
     const intl = useIntl();
     const nodeEditInfo = useSelector(getNodeEditInfo);
     const trackCompositions = useSelector(getTrackCompositions);
-    const participantsDelay = useSelector(getParticipantsDelay);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const branchNumbers = useSelector(getBranchNumbersSelector);
 
@@ -55,7 +53,7 @@ export const EditNodeDialog = () => {
         dispatch(nodesActions.setNodeEditInfo(undefined));
     };
 
-    const aggregated = true;
+    const aggregated = false;
 
     const saveNodeSpecifications = () => {
         dispatch(nodesActions.setNodeSpecification({ segmentAfter: nodeEditInfo?.segmentAfterId, nodeSpecs }));
@@ -118,31 +116,11 @@ export const EditNodeDialog = () => {
                     };
                     return (
                         <>
-                            <div key={segmentId} className={'mt-5'}>
-                                {tracks.map((track) => (
-                                    <span
-                                        key={track.id}
-                                        title={`${track.name}: ${track.peopleCount ?? 0} ${intl.formatMessage({
-                                            id: 'msg.trackPeople',
-                                        })}`}
-                                        style={{ backgroundColor: getColor(track), cursor: 'pointer' }}
-                                        className={'rounded-2 p-1'}
-                                    >
-                                        {track.name}
-                                    </span>
-                                ))}
-                                <span className={'mx-3'}>
-                                    <FormattedMessage
-                                        id={'msg.offsetByXs'}
-                                        values={{
-                                            seconds: formatNumber(
-                                                nodeSpecs.trackOffsets[segmentId] * participantsDelay,
-                                                0
-                                            ),
-                                        }}
-                                    />
-                                </span>
-                            </div>
+                            <EditNodeDialogBranchTitle
+                                segmentId={segmentId}
+                                tracks={tracks}
+                                peopleOffset={nodeSpecs.trackOffsets[segmentId]}
+                            />
                             <div
                                 key={segmentId + '2'}
                                 style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
