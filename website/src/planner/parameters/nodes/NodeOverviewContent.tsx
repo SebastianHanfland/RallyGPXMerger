@@ -1,5 +1,8 @@
 import { useSelector } from 'react-redux';
-import { getDelaysOfTracksSelector } from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
+import {
+    getDelaysOfTracksSelector,
+    TrackDelayDetails,
+} from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
 import { getColor } from '../../../utils/colorUtil.ts';
 import { ProgressBar } from 'react-bootstrap';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
@@ -9,6 +12,18 @@ import {
     getBranchNumbersSelector,
 } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 import { useIntl } from 'react-intl';
+
+function getTotalDelay(delaysOfTrack: TrackDelayDetails): number {
+    let countDelay = 0;
+    delaysOfTrack.delays.forEach((delay) => {
+        countDelay += delay.extraDelay;
+    });
+    return countDelay;
+}
+
+const compareDelays = (a: TrackDelayDetails, b: TrackDelayDetails) => {
+    return getTotalDelay(a) > getTotalDelay(b) ? 1 : -1;
+};
 
 export const NodeOverviewContent = () => {
     const intl = useIntl();
@@ -20,10 +35,11 @@ export const NodeOverviewContent = () => {
     const people = intl.formatMessage({ id: 'msg.people' });
     const direction = intl.formatMessage({ id: 'msg.direction' });
 
+    const sortedTrackDelays = delaysOfTracks.sort(compareDelays);
     return (
         <>
             <div>{`<= ${direction}`}</div>
-            {delaysOfTracks.map((trackDelay) => {
+            {sortedTrackDelays.map((trackDelay) => {
                 const foundTrack = tracks.find((track) => track.id === trackDelay.trackId);
                 console.log({ foundTrack });
                 return (
