@@ -102,7 +102,7 @@ export const getDelaysOfTracks = (
                     track.segments.map((segment) => segment.id).includes(segId)
                 );
                 tracksWithSegment.forEach((track) => {
-                    trackDelays = setDelay(trackDelays, track.id, segmentId, NODE_SPEC, offset);
+                    trackDelays = setDelay(trackDelays, track.id, segmentId, NODE_SPEC, offset * delayPerPerson);
                 });
             });
         } else if (hasPrioritiesSet(priorityCounter)) {
