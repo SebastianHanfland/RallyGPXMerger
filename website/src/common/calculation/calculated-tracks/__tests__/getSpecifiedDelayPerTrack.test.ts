@@ -327,18 +327,50 @@ describe('getSpecifiedDelayPerTrack', () => {
                     { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 0 } } },
                     'When A and B merges without delay, the maximum (20) is taken for check for C, so C goes first'
                 ),
-                // createTestCase(
-                //     [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
-                //     [-0, -0, -20],
-                //     { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 10 } } },
-                //     'When the delay of A does not increase the length, the maximum (20) is taken for delay for C'
-                // ),
-                // createTestCase(
-                //     [createTrack1(10, 1), createTrack2(20), createTrack3(25)],
-                //     [-0, -0, -25],
-                //     { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 15 } } },
-                //     'When the delay of A increases the length, the maximum (10 + 15 = 25) is taken for delay for C'
-                // ),
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(25)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 10, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 25, by: PEOPLE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 25, by: PEOPLE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 0, by: PEOPLE }] },
+                    ],
+                    { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 10 } } },
+                    'When the delay of A does not increase the length, the maximum (20) is taken for delay for C'
+                ),
+                createTestCase(
+                    [createTrack1(10), createTrack2(20), createTrack3(25)],
+                    [
+                        {
+                            trackId: '1',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 16, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                            ],
+                        },
+                        {
+                            trackId: '2',
+                            delays: [
+                                { segmentId: 'AB', extraDelay: 0, by: NODE_SPEC },
+                                { segmentId: 'ABC', extraDelay: 0, by: PEOPLE },
+                            ],
+                        },
+                        { trackId: '3', delays: [{ segmentId: 'ABC', extraDelay: 26, by: PEOPLE }] },
+                    ],
+                    { AB: { totalCount: 30, trackOffsets: { B1: 0, A1: 16 } } },
+                    'When the delay of A increases the length, the maximum (10 + 16 = 26) is taken for delay for C, because it has less'
+                ),
             ].forEach(executeTest);
         });
 
