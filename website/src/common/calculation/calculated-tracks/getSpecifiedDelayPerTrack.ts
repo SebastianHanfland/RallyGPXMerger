@@ -11,6 +11,10 @@ import {
 import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
 import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
 import { getBranchPriorities } from './getBranchPriorities.ts';
+import { createSelector } from '@reduxjs/toolkit';
+import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
+import { getParticipantsDelay } from '../../../planner/store/settings.reducer.ts';
+import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 
@@ -167,3 +171,8 @@ export const getDelaysOfTracks = (
 
     return trackDelays;
 };
+
+export const getDelaysOfTracksSelector = createSelector(
+    [getTrackCompositions, getParticipantsDelay, getNodeSpecifications],
+    getDelaysOfTracks
+);

@@ -1,4 +1,6 @@
 import { SEGMENT, TrackComposition } from '../../../planner/store/types.ts';
+import { createSelector } from '@reduxjs/toolkit';
+import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
 
 export interface TrackNodeSegment {
     segmentId: string;
@@ -70,3 +72,5 @@ export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): Tra
     });
     return trackNodes;
 }
+
+export const trackNodesBySegmentSizeSelector = createSelector([getTrackCompositions], trackNodesBySegmentSize);

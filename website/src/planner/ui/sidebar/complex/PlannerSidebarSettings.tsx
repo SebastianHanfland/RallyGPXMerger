@@ -11,31 +11,32 @@ import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker
 import { ReactNode } from 'react';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 import { StartNameOverwriteTable } from '../../../parameters/StartNameOverwriteTable.tsx';
+import { TrackNodesTable } from '../../../parameters/TrackNodesTable.tsx';
 
 export const PlannerSidebarSettings = () => {
-    const accordionEntries: [string, ReactNode, string][] = [
+    const accordionEntries: [string, ReactNode][] = [
         [
             'msg.titleOfPlanning',
             <>
                 <PlanningTitle />
                 <ArrivalDateTimePicker />
             </>,
-            '0',
         ],
-        ['msg.trackSettings', <TrackMergeParameters />, '1'],
-        ['msg.gapSetting', <GapFinderParameters />, '2'],
-        ['msg.prio', <TrackPriorityTable />, '3'],
-        ['msg.communicatedStart', <StartTimeTable />, '4'],
-        ['msg.startNameOverwrite', <StartNameOverwriteTable />, '5'],
-        ['msg.ownApiKey', <ApiKeyInput />, '6'],
-        ['msg.constructions.title', <ConstructionSites />, '7'],
-        ['msg.points', <PointsOfInterest />, '8'],
+        ['msg.trackSettings', <TrackMergeParameters />],
+        ['msg.gapSetting', <GapFinderParameters />],
+        ['msg.prio', <TrackPriorityTable />],
+        ['msg.nodes', <TrackNodesTable />],
+        ['msg.communicatedStart', <StartTimeTable />],
+        ['msg.startNameOverwrite', <StartNameOverwriteTable />],
+        ['msg.ownApiKey', <ApiKeyInput />],
+        ['msg.constructions.title', <ConstructionSites />],
+        ['msg.points', <PointsOfInterest />],
     ];
     return (
         <div className={'m-2'}>
             <Accordion defaultActiveKey={'0'}>
-                {accordionEntries.map(([title, component, key]) => (
-                    <Accordion.Item eventKey={key} key={key}>
+                {accordionEntries.map(([title, component], key) => (
+                    <Accordion.Item eventKey={`${key}`} key={key}>
                         <Accordion.Header>
                             <FormattedMessage id={title} />
                         </Accordion.Header>

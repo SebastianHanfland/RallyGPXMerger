@@ -206,9 +206,11 @@ export const EditNodeDialog = () => {
                 })}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger" onClick={resetNodeSpecs}>
-                    <FormattedMessage id={'msg.reset'} />
-                </Button>
+                {foundNodeSpec && (
+                    <Button variant="danger" onClick={resetNodeSpecs}>
+                        <FormattedMessage id={'msg.reset'} />
+                    </Button>
+                )}
                 <Button variant="secondary" onClick={closeModal}>
                     <FormattedMessage id={'msg.close'} />
                 </Button>
