@@ -1,5 +1,8 @@
 import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
 import { listAllNodesOfTracks, TrackNode } from '../nodes/nodeFinder.ts';
+import { createSelector } from '@reduxjs/toolkit';
+import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
+import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
 
 export const getBranchId = (trackIds: string[]): string => {
     const sortedIds = trackIds.sort();
@@ -26,7 +29,7 @@ export function getBranchTrackIds(trackNode: TrackNode): Record<string, string[]
 }
 
 export const getBranchNumbers = (
-    nodeSpecs: NodeSpecifications,
+    nodeSpecs: NodeSpecifications | undefined,
     trackCompositions: TrackComposition[]
 ): Record<string, number> => {
     const trackNodes = listAllNodesOfTracks(trackCompositions).sort((a, b) =>
@@ -36,7 +39,7 @@ export const getBranchNumbers = (
     const correctedSegmentPeople = initiallyFillWithSingleTrackPeople(trackCompositions);
 
     trackNodes.forEach((trackNode) => {
-        const nodeSpec = nodeSpecs[trackNode.segmentIdAfterNode];
+        const nodeSpec = (nodeSpecs ?? {})[trackNode.segmentIdAfterNode];
         const branchTracks = getBranchTrackIds(trackNode);
         if (!nodeSpec) {
             let afterNodeTrackIds: string[] = [];
@@ -65,3 +68,5 @@ export const getBranchNumbers = (
 
     return correctedSegmentPeople;
 };
+
+export const getBranchNumbersSelector = createSelector([getNodeSpecifications, getTrackCompositions], getBranchNumbers);

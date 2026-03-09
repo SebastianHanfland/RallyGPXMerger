@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import { ColorBlob } from '../../../utils/ColorBlob.tsx';
 import { getColor } from '../../../utils/colorUtil.ts';
 import { TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
-import { getBranchTrackIds } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
+import {
+    getBranchId,
+    getBranchNumbersSelector,
+    getBranchTrackIds,
+} from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 
 interface Props {
     trackNode: TrackNode;
@@ -12,6 +16,7 @@ interface Props {
 export const TrackNodesBranchCell = ({ trackNode }: Props) => {
     const tracks = useSelector(getTrackCompositions);
     const branchTrackIds = getBranchTrackIds(trackNode);
+    const branchNumbers = useSelector(getBranchNumbersSelector);
 
     function getColorOfTrackId(trackId: string) {
         const foundTrack = tracks.find((track) => track.id === trackId);
@@ -32,7 +37,7 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
                             <ColorBlob color={getColorOfTrackId(trackId)} />
                         </span>
                     ))}
-                    )
+                    {trackIds && branchNumbers[getBranchId(trackIds)]})
                 </span>
             ))}
         </>
