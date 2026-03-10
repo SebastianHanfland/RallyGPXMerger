@@ -124,7 +124,6 @@ export const getDelaysOfTracks = (
             let previousBranchesPeopleCounter = 0;
             const sortedBranches = branchPeopleOnSegment.sort((a, b) => (a.priority < b.priority ? 1 : -1));
             sortedBranches.forEach((branch) => {
-                console.log(branch);
                 branch.trackIds.forEach((trackId) => {
                     trackDelays = setDelay(
                         trackDelays,
@@ -154,7 +153,6 @@ export const getDelaysOfTracks = (
             let previousBranchesPeopleCounter = 0;
             const sortedBranches = branchPeopleOnSegment.sort((a, b) => (a.people < b.people ? 1 : -1));
             sortedBranches.forEach((branch) => {
-                console.log(branch);
                 branch.trackIds.forEach((trackId) => {
                     trackDelays = setDelay(
                         trackDelays,
