@@ -1,28 +1,12 @@
 import { useSelector } from 'react-redux';
-import {
-    getDelaysOfTracksSelector,
-    TrackDelayDetails,
-} from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
+import { getDelaysOfTracksSelector } from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
 import { getColor } from '../../../utils/colorUtil.ts';
 import { ProgressBar } from 'react-bootstrap';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getParticipantsDelay } from '../../store/settings.reducer.ts';
 import { useIntl } from 'react-intl';
 import { BREAK } from '../../store/types.ts';
-
-function getTotalDelay(delaysOfTrack: TrackDelayDetails): number {
-    let countDelay = 0;
-    delaysOfTrack.delays
-        .filter((delay) => delay.by !== BREAK)
-        .forEach((delay) => {
-            countDelay += delay.extraDelay;
-        });
-    return countDelay;
-}
-
-const compareDelays = (a: TrackDelayDetails, b: TrackDelayDetails) => {
-    return getTotalDelay(a) > getTotalDelay(b) ? 1 : -1;
-};
+import { compareDelays, getTotalDelay } from '../../../utils/delayUtil.ts';
 
 export const NodeOverviewContent = () => {
     const intl = useIntl();

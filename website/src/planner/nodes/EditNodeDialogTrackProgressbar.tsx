@@ -6,6 +6,8 @@ import {
     getDelaysOfTracksSelector,
     TrackDelayDetails,
 } from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
+import { getParticipantsDelay } from '../store/settings.reducer.ts';
+import { getTotalDelay } from '../../utils/delayUtil.ts';
 
 interface Props {
     segmentId: string;
@@ -48,11 +50,22 @@ function getAdditionalOffset(
 
 export const EditNodeDialogTrackProgressbar = ({ segmentId, tracks, offset, total }: Props) => {
     const delaysOfTrack = useSelector(getDelaysOfTracksSelector);
+    const participantsDelay = useSelector(getParticipantsDelay);
+
+    const sortedTracks = tracks.sort((a, b) => {
+        const delayOfA = delaysOfTrack.find((delay) => delay.trackId === a.id);
+        const delayOfB = delaysOfTrack.find((delay) => delay.trackId === b.id);
+        if (!delayOfA || !delayOfB) {
+            return 0;
+        }
+        return getTotalDelay(delayOfA) > getTotalDelay(delayOfB) ? 1 : -1;
+    });
 
     return (
         <div className={'flex-fill mx-2'}>
-            {tracks.map((track) => {
-                const additionalOffset = getAdditionalOffset(delaysOfTrack, track, tracks, segmentId);
+            {sortedTracks.map((track) => {
+                const additionalOffset =
+                    getAdditionalOffset(delaysOfTrack, track, tracks, segmentId) / participantsDelay;
                 return (
                     <ProgressBar
                         key={segmentId + track.id}
