@@ -15,7 +15,7 @@ export const EditNodeDialogBranchTitle = ({ segmentId, tracks, peopleOffset }: P
     const participantsDelay = useSelector(getParticipantsDelay);
 
     return (
-        <div key={segmentId} className={'mt-5'}>
+        <div key={segmentId} className={'mt-5 mb-2'}>
             {tracks.map((track) => (
                 <span
                     key={track.id}

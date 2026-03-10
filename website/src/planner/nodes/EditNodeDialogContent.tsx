@@ -30,7 +30,7 @@ interface Props {
     nodeEditInfo: NodeEditInfo;
 }
 
-const buttonHeight = '60px';
+const buttonHeight = '120px';
 
 export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }: Props) => {
     const intl = useIntl();

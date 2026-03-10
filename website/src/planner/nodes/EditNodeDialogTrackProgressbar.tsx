@@ -23,7 +23,7 @@ export const EditNodeDialogTrackProgressbar = ({ segmentId, tracks, offset, tota
                 <ProgressBar
                     key={segmentId + track.id}
                     className={'flex-fill mx-2'}
-                    style={{ height: `${60 / tracks.length}px` }}
+                    style={{ height: `${120 / tracks.length}px` }}
                 >
                     <ProgressBar
                         now={(offset / total) * 100}
