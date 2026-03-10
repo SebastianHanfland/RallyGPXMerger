@@ -34,7 +34,7 @@ export const EditNodeDialogDelayInput = ({ nodeSpecs, setNodeSpecs, segmentId, t
                 <Form.Control
                     type="text"
                     placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                    value={nodeSpecs.trackOffsets[segmentId]}
+                    value={nodeSpecs.trackOffsets[segmentId] ?? ''}
                     onChange={(value) => {
                         const newValue = getNodeDelayValue(getCount(value) ?? 0, branchSize, total);
                         setNodeSpecs({

@@ -1,4 +1,4 @@
-import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
+import { NODE, NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
 import { getDelaysOfTracks } from './getSpecifiedDelayPerTrack.ts';
 
 export function getExtraDelayOnTrack(
@@ -14,8 +14,11 @@ export function getExtraDelayOnTrack(
         return 0;
     }
     let countDelay = 0;
-    delaysOfTrack.delays.forEach((delay) => {
-        countDelay += delay.extraDelay;
-    });
+    delaysOfTrack.delays
+        // ignore not yet calculated Nodes
+        .filter((delay) => delay.by !== NODE)
+        .forEach((delay) => {
+            countDelay += delay.extraDelay;
+        });
     return -countDelay;
 }
