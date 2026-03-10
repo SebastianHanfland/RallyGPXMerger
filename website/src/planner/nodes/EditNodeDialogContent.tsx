@@ -30,6 +30,8 @@ interface Props {
     nodeEditInfo: NodeEditInfo;
 }
 
+const buttonHeight = '60px';
+
 export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }: Props) => {
     const intl = useIntl();
     const trackCompositions = useSelector(getTrackCompositions);
@@ -70,14 +72,14 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                     });
                 };
                 return (
-                    <>
+                    <div key={segmentId}>
                         <EditNodeDialogBranchTitle segmentId={segmentId} tracks={tracks} peopleOffset={peopleOffset} />
                         <div
                             key={segmentId + '2'}
                             style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
                         >
                             <div key={segmentId + '3'}>
-                                <Button size={'sm'} onClick={shiftOffset(-100000000)}>
+                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(-100000000)}>
                                     {'<-'}
                                 </Button>
                             </div>
@@ -88,7 +90,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 offset={peopleOffset}
                             />
                             <div key={segmentId + '4'}>
-                                <Button size={'sm'} onClick={shiftOffset(100000000)}>
+                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(100000000)}>
                                     {'->'}
                                 </Button>
                             </div>
@@ -100,7 +102,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 total={total}
                             />
                         </div>
-                    </>
+                    </div>
                 );
             })}
         </>
