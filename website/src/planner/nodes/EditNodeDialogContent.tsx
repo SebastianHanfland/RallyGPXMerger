@@ -1,18 +1,17 @@
 import { useSelector } from 'react-redux';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { Form } from 'react-bootstrap';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
 import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
 import { NodeEditInfo, NodeSpecification } from '../store/types.ts';
-import { getCount } from '../../utils/inputUtil.ts';
 import {
     getBranchId,
     getBranchNumbersSelector,
 } from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
 import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar.tsx';
+import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput.tsx';
 
 function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
     const maximum = (total ?? 0) - branchParticipants;
@@ -60,12 +59,11 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
         <>
             <div>{`<= ${direction}`}</div>
             {Object.entries(branchTracks).map(([segmentId, tracks]) => {
+                const peopleOffset = nodeSpecs.trackOffsets[segmentId] ?? 0;
+                const branchSize = branchNumbers[getBranchId(tracks.map(({ id }) => id))];
+
                 const shiftOffset = (offSet: number) => () => {
-                    const newValue = getNodeDelayValue(
-                        (nodeSpecs?.trackOffsets[segmentId] ?? 0) + offSet,
-                        branchNumbers[getBranchId(tracks.map(({ id }) => id))],
-                        total
-                    );
+                    const newValue = getNodeDelayValue((peopleOffset ?? 0) + offSet, branchSize, total);
                     setNodeSpecs({
                         ...nodeSpecs,
                         trackOffsets: { ...nodeSpecs.trackOffsets, [segmentId]: newValue },
@@ -73,11 +71,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                 };
                 return (
                     <>
-                        <EditNodeDialogBranchTitle
-                            segmentId={segmentId}
-                            tracks={tracks}
-                            peopleOffset={nodeSpecs.trackOffsets[segmentId]}
-                        />
+                        <EditNodeDialogBranchTitle segmentId={segmentId} tracks={tracks} peopleOffset={peopleOffset} />
                         <div
                             key={segmentId + '2'}
                             style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
@@ -91,36 +85,20 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 segmentId={segmentId}
                                 tracks={tracks}
                                 total={total}
-                                offset={nodeSpecs.trackOffsets[segmentId]}
+                                offset={peopleOffset}
                             />
                             <div key={segmentId + '4'}>
                                 <Button size={'sm'} onClick={shiftOffset(100000000)}>
                                     {'->'}
                                 </Button>
                             </div>
-                            <div className={'mx-2'}>
-                                <Form.Group>
-                                    <Form.Label>
-                                        <FormattedMessage id={'msg.nodeOffset'} />
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                                        value={nodeSpecs.trackOffsets[segmentId]}
-                                        onChange={(value) => {
-                                            const newValue = getNodeDelayValue(
-                                                getCount(value) ?? 0,
-                                                branchNumbers[getBranchId(tracks.map(({ id }) => id))],
-                                                total
-                                            );
-                                            setNodeSpecs({
-                                                ...nodeSpecs,
-                                                trackOffsets: { ...nodeSpecs.trackOffsets, [segmentId]: newValue },
-                                            });
-                                        }}
-                                    />
-                                </Form.Group>
-                            </div>
+                            <EditNodeDialogDelayInput
+                                nodeSpecs={nodeSpecs}
+                                setNodeSpecs={setNodeSpecs}
+                                segmentId={segmentId}
+                                branchSize={branchSize}
+                                total={total}
+                            />
                         </div>
                     </>
                 );
