@@ -44,7 +44,6 @@ function getAdditionalOffset(
     segmentId: string
 ): number {
     const allOffsetsAtPoint = tracks.map((tr) => getDelayOfTrackUntilSegment(delaysOfTrack, tr, segmentId));
-    console.log(allOffsetsAtPoint);
     return getDelayOfTrackUntilSegment(delaysOfTrack, track, segmentId) - Math.min(...allOffsetsAtPoint);
 }
 

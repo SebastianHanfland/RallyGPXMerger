@@ -8,7 +8,6 @@ export function getExtraDelayOnTrack(
     nodeSpecifications: NodeSpecifications | undefined
 ): number {
     const delaysOfTracks = getDelaysOfTracks(trackCompositions, participantsDelayInSeconds, nodeSpecifications);
-    console.log({ delaysOfTracks });
     const delaysOfTrack = delaysOfTracks.find((delays) => delays.trackId === track.id);
     if (!delaysOfTrack) {
         return 0;
