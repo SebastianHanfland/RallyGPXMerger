@@ -55,7 +55,6 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
     Object.values(branchTracks).forEach((bTracks) => {
         total += branchNumbers[getBranchId(bTracks.map(({ id }) => id))];
     });
-    console.log({ total });
 
     return (
         <>

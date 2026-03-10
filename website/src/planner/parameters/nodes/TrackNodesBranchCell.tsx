@@ -41,10 +41,10 @@ export const TrackNodesBranchCell = ({ trackNode }: Props) => {
     return (
         <>
             {Object.values(branchTrackIds).map((trackIds) => (
-                <span>
+                <span key={trackIds?.join(',')}>
                     (
                     {trackIds?.map((trackId) => (
-                        <span title={getNameOfTrackId(trackId)}>
+                        <span title={getNameOfTrackId(trackId)} key={trackId}>
                             <ColorBlob color={getColorOfTrackId(trackId)} />
                         </span>
                     ))}
