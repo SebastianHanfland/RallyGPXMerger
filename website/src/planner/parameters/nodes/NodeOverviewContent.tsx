@@ -27,7 +27,7 @@ export const NodeOverviewContent = () => {
 
     return (
         <>
-            <div>{`<= ${direction}`}</div>
+            <div>{`${direction} =>`}</div>
             {sortedTrackDelays.map((trackDelay) => {
                 const foundTrack = tracks.find((track) => track.id === trackDelay.trackId);
                 console.log({ foundTrack });
@@ -37,7 +37,7 @@ export const NodeOverviewContent = () => {
                         <div>
                             <ProgressBar
                                 key={trackDelay.trackId}
-                                className={'flex-fill mx-2'}
+                                className={'flex-fill mx-2 flex-row-reverse'}
                                 style={{ height: '30px' }}
                             >
                                 {trackDelay.delays

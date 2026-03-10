@@ -58,7 +58,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
 
     return (
         <>
-            <div>{`<= ${direction}`}</div>
+            <div>{`${direction} =>`}</div>
             {Object.entries(branchTracks).map(([segmentId, tracks]) => {
                 const peopleOffset = nodeSpecs.trackOffsets[segmentId] ?? 0;
                 const branchSize = branchNumbers[getBranchId(tracks.map(({ id }) => id))];
@@ -78,7 +78,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                             style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
                         >
                             <div key={segmentId + '3'}>
-                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(-100000000)}>
+                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(100000000)}>
                                     {'<-'}
                                 </Button>
                             </div>
@@ -89,7 +89,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 offset={peopleOffset}
                             />
                             <div key={segmentId + '4'}>
-                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(100000000)}>
+                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(-100000000)}>
                                     {'->'}
                                 </Button>
                             </div>
