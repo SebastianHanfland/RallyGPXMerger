@@ -1,4 +1,4 @@
-import { WayPoint } from '../../../planner/logic/resolving/types.ts';
+import { TrackWayPointType, WayPoint } from '../../../planner/logic/resolving/types.ts';
 import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 
@@ -21,7 +21,9 @@ export function joinWayPointsAtSegmentsBorders(wayPoints: WayPoint[], trackPoint
         if (
             lastWayPoint.streetName !== null &&
             firstTrackPoint.streetName !== null &&
-            isSameStreetName(lastWayPoint.streetName, firstTrackPoint.streetName)
+            isSameStreetName(lastWayPoint.streetName, firstTrackPoint.streetName) &&
+            firstTrackPoint.type === TrackWayPointType.Track &&
+            lastWayPoint.type == TrackWayPointType.Track
         ) {
             const matchedWayPoint = wayPoints[wayPoints.length - 1];
             const otherWayPoints = wayPoints.slice(0, wayPoints.length - 1);
