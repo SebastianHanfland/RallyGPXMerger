@@ -109,7 +109,7 @@ export function getWayPointsOfTrack(
     arrivalDateTime: string | undefined,
     aggregatedSegmentStreets: Record<string, AggregatedPoints[] | undefined>
 ): WayPoint[] {
-    let arrivalTimeForPreviousSegment = track.delayAtEndInSeconds ?? 0;
+    let arrivalTimeForPreviousSegment = -(track.delayAtEndInSeconds ?? 0);
     let trackPoints: WayPoint[] = [];
     const arrivalDate = arrivalDateTime ?? '2025-06-01T10:11:55';
 
