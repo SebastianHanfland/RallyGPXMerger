@@ -176,8 +176,9 @@ export function getWayPointsOfTrack(
                     pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
                     pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
                     frontArrival: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
+                    frontPassage: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                     backPassage: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontPassage,
+                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
                         participantsDelayInSeconds * (track.peopleCount ?? 0)
                     ),
                     speed: undefined,
@@ -198,10 +199,18 @@ export function getWayPointsOfTrack(
                         postCode: lookups.postCodes[point.s] ?? null,
                         backPassage: shiftDateBySeconds(
                             arrivalDate,
-                            point.frontPassage + participantsDelayInSeconds * (track.peopleCount ?? 0)
+                            point.frontPassage +
+                                participantsDelayInSeconds * (track.peopleCount ?? 0) +
+                                arrivalTimeForPreviousSegment
                         ),
-                        frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage),
-                        frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival),
+                        frontPassage: shiftDateBySeconds(
+                            arrivalDate,
+                            point.frontPassage + arrivalTimeForPreviousSegment
+                        ),
+                        frontArrival: shiftDateBySeconds(
+                            arrivalDate,
+                            point.frontArrival + arrivalTimeForPreviousSegment
+                        ),
                         pointFrom: extractLatLon(point.pointFrom, arrivalDate),
                         pointTo: extractLatLon(point.pointTo, arrivalDate),
                         distanceInKm: point.distanceInKm,

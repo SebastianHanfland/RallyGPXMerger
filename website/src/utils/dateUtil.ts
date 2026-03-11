@@ -2,10 +2,6 @@ import date from 'date-and-time';
 import { FormatDateOptions } from 'react-intl';
 import { getLanguage } from '../language.ts';
 
-export function shiftEndDate(endDateString: string, breakInMinutes: number): string {
-    return date.addSeconds(new Date(endDateString), -breakInMinutes * 60).toISOString();
-}
-
 export function shiftDateBySeconds(datetime: string, shiftInSeconds: number): string {
     return date.addSeconds(new Date(datetime), shiftInSeconds).toISOString();
 }
