@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { TrackOverviewContent } from './TrackOverviewContent.tsx';
-import { NodeIcon } from '../../../utils/icons/NodeIcon.tsx';
 
 export const TrackOverviewButton = () => {
     const [open, setOpen] = useState(false);
@@ -11,10 +10,9 @@ export const TrackOverviewButton = () => {
 
     return (
         <>
-            <Button className={'mx-1 rounded-2 p-0'} variant={'info'} onClick={() => setOpen(true)}>
+            <Button className={'mx-1 rounded-2'} variant={'info'} onClick={() => setOpen(true)}>
                 <span className={'mx-1'}>
-                    <FormattedMessage id={'msg.nodesOverview'} />
-                    <NodeIcon />
+                    <FormattedMessage id={'msg.trackOverview'} />
                 </span>
             </Button>
             {open && (
@@ -22,7 +20,7 @@ export const TrackOverviewButton = () => {
                     <Modal.Header closeButton>
                         <Modal.Title>
                             <div>
-                                <FormattedMessage id={'msg.nodes'} />
+                                <FormattedMessage id={'msg.tracks'} />
                             </div>
                         </Modal.Title>
                     </Modal.Header>

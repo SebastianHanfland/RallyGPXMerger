@@ -6,10 +6,10 @@ export const TrackOverviewContent = () => {
     const tracks = useSelector(getTrackCompositions);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', alignContent: 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignContent: 'flex-end' }}>
             {tracks.map((track) => {
                 return (
-                    <div style={{ width: '100px' }}>
+                    <div style={{ width: '100px', alignContent: 'end' }}>
                         <TrackSegmentSelectionMinimum track={track} />
                     </div>
                 );
