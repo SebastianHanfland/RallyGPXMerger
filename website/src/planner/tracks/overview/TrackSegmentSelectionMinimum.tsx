@@ -5,7 +5,7 @@ import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { AppDispatch } from '../../store/planningStore.ts';
 import { isDefined } from '../../../utils/typeUtil.ts';
-import { getColor } from '../../../utils/colorUtil.ts';
+import { SimpleElementDisplay } from './SimpleElementDisplay.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -35,21 +35,7 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
                 setList={setSegmentIds}
             >
                 {segments.map((trackElement) => {
-                    return (
-                        <div
-                            className={'rounded-2 d-flex justify-content-between'}
-                            style={{
-                                border: '1px solid transparent',
-                                borderColor: 'black',
-                                cursor: 'pointer',
-                                margin: '1px',
-                                backgroundColor: getColor(trackElement),
-                            }}
-                            key={trackElement.id}
-                        >
-                            {'Hi'}
-                        </div>
-                    );
+                    return <SimpleElementDisplay trackElement={trackElement} />;
                 })}
             </ReactSortable>
         </div>
