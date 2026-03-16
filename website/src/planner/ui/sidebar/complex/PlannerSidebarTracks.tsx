@@ -17,6 +17,7 @@ import { ColorBlob } from '../../../../utils/ColorBlob.tsx';
 import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer.ts';
 import { isDefined } from '../../../../utils/typeUtil.ts';
 import { ReactSortable } from 'react-sortablejs';
+import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -50,6 +51,7 @@ export const PlannerSidebarTracks = () => {
         <div>
             <div className={'m-2'}>
                 <BlockTextDescription messageId={'msg.description.tracks'} />
+                <TrackOverviewButton />
             </div>
             {trackCompositions.length > 0 && (
                 <div className={'m-2'}>
