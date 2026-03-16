@@ -46,7 +46,7 @@ function getSegmentInfo(aggregatedInfo: AggregatedPoints[] | undefined) {
     const speedString = speed ? `${formatNumber(speed)} km/h` : undefined;
 
     const minutesString = `${formatNumber(seconds / 60, 1)} min`;
-    const distanceString = `(${formatNumber(distance, 2)} km`;
+    const distanceString = `${formatNumber(distance, 2)} km`;
     return [distanceString, speedString, minutesString].filter(isDefined).join(', ');
 }
 
