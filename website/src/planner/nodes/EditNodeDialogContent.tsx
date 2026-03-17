@@ -53,7 +53,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
 
     let total = 0;
     Object.values(branchTracks).forEach((bTracks) => {
-        total += branchNumbers[getBranchId(bTracks.map(({ id }) => id))];
+        total += branchNumbers[getBranchId(bTracks.map(({ id }) => id))] ?? 0;
     });
 
     return (
@@ -61,7 +61,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
             <div>{`${direction} =>`}</div>
             {Object.entries(branchTracks).map(([segmentId, tracks]) => {
                 const peopleOffset = nodeSpecs.trackOffsets[segmentId] ?? 0;
-                const branchSize = branchNumbers[getBranchId(tracks.map(({ id }) => id))];
+                const branchSize = branchNumbers[getBranchId(tracks.map(({ id }) => id))] ?? 0;
 
                 const shiftOffset = (offSet: number) => () => {
                     const newValue = getNodeDelayValue((peopleOffset ?? 0) + offSet, branchSize, total);
