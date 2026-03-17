@@ -64,8 +64,8 @@ function setDelay(
     });
 }
 
-function hasPrioritiesSet(priorityCounter: Record<string, number>): boolean {
-    return Object.values(priorityCounter).some((counter) => counter > 0);
+function hasPrioritiesSet(priorityCounter: Record<string, number | undefined>): boolean {
+    return Object.values(priorityCounter).some((counter) => (counter ?? 0) > 0);
 }
 
 const getPossibleNodeSpecification = (
@@ -115,8 +115,8 @@ export const getDelaysOfTracks = (
                 [];
             Object.entries(branchTrackIds).forEach(([segId, trackIds]) => {
                 if (trackIds) {
-                    const people = branchNumbers[getBranchId(trackIds)];
-                    const priority = priorityCounter[segId];
+                    const people = branchNumbers[getBranchId(trackIds)] ?? 0;
+                    const priority = priorityCounter[segId] ?? 0;
                     branchPeopleOnSegment.push({ segmentId: segId, people, trackIds, priority });
                 }
             });
@@ -145,7 +145,7 @@ export const getDelaysOfTracks = (
             const branchPeopleOnSegment: { segmentId: string; people: number; trackIds: string[] }[] = [];
             Object.entries(branchTrackIds).forEach(([segId, trackIds]) => {
                 if (trackIds) {
-                    const people = branchNumbers[getBranchId(trackIds)];
+                    const people = branchNumbers[getBranchId(trackIds)] ?? 0;
                     branchPeopleOnSegment.push({ segmentId: segId, people, trackIds });
                 }
             });

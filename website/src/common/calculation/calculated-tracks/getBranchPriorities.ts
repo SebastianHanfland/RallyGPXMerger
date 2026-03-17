@@ -14,7 +14,7 @@ function getHighestPriorityOfTrack(tracks: TrackComposition[]): number {
 export function getBranchPriorities(
     segmentIdAfterNode: string,
     trackCompositions: TrackComposition[]
-): Record<string, number> {
+): Record<string, number | undefined> {
     const branchTracks = getBranchTracks(segmentIdAfterNode, trackCompositions);
 
     const priorityCounter: Record<string, number> = {};

@@ -31,7 +31,7 @@ export function getBranchTrackIds(trackNode: TrackNode): Record<string, string[]
 export const getBranchNumbers = (
     nodeSpecs: NodeSpecifications | undefined,
     trackCompositions: TrackComposition[]
-): Record<string, number> => {
+): Record<string, number | undefined> => {
     const trackNodes = listAllNodesOfTracks(trackCompositions).sort((a, b) =>
         a.segmentsBeforeNode.length > b.segmentsBeforeNode.length ? 1 : -1
     );
