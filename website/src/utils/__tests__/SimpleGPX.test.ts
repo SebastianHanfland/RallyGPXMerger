@@ -68,7 +68,7 @@ describe('SimpleGPX', () => {
 
         const manualMerged =
             '<?xml version="1.0" encoding="UTF-8"?>\n' +
-            '<gpx creator="fabulator:gpx-builder" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">\n' +
+            '<gpx creator="fabulator:gpx-builder" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 https://www.topografix.com/GPX/1/1/gpx.xsd">\n' +
             '<metadata></metadata>\n' +
             '<trk>\n' +
             '<name>Example gpx</name>\n' +
