@@ -380,5 +380,6 @@
     "msg.customBehavior": "Custom behavior",
     "msg.nodesOverview": "Nodes Overview",
     "msg.direction": "Driving directions",
-    "msg.trackOverview": "Track overview"
+    "msg.trackOverview": "Track overview",
+    "msg.trackOverview.description": "You can change the order of the segments within a track here and see an overview of all track"
 }

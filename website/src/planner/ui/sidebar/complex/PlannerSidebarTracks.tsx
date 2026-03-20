@@ -51,16 +51,16 @@ export const PlannerSidebarTracks = () => {
         <div>
             <div className={'m-2'}>
                 <BlockTextDescription messageId={'msg.description.tracks'} />
-                <TrackOverviewButton />
             </div>
             {trackCompositions.length > 0 && (
-                <div className={'m-2'}>
+                <div className={'m-2'} style={{ display: 'flex', flexDirection: 'row' }}>
                     <Form.Control
                         type="text"
                         placeholder="Filter tracks, separate term by ','"
                         value={filterTerm ?? ''}
                         onChange={(value) => setFilterTerm(value.target.value)}
                     />
+                    <TrackOverviewButton />
                 </div>
             )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>

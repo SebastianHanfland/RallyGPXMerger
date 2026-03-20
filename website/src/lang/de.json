@@ -380,5 +380,6 @@
     "msg.customBehavior": "Benutzerdefiniertes Verhalten",
     "msg.nodesOverview": "Knotenübersicht",
     "msg.direction": "Fahrtrichtung",
-    "msg.trackOverview": "Routenübersicht"
+    "msg.trackOverview": "Routenübersicht",
+    "msg.trackOverview.description": "Hier kann die Reihenfolge der Abschnitte angezeigt und geändert werden"
 }

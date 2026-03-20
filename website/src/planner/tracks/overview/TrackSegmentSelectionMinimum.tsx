@@ -6,6 +6,7 @@ import { ReactSortable } from 'react-sortablejs';
 import { AppDispatch } from '../../store/planningStore.ts';
 import { isDefined } from '../../../utils/typeUtil.ts';
 import { SimpleElementDisplay } from './SimpleElementDisplay.tsx';
+import { limitString } from '../../../utils/stringUtil.ts';
 
 interface Props {
     track: TrackComposition;
@@ -38,6 +39,7 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
                     return <SimpleElementDisplay trackElement={trackElement} />;
                 })}
             </ReactSortable>
+            <b title={track.name}>{limitString(track.name ?? '', 9)}</b>
         </div>
     );
 }

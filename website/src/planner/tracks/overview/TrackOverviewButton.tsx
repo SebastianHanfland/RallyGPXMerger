@@ -10,13 +10,18 @@ export const TrackOverviewButton = () => {
 
     return (
         <>
-            <Button className={'mx-1 rounded-2'} variant={'info'} onClick={() => setOpen(true)}>
+            <Button
+                className={'mx-1 rounded-2'}
+                variant={'info'}
+                onClick={() => setOpen(true)}
+                style={{ width: '190px' }}
+            >
                 <span className={'mx-1'}>
                     <FormattedMessage id={'msg.trackOverview'} />
                 </span>
             </Button>
             {open && (
-                <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'}>
+                <Modal show={true} onHide={closeModal} backdrop="static" size={'xl'} fullscreen={true}>
                     <Modal.Header closeButton>
                         <Modal.Title>
                             <div>

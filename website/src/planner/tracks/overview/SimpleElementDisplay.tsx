@@ -2,6 +2,7 @@ import { isTrackBreak, isTrackSegment, TrackElement } from '../../store/types.ts
 import { useSelector } from 'react-redux';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getColor } from '../../../utils/colorUtil.ts';
+import { limitString } from '../../../utils/stringUtil.ts';
 
 export const SimpleElementDisplay = ({ trackElement }: { trackElement: TrackElement }) => {
     const parsedGpxSegments = useSelector(getParsedGpxSegments);
@@ -27,7 +28,7 @@ export const SimpleElementDisplay = ({ trackElement }: { trackElement: TrackElem
         if (!filename) {
             return <span>n.n.</span>;
         }
-        const shortenedFileName = filename.length > 6 ? filename.slice(0, 6) : filename;
+        const shortenedFileName = limitString(filename, 8);
         return (
             <div
                 className={'rounded-2 d-flex justify-content-between'}
