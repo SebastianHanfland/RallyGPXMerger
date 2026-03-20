@@ -31,8 +31,8 @@ export const plannerUi = {
         const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
         const inputElement = fileInput?.parentNode?.parentNode;
         const buffer = fs.readFileSync(`./test/integration/data/${fileName}.gpx`);
-        const file = new File([buffer], `${fileName}.gpx`, { type: 'application/gpx+xml' });
-        file.arrayBuffer = () => Promise.resolve(buffer.buffer);
+        const file = new File([buffer.toString()], `${fileName}.gpx`, { type: 'application/gpx+xml' });
+        file.arrayBuffer = () => Promise.resolve(buffer.buffer as ArrayBuffer);
         await act(() => fireEvent.drop(inputElement!, { dataTransfer: { files: [file] } }));
     },
     uploadNode: () => {

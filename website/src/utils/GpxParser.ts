@@ -1,10 +1,16 @@
 import { GpxJson, Point, Route, Track } from './gpxTypes.ts';
-import { X2jOptions, XMLParser } from 'fast-xml-parser';
+import { JPathOrMatcher, X2jOptions, XMLParser } from 'fast-xml-parser';
 import { Util } from 'leaflet';
 import isArray = Util.isArray;
 
-const parseNumbers = (_: string, attrValue: string, __: string): number | string => {
-    return isNaN(Number(attrValue)) ? attrValue : attrValue;
+const parseNumbers = (
+    _: string,
+    tagValue: string,
+    __: JPathOrMatcher,
+    ___?: boolean,
+    ____?: boolean
+): number | string => {
+    return isNaN(Number(tagValue)) ? tagValue : tagValue;
 };
 
 export class GpxParser {
