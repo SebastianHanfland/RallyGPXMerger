@@ -17,7 +17,7 @@ const style: CSSProperties = {
 
 export const AppFooter = () => {
     const section = useGetUrlParam('section=');
-    if (!section || !['menu', 'wizard-complexity'].includes(section)) {
+    if (section !== undefined && ['wizard-complexity', 'gps'].includes(section)) {
         return null;
     }
     return (

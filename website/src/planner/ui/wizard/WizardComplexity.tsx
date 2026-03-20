@@ -56,6 +56,14 @@ export const WizardsComplexity = () => {
             </Row>
             <h5 className={'mt-5'}>
                 <FormattedMessage id={'msg.helpButton.hint'} />
+                <a
+                    href="https://github.com/SebastianHanfland/RallyGPXMerger?tab=readme-ov-file#rallygpxmerger"
+                    className="nav-link px-2 text-muted"
+                    target={'_blank'}
+                    referrerPolicy={'no-referrer'}
+                >
+                    https://github.com/SebastianHanfland/RallyGPXMerger
+                </a>
             </h5>
         </Container>
     );
