@@ -22,7 +22,7 @@
     "fast-xml-parser": "^5.2.1",
     "file-saver": "^2.0.5",
     "geo-distance-helper": "^2.0.4",
-    "gpx-builder": "^6.0.0",
+    "gpx-builder": "^5.2.1",
     "jszip": "^3.10.1",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.84.2",

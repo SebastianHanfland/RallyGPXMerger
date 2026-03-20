@@ -1,15 +1,10 @@
+import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
 import date from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from '../common/calculation/types.ts';
 import { getTimeDifferenceInSeconds } from './dateUtil.ts';
 import { Link, Metadata, Point, Route, Track, Waypoint } from './gpxTypes.ts';
 import { GpxParser } from './GpxParser.ts';
-import { Metadata as GMetadata } from 'gpx-builder/dist/builder/BaseBuilder/models/Metadata';
-import { Track as GTrack } from 'gpx-builder/dist/builder/BaseBuilder/models/Track';
-import { Route as GRoute } from 'gpx-builder/dist/builder/BaseBuilder/models/Route';
-import { Point as GPoint } from 'gpx-builder/dist/builder/BaseBuilder/models/Point';
-import { Link as GLink } from 'gpx-builder/dist/builder/BaseBuilder/models/Link';
-import { Segment as GSegment } from 'gpx-builder/dist/builder/BaseBuilder/models/Segment';
 
 export function mergeSimpleGPXs(parsers: SimpleGPX[]): SimpleGPX {
     const metadata = parsers[0].metadata;
@@ -149,7 +144,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         const builder = new BaseBuilder();
         const m = this.metadata;
         builder.setMetadata(
-            new GMetadata({
+            new gpxBuilder.Metadata({
                 name: m?.name,
                 desc: m?.desc,
                 time: m?.time,
@@ -164,7 +159,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
                 // ensure the output file contains only a single track
                 const first = this.tracks.at(0);
                 builder.setTracks([
-                    new GTrack([tracks2seg(this.tracks)], {
+                    new gpxBuilder.Track([tracks2seg(this.tracks)], {
                         name: first?.name,
                         // cmt: first?.cmt,
                         // desc: first?.desc,
@@ -210,27 +205,27 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 }
 
-function toLink(link: string | Link | undefined): GLink | undefined {
+function toLink(link: string | Link | undefined): gpxBuilder.Link | undefined {
     if (link === undefined) {
         return undefined;
     }
     // @ts-ignore
     if (typeof link === 'string') {
-        return new GLink(link, {});
+        return new gpxBuilder.Link(link, {});
     } else if (!Object.keys(link).length) {
         return undefined;
     } else if (!('href' in link)) {
         return undefined;
     } else {
-        return new GLink(link.href, {
+        return new gpxBuilder.Link(link.href, {
             text: link.text,
             type: link.type,
         });
     }
 }
 
-function point2point(_point: Point, timeshift: number = 0): GPoint {
-    return new GPoint(
+function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
+    return new gpxBuilder.Point(
         typeof _point.lat === 'string' ? Number(_point.lat) : _point.lat,
         typeof _point.lon === 'string' ? Number(_point.lon) : _point.lon,
         {
@@ -240,8 +235,8 @@ function point2point(_point: Point, timeshift: number = 0): GPoint {
     );
 }
 
-function track2track(_track: Track, timeshift: number = 0): GTrack {
-    return new GTrack([track2seg(_track, timeshift)], {
+function track2track(_track: Track, timeshift: number = 0): gpxBuilder.Track {
+    return new gpxBuilder.Track([track2seg(_track, timeshift)], {
         name: _track.name,
         // cmt: _track.cmt,
         // desc: _track.desc,
@@ -252,21 +247,23 @@ function track2track(_track: Track, timeshift: number = 0): GTrack {
     });
 }
 
-function track2seg(_track: Track, timeshift: number = 0): GSegment {
+function track2seg(_track: Track, timeshift: number = 0): gpxBuilder.Segment {
     // gpx-builder (i.e. output) tracks can have segments, but gpx-parser (i.e. input) ones do not
-    return new GSegment(_track.points.map((_point: Point) => point2point(_point, timeshift)));
+    return new gpxBuilder.Segment(_track.points.map((_point: Point) => point2point(_point, timeshift)));
 }
 
-function tracks2seg(_track: Track[], timeshift: number = 0): GSegment {
-    return new GSegment(_track.flatMap((track) => track.points.map((_point: Point) => point2point(_point, timeshift))));
+function tracks2seg(_track: Track[], timeshift: number = 0): gpxBuilder.Segment {
+    return new gpxBuilder.Segment(
+        _track.flatMap((track) => track.points.map((_point: Point) => point2point(_point, timeshift)))
+    );
 }
 
-function route2route(_route: Route, timeshift: number = 0): GRoute {
+function route2route(_route: Route, timeshift: number = 0): gpxBuilder.Route {
     // you cannot get the properties of a type because at compile time or runtime it just might be a whole different fuck-up.
     // this is like an Exclude or Omit<T, K> but as an object rather than a type
     const { link, number, points, distance, elevation, slopes, ...without } = _route;
 
-    return new GRoute({
+    return new gpxBuilder.Route({
         ...without,
         rtept: _route.points.map((_point: Point) => point2point(_point, timeshift)),
         // @ts-ignore
@@ -279,6 +276,6 @@ function waypoint2waypoint(
     _waypoints: Waypoint,
     // @ts-ignore
     _timeshift: number = 0
-): GPoint {
-    return new GPoint(_waypoints.lat, _waypoints.lon, { ele: _waypoints.ele, name: _waypoints.name });
+): gpxBuilder.Point {
+    return new gpxBuilder.Point(_waypoints.lat, _waypoints.lon, { ele: _waypoints.ele, name: _waypoints.name });
 }
