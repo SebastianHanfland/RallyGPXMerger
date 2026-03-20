@@ -77,6 +77,17 @@ export const AppFooter = () => {
                             About
                         </a>
                     </li>
+                    <li className="nav-item">
+                        <a
+                            // href="https://sternfahrtplaner.de/?imprint=true"
+                            href="http://localhost:5173?imprint=true"
+                            className="nav-link px-2 text-muted"
+                            target={'_blank'}
+                            referrerPolicy={'no-referrer'}
+                        >
+                            Imprint
+                        </a>
+                    </li>
                 </ul>
             </Col>
         </Row>

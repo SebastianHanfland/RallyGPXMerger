@@ -10,12 +10,17 @@ import { useGetUrlParam } from './utils/linkUtil.ts';
 import { planningStore } from './planner/store/planningStore.ts';
 import { displayStore } from './display/store/store.ts';
 import { comparisonStore } from './comparison/store/store.ts';
+import { Imprint } from './Imprint.tsx';
 
 export function App() {
     const hasComparisonUrl = useGetUrlParam('comparison=');
     const hasDisplayUrl = useGetUrlParam('display=');
     const hasTableUrl = useGetUrlParam('table=');
+    const hasImprintUrl = useGetUrlParam('imprint=');
 
+    if (hasImprintUrl) {
+        return <Imprint />;
+    }
     if (hasComparisonUrl) {
         return <ErrorBoundary>{<RallyComparisonWrapper store={comparisonStore} />}</ErrorBoundary>;
     }
