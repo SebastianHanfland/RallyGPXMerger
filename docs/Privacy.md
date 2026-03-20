@@ -4,7 +4,9 @@ Files are locally stored within the local storage of the browser, to continue wo
 All data can be cleared from the browser.
 
 To publish or share the planning it can be uploaded to a server. No personal data is required or stored to do so.
-When you publish the planning
+When you publish the planning you download a txt file with the chosen password. This password protects editing the planning.
+
+For public sharing you can use the display links.
 
 # Street name resolving and post codes
 To resolve the street names and postcodes two external API are used to retrieve the street information and the post codes.
