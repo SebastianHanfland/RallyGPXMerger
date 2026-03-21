@@ -7,13 +7,7 @@ import { formatNumber } from '../../../utils/numberUtil.ts';
 import { Link, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
 import { TrackStreetTableNodeRow } from './TrackStreetTableNodeRow.tsx';
-
-function getAdditionalInfo(type: TrackWayPointType | undefined, breakLength: number | undefined) {
-    if (type === TrackWayPointType.Break) {
-        return `: Pause${breakLength ? ` (${breakLength}) min` : ''}`;
-    }
-    return '';
-}
+import { TrackStreetTableBreakRow } from './TrackStreetTableBreakRow.tsx';
 
 interface Props {
     wayPoints: WayPoint[];
@@ -45,15 +39,23 @@ export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
                             />
                         );
                     }
+                    if (wayPoint.type === TrackWayPointType.Break) {
+                        return (
+                            <TrackStreetTableBreakRow
+                                intl={intl}
+                                colWidths={colWidths}
+                                wayPoint={wayPoint}
+                                key={index}
+                            />
+                        );
+                    }
 
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
                                 <Text style={pdfStyles.bold}>
                                     <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
-                                        {`${
-                                            wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
-                                        }${getAdditionalInfo(wayPoint.type, wayPoint.breakLength)}`}
+                                        {wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
                                     </Link>
                                 </Text>
                             </Text>
