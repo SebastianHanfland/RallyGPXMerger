@@ -12,18 +12,30 @@ import { getPlanningLabel, getPlanningTitle } from '../../store/settings.reducer
 import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { createRoot } from 'react-dom/client';
 
-const generatePdf = async (
+const generatePdfsInZip = async (
     trackStreetInfos: TrackStreetInfo[],
     blockedStreetInfos: BlockedStreetInfo[],
     intl: IntlShape,
     planningTitle?: string,
     planningLabel?: string
 ) => {
-    const pdfBlobs = await Promise.all(
-        trackStreetInfos.map((info) => generateTrackStreetPdfUrl(info, intl, planningLabel))
+    const zip = new JSZip();
+    await Promise.all(
+        trackStreetInfos.map((info) => {
+            generateTrackStreetPdfUrl(info, intl, planningLabel).then((blob) => zip.file(`${info.name}.pdf`, blob));
+        })
     );
-    const blockedStreets = await generateBlockedStreetsPdfUrl(blockedStreetInfos, intl, planningLabel);
-    await createAndDownloadZip([...pdfBlobs, blockedStreets], planningTitle, intl);
+    await generateBlockedStreetsPdfUrl(blockedStreetInfos, intl, planningLabel).then((blob) =>
+        zip.file(`${intl.formatMessage({ id: 'msg.blockedStreets' })}.pdf`, blob)
+    );
+
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    saveAs(
+        zipBlob,
+        `${planningTitle ?? 'Sternfahrtplaner'}-${intl.formatMessage({
+            id: 'msg.streetListZip',
+        })}-pdf-${new Date().toISOString()}.zip`
+    );
 };
 
 const generateTrackStreetPdfUrl = (trackStreetInfo: TrackStreetInfo, intl: IntlShape, planningLabel?: string) => {
@@ -70,20 +82,6 @@ const generateBlockedStreetsPdfUrl = (
     });
 };
 
-async function createAndDownloadZip(pdfBlobs: Blob[], planningTitle: string | undefined, intl: IntlShape) {
-    const zip = new JSZip();
-    pdfBlobs.forEach((blob, index) => {
-        zip.file(`document-${index + 1}.pdf`, blob);
-    });
-    const zipBlob = await zip.generateAsync({ type: 'blob' });
-    saveAs(
-        zipBlob,
-        `${planningTitle ?? 'Sternfahrtplaner'}-${intl.formatMessage({
-            id: 'msg.streetListZip',
-        })}-pdf-${new Date().toISOString()}.zip`
-    );
-}
-
 export const DButton = () => {
     const trackStreetInfos = useSelector(getTrackStreetInfos);
     const planningLabel = useSelector(getPlanningLabel);
@@ -91,7 +89,9 @@ export const DButton = () => {
     const planningTitle = useSelector(getPlanningTitle);
     const intl = useIntl();
     return (
-        <Button onClick={() => generatePdf(trackStreetInfos, blockedStreetInfos, intl, planningTitle, planningLabel)}>
+        <Button
+            onClick={() => generatePdfsInZip(trackStreetInfos, blockedStreetInfos, intl, planningTitle, planningLabel)}
+        >
             DZ
         </Button>
     );
