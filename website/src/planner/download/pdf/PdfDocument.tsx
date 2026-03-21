@@ -1,4 +1,7 @@
 import { Page, Text, View, Document, StyleSheet, usePDF } from '@react-pdf/renderer';
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
+import Button from 'react-bootstrap/Button';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -34,9 +37,25 @@ export const Bla = () => {
 
     if (instance.error) return <div>Something went wrong: {instance.error}</div>;
 
+    const downloadZip = () => {
+        instance.blob;
+        const zip = new JSZip();
+        [0, 1].forEach((n) => {
+            if (instance.blob) {
+                zip.file(`${n}.pdf`, new Blob([instance.blob]));
+            }
+        });
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+            FileSaver.saveAs(content, `${'zipName'}-${new Date().toISOString()}.zip`);
+        });
+    };
+
     return (
-        <a href={instance.url ?? ''} download="test.pdf">
-            Download
-        </a>
+        <>
+            <a href={instance.url ?? ''} download="test.pdf">
+                Download
+            </a>
+            <Button onClick={downloadZip}>Zip</Button>
+        </>
     );
 };
