@@ -26,6 +26,7 @@ export function DateTimePicker({ messageKey, setValue, value }: Props) {
                 isClearable={true}
                 locale={getLanguage()}
                 calendarStartDay={1}
+                popperPlacement={'left'}
                 timeIntervals={15}
                 showTimeSelect={true}
             />
