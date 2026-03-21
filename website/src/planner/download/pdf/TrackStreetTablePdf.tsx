@@ -15,7 +15,7 @@ interface Props {
     intl: IntlShape;
 }
 
-const colWidths = ['22%', '7%', '12%', '8%', '7%', '7%', '7%', '10%', '10%', '10%'].map((width) => ({ width }));
+const colWidths = ['22%', '7%', '11%', '6%', '10%', '7%', '7%', '10%', '10%', '10%'].map((width) => ({ width }));
 
 export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
     const tableHeader = getTrackTableHeaders(intl);
