@@ -7,6 +7,7 @@ import { BreakOverviewPdf } from './BreakOverviewPdf.tsx';
 import { NodeOverviewTablePdf } from './NodeOverviewTablePdf.tsx';
 import { TrackStreetTablePdf } from './TrackStreetTablePdf.tsx';
 import { pdfStyles } from './pdfStyles.ts';
+import { chunkList } from './chunkUtil.t.ts';
 
 interface Props {
     intl: IntlShape;
@@ -30,10 +31,12 @@ export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) =>
                 <NodeOverviewTablePdf trackStreets={trackStreets} intl={intl} />
             </View>
         </Page>
-        <Page size="A4" style={pdfStyles.page} orientation={'landscape'}>
-            <View style={pdfStyles.section}>
-                <TrackStreetTablePdf trackStreets={trackStreets} intl={intl} />
-            </View>
-        </Page>
+        {...chunkList(trackStreets.wayPoints, 15).map((wayPoints) => (
+            <Page size="A4" style={pdfStyles.page} orientation={'landscape'}>
+                <View style={pdfStyles.section}>
+                    <TrackStreetTablePdf wayPoints={wayPoints} intl={intl} />
+                </View>
+            </Page>
+        ))}
     </Document>
 );

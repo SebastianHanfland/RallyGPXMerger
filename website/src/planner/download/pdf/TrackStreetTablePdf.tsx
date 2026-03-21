@@ -1,4 +1,4 @@
-import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
+import { TrackWayPointType, WayPoint } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
@@ -22,13 +22,13 @@ function getAdditionalInfo(
 }
 
 interface Props {
-    trackStreets: TrackStreetInfo;
+    wayPoints: WayPoint[];
     intl: IntlShape;
 }
 
 const colWidths = ['22%', '8%', '8%', '8%', '8%', '8%', '8%', '10%', '10%', '10%'].map((width) => ({ width }));
 
-export const TrackStreetTablePdf = ({ trackStreets, intl }: Props) => {
+export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
     const tableHeader = getTrackTableHeaders(intl);
 
     return (
@@ -40,7 +40,7 @@ export const TrackStreetTablePdf = ({ trackStreets, intl }: Props) => {
                         <Text style={colWidths[index]}>{text} </Text>
                     ))}
                 </View>
-                {...trackStreets.wayPoints.map((wayPoint, index) => {
+                {...wayPoints.map((wayPoint, index) => {
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
