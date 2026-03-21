@@ -38,6 +38,7 @@ export function TrackSegmentSelect({ track }: Props) {
             menuPlacement={'top'}
             placeholder={intl.formatMessage({ id: 'msg.selectTrackSegment' })}
             options={options.filter((option) => !segments.map((segment) => segment.id).includes(option.value))}
+            filterOption={(option, filter) => option.label.toLowerCase().includes(filter.toLowerCase())}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={addSegmentToTrack}

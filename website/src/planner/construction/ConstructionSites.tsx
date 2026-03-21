@@ -15,10 +15,12 @@ export function ConstructionSites() {
     const constructionSegments = useSelector(getConstructionSegments) ?? [];
     const averageSpeed = useSelector(getAverageSpeedInKmH) ?? [];
 
-    const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) => {
-            dispatch(segmentDataActions.addConstructionSegments(newGpxSegments));
-        });
+    const handleChange = (newFiles: File | File[]) => {
+        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
+            (newGpxSegments) => {
+                dispatch(segmentDataActions.addConstructionSegments(newGpxSegments));
+            }
+        );
     };
     return (
         <div style={{ height: '95%', overflow: 'auto' }}>

@@ -48,6 +48,7 @@
     "msg.actions": "Aktionen",
     "msg.noFile": "Keine Datei hochgeladen",
     "msg.uploadFile": "Hier bitte die GPX Abschnitte hochladen",
+    "msg.uploadedFile": "Datei(en) wurden hinzugefügt, sie erscheinen, sobald Straßen und PLZ aufgelöst wurden",
     "msg.downloadFile": "Datei herunterladen",
     "msg.downloadFile.hint": "Datei \"{name}\" herunterladen",
     "msg.removeFile": "Datei entfernen",

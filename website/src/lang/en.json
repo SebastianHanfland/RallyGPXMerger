@@ -48,6 +48,7 @@
     "msg.actions": "Actions",
     "msg.noFile": "No file uploaded",
     "msg.uploadFile": "Please upload the GPX segments here",
+    "msg.uploadedFile": "File(s) are added, they appear once the streets and districts are resolved",
     "msg.downloadFile": "Download file",
     "msg.downloadFile.hint": "Download file \"{name}\"",
     "msg.removeFile": "Remove file",

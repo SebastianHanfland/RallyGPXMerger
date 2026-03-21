@@ -6,6 +6,7 @@ import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
 import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { successNotification } from '../store/toast.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -14,11 +15,14 @@ export function GpxSegmentsUploadAndParse() {
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
 
-    const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) =>
-            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
-                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
-            )
+    const handleChange = (newFiles: File | File[]) => {
+        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
+            (newGpxSegments) => {
+                successNotification(dispatch, '', intl.formatMessage({ id: 'msg.uploadedFile' }));
+                return dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
+                    dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+                );
+            }
         );
     };
     return (

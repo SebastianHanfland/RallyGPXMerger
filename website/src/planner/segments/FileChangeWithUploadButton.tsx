@@ -38,18 +38,20 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
         setShowModal(false);
     };
 
-    const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((replacementSegments) => {
-            dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments)).then(() =>
-                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
-            );
-            dispatch(
-                segmentDataActions.setReplaceProcess({
-                    targetSegment: replaceProcess!.targetSegment,
-                    replacementSegments: [...replaceProcess!.replacementSegments, ...replacementSegments],
-                })
-            );
-        });
+    const handleChange = (newFiles: File | File[]) => {
+        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
+            (replacementSegments) => {
+                dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments)).then(() =>
+                    dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+                );
+                dispatch(
+                    segmentDataActions.setReplaceProcess({
+                        targetSegment: replaceProcess!.targetSegment,
+                        replacementSegments: [...replaceProcess!.replacementSegments, ...replacementSegments],
+                    })
+                );
+            }
+        );
     };
 
     return (
@@ -96,7 +98,6 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
                                 </Table>
                             )}
                             <FileUploader
-                                style={{ width: '100px' }}
                                 handleChange={handleChange}
                                 name="file"
                                 types={['GPX']}

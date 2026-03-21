@@ -16,25 +16,27 @@ export function GpxSegmentsUploadAndParseAndSetToTrack({ track }: { track: Track
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
 
-    const handleChange = (newFiles: FileList) => {
-        Promise.all([...newFiles].map((file) => toParsedGpxSegment(file, averageSpeed))).then((newGpxSegments) => {
-            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
-                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
-            );
-            dispatch(
-                trackMergeActions.setSegments({
-                    id: track.id,
-                    segments: [
-                        ...track.segments,
-                        ...newGpxSegments.map((segment) => ({
-                            type: SEGMENT,
-                            segmentId: segment.id,
-                            id: segment.id,
-                        })),
-                    ],
-                })
-            );
-        });
+    const handleChange = (newFiles: File | File[]) => {
+        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
+            (newGpxSegments) => {
+                dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
+                    dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+                );
+                dispatch(
+                    trackMergeActions.setSegments({
+                        id: track.id,
+                        segments: [
+                            ...track.segments,
+                            ...newGpxSegments.map((segment) => ({
+                                type: SEGMENT,
+                                segmentId: segment.id,
+                                id: segment.id,
+                            })),
+                        ],
+                    })
+                );
+            }
+        );
     };
     return (
         <FileUploader
