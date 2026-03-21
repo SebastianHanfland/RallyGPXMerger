@@ -8,6 +8,7 @@ import { Link, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
 import { TrackStreetTableNodeRow } from './TrackStreetTableNodeRow.tsx';
 import { TrackStreetTableBreakRow } from './TrackStreetTableBreakRow.tsx';
+import { TrackStreetTableEntryPointRow } from './TrackStreetTableEntryPointRow.tsx';
 
 interface Props {
     wayPoints: WayPoint[];
@@ -49,11 +50,21 @@ export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
                             />
                         );
                     }
+                    if (wayPoint.type === TrackWayPointType.Entry) {
+                        return (
+                            <TrackStreetTableEntryPointRow
+                                intl={intl}
+                                colWidths={colWidths}
+                                wayPoint={wayPoint}
+                                key={index}
+                            />
+                        );
+                    }
 
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
-                                <Text style={pdfStyles.bold}>
+                                <Text>
                                     <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
                                         {wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
                                     </Link>
