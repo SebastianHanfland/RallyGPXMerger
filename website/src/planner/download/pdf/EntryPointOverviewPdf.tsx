@@ -1,7 +1,8 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { getLink } from '../../../utils/linkUtil.ts';
 
 const styles = StyleSheet.create({
     table: {
@@ -54,7 +55,9 @@ export const EntryPointOverviewPdf = ({ trackStreets, intl }: Props) => {
                 </View>
                 <View key={-1} style={styles.row} wrap={false}>
                     <Text style={styles.col1}>
-                        <Text style={styles.bold}>{startingLabel}</Text>
+                        <Link src={getLink({ pointTo: startingPoint.pointFrom, pointFrom: startingPoint.pointFrom })}>
+                            <Text style={styles.bold}>{startingLabel}</Text>
+                        </Link>
                     </Text>
                     <Text style={styles.col2}>{publishedStart}</Text>
                     <Text style={styles.col3}>{formatTimeOnly(startingPoint.frontArrival)}</Text>
@@ -64,7 +67,9 @@ export const EntryPointOverviewPdf = ({ trackStreets, intl }: Props) => {
                         <View key={index} style={styles.row} wrap={false}>
                             <Text style={styles.col1}>
                                 <Text style={styles.bold}>
-                                    {entryPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <Link src={getLink(entryPoint)} style={{ color: 'blue' }}>
+                                        {entryPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    </Link>
                                 </Text>
                             </Text>
                             <Text style={styles.col2}>{formatTimeOnly(entryPoint.frontArrival)}</Text>
