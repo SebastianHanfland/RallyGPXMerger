@@ -20,6 +20,7 @@ export const EntryPointOverviewPdf = ({ trackStreets, intl }: Props) => {
 
     return (
         <View>
+            <Text style={pdfStyles.sectionTitle}>{intl.formatMessage({ id: 'msg.entryPoints' })}</Text>
             <View style={pdfStyles.table}>
                 <View style={[pdfStyles.row, pdfStyles.bold, pdfStyles.header]}>
                     <Text style={pdfStyles.col1}>{intl.formatMessage({ id: 'msg.location' })} </Text>

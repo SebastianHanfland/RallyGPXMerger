@@ -18,7 +18,7 @@ export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) =>
     <Document>
         <Page size="A4" style={pdfStyles.page} orientation={'landscape'}>
             <View style={pdfStyles.section}>
-                <Text>{trackStreets.name.replaceAll('.gpx', '')}</Text>
+                <Text style={pdfStyles.documentTitle}>{trackStreets.name.replaceAll('.gpx', '')}</Text>
                 {planningLabel && <Text>{planningLabel}</Text>}
                 <InfoTablePdf trackStreets={trackStreets} intl={intl} />
                 <EntryPointOverviewPdf trackStreets={trackStreets} intl={intl} />

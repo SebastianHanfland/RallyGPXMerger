@@ -16,16 +16,18 @@ export const InfoTablePdf = ({ trackStreets, intl }: Props) => {
         .map((row) => row.split(';'));
 
     return (
-        <View style={pdfStyles.table}>
-            <Text style={pdfStyles.bold}>{intl.formatMessage({ id: 'msg.trackInfo' })}</Text>
-            {trackInfo.map((row, i) => (
-                <View key={i} style={pdfStyles.row} wrap={false}>
-                    <Text style={pdfStyles.col1}>
-                        <Text style={pdfStyles.bold}>{row[0]}</Text>
-                    </Text>
-                    <Text style={pdfStyles.col2}>{row[1]}</Text>
-                </View>
-            ))}
+        <View>
+            <Text style={pdfStyles.sectionTitle}>{intl.formatMessage({ id: 'msg.trackInfo' })}</Text>
+            <View style={pdfStyles.table}>
+                {trackInfo.map((row, i) => (
+                    <View key={i} style={pdfStyles.row} wrap={false}>
+                        <Text style={pdfStyles.col1}>
+                            <Text style={pdfStyles.bold}>{row[0]}</Text>
+                        </Text>
+                        <Text style={pdfStyles.col2}>{row[1]}</Text>
+                    </View>
+                ))}
+            </View>
         </View>
     );
 };
