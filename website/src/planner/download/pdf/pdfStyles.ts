@@ -17,6 +17,12 @@ export const pdfStyles = StyleSheet.create({
         margin: 10,
         padding: 10,
     },
+    streetTable: {
+        width: '95%',
+        margin: 10,
+        padding: 10,
+        fontSize: 9,
+    },
     row: {
         display: 'flex',
         flexDirection: 'row',
