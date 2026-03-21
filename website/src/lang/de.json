@@ -141,7 +141,7 @@
     "msg.onlyUnknown": "Nur \"Unbekannte\" anzeigen",
     "msg.unknown": "Unbekannt",
     "msg.numberOfUnknown": "Es gibt {amount} unbekannte Elemente",
-    "msg.blockedStreets": "Blockierte Straßen",
+    "msg.blockedStreets": "Blockierte Strassen",
     "msg.postCode": "PLZ",
     "msg.district": "Bezirk",
     "msg.street": "Straße",

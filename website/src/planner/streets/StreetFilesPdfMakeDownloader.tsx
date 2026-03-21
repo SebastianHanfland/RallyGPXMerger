@@ -29,7 +29,7 @@ export function downloadPdfFilesPure(
         )(track).getBlob((blob) => zip.file(`${track.name}-${track.distanceInKm.toFixed(2)}km.pdf`, blob));
     });
     createBlockedStreetsPdf(blockedStreetInfos, planningLabel, intl).getBlob((blob) =>
-        zip.file(`${intl.formatMessage({ id: 'msg.blockedStreets' }).replace('ß', 'ss')}.pdf`, blob)
+        zip.file(`${intl.formatMessage({ id: 'msg.blockedStreets' })}.pdf`, blob)
     );
     setTimeout(() => {
         zip.generateAsync({ type: 'blob' }).then(function (content) {

@@ -1,45 +1,36 @@
-import { BlobProvider, Page, View, Text, Document, StyleSheet } from '@react-pdf/renderer';
+import { BlobProvider } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import ReactDOM from 'react-dom';
 import Button from 'react-bootstrap/Button';
+import { TrackStreetsPdf } from './TrackStreetsPdf.tsx';
+import { IntlShape, useIntl } from 'react-intl';
+import { BlockedStreetInfo, TrackStreetInfo } from '../../logic/resolving/types.ts';
+import { BlockedStreetsPdf } from './BlockedStreetsPdf.tsx';
+import { useSelector } from 'react-redux';
+import { getTrackStreetInfos } from '../../calculation/getTrackStreetInfos.ts';
+import { getPlanningLabel } from '../../store/settings.reducer.ts';
+import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
+import { createRoot } from 'react-dom/client';
 
-// Create styles
-const styles = StyleSheet.create({
-    page: {
-        flexDirection: 'row',
-        backgroundColor: '#E4E4E4',
-    },
-    section: {
-        margin: 10,
-        padding: 10,
-        flexGrow: 1,
-    },
-});
-
-// Create Document Component
-const StatementPdf = () => (
-    <Document>
-        <Page size="A4" style={styles.page}>
-            <View style={styles.section}>
-                <Text>Section #1</Text>
-            </View>
-            <View style={styles.section}>
-                <Text>Section #2</Text>
-            </View>
-        </Page>
-    </Document>
-);
-
-const generatePdf = async () => {
-    const pdfBlobs = await Promise.all([1, 2, 3].map(() => generatePdfUrl()));
-    await createAndDownloadZip(pdfBlobs);
+const generatePdf = async (
+    trackStreetInfos: TrackStreetInfo[],
+    blockedStreetInfos: BlockedStreetInfo[],
+    intl: IntlShape,
+    planningLabel?: string
+) => {
+    const pdfBlobs = await Promise.all(
+        trackStreetInfos.map((info) => generateTrackStreetPdfUrl(info, intl, planningLabel))
+    );
+    const blockedStreets = await generateBlockedStreetsPdfUrl(blockedStreetInfos, intl, planningLabel);
+    await createAndDownloadZip([...pdfBlobs, blockedStreets]);
 };
 
-const generatePdfUrl = () => {
+const generateTrackStreetPdfUrl = (trackStreetInfo: TrackStreetInfo, intl: IntlShape, planningLabel?: string) => {
     return new Promise<Blob>((resolve, reject) => {
-        ReactDOM.render(
-            <BlobProvider document={<StatementPdf />}>
+        createRoot(document.createElement('div')).render(
+            <BlobProvider
+                document={<TrackStreetsPdf trackStreets={trackStreetInfo} intl={intl} planningLabel={planningLabel} />}
+            >
                 {({ blob, loading, error }) => {
                     if (!loading && blob) {
                         resolve(blob);
@@ -48,8 +39,32 @@ const generatePdfUrl = () => {
                     }
                     return null;
                 }}
-            </BlobProvider>,
-            document.createElement('div')
+            </BlobProvider>
+        );
+    });
+};
+
+const generateBlockedStreetsPdfUrl = (
+    blockedStreetInfos: BlockedStreetInfo[],
+    intl: IntlShape,
+    planningLabel?: string
+) => {
+    return new Promise<Blob>((resolve, reject) => {
+        createRoot(document.createElement('div')).render(
+            <BlobProvider
+                document={
+                    <BlockedStreetsPdf blockedStreets={blockedStreetInfos} intl={intl} planningLabel={planningLabel} />
+                }
+            >
+                {({ blob, loading, error }) => {
+                    if (!loading && blob) {
+                        resolve(blob);
+                    } else if (error) {
+                        reject(error);
+                    }
+                    return null;
+                }}
+            </BlobProvider>
         );
     });
 };
@@ -64,5 +79,9 @@ async function createAndDownloadZip(pdfBlobs: Blob[]) {
 }
 
 export const DButton = () => {
-    return <Button onClick={generatePdf}>DZ</Button>;
+    const trackStreetInfos = useSelector(getTrackStreetInfos);
+    const planningLabel = useSelector(getPlanningLabel);
+    const blockedStreetInfos = useSelector(getBlockedStreetInfo);
+    const intl = useIntl();
+    return <Button onClick={() => generatePdf(trackStreetInfos, blockedStreetInfos, intl, planningLabel)}>DZ</Button>;
 };
