@@ -9,12 +9,13 @@ import { createNodeOverviewTable } from './nodeOverviewTablePdf.ts';
 import { createStreetTable } from './trackStreetTablePdf.ts';
 import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles as stylesOld } from './pdfUtil.ts';
+import { ReportTable } from './ReportingTable.tsx';
 
 // Create styles
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
-        backgroundColor: '#E4E4E4',
+        backgroundColor: '#ffffff',
     },
     section: {
         margin: 10,
@@ -43,12 +44,28 @@ interface Props {
     trackStreets: TrackStreetInfo;
 }
 
-export const TrackStreetsPdf = ({ trackStreets, planningLabel }: Props) => (
+export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
                 <Text>{trackStreets.name.replaceAll('.gpx', '')}</Text>
                 {planningLabel && <Text>{planningLabel}</Text>}
+            </View>
+            <View style={styles.section}>
+                <Text>{intl.formatMessage({ id: 'msg.trackInfo' })}</Text>
+                <ReportTable
+                    data={[
+                        {
+                            days: 5,
+                            endDate: 'kfhf',
+                            firstName: 'Hans',
+                            lastName: 'Zimmer',
+                            startDate: 'fhfjf',
+                            info: 'Infos',
+                        },
+                    ]}
+                    maximumDays={5}
+                />
             </View>
         </Page>
     </Document>
@@ -64,6 +81,7 @@ export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) =>
             planningLabel ? `${planningLabel}` : ' ',
             ' ',
             { text: intl.formatMessage({ id: 'msg.trackInfo' }), style: 'titleStyle' },
+            // DONE
             ' ',
             createInfoTable(trackStreets, intl),
             ' ',

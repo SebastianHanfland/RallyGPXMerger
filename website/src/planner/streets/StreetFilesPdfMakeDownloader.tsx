@@ -14,14 +14,6 @@ import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { getPlanningLabel, getPlanningTitle } from '../store/settings.reducer.ts';
 import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
 
-export const downloadSinglePdfFiles = (intl: IntlShape, id: string) => (_: Dispatch, getState: () => State) => {
-    const trackStreetInfos = getTrackStreetInfos(getState());
-    const planningLabel = getPlanningLabel(getState());
-    trackStreetInfos
-        .filter((info) => id.includes(info.id))
-        .forEach((track) => createTrackStreetPdf(intl, planningLabel)(track).download(`${track.name}.pdf`));
-};
-
 export function downloadPdfFilesPure(
     intl: IntlShape,
     planningLabel: string,
