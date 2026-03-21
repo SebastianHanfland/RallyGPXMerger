@@ -20,7 +20,7 @@ export function ArrivalDateTimePicker({ noHeader }: { noHeader?: boolean }) {
                 className={'form-control'}
                 dateFormat={'dd.MM.yyyy HH:mm'}
                 placeholderText={intl.formatMessage({ id: 'msg.arrivalDate.title' })}
-                onChange={(date) => {
+                onChange={(date: Date | undefined | null) => {
                     dispatch(settingsActions.setArrivalDateTime(date?.toISOString() ?? undefined));
                 }}
                 selected={arrivalDateTime ? new Date(arrivalDateTime) : null}
