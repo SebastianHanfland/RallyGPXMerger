@@ -157,7 +157,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         if (this.tracks.length) {
             if (this.mergeTracks) {
                 // ensure the output file contains only a single track
-                const first = this.tracks.at(0);
+                const first = this.tracks[0];
                 builder.setTracks([
                     new gpxBuilder.Track([tracks2seg(this.tracks)], {
                         name: first?.name,
