@@ -10,7 +10,6 @@ export const GapFinderParameters = () => {
     const dispatch = useDispatch();
     return (
         <div>
-            {' '}
             <Form>
                 <Form.Label>
                     <FormattedMessage id={'msg.gapTolerance.hint'} />
