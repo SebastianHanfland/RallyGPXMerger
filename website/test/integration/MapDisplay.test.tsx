@@ -23,7 +23,7 @@ vi.mock('leaflet.locatecontrol', () => ({
         locate: () => {},
     }),
 }));
-vi.mock('@react-pdf/renderer', () => ({ usePDF: () => [{}], StyleSheet: { create: () => {} } }));
+vi.mock('@react-pdf/renderer', () => ({ StyleSheet: { create: () => {} } }));
 
 const messages = getMessages('en');
 

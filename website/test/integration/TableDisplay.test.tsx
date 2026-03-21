@@ -14,7 +14,7 @@ vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/versions/cache/readableTracks');
-vi.mock('@react-pdf/renderer', () => ({ usePDF: () => [{}], StyleSheet: { create: () => {} } }));
+vi.mock('@react-pdf/renderer', () => ({ StyleSheet: { create: () => {} } }));
 
 const ui = {
     isLoading: () => screen.getByText('Loading'),

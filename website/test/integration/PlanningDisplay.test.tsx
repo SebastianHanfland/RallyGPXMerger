@@ -22,7 +22,7 @@ vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate',
 vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
-vi.mock('@react-pdf/renderer', () => ({ usePDF: () => [{}], StyleSheet: { create: () => {} } }));
+vi.mock('@react-pdf/renderer', () => ({ StyleSheet: { create: () => {} } }));
 
 const timeout = { timeout: 2000 };
 describe('Planner integration test', () => {
