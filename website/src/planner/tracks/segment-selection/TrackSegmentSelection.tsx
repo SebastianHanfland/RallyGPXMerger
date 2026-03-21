@@ -74,6 +74,7 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
                     </Button>
                 </div>
             </div>
+            <div style={{ height: '200px' }}></div>
         </div>
     );
 }
