@@ -6,17 +6,11 @@ import { getTrackTableHeaders } from '../getHeader.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
 import { Link, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
+import { TrackStreetTableNodeRow } from './TrackStreetTableNodeRow.tsx';
 
-function getAdditionalInfo(
-    type: TrackWayPointType | undefined,
-    nodeTracks: string[] | undefined,
-    breakLength: number | undefined
-) {
+function getAdditionalInfo(type: TrackWayPointType | undefined, breakLength: number | undefined) {
     if (type === TrackWayPointType.Break) {
         return `: Pause${breakLength ? ` (${breakLength}) min` : ''}`;
-    }
-    if (type === TrackWayPointType.Node) {
-        return `: Knoten${nodeTracks ? ` (${nodeTracks.join(', ')})` : ''}`;
     }
     return '';
 }
@@ -42,27 +36,13 @@ export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
                 </View>
                 {...wayPoints.map((wayPoint, index) => {
                     if (wayPoint.type === TrackWayPointType.Node) {
-                        let width = 0;
-                        colWidths.slice(0, 7).forEach((colWidth) => {
-                            width += Number(colWidth.width.replace('%', ''));
-                        });
                         return (
-                            <View key={index} style={pdfStyles.row} wrap={false}>
-                                <Text style={{ width: `${width}%` }}>
-                                    <Text style={pdfStyles.bold}>
-                                        <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
-                                            {`${
-                                                wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
-                                            }: Knoten${
-                                                wayPoint.nodeTracks ? ` (${wayPoint.nodeTracks.join(', ')})` : ''
-                                            }`}
-                                        </Link>
-                                    </Text>
-                                </Text>
-                                <Text style={colWidths[7]}>{formatTimeOnly(wayPoint.frontArrival)}</Text>
-                                <Text style={colWidths[8]}>{formatTimeOnly(wayPoint.frontPassage)}</Text>
-                                <Text style={colWidths[9]}>{formatTimeOnly(wayPoint.backPassage)}</Text>
-                            </View>
+                            <TrackStreetTableNodeRow
+                                intl={intl}
+                                colWidths={colWidths}
+                                wayPoint={wayPoint}
+                                key={index}
+                            />
                         );
                     }
 
@@ -73,11 +53,7 @@ export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
                                     <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
                                         {`${
                                             wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
-                                        }${getAdditionalInfo(
-                                            wayPoint.type,
-                                            wayPoint.nodeTracks,
-                                            wayPoint.breakLength
-                                        )}`}
+                                        }${getAdditionalInfo(wayPoint.type, wayPoint.breakLength)}`}
                                     </Link>
                                 </Text>
                             </Text>
