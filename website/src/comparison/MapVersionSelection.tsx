@@ -87,6 +87,9 @@ export function MapVersionSelection() {
                                 )}
                                 // @ts-ignore
                                 options={optionsMap[planningId] ?? []}
+                                filterOption={(option, filter) =>
+                                    option.label.toLowerCase().includes(filter.toLowerCase())
+                                }
                                 className="basic-multi-select"
                                 isClearable={true}
                                 classNamePrefix="select"

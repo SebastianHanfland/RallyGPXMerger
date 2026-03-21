@@ -42,6 +42,7 @@ export function ReplacementSegmentSelect() {
                 }
                 return !replaceProcess?.replacementSegments.map((segment) => segment.id).includes(option.value);
             })}
+            filterOption={(option, filter) => option.label.toLowerCase().includes(filter.toLowerCase())}
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={addSegmentToReplacement}
