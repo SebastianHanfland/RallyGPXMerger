@@ -12,6 +12,7 @@ import { styles as stylesOld } from './pdfUtil.ts';
 import { InfoTablePdf } from './InfoTablePdf.tsx';
 import { EntryPointOverviewPdf } from './EntryPointOverviewPdf.tsx';
 import { BreakOverviewPdf } from './BreakOverviewPdf.tsx';
+import { NodeOverviewTablePdf } from './NodeOverviewTablePdf.tsx';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -61,6 +62,9 @@ export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) =>
                 {/*</View>*/}
                 {/*<View style={styles.section}>*/}
                 <BreakOverviewPdf trackStreets={trackStreets} intl={intl} />
+                {/*</View>*/}
+                {/*<View style={styles.section}>*/}
+                <NodeOverviewTablePdf trackStreets={trackStreets} intl={intl} />
             </View>
         </Page>
     </Document>
