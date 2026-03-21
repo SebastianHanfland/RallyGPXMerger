@@ -18,11 +18,6 @@ import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer
 import { isDefined } from '../../../../utils/typeUtil.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton.tsx';
-import { Bla, MyDocument } from '../../../download/pdf/PdfDocument.tsx';
-import Button from 'react-bootstrap/Button';
-import { PDFDownloadLink, renderToBuffer } from '@react-pdf/renderer';
-import FileSaver from 'file-saver';
-import { DButton } from '../../../download/pdf/PdfDocumentInZip.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -66,19 +61,6 @@ export const PlannerSidebarTracks = () => {
                         onChange={(value) => setFilterTerm(value.target.value)}
                     />
                     <TrackOverviewButton />
-                    <Button
-                        onClick={() => {
-                            renderToBuffer(<MyDocument />).then((buffer) => {
-                                const blob = new Blob([buffer.toString()], { type: 'pdf' });
-                                FileSaver.saveAs(blob, 'test.pdf');
-                            });
-                        }}
-                    >
-                        Save
-                    </Button>
-                    <PDFDownloadLink document={<MyDocument />}>Here</PDFDownloadLink>
-                    <Bla />
-                    <DButton />
                 </div>
             )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>
