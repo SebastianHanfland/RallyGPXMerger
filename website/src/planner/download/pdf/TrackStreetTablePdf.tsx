@@ -1,10 +1,10 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import { ContentTable } from 'pdfmake/interfaces';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
 import { getTrackTableHeaders } from '../getHeader.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
+import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 function getAdditionalInfo(
     type: TrackWayPointType | undefined,
@@ -20,40 +20,94 @@ function getAdditionalInfo(
     return '';
 }
 
-export function createStreetTable(trackStreets: TrackStreetInfo, intl: IntlShape): ContentTable {
-    const tableHeader = getTrackTableHeaders(intl).map((text) => ({
-        text,
-        style: 'headerStyle',
-    }));
+const styles = StyleSheet.create({
+    table: {
+        width: '100%',
+    },
+    row: {
+        display: 'flex',
+        flexDirection: 'row',
+        borderTop: '1px solid #EEE',
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    header: {
+        borderTop: 'none',
+    },
+    bold: {
+        fontWeight: 'bold',
+    },
+    col1: {
+        width: '33%',
+    },
+    col2: {
+        width: '33%',
+    },
+    col3: {
+        width: '34%',
+    },
+});
 
-    const wayPointRows = trackStreets.wayPoints.map((waypoint) => [
-        {
-            text: `${waypoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}${getAdditionalInfo(
-                waypoint.type,
-                waypoint.nodeTracks,
-                waypoint.breakLength
-            )}`,
-            style: waypoint.type === TrackWayPointType.Track ? 'linkStyle' : 'boldLinkStyle',
-            link: getLink(waypoint),
-        },
-        `${waypoint.postCode ?? ''}`,
-        `${waypoint.district?.replace('Wahlkreis', '') ?? ''}`,
-        `${waypoint.distanceInKm ? formatNumber(waypoint.distanceInKm ?? 0, 2) : ''}`,
-        `${waypoint.speed ? formatNumber(waypoint.speed ?? 0, 1) : ''}`,
-        `${formatNumber(getTimeDifferenceInSeconds(waypoint.frontPassage, waypoint.frontArrival) / 60, 1)}`,
-        `${formatNumber(getTimeDifferenceInSeconds(waypoint.backPassage, waypoint.frontArrival) / 60, 1)}`,
-        `${formatTimeOnly(waypoint.frontArrival)}`,
-        `${formatTimeOnly(waypoint.frontPassage)}`,
-        `${formatTimeOnly(waypoint.backPassage)}`,
-    ]);
-    return {
-        layout: 'lightHorizontalLines', // optional
-        table: {
-            // headers are automatically repeated if the table spans over multiple pages
-            // you can declare how many rows should be treated as headers
-            headerRows: 1,
-            widths: tableHeader.map(() => 'auto'),
-            body: [tableHeader, ...wayPointRows],
-        },
-    };
+interface Props {
+    trackStreets: TrackStreetInfo;
+    intl: IntlShape;
 }
+
+export const TrackStreetTablePdf = ({ trackStreets, intl }: Props) => {
+    const tableHeader = getTrackTableHeaders(intl);
+
+    return (
+        <View>
+            <Text style={styles.bold}>{intl.formatMessage({ id: 'msg.streetOverview' })}</Text>
+            <View style={styles.table}>
+                <View style={[styles.row, styles.bold, styles.header]}>
+                    {tableHeader.map((text) => (
+                        <Text style={styles.col1}>{text} </Text>
+                    ))}
+                </View>
+                {...trackStreets.wayPoints.map((wayPoint, index) => {
+                    return (
+                        <View key={index} style={styles.row} wrap={false}>
+                            <Text style={styles.col1}>
+                                <Text style={styles.bold}>
+                                    <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
+                                        {`${
+                                            wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
+                                        }${getAdditionalInfo(
+                                            wayPoint.type,
+                                            wayPoint.nodeTracks,
+                                            wayPoint.breakLength
+                                        )}`}
+                                    </Link>
+                                </Text>
+                            </Text>
+                            <Text style={styles.col2}>{wayPoint.postCode ?? ''}</Text>
+                            <Text style={styles.col2}>{wayPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
+                            <Text style={styles.col2}>
+                                {wayPoint.distanceInKm ? formatNumber(wayPoint.distanceInKm ?? 0, 2) : ''}
+                            </Text>
+                            <Text style={styles.col2}>
+                                {wayPoint.speed ? formatNumber(wayPoint.speed ?? 0, 1) : ''}
+                            </Text>
+                            <Text style={styles.col2}>
+                                {formatNumber(
+                                    getTimeDifferenceInSeconds(wayPoint.frontPassage, wayPoint.frontArrival) / 60,
+                                    1
+                                )}
+                            </Text>
+                            <Text style={styles.col2}>
+                                {formatNumber(
+                                    getTimeDifferenceInSeconds(wayPoint.backPassage, wayPoint.frontArrival) / 60,
+                                    1
+                                )}
+                            </Text>
+                            <Text style={styles.col2}>{formatTimeOnly(wayPoint.frontArrival)}</Text>
+                            <Text style={styles.col2}>{formatTimeOnly(wayPoint.frontPassage)}</Text>
+                            <Text style={styles.col2}>{formatTimeOnly(wayPoint.backPassage)}</Text>
+                        </View>
+                    );
+                })}
+            </View>
+        </View>
+    );
+};

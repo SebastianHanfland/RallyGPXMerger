@@ -13,12 +13,14 @@ import { InfoTablePdf } from './InfoTablePdf.tsx';
 import { EntryPointOverviewPdf } from './EntryPointOverviewPdf.tsx';
 import { BreakOverviewPdf } from './BreakOverviewPdf.tsx';
 import { NodeOverviewTablePdf } from './NodeOverviewTablePdf.tsx';
+import { TrackStreetTablePdf } from './TrackStreetTablePdf.tsx';
 
 // Create styles
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
         backgroundColor: '#ffffff',
+        fontSize: 11,
     },
     section: {
         margin: 10,
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
 // Create Document Component
 export const MyDocument = () => (
     <Document>
-        <Page size="A4" style={styles.page}>
+        <Page size="A4" style={styles.page} orientation={'landscape'}>
             <View style={styles.section}>
                 <Text>Section #1</Text>
             </View>
@@ -49,22 +51,23 @@ interface Props {
 
 export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) => (
     <Document>
-        <Page size="A4" style={styles.page}>
+        <Page size="A4" style={styles.page} orientation={'landscape'}>
             <View style={styles.section}>
                 <Text>{trackStreets.name.replaceAll('.gpx', '')}</Text>
                 {planningLabel && <Text>{planningLabel}</Text>}
-                {/*</View>*/}
-                {/*<View style={styles.section}>*/}
                 <InfoTablePdf trackStreets={trackStreets} intl={intl} />
-                {/*</View>*/}
-                {/*<View style={styles.section}>*/}
                 <EntryPointOverviewPdf trackStreets={trackStreets} intl={intl} />
-                {/*</View>*/}
-                {/*<View style={styles.section}>*/}
+            </View>
+        </Page>
+        <Page size="A4" style={styles.page} orientation={'landscape'}>
+            <View style={styles.section}>
                 <BreakOverviewPdf trackStreets={trackStreets} intl={intl} />
-                {/*</View>*/}
-                {/*<View style={styles.section}>*/}
                 <NodeOverviewTablePdf trackStreets={trackStreets} intl={intl} />
+            </View>
+        </Page>
+        <Page size="A4" style={styles.page} orientation={'landscape'}>
+            <View style={styles.section}>
+                <TrackStreetTablePdf trackStreets={trackStreets} intl={intl} />
             </View>
         </Page>
     </Document>
