@@ -12,7 +12,7 @@ import { getPlanningLabel, getPlanningTitle } from '../../store/settings.reducer
 import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { createRoot } from 'react-dom/client';
 
-const generatePdfsInZip = async (
+export const generatePdfsInZip = async (
     trackStreetInfos: TrackStreetInfo[],
     blockedStreetInfos: BlockedStreetInfo[],
     intl: IntlShape,
@@ -22,7 +22,9 @@ const generatePdfsInZip = async (
     const zip = new JSZip();
     await Promise.all(
         trackStreetInfos.map((info) => {
-            generateTrackStreetPdfUrl(info, intl, planningLabel).then((blob) => zip.file(`${info.name}.pdf`, blob));
+            generateTrackStreetPdfUrl(info, intl, planningLabel).then((blob) =>
+                zip.file(`${info.name}-${info.distanceInKm.toFixed(2)}km.pdf`, blob)
+            );
         })
     );
     await generateBlockedStreetsPdfUrl(blockedStreetInfos, intl, planningLabel).then((blob) =>
@@ -82,17 +84,21 @@ const generateBlockedStreetsPdfUrl = (
     });
 };
 
-export const DButton = () => {
+export const PdfDocumentInZipButton = () => {
     const trackStreetInfos = useSelector(getTrackStreetInfos);
     const planningLabel = useSelector(getPlanningLabel);
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const planningTitle = useSelector(getPlanningTitle);
     const intl = useIntl();
+
     return (
         <Button
             onClick={() => generatePdfsInZip(trackStreetInfos, blockedStreetInfos, intl, planningTitle, planningLabel)}
+            variant={'info'}
+            disabled={trackStreetInfos.length === 0}
+            title={intl.formatMessage({ id: 'msg.downloadPdf' })}
         >
-            DZ
+            PDFs
         </Button>
     );
 };

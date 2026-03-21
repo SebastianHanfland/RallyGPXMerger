@@ -2,10 +2,9 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { batch, useDispatch, useSelector } from 'react-redux';
-import { getShowSingleTrackInfo, getShowTrackInfo, displayMapActions } from '../store/displayMapReducer.ts';
+import { displayMapActions, getShowSingleTrackInfo, getShowTrackInfo } from '../store/displayMapReducer.ts';
 import { TrackInformationModalBody } from './TrackInformationModalBody.tsx';
 import { ZipFilesDownloader } from './TracksDownload.tsx';
-import { downloadPdfFilesPure } from '../../planner/streets/StreetFilesPdfMakeDownloader.tsx';
 import L from 'leaflet';
 import {
     getDisplayBlockedStreets,
@@ -13,6 +12,7 @@ import {
     getDisplayTitle,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
+import { generatePdfsInZip } from '../../planner/download/pdf/PdfDocumentInZip.tsx';
 
 export function TrackInformationModal() {
     const intl = useIntl();
@@ -56,12 +56,12 @@ export function TrackInformationModal() {
                         <Button
                             variant="success"
                             onClick={() =>
-                                downloadPdfFilesPure(
-                                    intl,
-                                    planningLabel,
-                                    planningTitle,
+                                generatePdfsInZip(
                                     trackStreetInfos,
-                                    blockedStreetInfos
+                                    blockedStreetInfos,
+                                    intl,
+                                    planningTitle,
+                                    planningLabel
                                 )
                             }
                         >
