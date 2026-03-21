@@ -42,7 +42,9 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
             <View style={pdfStyles.table}>
                 <View style={[pdfStyles.row, pdfStyles.bold, pdfStyles.header]}>
                     {tableHeader.map((text, index) => (
-                        <Text style={colWidths[index]}>{text} </Text>
+                        <Text style={colWidths[index]} key={index}>
+                            {text}{' '}
+                        </Text>
                     ))}
                 </View>
                 {...blockedStreets.map((streetPoint, index) => {

@@ -46,7 +46,8 @@ export function useLoadPlanningFromServer() {
                         intl.formatMessage({ id: 'msg.dataLoad.success.message' })
                     );
                 })
-                .catch(() => {
+                .catch((e) => {
+                    console.error(e);
                     errorNotification(
                         dispatch,
                         intl.formatMessage({ id: 'msg.dataLoad.error.title' }),
