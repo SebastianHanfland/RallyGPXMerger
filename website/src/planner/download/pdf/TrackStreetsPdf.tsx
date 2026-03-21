@@ -10,6 +10,7 @@ import { createStreetTable } from './trackStreetTablePdf.ts';
 import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles as stylesOld } from './pdfUtil.ts';
 import { InfoTablePdf } from './InfoTablePdf.tsx';
+import { EntryPointOverviewPdf } from './EntryPointOverviewPdf.tsx';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -50,9 +51,12 @@ export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) =>
             <View style={styles.section}>
                 <Text>{trackStreets.name.replaceAll('.gpx', '')}</Text>
                 {planningLabel && <Text>{planningLabel}</Text>}
-            </View>
-            <View style={styles.section}>
+                {/*</View>*/}
+                {/*<View style={styles.section}>*/}
                 <InfoTablePdf trackStreets={trackStreets} intl={intl} />
+                {/*</View>*/}
+                {/*<View style={styles.section}>*/}
+                <EntryPointOverviewPdf trackStreets={trackStreets} intl={intl} />
             </View>
         </Page>
     </Document>
