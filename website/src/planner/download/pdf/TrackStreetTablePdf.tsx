@@ -26,7 +26,7 @@ interface Props {
     intl: IntlShape;
 }
 
-const colWidths = ['22%', '8%', '8%', '8%', '8%', '8%', '8%', '10%', '10%', '10%'].map((width) => ({ width }));
+const colWidths = ['22%', '7%', '12%', '8%', '7%', '7%', '7%', '10%', '10%', '10%'].map((width) => ({ width }));
 
 export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
     const tableHeader = getTrackTableHeaders(intl);
@@ -41,6 +41,31 @@ export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
                     ))}
                 </View>
                 {...wayPoints.map((wayPoint, index) => {
+                    if (wayPoint.type === TrackWayPointType.Node) {
+                        let width = 0;
+                        colWidths.slice(0, 7).forEach((colWidth) => {
+                            width += Number(colWidth.width.replace('%', ''));
+                        });
+                        return (
+                            <View key={index} style={pdfStyles.row} wrap={false}>
+                                <Text style={{ width: `${width}%` }}>
+                                    <Text style={pdfStyles.bold}>
+                                        <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
+                                            {`${
+                                                wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
+                                            }: Knoten${
+                                                wayPoint.nodeTracks ? ` (${wayPoint.nodeTracks.join(', ')})` : ''
+                                            }`}
+                                        </Link>
+                                    </Text>
+                                </Text>
+                                <Text style={colWidths[7]}>{formatTimeOnly(wayPoint.frontArrival)}</Text>
+                                <Text style={colWidths[8]}>{formatTimeOnly(wayPoint.frontPassage)}</Text>
+                                <Text style={colWidths[9]}>{formatTimeOnly(wayPoint.backPassage)}</Text>
+                            </View>
+                        );
+                    }
+
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
