@@ -1,11 +1,10 @@
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
-import { BlockedStreetsPdf } from './BlockedStreetsPdf.tsx';
 import { useSelector } from 'react-redux';
 import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getPlanningLabel } from '../../store/settings.reducer.ts';
+import { downloadBlockedStreetPdf } from './pdfDownload.tsx';
 
 export const BlockedStreetsPdfDownloadButton = () => {
     const intl = useIntl();
@@ -13,19 +12,13 @@ export const BlockedStreetsPdfDownloadButton = () => {
     const planningLabel = useSelector(getPlanningLabel);
 
     const blockedStreets = intl.formatMessage({ id: 'msg.blockedStreets' });
+
+    const downloadPdf = () => downloadBlockedStreetPdf(blockedStreetInfos, intl, planningLabel);
+
     return (
-        <Button className={'p-0'} style={{ height: '35px' }} variant={'info'}>
-            <PDFDownloadLink
-                style={{ color: 'black', textDecoration: 'none', fontWeight: 400 }}
-                className={'m-0 p-1'}
-                document={
-                    <BlockedStreetsPdf blockedStreets={blockedStreetInfos} intl={intl} planningLabel={planningLabel} />
-                }
-                fileName={`${blockedStreets}.pdf`}
-            >
-                <DownloadIcon black={true} />
-                {blockedStreets}
-            </PDFDownloadLink>
+        <Button className={'p-0'} style={{ height: '35px' }} variant={'info'} onClick={downloadPdf}>
+            <DownloadIcon black={true} />
+            {blockedStreets}
         </Button>
     );
 };

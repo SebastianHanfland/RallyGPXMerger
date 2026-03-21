@@ -7,9 +7,23 @@ import { BlockedStreetInfo, TrackStreetInfo } from '../../logic/resolving/types.
 import { BlockedStreetsPdf } from './BlockedStreetsPdf.tsx';
 import { createRoot } from 'react-dom/client';
 
-export const downloadSinglePdf = async (trackStreetInfo: TrackStreetInfo, intl: IntlShape, planningLabel?: string) => {
+export const downloadSingleTrackStreetInfoPdf = async (
+    trackStreetInfo: TrackStreetInfo,
+    intl: IntlShape,
+    planningLabel?: string
+) => {
     generateTrackStreetPdfUrl(trackStreetInfo, intl, planningLabel).then((blob) => {
         saveAs(blob, `${trackStreetInfo.name}-${trackStreetInfo.distanceInKm.toFixed(2)}km.pdf`);
+    });
+};
+
+export const downloadBlockedStreetPdf = async (
+    blockedStreetsInfo: BlockedStreetInfo[],
+    intl: IntlShape,
+    planningLabel?: string
+) => {
+    generateBlockedStreetsPdfUrl(blockedStreetsInfo, intl, planningLabel).then((blob) => {
+        saveAs(blob, `${intl.formatMessage({ id: 'msg.blockedStreets' })}.pdf`);
     });
 };
 
