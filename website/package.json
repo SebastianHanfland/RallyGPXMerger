@@ -16,6 +16,7 @@
     "prettier:fix": "npm run prettier -- --write"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.2",
     "@reduxjs/toolkit": "^2.11.2",
     "bootstrap": "^5.3.8",
     "date-and-time": "^3.0.3",

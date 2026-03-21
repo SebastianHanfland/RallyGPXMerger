@@ -41,7 +41,6 @@ function getSegmentInfo(aggregatedInfo: AggregatedPoints[] | undefined) {
         distance += info.distanceInKm ?? 0;
     });
     const speed = seconds > 0 ? (distance / seconds) * 3600 : undefined;
-    console.log({ aggregatedInfo, seconds, speed, distance });
 
     const speedString = speed ? `${formatNumber(speed)} km/h` : undefined;
 
