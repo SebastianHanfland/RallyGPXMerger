@@ -4,7 +4,8 @@ export const pdfStyles = StyleSheet.create({
     page: {
         flexDirection: 'column',
         backgroundColor: '#ffffff',
-        fontSize: 11,
+        fontSize: 10,
+        margin: 20,
     },
     section: {
         margin: 10,
@@ -12,7 +13,9 @@ export const pdfStyles = StyleSheet.create({
         flexGrow: 1,
     },
     table: {
-        width: '100%',
+        width: '90%',
+        margin: 10,
+        padding: 10,
     },
     row: {
         display: 'flex',

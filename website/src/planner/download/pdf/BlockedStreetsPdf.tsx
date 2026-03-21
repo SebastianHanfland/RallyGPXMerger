@@ -8,6 +8,7 @@ import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
 import { Document, Link, Page, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
+import { chunkList } from './chunkUtil.t.ts';
 
 interface Props {
     intl: IntlShape;
@@ -15,15 +16,22 @@ interface Props {
     blockedStreets: BlockedStreetInfo[];
 }
 
+const colWidths = ['8%', '10%', '22%', '10%', '10%', '15%', '15%', '10%'].map((width) => ({ width }));
+
 export const BlockedStreetsPdf = ({ blockedStreets, intl, planningLabel }: Props) => (
     <Document>
-        <Page size="A4" style={pdfStyles.page} orientation={'landscape'}>
-            <View style={pdfStyles.section}>
-                <Text>{intl.formatMessage({ id: 'msg.blockedStreets' })}</Text>
-                {planningLabel && <Text>{planningLabel}</Text>}
-                <BlockedStreetsTablePdf blockedStreets={blockedStreets} intl={intl} />
-            </View>
-        </Page>
+        {chunkList(blockedStreets, 15).map((blockStreetsChunk, index) => {
+            console.log('Pages', index);
+            return (
+                <Page size="A4" style={pdfStyles.page} orientation={'landscape'} key={index}>
+                    <View style={pdfStyles.section}>
+                        <Text>{intl.formatMessage({ id: 'msg.blockedStreets' })}</Text>
+                        {planningLabel && <Text>{planningLabel}</Text>}
+                    </View>
+                    <BlockedStreetsTablePdf blockedStreets={blockStreetsChunk} intl={intl} />
+                </Page>
+            );
+        })}
     </Document>
 );
 
@@ -32,26 +40,25 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
 
     return (
         <View>
-            <Text style={pdfStyles.bold}>{intl.formatMessage({ id: 'msg.streetOverview' })}</Text>
             <View style={pdfStyles.table}>
                 <View style={[pdfStyles.row, pdfStyles.bold, pdfStyles.header]}>
-                    {tableHeader.map((text) => (
-                        <Text style={pdfStyles.col1}>{text} </Text>
+                    {tableHeader.map((text, index) => (
+                        <Text style={colWidths[index]}>{text} </Text>
                     ))}
                 </View>
                 {...blockedStreets.map((streetPoint, index) => {
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
-                            <Text style={pdfStyles.col1}>{streetPoint.postCode ?? ''}</Text>
-                            <Text style={pdfStyles.col1}>{streetPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
-                            <Text style={pdfStyles.col1}>
+                            <Text style={colWidths[0]}>{streetPoint.postCode ?? ''}</Text>
+                            <Text style={colWidths[1]}>{streetPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
+                            <Text style={colWidths[2]}>
                                 <Text style={pdfStyles.bold}>
                                     <Link src={getLink(streetPoint)} style={{ color: 'blue' }}>
                                         {streetPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
                                     </Link>
                                 </Text>
                             </Text>
-                            <Text style={pdfStyles.col2}>
+                            <Text style={colWidths[3]}>
                                 {formatNumber(
                                     streetPoint.distanceInKm ??
                                         (geoDistance(
@@ -61,19 +68,20 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
                                     2
                                 )}
                             </Text>
-                            <Text style={pdfStyles.col2}>
+                            <Text style={colWidths[4]}>
                                 {formatNumber(
                                     getTimeDifferenceInSeconds(streetPoint.backPassage, streetPoint.frontArrival) / 60,
                                     1
                                 )}
                             </Text>
-                            <Text style={pdfStyles.col2}>{formatTimeOnly(streetPoint.frontArrival)}</Text>
-                            <Text style={pdfStyles.col2}>{formatTimeOnly(streetPoint.backPassage)}</Text>
-                            <Text style={pdfStyles.col2}>{formatNumber(streetPoint.peopleCount)}</Text>
+                            <Text style={colWidths[5]}>{formatTimeOnly(streetPoint.frontArrival)}</Text>
+                            <Text style={colWidths[6]}>{formatTimeOnly(streetPoint.backPassage)}</Text>
+                            <Text style={colWidths[7]}>{formatNumber(streetPoint.peopleCount)}</Text>
                         </View>
                     );
                 })}
             </View>
+            <Text style={{ height: 35 }}>{''} </Text>
         </View>
     );
 };
