@@ -19,6 +19,7 @@ export const TrackInfoPdfDownloadButton = ({ trackStreets, planningLabel }: Prop
                 style={{ color: 'white', textDecoration: 'none' }}
                 className={'m-0 p-1'}
                 document={<TrackStreetsPdf trackStreets={trackStreets} intl={intl} planningLabel={planningLabel} />}
+                fileName={`${trackStreets.name}.pdf`}
             >
                 <DownloadIcon />
                 PDF
