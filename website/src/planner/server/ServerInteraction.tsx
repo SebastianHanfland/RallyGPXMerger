@@ -11,6 +11,7 @@ import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
 import { StreetFilesPdfMakeDownloader } from '../streets/StreetFilesPdfMakeDownloader.tsx';
 import { CleanDataButton } from './CleanDataButton.tsx';
 import { DownloadDataForCopyButton } from './DownloadDataForCopyButton.tsx';
+import { BlockedStreetsPdfDownloadButton } from '../download/pdf/BlockedStreetsPdfDownloadButton.tsx';
 
 export const PlannerSidebarServerSection = () => {
     const className = 'm-1';
@@ -74,6 +75,9 @@ export const PlannerSidebarServerSection = () => {
                                 <StreetFilesPdfMakeDownloader />
                             </Row>
                         </Col>
+                    </Row>
+                    <Row className={className}>
+                        <BlockedStreetsPdfDownloadButton />
                     </Row>
                     <Row className={className}>
                         <CleanDataButton />
