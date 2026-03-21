@@ -14,6 +14,7 @@ When entering the site again, the state is persisted.
 
 Plannings can also be loaded from the server when the respective planning id is set in the URL
 
+For the calculation createSelector is used to cache calculation results
 ### Backend
 
 Simply storing JSONs as files

@@ -21,6 +21,7 @@
 * With right click points can be marked on the map, with selectable radius to ease planning
 * On the document tabs, the street details can be edited before downloading them
 * Plannings can be easily shared with simply uploading and sharing the admin link
+* Specifying behavior at nodes
 
 ### Simple
 * Upload GPX files

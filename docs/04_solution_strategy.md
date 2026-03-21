@@ -18,3 +18,7 @@ This value can be set here.
 #### Priority at a node
 When two branches join, one has to go first. The default priority comes from the number of participants. The bigger group goes first.
 When this is not wanted, the priority can be overwritten in the settings
+
+#### Delay at a node
+When two or more branches join, the behavior of how to confluence can be determined.
+Depending on the behavior, the tracks gain a delay.

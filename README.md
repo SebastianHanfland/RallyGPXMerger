@@ -41,10 +41,13 @@ Therefore, now there are two modes of planning: one for a simple "line" demonstr
   * When participant use the CriticalMaps App, their location is displayed on the map
 * Automatic resolving of street names and post codes
 * Creation of PDF files containing a detailed overview of the streets and times
-* Allow to publish the plan as a map
+* Allow to publish the plan as a map (https://www.sternfahrtplaner.de/?display=ce4e62a5-3b73-4fa1-80e3-d66d687c2439)
 ![Sketch](./docs/images/map.png)
-* Allow to publish the plan as a table (e.g. to integrate on your website)
+* Allow to publish the plan as a table (e.g. to integrate on your website) (https://www.sternfahrtplaner.de/?table=ce4e62a5-3b73-4fa1-80e3-d66d687c2439)
 ![Sketch](./docs/images/table.png)
+* An overview of all nodes, where track come together
+* An overview of all segments on all tracks to check if the setup is right
+* Checking for gaps
 
 ### Simple ("Line")
 
@@ -66,7 +69,6 @@ The workflow for a complex demonstration
 * Add segments to the tracks (segments can be used multiple times, when the different branches join)
 * Integrate breaks into the track
 * Name the planning and choose settings (e.g. rounding of start times)
-* Calculate the planning
 * Upload the planning
 * Share or publish the planning in form of PDF, or links, or iframes, as map or as table
 

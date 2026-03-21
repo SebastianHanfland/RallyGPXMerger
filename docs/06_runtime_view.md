@@ -19,7 +19,8 @@ User interactions change this state. Every change is mirrored into the localstor
 
 When the website is loaded, the redux state is initialized by the values in the localstorage.
 
-The merge calculation happens in a [thunk](https://redux.js.org/usage/writing-logic-thunks) where the redux state first is accessed, then values are calculated and finally stored in the redux state again.
+The merge calculation happens in a selector where the redux state first is accessed, then values are calculated and stored.
+Once some relevant data segments update, the result is newly calculated. 
 
 Some values, especially used for the map, are mirrored in a normal global variable, to prevent [prop drilling](https://kentcdodds.com/blog/prop-drilling) in the logic.
 
@@ -33,7 +34,7 @@ An interpolation between the GPX points happen, to make a smoother experience.
 
 ## Street resolving
 
-The gpx segments are used to resolve the street names and their post codes.
+The gpx segments are first reduced to coordinates and are then used to resolve the street names and their post codes.
 Then the waypoints are grouped by street name and post code.
 The redux store and a mirror in the local storage are used for persistence.
 As long as the data is not cleared, the results for the post codes are cached.

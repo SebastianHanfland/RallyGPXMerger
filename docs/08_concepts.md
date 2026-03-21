@@ -14,6 +14,10 @@ with ```useSelector``` and ```useDispatch``` hooks
 #### in a function/thunk
 https://redux.js.org/usage/writing-logic-thunks
 
+#### createSelector
+https://reselect.js.org/api/createselector/
+
+
 ## Storage of gpx tracks
 
 There is a backend that allows to retrieve the full json for a planning.
