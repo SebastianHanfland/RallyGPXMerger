@@ -8,6 +8,7 @@ import { getLanguage } from '../language.ts';
 import { AppFooter } from './layout/Footer.tsx';
 import { ToastWrapper } from './toasts/ToastWrapper.tsx';
 import { Store } from '@reduxjs/toolkit';
+import { UseLoadPlanningFromServer } from './useLoadPlanningFromServer.tsx';
 
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);
@@ -16,6 +17,7 @@ export function RallyPlanner() {
         <IntlProvider locale={language ?? getLanguage()} messages={getMessages(language)}>
             <ToastWrapper />
             <RallyPlannerRouter />
+            <UseLoadPlanningFromServer />
             <AppFooter />
         </IntlProvider>
     );

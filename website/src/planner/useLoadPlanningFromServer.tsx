@@ -1,12 +1,14 @@
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from 'react-intl';
-import { useEffect } from 'react';
+import { IntlShape, useIntl } from 'react-intl';
+import { useEffect, useState } from 'react';
 import { getData } from '../api/api.ts';
 import { backendActions, getPlanningPassword } from './store/backend.reducer.ts';
 import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
 import { AppDispatch } from './store/planningStore.ts';
 import { State } from './store/types.ts';
+import { getTrackCompositions } from './store/trackMerge.reducer.ts';
+import { ConfirmationModal } from '../common/ConfirmationModal.tsx';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
@@ -28,32 +30,70 @@ export function loadStateAndSetUpPlanner(
     dispatch(backendActions.setIsPlanningSaved(!!planningId));
 }
 
-export function useLoadPlanningFromServer() {
+function loadPlanning(
+    planningId: string,
+    dispatch: AppDispatch,
+    adminToken: string | undefined,
+    planningPassword: string | undefined,
+    intl: IntlShape
+) {
+    getData(planningId)
+        .then((state) => {
+            loadStateAndSetUpPlanner(dispatch, state, planningId, adminToken, planningPassword);
+            successNotification(
+                dispatch,
+                intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
+                intl.formatMessage({ id: 'msg.dataLoad.success.message' })
+            );
+        })
+        .catch((e) => {
+            console.error(e);
+            errorNotification(
+                dispatch,
+                intl.formatMessage({ id: 'msg.dataLoad.error.title' }),
+                intl.formatMessage({ id: 'msg.dataLoad.error.message' })
+            );
+        });
+}
+
+export function UseLoadPlanningFromServer() {
     const planningId = useGetUrlParam('planning=');
     const adminToken = useGetUrlParam('admin=');
     const planningPassword = useSelector(getPlanningPassword);
     const dispatch: AppDispatch = useDispatch();
     const intl = useIntl();
+    const [loadFromServer, setLoadFromServer] = useState(false);
+    const [decided, setDecided] = useState(false);
+
+    const trackCompositions = useSelector(getTrackCompositions);
+    useEffect(() => {
+        console.log({ trackCompositions }, 2);
+        if (loadFromServer) {
+            if (planningId) {
+                loadPlanning(planningId, dispatch, adminToken, planningPassword, intl);
+            }
+        }
+    }, [planningId, loadFromServer]);
 
     useEffect(() => {
-        if (planningId) {
-            getData(planningId)
-                .then((state) => {
-                    loadStateAndSetUpPlanner(dispatch, state, planningId, adminToken, planningPassword);
-                    successNotification(
-                        dispatch,
-                        intl.formatMessage({ id: 'msg.dataLoad.success.title' }),
-                        intl.formatMessage({ id: 'msg.dataLoad.success.message' })
-                    );
-                })
-                .catch((e) => {
-                    console.error(e);
-                    errorNotification(
-                        dispatch,
-                        intl.formatMessage({ id: 'msg.dataLoad.error.title' }),
-                        intl.formatMessage({ id: 'msg.dataLoad.error.message' })
-                    );
-                });
-        }
-    }, [planningId]);
+        console.log({ planningId, trackCompositions }, 2);
+    }, []);
+
+    if (decided) {
+        return null;
+    }
+
+    if (planningId && !loadFromServer && trackCompositions.length > 0) {
+        return (
+            <ConfirmationModal
+                onConfirm={() => {
+                    setLoadFromServer(true);
+                    setDecided(true);
+                }}
+                closeModal={() => setDecided(true)}
+                title={intl.formatMessage({ id: 'msg.localDataFound' })}
+                body={intl.formatMessage({ id: 'msg.localDataFound.details' })}
+            />
+        );
+    }
 }

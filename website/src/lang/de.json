@@ -383,5 +383,7 @@
     "msg.nodesOverview": "Knotenübersicht",
     "msg.direction": "Fahrtrichtung",
     "msg.trackOverview": "Routenübersicht",
-    "msg.trackOverview.description": "Hier kann die Reihenfolge der Abschnitte angezeigt und geändert werden"
+    "msg.trackOverview.description": "Hier kann die Reihenfolge der Abschnitte angezeigt und geändert werden",
+    "msg.localDataFound.details": "Es gibt lokale Dateien im Browser. Möchtest Sie die lokalen Daten mit der Version vom Server überschreiben?",
+    "msg.localDataFound": "Lokale Dateien gefunden"
 }
