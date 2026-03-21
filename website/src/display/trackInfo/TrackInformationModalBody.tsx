@@ -4,16 +4,14 @@ import {
     getDisplayTracks,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
-import { Button, Card, Col, Row } from 'react-bootstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import { getShowSingleTrackInfo } from '../store/displayMapReducer.ts';
 import { CalculatedTrack } from '../../common/types.ts';
-import { useIntl } from 'react-intl';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import L from 'leaflet';
-import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
 
 const cardStyle = {
     style: { width: '170px', height: '145px', cursor: 'default' },
@@ -31,7 +29,6 @@ function TrackInfo({ track }: { track: CalculatedTrack }) {
     if (!foundInfo) {
         return <div>Info not found</div>;
     }
-    const intl = useIntl();
     return (
         <>
             <h6>{track.filename}</h6>
@@ -41,18 +38,7 @@ function TrackInfo({ track }: { track: CalculatedTrack }) {
             <div>
                 <div>
                     <TrackFileDownloader track={track} />
-                    {foundInfo && (
-                        <Button
-                            size={'sm'}
-                            className={'m-1'}
-                            onClick={() =>
-                                createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
-                            }
-                        >
-                            <DownloadIcon />
-                            PDF
-                        </Button>
-                    )}
+                    {foundInfo && <TrackInfoPdfDownloadButton trackStreets={foundInfo} planningLabel={planningLabel} />}
                 </div>
             </div>
         </>

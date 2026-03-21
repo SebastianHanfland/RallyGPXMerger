@@ -1,25 +1,23 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { Button } from 'react-bootstrap';
-import { downloadSinglePdfFiles } from '../../streets/StreetFilesPdfMakeDownloader.tsx';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../../store/planningStore.ts';
+import { FormattedMessage } from 'react-intl';
 import { FileDownloader } from '../../download/FileDownloader.tsx';
 import { StreetInfoModal } from '../../ui/elements/StreetInfoModal.tsx';
 import { useState } from 'react';
 import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
-import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
 import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
 import { UnknownWarning } from '../../streets/UnknownWarning.tsx';
+import { TrackInfoPdfDownloadButton } from '../../download/pdf/TrackInfoPdfDownloadButton.tsx';
+import { getPlanningLabel } from '../../store/settings.reducer.ts';
 
 export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
-    const intl = useIntl();
-    const dispatch: AppDispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
     const gpxSegments = useSelector(getParsedGpxSegments);
     const calculatedTracks = useSelector(getCalculateTracks);
+    const planningLabel = useSelector(getPlanningLabel);
 
     const [displayStreetInfo, setDisplayStreetInfo] = useState(false);
     if (trackCompositions.length === 0 || gpxSegments.length === 0 || !matchedTrackInfo) {
@@ -30,14 +28,7 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
 
     return (
         <div className={'d-flex flex-row'}>
-            <Button
-                size={'sm'}
-                className={'m-1'}
-                onClick={() => dispatch(downloadSinglePdfFiles(intl, matchedTrackInfo?.id))}
-            >
-                <DownloadIcon />
-                PDF
-            </Button>
+            <TrackInfoPdfDownloadButton trackStreets={matchedTrackInfo} planningLabel={planningLabel} />
             {calculatedTrack && (
                 <FileDownloader
                     name={`${calculatedTrack.filename}.gpx`}

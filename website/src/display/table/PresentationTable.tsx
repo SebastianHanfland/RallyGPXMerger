@@ -5,15 +5,14 @@ import {
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
 import { CalculatedTrack } from '../../common/types.ts';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { getLink } from '../../utils/linkUtil.ts';
-import { createTrackStreetPdf } from '../../planner/download/pdf/trackStreetsPdf.ts';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 import { TrackWayPointType } from '../../planner/logic/resolving/types.ts';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
 
 export const PresentationTable = () => {
     const tracks = useSelector(getDisplayTracks);
@@ -77,7 +76,6 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
     if (!foundInfo) {
         return <div>Info not found</div>;
     }
-    const intl = useIntl();
     const entryPoints = foundInfo.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Entry);
 
     const { pointFrom: startPoint, streetName: startStreetName } = foundInfo.wayPoints[0];
@@ -125,18 +123,7 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
             <td>{formatNumber(foundInfo.distanceInKm, 1)}</td>
             <td>
                 <TrackFileDownloader track={track} />
-                {foundInfo && (
-                    <Button
-                        size={'sm'}
-                        className={'m-1'}
-                        onClick={() =>
-                            createTrackStreetPdf(intl, planningLabel)(foundInfo).download(`${foundInfo.name}.pdf`)
-                        }
-                    >
-                        <DownloadIcon />
-                        PDF
-                    </Button>
-                )}
+                {foundInfo && <TrackInfoPdfDownloadButton trackStreets={foundInfo} planningLabel={planningLabel} />}
             </td>
         </tr>
     );
