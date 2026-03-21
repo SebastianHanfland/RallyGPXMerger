@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { SettingsState, State } from './types.ts';
+import { isTrackBreak, isTrackSegment, SettingsState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_IN_SECONDS } from './constants.ts';
+import { shiftDateBySeconds } from '../../utils/dateUtil.ts';
+import { getParsedGpxSegments } from './segmentData.redux.ts';
+import { getTrackCompositions } from './trackMerge.reducer.ts';
 
 const initialState: SettingsState = {
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,
@@ -13,6 +16,7 @@ const settingsSlice = createSlice({
     initialState: storage.load()?.settings ?? initialState,
     reducers: {
         setArrivalDateTime: (state: SettingsState, action: PayloadAction<string | undefined>) => {
+            state.startDate = undefined;
             state.hasDefaultArrivalDate = false;
             state.arrivalDateTime = action.payload;
         },
@@ -46,7 +50,28 @@ export const settingsActions = settingsSlice.actions;
 export const settingsReducer: Reducer<SettingsState> = settingsSlice.reducer;
 const getBase = (state: State) => state.settings;
 export const getArrivalDateTime = (state: State) => {
-    if (getBase(state).startDate) return getBase(state).arrivalDateTime;
+    const startDate = getBase(state).startDate;
+    if (startDate) {
+        const tracks = getTrackCompositions(state);
+        if (tracks.length === 1) {
+            const segments = getParsedGpxSegments(state);
+            let duration = 0;
+            tracks.forEach((track) => {
+                track.segments.forEach((segment) => {
+                    if (isTrackSegment(segment)) {
+                        const foundSegment = segments.find((seg) => seg.id === segment.id);
+                        const t = foundSegment?.points[foundSegment?.points.length - 1].t ?? 0;
+                        duration += t;
+                    } else if (isTrackBreak(segment)) {
+                        duration += segment.minutes * 60;
+                    }
+                });
+            });
+
+            return shiftDateBySeconds(startDate, duration);
+        }
+    }
+    return getBase(state).arrivalDateTime;
 };
 export const getStartDate = (state: State) => getBase(state).startDate;
 export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
