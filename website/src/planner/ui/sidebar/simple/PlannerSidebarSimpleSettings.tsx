@@ -7,6 +7,7 @@ import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { ReactNode } from 'react';
 import { PlannerSidebarServerSection } from '../../../server/ServerInteraction.tsx';
+import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
 
 export const PlannerSidebarSimpleSettings = () => {
     const accordionEntries: [string, ReactNode, string][] = [
@@ -23,6 +24,7 @@ export const PlannerSidebarSimpleSettings = () => {
                 </h5>
                 <PlanningTitle />
                 <ArrivalDateTimePicker />
+                <StartDateTimePicker />
             </div>
             <Accordion defaultActiveKey={'0'}>
                 {accordionEntries.map(([title, component, key]) => (

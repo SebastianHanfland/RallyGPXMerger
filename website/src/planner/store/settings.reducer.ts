@@ -16,6 +16,9 @@ const settingsSlice = createSlice({
             state.hasDefaultArrivalDate = false;
             state.arrivalDateTime = action.payload;
         },
+        setStartDate: (state: SettingsState, action: PayloadAction<string | undefined>) => {
+            state.startDate = action.payload;
+        },
         setPlanningLabel: (state: SettingsState, action: PayloadAction<string | undefined>) => {
             state.planningLabel = action.payload;
         },
@@ -43,8 +46,9 @@ export const settingsActions = settingsSlice.actions;
 export const settingsReducer: Reducer<SettingsState> = settingsSlice.reducer;
 const getBase = (state: State) => state.settings;
 export const getArrivalDateTime = (state: State) => {
-    return getBase(state).arrivalDateTime;
+    if (getBase(state).startDate) return getBase(state).arrivalDateTime;
 };
+export const getStartDate = (state: State) => getBase(state).startDate;
 export const getHasDefaultArrivalDateTime = (state: State) => getBase(state).hasDefaultArrivalDate;
 export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getPlanningTitle = (state: State) => getBase(state).planningTitle;

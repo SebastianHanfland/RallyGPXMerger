@@ -109,6 +109,7 @@
     "msg.customSpeed.placeholder": "Custom speed",
     "msg.rallyParameters.title": "Rally parameters",
     "msg.arrivalDate.title": "Arrival of tracks",
+    "msg.startDate.title": "Start der Route",
     "msg.arrivalDate.hint": "Time when the first people should arrive at the end of the track:",
     "msg.label.title": "Additional information of current planning",
     "msg.label.hint": "This text will be added at the start of the pdf documents",

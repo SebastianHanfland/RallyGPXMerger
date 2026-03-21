@@ -13,6 +13,7 @@ import { FormattedMessage } from 'react-intl';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -58,6 +59,9 @@ export function SimpleFileUploadSection() {
                     </Col>
                     <Col>
                         <ArrivalDateTimePicker />
+                    </Col>
+                    <Col>
+                        <StartDateTimePicker />
                     </Col>
                 </Row>
             </div>

@@ -138,6 +138,7 @@ export interface TrackMergeState {
 
 export interface SettingsState {
     arrivalDateTime?: string;
+    startDate?: string;
     hasDefaultArrivalDate?: boolean;
     planningLabel?: string;
     planningTitle?: string;
