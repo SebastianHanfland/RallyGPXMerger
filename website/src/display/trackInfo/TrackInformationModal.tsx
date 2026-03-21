@@ -12,7 +12,7 @@ import {
     getDisplayTitle,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
-import { generatePdfsInZip } from '../../planner/download/pdf/PdfDocumentInZip.tsx';
+import { generatePdfsInZip } from '../../planner/download/pdf/pdfDownload.tsx';
 
 export function TrackInformationModal() {
     const intl = useIntl();
