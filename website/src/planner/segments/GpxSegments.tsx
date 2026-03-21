@@ -76,6 +76,7 @@ export function GpxSegments({ noFilter }: Props) {
                     </div>
                 </div>
             )}
+            <div style={{ height: '200px' }}></div>
         </div>
     );
 }
