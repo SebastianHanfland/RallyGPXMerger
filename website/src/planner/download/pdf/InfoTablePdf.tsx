@@ -2,29 +2,8 @@ import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 
 import { getHeader } from '../getHeader.ts';
 import { IntlShape } from 'react-intl';
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
-
-const styles = StyleSheet.create({
-    table: {
-        width: '100%',
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        borderTop: '1px solid #EEE',
-        paddingTop: 8,
-        paddingBottom: 8,
-    },
-    bold: {
-        fontWeight: 'bold',
-    },
-    col1: {
-        width: '50%',
-    },
-    col2: {
-        width: '50%',
-    },
-});
+import { Text, View } from '@react-pdf/renderer';
+import { pdfStyles } from './pdfStyles.ts';
 
 interface Props {
     trackStreets: TrackStreetInfo;
@@ -37,14 +16,14 @@ export const InfoTablePdf = ({ trackStreets, intl }: Props) => {
         .map((row) => row.split(';'));
 
     return (
-        <View style={styles.table}>
-            <Text style={styles.bold}>{intl.formatMessage({ id: 'msg.trackInfo' })}</Text>
+        <View style={pdfStyles.table}>
+            <Text style={pdfStyles.bold}>{intl.formatMessage({ id: 'msg.trackInfo' })}</Text>
             {trackInfo.map((row, i) => (
-                <View key={i} style={styles.row} wrap={false}>
-                    <Text style={styles.col1}>
-                        <Text style={styles.bold}>{row[0]}</Text>
+                <View key={i} style={pdfStyles.row} wrap={false}>
+                    <Text style={pdfStyles.col1}>
+                        <Text style={pdfStyles.bold}>{row[0]}</Text>
                     </Text>
-                    <Text style={styles.col2}>{row[1]}</Text>
+                    <Text style={pdfStyles.col2}>{row[1]}</Text>
                 </View>
             ))}
         </View>

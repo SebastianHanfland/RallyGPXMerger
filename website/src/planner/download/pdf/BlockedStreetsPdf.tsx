@@ -6,42 +6,8 @@ import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
-import { Document, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
-
-const styles = StyleSheet.create({
-    page: {
-        flexDirection: 'column',
-        backgroundColor: '#ffffff',
-        fontSize: 11,
-    },
-    section: {
-        margin: 10,
-        padding: 10,
-        flexGrow: 1,
-    },
-    table: {
-        width: '100%',
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        borderTop: '1px solid #EEE',
-        paddingTop: 8,
-        paddingBottom: 8,
-    },
-    header: {
-        borderTop: 'none',
-    },
-    bold: {
-        fontWeight: 'bold',
-    },
-    col1: {
-        width: '33%',
-    },
-    col2: {
-        width: '33%',
-    },
-});
+import { Document, Link, Page, Text, View } from '@react-pdf/renderer';
+import { pdfStyles } from './pdfStyles.ts';
 
 interface Props {
     intl: IntlShape;
@@ -51,8 +17,8 @@ interface Props {
 
 export const BlockedStreetsPdf = ({ blockedStreets, intl, planningLabel }: Props) => (
     <Document>
-        <Page size="A4" style={styles.page} orientation={'landscape'}>
-            <View style={styles.section}>
+        <Page size="A4" style={pdfStyles.page} orientation={'landscape'}>
+            <View style={pdfStyles.section}>
                 <Text>{intl.formatMessage({ id: 'msg.blockedStreets' })}</Text>
                 {planningLabel && <Text>{planningLabel}</Text>}
                 <BlockedStreetsTablePdf blockedStreets={blockedStreets} intl={intl} />
@@ -66,26 +32,26 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
 
     return (
         <View>
-            <Text style={styles.bold}>{intl.formatMessage({ id: 'msg.streetOverview' })}</Text>
-            <View style={styles.table}>
-                <View style={[styles.row, styles.bold, styles.header]}>
+            <Text style={pdfStyles.bold}>{intl.formatMessage({ id: 'msg.streetOverview' })}</Text>
+            <View style={pdfStyles.table}>
+                <View style={[pdfStyles.row, pdfStyles.bold, pdfStyles.header]}>
                     {tableHeader.map((text) => (
-                        <Text style={styles.col1}>{text} </Text>
+                        <Text style={pdfStyles.col1}>{text} </Text>
                     ))}
                 </View>
                 {...blockedStreets.map((streetPoint, index) => {
                     return (
-                        <View key={index} style={styles.row} wrap={false}>
-                            <Text style={styles.col1}>{streetPoint.postCode ?? ''}</Text>
-                            <Text style={styles.col1}>{streetPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
-                            <Text style={styles.col1}>
-                                <Text style={styles.bold}>
+                        <View key={index} style={pdfStyles.row} wrap={false}>
+                            <Text style={pdfStyles.col1}>{streetPoint.postCode ?? ''}</Text>
+                            <Text style={pdfStyles.col1}>{streetPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
+                            <Text style={pdfStyles.col1}>
+                                <Text style={pdfStyles.bold}>
                                     <Link src={getLink(streetPoint)} style={{ color: 'blue' }}>
                                         {streetPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
                                     </Link>
                                 </Text>
                             </Text>
-                            <Text style={styles.col2}>
+                            <Text style={pdfStyles.col2}>
                                 {formatNumber(
                                     streetPoint.distanceInKm ??
                                         (geoDistance(
@@ -95,15 +61,15 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
                                     2
                                 )}
                             </Text>
-                            <Text style={styles.col2}>
+                            <Text style={pdfStyles.col2}>
                                 {formatNumber(
                                     getTimeDifferenceInSeconds(streetPoint.backPassage, streetPoint.frontArrival) / 60,
                                     1
                                 )}
                             </Text>
-                            <Text style={styles.col2}>{formatTimeOnly(streetPoint.frontArrival)}</Text>
-                            <Text style={styles.col2}>{formatTimeOnly(streetPoint.backPassage)}</Text>
-                            <Text style={styles.col2}>{formatNumber(streetPoint.peopleCount)}</Text>
+                            <Text style={pdfStyles.col2}>{formatTimeOnly(streetPoint.frontArrival)}</Text>
+                            <Text style={pdfStyles.col2}>{formatTimeOnly(streetPoint.backPassage)}</Text>
+                            <Text style={pdfStyles.col2}>{formatNumber(streetPoint.peopleCount)}</Text>
                         </View>
                     );
                 })}
