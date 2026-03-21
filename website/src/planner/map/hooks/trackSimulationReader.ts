@@ -1,7 +1,7 @@
 import { State, TrackComposition } from '../../store/types.ts';
 import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import date from 'date-and-time';
+import { addSeconds } from 'date-and-time';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { MAX_SLIDER_TIME } from '../../../common/constants.ts';
@@ -50,7 +50,7 @@ export const getCurrentTimeStamp = (state: State): string | undefined => {
 
     const percentage = mapTime / MAX_SLIDER_TIME;
     const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
-    return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
+    return addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
 export const getBikeSnakesForPlanningMap = createSelector(

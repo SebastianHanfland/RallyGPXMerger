@@ -1,9 +1,9 @@
-import date from 'date-and-time';
+import { addSeconds, format, subtract } from 'date-and-time';
 import { FormatDateOptions } from 'react-intl';
 import { getLanguage } from '../language.ts';
 
 export function shiftDateBySeconds(datetime: string, shiftInSeconds: number): string {
-    return date.addSeconds(new Date(datetime), shiftInSeconds).toISOString();
+    return addSeconds(new Date(datetime), shiftInSeconds).toISOString();
 }
 
 export function getTimeDifferenceInSeconds(firstDateString: string, secondDateString: string): number {
@@ -11,19 +11,14 @@ export function getTimeDifferenceInSeconds(firstDateString: string, secondDateSt
     const secondDate = new Date(firstDateString);
 
     const dayLightSavingDifference = firstDate.getTimezoneOffset() - secondDate.getTimezoneOffset();
-    return date.subtract(secondDate, firstDate).toSeconds() + dayLightSavingDifference * 60;
-}
-
-export function formatDate(dateString: string): string {
-    const DATE_FORMAT = 'DD.MM.YYYY HH:mm:ss';
-    return date.format(new Date(dateString), DATE_FORMAT);
+    return subtract(firstDate, secondDate).toSeconds().value + dayLightSavingDifference * 60;
 }
 
 export function formatTimeOnly(dateString: string, noSecond = false): string {
     const germanFormat = noSecond ? 'HH:mm' : 'HH:mm:ss';
     const englishFormat = noSecond ? 'hh:mm A' : 'hh:mm:ss A';
     const TIME_FORMAT = getLanguage() === 'de' ? germanFormat : englishFormat;
-    return date.format(new Date(dateString), TIME_FORMAT);
+    return format(new Date(dateString), TIME_FORMAT);
 }
 
 export function shiftEndTimeByParticipants(
@@ -31,7 +26,7 @@ export function shiftEndTimeByParticipants(
     participants: number,
     participantsDelayInSeconds: number
 ): string {
-    return date.addSeconds(new Date(endDateTime), participants * participantsDelayInSeconds).toISOString();
+    return addSeconds(new Date(endDateTime), participants * participantsDelayInSeconds).toISOString();
 }
 
 export const DateTimeFormat: FormatDateOptions = {
@@ -48,7 +43,7 @@ export function roundPublishedStartTimes(
     minutesToSubtract: number,
     minutesToRoundTo: number
 ): string {
-    const timeMinusBuffer = date.addSeconds(new Date(startFront), -minutesToSubtract * 60).toISOString();
+    const timeMinusBuffer = addSeconds(new Date(startFront), -minutesToSubtract * 60).toISOString();
 
     if (minutesToRoundTo === 0) {
         return timeMinusBuffer;

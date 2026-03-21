@@ -2,7 +2,6 @@ import { BREAK, ENTRY, ParsedGpxSegment, TrackBreak, TrackEntry } from '../../pl
 import { NodePosition } from '../../planner/logic/resolving/selectors/getNodePositions.ts';
 
 export interface GpxFileAccess {
-    shiftToArrivalTime: (arrival: string) => void;
     getStart: () => string;
     toString: () => string;
 }

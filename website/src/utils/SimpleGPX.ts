@@ -1,5 +1,5 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
-import date from 'date-and-time';
+import { addSeconds } from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from '../common/calculation/types.ts';
 import { getTimeDifferenceInSeconds } from './dateUtil.ts';
@@ -82,17 +82,17 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     }
 
     public shiftSeconds(interval: number) {
-        this.start = date.addSeconds(this.start, interval);
-        this.end = date.addSeconds(this.end, interval);
+        this.start = addSeconds(this.start, interval);
+        this.end = addSeconds(this.end, interval);
         // immediately propagate to all the time points
         getPointsFromTracksAndRoutes(this.routes, this.tracks).forEach((points) => {
             points.forEach((point) => {
-                point.time = date.addSeconds(new Date(point.time), interval).toISOString();
+                point.time = addSeconds(new Date(point.time), interval).toISOString();
             });
         });
         if (this.waypoints.length && haveTimeStamp(this.waypoints)) {
             this.waypoints.forEach((wp) => {
-                wp.time = date.addSeconds(new Date(wp.time), interval).toISOString();
+                wp.time = addSeconds(new Date(wp.time), interval).toISOString();
             });
         }
     }
@@ -122,13 +122,9 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
             lat: last_point.lat,
             lon: last_point.lon,
             ele: last_point.ele,
-            time: date.addSeconds(new Date(last_point.time), interval).toISOString(),
+            time: addSeconds(new Date(last_point.time), interval).toISOString(),
         });
-        this.end = date.addSeconds(this.end, interval);
-    }
-
-    public shiftToArrivalTime(arrival: string) {
-        this.shiftSeconds(getTimeDifferenceInSeconds(arrival, this.getEnd()));
+        this.end = addSeconds(this.end, interval);
     }
 
     public getPoints() {
@@ -230,7 +226,7 @@ function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
         typeof _point.lon === 'string' ? Number(_point.lon) : _point.lon,
         {
             ele: typeof _point.ele === 'string' ? Number(_point.ele) : _point.ele,
-            ...(_point.time ? { time: date.addSeconds(new Date(_point.time), timeshift) } : {}),
+            ...(_point.time ? { time: addSeconds(new Date(_point.time), timeshift) } : {}),
         }
     );
 }

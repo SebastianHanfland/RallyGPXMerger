@@ -14,7 +14,7 @@ import {
 } from '../store/map.reducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
-import date from 'date-and-time';
+import { addSeconds } from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
 import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
@@ -53,7 +53,7 @@ export const getCurrentComparisonTimeStamps = (state: ComparisonTrackState): Rec
             const start = mapTime.start;
             const end = mapTime.end;
             const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
-            timeForPlanningIds[planningId] = date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
+            timeForPlanningIds[planningId] = addSeconds(new Date(start), secondsToAddToStart).toISOString();
         }
     });
 

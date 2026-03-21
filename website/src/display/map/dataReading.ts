@@ -11,7 +11,7 @@ import {
 } from '../store/displayMapReducer.ts';
 import { MAX_SLIDER_TIME } from '../../common/constants.ts';
 import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
-import date from 'date-and-time';
+import { addSeconds } from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
@@ -49,7 +49,7 @@ export const getCurrentDisplayTimeStamp = (state: DisplayState): string | undefi
 
     const percentage = mapTime / MAX_SLIDER_TIME;
     const secondsToAddToStart = getTimeDifferenceInSeconds(end, start) * percentage;
-    return date.addSeconds(new Date(start), secondsToAddToStart).toISOString();
+    return addSeconds(new Date(start), secondsToAddToStart).toISOString();
 };
 
 export const getDisplayTimeStamp = (state: DisplayState): string | undefined => {

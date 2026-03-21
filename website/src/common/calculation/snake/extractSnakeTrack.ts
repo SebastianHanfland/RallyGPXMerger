@@ -1,9 +1,9 @@
 import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import date from 'date-and-time';
 import { CalculatedTrack } from '../../types.ts';
 import { getLatLng } from '../../../utils/pointUtil.ts';
 
 import { TimedPoint } from '../../../planner/store/types.ts';
+import { addSeconds } from 'date-and-time';
 
 function interpolatePosition(previous: TimedPoint, next: TimedPoint, timeStamp: string) {
     const nextTime = next.t;
@@ -27,9 +27,7 @@ export function extractSnakeTrackFromCalculatedTrack(
     if (!timeStampFront) {
         return [];
     }
-    const timeStampEnd = date
-        .addSeconds(new Date(timeStampFront), -participants * participantsDelayInSeconds)
-        .toISOString();
+    const timeStampEnd = addSeconds(new Date(timeStampFront), -participants * participantsDelayInSeconds).toISOString();
 
     let returnPoints: { lat: number; lng: number }[] = [];
     const points = track.points;
