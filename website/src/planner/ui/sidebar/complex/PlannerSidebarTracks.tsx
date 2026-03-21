@@ -22,6 +22,7 @@ import { Bla, MyDocument } from '../../../download/pdf/PdfDocument.tsx';
 import Button from 'react-bootstrap/Button';
 import { PDFDownloadLink, renderToBuffer } from '@react-pdf/renderer';
 import FileSaver from 'file-saver';
+import { DButton } from '../../../download/pdf/PdfDocumentInZip.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -77,6 +78,7 @@ export const PlannerSidebarTracks = () => {
                     </Button>
                     <PDFDownloadLink document={<MyDocument />}>Here</PDFDownloadLink>
                     <Bla />
+                    <DButton />
                 </div>
             )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>
