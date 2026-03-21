@@ -1,42 +1,81 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
-import { Content, ContentTable } from 'pdfmake/interfaces';
 import { getLink } from '../../../utils/linkUtil.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
+import { Link, StyleSheet, Text, View } from '@react-pdf/renderer';
 
-export function createBreakOverviewTable(trackStreets: TrackStreetInfo, intl: IntlShape): (ContentTable | Content)[] {
+const styles = StyleSheet.create({
+    table: {
+        width: '100%',
+    },
+    row: {
+        display: 'flex',
+        flexDirection: 'row',
+        borderTop: '1px solid #EEE',
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    header: {
+        borderTop: 'none',
+    },
+    bold: {
+        fontWeight: 'bold',
+    },
+    col1: {
+        width: '33%',
+    },
+    col2: {
+        width: '33%',
+    },
+    col3: {
+        width: '34%',
+    },
+});
+
+interface Props {
+    trackStreets: TrackStreetInfo;
+    intl: IntlShape;
+}
+
+export const BreakOverviewPdf = ({ trackStreets, intl }: Props) => {
     const breaks = trackStreets.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Break);
 
     if (breaks.length === 0) {
-        return [
-            { text: intl.formatMessage({ id: 'msg.breakPoints' }), style: 'titleStyle' },
-            ' ',
-            { text: intl.formatMessage({ id: 'msg.noBreakPoints' }) },
-        ];
+        return (
+            <View>
+                <Text style={styles.bold}>{intl.formatMessage({ id: 'msg.breakPoints' })}</Text>
+                <Text>{intl.formatMessage({ id: 'msg.noBreakPoints' })}</Text>
+            </View>
+        );
     }
 
-    return [
-        { text: intl.formatMessage({ id: 'msg.breakPoints' }), style: 'titleStyle' },
-        ' ',
-        {
-            layout: 'lightHorizontalLines', // optional
-            table: {
-                widths: ['auto', 'auto', 'auto'],
-
-                headerRows: 1,
-                body: [
-                    ['msg.location', 'msg.breakStart', 'msg.breakLength'].map((key) => intl.formatMessage({ id: key })),
-                    ...breaks.map((breakWayPoint) => [
-                        {
-                            text: breakWayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' }),
-                            link: getLink(breakWayPoint),
-                            style: 'linkStyle',
-                        },
-                        `${formatTimeOnly(breakWayPoint.frontArrival)}`,
-                        breakWayPoint.breakLength ? `${breakWayPoint.breakLength.toFixed(0)} min` : '',
-                    ]),
-                ],
-            },
-        },
-    ];
-}
+    return (
+        <View>
+            <Text style={styles.bold}>{intl.formatMessage({ id: 'msg.breakPoints' })}</Text>
+            <View style={styles.table}>
+                <View style={[styles.row, styles.bold, styles.header]}>
+                    <Text style={styles.col1}>{intl.formatMessage({ id: 'msg.location' })} </Text>
+                    <Text style={styles.col2}>{intl.formatMessage({ id: 'msg.breakStart' })} </Text>
+                    <Text style={styles.col3}>{intl.formatMessage({ id: 'msg.breakLength' })} </Text>
+                </View>
+                {...breaks.map((breakWayPoint, index) => {
+                    return (
+                        <View key={index} style={styles.row} wrap={false}>
+                            <Text style={styles.col1}>
+                                <Text style={styles.bold}>
+                                    <Link src={getLink(breakWayPoint)} style={{ color: 'blue' }}>
+                                        {breakWayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    </Link>
+                                </Text>
+                            </Text>
+                            <Text style={styles.col2}>{formatTimeOnly(breakWayPoint.frontArrival)}</Text>
+                            <Text style={styles.col3}>
+                                {breakWayPoint.breakLength ? `${breakWayPoint.breakLength.toFixed(0)} min` : ''}
+                            </Text>
+                        </View>
+                    );
+                })}
+            </View>
+        </View>
+    );
+};

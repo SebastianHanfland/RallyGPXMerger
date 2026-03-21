@@ -11,6 +11,7 @@ import { createPdf } from 'pdfmake/build/pdfmake';
 import { styles as stylesOld } from './pdfUtil.ts';
 import { InfoTablePdf } from './InfoTablePdf.tsx';
 import { EntryPointOverviewPdf } from './EntryPointOverviewPdf.tsx';
+import { BreakOverviewPdf } from './BreakOverviewPdf.tsx';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -57,6 +58,9 @@ export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) =>
                 {/*</View>*/}
                 {/*<View style={styles.section}>*/}
                 <EntryPointOverviewPdf trackStreets={trackStreets} intl={intl} />
+                {/*</View>*/}
+                {/*<View style={styles.section}>*/}
+                <BreakOverviewPdf trackStreets={trackStreets} intl={intl} />
             </View>
         </Page>
     </Document>
@@ -75,12 +79,12 @@ export const createTrackStreetPdf = (intl: IntlShape, planningLabel?: string) =>
             ' ',
             createInfoTable(trackStreets, intl),
             ' ',
-            // DONE
             ' ',
             ...createEntryPointOverviewTable(trackStreets, intl),
             ' ',
             ' ',
             ...createBreakOverviewTable(trackStreets, intl),
+            // DONE
             ' ',
             ' ',
             ...createNodeOverviewTable(trackStreets, intl),
