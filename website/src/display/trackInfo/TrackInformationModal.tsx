@@ -1,38 +1,25 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { batch, useDispatch, useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { displayMapActions, getShowSingleTrackInfo, getShowTrackInfo } from '../store/displayMapReducer.ts';
 import { TrackInformationModalBody } from './TrackInformationModalBody.tsx';
 import { ZipFilesDownloader } from './TracksDownload.tsx';
 import L from 'leaflet';
-import {
-    getDisplayBlockedStreets,
-    getDisplayPlanningLabel,
-    getDisplayTitle,
-    getDisplayTrackStreetInfos,
-} from '../store/displayTracksReducer.ts';
-import { generatePdfsInZip } from '../../planner/download/pdf/pdfDownload.tsx';
+import { TrackInformationPdfZipDownloadButton } from './TrackInformationPdfZipDownloadButton.tsx';
 
 export function TrackInformationModal() {
-    const intl = useIntl();
     const dispatch = useDispatch();
     const showModal = useSelector(getShowTrackInfo);
     const singleTrackId = useSelector(getShowSingleTrackInfo);
-    const planningLabel = useSelector(getDisplayPlanningLabel) ?? '';
-    const planningTitle = useSelector(getDisplayTitle) ?? '';
-    const blockedStreetInfos = useSelector(getDisplayBlockedStreets);
-    const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
 
     const setShowModal = (value: boolean) => dispatch(displayMapActions.setShowTrackInfo(value));
 
     const close = () => {
-        batch(() => {
-            setShowModal(false);
-            setTimeout(() => {
-                dispatch(displayMapActions.setShowSingleTrackInfo(undefined));
-            }, 200);
-        });
+        setShowModal(false);
+        setTimeout(() => {
+            dispatch(displayMapActions.setShowSingleTrackInfo(undefined));
+        }, 200);
     };
     return (
         <Modal
@@ -52,22 +39,7 @@ export function TrackInformationModal() {
             {!singleTrackId && (
                 <Modal.Footer>
                     <ZipFilesDownloader />
-                    {blockedStreetInfos && trackStreetInfos && (
-                        <Button
-                            variant="success"
-                            onClick={() =>
-                                generatePdfsInZip(
-                                    trackStreetInfos,
-                                    blockedStreetInfos,
-                                    intl,
-                                    planningTitle,
-                                    planningLabel
-                                )
-                            }
-                        >
-                            Alle PDF herunterladen
-                        </Button>
-                    )}
+                    <TrackInformationPdfZipDownloadButton />
                     <Button variant="secondary" onClick={close}>
                         <FormattedMessage id={'msg.close'} />
                     </Button>
