@@ -36,7 +36,8 @@ export const getBranchNumbers = (
         a.segmentsBeforeNode.length > b.segmentsBeforeNode.length ? 1 : -1
     );
 
-    const correctedSegmentPeople = initiallyFillWithSingleTrackPeople(trackCompositions);
+    const correctedSegmentPeople: Record<string, number | undefined> =
+        initiallyFillWithSingleTrackPeople(trackCompositions);
 
     trackNodes.forEach((trackNode) => {
         const nodeSpec = (nodeSpecs ?? {})[trackNode.segmentIdAfterNode];
@@ -47,7 +48,7 @@ export const getBranchNumbers = (
             Object.values(branchTracks).forEach((trackIds) => {
                 if (trackIds) {
                     afterNodeTrackIds = [...afterNodeTrackIds, ...trackIds];
-                    peopleCounter += correctedSegmentPeople[getBranchId(trackIds)];
+                    peopleCounter += correctedSegmentPeople[getBranchId(trackIds)] ?? 0;
                 }
             });
             correctedSegmentPeople[getBranchId(afterNodeTrackIds)] = peopleCounter;
@@ -58,7 +59,7 @@ export const getBranchNumbers = (
                 if (trackIds) {
                     afterNodeTrackIds = [...afterNodeTrackIds, ...trackIds];
                     const offset = nodeSpec.trackOffsets[segmentId] ?? 0;
-                    const peopleSize = offset + correctedSegmentPeople[getBranchId(trackIds)];
+                    const peopleSize = offset + (correctedSegmentPeople[getBranchId(trackIds)] ?? 0);
                     peopleSizeCounter = [...peopleSizeCounter, peopleSize];
                 }
             });
