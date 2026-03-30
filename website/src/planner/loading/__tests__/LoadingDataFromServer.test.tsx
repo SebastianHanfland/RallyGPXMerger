@@ -37,6 +37,7 @@ vi.mock('../../src/planner/store/storage', () => ({
 describe('Import planning', () => {
     const ui = {
         showsModal: () => screen.getByRole('dialog'),
+        showsNoModal: () => expect(screen.queryByRole('dialog')).toBeNull(),
         differentIdText: () => {
             screen.getByText(messages['msg.differentPlannnings']);
             screen.getByText(messages['msg.differentPlannnings.details']);
@@ -52,14 +53,34 @@ describe('Import planning', () => {
     describe('test loading and asking for what to load', () => {
         const testCases = [
             {
-                description: 'should provide modal, when planning ids are different',
+                description: 'should provide modal, when planning ids are different, and then load on confirm',
                 urlPlanningId: '1234',
                 storagePlanningId: '4321',
                 isStateTheSame: false,
                 isLocalStatePresent: true,
-                expectShowModal: true,
+                expectShowModal: 'different',
                 action: 'confirm',
                 numberOfExpectedGetDataCalls: 2,
+            },
+            {
+                description: 'should provide modal, when planning ids are same but states are different',
+                urlPlanningId: '1234',
+                storagePlanningId: '1234',
+                isStateTheSame: false,
+                isLocalStatePresent: true,
+                expectShowModal: 'same',
+                action: 'confirm',
+                numberOfExpectedGetDataCalls: 2,
+            },
+            {
+                description: 'should not provide modal, when planning ids are same and states are same',
+                urlPlanningId: '1234',
+                storagePlanningId: '1234',
+                isStateTheSame: true,
+                isLocalStatePresent: true,
+                expectShowModal: false,
+                action: 'confirm',
+                numberOfExpectedGetDataCalls: 1,
             },
         ];
 
@@ -74,6 +95,8 @@ describe('Import planning', () => {
                     trackMerge: { trackCompositions: [] },
                     segmentData: { segments: [{ id: '123', filename: '1', points: [] }] },
                 });
+                vi.clearAllMocks();
+
                 const store = createPlanningStore();
                 if (testCase.storagePlanningId) {
                     store.dispatch(backendActions.setPlanningId(testCase.storagePlanningId));
@@ -95,12 +118,23 @@ describe('Import planning', () => {
                     )
                 );
 
-                await waitFor(() => expect(ui.showsModal()).toBeDefined());
-                ui.differentIdText();
-                if (testCase.action === 'confirm') {
-                    await user.click(ui.confirmButton());
-                } else if (testCase.action === 'confirm') {
-                    await user.click(ui.abortButton());
+                if (testCase.expectShowModal === false) {
+                    await waitFor(() => ui.showsNoModal());
+                } else {
+                    if (testCase.expectShowModal === 'same') {
+                        await waitFor(() => expect(ui.showsModal()).toBeDefined());
+                        ui.differentStateText();
+                    }
+                    if (testCase.expectShowModal === 'different') {
+                        await waitFor(() => expect(ui.showsModal()).toBeDefined());
+                        ui.differentIdText();
+                    }
+
+                    if (testCase.action === 'confirm') {
+                        await user.click(ui.confirmButton());
+                    } else if (testCase.action === 'confirm') {
+                        await user.click(ui.abortButton());
+                    }
                 }
 
                 expect(getData).toHaveBeenCalledTimes(testCase.numberOfExpectedGetDataCalls);
