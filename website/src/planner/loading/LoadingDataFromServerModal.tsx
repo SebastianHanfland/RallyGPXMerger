@@ -5,28 +5,12 @@ import { useEffect, useState } from 'react';
 import { getData } from '../../api/api.ts';
 import { backendActions, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
-import { State } from '../store/types.ts';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { storage } from '../store/storage.ts';
 import { loadPlanning } from './loadPlanningFromServer.ts';
-
-function isSame(serverState: State, storedState: State) {
-    const stateAreas = [
-        (state: State) => state.segmentData,
-        (state: State) => state.trackMerge,
-        (state: State) => state.nodes,
-        (state: State) => state.settings,
-    ];
-
-    for (const stateAccess of stateAreas) {
-        if (JSON.stringify(stateAccess(serverState)) !== JSON.stringify(stateAccess(storedState))) {
-            return false;
-        }
-    }
-    return true;
-}
+import { isStateTheSame } from './IsStateTheSame.ts';
 
 export function LoadingDataFromServerModal() {
     const planningId = useGetUrlParam('planning=');
@@ -59,7 +43,7 @@ export function LoadingDataFromServerModal() {
 
                     return;
                 }
-                if (isSame(serverState, storedState)) {
+                if (isStateTheSame(serverState, storedState)) {
                     console.log('state is same');
                     setDecided(true);
                     setIsDataSame(true);

@@ -13,9 +13,11 @@ import { backendActions } from '../../store/backend.reducer.ts';
 import { getData } from '../../../api/api.ts';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { segmentDataActions } from '../../store/segmentData.redux.ts';
+import { isStateTheSame } from '../IsStateTheSame.ts';
 
 const messages = getMessages('en');
 
+vi.mock('../IsStateTheSame');
 vi.mock('../../../language');
 vi.mock('../../../api/api');
 vi.mock('../../../utils/linkUtil');
@@ -47,14 +49,17 @@ describe('Import planning', () => {
         abortButton: () => screen.getByRole('button', { name: messages['msg.close'] }),
     };
 
-    describe('test block', () => {
+    describe('test loading and asking for what to load', () => {
         const testCases = [
             {
                 description: 'should provide modal, when planning ids are different',
                 urlPlanningId: '1234',
                 storagePlanningId: '4321',
                 isStateTheSame: false,
+                isLocalStatePresent: true,
                 expectShowModal: true,
+                action: 'confirm',
+                numberOfExpectedGetDataCalls: 2,
             },
         ];
 
@@ -63,6 +68,7 @@ describe('Import planning', () => {
                 const user = userEvent.setup();
 
                 (getLanguage as Mock).mockImplementation(() => 'en');
+                (isStateTheSame as Mock).mockImplementation(() => testCase.isStateTheSame);
                 (useGetUrlParam as Mock).mockImplementation(() => testCase.urlPlanningId);
                 (getData as Mock).mockResolvedValue({
                     trackMerge: { trackCompositions: [] },
@@ -72,8 +78,10 @@ describe('Import planning', () => {
                 if (testCase.storagePlanningId) {
                     store.dispatch(backendActions.setPlanningId(testCase.storagePlanningId));
                 }
-                store.dispatch(trackMergeActions.setTracks([]));
-                store.dispatch(segmentDataActions.addGpxSegments([{ id: '123', filename: '1', points: [] }]));
+                if (testCase.isLocalStatePresent) {
+                    store.dispatch(trackMergeActions.setTracks([]));
+                    store.dispatch(segmentDataActions.addGpxSegments([{ id: '123', filename: '1', points: [] }]));
+                }
 
                 act(() =>
                     render(
@@ -89,9 +97,16 @@ describe('Import planning', () => {
 
                 await waitFor(() => expect(ui.showsModal()).toBeDefined());
                 ui.differentIdText();
-                await user.click(ui.confirmButton());
-                expect(getData).toHaveBeenCalledTimes(2);
-                expect(getData).toHaveBeenCalledWith(testCase.urlPlanningId);
+                if (testCase.action === 'confirm') {
+                    await user.click(ui.confirmButton());
+                } else if (testCase.action === 'confirm') {
+                    await user.click(ui.abortButton());
+                }
+
+                expect(getData).toHaveBeenCalledTimes(testCase.numberOfExpectedGetDataCalls);
+                if (testCase.numberOfExpectedGetDataCalls > 0) {
+                    expect(getData).toHaveBeenCalledWith(testCase.urlPlanningId);
+                }
             })
         );
     });
