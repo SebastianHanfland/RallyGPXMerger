@@ -385,5 +385,7 @@
     "msg.trackOverview": "Track overview",
     "msg.trackOverview.description": "You can change the order of the segments within a track here and see an overview of all track",
     "msg.localDataFound.details": "There are local data in your browser. Do you want to overwrite them with the version from the server?",
-    "msg.localDataFound": "Local data found"
+    "msg.localDataFound": "Local data found",
+    "msg.differentPlannnings": "Different plannings",
+    "msg.differentPlannnings.details": "The local planning is different from the one in the URL. Do you want to load the planning from the URL and discard all other possible local changes on the other planning?"
 }

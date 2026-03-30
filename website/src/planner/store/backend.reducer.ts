@@ -8,15 +8,24 @@ const initialState: BackendState = {
     hasChangesSinceLastUpload: false,
 };
 
+function setPlanningIdInUrl(currentSearch: string, newSearch: string) {
+    if (currentSearch.includes('planning=')) {
+        return `${getBaseUrl()}${'?section=gps'}${newSearch}`;
+    }
+    return `${getBaseUrl()}${currentSearch}${newSearch}`;
+}
+
 const backendSlice = createSlice({
     name: 'backend',
     initialState: storage.load()?.backend ?? initialState,
     reducers: {
         setPlanningId: (state: BackendState, action: PayloadAction<string>) => {
-            state.planningId = action.payload;
-            const newSearch = `&planning=${action.payload}`;
-            if (!window.location.search.includes(action.payload)) {
-                history.replaceState(null, '', `${getBaseUrl()}${window.location.search}${newSearch}`);
+            const planningId = action.payload;
+            state.planningId = planningId;
+            const newSearch = `&planning=${planningId}`;
+            const currentSearch = window.location.search;
+            if (!currentSearch.includes(planningId)) {
+                history.replaceState(null, '', setPlanningIdInUrl(currentSearch, newSearch));
             }
         },
         setPlanningPassword: (state: BackendState, action: PayloadAction<string>) => {
