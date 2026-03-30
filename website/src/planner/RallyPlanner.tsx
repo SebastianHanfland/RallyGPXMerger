@@ -8,7 +8,7 @@ import { getLanguage } from '../language.ts';
 import { AppFooter } from './layout/Footer.tsx';
 import { ToastWrapper } from './toasts/ToastWrapper.tsx';
 import { Store } from '@reduxjs/toolkit';
-import { LoadingDataFromServerModal } from './LoadingDataFromServerModal.tsx';
+import { LoadingDataFromServerModal } from './loading/LoadingDataFromServerModal.tsx';
 
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);

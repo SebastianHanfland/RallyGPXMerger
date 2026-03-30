@@ -1,9 +1,9 @@
 import { IntlShape } from 'react-intl';
-import { getData } from '../api/api.ts';
-import { backendActions } from './store/backend.reducer.ts';
-import { errorNotification, successNotification, toastsActions } from './store/toast.reducer.ts';
-import { AppDispatch } from './store/planningStore.ts';
-import { State } from './store/types.ts';
+import { getData } from '../../api/api.ts';
+import { backendActions } from '../store/backend.reducer.ts';
+import { errorNotification, successNotification, toastsActions } from '../store/toast.reducer.ts';
+import { AppDispatch } from '../store/planningStore.ts';
+import { State } from '../store/types.ts';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,

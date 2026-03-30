@@ -3,7 +3,7 @@ import { gpxShortener } from './gpxShortener.ts';
 import { storage } from '../store/storage.ts';
 import { State } from '../store/types.ts';
 import { useDispatch } from 'react-redux';
-import { loadStateAndSetUpPlanner } from '../useLoadPlanningFromServer.tsx';
+import { loadStateAndSetUpPlanner } from '../loading/useLoadPlanningFromServer.tsx';
 import { useNavigate } from 'react-router';
 import { StateOld } from '../store/typesOld.ts';
 import { isOldState } from '../../migrate/types.ts';
