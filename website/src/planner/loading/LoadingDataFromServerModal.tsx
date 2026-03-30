@@ -40,7 +40,6 @@ export function LoadingDataFromServerModal() {
                     console.log('No stored state');
                     setLoadFromServer(true);
                     setDecided(true);
-
                     return;
                 }
                 if (isStateTheSame(serverState, storedState)) {
