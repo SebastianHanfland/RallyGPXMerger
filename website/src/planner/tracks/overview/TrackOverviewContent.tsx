@@ -21,7 +21,7 @@ export const TrackOverviewContent = () => {
             <div style={{ display: 'flex', flexDirection: 'row', alignContent: 'flex-end' }}>
                 {sortedTracks.map((track) => {
                     return (
-                        <div style={{ width: '100px', alignContent: 'end' }}>
+                        <div style={{ width: '100px', alignContent: 'end' }} key={track.id}>
                             <TrackSegmentSelectionMinimum track={track} />
                         </div>
                     );
