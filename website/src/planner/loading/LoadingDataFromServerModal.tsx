@@ -10,7 +10,7 @@ import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { storage } from '../store/storage.ts';
-import { loadPlanning } from './useLoadPlanningFromServer.tsx';
+import { loadPlanning } from './loadPlanningFromServer.ts';
 
 function isSame(serverState: State, storedState: State) {
     const stateAreas = [
