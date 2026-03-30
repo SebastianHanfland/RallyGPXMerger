@@ -9,6 +9,7 @@ import { AppDispatch } from './store/planningStore.ts';
 import { State } from './store/types.ts';
 import { getTrackCompositions } from './store/trackMerge.reducer.ts';
 import { ConfirmationModal } from '../common/ConfirmationModal.tsx';
+import { getParsedGpxSegments } from './store/segmentData.redux.ts';
 
 export function loadStateAndSetUpPlanner(
     dispatch: AppDispatch,
@@ -66,9 +67,18 @@ export function UseLoadPlanningFromServer() {
     const [decided, setDecided] = useState(false);
 
     const trackCompositions = useSelector(getTrackCompositions);
+    const segments = useSelector(getParsedGpxSegments);
+    const noLocalDataStored = segments.length === 0 && trackCompositions.length === 0;
+
+    useEffect(() => {
+        if (!decided && noLocalDataStored) {
+            setDecided(true);
+        }
+    }, [noLocalDataStored]);
+
     useEffect(() => {
         console.log({ trackCompositions }, 2);
-        if (loadFromServer) {
+        if (loadFromServer || noLocalDataStored) {
             if (planningId) {
                 loadPlanning(planningId, dispatch, adminToken, planningPassword, intl);
             }
@@ -83,7 +93,7 @@ export function UseLoadPlanningFromServer() {
         return null;
     }
 
-    if (planningId && !loadFromServer && trackCompositions.length > 0) {
+    if (planningId && !noLocalDataStored) {
         return (
             <ConfirmationModal
                 onConfirm={() => {
