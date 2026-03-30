@@ -134,7 +134,9 @@ const trackMergeSlice = createSlice({
 export const trackMergeActions = trackMergeSlice.actions;
 export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reducer;
 const getBase = (state: State) => state.trackMerge;
-export const getTrackCompositions = (state: State) => getBase(state).trackCompositions;
+export const getTrackCompositions = (state: State) => {
+    return getBase(state).trackCompositions;
+};
 export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;

@@ -13,7 +13,6 @@ import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 
-import { calculateTracks } from '../../src/common/calculation/calculated-tracks/calculateTracks';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 
 const messages = getMessages('en');
