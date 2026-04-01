@@ -3,7 +3,6 @@ import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil
 import { Table } from 'react-bootstrap';
 import { StreetMapLink } from './StreetMapLink.tsx';
 import { HighlightUnknown } from './HighlightUnknown.tsx';
-import info from '../../assets/info.svg';
 import { useSelector } from 'react-redux';
 import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -13,6 +12,7 @@ import { EditPostCodeButton } from './EditPostCodeButton.tsx';
 import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox.tsx';
 import { wayPointHasUnknown } from './unknownUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
+import { InfoIcon } from '../../utils/icons/InfoIcon.tsx';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;
@@ -83,11 +83,11 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                         <th>
                             <div title={intl.formatMessage({ id: 'msg.duration.hint' })}>
                                 <FormattedMessage id={'msg.duration'} />
-                                <img src={info} className={'m-1'} alt="help" />
+                                <InfoIcon />
                             </div>
                             <div title={intl.formatMessage({ id: 'msg.blockage.hint' })}>
                                 ( <FormattedMessage id={'msg.blockage'} />
-                                <img src={info} className={'m-1'} alt="help" />)
+                                <InfoIcon />
                             </div>
                         </th>
                         <th>

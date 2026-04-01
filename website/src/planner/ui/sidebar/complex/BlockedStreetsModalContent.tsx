@@ -2,12 +2,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
 import { Table } from 'react-bootstrap';
-import info from '../../../../assets/info.svg';
 import { HighlightUnknown } from '../../../streets/HighlightUnknown.tsx';
 import { StreetMapLink } from '../../../streets/StreetMapLink.tsx';
 import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { getBlockedStreetInfo } from '../../../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { wayPointHasUnknown } from '../../../streets/unknownUtil.ts';
+import { InfoIcon } from '../../../../utils/icons/InfoIcon.tsx';
 
 export const BlockedStreetsModalContent = () => {
     const intl = useIntl();
@@ -42,7 +42,7 @@ export const BlockedStreetsModalContent = () => {
                         <th>
                             <div title={intl.formatMessage({ id: 'msg.blockage.hint' })}>
                                 <FormattedMessage id={'msg.blockage'} />
-                                <img src={info} className={'m-1'} alt="help" />
+                                <InfoIcon />
                             </div>
                         </th>
                         <th>

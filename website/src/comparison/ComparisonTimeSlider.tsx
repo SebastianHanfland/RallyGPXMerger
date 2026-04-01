@@ -9,6 +9,7 @@ import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
 import { getPlanningIds, getComparisonTrackTitles } from './store/tracks.reducer.ts';
+import { InfoIcon } from '../utils/icons/InfoIcon.tsx';
 
 let interval: NodeJS.Timeout | undefined;
 
@@ -38,23 +39,21 @@ export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: 
         }
     }, [playing]);
 
+    const timestampsInfo = planningIds
+        .map((planningId) => {
+            const currentTimeStampValue = currentTimeStampValues[planningId];
+            const formattedTimeStamp = currentTimeStampValue
+                ? intl.formatDate(currentTimeStampValue, DateTimeFormat)
+                : intl.formatMessage({ id: 'msg.time' });
+
+            return `${formattedTimeStamp} (${trackInfo[planningId]})`;
+        })
+        .join('\n');
+
     return (
         <div className={'d-flex'}>
             <div className={'flex-fill'}>
                 <Form.Group className={'mx-3'}>
-                    {planningIds.map((planningId) => {
-                        const currentTimeStampValue = currentTimeStampValues[planningId];
-                        const formattedTimeStamp = currentTimeStampValue
-                            ? intl.formatDate(currentTimeStampValue, DateTimeFormat)
-                            : intl.formatMessage({ id: 'msg.time' });
-
-                        return (
-                            <div key={planningId}>
-                                {formattedTimeStamp}
-                                {` (${trackInfo[planningId]})`}
-                            </div>
-                        );
-                    })}
                     <div className={`d-flex${bigThumb ? ' my-2' : ''}`}>
                         <Form.Range
                             min={0}
@@ -64,6 +63,9 @@ export function ComparisonTimeSlider({ bigThumb, showPlayButton }: { bigThumb?: 
                             height={'100px'}
                             className={bigThumb ? 'bigThumb' : undefined}
                         />
+                        <span title={timestampsInfo}>
+                            <InfoIcon />
+                        </span>
                     </div>
                 </Form.Group>
             </div>

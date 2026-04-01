@@ -136,7 +136,6 @@ export function MapVersionSelection() {
                         readOnly
                         onClick={() => dispatch(mapActions.setUseVersionColor(!useVersionColor))}
                     ></Form.Check>
-                    <ComparisonTimeSlider />
                     {constructions.length > 0 && (
                         <Form.Check
                             type={'checkbox'}
@@ -148,6 +147,7 @@ export function MapVersionSelection() {
                             onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
                         ></Form.Check>
                     )}
+                    <ComparisonTimeSlider />
                 </div>
             </Form>
         </Form.Group>
