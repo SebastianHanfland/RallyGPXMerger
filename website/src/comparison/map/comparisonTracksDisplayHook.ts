@@ -71,5 +71,6 @@ export function comparisonTracksDisplayHook(
         showMarker,
         highlightedTrack,
         useVersionColor,
+        colors.toString(),
     ]);
 }

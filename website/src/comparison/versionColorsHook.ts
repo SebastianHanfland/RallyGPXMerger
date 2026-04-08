@@ -18,7 +18,7 @@ export function useGetVersionColors(): Record<string, string | undefined> {
     }
     const colorLookup: Record<string, string | undefined> = {};
     colors.forEach((color, index) => {
-        colorLookup[planningIds[index]] = color;
+        colorLookup[planningIds[index]] = '#' + color;
     });
     return colorLookup;
 }
