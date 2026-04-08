@@ -6,11 +6,9 @@ import { TrackPrio } from '../tracks/components/TrackPrio.tsx';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getColor } from '../../utils/colorUtil.ts';
 import { TrackPeople } from '../tracks/components/TrackPeople.tsx';
-import { getDelaysOfTracksSelector } from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
 
 export const TrackPriorityTable = () => {
     const tracks = useSelector(getTrackCompositions);
-    const delays = useSelector(getDelaysOfTracksSelector);
     return (
         <div>
             <Table striped bordered hover style={{ width: '100%' }} size="sm">
@@ -44,7 +42,6 @@ export const TrackPriorityTable = () => {
                     ))}
                 </tbody>
             </Table>
-            <div>{JSON.stringify(delays)}</div>
         </div>
     );
 };
