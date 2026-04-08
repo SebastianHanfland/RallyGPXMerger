@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getNodeEditInfo, getNodeSpecifications, nodesActions } from '../store/nodes.reducer.ts';
 import { AppDispatch } from '../store/planningStore.ts';
@@ -10,6 +10,7 @@ import { NodeSpecification } from '../store/types.ts';
 import { EditNodeDialogContent } from './EditNodeDialogContent.tsx';
 
 export const EditNodeDialog = () => {
+    const intl = useIntl();
     const nodeEditInfo = useSelector(getNodeEditInfo);
     const branchesAtNode = useSelector(getBranchesAtNode);
     const storedNodeSpecs = useSelector(getNodeSpecifications);
@@ -49,8 +50,8 @@ export const EditNodeDialog = () => {
             <Modal.Header closeButton>
                 <Modal.Title>
                     <div>
-                        <FormattedMessage id={'msg.editNode'} />
-                        {foundNodeSpec && <FormattedMessage id={'msg.nodeSpecActive'} />}
+                        {intl.formatMessage({ id: 'msg.editNode' })}
+                        {foundNodeSpec && ` ${intl.formatMessage({ id: 'msg.nodeSpecActive' })}`}
                     </div>
                 </Modal.Title>
             </Modal.Header>

@@ -145,7 +145,7 @@ export function MapVersionSelection() {
                             checked={showConstructions}
                             readOnly
                             onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
-                        ></Form.Check>
+                        />
                     )}
                     <ComparisonTimeSlider />
                 </div>
