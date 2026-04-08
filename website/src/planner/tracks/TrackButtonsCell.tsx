@@ -10,10 +10,10 @@ import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
 import { getColor } from '../../utils/colorUtil.ts';
-import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
 import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
+import { ColorPicker } from '../../utils/ColorPicker.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -84,14 +84,7 @@ export function TrackButtonsCell({ track }: Props) {
                     }}
                     closeModal={() => setShowColorModal(false)}
                     title={`${intl.formatMessage({ id: 'msg.setColor' })} ${track.name ?? ''}`}
-                    body={
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <HexColorPicker color={color} onChange={setColor} />
-                            <div className={'mt-2'}>
-                                <HexColorInput color={color} onChange={setColor} />
-                            </div>
-                        </div>
-                    }
+                    body={<ColorPicker color={color} setColor={setColor} />}
                 />
             )}
 

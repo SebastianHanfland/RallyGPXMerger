@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { getColorFromUuid } from '../utils/colorUtil.ts';
 import { ColorBlob } from '../utils/ColorBlob.tsx';
 import { ConfirmationModal } from '../common/ConfirmationModal.tsx';
-import { HexColorPicker } from 'react-colorful';
 import { EditIcon } from '../utils/icons/EditIcon.tsx';
 import { useGetVersionColors } from './versionColorsHook.ts';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { NavigateFunction, useNavigate } from 'react-router';
+import { ColorPicker } from '../utils/ColorPicker.tsx';
 
 interface Props {
     index: number;
@@ -69,7 +69,7 @@ export function EditVersionColorButton({ planningId }: Props) {
                     }}
                     closeModal={() => setShowColorModal(false)}
                     title={`${intl.formatMessage({ id: 'msg.setColor' })}`}
-                    body={<HexColorPicker color={color} onChange={setColor} />}
+                    body={<ColorPicker color={color} setColor={setColor} />}
                 />
             )}
         </>

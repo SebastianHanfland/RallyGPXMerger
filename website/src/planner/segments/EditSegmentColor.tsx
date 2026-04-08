@@ -7,8 +7,8 @@ import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getColor } from '../../utils/colorUtil.ts';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { HexColorPicker } from 'react-colorful';
 import { ParsedGpxSegment } from '../store/types.ts';
+import { ColorPicker } from '../../utils/ColorPicker.tsx';
 
 interface Props {
     segment: ParsedGpxSegment;
@@ -40,7 +40,7 @@ export function EditSegmentColorButton({ segment }: Props) {
                     }}
                     closeModal={() => setShowColorModal(false)}
                     title={`${intl.formatMessage({ id: 'msg.setColor' })} ${segment.filename ?? ''}`}
-                    body={<HexColorPicker color={color} onChange={setColor} />}
+                    body={<ColorPicker color={color} setColor={setColor} />}
                 />
             )}
         </>
