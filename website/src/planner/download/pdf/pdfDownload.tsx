@@ -36,11 +36,11 @@ export const generatePdfsInZip = async (
 ) => {
     const zip = new JSZip();
     await Promise.all(
-        trackStreetInfos.map((info) => {
+        trackStreetInfos.map((info) =>
             generateTrackStreetPdfUrl(info, intl, planningLabel).then((blob) =>
                 zip.file(`${info.name}-${info.distanceInKm.toFixed(2)}km.pdf`, blob)
-            );
-        })
+            )
+        )
     );
     await generateBlockedStreetsPdfUrl(blockedStreetInfos, intl, planningLabel).then((blob) =>
         zip.file(`${intl.formatMessage({ id: 'msg.blockedStreets' })}.pdf`, blob)
