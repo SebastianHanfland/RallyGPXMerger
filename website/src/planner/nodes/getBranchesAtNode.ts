@@ -18,6 +18,13 @@ export const getBranchTracks = (segmentAfterId: string, tracks: TrackComposition
             track.segments.map((segment) => segment.id).includes(branchId)
         );
     });
+    // Set participants if a track starts at the node
+    foundTrackNode.segmentsBeforeNode
+        .filter((segmentsBefore) => segmentsBefore.trackIdInsteadOfSegmentId)
+        .map((segment) => segment.trackId)
+        .forEach((trackId) => {
+            branchTracks[trackId] = tracks.filter((track) => track.id === trackId);
+        });
     return branchTracks;
 };
 
