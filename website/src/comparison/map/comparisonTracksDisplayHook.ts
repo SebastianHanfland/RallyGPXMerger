@@ -6,11 +6,12 @@ import { getHighlightedTrack, getShowMapMarker, getUseVersionColor, mapActions }
 import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer.ts';
 import { getColorFromUuid } from '../../utils/colorUtil.ts';
 import { CalculatedTrack } from '../../common/types.ts';
+import { useGetVersionColors } from '../versionColorsHook.ts';
 
-function setColor(track: CalculatedTrack, useVersionColor: boolean, version: string) {
+function setColor(track: CalculatedTrack, useVersionColor: boolean, versionColor: string) {
     return {
         ...track,
-        color: useVersionColor ? getColorFromUuid(version) : track.color,
+        color: useVersionColor ? versionColor : track.color,
     };
 }
 
@@ -18,6 +19,7 @@ export function comparisonTracksDisplayHook(
     calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
     showMarkerOverwrite?: boolean
 ) {
+    const colors = useGetVersionColors();
     const parsedTracks = useSelector(getComparisonParsedTracks);
     const showMarker = useSelector(getShowMapMarker) || !!showMarkerOverwrite;
     const useVersionColor = useSelector(getUseVersionColor);
@@ -30,7 +32,7 @@ export function comparisonTracksDisplayHook(
     useEffect(() => {
         const tracks = selectedVersions.flatMap((version) => {
             const tracksOfVersion = (parsedTracks[version] ?? []).map((track) =>
-                setColor(track, useVersionColor, version)
+                setColor(track, useVersionColor, colors[version] ?? getColorFromUuid(version))
             );
 
             if ((selectedTracks[version]?.length ?? 0) === 0) {

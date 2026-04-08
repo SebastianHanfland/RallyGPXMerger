@@ -7,20 +7,19 @@ import {
     mapActions,
 } from './store/map.reducer.ts';
 import {
+    comparisonActions,
+    getComparisonMapConstructions,
+    getComparisonParsedTracks,
+    getComparisonTrackTitles,
+    getPlanningIds,
     getSelectedTracks,
     getSelectedVersions,
-    getComparisonTrackTitles,
-    comparisonActions,
-    getPlanningIds,
-    getComparisonParsedTracks,
-    getComparisonMapConstructions,
 } from './store/tracks.reducer.ts';
 import Select from 'react-select';
 import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getBaseUrl } from '../utils/linkUtil.ts';
-import { ColorBlob } from '../utils/ColorBlob.tsx';
-import { getColorFromUuid } from '../utils/colorUtil.ts';
+import { EditVersionColorButton } from './VersionColorEdit.tsx';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);
@@ -52,7 +51,7 @@ export function MapVersionSelection() {
     return (
         <Form.Group>
             <Form className={'d-flex'}>
-                {planningIds.map((planningId) => {
+                {planningIds.map((planningId, index) => {
                     const versionName = trackInfo[planningId] ?? planningId;
                     return (
                         <div
@@ -66,7 +65,7 @@ export function MapVersionSelection() {
                                 className={'m-3'}
                                 label={
                                     <span>
-                                        <ColorBlob color={getColorFromUuid(planningId)} />
+                                        <EditVersionColorButton planningId={planningId} index={index} />
                                         {versionName}
                                     </span>
                                 }
