@@ -28,6 +28,7 @@ import { breakPointsDisplayHook } from './hooks/breakPointsDisplayHook.ts';
 import { CreateEntryPointDialog } from '../entry/CreateEntryPointDialog.tsx';
 import { EditEntryPointDialog } from '../entry/EditEntryPointDialog.tsx';
 import { entryPointsDisplayHook } from './hooks/entryPointsDisplayHook.ts';
+import { TRACK_MARKER } from './panes.ts';
 
 let myMap: L.Map | undefined;
 
@@ -67,6 +68,9 @@ export const InteractionMap = () => {
                 console.log(event);
                 // dispatch(pointsActions.setContextMenuPoint({ lat: event.latlng.lat, lng: event.latlng.lng }));
             });
+            myMap.createPane(TRACK_MARKER);
+            const pane = myMap?.getPane(TRACK_MARKER)!;
+            pane.style.zIndex = '1000';
         }
         return () => {
             myMap?.remove();

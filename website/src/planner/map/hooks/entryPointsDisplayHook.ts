@@ -10,6 +10,7 @@ import {
     getEntryPointPositions,
     getEntryPointTooltip,
 } from '../../logic/resolving/selectors/getEntryPointPositions.ts';
+import { TRACK_MARKER } from '../panes.ts';
 
 export function entryPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getEntryPointPositions);
@@ -27,6 +28,7 @@ export function entryPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerG
             entryPointPositions.forEach((entryPoint) => {
                 const breakPointMarker = L.marker(toLatLng(entryPoint.point), {
                     icon: entryIcon,
+                    pane: TRACK_MARKER,
                 }).bindTooltip(getEntryPointTooltip(entryPoint), { sticky: true });
                 breakPointMarker.on('click', () => {
                     const breakInfo = { entryPointId: entryPoint.id, trackId: entryPoint.trackId };

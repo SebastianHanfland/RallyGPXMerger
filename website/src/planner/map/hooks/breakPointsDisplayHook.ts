@@ -7,6 +7,7 @@ import { toLatLng } from '../../../utils/pointUtil.ts';
 import { getBreakPositions, getBreakTooltip } from '../../logic/resolving/selectors/getBreakPositions.ts';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { layoutActions } from '../../store/layout.reducer.ts';
+import { TRACK_MARKER } from '../panes.ts';
 
 export function breakPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const breakPoints = useSelector(getBreakPositions);
@@ -24,6 +25,7 @@ export function breakPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerG
             breakPoints.forEach((breakPoint) => {
                 const breakPointMarker = L.marker(toLatLng(breakPoint.point), {
                     icon: breakPoint.hasToilet ? wcIcon : breakIcon,
+                    pane: TRACK_MARKER,
                 }).bindTooltip(getBreakTooltip(breakPoint), { sticky: true });
                 breakPointMarker.on('click', () => {
                     const breakInfo = { breakId: breakPoint.breakId, trackId: breakPoint.trackId };

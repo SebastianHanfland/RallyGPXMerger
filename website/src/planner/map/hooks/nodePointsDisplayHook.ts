@@ -6,6 +6,7 @@ import { nodeMergeIcon } from '../../../common/map/MapIcons.ts';
 import { getNodePositions } from '../../logic/resolving/selectors/getNodePositions.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { nodesActions } from '../../store/nodes.reducer.ts';
+import { TRACK_MARKER } from '../panes.ts';
 
 export function nodePointsDisplayHook(pointsOfInterestLayer: MutableRefObject<LayerGroup | null>) {
     const nodes = useSelector(getNodePositions);
@@ -23,6 +24,7 @@ export function nodePointsDisplayHook(pointsOfInterestLayer: MutableRefObject<La
             nodes.forEach((node) => {
                 const pointOfInterest = L.marker(toLatLng(node.point), {
                     icon: nodeMergeIcon,
+                    pane: TRACK_MARKER,
                 }).bindTooltip('Node point' + '\n' + node.tracks.join('\n'), { sticky: true });
                 pointOfInterest.on('click', () => {
                     dispatch(nodesActions.setNodeEditInfo({ segmentAfterId: node.segmentIdAfter }));
