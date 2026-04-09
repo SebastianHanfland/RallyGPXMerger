@@ -30,6 +30,9 @@ export async function loadServerFile(id: string, dispatch: Dispatch) {
             dispatch(comparisonActions.setDisplayInformation({ version: id, versionTitle: planningTitle }));
             dispatch(comparisonActions.setSelectVersions([id]));
         })
-        .catch(console.error)
+        .catch((error) => {
+            alert(`Error when loading Planning with id "${id}":\n${error}`);
+            console.error(error);
+        })
         .finally();
 }
