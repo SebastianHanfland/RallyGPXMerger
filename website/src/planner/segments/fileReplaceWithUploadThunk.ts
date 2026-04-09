@@ -14,33 +14,24 @@ export const executeGpxSegmentReplacementWithUpload = (dispatch: AppDispatch, ge
     }
 
     const { replacementSegments, targetSegment } = replaceProcess;
-    if (replacementSegments.length === 1) {
-        const newSegment = replacementSegments[0];
-        const payload = { id: targetSegment, newPoints: newSegment.points };
 
-        dispatch(segmentDataActions.changeGpxSegmentPoints(payload));
-        dispatch(segmentDataActions.setFilename({ id: targetSegment, filename: newSegment.filename }));
-    } else {
-        const previousSegmentSpeed = getSegmentSpeeds(getState())[targetSegment];
-        const replacementIds = replacementSegments.map((segment) => segment.id);
-        trackCompositions.forEach((track) => {
-            if (track.segments.map((segment) => segment.id).includes(targetSegment)) {
-                const newSegments = track.segments.flatMap((segmentId) =>
-                    segmentId.id === targetSegment
-                        ? [...replacementIds.map((id) => ({ id: id, segmentId: id, type: SEGMENT }))]
-                        : segmentId
-                );
-                dispatch(trackMergeActions.setSegments({ id: track.id, segments: newSegments }));
-            }
-        });
-        replacementIds.forEach((replacementId) => {
-            dispatch(
-                segmentDataActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed, averageSpeed })
+    const previousSegmentSpeed = getSegmentSpeeds(getState())[targetSegment];
+    const replacementIds = replacementSegments.map((segment) => segment.id);
+    trackCompositions.forEach((track) => {
+        if (track.segments.map((segment) => segment.id).includes(targetSegment)) {
+            const newSegments = track.segments.flatMap((segmentId) =>
+                segmentId.id === targetSegment
+                    ? [...replacementIds.map((id) => ({ id: id, segmentId: id, type: SEGMENT }))]
+                    : segmentId
             );
-        });
-        dispatch(segmentDataActions.addGpxSegments(replacementSegments));
-        dispatch(segmentDataActions.removeGpxSegment(targetSegment));
-    }
+            dispatch(trackMergeActions.setSegments({ id: track.id, segments: newSegments }));
+        }
+    });
+    replacementIds.forEach((replacementId) => {
+        dispatch(segmentDataActions.setSegmentSpeeds({ id: replacementId, speed: previousSegmentSpeed, averageSpeed }));
+    });
+    dispatch(segmentDataActions.removeGpxSegment(targetSegment));
 
     dispatch(segmentDataActions.setReplaceProcess(undefined));
+    dispatch(segmentDataActions.setClickOnSegment(undefined));
 };

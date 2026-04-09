@@ -30,6 +30,7 @@ export function ReplaceFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegmen
                                 ),
                             })
                         );
+                        dispatch(segmentDataActions.setFilename({ id, filename: value.target.value }));
                     }}
                 />
             </td>

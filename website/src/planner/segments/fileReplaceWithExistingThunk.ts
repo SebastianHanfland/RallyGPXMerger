@@ -25,4 +25,5 @@ export const executeGpxSegmentReplacementWithExisting = (dispatch: AppDispatch, 
     });
 
     dispatch(segmentDataActions.setReplaceProcess(undefined));
+    dispatch(segmentDataActions.setClickOnSegment(undefined));
 };
