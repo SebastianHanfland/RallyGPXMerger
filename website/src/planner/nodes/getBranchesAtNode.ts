@@ -59,7 +59,7 @@ export const getBranchesAtNode = createSelector(
         });
 
         const branchOffsets: Record<string, number> = {};
-        const sortedBranches = Object.entries(branchParticipants).sort((a, b) => (a[1] > b[1] ? 1 : -1));
+        const sortedBranches = Object.entries(branchParticipants).sort((a, b) => (a[1] < b[1] ? 1 : -1));
         sortedBranches.forEach(([segmentId], index) => {
             if (index === 0) {
                 branchOffsets[segmentId] = 0;
