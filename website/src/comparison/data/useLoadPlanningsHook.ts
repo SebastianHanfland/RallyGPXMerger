@@ -15,12 +15,15 @@ export function useLoadPlanningsHook(planningIds: string[]) {
         if (hasColorsDefined) {
             dispatch(mapActions.setUseVersionColor(true));
         }
+        if ([...new Set(planningIds)].length !== planningIds.length) {
+            alert('Duplicated ids in URL');
+        }
 
         Promise.all([planningIds.map((planningId) => loadServerFile(planningId, dispatch))]);
     }, []);
 
     useEffect(() => {
-        if (Object.keys(trackTitles).length !== planningIds.length) {
+        if (Object.keys(trackTitles).length !== [...new Set(planningIds)].length) {
             dispatch(comparisonActions.setIsLoading(true));
         } else {
             dispatch(comparisonActions.setIsLoading(false));
