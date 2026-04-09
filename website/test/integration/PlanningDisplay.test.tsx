@@ -160,7 +160,7 @@ describe('Planner integration test', () => {
             await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3), timeout);
 
             await ui.splitSegment(firstSegment.id, store.dispatch);
-            expect(getParsedGpxSegments(store.getState())).toHaveLength(4);
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(4), timeout);
         });
     });
 });

@@ -21,5 +21,6 @@ export const splitGpxAtPosition = (dispatch: AppDispatch, getState: () => State)
         { ...clickedSegment, points: pointsAfter, id: uuidv4(), filename: `${clickedSegment.filename}-2` },
     ];
     dispatch(segmentDataActions.setReplaceProcess({ targetSegment: clickedSegment.id, replacementSegments }));
+    dispatch(segmentDataActions.addGpxSegments(replacementSegments));
     dispatch(executeGpxSegmentReplacementWithUpload);
 };
