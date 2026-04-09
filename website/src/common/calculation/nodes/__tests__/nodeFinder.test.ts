@@ -1,5 +1,5 @@
 import { BREAK, SEGMENT, TrackBreak, TrackComposition, TrackElement } from '../../../../planner/store/types.ts';
-import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, TrackNode } from '../nodeFinder.ts';
+import { findMultipleOccurrencesOfSegments, listAllNodesOfTracks, NodeAtTrack } from '../nodeFinder.ts';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };
@@ -17,7 +17,7 @@ describe('Node finder', () => {
             { id: '2', name: 'B', segments: ['2', '3'].map(getSegment), peopleCount: 300 },
         ];
 
-        const expectedTrackNodes: TrackNode[] = [
+        const expectedTrackNodes: NodeAtTrack[] = [
             {
                 segmentsBeforeNode: [
                     { segmentId: '1', trackId: '1', amount: 200 },
@@ -46,7 +46,7 @@ describe('Node finder', () => {
             { id: '2', name: 'B', segments: [getSegment('2'), getBreak('5', 20), getSegment('4')], peopleCount: 300 },
         ];
 
-        const expectedTrackNodes: TrackNode[] = [];
+        const expectedTrackNodes: NodeAtTrack[] = [];
 
         // when
         const nodesOfTracks = listAllNodesOfTracks(trackCompositions);
@@ -62,7 +62,7 @@ describe('Node finder', () => {
             { id: '2', name: 'B', segments: ['3'].map(getSegment), peopleCount: 300 },
         ];
 
-        const expectedTrackNodes: TrackNode[] = [
+        const expectedTrackNodes: NodeAtTrack[] = [
             {
                 segmentsBeforeNode: [
                     { segmentId: '1', trackId: '1', amount: 200 },
@@ -149,7 +149,7 @@ describe('Node finder', () => {
             it(description, () => {
                 // when
                 // then
-                const expectedTrackNodes: TrackNode[] = [
+                const expectedTrackNodes: NodeAtTrack[] = [
                     {
                         segmentIdAfterNode: '1',
                         segmentsBeforeNode: [
@@ -176,7 +176,7 @@ describe('Node finder', () => {
             { id: '3', name: 'C', segments: ['C1', 'ABC'].map(getSegment), peopleCount: 400 },
         ];
 
-        const expectedTrackNodes: TrackNode[] = [
+        const expectedTrackNodes: NodeAtTrack[] = [
             {
                 segmentsBeforeNode: [
                     { segmentId: 'A1', trackId: '1', amount: 200 },
@@ -208,7 +208,7 @@ describe('Node finder', () => {
             { id: '2', name: 'B', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount: 300 },
         ];
 
-        const expectedTrackNodes: TrackNode[] = [
+        const expectedTrackNodes: NodeAtTrack[] = [
             {
                 segmentsBeforeNode: [
                     { segmentId: 'A1', trackId: '1', amount: 200 },

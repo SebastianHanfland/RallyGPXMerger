@@ -9,7 +9,7 @@ export interface TrackNodeSegment {
     trackIdInsteadOfSegmentId?: boolean;
 }
 
-export interface TrackNode {
+export interface NodeAtTrack {
     segmentsBeforeNode: TrackNodeSegment[];
     segmentIdAfterNode: string;
 }
@@ -32,15 +32,15 @@ export function findMultipleOccurrencesOfSegments(trackCompositions: TrackCompos
     return multipleSegmentIds;
 }
 
-export const trackNodesBySegmentSize = (trackCompositions: TrackComposition[]): TrackNode[] => {
+export const trackNodesBySegmentSize = (trackCompositions: TrackComposition[]): NodeAtTrack[] => {
     return listAllNodesOfTracks(trackCompositions).sort((a, b) =>
         a.segmentsBeforeNode.length > b.segmentsBeforeNode.length ? 1 : -1
     );
 };
 
-export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): TrackNode[] {
+export function listAllNodesOfTracks(trackCompositions: TrackComposition[]): NodeAtTrack[] {
     const segmentIdsUsedMultipleTimes = findMultipleOccurrencesOfSegments(trackCompositions);
-    const trackNodes: TrackNode[] = [];
+    const trackNodes: NodeAtTrack[] = [];
     segmentIdsUsedMultipleTimes.forEach((segmentId) => {
         const segmentsBeforeNode: TrackNodeSegment[] = [];
         trackCompositions.forEach((track) => {

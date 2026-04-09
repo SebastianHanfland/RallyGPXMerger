@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
-import { getBranchesAtNode, getBranchTracks } from './getBranchesAtNode.ts';
+import { getBranchesAtNode } from './getBranchesAtNode.ts';
 import { NodeEditInfo, NodeSpecification } from '../store/types.ts';
 import {
     getBranchId,
@@ -12,6 +12,7 @@ import {
 import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
 import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar.tsx';
 import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput.tsx';
+import { getBranchTracks } from './getBranchTracks.ts';
 
 function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
     const maximum = (total ?? 0) - branchParticipants;

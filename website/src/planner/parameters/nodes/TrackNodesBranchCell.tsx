@@ -2,7 +2,7 @@ import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { ColorBlob } from '../../../utils/ColorBlob.tsx';
 import { getColor } from '../../../utils/colorUtil.ts';
-import { TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
+import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
 import {
     getBranchId,
     getBranchNumbersSelector,
@@ -15,7 +15,7 @@ import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getLatLng } from '../../../utils/pointUtil.ts';
 
 interface Props {
-    trackNode: TrackNode;
+    trackNode: NodeAtTrack;
 }
 
 export const TrackNodesBranchCell = ({ trackNode }: Props) => {

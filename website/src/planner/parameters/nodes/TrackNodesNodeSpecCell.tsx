@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { TrackNode } from '../../../common/calculation/nodes/nodeFinder.ts';
+import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
 import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer.ts';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
@@ -7,7 +7,7 @@ import { TrashIcon } from '../../../utils/icons/TrashIcon.tsx';
 import { NodeIcon } from '../../../utils/icons/NodeIcon.tsx';
 
 interface Props {
-    trackNode: TrackNode;
+    trackNode: NodeAtTrack;
 }
 
 export const TrackNodesNodeSpecCell = ({ trackNode }: Props) => {

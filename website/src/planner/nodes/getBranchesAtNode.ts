@@ -1,38 +1,39 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { getNodeEditInfo, getNodeSpecifications } from '../store/nodes.reducer.ts';
-import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
-import { NodeSpecification, TrackComposition } from '../store/types.ts';
+import { listAllNodesOfTracks, NodeAtTrack } from '../../common/calculation/nodes/nodeFinder.ts';
+import { NodeSpecification } from '../store/types.ts';
+import { getBranchTracks } from './getBranchTracks.ts';
+import {
+    getDelaysOfTracks,
+    TrackDelayDetails,
+} from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
+import { getParticipantsDelay } from '../store/settings.reducer.ts';
 
-export const getBranchTracks = (segmentAfterId: string, tracks: TrackComposition[]) => {
-    const trackNodes = listAllNodesOfTracks(tracks);
-    const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === segmentAfterId);
-    if (!foundTrackNode) {
-        return undefined;
-    }
-    const branchSegmentIds = [...new Set(foundTrackNode.segmentsBeforeNode.map((segment) => segment.segmentId))];
+function getDelaysOfTrackAtNode(
+    delaysOfTracks: TrackDelayDetails[],
+    foundTrackNode: NodeAtTrack,
+    participantsDelay: number
+): Record<string, number> {
+    const delayOfTrackAtNode: Record<string, number> = {};
 
-    const branchTracks: Record<string, TrackComposition[]> = {};
-    branchSegmentIds.forEach((branchId) => {
-        branchTracks[branchId] = tracks.filter((track) =>
-            track.segments.map((segment) => segment.id).includes(branchId)
-        );
-    });
-    // Set participants if a track starts at the node
-    foundTrackNode.segmentsBeforeNode
-        .filter((segmentsBefore) => segmentsBefore.trackIdInsteadOfSegmentId)
-        .map((segment) => segment.trackId)
-        .forEach((trackId) => {
-            branchTracks[trackId] = tracks.filter((track) => track.id === trackId);
+    delaysOfTracks
+        .filter((trackDelay) =>
+            trackDelay.delays.map((delay) => delay.segmentId).includes(foundTrackNode.segmentIdAfterNode)
+        )
+        .forEach((trackDelay) => {
+            const foundDelay = trackDelay.delays.find((delay) => delay.segmentId === foundTrackNode.segmentIdAfterNode);
+            delayOfTrackAtNode[trackDelay.trackId] = (foundDelay?.extraDelay ?? 0) / participantsDelay;
         });
-    return branchTracks;
-};
+    return delayOfTrackAtNode;
+}
 
 export const getBranchesAtNode = createSelector(
     getNodeEditInfo,
     getTrackCompositions,
     getNodeSpecifications,
-    (nodeInfo, tracks, nodeSpecifications): NodeSpecification | undefined => {
+    getParticipantsDelay,
+    (nodeInfo, tracks, nodeSpecifications, participantsDelay): NodeSpecification | undefined => {
         const trackNodes = listAllNodesOfTracks(tracks);
         const foundTrackNode = trackNodes.find((node) => node.segmentIdAfterNode === nodeInfo?.segmentAfterId);
         if (nodeInfo?.segmentAfterId && nodeSpecifications) {
@@ -45,33 +46,23 @@ export const getBranchesAtNode = createSelector(
             return;
         }
         const branchTracks = getBranchTracks(foundTrackNode.segmentIdAfterNode, tracks);
+        const delaysOfTracks = getDelaysOfTracks(tracks, participantsDelay, nodeSpecifications);
+        const delayOfTrackAtNode = getDelaysOfTrackAtNode(delaysOfTracks, foundTrackNode, participantsDelay);
 
         const branchParticipants: Record<string, number> = {};
+        const branchOffsets: Record<string, number> = {};
+
         let totalCount = 0;
         if (!branchTracks) {
             return;
         }
+
         Object.entries(branchTracks).forEach(([key, value]) => {
             value.forEach((track) => {
                 totalCount = totalCount + (track.peopleCount ?? 0);
                 branchParticipants[key] = (branchParticipants[key] ?? 0) + (track.peopleCount ?? 0);
+                branchOffsets[key] = delayOfTrackAtNode[track.id];
             });
-        });
-
-        const branchOffsets: Record<string, number> = {};
-        const sortedBranches = Object.entries(branchParticipants).sort((a, b) => (a[1] < b[1] ? 1 : -1));
-        sortedBranches.forEach(([segmentId], index) => {
-            if (index === 0) {
-                branchOffsets[segmentId] = 0;
-                return;
-            }
-            let participantsBefore = 0;
-            sortedBranches.forEach((branch, counter) => {
-                if (counter < index) {
-                    participantsBefore = participantsBefore + branch[1];
-                }
-            });
-            branchOffsets[segmentId] = participantsBefore;
         });
 
         return { totalCount, trackOffsets: branchOffsets };

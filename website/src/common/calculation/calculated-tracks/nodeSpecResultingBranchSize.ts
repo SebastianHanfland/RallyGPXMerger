@@ -1,5 +1,5 @@
 import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
-import { listAllNodesOfTracks, TrackNode } from '../nodes/nodeFinder.ts';
+import { listAllNodesOfTracks, NodeAtTrack } from '../nodes/nodeFinder.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
 import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
@@ -17,7 +17,7 @@ function initiallyFillWithSingleTrackPeople(trackCompositions: TrackComposition[
     return correctedSegmentPeople;
 }
 
-export function getBranchTrackIds(trackNode: TrackNode): Record<string, string[] | undefined> {
+export function getBranchTrackIds(trackNode: NodeAtTrack): Record<string, string[] | undefined> {
     const branchTracks: Record<string, string[] | undefined> = {};
     trackNode.segmentsBeforeNode.forEach((beforeSegment) => {
         branchTracks[beforeSegment.segmentId] = [

@@ -8,7 +8,7 @@ import {
     PRIORITY,
     TrackComposition,
 } from '../../../planner/store/types.ts';
-import { TrackNode, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
+import { NodeAtTrack, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
 import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
 import { getBranchPriorities } from './getBranchPriorities.ts';
 import { createSelector } from '@reduxjs/toolkit';
@@ -29,7 +29,7 @@ export interface TrackDelayDetails {
     delays: TrackDelay[];
 }
 
-const initializeTrackDelayDetails = (trackNodes: TrackNode[]) => (track: TrackComposition) => {
+const initializeTrackDelayDetails = (trackNodes: NodeAtTrack[]) => (track: TrackComposition) => {
     const delays: TrackDelay[] = [];
     track.segments.forEach((segment) => {
         const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segment.id);
