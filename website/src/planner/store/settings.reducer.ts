@@ -32,7 +32,7 @@ const settingsSlice = createSlice({
         setParticipantsDelays: (state: SettingsState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
         },
-        setAverageSpeed: (state: SettingsState, action: PayloadAction<number>) => {
+        setAverageSpeed: (state: SettingsState, action: PayloadAction<number | undefined>) => {
             state.averageSpeedInKmH = action.payload;
         },
         setGapToleranceInKm: (state: SettingsState, action: PayloadAction<number | undefined>) => {
