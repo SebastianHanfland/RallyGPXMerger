@@ -16,7 +16,8 @@ function addSnakeToLayer(snake: BikeSnake, routeLayer: LayerGroup) {
     if (points.length === 0) {
         return;
     }
-    const trackMarker = L.marker(points.reverse()[0], {
+
+    const trackMarker = L.marker(points[points.length - 1], {
         icon: bikeIcon,
         title,
     });
