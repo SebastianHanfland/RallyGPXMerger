@@ -36,7 +36,9 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
                 setList={setSegmentIds}
             >
                 {segments.map((trackElement) => {
-                    return <SimpleElementDisplay trackElement={trackElement} key={trackElement.id} />;
+                    return (
+                        <SimpleElementDisplay trackElement={trackElement} key={trackElement.id} trackId={track.id} />
+                    );
                 })}
             </ReactSortable>
             <b title={track.name}>{limitString(track.name ?? '', 9)}</b>

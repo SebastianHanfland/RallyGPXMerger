@@ -3,9 +3,17 @@ import { useSelector } from 'react-redux';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getColor } from '../../../utils/colorUtil.ts';
 import { limitString } from '../../../utils/stringUtil.ts';
+import { SegmentGapDisplay } from './TrackSelectionGapDisplay.tsx';
+import { getGaps } from '../../calculation/getGaps.ts';
 
-export const SimpleElementDisplay = ({ trackElement }: { trackElement: TrackElement }) => {
+interface Props {
+    trackElement: TrackElement;
+    trackId: string;
+}
+
+export const SimpleElementDisplay = ({ trackElement, trackId }: Props) => {
     const parsedGpxSegments = useSelector(getParsedGpxSegments);
+    const gapsOfTrack = useSelector(getGaps).filter((gap) => gap.trackId === trackId);
 
     if (isTrackBreak(trackElement)) {
         return (
@@ -28,7 +36,7 @@ export const SimpleElementDisplay = ({ trackElement }: { trackElement: TrackElem
         if (!filename) {
             return <span>n.n.</span>;
         }
-        const shortenedFileName = limitString(filename, 8);
+        const shortenedFileName = limitString(filename, gapsOfTrack.length > 0 ? 6 : 8);
         return (
             <div
                 className={'rounded-2 d-flex justify-content-between'}
@@ -43,6 +51,7 @@ export const SimpleElementDisplay = ({ trackElement }: { trackElement: TrackElem
                 title={filename}
             >
                 {shortenedFileName}
+                <SegmentGapDisplay segmentId={trackElement.id} trackId={trackId} />
             </div>
         );
     }
