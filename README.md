@@ -81,7 +81,7 @@ For trying out the behaviors, you find this simple planning here: https://www.st
 
 Without any further setting, at a node the bigger group goes first, and then the smaller one(s) add behind.
 
-![Sketch](./docs/images/Confluence.gif)
+![Sketch](./docs/images/Confluence.png)
 
 ##### Custom behavior
 
