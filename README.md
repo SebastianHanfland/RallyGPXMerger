@@ -48,6 +48,7 @@ Therefore, now there are two modes of planning: one for a simple "line" demonstr
 * An overview of all nodes, where track come together
 * An overview of all segments on all tracks to check if the setup is right
 * Checking for gaps
+* Adding extra gathering points/entry points which have a time to be published, with a buffer and rounding, calculated from the current planning
 
 ### Simple ("Line")
 
@@ -71,6 +72,36 @@ The workflow for a complex demonstration
 * Name the planning and choose settings (e.g. rounding of start times)
 * Upload the planning
 * Share or publish the planning in form of PDF, or links, or iframes, as map or as table
+
+#### Behavior at nodes
+
+For trying out the behaviors, you find this simple planning here: https://www.sternfahrtplaner.de/?section=gps&planning=f9043eb9-2394-4d78-be27-481e96654411
+
+##### Default behavior
+
+Without any further setting, at a node the bigger group goes first, and then the smaller one(s) add behind.
+
+![Sketch](./docs/images/Confluence.gif)
+
+##### Custom behavior
+
+The tool allows to alter this behavior:
+* Via settings priorities can be set (the higher the priority, the earlier a branch finishes)
+* At each node the behavior can be specified:
+  * Altering the order
+  * Let the branches join at the same time
+
+When two or more branches join at the same time, the size is not adopted.
+The tool is based on a very simple simulation approach.
+For the planning and the execution the times of the head of branches are important.
+A more sophisticated approach would require detailed participant numbers, which are difficult to get.
+
+### Comparison
+
+Different plannings can be compared, to see the differences between them. Therefore, the planning ids have to be listed, like in this example:
+Optionally the color for the plannings can be specified in hex codes, or altered in the comparison itself
+
+https://www.sternfahrtplaner.de/?comparison=ce4e62a5-3b73-4fa1-80e3-d66d687c2439,2bf9d574-e3eb-4eb8-8759-762c34405160&colors=644ecf,befa2a
 
 ## Project structure
 
