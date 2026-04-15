@@ -6,7 +6,7 @@ export function getLink(waypoint: { pointFrom: { lat: number; lon: number }; poi
         // return `https://www.google.com/maps/search/${waypoint.pointTo.lat},${waypoint.pointTo.lon}`;
         return `https://www.openstreetmap.org/?mlat=${waypoint.pointTo.lat}&mlon=${waypoint.pointTo.lon}#map=17/${waypoint.pointTo.lat}/${waypoint.pointTo.lon}`;
     }
-    return `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${waypoint.pointFrom.lat}%2C${waypoint.pointFrom.lon}%3B${waypoint.pointTo.lat}%2C${waypoint.pointTo.lon}`;
+    return `https://www.openstreetmap.org/directions?engine=fossgis_osrm_bicycle&route=${waypoint.pointFrom.lat}%2C${waypoint.pointFrom.lon}%3B${waypoint.pointTo.lat}%2C${waypoint.pointTo.lon}`;
 }
 
 export function useGetUrlParam(paramArg: string): string | undefined {
