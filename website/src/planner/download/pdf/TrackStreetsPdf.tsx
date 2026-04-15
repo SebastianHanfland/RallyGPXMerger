@@ -31,7 +31,7 @@ export const TrackStreetsPdf = ({ trackStreets, intl, planningLabel }: Props) =>
                 <NodeOverviewTablePdf trackStreets={trackStreets} intl={intl} />
             </View>
         </Page>
-        {...chunkList(trackStreets.wayPoints, 15).map((wayPoints) => (
+        {...chunkList(trackStreets.wayPoints, 12).map((wayPoints) => (
             <Page size="A4" style={pdfStyles.page} orientation={'landscape'}>
                 <View style={pdfStyles.section}>
                     <TrackStreetTablePdf wayPoints={wayPoints} intl={intl} />

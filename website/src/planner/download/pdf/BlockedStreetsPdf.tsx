@@ -20,7 +20,7 @@ const colWidths = ['8%', '10%', '22%', '10%', '10%', '15%', '15%', '10%'].map((w
 
 export const BlockedStreetsPdf = ({ blockedStreets, intl, planningLabel }: Props) => (
     <Document>
-        {chunkList(blockedStreets, 15).map((blockStreetsChunk, index) => {
+        {chunkList(blockedStreets, 12).map((blockStreetsChunk, index) => {
             return (
                 <Page size="A4" style={pdfStyles.page} orientation={'landscape'} key={index}>
                     <View style={pdfStyles.section}>
