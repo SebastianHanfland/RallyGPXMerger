@@ -14,7 +14,7 @@ import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloa
 import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
 
 const cardStyle = {
-    style: { width: '170px', height: '145px', cursor: 'default' },
+    style: { width: '170px', minHeight: '145px', cursor: 'default' },
     className: 'startPageCard shadow mb-2 p-2 text-center',
 };
 
