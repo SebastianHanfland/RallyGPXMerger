@@ -6,9 +6,11 @@ import { toLatLng } from '../../utils/pointUtil.ts';
 import { entryIcon } from '../../common/map/MapIcons.ts';
 
 import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil.ts';
+import { getShowTimes } from '../store/displayMapReducer.ts';
 
 export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);
+    const showTimes = useSelector(getShowTimes);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -17,19 +19,24 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
             return;
         }
         current.clearLayers();
+        current.closePopup();
+
         entryPointPositions.forEach((entryPoint) => {
             const breakPointMarker = L.marker(toLatLng(entryPoint.point), {
                 icon: entryIcon,
             }).bindTooltip(getEntryPointTooltip(entryPoint), { sticky: true });
-            breakPointMarker
-                .addTo(current)
-                .bindPopup(getEntryPointTime(entryPoint), {
-                    closeButton: false,
-                    interactive: false,
-                    autoClose: false,
-                    offset: [-48, 0],
-                })
-                .openPopup();
+            const addedMarker = breakPointMarker.addTo(current);
+            if (showTimes) {
+                addedMarker
+                    .bindPopup(getEntryPointTime(entryPoint), {
+                        closeButton: false,
+                        interactive: false,
+                        autoClose: false,
+                        closeOnClick: false,
+                        offset: [-48, 0],
+                    })
+                    .openPopup();
+            }
         });
-    }, [entryPointPositions, entryPointPositions.length]);
+    }, [entryPointPositions, entryPointPositions.length, showTimes]);
 }
