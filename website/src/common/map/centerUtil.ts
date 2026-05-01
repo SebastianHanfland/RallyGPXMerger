@@ -6,6 +6,9 @@ export function getCenterPoint(parsedTracks: CalculatedTrack[] | undefined): { l
     if (!parsedTracks || parsedTracks.length === 0) {
         return Munich;
     }
+    if (parsedTracks[0].points.length === 0) {
+        return Munich;
+    }
     const point = parsedTracks[0].points[parsedTracks[0].points.length - 1];
     return getLatLng(point);
 }

@@ -7,14 +7,16 @@ export function getStartAndEndOfParsedTracks(calculatedTracks: CalculatedTrack[]
     let startDate = '9999-10-14T10:09:57.000Z';
 
     calculatedTracks.forEach((track) => {
-        const startTimeOfTrack = track.points[0].t;
-        if (startTimeOfTrack < startDate) {
-            startDate = startTimeOfTrack;
-        }
+        if (track.points.length > 0) {
+            const startTimeOfTrack = track.points[0].t;
+            if (startTimeOfTrack < startDate) {
+                startDate = startTimeOfTrack;
+            }
 
-        const endTimeOfTrack = track.points[track.points.length - 1].t;
-        if (endTimeOfTrack > endDate) {
-            endDate = endTimeOfTrack;
+            const endTimeOfTrack = track.points[track.points.length - 1].t;
+            if (endTimeOfTrack > endDate) {
+                endDate = endTimeOfTrack;
+            }
         }
     });
 
