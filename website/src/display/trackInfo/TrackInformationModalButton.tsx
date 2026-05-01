@@ -22,7 +22,7 @@ export function TrackInformationModalButton() {
     const setShowModal = (value: boolean) => dispatch(displayMapActions.setShowTrackInfo(value));
 
     return (
-        <>
+        <div style={{ marginRight: '20px', marginLeft: '20px' }}>
             <Button onClick={() => setShowModal(true)}>
                 <FormattedMessage id={'msg.trackInfoShort'} />
             </Button>
@@ -40,6 +40,6 @@ export function TrackInformationModalButton() {
                     <FormattedMessage id={isLive ? 'msg.showPlan' : 'msg.showLive'} />
                 </Button>
             )}
-        </>
+        </div>
     );
 }

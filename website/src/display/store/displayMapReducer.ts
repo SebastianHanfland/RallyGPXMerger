@@ -4,6 +4,7 @@ import { DisplayState, MapState } from './types';
 const initialState: MapState = {
     isLoading: true,
     currentTime: 0,
+    showTimes: true,
     isLive: window.location.search.includes('&live'),
 };
 
@@ -33,6 +34,9 @@ const mapSlice = createSlice({
         setIsLive: (state: MapState, action: PayloadAction<boolean>) => {
             state.isLive = action.payload;
         },
+        setShowTimes: (state: MapState, action: PayloadAction<boolean>) => {
+            state.showTimes = action.payload;
+        },
         setIsLoading: (state: MapState, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
         },
@@ -50,4 +54,5 @@ export const getShowTrackInfo = (state: DisplayState) => getBase(state).showTrac
 export const getShowSingleTrackInfo = (state: DisplayState) => getBase(state).showSingleTrackInfo;
 export const getHighlightedTrack = (state: DisplayState) => getBase(state).highlightedTrack;
 export const getIsLive = (state: DisplayState) => getBase(state).isLive;
+export const getShowTimes = (state: DisplayState) => getBase(state).showTimes;
 export const getIsDisplayMapLoading = (state: DisplayState) => getBase(state).isLoading;

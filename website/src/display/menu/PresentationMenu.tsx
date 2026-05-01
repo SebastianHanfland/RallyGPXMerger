@@ -4,6 +4,7 @@ import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
 import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton.tsx';
 import { useSelector } from 'react-redux';
 import { getDisplayTitle } from '../store/displayTracksReducer.ts';
+import { TimeDisplayCheckbox } from '../trackInfo/TimeDisplayCheckbox.tsx';
 
 const style: CSSProperties = {
     paddingLeft: '15px',
@@ -31,15 +32,17 @@ export function PresentationMenu() {
             <div style={style} className={'shadow d-sm-block'}>
                 <h5 className={'mt-2'}>{title}</h5>
                 <DisplayTimeSlider showPlayButton={true} bigThumb={true} />
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TrackInformationModalButton />
+                    <TimeDisplayCheckbox />
                 </div>
             </div>
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
                 <h5 className={'mt-2'}>{title}</h5>
                 <DisplayTimeSlider showPlayButton={true} bigThumb={true} />
-                <div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <TrackInformationModalButton />
+                    <TimeDisplayCheckbox />
                 </div>
             </div>
         </>

@@ -10,6 +10,7 @@ export interface MapState {
     showSingleTrackInfo?: string;
     highlightedTrack?: string;
     isLive: boolean;
+    showTimes: boolean;
     isLoading: boolean;
 }
 

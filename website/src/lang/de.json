@@ -387,5 +387,6 @@
     "msg.localDataFound.details": "Es gibt lokale Dateien im Browser. Möchtest Sie die lokalen Daten mit der Version vom Server überschreiben?",
     "msg.localDataFound": "Lokale Dateien gefunden",
     "msg.differentPlannnings": "Unterschiedliche Planungen",
-    "msg.differentPlannnings.details": "Die lokale Planung hat eine andere ID als in der URL. Wollen Sie die Planung aus der URL laden und damit bei der anderen lokalen Planung eventuelle ungespeicherte Änderungen verwerfen?"
+    "msg.differentPlannnings.details": "Die lokale Planung hat eine andere ID als in der URL. Wollen Sie die Planung aus der URL laden und damit bei der anderen lokalen Planung eventuelle ungespeicherte Änderungen verwerfen?",
+    "msg.times": "Zeiten"
 }
