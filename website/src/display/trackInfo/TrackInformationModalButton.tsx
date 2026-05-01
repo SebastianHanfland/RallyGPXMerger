@@ -22,23 +22,27 @@ export function TrackInformationModalButton() {
     const setShowModal = (value: boolean) => dispatch(displayMapActions.setShowTrackInfo(value));
 
     return (
-        <div style={{ marginRight: '20px', marginLeft: '20px' }}>
-            <Button onClick={() => setShowModal(true)}>
-                <FormattedMessage id={'msg.trackInfoShort'} />
-            </Button>
-            {rallyIsToday && (
-                <Button
-                    onClick={() => {
-                        if (isLive) {
-                            dispatch(setStartAndEndTime);
-                        }
-                        dispatch(displayMapActions.setIsLive(!isLive));
-                    }}
-                    variant={'info'}
-                    style={{ marginLeft: '10px' }}
-                >
-                    <FormattedMessage id={isLive ? 'msg.showPlan' : 'msg.showLive'} />
+        <div style={{ marginRight: '20px', marginLeft: '20px', display: 'flex', flexDirection: 'row' }}>
+            <div>
+                <Button onClick={() => setShowModal(true)}>
+                    <FormattedMessage id={'msg.trackInfoShort'} />
                 </Button>
+            </div>
+            {rallyIsToday && (
+                <div>
+                    <Button
+                        onClick={() => {
+                            if (isLive) {
+                                dispatch(setStartAndEndTime);
+                            }
+                            dispatch(displayMapActions.setIsLive(!isLive));
+                        }}
+                        variant={'info'}
+                        style={{ marginLeft: '10px' }}
+                    >
+                        <FormattedMessage id={isLive ? 'msg.showPlan' : 'msg.showLive'} />
+                    </Button>
+                </div>
             )}
         </div>
     );
