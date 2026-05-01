@@ -32,6 +32,7 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
                         closeButton: false,
                         interactive: false,
                         autoClose: false,
+                        closeOnEscapeKey: false,
                         closeOnClick: false,
                         offset: [-48, 0],
                     })
