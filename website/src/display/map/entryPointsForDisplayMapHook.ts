@@ -4,7 +4,8 @@ import L, { LayerGroup } from 'leaflet';
 import { getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
 import { entryIcon } from '../../common/map/MapIcons.ts';
-import { getEntryPointTooltip } from '../../planner/logic/resolving/selectors/getEntryPointPositions.ts';
+
+import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil.ts';
 
 export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);
@@ -20,7 +21,15 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
             const breakPointMarker = L.marker(toLatLng(entryPoint.point), {
                 icon: entryIcon,
             }).bindTooltip(getEntryPointTooltip(entryPoint), { sticky: true });
-            breakPointMarker.addTo(current);
+            breakPointMarker
+                .addTo(current)
+                .bindPopup(getEntryPointTime(entryPoint), {
+                    closeButton: false,
+                    interactive: false,
+                    autoClose: false,
+                    offset: [-48, 0],
+                })
+                .openPopup();
         });
     }, [entryPointPositions, entryPointPositions.length]);
 }

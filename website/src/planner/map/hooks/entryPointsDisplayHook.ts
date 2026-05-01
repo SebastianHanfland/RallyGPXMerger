@@ -6,11 +6,9 @@ import { entryIcon } from '../../../common/map/MapIcons.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { layoutActions } from '../../store/layout.reducer.ts';
-import {
-    getEntryPointPositions,
-    getEntryPointTooltip,
-} from '../../logic/resolving/selectors/getEntryPointPositions.ts';
+import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntryPointPositions.ts';
 import { TRACK_MARKER } from '../panes.ts';
+import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
 
 export function entryPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getEntryPointPositions);

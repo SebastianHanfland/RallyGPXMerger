@@ -7,13 +7,11 @@ import { TrackEntry } from '../../store/types.ts';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
 import { ArrowRightIcon } from '../../../utils/icons/ArrowRightIcon.tsx';
 import { EditIcon } from '../../../utils/icons/EditIcon.tsx';
-import {
-    getEntryPointPositions,
-    getEntryPointTooltip,
-} from '../../logic/resolving/selectors/getEntryPointPositions.ts';
+import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntryPointPositions.ts';
 import { mapActions } from '../../store/map.reducer.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
+import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
 
 interface Props {
     trackId: string;
