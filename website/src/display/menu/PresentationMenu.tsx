@@ -40,7 +40,7 @@ export function PresentationMenu() {
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
                 <h5 className={'mt-2'}>{title}</h5>
                 <DisplayTimeSlider showPlayButton={true} bigThumb={true} />
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TrackInformationModalButton />
                     <TimeDisplayCheckbox />
                 </div>
