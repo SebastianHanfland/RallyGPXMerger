@@ -11,7 +11,7 @@ const style: CSSProperties = {
     paddingRight: '15px',
     position: 'fixed',
     width: '350px',
-    height: '160px',
+    minHeight: '160px',
     left: 0,
     right: 0,
     overflowY: 'scroll',
