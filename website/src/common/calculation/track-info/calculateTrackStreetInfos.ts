@@ -85,8 +85,9 @@ function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): P
 }
 
 function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
-    if (trackPoints.length > 0) {
-        return trackPoints[0];
+    const wayPointsWithoutEntryPoints = trackPoints.filter((point) => point.type !== TrackWayPointType.Entry);
+    if (wayPointsWithoutEntryPoints.length > 0) {
+        return wayPointsWithoutEntryPoints[0];
     }
     return {
         streetName: null,
