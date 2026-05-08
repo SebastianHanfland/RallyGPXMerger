@@ -25,7 +25,7 @@ export const PresentationTable = () => {
         return <div>Loading</div>;
     }
 
-    const sortedTracks = [...tracks].sort((a, b) => a.filename.localeCompare(b.filename));
+    const sortedTracks = [...tracks];
 
     return (
         <div>
