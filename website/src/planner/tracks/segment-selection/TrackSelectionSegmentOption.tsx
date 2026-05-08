@@ -35,8 +35,11 @@ function getSegmentInfo(aggregatedInfo: AggregatedPoints[] | undefined) {
     if (!aggregatedInfo) {
         return undefined;
     }
+    if (aggregatedInfo.length === 0) {
+        return undefined;
+    }
     let distance = 0;
-    const seconds = aggregatedInfo[aggregatedInfo.length - 1].frontPassage;
+    const seconds = aggregatedInfo[aggregatedInfo.length - 1].frontPassage - aggregatedInfo[0].frontArrival;
     aggregatedInfo.forEach((info) => {
         distance += info.distanceInKm ?? 0;
     });
