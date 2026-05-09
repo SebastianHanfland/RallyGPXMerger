@@ -3,8 +3,9 @@ import { CSSProperties } from 'react';
 import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
 import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton.tsx';
 import { useSelector } from 'react-redux';
-import { getDisplayTitle } from '../store/displayTracksReducer.ts';
+import { getDisplayEntryPoints, getDisplayTitle } from '../store/displayTracksReducer.ts';
 import { TimeDisplayCheckbox } from '../trackInfo/TimeDisplayCheckbox.tsx';
+import { useTimesConfig } from '../map/useTimesConfig.ts';
 
 const style: CSSProperties = {
     paddingLeft: '15px',
@@ -26,13 +27,19 @@ const style: CSSProperties = {
 
 export function PresentationMenu() {
     const title = useSelector(getDisplayTitle) ?? 'Demonstration';
+
+    const entryPointPositions = useSelector(getDisplayEntryPoints);
+    const timesConfig = useTimesConfig();
+    const doesNotShowTimes = entryPointPositions.length === 0 || timesConfig === 'off';
+    const justifyContent = doesNotShowTimes ? 'center' : 'space-between';
+
     return (
         <>
             <TrackInformationModal />
             <div style={style} className={'shadow d-sm-block'}>
                 <h5 className={'mt-2'}>{title}</h5>
                 <DisplayTimeSlider showPlayButton={true} bigThumb={true} />
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: justifyContent }}>
                     <TrackInformationModalButton />
                     <TimeDisplayCheckbox />
                 </div>
@@ -40,7 +47,7 @@ export function PresentationMenu() {
             <div style={{ ...style, width: '95%' }} className={'shadow d-sm-none'}>
                 <h5 className={'mt-2'}>{title}</h5>
                 <DisplayTimeSlider showPlayButton={true} bigThumb={true} />
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: justifyContent }}>
                     <TrackInformationModalButton />
                     <TimeDisplayCheckbox />
                 </div>

@@ -7,12 +7,12 @@ import { markerIcon } from '../../common/map/MapIcons.ts';
 
 import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil.ts';
 import { getShowTimes } from '../store/displayMapReducer.ts';
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
+import { useTimesConfig } from './useTimesConfig.ts';
 
 export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);
     const showTimes = useSelector(getShowTimes);
-    const useTimes = useGetUrlParam('times=');
+    const useTimes = useTimesConfig();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -29,19 +29,19 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
                 { sticky: true }
             );
             const addedMarker = breakPointMarker.addTo(current);
-            if (showTimes) {
-                addedMarker
-                    .bindPopup(getEntryPointTime(entryPoint), {
-                        closeButton: false,
-                        interactive: false,
-                        autoClose: false,
-                        closeOnEscapeKey: false,
-                        closeOnClick: false,
-                        offset: [0, 10],
-                        maxWidth: 30,
-                        minWidth: 30,
-                    })
-                    .openPopup();
+            if (showTimes && ['defaultOff', 'defaultOn'].includes(useTimes)) {
+                const marker = addedMarker.bindPopup(getEntryPointTime(entryPoint), {
+                    closeButton: false,
+                    interactive: false,
+                    autoClose: false,
+                    closeOnEscapeKey: false,
+                    closeOnClick: false,
+                    autoPan: false,
+                    offset: [0, 10],
+                    maxWidth: 30,
+                    minWidth: 30,
+                });
+                marker.openPopup();
             }
         });
     }, [entryPointPositions, entryPointPositions.length, showTimes]);

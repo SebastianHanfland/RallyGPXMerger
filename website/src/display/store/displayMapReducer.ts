@@ -4,7 +4,7 @@ import { DisplayState, MapState } from './types';
 const initialState: MapState = {
     isLoading: true,
     currentTime: 0,
-    showTimes: true,
+    showTimes: window.location.search.includes('&times=defaultOn') || !window.location.search.includes('&times='),
     isLive: window.location.search.includes('&live'),
 };
 

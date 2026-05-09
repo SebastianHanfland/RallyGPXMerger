@@ -4,13 +4,14 @@ import { displayMapActions, getShowTimes } from '../store/displayMapReducer.ts';
 import { DisplayDispatch } from '../store/store.ts';
 import { Form } from 'react-bootstrap';
 import { getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
+import { useTimesConfig } from '../map/useTimesConfig.ts';
 
 export function TimeDisplayCheckbox() {
     const dispatch: DisplayDispatch = useDispatch();
     const showTimes = useSelector(getShowTimes);
     const entryPointPositions = useSelector(getDisplayEntryPoints);
-
-    if (entryPointPositions.length === 0) {
+    const timesConfig = useTimesConfig();
+    if (entryPointPositions.length === 0 || timesConfig === 'off') {
         return null;
     }
 
