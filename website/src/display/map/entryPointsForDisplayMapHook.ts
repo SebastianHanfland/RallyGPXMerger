@@ -35,7 +35,9 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
                         autoClose: false,
                         closeOnEscapeKey: false,
                         closeOnClick: false,
-                        offset: [0, -24],
+                        offset: [0, 10],
+                        maxWidth: 30,
+                        minWidth: 30,
                     })
                     .openPopup();
             }
