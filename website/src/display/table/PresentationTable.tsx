@@ -32,8 +32,8 @@ export const PresentationTable = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>
-                            <FormattedMessage id={'msg.trackName'} />
+                        <th style={{ minWidth: '100px' }}>
+                            <FormattedMessage id={'msg.track'} />
                         </th>
                         <th>
                             <FormattedMessage id={'msg.start'} />
@@ -43,15 +43,6 @@ export const PresentationTable = () => {
                                 <FormattedMessage id={'msg.entryPoints'} />
                             </th>
                         )}
-                        <th>
-                            <FormattedMessage id={'msg.destination'} />
-                        </th>
-                        <th>
-                            <FormattedMessage id={'msg.distanceInKm'} />
-                        </th>
-                        <th>
-                            <FormattedMessage id={'msg.files'} />
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,11 +72,24 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
     const { pointFrom: startPoint, streetName: startStreetName } = foundInfo.wayPoints[0];
     const startLink = getLink({ pointFrom: startPoint, pointTo: startPoint });
 
-    const { pointFrom: endPoint, streetName: endStreetName } = foundInfo.wayPoints[foundInfo.wayPoints.length - 1];
-    const endLink = getLink({ pointFrom: endPoint, pointTo: endPoint });
     return (
         <tr>
-            <td>{track.filename}</td>
+            <td>
+                <div>
+                    <div>{track.filename}</div>
+                    <div>({formatNumber(foundInfo.distanceInKm, 1)} km)</div>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <div>
+                            <TrackFileDownloader track={track} />
+                        </div>
+                        {foundInfo && (
+                            <div>
+                                <TrackInfoPdfDownloadButton trackStreets={foundInfo} planningLabel={planningLabel} />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </td>
             <td>
                 {formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront, hideSeconds)}{' '}
                 <div>
@@ -112,19 +116,6 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                     </div>
                 </td>
             )}
-            <td>
-                {formatTimeOnly(foundInfo.arrivalFront, hideSeconds)}
-                <div>
-                    <a href={endLink} target={'_blank'} referrerPolicy={'no-referrer'}>
-                        {endStreetName}
-                    </a>
-                </div>
-            </td>
-            <td>{formatNumber(foundInfo.distanceInKm, 1)}</td>
-            <td>
-                <TrackFileDownloader track={track} />
-                {foundInfo && <TrackInfoPdfDownloadButton trackStreets={foundInfo} planningLabel={planningLabel} />}
-            </td>
         </tr>
     );
 }
