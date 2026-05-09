@@ -13,13 +13,18 @@ import { getLink } from '../../utils/linkUtil.ts';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 import { TrackWayPointType } from '../../planner/logic/resolving/types.ts';
 import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
+import { useTableIndices } from './useTableIndices.ts';
+
+const filterByIndex = (tableIndices: number[] | undefined) => (_: unknown, index: number) =>
+    !tableIndices || tableIndices.includes(index);
 
 export const PresentationTable = () => {
-    const tracks = useSelector(getDisplayTracks);
+    const tableIndices = useTableIndices();
+    const tracks = useSelector(getDisplayTracks).filter(filterByIndex(tableIndices));
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
-    const hasEntryPoints = trackStreetInfos.some((track) =>
-        track.wayPoints.some((wayPoint) => wayPoint.type === TrackWayPointType.Entry)
-    );
+    const hasEntryPoints = trackStreetInfos
+        .filter(filterByIndex(tableIndices))
+        .some((track) => track.wayPoints.some((wayPoint) => wayPoint.type === TrackWayPointType.Entry));
 
     if (!tracks) {
         return <div>Loading</div>;
@@ -78,7 +83,7 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                 <div>
                     <div>{track.filename}</div>
                     <div>({formatNumber(foundInfo.distanceInKm, 1)} km)</div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                         <div>
                             <TrackFileDownloader track={track} />
                         </div>
