@@ -2,13 +2,13 @@ import { Button } from 'react-bootstrap';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { CSSProperties, useState } from 'react';
 import shareIcon from '../../assets/share.svg';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
-import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/settings.reducer.ts';
 import { EntryPointOptions } from './EntryPointOptions.tsx';
+import { LinkAndClipboardCopy } from './LinkAndClipboardCopy.tsx';
 
 const sharePlanningStyle1: CSSProperties = {
     position: 'fixed',
@@ -56,8 +56,6 @@ export function SharePlanningButton({ onMap }: { onMap?: boolean }) {
     );
 }
 
-const entryStyle = { display: 'flex', justifyContent: 'space-between', margin: '10px' };
-
 function getIframeExample(displayLink: string, planningTitle: string | undefined) {
     const iframeExample = `
         <iframe
@@ -84,58 +82,16 @@ const SharingModalBody = () => {
 
     return (
         <div>
-            <div style={entryStyle}>
-                <span>
-                    <FormattedMessage id={'msg.publicLink'} />: <b>{displayLink}</b>
-                </span>
-                <CopyToClipboardButton text={displayLink} />
-            </div>
-            <div style={entryStyle}>
-                <span>
-                    <FormattedMessage id={'msg.publicTableLink'} />: <b>{tableLink}</b>
-                </span>
-                <CopyToClipboardButton text={tableLink} />
-            </div>
-            <div style={entryStyle}>
-                <span>
-                    <FormattedMessage id={'msg.planningLink'} />: <b>{planningLink}</b>
-                </span>
-                <CopyToClipboardButton text={planningLink} />
-            </div>
-            <div style={entryStyle}>
-                <span>
-                    <FormattedMessage id={'msg.compareLink'} />: <b>{compareLink}</b>
-                </span>
-                <CopyToClipboardButton text={compareLink} />
-            </div>
-            <div style={entryStyle}>
-                <span>
-                    <FormattedMessage id={'msg.iframeExample'} />: <b>{iframeExample}</b>
-                </span>
-                <CopyToClipboardButton text={iframeExample} />
-            </div>
-            <div style={entryStyle}>
-                <span>
-                    <FormattedMessage id={'msg.iframeTableExample'} />: <b>{iframeTableExample}</b>
-                </span>
-                <CopyToClipboardButton text={iframeTableExample} />
-            </div>
-            {password && (
-                <div style={entryStyle}>
-                    <span>
-                        <FormattedMessage id={'msg.planningLinkWithAdmin'} />: <b>{planningLinkWithAdmin}</b>
-                    </span>
-                    <CopyToClipboardButton text={planningLinkWithAdmin} />
-                </div>
-            )}
-            {password && (
-                <div style={entryStyle}>
-                    <span>
-                        <FormattedMessage id={'msg.planningPassword'} />: <b>{password}</b>
-                    </span>
-                    <CopyToClipboardButton text={password} />
-                </div>
-            )}
+            <LinkAndClipboardCopy messageId={'msg.publicLink'} link={displayLink} />
+            <LinkAndClipboardCopy messageId={'msg.publicTableLink'} link={tableLink} />
+            <LinkAndClipboardCopy messageId={'msg.planningLink'} link={planningLink} />
+            <LinkAndClipboardCopy messageId={'msg.compareLink'} link={compareLink} />
+            <LinkAndClipboardCopy messageId={'msg.iframeExample'} link={iframeExample} />
+            <LinkAndClipboardCopy messageId={'msg.iframeTableExample'} link={iframeTableExample} />
+
+            {password && <LinkAndClipboardCopy messageId={'msg.planningLinkWithAdmin'} link={planningLinkWithAdmin} />}
+            {password && <LinkAndClipboardCopy messageId={'msg.planningPassword'} link={password} />}
+
             <EntryPointOptions />
         </div>
     );
