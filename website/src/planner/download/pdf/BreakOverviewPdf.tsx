@@ -17,7 +17,7 @@ export const BreakOverviewPdf = ({ trackStreets, intl }: Props) => {
 
     if (breaks.length === 0) {
         return (
-            <View>
+            <View wrap={false}>
                 <Text style={pdfStyles.sectionTitle}>{intl.formatMessage({ id: 'msg.breakPoints' })}</Text>
                 <Text>{intl.formatMessage({ id: 'msg.noBreakPoints' })}</Text>
             </View>
@@ -25,7 +25,7 @@ export const BreakOverviewPdf = ({ trackStreets, intl }: Props) => {
     }
 
     return (
-        <View>
+        <View wrap={false}>
             <Text style={pdfStyles.sectionTitle}>{intl.formatMessage({ id: 'msg.breakPoints' })}</Text>
             <View style={pdfStyles.table}>
                 <View style={[pdfStyles.row, pdfStyles.bold, pdfStyles.header]}>

@@ -18,7 +18,7 @@ export const NodeOverviewTablePdf = ({ trackStreets, intl }: Props) => {
 
     if (nodes.length === 0) {
         return (
-            <View>
+            <View wrap={false}>
                 <Text style={pdfStyles.sectionTitle}>{nodesTitle}</Text>
                 <Text>{intl.formatMessage({ id: 'msg.noNodePoints' })}</Text>
             </View>
@@ -26,7 +26,7 @@ export const NodeOverviewTablePdf = ({ trackStreets, intl }: Props) => {
     }
 
     return (
-        <View>
+        <View wrap={false}>
             <Text style={pdfStyles.sectionTitle}>{nodesTitle}</Text>
             <View style={pdfStyles.table}>
                 <View style={[pdfStyles.row, pdfStyles.bold, pdfStyles.header]}>
@@ -34,6 +34,23 @@ export const NodeOverviewTablePdf = ({ trackStreets, intl }: Props) => {
                     <Text style={colWidths[1]}>{intl.formatMessage({ id: 'msg.pointInTime' })} </Text>
                     <Text style={colWidths[2]}>{intl.formatMessage({ id: 'msg.otherTracks' })} </Text>
                 </View>
+                {...nodes.map((nodePoint, index) => {
+                    return (
+                        <View key={index} style={pdfStyles.row} wrap={false}>
+                            <Text style={colWidths[0]}>
+                                <Text style={pdfStyles.bold}>
+                                    <Link src={getLink(nodePoint)} style={{ color: 'blue' }}>
+                                        {nodePoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    </Link>
+                                </Text>
+                            </Text>
+                            <Text style={colWidths[1]}>{formatTimeOnly(nodePoint.frontArrival)}</Text>
+                            <Text style={colWidths[2]}>
+                                {nodePoint.nodeTracks ? `${nodePoint.nodeTracks.join(', ')}` : ''}
+                            </Text>
+                        </View>
+                    );
+                })}
                 {...nodes.map((nodePoint, index) => {
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
