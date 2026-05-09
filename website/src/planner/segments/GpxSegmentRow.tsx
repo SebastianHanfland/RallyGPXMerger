@@ -16,6 +16,8 @@ import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
 import { EditSegmentColorButton } from './EditSegmentColor.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
+import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
+import { getSegmentInfo } from '../tracks/segment-selection/getSegmentInfo.ts';
 
 interface Props {
     gpxSegment: ParsedGpxSegment;
@@ -29,10 +31,13 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
     const dispatch = useDispatch();
     const trackCompositions = useSelector(getTrackCompositions);
     const { alert, tooltip } = getUsagesOfSegment(trackCompositions, id, intl);
+    const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
+    const aggregatedInfo = aggregatedSegments[id];
+    const info = getSegmentInfo(aggregatedInfo);
 
     return (
         <tr
-            title={tooltip}
+            title={info ? info + '\n\n' + tooltip : tooltip}
             onMouseEnter={() => dispatch(mapActions.setHighlightedSegmentId(id))}
             onMouseLeave={() => dispatch(mapActions.setHighlightedSegmentId(undefined))}
         >
