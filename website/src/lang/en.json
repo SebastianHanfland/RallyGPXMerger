@@ -362,6 +362,7 @@
     "msg.showLive": "Live",
     "msg.showPlan": "Plan",
     "msg.publicTableLink": "Public link with table",
+    "msg.publicTableLink.withIndex": "Public link with table, only showing some rows",
     "msg.iframeTableExample": "Public link with table in iframe",
     "msg.nn": "not named",
     "msg.prio": "Priority of tracks at nodes",

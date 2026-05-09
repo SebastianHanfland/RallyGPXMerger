@@ -84,6 +84,7 @@ const SharingModalBody = () => {
         <div>
             <LinkAndClipboardCopy messageId={'msg.publicLink'} link={displayLink} />
             <LinkAndClipboardCopy messageId={'msg.publicTableLink'} link={tableLink} />
+            <LinkAndClipboardCopy messageId={'msg.publicTableLink.withIndex'} link={tableLink + '&rows=0,1,2'} />
             <LinkAndClipboardCopy messageId={'msg.planningLink'} link={planningLink} />
             <LinkAndClipboardCopy messageId={'msg.compareLink'} link={compareLink} />
             <LinkAndClipboardCopy messageId={'msg.iframeExample'} link={iframeExample} />

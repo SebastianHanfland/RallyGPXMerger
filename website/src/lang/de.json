@@ -360,6 +360,7 @@
     "msg.showLive": "Live",
     "msg.showPlan": "Plan",
     "msg.publicTableLink": "Öffentlicher Link mit Tabelle",
+    "msg.publicTableLink.withIndex": "Öffentlicher Link mit Tabelle, zeigt nur einzelne Zeilen",
     "msg.iframeTableExample": "Öffentlicher Link mit Tabelle im iframe",
     "msg.removeBreakSegment": "Pause entfernen",
     "msg.removeEntryPoint": "Einstiegspunkt entfernen",
