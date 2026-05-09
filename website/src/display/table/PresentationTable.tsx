@@ -32,7 +32,7 @@ export const PresentationTable = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th style={{ minWidth: '100px' }}>
+                        <th style={{ minWidth: '180px' }}>
                             <FormattedMessage id={'msg.track'} />
                         </th>
                         <th>
