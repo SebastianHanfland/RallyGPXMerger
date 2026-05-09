@@ -59,11 +59,18 @@ describe('dateUtil', () => {
                 output: '2007-10-14T09:55:00.000Z',
             },
             {
-                description: 'Should subtract 10 minutes and round down to full 5 minutes for A routes',
+                description: 'Should subtract 0 minutes and round down to full 0 minutes for A routes',
                 input: '2007-10-14T10:09:57.000Z',
                 buffer: 0,
                 round: 0,
                 output: '2007-10-14T10:09:57.000Z',
+            },
+            {
+                description: 'Should subtract 5 minutes and round down to full 5 minutes for A routes',
+                input: '2007-10-14T11:21:00.000Z',
+                buffer: 5,
+                round: 5,
+                output: '2007-10-14T11:15:00.000Z',
             },
         ];
 
