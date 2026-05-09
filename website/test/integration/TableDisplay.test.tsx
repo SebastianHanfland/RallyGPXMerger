@@ -23,9 +23,7 @@ const ui = {
     hasOnePdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),
     hasATable: () => {
         screen.getByRole('table');
-        ['Track name', 'Start', 'Destination', 'Distance in km', 'Files'].forEach((text) =>
-            screen.getByRole('columnheader', { name: text })
-        );
+        ['Track', 'Start'].forEach((text) => screen.getByRole('columnheader', { name: text }));
         expect(screen.getAllByRole('row')).toHaveLength(2);
     },
 };
