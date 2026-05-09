@@ -8,6 +8,7 @@ import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '.
 import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/settings.reducer.ts';
+import { EntryPointOptions } from './EntryPointOptions.tsx';
 
 const sharePlanningStyle1: CSSProperties = {
     position: 'fixed',
@@ -80,6 +81,7 @@ const SharingModalBody = () => {
     const planningLinkWithAdmin = `${getBaseUrl()}?section=gps&planning=${planningId}&admin=${password}`;
     const iframeExample = getIframeExample(displayLink, planningTitle);
     const iframeTableExample = getIframeExample(tableLink, planningTitle);
+
     return (
         <div>
             <div style={entryStyle}>
@@ -134,6 +136,7 @@ const SharingModalBody = () => {
                     <CopyToClipboardButton text={password} />
                 </div>
             )}
+            <EntryPointOptions />
         </div>
     );
 };

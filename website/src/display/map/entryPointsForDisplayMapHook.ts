@@ -7,10 +7,12 @@ import { markerIcon } from '../../common/map/MapIcons.ts';
 
 import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil.ts';
 import { getShowTimes } from '../store/displayMapReducer.ts';
+import { useGetUrlParam } from '../../utils/linkUtil.ts';
 
 export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);
     const showTimes = useSelector(getShowTimes);
+    const useTimes = useGetUrlParam('times=');
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
