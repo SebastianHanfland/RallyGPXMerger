@@ -3,7 +3,7 @@ import { MutableRefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
-import { entryIcon } from '../../common/map/MapIcons.ts';
+import { markerIcon } from '../../common/map/MapIcons.ts';
 
 import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil.ts';
 import { getShowTimes } from '../store/displayMapReducer.ts';
@@ -22,9 +22,10 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
         current.closePopup();
 
         entryPointPositions.forEach((entryPoint) => {
-            const breakPointMarker = L.marker(toLatLng(entryPoint.point), {
-                icon: entryIcon,
-            }).bindTooltip(getEntryPointTooltip(entryPoint), { sticky: true });
+            const breakPointMarker = L.marker(toLatLng(entryPoint.point), { icon: markerIcon }).bindTooltip(
+                getEntryPointTooltip(entryPoint),
+                { sticky: true }
+            );
             const addedMarker = breakPointMarker.addTo(current);
             if (showTimes) {
                 addedMarker
@@ -34,7 +35,7 @@ export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<
                         autoClose: false,
                         closeOnEscapeKey: false,
                         closeOnClick: false,
-                        offset: [-48, 0],
+                        offset: [0, -24],
                     })
                     .openPopup();
             }

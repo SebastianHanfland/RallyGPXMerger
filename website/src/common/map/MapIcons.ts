@@ -25,16 +25,34 @@ export const wcIcon = L.icon({
     iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2], // point of the icon which will correspond to marker's location
 });
 
+export const loweredWcIcon = L.icon({
+    iconUrl: 'wc.svg',
+    iconSize: [MARKER_SIZE, MARKER_SIZE], // size of the icon
+    iconAnchor: [MARKER_SIZE / 2, 0], // point of the icon which will correspond to marker's location
+});
+
 export const breakIcon = L.icon({
     iconUrl: 'break.svg',
     iconSize: [MARKER_SIZE, MARKER_SIZE], // size of the icon
     iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2], // point of the icon which will correspond to marker's location
 });
 
+export const loweredBreakIcon = L.icon({
+    iconUrl: 'break.svg',
+    iconSize: [MARKER_SIZE, MARKER_SIZE], // size of the icon
+    iconAnchor: [MARKER_SIZE / 2, 0], // point of the icon which will correspond to marker's location
+});
+
 export const entryIcon = L.icon({
     iconUrl: 'arrow-right.svg',
-    iconSize: [MARKER_SIZE * 2, MARKER_SIZE * 2], // size of the icon
-    iconAnchor: [MARKER_SIZE * 2, MARKER_SIZE], // point of the icon which will correspond to marker's location
+    iconSize: [MARKER_SIZE, MARKER_SIZE], // size of the icon
+    iconAnchor: [MARKER_SIZE, MARKER_SIZE / 2], // point of the icon which will correspond to marker's location
+});
+
+export const markerIcon = L.icon({
+    iconUrl: 'geo-alt-filled.svg',
+    iconSize: [MARKER_SIZE, MARKER_SIZE], // size of the icon
+    iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE], // point of the icon which will correspond to marker's location
 });
 
 export const nodeMergeIcon = L.icon({
