@@ -394,5 +394,8 @@
     "msg.localDataFound": "Local data found",
     "msg.differentPlannnings": "Different plannings",
     "msg.differentPlannnings.details": "The local planning is different from the one in the URL. Do you want to load the planning from the URL and discard all other possible local changes on the other planning?",
-    "msg.times": "Times"
+    "msg.times": "Times",
+    "msg.activeApps": "Active apps: {counter}",
+    "msg.criticalMaps.title": "Critical Maps App",
+    "msg.criticalMaps.body": "If you have running the Critical Maps App on your phone, there will appear a small bike icon for you on the map. This way the other participants can see the plan and the actual current status of the demonstration. You find more information about how to download and install the Critical Maps App here: "
 }

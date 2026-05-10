@@ -394,5 +394,8 @@
     "msg.localDataFound": "Lokale Dateien gefunden",
     "msg.differentPlannnings": "Unterschiedliche Planungen",
     "msg.differentPlannnings.details": "Die lokale Planung hat eine andere ID als in der URL. Wollen Sie die Planung aus der URL laden und damit bei der anderen lokalen Planung eventuelle ungespeicherte Änderungen verwerfen?",
-    "msg.times": "Zeiten"
+    "msg.times": "Zeiten",
+    "msg.activeApps": "Eingeschaltete Apps: {counter}",
+    "msg.criticalMaps.title": "Critical Maps App",
+    "msg.criticalMaps.body": "Wenn Sie die Critical Maps App auf Ihrem Handy eingeschaltet haben, taucht an ihrer Position ein kleines Fahrrad Symbol auf der Karte auf. So können die anderen Teilnehmenden sowohl den Plan als auch den aktuellen Zustand der Demonstration sehen. Hier finden Sie mehr Information wie Sie die Critical Maps App herunterladen und installieren können: "
 }

@@ -1,14 +1,15 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenDisplayMapTime, getIsLive, displayMapActions } from './store/displayMapReducer.ts';
+import { displayMapActions, getCurrenDisplayMapTime, getIsLive } from './store/displayMapReducer.ts';
 import { MAX_SLIDER_TIME } from '../common/constants.ts';
 import { getDisplayTimeStamp } from './map/dataReading.ts';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { DateTimeFormat } from '../utils/dateUtil.ts';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
 import { bikeCounterMirror } from './criticalmaps/criticalMapsHook.ts';
+import { AppInfoIcon } from './menu/AppInfoIcon.tsx';
 
 let interval: NodeJS.Timeout | undefined;
 
@@ -53,7 +54,10 @@ export function DisplayTimeSlider({ bigThumb, showPlayButton }: Props) {
     if (isLive) {
         return (
             <div>
-                <h6>{`Eingeschaltete Apps: ${bikeCounterMirror}`}</h6>
+                <h6>
+                    <FormattedMessage id={'msg.activeApps'} values={{ counter: bikeCounterMirror }} />
+                    <AppInfoIcon />
+                </h6>
                 <div>
                     {dateValue ? intl.formatDate(dateValue, DateTimeFormat) : intl.formatMessage({ id: 'msg.time' })}
                 </div>
