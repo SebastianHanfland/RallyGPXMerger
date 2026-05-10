@@ -23,6 +23,7 @@ export const ComparisonMap = () => {
             myMap = L.map('mapid').setView(Munich, startZoom);
             L.tileLayer(tileUrlTemplate, getOptions()).addTo(myMap);
         }
+        L.control.scale({ position: 'bottomright', imperial: false, maxWidth: 200 }).addTo(myMap);
         return () => {
             myMap?.remove();
             myMap = undefined;

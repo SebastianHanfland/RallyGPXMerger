@@ -39,6 +39,7 @@ export const PresentationMap = () => {
             }
             const centerPoint = getCenterPoint(parsedTracks);
             myMap.setView(centerPoint, 12);
+            L.control.scale({ position: 'topright', imperial: false, maxWidth: 200 }).addTo(myMap);
         }
     }, []);
 
