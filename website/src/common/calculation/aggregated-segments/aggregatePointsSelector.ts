@@ -53,6 +53,7 @@ export const getAggregateStreetsInSegments = createSelector(
         segments.forEach((segment) => {
             let pointIndex = 0;
             const aggregatedPoints: AggregatedPoints[] = [];
+            const initialOffset = segment.points.length > 0 ? segment.points[0].t : 0;
 
             while (pointIndex < segment.points.length) {
                 const firstPoint = segment.points[pointIndex];
@@ -71,8 +72,8 @@ export const getAggregateStreetsInSegments = createSelector(
                 const correctedFirstPoint = pointIndex > 0 ? segment.points[pointIndex - 1] : firstPoint;
 
                 aggregatedPoints.push({
-                    frontPassage: lastPoint.t,
-                    frontArrival: correctedFirstPoint.t,
+                    frontPassage: lastPoint.t - initialOffset,
+                    frontArrival: correctedFirstPoint.t - initialOffset,
                     pointFrom: correctedFirstPoint,
                     pointTo: lastPoint,
                     distanceInKm: distanceInKm,
