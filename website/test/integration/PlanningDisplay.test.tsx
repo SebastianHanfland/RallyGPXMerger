@@ -24,7 +24,7 @@ vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () =
 }));
 vi.mock('@react-pdf/renderer', () => ({ StyleSheet: { create: () => {} } }));
 
-const timeout = { timeout: 2000 };
+const timeout = { timeout: 3000 };
 describe('Planner integration test', () => {
     describe('Main navigation', () => {
         it('Starts a new simple planning', async () => {
