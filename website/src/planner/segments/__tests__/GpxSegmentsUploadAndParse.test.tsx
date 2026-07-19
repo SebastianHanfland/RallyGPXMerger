@@ -20,7 +20,7 @@ vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate',
 }));
 
 describe('GpxUpload and parse', () => {
-    it('Starts a new simple planning', async () => {
+    it('Can upload a segment and points are available', async () => {
         (getLanguage as Mock).mockImplementation(() => 'en');
         const store = createPlanningStore();
         render(
