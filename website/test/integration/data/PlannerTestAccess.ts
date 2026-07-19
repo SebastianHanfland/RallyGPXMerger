@@ -1,9 +1,11 @@
 import { act, fireEvent, screen } from '@testing-library/react';
-import * as fs from 'node:fs';
 import { AppDispatch } from '../../../src/planner/store/planningStore';
 import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
 import { segmentDataActions } from '../../../src/planner/store/segmentData.redux.ts';
+import { segment1 } from './segment1.ts';
+import { segment2 } from './segment2.ts';
+import { segment3 } from './segment3.ts';
 
 const messages = getMessages('en');
 
@@ -30,9 +32,19 @@ export const plannerUi = {
     uploadGpxSegment: async (fileName: 'segment1' | 'segment2' | 'segment3') => {
         const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
         const inputElement = fileInput?.parentNode?.parentNode;
-        const buffer = fs.readFileSync(`./test/integration/data/${fileName}.gpx`);
-        const file = new File([buffer.toString()], `${fileName}.gpx`, { type: 'application/gpx+xml' });
-        file.arrayBuffer = () => Promise.resolve(buffer.buffer as ArrayBuffer);
+        let fileContent = '';
+        if (fileName === 'segment1') {
+            fileContent = segment1;
+        }
+        if (fileName === 'segment2') {
+            fileContent = segment2;
+        }
+        if (fileName === 'segment3') {
+            fileContent = segment3;
+        }
+        const textEncoder = new TextEncoder();
+        const file = new File([fileContent], `${fileName}.gpx`, { type: 'application/gpx+xml' });
+        file.arrayBuffer = () => Promise.resolve(textEncoder.encode(fileContent) as unknown as ArrayBuffer);
         await act(() => fireEvent.drop(inputElement!, { dataTransfer: { files: [file] } }));
     },
     uploadNode: () => {
