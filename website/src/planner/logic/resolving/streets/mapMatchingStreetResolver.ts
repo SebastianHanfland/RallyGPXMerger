@@ -5,7 +5,7 @@ import { splitListIntoSections } from '../helper/splitPointsService.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
 import { errorNotification } from '../../../store/toast.reducer.ts';
 import { Point } from '../../../../utils/gpxTypes.ts';
-import { getStreetLookup, segmentDataActions } from '../../../store/segmentData.redux.ts';
+import { getNextStreetLookupIndex, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
@@ -34,14 +34,16 @@ const toPoint = (point: ParsedPoint): Point => ({
 export const enrichGpxSegmentsWithStreetNames =
     (parsedSegments: ParsedGpxSegment[]) =>
     async (dispatch: AppDispatch, getState: () => State): Promise<void> => {
-        const streetLookup = getStreetLookup(getState());
-        const lookupKeys = Object.keys(streetLookup);
-        const maximumIndex = lookupKeys.length === 0 ? 1 : Math.max(...lookupKeys.map(Number));
-        const segmentIndexOffset = Math.ceil(maximumIndex / 1000);
+        const streetResolveStart = getNextStreetLookupIndex(getState());
+        const numberOfIndexesToReserve = parsedSegments.reduce((total, segment) => total + segment.points.length, 0);
+        dispatch(segmentDataActions.reserveStreetLookupIndexes(numberOfIndexesToReserve));
 
-        const promises = parsedSegments.map((segment, segmentIndex) =>
-            dispatch(enrichOneGpxSegment(segment, (segmentIndexOffset + segmentIndex) * 1000))
-        );
+        let currentStreetResolveStart = streetResolveStart;
+        const promises = parsedSegments.map((segment) => {
+            const segmentStreetResolveStart = currentStreetResolveStart;
+            currentStreetResolveStart += segment.points.length;
+            return dispatch(enrichOneGpxSegment(segment, segmentStreetResolveStart));
+        });
         await Promise.all(promises);
         return Promise.resolve();
     };

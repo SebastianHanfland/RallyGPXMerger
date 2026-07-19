@@ -14,7 +14,13 @@ const initialState: SegmentDataState = {
     replaceStreetLookup: {},
     replacePostCodeLookup: {},
     replaceDistrictLookup: {},
+    streetLookupIndex: 0,
 };
+
+function getHighestStreetLookupIndex(state: SegmentDataState): number {
+    const resolvedIndexes = Object.keys(state.streetLookup).map(Number).filter(Number.isFinite);
+    return Math.max(state.streetLookupIndex ?? 0, ...resolvedIndexes, 0);
+}
 
 const segmentDataSlice = createSlice({
     name: 'segmentData',
@@ -40,6 +46,9 @@ const segmentDataSlice = createSlice({
         },
         addDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
             state.districtLookup = { ...state.districtLookup, ...action.payload };
+        },
+        reserveStreetLookupIndexes: (state: SegmentDataState, action: PayloadAction<number>) => {
+            state.streetLookupIndex = getHighestStreetLookupIndex(state) + action.payload;
         },
         addReplaceStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
             state.replaceStreetLookup = { ...state.replaceStreetLookup, ...action.payload };
@@ -140,6 +149,7 @@ const getBase = (state: State) => state.segmentData;
 
 export const getParsedGpxSegments = (state: State) => getBase(state).segments;
 export const getStreetLookup = (state: State) => getBase(state).streetLookup;
+export const getNextStreetLookupIndex = (state: State) => getHighestStreetLookupIndex(getBase(state));
 export const getPostCodeLookup = (state: State) => getBase(state).postCodeLookup;
 export const getDistrictLookup = (state: State) => getBase(state).districtLookup;
 export const getReplaceStreetLookup = (state: State) => getBase(state).replaceStreetLookup;

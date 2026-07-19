@@ -222,6 +222,8 @@ export interface SegmentDataState {
     replaceStreetLookup: Record<number, string | undefined>;
     replacePostCodeLookup: Record<number, string | undefined>;
     replaceDistrictLookup: Record<number, string | undefined>;
+    /** Highest street-lookup index reserved for asynchronous resolving. */
+    streetLookupIndex?: number;
 }
 
 export interface PointOfInterest {
