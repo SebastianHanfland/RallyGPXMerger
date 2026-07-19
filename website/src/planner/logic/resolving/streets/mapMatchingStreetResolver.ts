@@ -62,6 +62,7 @@ const enrichOneGpxSegment =
     (segmentWithoutStreets: ParsedGpxSegment, streetResolveStart: number) =>
     (dispatch: AppDispatch, getState: () => State): Promise<void> => {
         const geoApifyKey = getGeoApifyKey(getState()) || '9785fab54f7e463fa8f04543b4b9852b';
+        console.log({ ba: segmentWithoutStreets.points });
         const points = segmentWithoutStreets.points;
 
         const resolvedPositions = splitListIntoSections(points, 700).flatMap((points) =>
