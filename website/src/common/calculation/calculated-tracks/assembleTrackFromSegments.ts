@@ -21,8 +21,10 @@ export function assembleTrackFromSegments(
                 arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
             } else {
                 const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
-                arrivalTimeForPreviousSegment = shiftedPoint[0].t;
-                trackPoints = [...shiftedPoint, ...trackPoints];
+                if (shiftedPoint.length > 0) {
+                    arrivalTimeForPreviousSegment = shiftedPoint[0].t;
+                    trackPoints = [...shiftedPoint, ...trackPoints];
+                }
             }
         });
 
