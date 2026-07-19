@@ -23,6 +23,7 @@ import { NodePosition } from '../../../planner/logic/resolving/selectors/getNode
 import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
 import { CalculatedTrack } from '../../types.ts';
 import { joinWayPointsAtSegmentsBorders } from './joinWayPointsAtSegmentsBorders.ts';
+import { getPointsEndingAtTime } from '../lastPointUtil.ts';
 
 const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     lat: b,
@@ -76,13 +77,6 @@ export const calculateTrackStreetInfos = (
         };
     });
 };
-
-function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
-    const points = gpxOrBreak.points;
-    const secondsOfSegment = points[points.length - 1].t;
-
-    return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
-}
 
 function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
     const wayPointsWithoutEntryPoints = trackPoints.filter((point) => point.type !== TrackWayPointType.Entry);

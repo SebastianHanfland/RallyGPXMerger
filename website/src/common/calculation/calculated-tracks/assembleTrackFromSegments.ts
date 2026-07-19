@@ -2,13 +2,7 @@ import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../planne
 import { instanceOfBreak } from '../types.ts';
 import { resolveGpxSegments } from './solvingHelper.ts';
 import { PreCalculatedTrack } from '../../types.ts';
-
-function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
-    const points = gpxOrBreak.points;
-    const secondsOfSegment = points[points.length - 1].t;
-
-    return points.map((point) => ({ ...point, t: endTime + (point.t - secondsOfSegment) }));
-}
+import { getPointsEndingAtTime } from '../lastPointUtil.ts';
 
 export function assembleTrackFromSegments(
     track: TrackComposition,
