@@ -27,7 +27,12 @@ export const deletePlanning = (id: string, adminToken: string) => {
 };
 
 const getDataFromServer = (id: string) => {
-    return fetch(`${baseUrl}/${id}`, { method: 'get' }).then((res) => res.json());
+    return fetch(`${baseUrl}/${id}`, { method: 'get' }).then((res) => {
+        if (!res.ok) {
+            throw new Error(`Could not load planning ${id}: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+    });
 };
 
 export const getData = (id: string): Promise<State> => {

@@ -11,6 +11,7 @@ import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
 import { storage } from '../store/storage.ts';
 import { loadPlanning } from './loadPlanningFromServer.ts';
 import { isStateTheSame } from './IsStateTheSame.ts';
+import { errorNotification } from '../store/toast.reducer.ts';
 
 export function LoadingDataFromServerModal() {
     const planningId = useGetUrlParam('planning=');
@@ -34,23 +35,38 @@ export function LoadingDataFromServerModal() {
     useEffect(() => {
         console.log({ planningId });
         if (planningId) {
-            getData(planningId).then((serverState) => {
-                const storedState = storage.load();
-                if (!storedState) {
-                    console.log('No stored state');
-                    setLoadFromServer(true);
+            getData(planningId)
+                .then((serverState) => {
+                    const storedState = storage.load();
+                    if (!storedState) {
+                        console.log('No stored state');
+                        setLoadFromServer(true);
+                        setDecided(true);
+                        return;
+                    }
+                    if (isStateTheSame(serverState, storedState)) {
+                        console.log('state is same');
+                        setDecided(true);
+                        setIsDataSame(true);
+                        return;
+                    }
+                    console.log('states are different');
+                    setIsDataSame(false);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    // When there is no local plan, loadPlanning handles this error and
+                    // shows the notification. Avoid reporting the same failed request twice.
+                    if (shouldBeLoaded) {
+                        return;
+                    }
                     setDecided(true);
-                    return;
-                }
-                if (isStateTheSame(serverState, storedState)) {
-                    console.log('state is same');
-                    setDecided(true);
-                    setIsDataSame(true);
-                    return;
-                }
-                console.log('states are different');
-                setIsDataSame(false);
-            });
+                    errorNotification(
+                        dispatch,
+                        intl.formatMessage({ id: 'msg.dataLoad.error.title' }),
+                        intl.formatMessage({ id: 'msg.dataLoad.error.message' })
+                    );
+                });
         }
     }, []);
 

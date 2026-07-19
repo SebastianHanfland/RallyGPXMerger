@@ -14,6 +14,7 @@ import { getData } from '../../../api/api.ts';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { segmentDataActions } from '../../store/segmentData.redux.ts';
 import { isStateTheSame } from '../IsStateTheSame.ts';
+import { getToasts } from '../../store/toast.reducer.ts';
 
 const messages = getMessages('en');
 
@@ -184,5 +185,34 @@ describe('Import planning', () => {
                 }
             })
         );
+
+        it('shows an error notification when a shared planning cannot be loaded while local data exists', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            (useGetUrlParam as Mock).mockImplementation(() => 'missing-planning');
+            (getData as Mock).mockRejectedValue(new Error('Not found'));
+
+            const store = createPlanningStore();
+            store.dispatch(backendActions.setPlanningId('local-planning'));
+            store.dispatch(segmentDataActions.addGpxSegments([{ id: '123', filename: '1', points: [] }]));
+
+            render(
+                <MemoryRouter>
+                    <IntlProvider locale={'en'} messages={messages}>
+                        <Provider store={store}>
+                            <LoadingDataFromServerModal />
+                        </Provider>
+                    </IntlProvider>
+                </MemoryRouter>
+            );
+
+            await waitFor(() => expect(getToasts(store.getState())).toHaveLength(1));
+            const [toast] = getToasts(store.getState()) ?? [];
+            expect(toast).toMatchObject({
+                type: 'danger',
+                title: messages['msg.dataLoad.error.title'],
+                message: messages['msg.dataLoad.error.message'],
+            });
+            ui.showsNoModal();
+        });
     });
 });
