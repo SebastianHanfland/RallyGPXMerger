@@ -14,7 +14,6 @@ interface Props {
 export const TrackInfoPdfDownloadButton = ({ trackStreets, planningLabel }: Props) => {
     const intl = useIntl();
     const [isBusy, setIsBusy] = useState(false);
-    console.log({ isBusy });
     const downloadPdf = () => {
         setIsBusy(true);
         setTimeout(() => {
