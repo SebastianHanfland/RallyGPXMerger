@@ -185,37 +185,39 @@ export function getWayPointsOfTrack(
             } else {
                 const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
                 const aggregatedPoints = aggregatedSegmentStreets[gpxOrBreak.id];
-                arrivalTimeForPreviousSegment = shiftedPoint[0].t;
+                if (shiftedPoint.length > 0) {
+                    arrivalTimeForPreviousSegment = shiftedPoint[0].t;
 
-                const wayPoints: WayPoint[] = (aggregatedPoints ?? []).map((point) => {
-                    return {
-                        streetName: lookups.streets[point.s] ?? null,
-                        district: lookups.districts[point.s] ?? null,
-                        postCode: lookups.postCodes[point.s] ?? null,
-                        backPassage: shiftDateBySeconds(
-                            arrivalDate,
-                            point.frontPassage +
-                                participantsDelayInSeconds * (track.peopleCount ?? 0) +
-                                arrivalTimeForPreviousSegment
-                        ),
-                        frontPassage: shiftDateBySeconds(
-                            arrivalDate,
-                            point.frontPassage + arrivalTimeForPreviousSegment
-                        ),
-                        frontArrival: shiftDateBySeconds(
-                            arrivalDate,
-                            point.frontArrival + arrivalTimeForPreviousSegment
-                        ),
-                        pointFrom: extractLatLon(point.pointFrom, arrivalDate),
-                        pointTo: extractLatLon(point.pointTo, arrivalDate),
-                        distanceInKm: point.distanceInKm,
-                        speed: point.speed,
-                        type: TrackWayPointType.Track,
-                        s: point.s,
-                    };
-                });
+                    const wayPoints: WayPoint[] = (aggregatedPoints ?? []).map((point) => {
+                        return {
+                            streetName: lookups.streets[point.s] ?? null,
+                            district: lookups.districts[point.s] ?? null,
+                            postCode: lookups.postCodes[point.s] ?? null,
+                            backPassage: shiftDateBySeconds(
+                                arrivalDate,
+                                point.frontPassage +
+                                    participantsDelayInSeconds * (track.peopleCount ?? 0) +
+                                    arrivalTimeForPreviousSegment
+                            ),
+                            frontPassage: shiftDateBySeconds(
+                                arrivalDate,
+                                point.frontPassage + arrivalTimeForPreviousSegment
+                            ),
+                            frontArrival: shiftDateBySeconds(
+                                arrivalDate,
+                                point.frontArrival + arrivalTimeForPreviousSegment
+                            ),
+                            pointFrom: extractLatLon(point.pointFrom, arrivalDate),
+                            pointTo: extractLatLon(point.pointTo, arrivalDate),
+                            distanceInKm: point.distanceInKm,
+                            speed: point.speed,
+                            type: TrackWayPointType.Track,
+                            s: point.s,
+                        };
+                    });
 
-                trackPoints = joinWayPointsAtSegmentsBorders(wayPoints, trackPoints);
+                    trackPoints = joinWayPointsAtSegmentsBorders(wayPoints, trackPoints);
+                }
             }
         });
 
