@@ -33,7 +33,7 @@ export const getNodePositions = createSelector(
         segmentIdsAfterNode.forEach((segmentId) => {
             const foundSegment = parsedTracks?.find((gpxSegment) => gpxSegment.id === segmentId);
             if (foundSegment) {
-                console.log(foundSegment);
+                console.log({ foundSegment });
                 const lastPointOfSegment = foundSegment.points[0];
                 nodePositions.push({
                     point: getLatLon(lastPointOfSegment),
