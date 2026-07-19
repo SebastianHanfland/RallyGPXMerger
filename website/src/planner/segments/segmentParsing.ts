@@ -12,7 +12,6 @@ export function getPointsFromGpx(gpxString: string, averageSpeed: number): Parse
 export async function toParsedGpxSegment(file: File, averageSpeed: number): Promise<ParsedGpxSegment> {
     return file.arrayBuffer().then((buffer) => {
         const gpxString = new TextDecoder().decode(buffer);
-        console.log({ gpxString });
         return {
             id: uuidv4(),
             filename: file.name.replace('.gpx', ''),

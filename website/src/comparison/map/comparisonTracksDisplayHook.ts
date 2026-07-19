@@ -38,12 +38,10 @@ export function comparisonTracksDisplayHook(
             if ((selectedTracks[version]?.length ?? 0) === 0) {
                 return tracksOfVersion;
             }
-            const selectedTracksOfVersion = tracksOfVersion
+
+            return tracksOfVersion
                 .filter((track) => selectedTracks[version]?.includes(track.id))
                 .sort((a, b) => b.filename.localeCompare(a.filename, undefined, { numeric: true }));
-
-            console.log(selectedTracksOfVersion.map((track) => track.filename));
-            return selectedTracksOfVersion;
         });
 
         const sortedTracks = tracks.sort((a, b) => -b.filename.localeCompare(a.filename, undefined, { numeric: true }));

@@ -16,7 +16,6 @@ export function GpxSegmentsUploadAndParse() {
     const averageSpeed = useSelector(getAverageSpeedInKmH);
 
     const handleChange = (newFiles: File | File[]) => {
-        console.log({ newFiles });
         Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
             (newGpxSegments) => {
                 successNotification(dispatch, '', intl.formatMessage({ id: 'msg.uploadedFile' }));

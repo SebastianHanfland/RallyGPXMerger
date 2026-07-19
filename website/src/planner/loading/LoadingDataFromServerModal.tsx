@@ -31,7 +31,6 @@ export function LoadingDataFromServerModal() {
     const shouldBeLoaded = noLocalDataStored || (decided && loadFromServer);
 
     useEffect(() => {
-        console.log({ planningId });
         if (planningId) {
             getData(planningId)
                 .then((serverState) => {

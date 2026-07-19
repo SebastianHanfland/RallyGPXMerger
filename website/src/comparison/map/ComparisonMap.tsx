@@ -35,7 +35,6 @@ export const ComparisonMap = () => {
             const centerPoints = Object.values(parsedTracks).map((tracks) => getCenterPoint(tracks));
             let lat = 0;
             let lng = 0;
-            console.log(centerPoints);
             centerPoints.forEach((point) => {
                 lat += point.lat / centerPoints.length;
                 lng += point.lng / centerPoints.length;
