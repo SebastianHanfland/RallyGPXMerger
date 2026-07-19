@@ -7,7 +7,7 @@ export function centerPointHook(map: L.Map | undefined, startZoom: number) {
     const gpxSegments = useSelector(getParsedGpxSegments);
 
     useEffect(() => {
-        if (map && gpxSegments.length > 0) {
+        if (map && gpxSegments.length > 0 && gpxSegments[0].points.length > 0) {
             const { b, l } = gpxSegments[0].points[0];
             map.setView({ lat: b, lng: l }, startZoom);
         }
