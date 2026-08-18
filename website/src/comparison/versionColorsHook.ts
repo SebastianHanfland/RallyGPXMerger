@@ -8,8 +8,8 @@ export function useGetVersionColors(): Record<string, string | undefined> {
     const colors = colorsFromUrl?.split(',') ?? [];
     if (!colorsFromUrl) {
         const colorLookup: Record<string, string | undefined> = {};
-        planningIds.forEach((plannindId) => {
-            colorLookup[plannindId] = getColorFromUuid(plannindId);
+        planningIds.forEach((planningId) => {
+            colorLookup[planningId] = getColorFromUuid(planningId);
         });
         return colorLookup;
     }
