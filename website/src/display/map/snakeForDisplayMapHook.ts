@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { getBikeSnakesForDisplayMap, getDisplayTimeStamp } from './dataReading.ts';
 import { addBikeSnakesToLayer } from '../../common/map/addSnakeWithBikeToMap.ts';
 
-export function snakeForDisplayMapHook(snakeLayer: MutableRefObject<LayerGroup | null>) {
+export function snakeForDisplayMapHook(snakeLayer: RefObject<LayerGroup | null>) {
     const displayTracks = useSelector(getDisplayTracks);
     const currentMapTime = useSelector(getDisplayTimeStamp);
     const pointsToDisplay = useSelector(getBikeSnakesForDisplayMap);

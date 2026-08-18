@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedSegmentId, getShowGpxSegments, getShowMapMarker, mapActions } from '../../store/map.reducer.ts';
@@ -16,7 +16,7 @@ const setMarkHighlightedTrackPlain =
         dispatch(mapActions.setHighlightedSegmentId(trackId));
     };
 
-export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGroup | null>) {
+export function gpxSegmentDisplayHook(gpxSegmentsLayer: RefObject<LayerGroup | null>) {
     const filteredGpxSegments = useSelector(getFilteredGpxSegments);
     const gpxSegments = useSelector(getParsedGpxSegments);
     const highlightedSegmentId = useSelector(getHighlightedSegmentId);
@@ -31,8 +31,8 @@ export function gpxSegmentDisplayHook(gpxSegmentsLayer: MutableRefObject<LayerGr
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const tracks = highlightedSegmentId
-            ? gpxSegments?.filter(({ id }) => id === highlightedSegmentId) ?? []
-            : filteredGpxSegments ?? [];
+            ? (gpxSegments?.filter(({ id }) => id === highlightedSegmentId) ?? [])
+            : (filteredGpxSegments ?? []);
 
         addTracksToLayer(gpxSegmentsLayer, tracks, showSegments, {
             showMarker,

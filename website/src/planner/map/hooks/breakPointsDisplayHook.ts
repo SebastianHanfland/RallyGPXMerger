@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowBreakMarker } from '../../store/map.reducer.ts';
 import { breakIcon, wcIcon } from '../../../common/map/MapIcons.ts';
@@ -9,7 +9,7 @@ import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { layoutActions } from '../../store/layout.reducer.ts';
 import { TRACK_MARKER } from '../panes.ts';
 
-export function breakPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
+export function breakPointsDisplayHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const breakPoints = useSelector(getBreakPositions);
     const showBreakMarker = useSelector(getShowBreakMarker);
     const dispatch = useDispatch();

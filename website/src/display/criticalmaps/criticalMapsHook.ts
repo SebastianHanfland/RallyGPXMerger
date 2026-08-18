@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
 import { blueBike } from '../../common/map/MapIcons.ts';
@@ -12,7 +12,7 @@ const convertToCoord = (latitude: number) => {
 
 export let bikeCounterMirror = 0;
 
-export const criticalMapsHook = (criticalMapsLayer: React.MutableRefObject<LayerGroup | null>) => {
+export const criticalMapsHook = (criticalMapsLayer: RefObject<LayerGroup | null>) => {
     const [fetchCounter, setFetchCounter] = useState(0);
     const [bikeCounter, setBikeCounter] = useState(0);
     const isLive = useSelector(getIsLive);

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
@@ -9,7 +9,7 @@ import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointU
 import { getShowTimes } from '../store/displayMapReducer.ts';
 import { useTimesConfig } from './useTimesConfig.ts';
 
-export function entryPointsForDisplayMapHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
+export function entryPointsForDisplayMapHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);
     const showTimes = useSelector(getShowTimes);
     const useTimes = useTimesConfig();

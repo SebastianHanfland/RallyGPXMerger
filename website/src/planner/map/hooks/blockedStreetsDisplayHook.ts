@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowBlockStreets } from '../../store/map.reducer.ts';
 import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
@@ -24,7 +24,7 @@ function getColorForStreetName(streetName: string): string {
     return storedColor;
 }
 
-export function blockedStreetsDisplayHook(blockedStreetsLayer: MutableRefObject<LayerGroup | null>) {
+export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGroup | null>) {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const showStreets = useSelector(getShowBlockStreets);
 

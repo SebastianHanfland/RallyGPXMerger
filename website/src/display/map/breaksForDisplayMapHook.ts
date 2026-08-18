@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getDisplayBreaks, getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
 import { toLatLng } from '../../utils/pointUtil.ts';
@@ -17,7 +17,7 @@ function getIcon(hasToilet: boolean, hasAlsoEntryPoint: boolean) {
     return hasToilet ? wcIcon : breakIcon;
 }
 
-export function breaksForDisplayMapHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
+export function breaksForDisplayMapHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);
     const breakPoints = useSelector(getDisplayBreaks);
     const entryRecords: Record<string, boolean | undefined> = {};

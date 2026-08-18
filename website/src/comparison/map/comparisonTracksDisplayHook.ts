@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
 import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
 import { getHighlightedTrack, getShowMapMarker, getUseVersionColor, mapActions } from '../store/map.reducer.ts';
@@ -16,7 +16,7 @@ function setColor(track: CalculatedTrack, useVersionColor: boolean, versionColor
 }
 
 export function comparisonTracksDisplayHook(
-    calculatedTracksLayer: MutableRefObject<LayerGroup | null>,
+    calculatedTracksLayer: RefObject<LayerGroup | null>,
     showMarkerOverwrite?: boolean
 ) {
     const colors = useGetVersionColors();

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowEntryPointMarker } from '../../store/map.reducer.ts';
 import { entryIcon } from '../../../common/map/MapIcons.ts';
@@ -10,7 +10,7 @@ import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntry
 import { TRACK_MARKER } from '../panes.ts';
 import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
 
-export function entryPointsDisplayHook(breakPointsLayer: MutableRefObject<LayerGroup | null>) {
+export function entryPointsDisplayHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getEntryPointPositions);
     const showBreakMarker = useSelector(getShowEntryPointMarker);
     const dispatch = useDispatch();

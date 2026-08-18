@@ -5,6 +5,7 @@ import { CalculatedTrack } from '../types.ts';
 import { getLanguage } from '../../language.ts';
 import { getLatLng } from '../../utils/pointUtil.ts';
 import { ParsedGpxSegment } from '../../planner/store/types.ts';
+import { RefObject } from 'react';
 
 export interface MapOptions {
     showMarker: boolean;
@@ -91,7 +92,7 @@ export function addTrackToMap(
 }
 
 export function addTracksToLayer(
-    mapLayer: React.MutableRefObject<LayerGroup | null>,
+    mapLayer: RefObject<LayerGroup | null>,
     parsedTracks: CalculatedTrack[] | ParsedGpxSegment[],
     show: boolean,
     options: MapOptions

@@ -1,5 +1,6 @@
 import L, { LayerGroup } from 'leaflet';
 import { bikeIcon } from './MapIcons.ts';
+import { RefObject } from 'react';
 
 export interface BikeSnake {
     points: { lat: number; lng: number }[];
@@ -28,11 +29,7 @@ function addSnakeToLayer(snake: BikeSnake, routeLayer: LayerGroup) {
     trackSnake.addTo(routeLayer);
 }
 
-export function addBikeSnakesToLayer(
-    mapLayer: React.MutableRefObject<LayerGroup | null>,
-    bikeSnakes: BikeSnake[],
-    show: boolean
-) {
+export function addBikeSnakesToLayer(mapLayer: RefObject<LayerGroup | null>, bikeSnakes: BikeSnake[], show: boolean) {
     const current = mapLayer.current;
 
     if (!mapLayer || !current) {

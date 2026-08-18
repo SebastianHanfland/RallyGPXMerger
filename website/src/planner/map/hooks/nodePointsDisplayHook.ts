@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowNodeMarker } from '../../store/map.reducer.ts';
 import { nodeMergeIcon } from '../../../common/map/MapIcons.ts';
@@ -8,7 +8,7 @@ import { toLatLng } from '../../../utils/pointUtil.ts';
 import { nodesActions } from '../../store/nodes.reducer.ts';
 import { TRACK_MARKER } from '../panes.ts';
 
-export function nodePointsDisplayHook(pointsOfInterestLayer: MutableRefObject<LayerGroup | null>) {
+export function nodePointsDisplayHook(pointsOfInterestLayer: RefObject<LayerGroup | null>) {
     const nodes = useSelector(getNodePositions);
     const showMapMarker = useSelector(getShowNodeMarker);
     const dispatch = useDispatch();

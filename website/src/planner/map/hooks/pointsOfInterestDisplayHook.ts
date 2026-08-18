@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { MutableRefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowPointsOfInterest } from '../../store/map.reducer.ts';
 import { getPoints, pointsActions } from '../../store/points.reducer.ts';
@@ -27,7 +27,7 @@ function createPointOfInterest(point: PointOfInterest) {
     return L.circle(point, { radius: point.radiusInM, color: 'blue' });
 }
 
-export function pointsOfInterestDisplayHook(pointsOfInterestLayer: MutableRefObject<LayerGroup | null>) {
+export function pointsOfInterestDisplayHook(pointsOfInterestLayer: RefObject<LayerGroup | null>) {
     const points = useSelector(getPoints);
     const gaps = useSelector(getGaps);
     const showPointsOfInterest = useSelector(getShowPointsOfInterest);
