@@ -11,7 +11,7 @@ import { Store } from '@reduxjs/toolkit';
 import { getIsDisplayMapLoading } from './store/displayMapReducer.ts';
 
 function RallyDisplay() {
-    const planningId = useGetUrlParam('display=');
+    const planningId = useGetUrlParam('display');
     useLoadPlanningById(planningId);
 
     const isLoading = useSelector(getIsDisplayMapLoading);

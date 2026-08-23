@@ -9,13 +9,9 @@ export function getLink(waypoint: { pointFrom: { lat: number; lon: number }; poi
     return `https://www.openstreetmap.org/directions?engine=fossgis_osrm_bicycle&route=${waypoint.pointFrom.lat}%2C${waypoint.pointFrom.lon}%3B${waypoint.pointTo.lat}%2C${waypoint.pointTo.lon}`;
 }
 
-export function useGetUrlParam(paramArg: string): string | undefined {
+export function useGetUrlParam(paramName: string): string | undefined {
     const { search } = useLocation();
-    return search
-        .replace('?', '')
-        .split('&')
-        .find((param) => param.startsWith(paramArg))
-        ?.replace(paramArg, '');
+    return new URLSearchParams(search).get(paramName) ?? undefined;
 }
 
 export function getBaseUrl() {

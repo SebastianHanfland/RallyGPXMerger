@@ -14,8 +14,8 @@ import { isStateTheSame } from './IsStateTheSame.ts';
 import { errorNotification } from '../store/toast.reducer.ts';
 
 export function LoadingDataFromServerModal() {
-    const planningId = useGetUrlParam('planning=');
-    const adminToken = useGetUrlParam('admin=');
+    const planningId = useGetUrlParam('planning');
+    const adminToken = useGetUrlParam('admin');
     const planningPassword = useSelector(getPlanningPassword);
     const localPlanningId = useSelector(getPlanningId);
     const dispatch: AppDispatch = useDispatch();

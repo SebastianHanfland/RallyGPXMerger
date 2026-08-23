@@ -36,7 +36,7 @@ function setUrlColor(
 export function EditVersionColorButton({ planningId }: Props) {
     const intl = useIntl();
     const colors = useGetVersionColors();
-    const planningIdsFromUrl = useGetUrlParam('comparison=');
+    const planningIdsFromUrl = useGetUrlParam('comparison');
     const planningIds = planningIdsFromUrl?.split(',') ?? [];
     const navigateTo = useNavigate();
 

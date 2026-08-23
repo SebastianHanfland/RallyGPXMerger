@@ -8,7 +8,7 @@ import { mapActions } from '../store/map.reducer.ts';
 export function useLoadPlanningsHook(planningIds: string[]) {
     const dispatch = useDispatch();
     const trackTitles = useSelector(getComparisonTrackTitles);
-    const hasColorsDefined = !!useGetUrlParam('colors=');
+    const hasColorsDefined = !!useGetUrlParam('colors');
 
     useEffect(() => {
         dispatch(comparisonActions.setPlanningIds(planningIds));

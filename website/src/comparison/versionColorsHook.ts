@@ -2,8 +2,8 @@ import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { getColorFromUuid } from '../utils/colorUtil.ts';
 
 export function useGetVersionColors(): Record<string, string | undefined> {
-    const planningIdsFromUrl = useGetUrlParam('comparison=');
-    const colorsFromUrl = useGetUrlParam('colors=');
+    const planningIdsFromUrl = useGetUrlParam('comparison');
+    const colorsFromUrl = useGetUrlParam('colors');
     const planningIds = planningIdsFromUrl?.split(',') ?? [];
     const colors = colorsFromUrl?.split(',') ?? [];
     if (!colorsFromUrl) {

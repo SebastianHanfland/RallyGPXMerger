@@ -11,7 +11,7 @@ import { Store } from '@reduxjs/toolkit';
 import { useLoadPlanningsHook } from './data/useLoadPlanningsHook.ts';
 
 function RallyComparison() {
-    const planningIds = useGetUrlParam('comparison=')?.split(',') ?? [];
+    const planningIds = useGetUrlParam('comparison')?.split(',') ?? [];
     useLoadPlanningsHook(planningIds);
     const isLoading = useSelector(getIsComparisonLoading);
 

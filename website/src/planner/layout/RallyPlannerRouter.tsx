@@ -4,8 +4,8 @@ import { MainPlannerUi } from '../ui/MainPlannerUi.tsx';
 import { useGetUrlParam } from '../../utils/linkUtil.ts';
 
 export const RallyPlannerRouter = () => {
-    const section = useGetUrlParam('section=');
-    const planningId = useGetUrlParam('planning=');
+    const section = useGetUrlParam('section');
+    const planningId = useGetUrlParam('planning');
 
     if (!section && planningId) {
         return <MainPlannerUi />;

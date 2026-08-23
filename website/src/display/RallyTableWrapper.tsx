@@ -10,7 +10,7 @@ import { Store } from '@reduxjs/toolkit';
 import { getIsDisplayMapLoading } from './store/displayMapReducer.ts';
 
 function RallyTable() {
-    const planningId = useGetUrlParam('table=');
+    const planningId = useGetUrlParam('table');
     useLoadPlanningById(planningId);
 
     const isLoading = useSelector(getIsDisplayMapLoading);

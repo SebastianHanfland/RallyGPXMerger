@@ -12,24 +12,19 @@ import { displayStore } from './display/store/store.ts';
 import { comparisonStore } from './comparison/store/store.ts';
 import { Imprint } from './Imprint.tsx';
 import { StreetPathMapWrapper } from './street-path/StreetPathMap.tsx';
-import { useLocation } from 'react-router';
 
 export function App() {
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-    const hasStreetPathUrl = searchParams.has('streetpath');
-    const hasComparisonUrl = useGetUrlParam('comparison=');
-    const hasDisplayUrl = useGetUrlParam('display=');
-    const hasTableUrl = useGetUrlParam('table=');
-    const hasImprintUrl = useGetUrlParam('imprint=');
+    const streetPath = useGetUrlParam('streetpath');
+    const streetName = useGetUrlParam('streetname');
+    const hasComparisonUrl = useGetUrlParam('comparison');
+    const hasDisplayUrl = useGetUrlParam('display');
+    const hasTableUrl = useGetUrlParam('table');
+    const hasImprintUrl = useGetUrlParam('imprint');
 
-    if (hasStreetPathUrl) {
+    if (streetPath !== undefined) {
         return (
             <ErrorBoundary>
-                <StreetPathMapWrapper
-                    encodedPath={searchParams.get('streetpath') ?? ''}
-                    streetName={searchParams.get('streetname') ?? undefined}
-                />
+                <StreetPathMapWrapper encodedPath={streetPath} streetName={streetName} />
             </ErrorBoundary>
         );
     }

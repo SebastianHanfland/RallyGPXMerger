@@ -1,7 +1,7 @@
 import { useGetUrlParam } from '../../utils/linkUtil.ts';
 
 export function useTableIndices(): number[] | undefined {
-    const tableIndices = useGetUrlParam('rows=');
+    const tableIndices = useGetUrlParam('rows');
     if (!tableIndices) {
         return undefined;
     }
