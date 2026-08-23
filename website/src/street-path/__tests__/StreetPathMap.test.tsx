@@ -52,7 +52,7 @@ describe('StreetPathMap', () => {
             />
         );
 
-        expect(screen.getByRole('heading', { name: 'Main Street' })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Main Street' })).toHaveStyle({ left: '56px' });
         expect(document.title).toBe('Main Street');
         expect(leafletMocks.createPolyline).toHaveBeenCalledTimes(1);
         expect(leafletMocks.map.fitBounds).toHaveBeenCalledWith('bounds', {

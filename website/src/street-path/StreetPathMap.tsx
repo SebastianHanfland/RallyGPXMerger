@@ -58,7 +58,7 @@ function StreetPathMap({ encodedPath, streetName }: Props) {
             {streetName && (
                 <h1
                     className="fs-5 m-0 px-3 py-2 bg-white text-dark shadow rounded"
-                    style={{ position: 'absolute', top: 12, left: 12, zIndex: 1000, maxWidth: 'calc(100vw - 24px)' }}
+                    style={{ position: 'absolute', top: 12, left: 56, zIndex: 1000, maxWidth: 'calc(100vw - 68px)' }}
                 >
                     {streetName}
                 </h1>
