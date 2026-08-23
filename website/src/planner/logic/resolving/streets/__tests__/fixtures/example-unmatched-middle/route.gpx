@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="RallyGPXMerger" xmlns="http://www.topografix.com/GPX/1/1">
+    <trk>
+        <name>Example unmatched middle</name>
+        <trkseg>
+            <trkpt lat="48.200000" lon="11.200000"><ele>500</ele><time>2024-01-01T10:00:00Z</time></trkpt>
+            <trkpt lat="48.200100" lon="11.200100"><ele>500</ele><time>2024-01-01T10:00:10Z</time></trkpt>
+            <trkpt lat="48.200200" lon="11.200200"><ele>500</ele><time>2024-01-01T10:00:20Z</time></trkpt>
+            <trkpt lat="48.200300" lon="11.200300"><ele>500</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+            <trkpt lat="48.200400" lon="11.200400"><ele>500</ele><time>2024-01-01T10:00:40Z</time></trkpt>
+        </trkseg>
+    </trk>
+</gpx>

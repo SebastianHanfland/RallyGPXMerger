@@ -6,6 +6,9 @@ import { GeoApifyMapMatchingResult } from '../../types.ts';
 import routeGpx from './fixtures/example-street-transition/route.gpx?raw';
 import geoApifyResponse from './fixtures/example-street-transition/geoapify-response.json';
 import expectedStreets from './fixtures/example-street-transition/expected-streets.ts';
+import unmatchedMiddleRouteGpx from './fixtures/example-unmatched-middle/route.gpx?raw';
+import unmatchedMiddleGeoApifyResponse from './fixtures/example-unmatched-middle/geoapify-response.json';
+import unmatchedMiddleExpectedStreets from './fixtures/example-unmatched-middle/expected-streets.ts';
 
 function toParsedSegment(rawGpx: string): ParsedGpxSegment {
     const parsed = SimpleGPX.fromString(rawGpx);
@@ -26,9 +29,9 @@ function toParsedSegment(rawGpx: string): ParsedGpxSegment {
 }
 
 describe('street resolver fixtures', () => {
-    it('matches the expected names for example-street-transition', () => {
-        const segment = toParsedSegment(routeGpx);
-        const resolvedPositions = mapToPositionMap(geoApifyResponse as unknown as GeoApifyMapMatchingResult);
+    function assertFixture(rawGpx: string, response: unknown, expectedStreets: typeof unmatchedMiddleExpectedStreets) {
+        const segment = toParsedSegment(rawGpx);
+        const resolvedPositions = mapToPositionMap(response as GeoApifyMapMatchingResult);
         const { segment: resolvedSegment, streetLookUp } = enrichSegmentWithResolvedStreets(
             segment,
             resolvedPositions,
@@ -44,5 +47,13 @@ describe('street resolver fixtures', () => {
             expect(actualPoint.l).toBeCloseTo(expected.lon, 6);
             expect(actualStreet).toBe(expected.streetName);
         });
+    }
+
+    it('matches the expected names for example-street-transition', () => {
+        assertFixture(routeGpx, geoApifyResponse, expectedStreets);
+    });
+
+    it('keeps the preceding street for an unmatched middle point', () => {
+        assertFixture(unmatchedMiddleRouteGpx, unmatchedMiddleGeoApifyResponse, unmatchedMiddleExpectedStreets);
     });
 });

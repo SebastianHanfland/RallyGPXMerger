@@ -1,0 +1,89 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "distance": 30,
+                "time": 30,
+                "mode": "drive",
+                "legs": [
+                    {
+                        "distance": 30,
+                        "time": 30,
+                        "steps": [
+                            {
+                                "osm_way_id": 2001,
+                                "from_index": 0,
+                                "to_index": 1,
+                                "name": "First Street",
+                                "toll": false,
+                                "tunnel": false,
+                                "bridge": false,
+                                "roundabout": false
+                            },
+                            {
+                                "osm_way_id": 2002,
+                                "from_index": 2,
+                                "to_index": 4,
+                                "name": "Second Street",
+                                "toll": false,
+                                "tunnel": false,
+                                "bridge": false,
+                                "roundabout": false
+                            }
+                        ]
+                    }
+                ],
+                "waypoints": [
+                    {
+                        "original_index": 0,
+                        "location": [11.2, 48.2],
+                        "original_location": [11.2, 48.2],
+                        "match_type": "matched",
+                        "match_distance": 1,
+                        "leg_index": 0,
+                        "step_index": 0
+                    },
+                    {
+                        "original_index": 1,
+                        "location": [11.2001, 48.2001],
+                        "original_location": [11.2001, 48.2001],
+                        "match_type": "matched",
+                        "match_distance": 1,
+                        "leg_index": 0,
+                        "step_index": 0
+                    },
+                    {
+                        "original_index": 3,
+                        "location": [11.2003, 48.2003],
+                        "original_location": [11.2003, 48.2003],
+                        "match_type": "matched",
+                        "match_distance": 1,
+                        "leg_index": 0,
+                        "step_index": 1
+                    },
+                    {
+                        "original_index": 4,
+                        "location": [11.2004, 48.2004],
+                        "original_location": [11.2004, 48.2004],
+                        "match_type": "matched",
+                        "match_distance": 1,
+                        "leg_index": 0,
+                        "step_index": 1
+                    }
+                ]
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [11.2, 48.2],
+                    [11.2001, 48.2001],
+                    [11.2002, 48.2002],
+                    [11.2003, 48.2003],
+                    [11.2004, 48.2004]
+                ]
+            }
+        }
+    ]
+}
