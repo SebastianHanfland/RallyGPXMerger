@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="RallyGPXMerger" xmlns="http://www.topografix.com/GPX/1/1">
+    <trk>
+        <name>Example street transition</name>
+        <trkseg>
+            <trkpt lat="48.100000" lon="11.100000"><ele>500</ele><time>2024-01-01T10:00:00Z</time></trkpt>
+            <trkpt lat="48.100100" lon="11.100100"><ele>500</ele><time>2024-01-01T10:00:10Z</time></trkpt>
+            <trkpt lat="48.100200" lon="11.100200"><ele>500</ele><time>2024-01-01T10:00:20Z</time></trkpt>
+            <trkpt lat="48.100300" lon="11.100300"><ele>500</ele><time>2024-01-01T10:00:30Z</time></trkpt>
+        </trkseg>
+    </trk>
+</gpx>
