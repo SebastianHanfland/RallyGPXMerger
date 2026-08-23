@@ -142,6 +142,8 @@
     "msg.allEntries": "Alle Einträge anzeigen",
     "msg.onlyUnknown": "Nur \"Unbekannte\" anzeigen",
     "msg.unknown": "Unbekannt",
+    "msg.streetPath.title": "Straßenverlauf",
+    "msg.streetPath.invalid": "Dieser Link zum Straßenverlauf ist ungültig oder unvollständig.",
     "msg.numberOfUnknown": "Es gibt {amount} unbekannte Elemente",
     "msg.blockedStreets": "Blockierte Strassen",
     "msg.postCode": "PLZ",

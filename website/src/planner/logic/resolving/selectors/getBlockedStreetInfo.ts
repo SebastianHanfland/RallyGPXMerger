@@ -33,6 +33,16 @@ function countPeopleOnTracks(tracks: TrackComposition[], tracksIds: string[]): n
     return counter;
 }
 
+function joinPaths(first: WayPoint['path'], second: WayPoint['path']): WayPoint['path'] {
+    if (!first) return second;
+    if (!second) return first;
+    const lastFirst = first[first.length - 1];
+    const firstSecond = second[0];
+    const secondWithoutDuplicate =
+        lastFirst?.lat === firstSecond?.lat && lastFirst?.lon === firstSecond?.lon ? second.slice(1) : second;
+    return [...first, ...secondWithoutDuplicate];
+}
+
 export const getBlockedStreetInfo = createSelector(
     [getTrackStreetInfos, getTrackCompositions],
     (trackStreetInfos, tracks): BlockedStreetInfo[] => {
@@ -52,6 +62,7 @@ export const getBlockedStreetInfo = createSelector(
                             distanceInKm: waypoint.distanceInKm,
                             pointFrom: waypoint.pointFrom,
                             pointTo: waypoint.pointTo,
+                            path: waypoint.path,
                             peopleCount: 0,
                             tracksIds: [foundTrack!.id],
                         });
@@ -64,6 +75,7 @@ export const getBlockedStreetInfo = createSelector(
                                   backPassage: takeLaterOne(info.backPassage, waypoint.backPassage),
                                   frontArrival: takeEarlierOne(info.frontArrival, waypoint.frontArrival),
                                   tracksIds: addTrackId(info.tracksIds, foundTrack!.id),
+                                  path: joinPaths(info.path, waypoint.path),
                               }
                             : info
                     );

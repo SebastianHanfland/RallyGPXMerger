@@ -31,6 +31,8 @@ const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     time: shiftDateBySeconds(arrivalDate, t),
 });
 
+const extractPathPoint = ({ b, l }: ParsedPoint) => ({ lat: b, lon: l });
+
 export const calculateTrackStreetInfos = (
     segments: ParsedGpxSegment[],
     tracks: TrackComposition[],
@@ -209,6 +211,7 @@ export function getWayPointsOfTrack(
                             ),
                             pointFrom: extractLatLon(point.pointFrom, arrivalDate),
                             pointTo: extractLatLon(point.pointTo, arrivalDate),
+                            path: point.path.map(extractPathPoint),
                             distanceInKm: point.distanceInKm,
                             speed: point.speed,
                             type: TrackWayPointType.Track,

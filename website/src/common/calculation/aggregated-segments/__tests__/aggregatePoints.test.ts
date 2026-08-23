@@ -1,5 +1,5 @@
 import { ParsedPoint } from '../../../../planner/store/types.ts';
-import { getConnectedPointWithTheSameStreetIndex } from '../aggregatePointsSelector.ts';
+import { aggregateStreetPointsInSegment, getConnectedPointWithTheSameStreetIndex } from '../aggregatePointsSelector.ts';
 
 function getPoint(coordinate: number, streetIndex: number): ParsedPoint {
     return {
@@ -58,5 +58,18 @@ describe('getConnectedPointWithTheSameStreetIndex', () => {
 
         // then
         expect(connectedPoints).toEqual([getPoint(2, 1), getPoint(3, 1)]);
+    });
+});
+
+describe('aggregateStreetPointsInSegment', () => {
+    it('retains every GPX point belonging to the street geometry', () => {
+        const points = [getPoint(3, 1), getPoint(4, 1), getPoint(5, 1)];
+
+        const result = aggregateStreetPointsInSegment(points, { 1: 'street' });
+
+        expect(result).toHaveLength(1);
+        expect(result[0].path).toEqual(points);
+        expect(result[0].pointFrom).toEqual(points[0]);
+        expect(result[0].pointTo).toEqual(points[2]);
     });
 });

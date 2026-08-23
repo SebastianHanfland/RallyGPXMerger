@@ -1,6 +1,5 @@
 import { TrackWayPointType, WayPoint } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
 import { getTrackTableHeaders } from '../getHeader.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
@@ -9,6 +8,7 @@ import { pdfStyles } from './pdfStyles.ts';
 import { TrackStreetTableNodeRow } from './TrackStreetTableNodeRow.tsx';
 import { TrackStreetTableBreakRow } from './TrackStreetTableBreakRow.tsx';
 import { TrackStreetTableEntryPointRow } from './TrackStreetTableEntryPointRow.tsx';
+import { createStreetPathUrl } from '../../../utils/streetPathUrl.ts';
 
 interface Props {
     wayPoints: WayPoint[];
@@ -61,12 +61,14 @@ export const TrackStreetTablePdf = ({ wayPoints, intl }: Props) => {
                         );
                     }
 
+                    const streetName = wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
+                    const streetPath = wayPoint.path ?? [wayPoint.pointFrom, wayPoint.pointTo];
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
                                 <Text>
-                                    <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
-                                        {wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <Link src={createStreetPathUrl(streetPath, streetName)} style={{ color: 'blue' }}>
+                                        {streetName}
                                     </Link>
                                 </Text>
                             </Text>

@@ -35,12 +35,20 @@ describe('getBlockedStreetInfo', () => {
                         frontArrival: '2022-02-02T02:10:00.000Z',
                         backPassage: '2022-02-02T02:12:00.000Z',
                         type: TrackWayPointType.Track,
+                        path: [
+                            { lat: 48, lon: 11 },
+                            { lat: 48.1, lon: 11.1 },
+                        ],
                     },
                     {
                         streetName: 'A',
                         frontArrival: '2022-02-02T02:14:00.000Z',
                         backPassage: latestEnd,
                         type: TrackWayPointType.Track,
+                        path: [
+                            { lat: 48.1, lon: 11.1 },
+                            { lat: 48.2, lon: 11.2 },
+                        ],
                     },
                 ],
             },
@@ -52,6 +60,10 @@ describe('getBlockedStreetInfo', () => {
                         frontArrival: earliestStart,
                         backPassage: '2022-02-02T02:10:00.000Z',
                         type: TrackWayPointType.Track,
+                        path: [
+                            { lat: 48.3, lon: 11.3 },
+                            { lat: 48.4, lon: 11.4 },
+                        ],
                     },
                 ],
             },
@@ -69,6 +81,13 @@ describe('getBlockedStreetInfo', () => {
                 backPassage: latestEnd,
                 peopleCount: 30,
                 tracksIds: ['1', '2'],
+                path: [
+                    { lat: 48, lon: 11 },
+                    { lat: 48.1, lon: 11.1 },
+                    { lat: 48.2, lon: 11.2 },
+                    { lat: 48.3, lon: 11.3 },
+                    { lat: 48.4, lon: 11.4 },
+                ],
             } as BlockedStreetInfo,
         ];
 

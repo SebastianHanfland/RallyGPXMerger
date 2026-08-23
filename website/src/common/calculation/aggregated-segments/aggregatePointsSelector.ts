@@ -51,39 +51,39 @@ export const getAggregateStreetsInSegments = createSelector(
     (segments, streetLookup): Record<string, AggregatedPoints[] | undefined> => {
         const aggregatedPointsForSegments: Record<string, AggregatedPoints[]> = {};
         segments.forEach((segment) => {
-            let pointIndex = 0;
-            const aggregatedPoints: AggregatedPoints[] = [];
-            const initialOffset = segment.points.length > 0 ? segment.points[0].t : 0;
-
-            while (pointIndex < segment.points.length) {
-                const firstPoint = segment.points[pointIndex];
-                const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(
-                    segment.points,
-                    firstPoint,
-                    streetLookup
-                );
-                const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1];
-
-                const distanceInKm =
-                    pointIndex > 0
-                        ? calculateDistanceInKm([segment.points[pointIndex - 1], ...pointsWithSameStreet])
-                        : calculateDistanceInKm(pointsWithSameStreet);
-
-                const correctedFirstPoint = pointIndex > 0 ? segment.points[pointIndex - 1] : firstPoint;
-
-                aggregatedPoints.push({
-                    frontPassage: lastPoint.t - initialOffset,
-                    frontArrival: correctedFirstPoint.t - initialOffset,
-                    pointFrom: correctedFirstPoint,
-                    pointTo: lastPoint,
-                    distanceInKm: distanceInKm,
-                    speed: (distanceInKm / (lastPoint.t - correctedFirstPoint.t)) * 3600,
-                    s: firstPoint.s,
-                });
-                pointIndex += pointsWithSameStreet.length;
-            }
-            aggregatedPointsForSegments[segment.id] = aggregatedPoints;
+            aggregatedPointsForSegments[segment.id] = aggregateStreetPointsInSegment(segment.points, streetLookup);
         });
         return aggregatedPointsForSegments;
     }
 );
+
+export function aggregateStreetPointsInSegment(
+    points: ParsedPoint[],
+    streetLookup: Record<number, string | undefined>
+): AggregatedPoints[] {
+    let pointIndex = 0;
+    const aggregatedPoints: AggregatedPoints[] = [];
+    const initialOffset = points.length > 0 ? points[0].t : 0;
+
+    while (pointIndex < points.length) {
+        const firstPoint = points[pointIndex]!;
+        const pointsWithSameStreet = getConnectedPointWithTheSameStreetIndex(points, firstPoint, streetLookup);
+        const lastPoint = pointsWithSameStreet[pointsWithSameStreet.length - 1]!;
+        const correctedFirstPoint = pointIndex > 0 ? points[pointIndex - 1]! : firstPoint;
+        const path = pointIndex > 0 ? [correctedFirstPoint, ...pointsWithSameStreet] : pointsWithSameStreet;
+        const distanceInKm = calculateDistanceInKm(path);
+
+        aggregatedPoints.push({
+            frontPassage: lastPoint.t - initialOffset,
+            frontArrival: correctedFirstPoint.t - initialOffset,
+            pointFrom: correctedFirstPoint,
+            pointTo: lastPoint,
+            path,
+            distanceInKm,
+            speed: (distanceInKm / (lastPoint.t - correctedFirstPoint.t)) * 3600,
+            s: firstPoint.s,
+        });
+        pointIndex += pointsWithSameStreet.length;
+    }
+    return aggregatedPoints;
+}

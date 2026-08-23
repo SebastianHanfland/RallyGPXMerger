@@ -86,6 +86,7 @@ export interface BlockedStreetInfo {
     distanceInKm?: number;
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
+    path?: StreetPathPoint[];
     peopleCount: number;
     tracksIds: string[];
 }
@@ -95,6 +96,7 @@ export interface AggregatedPoints {
     frontPassage: number;
     pointFrom: ParsedPoint;
     pointTo: ParsedPoint;
+    path: ParsedPoint[];
     speed?: number;
     distanceInKm?: number;
     s: number;
@@ -109,6 +111,7 @@ export interface WayPoint {
     backPassage: string;
     pointFrom: { lat: number; lon: number; time: string };
     pointTo: { lat: number; lon: number; time: string };
+    path?: StreetPathPoint[];
     speed?: number;
     distanceInKm?: number;
     type?: TrackWayPointType;
@@ -119,4 +122,9 @@ export interface WayPoint {
     s?: number;
     breakId?: string;
     entryId?: string;
+}
+
+export interface StreetPathPoint {
+    lat: number;
+    lon: number;
 }

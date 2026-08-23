@@ -9,9 +9,20 @@ function mergePoints(matchedWayPoint: WayPoint, matchedTrackPoint: WayPoint): Wa
         ...matchedTrackPoint,
         frontArrival: matchedWayPoint.frontArrival,
         pointFrom: matchedWayPoint.pointFrom,
+        path: joinPaths(matchedWayPoint.path, matchedTrackPoint.path),
         distanceInKm: totalDistance,
         speed: totalTime > 0 ? (totalDistance / totalTime) * 3600 : 0,
     };
+}
+
+function joinPaths(first: WayPoint['path'], second: WayPoint['path']): WayPoint['path'] {
+    if (!first) return second;
+    if (!second) return first;
+    const lastFirst = first[first.length - 1];
+    const firstSecond = second[0];
+    const secondWithoutDuplicate =
+        lastFirst?.lat === firstSecond?.lat && lastFirst?.lon === firstSecond?.lon ? second.slice(1) : second;
+    return [...first, ...secondWithoutDuplicate];
 }
 
 export function joinWayPointsAtSegmentsBorders(wayPoints: WayPoint[], trackPoints: WayPoint[]) {

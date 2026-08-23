@@ -137,6 +137,8 @@
     "msg.allEntries": "Show all entries",
     "msg.onlyUnknown": "Only show \"Unknown\"",
     "msg.unknown": "Unknown",
+    "msg.streetPath.title": "Street path",
+    "msg.streetPath.invalid": "This street path link is invalid or incomplete.",
     "msg.numberOfUnknown": "There are {amount} unknown elements",
     "msg.blockedStreets": "Blocked Streets",
     "msg.postCode": "Post code",

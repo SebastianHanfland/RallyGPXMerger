@@ -2,13 +2,13 @@ import { BlockedStreetInfo } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import geoDistance from 'geo-distance-helper';
 import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv.ts';
-import { getLink } from '../../../utils/linkUtil.ts';
 import { IntlShape } from 'react-intl';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
 import { Document, Link, Page, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
 import { chunkList } from './chunkUtil.t.ts';
+import { createStreetPathUrl } from '../../../utils/streetPathUrl.ts';
 
 interface Props {
     intl: IntlShape;
@@ -48,14 +48,16 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
                     ))}
                 </View>
                 {...blockedStreets.map((streetPoint, index) => {
+                    const streetName = streetPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
+                    const streetPath = streetPoint.path ?? [streetPoint.pointFrom, streetPoint.pointTo];
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>{streetPoint.postCode ?? ''}</Text>
                             <Text style={colWidths[1]}>{streetPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
                             <Text style={colWidths[2]}>
                                 <Text style={pdfStyles.bold}>
-                                    <Link src={getLink(streetPoint)} style={{ color: 'blue' }}>
-                                        {streetPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <Link src={createStreetPathUrl(streetPath, streetName)} style={{ color: 'blue' }}>
+                                        {streetName}
                                     </Link>
                                 </Text>
                             </Text>
