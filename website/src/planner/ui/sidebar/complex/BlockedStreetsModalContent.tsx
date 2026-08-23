@@ -71,12 +71,16 @@ export const BlockedStreetsModalContent = () => {
                                 pointFrom,
                                 distanceInKm,
                                 peopleCount,
+                                path,
                             } = street;
                             return (
                                 <tr key={backPassage + streetName + frontArrival}>
                                     <td>
                                         <HighlightUnknown value={streetName ?? unknown} />
-                                        <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
+                                        <StreetMapLink
+                                            path={path ?? [pointFrom, pointTo]}
+                                            streetName={streetName ?? unknown}
+                                        />
                                     </td>
                                     <td>
                                         <HighlightUnknown value={postCode?.toString() ?? unknown} />

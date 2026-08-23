@@ -12,10 +12,12 @@ import { displayStore } from './display/store/store.ts';
 import { comparisonStore } from './comparison/store/store.ts';
 import { Imprint } from './Imprint.tsx';
 import { StreetPathMapWrapper } from './street-path/StreetPathMap.tsx';
+import { useLocation } from 'react-router';
 
 export function App() {
-    const hasStreetPathUrl = useGetUrlParam('streetpath=');
-    const hasStreetName = useGetUrlParam('streetname=');
+    const { search } = useLocation();
+    const searchParams = new URLSearchParams(search);
+    const hasStreetPathUrl = searchParams.has('streetpath');
     const hasComparisonUrl = useGetUrlParam('comparison=');
     const hasDisplayUrl = useGetUrlParam('display=');
     const hasTableUrl = useGetUrlParam('table=');
@@ -24,7 +26,10 @@ export function App() {
     if (hasStreetPathUrl) {
         return (
             <ErrorBoundary>
-                <StreetPathMapWrapper encodedPath={hasStreetPathUrl ?? ''} streetName={hasStreetName} />
+                <StreetPathMapWrapper
+                    encodedPath={searchParams.get('streetpath') ?? ''}
+                    streetName={searchParams.get('streetname') ?? undefined}
+                />
             </ErrorBoundary>
         );
     }

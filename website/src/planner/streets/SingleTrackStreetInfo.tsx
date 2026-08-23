@@ -119,12 +119,16 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                                 nodeTracks,
                                 distanceInKm,
                                 speed,
+                                path,
                             } = waypoint;
                             return (
                                 <tr key={backPassage + streetName + frontArrival + type}>
                                     <td>
                                         <HighlightUnknown value={streetName ?? unknown} />
-                                        <StreetMapLink pointTo={pointTo} pointFrom={pointFrom} />
+                                        <StreetMapLink
+                                            path={path ?? [pointFrom, pointTo]}
+                                            streetName={streetName ?? unknown}
+                                        />
                                         <b>
                                             {type === TrackWayPointType.Break
                                                 ? `${breakLabel}${breakLength ? ` (${breakLength} min)` : ''}`
