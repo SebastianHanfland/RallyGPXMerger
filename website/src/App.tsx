@@ -11,13 +11,11 @@ import { planningStore } from './planner/store/planningStore.ts';
 import { displayStore } from './display/store/store.ts';
 import { comparisonStore } from './comparison/store/store.ts';
 import { Imprint } from './Imprint.tsx';
-import { useLocation } from 'react-router';
 import { StreetPathMapWrapper } from './street-path/StreetPathMap.tsx';
 
 export function App() {
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-    const hasStreetPathUrl = searchParams.has('streetpath');
+    const hasStreetPathUrl = useGetUrlParam('streetpath=');
+    const hasStreetName = useGetUrlParam('streetname=');
     const hasComparisonUrl = useGetUrlParam('comparison=');
     const hasDisplayUrl = useGetUrlParam('display=');
     const hasTableUrl = useGetUrlParam('table=');
@@ -26,10 +24,7 @@ export function App() {
     if (hasStreetPathUrl) {
         return (
             <ErrorBoundary>
-                <StreetPathMapWrapper
-                    encodedPath={searchParams.get('streetpath') ?? ''}
-                    streetName={searchParams.get('streetname') ?? undefined}
-                />
+                <StreetPathMapWrapper encodedPath={hasStreetPathUrl ?? ''} streetName={hasStreetName} />
             </ErrorBoundary>
         );
     }
