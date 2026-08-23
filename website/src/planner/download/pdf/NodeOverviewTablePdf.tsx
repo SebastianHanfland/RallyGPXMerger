@@ -1,5 +1,5 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
-import { getLink } from '../../../utils/linkUtil.ts';
+import { createStreetPointUrl } from '../../../utils/streetPathUrl.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
@@ -35,12 +35,16 @@ export const NodeOverviewTablePdf = ({ trackStreets, intl }: Props) => {
                     <Text style={colWidths[2]}>{intl.formatMessage({ id: 'msg.otherTracks' })} </Text>
                 </View>
                 {...nodes.map((nodePoint, index) => {
+                    const streetName = nodePoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
                                 <Text style={pdfStyles.bold}>
-                                    <Link src={getLink(nodePoint)} style={{ color: 'blue' }}>
-                                        {nodePoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <Link
+                                        src={createStreetPointUrl(nodePoint.pointFrom, streetName)}
+                                        style={{ color: 'blue' }}
+                                    >
+                                        {streetName}
                                     </Link>
                                 </Text>
                             </Text>
@@ -52,12 +56,16 @@ export const NodeOverviewTablePdf = ({ trackStreets, intl }: Props) => {
                     );
                 })}
                 {...nodes.map((nodePoint, index) => {
+                    const streetName = nodePoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>
                                 <Text style={pdfStyles.bold}>
-                                    <Link src={getLink(nodePoint)} style={{ color: 'blue' }}>
-                                        {nodePoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <Link
+                                        src={createStreetPointUrl(nodePoint.pointFrom, streetName)}
+                                        style={{ color: 'blue' }}
+                                    >
+                                        {streetName}
                                     </Link>
                                 </Text>
                             </Text>

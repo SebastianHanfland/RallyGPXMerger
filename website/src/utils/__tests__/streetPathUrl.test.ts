@@ -1,4 +1,9 @@
-import { createStreetPathUrl, decodeStreetPath, STREET_PATH_URL_LIMIT } from '../streetPathUrl.ts';
+import {
+    createStreetPathUrl,
+    createStreetPointUrl,
+    decodeStreetPath,
+    STREET_PATH_URL_LIMIT,
+} from '../streetPathUrl.ts';
 
 describe('street path URLs', () => {
     it('round-trips exact geometry and the street name when the URL fits', () => {
@@ -36,5 +41,12 @@ describe('street path URLs', () => {
         expect(decodeStreetPath('')).toBeUndefined();
         const invalidUrl = new URL(createStreetPathUrl([{ lat: 100, lon: 200 }]));
         expect(decodeStreetPath(invalidUrl.searchParams.get('streetpath')!)).toBeUndefined();
+    });
+
+    it('creates a named single-location URL', () => {
+        const url = new URL(createStreetPointUrl({ lat: 48.12345, lon: 11.54321 }, 'Meeting point'));
+
+        expect(url.searchParams.get('streetname')).toBe('Meeting point');
+        expect(decodeStreetPath(url.searchParams.get('streetpath')!)).toEqual([{ lat: 48.12345, lon: 11.54321 }]);
     });
 });

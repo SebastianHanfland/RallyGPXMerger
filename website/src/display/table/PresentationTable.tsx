@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
 import { Table } from 'react-bootstrap';
-import { getLink } from '../../utils/linkUtil.ts';
+import { createStreetPointUrl } from '../../utils/streetPathUrl.ts';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 import { TrackWayPointType } from '../../planner/logic/resolving/types.ts';
 import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
@@ -75,7 +75,8 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
     const entryPoints = foundInfo.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Entry);
 
     const { pointFrom: startPoint, streetName: startStreetName } = foundInfo.wayPoints[0];
-    const startLink = getLink({ pointFrom: startPoint, pointTo: startPoint });
+    const startName = foundInfo.startName ?? startStreetName ?? undefined;
+    const startLink = createStreetPointUrl(startPoint, startName);
 
     return (
         <tr>
@@ -99,7 +100,7 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                 {formatTimeOnly(foundInfo.publicStart ?? foundInfo.startFront, hideSeconds)}{' '}
                 <div>
                     <a href={startLink} target={'_blank'} referrerPolicy={'no-referrer'}>
-                        {foundInfo?.startName ?? startStreetName}
+                        {startName}
                     </a>
                 </div>
             </td>
@@ -111,7 +112,14 @@ function TrackInfoRow({ track, hasEntryPoints }: { track: CalculatedTrack; hasEn
                                 <div className={'mx-2'}>
                                     <div>{formatTimeOnly(entryPoint.frontArrival, hideSeconds)}</div>
                                     <div>
-                                        <a href={getLink(entryPoint)} target={'_blank'} referrerPolicy={'no-referrer'}>
+                                        <a
+                                            href={createStreetPointUrl(
+                                                entryPoint.pointFrom,
+                                                entryPoint.streetName ?? undefined
+                                            )}
+                                            target={'_blank'}
+                                            referrerPolicy={'no-referrer'}
+                                        >
                                             {entryPoint.streetName}
                                         </a>
                                     </div>

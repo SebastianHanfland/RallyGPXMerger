@@ -2,7 +2,7 @@ import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
-import { getLink } from '../../../utils/linkUtil.ts';
+import { createStreetPointUrl } from '../../../utils/streetPathUrl.ts';
 import { pdfStyles } from './pdfStyles.ts';
 
 interface Props {
@@ -29,7 +29,7 @@ export const EntryPointOverviewPdf = ({ trackStreets, intl }: Props) => {
                 </View>
                 <View key={-1} style={pdfStyles.row} wrap={false}>
                     <Text style={pdfStyles.col1}>
-                        <Link src={getLink({ pointTo: startingPoint.pointFrom, pointFrom: startingPoint.pointFrom })}>
+                        <Link src={createStreetPointUrl(startingPoint.pointFrom, startingLabel)}>
                             <Text style={pdfStyles.bold}>{startingLabel}</Text>
                         </Link>
                     </Text>
@@ -37,12 +37,16 @@ export const EntryPointOverviewPdf = ({ trackStreets, intl }: Props) => {
                     <Text style={pdfStyles.col3}>{formatTimeOnly(startingPoint.frontArrival)}</Text>
                 </View>
                 {...entryPoints.map((entryPoint, index) => {
+                    const streetName = entryPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={pdfStyles.col1}>
                                 <Text style={pdfStyles.bold}>
-                                    <Link src={getLink(entryPoint)} style={{ color: 'blue' }}>
-                                        {entryPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}
+                                    <Link
+                                        src={createStreetPointUrl(entryPoint.pointFrom, streetName)}
+                                        style={{ color: 'blue' }}
+                                    >
+                                        {streetName}
                                     </Link>
                                 </Text>
                             </Text>

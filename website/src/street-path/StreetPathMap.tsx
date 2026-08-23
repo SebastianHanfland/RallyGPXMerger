@@ -6,7 +6,7 @@ import { decodeStreetPath } from '../utils/streetPathUrl.ts';
 import { getMapConfiguration } from '../common/map/mapConfig.ts';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
-import { endIcon, startIcon } from '../common/map/MapIcons.ts';
+import { endIcon, markerIcon, startIcon } from '../common/map/MapIcons.ts';
 import { getStreetPathDirection } from './getStreetPathDirection.ts';
 
 interface Props {
@@ -46,7 +46,7 @@ function StreetPathMap({ encodedPath, streetName }: Props) {
         const latLngs = path.map(({ lat, lon }) => L.latLng(lat, lon));
 
         if (latLngs.length === 1) {
-            L.circleMarker(latLngs[0]!, { radius: 7, color: '#005fcc', fillOpacity: 1 }).addTo(map);
+            L.marker(latLngs[0]!, { icon: markerIcon, title }).addTo(map);
             map.setView(latLngs[0]!, 18);
         } else {
             const line = L.polyline(latLngs, { color: '#005fcc', weight: 6 }).addTo(map);
@@ -65,7 +65,7 @@ function StreetPathMap({ encodedPath, streetName }: Props) {
         return () => {
             map.remove();
         };
-    }, [directionTitle, endTitle, path, startTitle]);
+    }, [directionTitle, endTitle, path, startTitle, title]);
 
     if (!path) {
         return (

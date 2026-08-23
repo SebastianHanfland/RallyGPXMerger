@@ -1,6 +1,6 @@
 import { WayPoint } from '../../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import { getLink } from '../../../utils/linkUtil.ts';
+import { createStreetPointUrl } from '../../../utils/streetPathUrl.ts';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const TrackStreetTableBreakRow = ({ wayPoint, intl, colWidths }: Props) => {
+    const streetName = wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
     let width = 0;
     colWidths.slice(0, 5).forEach((colWidth) => {
         width += Number(colWidth.width.replace('%', ''));
@@ -21,10 +22,8 @@ export const TrackStreetTableBreakRow = ({ wayPoint, intl, colWidths }: Props) =
         <View key={wayPoint.streetName} style={pdfStyles.row} wrap={false}>
             <Text style={{ width: `${width}%` }}>
                 <Text style={pdfStyles.bold}>
-                    <Link src={getLink(wayPoint)} style={{ color: 'blue' }}>
-                        {`${wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })}: Pause${
-                            wayPoint.breakLength ? ` (${wayPoint.breakLength}) min` : ''
-                        }`}
+                    <Link src={createStreetPointUrl(wayPoint.pointFrom, streetName)} style={{ color: 'blue' }}>
+                        {`${streetName}: Pause${wayPoint.breakLength ? ` (${wayPoint.breakLength}) min` : ''}`}
                     </Link>
                 </Text>
             </Text>

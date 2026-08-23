@@ -117,6 +117,10 @@ export function createStreetPathUrl(path: StreetPathPoint[], streetName?: string
     return simplifiedUrl.length <= STREET_PATH_URL_LIMIT ? simplifiedUrl : buildUrl(simplifiedPath);
 }
 
+export function createStreetPointUrl(point: StreetPathPoint, locationName?: string): string {
+    return createStreetPathUrl([point], locationName);
+}
+
 export function decodeStreetPath(encodedPath: string): StreetPathPoint[] | undefined {
     if (!encodedPath) return undefined;
     try {

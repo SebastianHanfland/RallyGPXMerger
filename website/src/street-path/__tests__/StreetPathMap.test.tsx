@@ -104,7 +104,10 @@ describe('StreetPathMap', () => {
             />
         );
 
-        expect(leafletMocks.createCircleMarker).toHaveBeenCalledTimes(1);
-        expect(leafletMocks.createMarker).not.toHaveBeenCalled();
+        expect(leafletMocks.createCircleMarker).not.toHaveBeenCalled();
+        expect(leafletMocks.createMarker).toHaveBeenCalledWith(
+            { lat: 48, lng: 11 },
+            expect.objectContaining({ title: 'Single point' })
+        );
     });
 });
