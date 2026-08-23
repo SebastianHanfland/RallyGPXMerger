@@ -1,14 +1,11 @@
 import { SimpleGPX } from '../../../../../utils/SimpleGPX.ts';
-import { mapToPositionMap } from '../mapToPositionMap.ts';
-import { enrichSegmentWithResolvedStreets } from '../enrichSegmentWithResolvedStreets.ts';
 import { ParsedGpxSegment } from '../../../../store/types.ts';
 import { GeoApifyMapMatchingResult } from '../../types.ts';
-import routeGpx from './fixtures/example-street-transition/route.gpx?raw';
-import geoApifyResponse from './fixtures/example-street-transition/geoapify-response.json';
-import expectedStreets from './fixtures/example-street-transition/expected-streets.ts';
-import unmatchedMiddleRouteGpx from './fixtures/example-unmatched-middle/route.gpx?raw';
-import unmatchedMiddleGeoApifyResponse from './fixtures/example-unmatched-middle/geoapify-response.json';
-import unmatchedMiddleExpectedStreets from './fixtures/example-unmatched-middle/expected-streets.ts';
+import { enrichSegmentWithResolvedStreets } from '../enrichSegmentWithResolvedStreets.ts';
+import { mapToPositionMap } from '../mapToPositionMap.ts';
+import { StreetResolverTestCase } from './fixtureHelpers.ts';
+import { exampleStreetTransitionTestCase } from './fixtures/example-street-transition/testcase.ts';
+import { exampleUnmatchedMiddleTestCase } from './fixtures/example-unmatched-middle/testcase.ts';
 
 function toParsedSegment(rawGpx: string): ParsedGpxSegment {
     const parsed = SimpleGPX.fromString(rawGpx);
@@ -29,17 +26,17 @@ function toParsedSegment(rawGpx: string): ParsedGpxSegment {
 }
 
 describe('street resolver fixtures', () => {
-    function assertFixture(rawGpx: string, response: unknown, expectedStreets: typeof unmatchedMiddleExpectedStreets) {
-        const segment = toParsedSegment(rawGpx);
-        const resolvedPositions = mapToPositionMap(response as GeoApifyMapMatchingResult);
+    function assertFixture(testCase: StreetResolverTestCase) {
+        const segment = toParsedSegment(testCase.routeGpx);
+        const resolvedPositions = mapToPositionMap(testCase.geoApifyResponse as GeoApifyMapMatchingResult);
         const { segment: resolvedSegment, streetLookUp } = enrichSegmentWithResolvedStreets(
             segment,
             resolvedPositions,
             0
         );
 
-        expect(resolvedSegment.points).toHaveLength(expectedStreets.length);
-        expectedStreets.forEach((expected, index) => {
+        expect(resolvedSegment.points).toHaveLength(testCase.expectedStreets.length);
+        testCase.expectedStreets.forEach((expected, index) => {
             const actualPoint = resolvedSegment.points[index]!;
             const actualStreet = streetLookUp[actualPoint.s] ?? null;
 
@@ -49,11 +46,10 @@ describe('street resolver fixtures', () => {
         });
     }
 
-    it('matches the expected names for example-street-transition', () => {
-        assertFixture(routeGpx, geoApifyResponse, expectedStreets);
-    });
-
-    it('keeps the preceding street for an unmatched middle point', () => {
-        assertFixture(unmatchedMiddleRouteGpx, unmatchedMiddleGeoApifyResponse, unmatchedMiddleExpectedStreets);
+    const testCases = [exampleStreetTransitionTestCase, exampleUnmatchedMiddleTestCase];
+    testCases.forEach((testCase) => {
+        it(`matches the expected names for ${testCase.name}`, () => {
+            assertFixture(testCase);
+        });
     });
 });
