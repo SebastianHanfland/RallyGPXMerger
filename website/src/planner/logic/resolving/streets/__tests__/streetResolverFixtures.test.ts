@@ -35,15 +35,13 @@ describe('street resolver fixtures', () => {
             0
         );
 
-        expect(resolvedSegment.points).toHaveLength(testCase.expectedStreets.length);
-        testCase.expectedStreets.forEach((expected, index) => {
-            const actualPoint = resolvedSegment.points[index]!;
-            const actualStreet = streetLookUp[actualPoint.s] ?? null;
+        const actualStreets = resolvedSegment.points.map((point) => ({
+            lat: point.b,
+            lon: point.l,
+            streetName: streetLookUp[point.s] ?? null,
+        }));
 
-            expect(actualPoint.b).toBeCloseTo(expected.lat, 6);
-            expect(actualPoint.l).toBeCloseTo(expected.lon, 6);
-            expect(actualStreet).toBe(expected.streetName);
-        });
+        expect(actualStreets).toEqual(testCase.expectedStreets);
     }
 
     const testCases = [exampleStreetTransitionTestCase, exampleUnmatchedMiddleTestCase];
