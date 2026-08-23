@@ -6,10 +6,21 @@ import { decodeStreetPath } from '../utils/streetPathUrl.ts';
 import { getMapConfiguration } from '../common/map/mapConfig.ts';
 import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
+import { endIcon, startIcon } from '../common/map/MapIcons.ts';
+import { getStreetPathDirection } from './getStreetPathDirection.ts';
 
 interface Props {
     encodedPath: string;
     streetName?: string;
+}
+
+function createDirectionIcon(bearing: number) {
+    return L.divIcon({
+        className: '',
+        html: `<div aria-hidden="true" style="width:28px;height:28px;line-height:24px;text-align:center;background:white;border:2px solid #005fcc;border-radius:50%;color:#005fcc;font-size:20px;font-weight:bold;box-shadow:0 1px 4px rgba(0,0,0,.4);transform:rotate(${bearing - 90}deg)">➜</div>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 14],
+    });
 }
 
 function StreetPathMap({ encodedPath, streetName }: Props) {
@@ -17,6 +28,9 @@ function StreetPathMap({ encodedPath, streetName }: Props) {
     const mapElement = useRef<HTMLDivElement>(null);
     const path = useMemo(() => decodeStreetPath(encodedPath), [encodedPath]);
     const title = streetName || intl.formatMessage({ id: 'msg.streetPath.title' });
+    const startTitle = intl.formatMessage({ id: 'msg.streetPath.start' });
+    const endTitle = intl.formatMessage({ id: 'msg.streetPath.end' });
+    const directionTitle = intl.formatMessage({ id: 'msg.streetPath.direction' });
 
     useEffect(() => {
         document.title = title;
@@ -36,13 +50,22 @@ function StreetPathMap({ encodedPath, streetName }: Props) {
             map.setView(latLngs[0]!, 18);
         } else {
             const line = L.polyline(latLngs, { color: '#005fcc', weight: 6 }).addTo(map);
+            L.marker(latLngs[0]!, { icon: startIcon, title: startTitle }).addTo(map);
+            L.marker(latLngs[latLngs.length - 1]!, { icon: endIcon, title: endTitle }).addTo(map);
+            const direction = getStreetPathDirection(path);
+            if (direction) {
+                L.marker(L.latLng(direction.position.lat, direction.position.lon), {
+                    icon: createDirectionIcon(direction.bearing),
+                    title: directionTitle,
+                }).addTo(map);
+            }
             map.fitBounds(line.getBounds(), { padding: [24, 24], maxZoom: 18 });
         }
 
         return () => {
             map.remove();
         };
-    }, [path]);
+    }, [directionTitle, endTitle, path, startTitle]);
 
     if (!path) {
         return (
