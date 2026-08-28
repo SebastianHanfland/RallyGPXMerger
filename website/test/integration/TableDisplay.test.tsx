@@ -89,9 +89,16 @@ describe('Table integration test', () => {
 
         expect(screen.getByRole('heading', { name: 'Ride of Silence 2024' })).toBeVisible();
         expect(screen.getAllByRole('table')).toHaveLength(1);
+        const table = screen.getByRole('table');
+        expect(table).toHaveStyle({ width: '100%', tableLayout: 'fixed' });
+        expect(table.querySelectorAll('col')[0]).toHaveStyle({ width: 'auto' });
+        expect(table.querySelectorAll('col')[1]).toHaveStyle({ width: '180px' });
+        expect(table.querySelectorAll('col')[2]).toHaveStyle({ width: '180px' });
         ['Location', 'Please appear at', 'Planned departure'].forEach((text) =>
             screen.getByRole('columnheader', { name: text })
         );
+        expect(screen.getByRole('columnheader', { name: 'Location' })).toHaveStyle({ textAlign: 'left' });
+        expect(screen.getByText('Entry Point 1').closest('td')).toHaveStyle({ textAlign: 'left' });
         expect(screen.getAllByRole('row')).toHaveLength(4);
         expect(screen.getByText('Entry Point 1')).toBeVisible();
         expect(screen.getByText('Entry Point 2')).toBeVisible();

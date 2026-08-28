@@ -2,13 +2,12 @@ import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Table } from 'react-bootstrap';
 import {
-    getDisplayPlanningLabel,
     getDisplayEntryPoints,
+    getDisplayPlanningLabel,
     getDisplayTracks,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
 import { CalculatedTrack } from '../../common/types.ts';
-import { TrackStreetInfo } from '../../planner/logic/resolving/types.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { createStreetPointUrl } from '../../utils/streetPathUrl.ts';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
@@ -17,6 +16,8 @@ import { useTableIndices } from './useTableIndices.ts';
 import { EntryPointPosition } from '../../planner/logic/resolving/selectors/getEntryPointPositions.ts';
 
 const hideSeconds = true;
+const timeColumnStyle = { width: '180px', whiteSpace: 'nowrap' as const };
+const locationColumnStyle = { width: 'auto', textAlign: 'left' as const };
 
 const filterByIndex = (tableIndices: number[] | undefined) => (_: unknown, index: number) =>
     !tableIndices || tableIndices.includes(index);
@@ -56,17 +57,28 @@ function TrackSection({ track, entryPoints }: { track: CalculatedTrack; entryPoi
     const startName = foundInfo.startName ?? startingPoint.streetName;
     return (
         <section className={'mb-4'}>
-            <h2>{foundInfo.name}</h2>
-            <Table striped bordered hover>
+            <h2 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                {foundInfo.name}{' '}
+                <div style={{ marginLeft: '15px' }}>
+                    <TrackFileDownloader track={track} />
+                    <TrackInfoPdfDownloadButton trackStreets={foundInfo} planningLabel={planningLabel} />
+                </div>
+            </h2>
+            <Table striped bordered hover style={{ width: '100%', tableLayout: 'fixed' }}>
+                <colgroup>
+                    <col style={{ width: locationColumnStyle.width }} />
+                    <col style={{ width: timeColumnStyle.width }} />
+                    <col style={{ width: timeColumnStyle.width }} />
+                </colgroup>
                 <thead>
                     <tr>
-                        <th>
+                        <th style={locationColumnStyle}>
                             <FormattedMessage id={'msg.location'} />
                         </th>
-                        <th>
+                        <th style={timeColumnStyle}>
                             <FormattedMessage id={'msg.collectionTime'} />
                         </th>
-                        <th>
+                        <th style={timeColumnStyle}>
                             <FormattedMessage id={'msg.startingTime'} />
                         </th>
                     </tr>
@@ -77,13 +89,10 @@ function TrackSection({ track, entryPoints }: { track: CalculatedTrack; entryPoi
                         point={startingPoint.pointFrom}
                         meetingTime={foundInfo.publicStart ?? foundInfo.startFront}
                         passageTime={foundInfo.startFront}
-                        track={track}
-                        trackInfo={foundInfo}
-                        planningLabel={planningLabel}
                     />
                     {entryPoints.map((entryPoint) => (
                         <tr key={entryPoint.id}>
-                            <td>
+                            <td style={locationColumnStyle}>
                                 <a
                                     href={createStreetPointUrl(entryPoint.point, entryPoint.streetName ?? undefined)}
                                     target={'_blank'}
@@ -107,21 +116,15 @@ function VerticalTrackRow({
     point,
     meetingTime,
     passageTime,
-    track,
-    trackInfo,
-    planningLabel,
 }: {
     name: string | null | undefined;
     point: { lat: number; lon: number };
     meetingTime: string;
     passageTime: string;
-    track: CalculatedTrack;
-    trackInfo: TrackStreetInfo;
-    planningLabel?: string;
 }) {
     return (
         <tr>
-            <td>
+            <td style={locationColumnStyle}>
                 <a
                     href={createStreetPointUrl(point, name ?? undefined)}
                     target={'_blank'}
@@ -129,10 +132,6 @@ function VerticalTrackRow({
                 >
                     {name}
                 </a>
-                <div>
-                    <TrackFileDownloader track={track} />
-                    <TrackInfoPdfDownloadButton trackStreets={trackInfo} planningLabel={planningLabel} />
-                </div>
             </td>
             <td>{formatTimeOnly(meetingTime, hideSeconds)}</td>
             <td>{formatTimeOnly(passageTime, hideSeconds)}</td>
