@@ -45,6 +45,8 @@ Therefore, now there are two modes of planning: one for a simple "line" demonstr
 ![Sketch](./docs/images/map.png)
 * Allow to publish the plan as a table (e.g. to integrate on your website) (https://www.sternfahrtplaner.de/?table=ce4e62a5-3b73-4fa1-80e3-d66d687c2439)
 ![Sketch](./docs/images/table.png)
+* Allow to publish the plan as a vertical table (e.g. to integrate on your website) (https://www.sternfahrtplaner.de/?vTable=6efaf495-a9f6-4308-87e1-fd5d2c8e7911)
+![Sketch](./docs/images/verticalTable.png)
 * An overview of all nodes, where track come together
 * An overview of all segments on all tracks to check if the setup is right
 * Checking for gaps
