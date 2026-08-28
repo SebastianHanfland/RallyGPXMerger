@@ -62,7 +62,20 @@ describe('Table integration test', () => {
 
         (getLanguage as Mock).mockImplementation(() => 'en');
         (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
-        (getData as Mock).mockResolvedValue(migrateVersion1To2(state));
+        const migratedState = migrateVersion1To2(state);
+        migratedState.trackMerge.trackCompositions[0].segments.push(
+            {
+                id: 'entry-point-1',
+                type: 'ENTRY',
+                streetName: 'Entry Point 1',
+            },
+            {
+                id: 'entry-point-2',
+                type: 'ENTRY',
+                streetName: 'Entry Point 2',
+            }
+        );
+        (getData as Mock).mockResolvedValue(migratedState);
         const store = createDisplayStore();
         const loadingPage = act(() =>
             render(
@@ -79,7 +92,9 @@ describe('Table integration test', () => {
         ['Location', 'Please appear at', 'Planned departure'].forEach((text) =>
             screen.getByRole('columnheader', { name: text })
         );
-        expect(screen.getAllByRole('row')).toHaveLength(2);
+        expect(screen.getAllByRole('row')).toHaveLength(4);
+        expect(screen.getByText('Entry Point 1')).toBeVisible();
+        expect(screen.getByText('Entry Point 2')).toBeVisible();
         ui.hasOneGpxDownloadButton();
         ui.hasOnePdfDownloadButton();
     });

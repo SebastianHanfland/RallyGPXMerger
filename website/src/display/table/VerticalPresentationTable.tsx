@@ -3,16 +3,18 @@ import { FormattedMessage } from 'react-intl';
 import { Table } from 'react-bootstrap';
 import {
     getDisplayPlanningLabel,
+    getDisplayEntryPoints,
     getDisplayTracks,
     getDisplayTrackStreetInfos,
 } from '../store/displayTracksReducer.ts';
 import { CalculatedTrack } from '../../common/types.ts';
-import { TrackStreetInfo, TrackWayPointType } from '../../planner/logic/resolving/types.ts';
+import { TrackStreetInfo } from '../../planner/logic/resolving/types.ts';
 import { formatTimeOnly } from '../../utils/dateUtil.ts';
 import { createStreetPointUrl } from '../../utils/streetPathUrl.ts';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
 import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
 import { useTableIndices } from './useTableIndices.ts';
+import { EntryPointPosition } from '../../planner/logic/resolving/selectors/getEntryPointPositions.ts';
 
 const hideSeconds = true;
 
@@ -22,17 +24,22 @@ const filterByIndex = (tableIndices: number[] | undefined) => (_: unknown, index
 export const VerticalPresentationTable = () => {
     const tableIndices = useTableIndices();
     const tracks = useSelector(getDisplayTracks).filter(filterByIndex(tableIndices));
+    const entryPoints = useSelector(getDisplayEntryPoints);
 
     return (
         <div>
             {tracks.map((track) => (
-                <TrackSection track={track} key={track.id} />
+                <TrackSection
+                    track={track}
+                    entryPoints={entryPoints.filter((entryPoint) => entryPoint.trackId === track.id)}
+                    key={track.id}
+                />
             ))}
         </div>
     );
 };
 
-function TrackSection({ track }: { track: CalculatedTrack }) {
+function TrackSection({ track, entryPoints }: { track: CalculatedTrack; entryPoints: EntryPointPosition[] }) {
     const trackStreetInfos = useSelector(getDisplayTrackStreetInfos);
     const planningLabel = useSelector(getDisplayPlanningLabel);
     const foundInfo = trackStreetInfos.find((info) => track.id.includes(info.id));
@@ -47,8 +54,6 @@ function TrackSection({ track }: { track: CalculatedTrack }) {
     }
 
     const startName = foundInfo.startName ?? startingPoint.streetName;
-    const entryPoints = foundInfo.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Entry);
-
     return (
         <section className={'mb-4'}>
             <h2>{foundInfo.name}</h2>
@@ -77,21 +82,18 @@ function TrackSection({ track }: { track: CalculatedTrack }) {
                         planningLabel={planningLabel}
                     />
                     {entryPoints.map((entryPoint) => (
-                        <tr key={entryPoint.entryId ?? entryPoint.streetName}>
+                        <tr key={entryPoint.id}>
                             <td>
                                 <a
-                                    href={createStreetPointUrl(
-                                        entryPoint.pointFrom,
-                                        entryPoint.streetName ?? undefined
-                                    )}
+                                    href={createStreetPointUrl(entryPoint.point, entryPoint.streetName ?? undefined)}
                                     target={'_blank'}
                                     referrerPolicy={'no-referrer'}
                                 >
                                     {entryPoint.streetName}
                                 </a>
                             </td>
-                            <td>{formatTimeOnly(entryPoint.frontArrival, hideSeconds)}</td>
-                            <td>{formatTimeOnly(entryPoint.frontPassage, hideSeconds)}</td>
+                            <td>{formatTimeOnly(entryPoint.at, hideSeconds)}</td>
+                            <td>{formatTimeOnly(entryPoint.passageAt, hideSeconds)}</td>
                         </tr>
                     ))}
                 </tbody>

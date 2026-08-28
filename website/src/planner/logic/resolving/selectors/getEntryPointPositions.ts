@@ -7,20 +7,21 @@ export interface EntryPointPosition extends TrackEntry {
     point: { lat: number; lon: number };
     trackId: string;
     at: string;
+    passageAt: string;
 }
 
 export const getEntryPointPositions = createSelector(
     getFilteredTrackCompositions,
     getTrackStreetInfos,
     (trackCompositions, trackInfos): EntryPointPosition[] => {
-        const breakPoints: EntryPointPosition[] = [];
+        const entryPoints: EntryPointPosition[] = [];
         trackCompositions.forEach((track) => {
             track.segments.filter(isTrackEntryPoint).forEach((segment) => {
                 const foundTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
-                const foundBreak = foundTrackInfo?.wayPoints.find((wayPoint) => wayPoint.entryId === segment.id);
-                if (foundBreak) {
-                    breakPoints.push({
-                        point: foundBreak.pointFrom,
+                const foundEntryPoint = foundTrackInfo?.wayPoints.find((wayPoint) => wayPoint.entryId === segment.id);
+                if (foundEntryPoint) {
+                    entryPoints.push({
+                        point: foundEntryPoint.pointFrom,
                         id: segment.id,
                         trackId: track.id,
                         buffer: segment.buffer,
@@ -28,11 +29,12 @@ export const getEntryPointPositions = createSelector(
                         streetName: segment.streetName,
                         extraInfo: segment.extraInfo,
                         type: ENTRY,
-                        at: foundBreak?.frontArrival ?? '',
+                        at: foundEntryPoint?.frontArrival ?? '',
+                        passageAt: foundEntryPoint?.frontPassage ?? '',
                     });
                 }
             });
         });
-        return breakPoints;
+        return entryPoints;
     }
 );
