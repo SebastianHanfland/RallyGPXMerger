@@ -27,7 +27,6 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
                     </div>
                     <TrackDocuments matchedTrackInfo={matchedTrackInfo} />
                 </h4>
-                <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
                 <PlannerSidebarTrackFormDetails track={track} />
             </div>
 
@@ -50,6 +49,14 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
                         unmountOnExit={true}
                     >
                         <PlannerSidebarTrackStreets track={track} />
+                    </Tab>
+                    <Tab
+                        eventKey={'info'}
+                        title={<FormattedMessage id={'msg.info'} />}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
+                    >
+                        <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
                     </Tab>
                 </Tabs>
             </div>

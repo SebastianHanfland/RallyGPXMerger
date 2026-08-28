@@ -13,6 +13,7 @@
     "msg.planning": "Planning",
     "msg.settings": "Settings",
     "msg.segments": "Segments",
+    "msg.info": "Info",
     "msg.segment": "Segment",
     "msg.tracks": "Tracks",
     "msg.nodeOffset": "Node offset in participants",
