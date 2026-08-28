@@ -19,6 +19,7 @@ export function App() {
     const hasComparisonUrl = useGetUrlParam('comparison');
     const hasDisplayUrl = useGetUrlParam('display');
     const hasTableUrl = useGetUrlParam('table');
+    const hasVerticalTableUrl = useGetUrlParam('vTable');
     const hasImprintUrl = useGetUrlParam('imprint');
 
     if (streetPath !== undefined) {
@@ -36,6 +37,9 @@ export function App() {
     }
     if (hasTableUrl) {
         return <ErrorBoundary>{<RallyTableWrapper store={displayStore} />}</ErrorBoundary>;
+    }
+    if (hasVerticalTableUrl) {
+        return <ErrorBoundary>{<RallyTableWrapper store={displayStore} vertical />}</ErrorBoundary>;
     }
     if (hasDisplayUrl) {
         return <ErrorBoundary>{<RallyDisplayWrapper store={displayStore} />}</ErrorBoundary>;

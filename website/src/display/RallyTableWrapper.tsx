@@ -5,6 +5,7 @@ import { getLanguage } from '../language.ts';
 import { getMessages } from '../lang/getMessages.ts';
 import { useGetUrlParam } from '../utils/linkUtil.ts';
 import { PresentationTable } from './table/PresentationTable.tsx';
+import { VerticalPresentationTable } from './table/VerticalPresentationTable.tsx';
 import { useLoadPlanningById } from './data/loadPlanningHook.ts';
 import { Store } from '@reduxjs/toolkit';
 import { getIsDisplayMapLoading } from './store/displayMapReducer.ts';
@@ -30,11 +31,32 @@ function RallyTable() {
     );
 }
 
-export function RallyTableWrapper({ store }: { store: Store }) {
+function RallyVerticalTable() {
+    const planningId = useGetUrlParam('vTable');
+    useLoadPlanningById(planningId);
+
+    const isLoading = useSelector(getIsDisplayMapLoading);
+
+    if (isLoading) {
+        return (
+            <div>
+                <FormattedMessage id={'msg.loading'} />
+            </div>
+        );
+    }
+
+    return (
+        <Container fluid className={'p-0'}>
+            <VerticalPresentationTable />
+        </Container>
+    );
+}
+
+export function RallyTableWrapper({ store, vertical = false }: { store: Store; vertical?: boolean }) {
     return (
         <Provider store={store}>
             <IntlProvider locale={getLanguage()} messages={getMessages()}>
-                <RallyTable />
+                {vertical ? <RallyVerticalTable /> : <RallyTable />}
             </IntlProvider>
         </Provider>
     );

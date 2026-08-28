@@ -54,4 +54,33 @@ describe('Table integration test', () => {
         ui.hasOneGpxDownloadButton();
         ui.hasOnePdfDownloadButton();
     });
+
+    it('Render the vertical table with one table per track', async () => {
+        // given
+        const buffer = '' + fs.readFileSync('./test/integration/data/RideOfSilence2024.json');
+        const state = JSON.parse(buffer) as StateOld;
+
+        (getLanguage as Mock).mockImplementation(() => 'en');
+        (useGetUrlParam as Mock).mockImplementation(() => 'planning-id');
+        (getData as Mock).mockResolvedValue(migrateVersion1To2(state));
+        const store = createDisplayStore();
+        const loadingPage = act(() =>
+            render(
+                <MemoryRouter>
+                    <RallyTableWrapper store={store} vertical />
+                </MemoryRouter>
+            )
+        );
+        ui.isLoading();
+        await loadingPage;
+
+        expect(screen.getByRole('heading', { name: 'Ride of Silence 2024' })).toBeVisible();
+        expect(screen.getAllByRole('table')).toHaveLength(1);
+        ['Location', 'Please appear at', 'Planned departure'].forEach((text) =>
+            screen.getByRole('columnheader', { name: text })
+        );
+        expect(screen.getAllByRole('row')).toHaveLength(2);
+        ui.hasOneGpxDownloadButton();
+        ui.hasOnePdfDownloadButton();
+    });
 });
