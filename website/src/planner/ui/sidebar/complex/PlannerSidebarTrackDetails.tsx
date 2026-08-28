@@ -7,9 +7,12 @@ import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { TrackDocuments } from '../../../tracks/components/TrackDocuments.tsx';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { Tab, Tabs } from 'react-bootstrap';
+import { useState } from 'react';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
+    const [activeTab, setActiveTab] = useState('segments');
     const trackInfos = useSelector(getTrackStreetInfos);
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
     const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
@@ -28,12 +31,26 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
             </div>
 
             <div style={{ width: '100%' }} className={'my-2'}>
-                <h4>
-                    <FormattedMessage id={'msg.segments'} />
-                </h4>
-                <div className={'m-3'}>
-                    <TrackSegmentSelection track={track} />
-                </div>
+                <Tabs activeKey={activeTab} onSelect={(key) => key && setActiveTab(key)}>
+                    <Tab
+                        eventKey={'segments'}
+                        title={<FormattedMessage id={'msg.segments'} />}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
+                    >
+                        <div className={'m-3'}>
+                            <TrackSegmentSelection track={track} />
+                        </div>
+                    </Tab>
+                    <Tab
+                        eventKey={'streets'}
+                        title={<FormattedMessage id={'msg.streets'} />}
+                        mountOnEnter={true}
+                        unmountOnExit={true}
+                    >
+                        <div />
+                    </Tab>
+                </Tabs>
             </div>
             <div></div>
         </div>

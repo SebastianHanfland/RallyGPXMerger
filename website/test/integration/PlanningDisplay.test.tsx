@@ -118,6 +118,14 @@ describe('Planner integration test', () => {
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(1);
 
+            const segmentsTab = screen.getByRole('tab', { name: messages['msg.segments'] });
+            const streetsTab = screen.getByRole('tab', { name: messages['msg.streets'] });
+
+            await user.click(streetsTab);
+            expect(screen.queryByRole('combobox')).toBeNull();
+
+            await user.click(segmentsTab);
+
             await user.clear(ui.trackNameInput());
             await user.type(ui.trackNameInput(), 'Track 1');
 
