@@ -1,15 +1,18 @@
 import { PlannerSidebarStreetInfos } from './PlannerSidebarStreetInfos.tsx';
 import { FormattedMessage } from 'react-intl';
 import { PlanningLabel } from '../../../parameters/PlanningLabel.tsx';
-import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { PlannerSidebarServerSection } from '../../../server/ServerInteraction.tsx';
 import { PlannerSidebarBlockedStreets } from './PlannerSidebarBlockedStreets.tsx';
+import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 
 export const PlannerSidebarDocuments = () => {
     return (
         <div>
-            <div className={'m-2'}>
-                <BlockTextDescription messageId={'msg.description.documents'} />
+            <div className={'d-flex justify-content-end m-2'}>
+                <DescriptionInfoButton
+                    titleMessageId={'msg.documents'}
+                    descriptionMessageId={'msg.description.documents'}
+                />
             </div>
             <div className={'m-2'}>
                 <PlannerSidebarServerSection />

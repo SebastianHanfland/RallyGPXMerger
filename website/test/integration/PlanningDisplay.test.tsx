@@ -69,6 +69,23 @@ describe('Planner integration test', () => {
 
             await user.click(ui.complexButton());
             ui.complexSegmentsTab();
+
+            expect(screen.queryByText(messages['msg.description.segments'])).toBeNull();
+            await user.click(screen.getByRole('button', { name: messages['msg.segment'] }));
+            const segmentsDescriptionDialog = screen.getByRole('dialog');
+            expect(within(segmentsDescriptionDialog).getByText(messages['msg.description.segments'])).toBeVisible();
+            await user.click(
+                within(segmentsDescriptionDialog).getAllByRole('button', { name: messages['msg.close'] })[0]
+            );
+
+            await user.click(screen.getByRole('button', { name: messages['msg.documents'] }));
+            expect(screen.queryByText(messages['msg.description.documents'])).toBeNull();
+            await user.click(screen.getAllByRole('button', { name: messages['msg.documents'] })[1]);
+            const documentsDescriptionDialog = screen.getByRole('dialog');
+            expect(within(documentsDescriptionDialog).getByText(messages['msg.description.documents'])).toBeVisible();
+            await user.click(
+                within(documentsDescriptionDialog).getAllByRole('button', { name: messages['msg.close'] })[0]
+            );
             ui.complexTracksTab(0);
         });
     });
