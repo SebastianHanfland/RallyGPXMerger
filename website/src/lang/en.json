@@ -161,6 +161,7 @@
     "msg.blockage.hint": "Time between the first and last cyclist on this street",
     "msg.distance": "Distance",
     "msg.distanceInKm": "Distance in km",
+    "msg.streetDetails": "({points} points, {distance} km)",
     "msg.start": "Start",
     "msg.arrival": "Arrival",
     "msg.end": "End",

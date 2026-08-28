@@ -166,6 +166,7 @@
     "msg.blockage.hint": "Zeit zwischen dem ersten und letzten Fahrrad auf der Straße",
     "msg.distance": "Distanz",
     "msg.distanceInKm": "Distanz in km",
+    "msg.streetDetails": "({points} Punkte, {distance} km)",
     "msg.start": "Start",
     "msg.arrival": "Ankunft",
     "msg.end": "Ende",

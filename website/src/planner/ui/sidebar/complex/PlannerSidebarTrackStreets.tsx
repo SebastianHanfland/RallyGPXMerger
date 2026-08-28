@@ -7,6 +7,7 @@ import { mapActions } from '../../../store/map.reducer.ts';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import { formatNumber } from '../../../../utils/numberUtil.ts';
 
 interface Props {
     track: TrackComposition;
@@ -86,7 +87,14 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                     );
                                 }}
                             >
-                                {wayPoint.streetName ?? <FormattedMessage id={'msg.unknown'} />}
+                                {wayPoint.streetName ?? <FormattedMessage id={'msg.unknown'} />}{' '}
+                                <FormattedMessage
+                                    id={'msg.streetDetails'}
+                                    values={{
+                                        points: getStreetPath(wayPoint).length,
+                                        distance: formatNumber(wayPoint.distanceInKm ?? 0, 2),
+                                    }}
+                                />
                             </button>
                         </div>
                     </li>
