@@ -79,7 +79,7 @@ export const AppFooter = () => {
                     </li>
                     <li className="nav-item">
                         <a
-                            href="https://sternfahrtplaner.de/?imprint=true"
+                            href="https://www.sternfahrtplaner.de/?imprint=true"
                             className="nav-link px-2 text-muted"
                             target={'_blank'}
                             referrerPolicy={'no-referrer'}
