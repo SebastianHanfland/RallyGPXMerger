@@ -55,22 +55,6 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                             >
                                 <FormattedMessage id={'msg.start'} />
                             </Button>
-                            <button
-                                type={'button'}
-                                className={'flex-grow-1'}
-                                style={{ cursor: 'pointer', border: 0, background: 'transparent' }}
-                                onClick={() => {
-                                    highlightStreetPath(wayPoint);
-                                    dispatch(
-                                        mapActions.setPointToCenter({
-                                            lat: (wayPoint.pointFrom.lat + wayPoint.pointTo.lat) / 2,
-                                            lng: (wayPoint.pointFrom.lon + wayPoint.pointTo.lon) / 2,
-                                        })
-                                    );
-                                }}
-                            >
-                                {wayPoint.streetName ?? <FormattedMessage id={'msg.unknown'} />}
-                            </button>
                             <Button
                                 type={'button'}
                                 size={'sm'}
@@ -87,6 +71,23 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                             >
                                 <FormattedMessage id={'msg.end'} />
                             </Button>
+
+                            <button
+                                type={'button'}
+                                className={'flex-grow-1'}
+                                style={{ cursor: 'pointer', border: 0, background: 'transparent' }}
+                                onClick={() => {
+                                    highlightStreetPath(wayPoint);
+                                    dispatch(
+                                        mapActions.setPointToCenter({
+                                            lat: (wayPoint.pointFrom.lat + wayPoint.pointTo.lat) / 2,
+                                            lng: (wayPoint.pointFrom.lon + wayPoint.pointTo.lon) / 2,
+                                        })
+                                    );
+                                }}
+                            >
+                                {wayPoint.streetName ?? <FormattedMessage id={'msg.unknown'} />}
+                            </button>
                         </div>
                     </li>
                 ))}
