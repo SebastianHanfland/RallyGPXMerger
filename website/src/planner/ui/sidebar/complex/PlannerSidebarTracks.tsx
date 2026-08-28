@@ -10,7 +10,6 @@ import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
 import { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
-import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { TrackGapWarning } from '../../../tracks/TrackGapWarning.tsx';
 import { getColor } from '../../../../utils/colorUtil.ts';
 import { ColorBlob } from '../../../../utils/ColorBlob.tsx';
@@ -18,6 +17,7 @@ import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer
 import { isDefined } from '../../../../utils/typeUtil.ts';
 import { ReactSortable } from 'react-sortablejs';
 import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton.tsx';
+import { TrackDescriptionInfoButton } from './TrackDescriptionInfoButton.tsx';
 
 export const PlannerSidebarTracks = () => {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -49,9 +49,6 @@ export const PlannerSidebarTracks = () => {
 
     return (
         <div>
-            <div className={'m-2'}>
-                <BlockTextDescription messageId={'msg.description.tracks'} />
-            </div>
             {trackCompositions.length > 0 && (
                 <div className={'m-2'} style={{ display: 'flex', flexDirection: 'row' }}>
                     <Form.Control
@@ -61,6 +58,7 @@ export const PlannerSidebarTracks = () => {
                         onChange={(value) => setFilterTerm(value.target.value)}
                     />
                     <TrackOverviewButton />
+                    <TrackDescriptionInfoButton />
                 </div>
             )}
             <Pagination style={{ flexFlow: 'wrap' }} className={'m-2'}>

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
@@ -120,6 +120,13 @@ describe('Planner integration test', () => {
 
             const segmentsTab = screen.getByRole('tab', { name: messages['msg.segments'] });
             const streetsTab = screen.getByRole('tab', { name: messages['msg.streets'] });
+            expect(screen.queryByText(messages['msg.description.tracks'])).toBeNull();
+
+            const trackDescriptionButton = screen.getByRole('button', { name: messages['msg.tracks.title'] });
+            await user.click(trackDescriptionButton);
+            const descriptionDialog = screen.getByRole('dialog');
+            expect(within(descriptionDialog).getByText(messages['msg.description.tracks'])).toBeVisible();
+            await user.click(within(descriptionDialog).getAllByRole('button', { name: messages['msg.close'] })[0]);
 
             await user.click(streetsTab);
             expect(screen.queryByRole('combobox')).toBeNull();
@@ -134,6 +141,11 @@ describe('Planner integration test', () => {
             await user.click(ui.segmentSelect());
             await user.click(screen.getByText('segment3'));
             expect(getTrackCompositions(store.getState())[0].segments).toHaveLength(2);
+
+            await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(1), timeout);
+            await user.click(streetsTab);
+            expect(screen.getAllByRole('listitem').length).toBeGreaterThan(0);
+            await user.click(segmentsTab);
 
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(2);

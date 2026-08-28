@@ -9,6 +9,7 @@ import { TrackDocuments } from '../../../tracks/components/TrackDocuments.tsx';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useState } from 'react';
+import { PlannerSidebarTrackStreets } from './PlannerSidebarTrackStreets.tsx';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
@@ -48,7 +49,7 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
                         mountOnEnter={true}
                         unmountOnExit={true}
                     >
-                        <div />
+                        <PlannerSidebarTrackStreets track={track} />
                     </Tab>
                 </Tabs>
             </div>
