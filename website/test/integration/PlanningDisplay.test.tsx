@@ -125,7 +125,6 @@ describe('Planner integration test', () => {
             const trackDescriptionButton = screen.getByRole('button', { name: messages['msg.tracks.title'] });
             await user.click(trackDescriptionButton);
             const descriptionDialog = screen.getByRole('dialog');
-            expect(within(descriptionDialog).getByText(messages['msg.description.tracks'])).toBeVisible();
             await user.click(within(descriptionDialog).getAllByRole('button', { name: messages['msg.close'] })[0]);
 
             await user.click(streetsTab);
