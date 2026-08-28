@@ -43,6 +43,9 @@ const mapSlice = createSlice({
         setHighlightedSegmentId: (state: MapState, action: PayloadAction<string | undefined>) => {
             state.highlightedSegmentId = action.payload;
         },
+        setHighlightedStreetPath: (state: MapState, action: PayloadAction<MapState['highlightedStreetPath']>) => {
+            state.highlightedStreetPath = action.payload;
+        },
         setPointToCenter: (state: MapState, action: PayloadAction<{ lat: number; lng: number } | undefined>) => {
             const point = action.payload;
             if (point) {
@@ -68,4 +71,5 @@ export const getShowGpxSegments = (state: State) => getBase(state).showGpxSegmen
 export const getShowConstructions = (state: State) => getBase(state).showConstructions;
 export const getShowPointsOfInterest = (state: State) => getBase(state).showPointsOfInterest ?? true;
 export const getHighlightedSegmentId = (state: State) => getBase(state).highlightedSegmentId;
+export const getHighlightedStreetPath = (state: State) => getBase(state).highlightedStreetPath;
 export const getPointToCenter = (state: State) => getBase(state).pointToCenter;

@@ -29,6 +29,7 @@ import { CreateEntryPointDialog } from '../entry/CreateEntryPointDialog.tsx';
 import { EditEntryPointDialog } from '../entry/EditEntryPointDialog.tsx';
 import { entryPointsDisplayHook } from './hooks/entryPointsDisplayHook.ts';
 import { TRACK_MARKER } from './panes.ts';
+import { streetHighlightDisplayHook } from './hooks/streetHighlightDisplayHook.ts';
 
 let myMap: L.Map | undefined;
 
@@ -90,6 +91,7 @@ export const InteractionMap = () => {
     const nodePointsLayer = useRef<LayerGroup>(null);
     const breakPointsLayer = useRef<LayerGroup>(null);
     const entryPointsLayer = useRef<LayerGroup>(null);
+    const streetHighlightLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -113,6 +115,8 @@ export const InteractionMap = () => {
         breakPointsLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         entryPointsLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        streetHighlightLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     blockedStreetsDisplayHook(blockedStreetLayer);
@@ -124,6 +128,7 @@ export const InteractionMap = () => {
     entryPointsDisplayHook(entryPointsLayer);
     nodePointsDisplayHook(nodePointsLayer);
     gpxSegmentDisplayHook(gpxSegmentsLayer);
+    streetHighlightDisplayHook(streetHighlightLayer);
 
     return (
         <div>

@@ -10,6 +10,7 @@ import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
+import { getHighlightedStreetPath } from '../../src/planner/store/map.reducer';
 
 const messages = getMessages('en');
 
@@ -158,8 +159,13 @@ describe('Planner integration test', () => {
 
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(1), timeout);
             await user.click(streetsTab);
-            expect(screen.getAllByRole('listitem').length).toBeGreaterThan(0);
+            const streetEntries = within(screen.getByTestId('track-street-list')).getAllByRole('listitem');
+            expect(streetEntries.length).toBeGreaterThan(0);
+            await user.click(within(streetEntries[0]!).getByRole('button'));
+            expect(getHighlightedStreetPath(store.getState())).toBeDefined();
+            expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
             await user.click(segmentsTab);
+            expect(getHighlightedStreetPath(store.getState())).toBeUndefined();
 
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(2);

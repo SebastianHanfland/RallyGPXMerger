@@ -1,5 +1,6 @@
 import { CalculatedTrack } from '../../common/types.ts';
 import { SupportedLanguages } from '../../language.ts';
+import type { StreetPathPoint } from '../logic/resolving/types.ts';
 
 export interface CalculatedTracksState {
     tracks: CalculatedTrack[];
@@ -170,6 +171,7 @@ export interface MapState {
     showConstructions?: boolean;
     showPointsOfInterest?: boolean;
     highlightedSegmentId?: string;
+    highlightedStreetPath?: StreetPathPoint[];
     pointToCenter?: PointToCenter;
 }
 
