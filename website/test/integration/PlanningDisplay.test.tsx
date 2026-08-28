@@ -161,7 +161,14 @@ describe('Planner integration test', () => {
             await user.click(streetsTab);
             const streetEntries = within(screen.getByTestId('track-street-list')).getAllByRole('listitem');
             expect(streetEntries.length).toBeGreaterThan(0);
-            await user.click(within(streetEntries[0]!).getByRole('button'));
+            const streetButtons = within(streetEntries[0]!).getAllByRole('button');
+            await user.click(streetButtons[0]!);
+            expect(getHighlightedStreetPath(store.getState())).toBeDefined();
+            expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
+            await user.click(streetButtons[2]!);
+            expect(getHighlightedStreetPath(store.getState())).toBeDefined();
+            expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
+            await user.click(streetButtons[1]!);
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
             expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
             await user.click(segmentsTab);
