@@ -19,8 +19,8 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
 
     const getStreetPath = (wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number]) =>
         wayPoint.path ?? [
-            { lat: wayPoint.pointFrom.lat, lon: wayPoint.pointFrom.lon },
-            { lat: wayPoint.pointTo.lat, lon: wayPoint.pointTo.lon },
+            { lat: wayPoint.pointFrom.lat, lon: wayPoint.pointFrom.lon, s: wayPoint.s },
+            { lat: wayPoint.pointTo.lat, lon: wayPoint.pointTo.lon, s: wayPoint.s },
         ];
 
     const highlightStreetPath = (wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number]) => {

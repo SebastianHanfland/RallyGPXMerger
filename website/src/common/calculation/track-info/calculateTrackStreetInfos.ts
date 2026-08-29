@@ -31,7 +31,7 @@ const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     time: shiftDateBySeconds(arrivalDate, t),
 });
 
-const extractPathPoint = ({ b, l }: ParsedPoint) => ({ lat: b, lon: l });
+const extractPathPoint = ({ b, l, s }: ParsedPoint) => ({ lat: b, lon: l, s });
 
 export const calculateTrackStreetInfos = (
     segments: ParsedGpxSegment[],

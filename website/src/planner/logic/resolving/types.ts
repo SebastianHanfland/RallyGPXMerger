@@ -127,4 +127,6 @@ export interface WayPoint {
 export interface StreetPathPoint {
     lat: number;
     lon: number;
+    /** Street lookup index for planner-generated paths. */
+    s?: number;
 }

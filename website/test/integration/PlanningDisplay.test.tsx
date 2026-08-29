@@ -165,6 +165,7 @@ describe('Planner integration test', () => {
             await user.click(streetButtons[0]!);
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
             expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
+            expect(getHighlightedStreetPath(store.getState())!.every((point) => point.s !== undefined)).toBe(true);
             await user.click(streetButtons[2]!);
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
             expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
