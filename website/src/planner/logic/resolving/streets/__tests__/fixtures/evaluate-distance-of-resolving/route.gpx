@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx creator="fabulator:gpx-builder" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 https://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Augsburg - Wald-1</name>
+    <desc>Augsburg - Wald-1</desc>
+    <link href=""></link>
+    <time>2026-08-29T09:36:44.929Z</time>
+  </metadata>
+  <trk>
+    <name>Augsburg - Wald-1</name>
+    <number>NaN</number>
+    <trkseg>
+      <trkpt lat="48.366114" lon="10.894762">
+        <ele>496.5</ele>
+      </trkpt>
+      <trkpt lat="48.366142" lon="10.894696">
+        <ele>496.5</ele>
+      </trkpt>
+      <trkpt lat="48.36594" lon="10.894649">
+        <ele>496.5</ele>
+      </trkpt>
+      <trkpt lat="48.365942" lon="10.894649">
+        <ele>496.5</ele>
+      </trkpt>
+      <trkpt lat="48.365918" lon="10.894644">
+        <ele>496.5</ele>
+      </trkpt>
+      <trkpt lat="48.365814" lon="10.8947">
+        <ele>496.75</ele>
+      </trkpt>
+      <trkpt lat="48.365195" lon="10.895039">
+        <ele>497.75</ele>
+      </trkpt>
+      <trkpt lat="48.365156" lon="10.89506">
+        <ele>497.75</ele>
+      </trkpt>
+      <trkpt lat="48.365147" lon="10.895065">
+        <ele>497.75</ele>
+      </trkpt>
+      <trkpt lat="48.365115" lon="10.895081">
+        <ele>497.75</ele>
+      </trkpt>
+      <trkpt lat="48.365111" lon="10.895078">
+        <ele>497.75</ele>
+      </trkpt>
+      <trkpt lat="48.36511211396057" lon="10.895078938542127">
+        <ele>497.80000000000007</ele>
+      </trkpt>
+      <trkpt lat="48.365087" lon="10.895061">
+        <ele>497.8</ele>
+      </trkpt>
+      <trkpt lat="48.365051" lon="10.895065">
+        <ele>497.8</ele>
+      </trkpt>
+      <trkpt lat="48.365041311300224" lon="10.89507017561172">
+        <ele>497.82888320918795</ele>
+      </trkpt>
+      <trkpt lat="48.365041" lon="10.89507">
+        <ele>497.75</ele>
+      </trkpt>
+      <trkpt lat="48.364817" lon="10.89519">
+        <ele>498.5</ele>
+      </trkpt>
+      <trkpt lat="48.364799" lon="10.8952">
+        <ele>498.5</ele>
+      </trkpt>
+      <trkpt lat="48.364606" lon="10.895303">
+        <ele>499.5</ele>
+      </trkpt>
+      <trkpt lat="48.364413" lon="10.895405">
+        <ele>500.25</ele>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

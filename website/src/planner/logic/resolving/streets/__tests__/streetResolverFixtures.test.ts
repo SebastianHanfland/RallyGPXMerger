@@ -6,6 +6,7 @@ import { mapToPositionMap } from '../mapToPositionMap.ts';
 import { StreetResolverTestCase } from './fixtureHelpers.ts';
 import { exampleStreetTransitionTestCase } from './fixtures/example-street-transition/testcase.ts';
 import { exampleUnmatchedMiddleTestCase } from './fixtures/example-unmatched-middle/testcase.ts';
+import { evaluateDistanceOfResolving } from './fixtures/evaluate-distance-of-resolving/testcase.ts';
 
 function toParsedSegment(rawGpx: string): ParsedGpxSegment {
     const parsed = SimpleGPX.fromString(rawGpx);
@@ -44,7 +45,7 @@ describe('street resolver fixtures', () => {
         expect(actualStreets).toEqual(testCase.expectedStreets);
     }
 
-    const testCases = [exampleStreetTransitionTestCase, exampleUnmatchedMiddleTestCase];
+    const testCases = [exampleStreetTransitionTestCase, exampleUnmatchedMiddleTestCase, evaluateDistanceOfResolving];
     testCases.forEach((testCase) => {
         it(`matches the expected names for ${testCase.name}`, () => {
             assertFixture(testCase);
