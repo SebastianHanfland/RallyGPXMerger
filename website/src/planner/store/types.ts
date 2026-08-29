@@ -223,12 +223,11 @@ export interface SegmentDataState {
     streetLookup: Record<number, string | undefined>;
     postCodeLookup: Record<number, string | undefined>;
     districtLookup: Record<number, string | undefined>;
-    replaceStreetLookup: Record<number, string | undefined>;
-    replacePostCodeLookup: Record<number, string | undefined>;
-    replaceDistrictLookup: Record<number, string | undefined>;
     /** Highest street-lookup index reserved for asynchronous resolving. */
     streetLookupIndex?: number;
 }
+
+export type ManualLookupField = 'street' | 'postCode' | 'district';
 
 export interface PointOfInterest {
     id: string;

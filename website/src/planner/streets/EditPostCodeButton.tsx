@@ -39,7 +39,11 @@ export function EditPostCodeModal(props: Props & { closeModal: () => void }) {
     const [postCode, setPostCode] = useState(waypoint.postCode ?? '');
 
     const onConfirm = () => {
-        dispatch(segmentDataActions.addReplacePostCodeLookup({ [waypoint.s ?? -1]: postCode }));
+        if (waypoint.s !== undefined) {
+            dispatch(
+                segmentDataActions.applyManualLookup({ sourceIndex: waypoint.s, field: 'postCode', value: postCode })
+            );
+        }
         closeModal();
     };
 

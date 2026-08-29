@@ -54,7 +54,11 @@ export function EditStreetNameModal(props: ModalProps) {
     const [streetName, setStreetName] = useState(waypoint.streetName ?? '');
 
     const onConfirm = () => {
-        dispatch(segmentDataActions.addReplaceStreetLookup({ [waypoint.s ?? -1]: streetName }));
+        if (waypoint.s !== undefined) {
+            dispatch(
+                segmentDataActions.applyManualLookup({ sourceIndex: waypoint.s, field: 'street', value: streetName })
+            );
+        }
         closeModal();
     };
 

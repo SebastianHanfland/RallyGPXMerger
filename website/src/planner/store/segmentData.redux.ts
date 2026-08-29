@@ -1,8 +1,9 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { ClickOnSegment, ParsedGpxSegment, ParsedPoint, SegmentDataState, State } from './types.ts';
+import { ClickOnSegment, ManualLookupField, ParsedGpxSegment, ParsedPoint, SegmentDataState, State } from './types.ts';
 import { storage } from './storage.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
+import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex.ts';
 
 const initialState: SegmentDataState = {
     segments: [],
@@ -11,15 +12,28 @@ const initialState: SegmentDataState = {
     streetLookup: {},
     postCodeLookup: {},
     districtLookup: {},
-    replaceStreetLookup: {},
-    replacePostCodeLookup: {},
-    replaceDistrictLookup: {},
     streetLookupIndex: 0,
 };
 
 function getHighestStreetLookupIndex(state: SegmentDataState): number {
-    const resolvedIndexes = Object.keys(state.streetLookup).map(Number).filter(Number.isFinite);
-    return Math.max(state.streetLookupIndex ?? 0, ...resolvedIndexes, 0);
+    const lookupIndexes = [state.streetLookup, state.postCodeLookup, state.districtLookup]
+        .flatMap((lookup) => Object.keys(lookup))
+        .map(Number)
+        .filter(Number.isFinite);
+    const manualIndexes = state.segments.flatMap((segment) =>
+        segment.points.flatMap((point) => [point.s, point.m]).filter((index): index is number => index !== undefined)
+    );
+    return Math.max(state.streetLookupIndex ?? 0, ...lookupIndexes, ...manualIndexes, 0);
+}
+
+function keepLookupIndexes(
+    lookup: Record<number, string | undefined>,
+    indexesToKeep: Set<number>
+): Record<number, string | undefined> {
+    return Object.fromEntries(Object.entries(lookup).filter(([index]) => indexesToKeep.has(Number(index)))) as Record<
+        number,
+        string | undefined
+    >;
 }
 
 const segmentDataSlice = createSlice({
@@ -50,19 +64,48 @@ const segmentDataSlice = createSlice({
         reserveStreetLookupIndexes: (state: SegmentDataState, action: PayloadAction<number>) => {
             state.streetLookupIndex = getHighestStreetLookupIndex(state) + action.payload;
         },
-        addReplaceStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
-            state.replaceStreetLookup = { ...state.replaceStreetLookup, ...action.payload };
-        },
-        addReplacePostCodeLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
-            state.replacePostCodeLookup = { ...state.replacePostCodeLookup, ...action.payload };
-        },
-        addReplaceDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
-            state.replaceDistrictLookup = { ...state.replaceDistrictLookup, ...action.payload };
+        applyManualLookup: (
+            state: SegmentDataState,
+            action: PayloadAction<{ sourceIndex: number; field: ManualLookupField; value: string }>
+        ) => {
+            const { sourceIndex, field, value } = action.payload;
+            const pointsToUpdate = state.segments.flatMap((segment) =>
+                segment.points.filter((point) => getStreetLookupIndex(point) === sourceIndex)
+            );
+            if (pointsToUpdate.length === 0) {
+                return;
+            }
+
+            const manualIndex = getHighestStreetLookupIndex(state) + 1;
+            state.streetLookup[manualIndex] = state.streetLookup[sourceIndex];
+            state.postCodeLookup[manualIndex] = state.postCodeLookup[sourceIndex];
+            state.districtLookup[manualIndex] = state.districtLookup[sourceIndex];
+
+            if (field === 'street') {
+                state.streetLookup[manualIndex] = value;
+            } else if (field === 'postCode') {
+                state.postCodeLookup[manualIndex] = value;
+            } else {
+                state.districtLookup[manualIndex] = value;
+            }
+
+            state.segments = state.segments.map((segment) => ({
+                ...segment,
+                points: segment.points.map((point) =>
+                    getStreetLookupIndex(point) === sourceIndex ? { ...point, m: manualIndex } : point
+                ),
+            }));
+            state.streetLookupIndex = manualIndex;
         },
         clearResolvedStreetData: (state: SegmentDataState) => {
-            state.streetLookup = {};
-            state.postCodeLookup = {};
-            state.districtLookup = {};
+            const manualIndexes = new Set(
+                state.segments.flatMap((segment) =>
+                    segment.points.map((point) => point.m).filter((index): index is number => index !== undefined)
+                )
+            );
+            state.streetLookup = keepLookupIndexes(state.streetLookup, manualIndexes);
+            state.postCodeLookup = keepLookupIndexes(state.postCodeLookup, manualIndexes);
+            state.districtLookup = keepLookupIndexes(state.districtLookup, manualIndexes);
         },
         removeGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
@@ -157,9 +200,6 @@ export const getStreetLookup = (state: State) => getBase(state).streetLookup;
 export const getNextStreetLookupIndex = (state: State) => getHighestStreetLookupIndex(getBase(state));
 export const getPostCodeLookup = (state: State) => getBase(state).postCodeLookup;
 export const getDistrictLookup = (state: State) => getBase(state).districtLookup;
-export const getReplaceStreetLookup = (state: State) => getBase(state).replaceStreetLookup;
-export const getReplacePostCodeLookup = (state: State) => getBase(state).replacePostCodeLookup;
-export const getReplaceDistrictLookup = (state: State) => getBase(state).replaceDistrictLookup;
 
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;

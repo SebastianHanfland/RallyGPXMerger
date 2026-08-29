@@ -3,11 +3,11 @@ import L, { LayerGroup } from 'leaflet';
 import { useSelector } from 'react-redux';
 import { getHighlightedStreetPath } from '../../store/map.reducer.ts';
 import { TRACK_MARKER } from '../panes.ts';
-import { getCorrectStreetLookup } from '../../logic/resolving/selectors/getLookups.ts';
+import { getStreetLookup } from '../../store/segmentData.redux.ts';
 
 export function streetHighlightDisplayHook(streetHighlightLayer: RefObject<LayerGroup | null>) {
     const highlightedStreetPath = useSelector(getHighlightedStreetPath);
-    const streetLookup = useSelector(getCorrectStreetLookup);
+    const streetLookup = useSelector(getStreetLookup);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {

@@ -39,7 +39,11 @@ export function EditDistrictModal(props: Props & { closeModal: () => void }) {
     const [district, setDistrict] = useState(waypoint.district ?? '');
 
     const onConfirm = () => {
-        dispatch(segmentDataActions.addReplaceDistrictLookup({ [waypoint.s ?? -1]: district }));
+        if (waypoint.s !== undefined) {
+            dispatch(
+                segmentDataActions.applyManualLookup({ sourceIndex: waypoint.s, field: 'district', value: district })
+            );
+        }
         closeModal();
     };
 

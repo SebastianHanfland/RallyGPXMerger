@@ -1,10 +1,11 @@
-import { State } from './types.ts';
+import { SegmentDataState, State } from './types.ts';
 
 import { optionallyCompress } from './compressHelper.ts';
 import { GpxSegment } from '../../common/types.ts';
 import { StateOld } from './typesOld.ts';
 import { isOldState } from '../../migrate/types.ts';
 import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
+import { migrateManualLookupOverrides } from './migrateManualLookupOverrides.ts';
 
 const localStorage = window.localStorage;
 
@@ -43,7 +44,7 @@ const load = (): State | undefined => {
         let geoCoding = undefined;
         let calculatedTracks = undefined;
         let backend = undefined;
-        let segmentData = undefined;
+        let segmentData: SegmentDataState | undefined = undefined;
 
         const layoutString = localStorage.getItem(stateKey + '.layout');
         if (isDefined(layoutString)) {
@@ -89,7 +90,7 @@ const load = (): State | undefined => {
         }
         const segmentDataStringified = localStorage.getItem(stateKey + '.segmentData');
         if (isDefined(segmentDataStringified)) {
-            segmentData = JSON.parse(segmentDataStringified);
+            segmentData = migrateManualLookupOverrides(JSON.parse(segmentDataStringified));
         }
         const calculatedTracksStringified = localStorage.getItem(stateKey + '.calculatedTracks');
         if (isDefined(calculatedTracksStringified)) {
@@ -106,7 +107,7 @@ const load = (): State | undefined => {
             geoCoding,
             calculatedTracks,
             backend,
-            segmentData,
+            segmentData: segmentData as SegmentDataState,
         };
         if (isOldState(readState)) {
             return migrateVersion1To2(readState);
