@@ -43,13 +43,23 @@ describe('ResetAllResolvedStreets', () => {
 
         await waitFor(() => expect(resolveCalls).toEqual(['first']));
         expect(screen.getByText('Resolved: 0; waiting: 2 of 2 segments')).toBeInTheDocument();
+        expect(screen.getByRole('note')).toHaveTextContent(
+            'Caution: resolving all streets can consume many Geoapify API tokens.'
+        );
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        expect(document.querySelector('.modal-backdrop')).toBeInTheDocument();
         expect(resolvePromises).toHaveLength(1);
+
+        fireEvent.keyDown(document, { key: 'Escape' });
+        fireEvent.click(document.querySelector('.modal-backdrop')!);
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
 
         resolvePromises[0]!();
         await waitFor(() => expect(resolveCalls).toEqual(['first', 'second']));
         expect(screen.getByText('Resolved: 1; waiting: 1 of 2 segments')).toBeInTheDocument();
 
         resolvePromises[1]!();
-        await waitFor(() => expect(screen.queryByText('Resolved: 1; waiting: 1 of 2 segments')).toBeNull());
+        await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+        expect(document.querySelector('.modal-backdrop')).toBeNull();
     });
 });

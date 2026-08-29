@@ -1,4 +1,4 @@
-import { ProgressBar, Button } from 'react-bootstrap';
+import { ProgressBar, Button, Modal } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -43,20 +43,30 @@ export function ResetAllResolvedStreets() {
 
     return (
         <div className="m-2">
+            <div className="alert alert-warning" role="note">
+                <FormattedMessage id="msg.resetAllStreets.warning" />
+                <br />
+                <FormattedMessage id="msg.resetAllStreets.apiKeyAdvice" />
+            </div>
             <Button onClick={resetStreets} disabled={isResolving || totalCount === 0}>
                 <FormattedMessage id="msg.resetAllStreets" />
             </Button>
-            {isResolving && (
-                <div className="mt-2">
+            <Modal show={isResolving} backdrop="static" keyboard={false} centered>
+                <Modal.Header>
+                    <Modal.Title>
+                        <FormattedMessage id="msg.resetAllStreets.title" />
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <ProgressBar now={progress} label={`${resolvedCount}/${totalCount}`} />
-                    <div className="mt-1">
+                    <div className="mt-2">
                         <FormattedMessage
                             id="msg.resetAllStreets.progress"
                             values={{ resolved: resolvedCount, waiting: totalCount - resolvedCount, total: totalCount }}
                         />
                     </div>
-                </div>
-            )}
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }

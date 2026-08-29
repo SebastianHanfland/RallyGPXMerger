@@ -252,6 +252,8 @@
     "msg.resetAllStreets.title": "Reset all resolved streets",
     "msg.resetAllStreets": "Reset all streets",
     "msg.resetAllStreets.progress": "Resolved: {resolved}; waiting: {waiting} of {total} segments",
+    "msg.resetAllStreets.warning": "Caution: resolving all streets can consume many Geoapify API tokens.",
+    "msg.resetAllStreets.apiKeyAdvice": "If you use this operation frequently, configuring your own Geoapify API key is recommended.",
     "msg.communicatedStart": "Published start times",
     "msg.priority": "Prio",
     "msg.priority.hint": "The higher the priority the more it is prioritized at a node",

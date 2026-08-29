@@ -256,6 +256,8 @@
     "msg.resetAllStreets.title": "Alle aufgelösten Straßen zurücksetzen",
     "msg.resetAllStreets": "Alle Straßen zurücksetzen",
     "msg.resetAllStreets.progress": "Aufgelöst: {resolved}; wartend: {waiting} von {total} Abschnitten",
+    "msg.resetAllStreets.warning": "Achtung: Die Auflösung aller Straßen kann viele Geoapify-API-Token verbrauchen.",
+    "msg.resetAllStreets.apiKeyAdvice": "Wenn Sie diese Funktion häufig verwenden, wird die Verwendung eines eigenen Geoapify-API-Schlüssels empfohlen.",
     "msg.communicatedStart": "Veröffentliche Startzeiten",
     "msg.priority": "Prio",
     "msg.priority.hint": "Umso höher die Priorität ist, desto priorisierter ist eine Route bei Knotenpunkten",
