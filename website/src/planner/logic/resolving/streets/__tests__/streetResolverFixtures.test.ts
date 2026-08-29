@@ -45,7 +45,7 @@ describe('street resolver fixtures', () => {
         expect(actualStreets).toEqual(testCase.expectedStreets);
     }
 
-    const testCases = [exampleStreetTransitionTestCase, exampleUnmatchedMiddleTestCase, evaluateDistanceOfResolving];
+    const testCases = [evaluateDistanceOfResolving, exampleUnmatchedMiddleTestCase, exampleStreetTransitionTestCase];
     testCases.forEach((testCase) => {
         it(`matches the expected names for ${testCase.name}`, () => {
             assertFixture(testCase);

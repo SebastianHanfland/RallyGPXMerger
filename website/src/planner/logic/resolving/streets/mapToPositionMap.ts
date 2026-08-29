@@ -41,6 +41,7 @@ export function mapToPositionMap(result: GeoApifyMapMatchingResult): ResolvedPos
         const legInfo = feature.properties.legs;
         feature.properties.waypoints
             .filter((waypoint) => waypoint.match_type !== 'unmatched')
+            .filter((waypoint) => waypoint.match_distance < 10)
             .forEach((waypoint) => resolveWayPoint(legInfo, resolvedPositions)(waypoint));
     });
     return resolvedPositions;
