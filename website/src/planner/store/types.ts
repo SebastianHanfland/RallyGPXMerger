@@ -159,6 +159,14 @@ export interface PointToCenter {
     zoom: number;
 }
 
+export interface StreetPointSelection {
+    trackId: string;
+    streetIndex: number;
+    boundary: 'start' | 'end';
+    range: { start: number; end: number };
+    selectedPoint?: { segmentId: string; pointIndex: number };
+}
+
 export interface MapState {
     currentTime: number;
     showMapMarker?: boolean;
@@ -173,6 +181,7 @@ export interface MapState {
     highlightedSegmentId?: string;
     highlightedStreetPath?: StreetPathPoint[];
     pointToCenter?: PointToCenter;
+    streetPointSelection?: StreetPointSelection;
 }
 
 export interface PointsState {

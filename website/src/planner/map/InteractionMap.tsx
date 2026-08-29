@@ -28,8 +28,9 @@ import { breakPointsDisplayHook } from './hooks/breakPointsDisplayHook.ts';
 import { CreateEntryPointDialog } from '../entry/CreateEntryPointDialog.tsx';
 import { EditEntryPointDialog } from '../entry/EditEntryPointDialog.tsx';
 import { entryPointsDisplayHook } from './hooks/entryPointsDisplayHook.ts';
-import { TRACK_MARKER } from './panes.ts';
+import { STREET_POINT_SELECTION, TRACK_MARKER } from './panes.ts';
 import { streetHighlightDisplayHook } from './hooks/streetHighlightDisplayHook.ts';
+import { streetPointSelectionDisplayHook } from './hooks/streetPointSelectionDisplayHook.ts';
 
 let myMap: L.Map | undefined;
 
@@ -72,6 +73,9 @@ export const InteractionMap = () => {
             myMap.createPane(TRACK_MARKER);
             const pane = myMap?.getPane(TRACK_MARKER)!;
             pane.style.zIndex = '1000';
+            myMap.createPane(STREET_POINT_SELECTION);
+            const streetPointSelectionPane = myMap.getPane(STREET_POINT_SELECTION)!;
+            streetPointSelectionPane.style.zIndex = '1100';
         }
         return () => {
             myMap?.remove();
@@ -92,6 +96,7 @@ export const InteractionMap = () => {
     const breakPointsLayer = useRef<LayerGroup>(null);
     const entryPointsLayer = useRef<LayerGroup>(null);
     const streetHighlightLayer = useRef<LayerGroup>(null);
+    const streetPointSelectionLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -117,6 +122,8 @@ export const InteractionMap = () => {
         entryPointsLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         streetHighlightLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        streetPointSelectionLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     blockedStreetsDisplayHook(blockedStreetLayer);
@@ -129,6 +136,7 @@ export const InteractionMap = () => {
     nodePointsDisplayHook(nodePointsLayer);
     gpxSegmentDisplayHook(gpxSegmentsLayer);
     streetHighlightDisplayHook(streetHighlightLayer);
+    streetPointSelectionDisplayHook(streetPointSelectionLayer);
 
     return (
         <div>

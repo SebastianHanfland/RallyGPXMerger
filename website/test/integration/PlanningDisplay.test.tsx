@@ -10,7 +10,7 @@ import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
-import { getHighlightedStreetPath } from '../../src/planner/store/map.reducer';
+import { getHighlightedStreetPath, getStreetPointSelection, mapActions } from '../../src/planner/store/map.reducer';
 
 const messages = getMessages('en');
 
@@ -171,13 +171,19 @@ describe('Planner integration test', () => {
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
             expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
             await user.click(streetButtons[1]!);
-            const startDialog = screen.getByRole('dialog');
-            expect(startDialog).toBeInTheDocument();
-            await user.click(within(startDialog).getByRole('button', { name: /close/i }));
+            expect(getStreetPointSelection(store.getState())?.boundary).toBe('start');
+            const cancelButtons = within(streetEntries[1]!).getAllByRole('button');
+            expect(cancelButtons[1]).toHaveAccessibleName('Cancel editing street start');
+            await user.click(cancelButtons[1]!);
+            expect(getStreetPointSelection(store.getState())).toBeUndefined();
+            await user.click(within(streetEntries[1]!).getAllByRole('button')[1]!);
+            expect(getStreetPointSelection(store.getState())?.boundary).toBe('start');
+            const firstSegment = getParsedGpxSegments(store.getState())[0]!;
+            store.dispatch(mapActions.setSelectedStreetPoint({ segmentId: firstSegment.id, pointIndex: 0 }));
+            await waitFor(() => expect(getStreetPointSelection(store.getState())).toBeUndefined());
             await user.click(streetButtons[3]!);
-            const endDialog = screen.getByRole('dialog');
-            expect(endDialog).toBeInTheDocument();
-            await user.click(within(endDialog).getByRole('button', { name: /close/i }));
+            expect(getStreetPointSelection(store.getState())?.boundary).toBe('end');
+            store.dispatch(mapActions.setStreetPointSelection(undefined));
             await user.click(segmentsTab);
             expect(getHighlightedStreetPath(store.getState())).toBeUndefined();
 

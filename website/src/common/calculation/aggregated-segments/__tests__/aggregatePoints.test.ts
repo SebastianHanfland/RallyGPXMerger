@@ -68,6 +68,13 @@ describe('getConnectedPointWithTheSameStreetIndex', () => {
         // then
         expect(connectedPoints).toEqual([getPoint(2, 1), getPoint(3, 1)]);
     });
+
+    it('does not connect an unknown edge section through a known street', () => {
+        const points = [getPoint(2, 1), getPoint(3, 2), getPoint(4, 3)];
+        const streetLookUp = { 2: 'known street' };
+
+        expect(getConnectedPointWithTheSameStreetIndex(points, points[0], streetLookUp)).toEqual([points[0]]);
+    });
 });
 
 describe('aggregateStreetPointsInSegment', () => {

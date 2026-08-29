@@ -12,9 +12,15 @@ export function getConnectedPointWithTheSameStreetIndex(
     firstPoint: ParsedPoint,
     streetLookup: Record<number, string | undefined>
 ): ParsedPoint[] {
+    const wantedStreetIndex = getStreetLookupIndex(firstPoint);
+    const wantedStreetName = streetLookup[wantedStreetIndex];
     return enrichedPoints.filter((point, index) => {
-        if (getStreetLookupIndex(point) === getStreetLookupIndex(firstPoint)) {
+        const currentStreetIndex = getStreetLookupIndex(point);
+        if (currentStreetIndex === wantedStreetIndex) {
             return true;
+        }
+        if (wantedStreetName === undefined || streetLookup[currentStreetIndex] === undefined) {
+            return false;
         }
         if (index > 0) {
             const previousStreet = streetLookup[getStreetLookupIndex(enrichedPoints[index - 1])];
