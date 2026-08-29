@@ -213,6 +213,7 @@ export interface SegmentDataState {
     segments: ParsedGpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds: Record<string, number | undefined>;
+    forcedSegmentSpeeds?: Record<string, boolean | undefined>;
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;

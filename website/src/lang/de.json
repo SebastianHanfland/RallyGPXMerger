@@ -112,6 +112,7 @@
     "msg.globalSpeed": "Globale Geschwindigkeit in km/h",
     "msg.customSpeed": "Angepasste Geschwindigkeit in km/h",
     "msg.customSpeed.placeholder": "Angepasste Geschwindigkeit",
+    "msg.customSpeed.hint": "Geschwindigkeit in km/h eingeben. Ein ! vor oder nach der Zahl hält die Geschwindigkeit konstant, ohne Geländeanpassung.",
     "msg.rallyParameters.title": "Sternfahrtparameter",
     "msg.arrivalDate.title": "Ankunft der Routen",
     "msg.startDate.title": "Start der Route",

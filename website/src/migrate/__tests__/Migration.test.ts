@@ -29,6 +29,7 @@ describe('test migration', () => {
             '2001': '81245',
         });
         expect(state.segmentData.segmentSpeeds).toEqual(oldState.gpxSegments.segmentSpeeds);
+        expect(state.segmentData.forcedSegmentSpeeds).toEqual({});
         expect(state.segmentData.segments[0].points[0].t).toEqual(0);
     });
 

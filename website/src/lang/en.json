@@ -107,6 +107,7 @@
     "msg.globalSpeed": "Global speed in km/h",
     "msg.customSpeed": "Custom speed in km/h",
     "msg.customSpeed.placeholder": "Custom speed",
+    "msg.customSpeed.hint": "Enter a speed in km/h. Add ! before or after the number to keep that speed constant, without terrain adjustment.",
     "msg.rallyParameters.title": "Rally parameters",
     "msg.arrivalDate.title": "Arrival of tracks",
     "msg.startDate.title": "Start der Route",

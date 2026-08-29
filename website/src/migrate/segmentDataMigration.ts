@@ -50,6 +50,7 @@ export function migrateToSegmentData(
 
     return {
         segmentSpeeds: state.segmentSpeeds ?? {},
+        forcedSegmentSpeeds: {},
         segments: segmentsWithTiming,
         clickOnSegment: state.clickOnSegment,
         constructionSegments: state.constructionSegments?.map((segment) => gpxSegmentToParsedSegment(segment)) ?? [],
