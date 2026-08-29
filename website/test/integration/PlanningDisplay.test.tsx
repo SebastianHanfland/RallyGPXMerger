@@ -159,6 +159,17 @@ describe('Planner integration test', () => {
 
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(1), timeout);
             await user.click(streetsTab);
+            const insertionRail = screen.getByTestId('street-insertion-rail');
+            const insertionButtons = within(insertionRail).getAllByRole('button');
+            expect(insertionButtons.length).toBeGreaterThan(1);
+            expect(insertionButtons[0]).toHaveClass('btn-outline-secondary', 'p-0');
+            expect(insertionButtons[0]).not.toHaveClass('rounded-circle', 'btn-link');
+            expect(insertionButtons[0]).toHaveTextContent('+');
+            expect(within(screen.getByTestId('track-street-list')).queryByTestId('street-insertion-rail')).toBeNull();
+            await user.click(insertionButtons[0]!);
+            expect(getStreetPointSelection(store.getState())?.mode).toBe('add-start');
+            await user.click(insertionButtons[0]!);
+            expect(getStreetPointSelection(store.getState())).toBeUndefined();
             const streetTable = screen.getByTestId('track-street-list');
             const streetEntries = within(streetTable).getAllByRole('row');
             expect(streetEntries.length).toBeGreaterThan(1);

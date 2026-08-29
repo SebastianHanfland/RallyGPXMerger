@@ -10,12 +10,40 @@ import { STREET_POINT_SELECTION } from '../panes.ts';
 const SELECTABLE_POINT_COLOR = '#198754';
 const DISABLED_POINT_COLOR = '#808080';
 
+function getSelectionRenderKey(
+    selection: ReturnType<typeof getStreetPointSelection>,
+    routePoints: ReturnType<typeof getRoutePointReferences>
+): string {
+    const selectionKey = selection
+        ? [
+              selection.trackId,
+              selection.streetIndex,
+              selection.boundary,
+              selection.range.start,
+              selection.range.end,
+              selection.mode,
+              selection.insertionIndex,
+              selection.startRouteIndex,
+              selection.selectedPoint?.segmentId,
+              selection.selectedPoint?.pointIndex,
+          ].join(':')
+        : 'none';
+    const routePointKey = routePoints
+        .map(
+            ({ segmentId, pointIndex, point }) =>
+                `${segmentId}:${pointIndex}:${point.b}:${point.l}:${point.s}:${point.m}`
+        )
+        .join('|');
+    return `${selectionKey}|${routePointKey}`;
+}
+
 export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerGroup | null>) {
     const selection = useSelector(getStreetPointSelection);
     const track = useSelector(getTrackCompositions).find(({ id }) => id === selection?.trackId);
     const segments = useSelector(getParsedGpxSegments);
     const dispatch = useDispatch();
     const routePoints = useMemo(() => (track ? getRoutePointReferences(track, segments) : []), [track, segments]);
+    const selectionRenderKey = getSelectionRenderKey(selection, routePoints);
 
     useEffect(() => {
         const current = selectionLayer.current;
@@ -60,5 +88,5 @@ export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerG
             }
             marker.addTo(current);
         });
-    }, [dispatch, routePoints, selection, selectionLayer]);
+    }, [dispatch, routePoints, selection, selectionLayer, selectionRenderKey]);
 }

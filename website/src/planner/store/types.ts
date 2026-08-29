@@ -164,6 +164,9 @@ export interface StreetPointSelection {
     streetIndex: number;
     boundary: 'start' | 'end';
     range: { start: number; end: number };
+    mode?: 'edit' | 'add-start' | 'add-end';
+    insertionIndex?: number;
+    startRouteIndex?: number;
     selectedPoint?: { segmentId: string; pointIndex: number };
 }
 

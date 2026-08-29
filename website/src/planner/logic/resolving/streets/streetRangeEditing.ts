@@ -15,6 +15,19 @@ export interface StreetPointAssignment {
     lookupIndex: RangeAssignmentIndex;
 }
 
+export function getNewStreetRangeAssignments(
+    points: RoutePointReference[],
+    streetIndex: number,
+    start: number,
+    end: number
+): StreetPointAssignment[] {
+    return points.slice(start, end + 1).map(({ segmentId, pointIndex }) => ({
+        segmentId,
+        pointIndex,
+        lookupIndex: streetIndex,
+    }));
+}
+
 export function getRoutePointReferences(track: TrackComposition, segments: ParsedGpxSegment[]): RoutePointReference[] {
     return track.segments
         .slice()

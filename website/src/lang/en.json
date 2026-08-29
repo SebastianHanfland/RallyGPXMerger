@@ -172,6 +172,8 @@
     "msg.editStreetEnd": "Edit street end",
     "msg.cancelStreetStartEdit": "Cancel editing street start",
     "msg.cancelStreetEndEdit": "Cancel editing street end",
+    "msg.addStreet": "Add street",
+    "msg.cancelAddStreet": "Cancel adding street",
     "msg.arrival": "Arrival",
     "msg.end": "End",
     "msg.files": "Files",

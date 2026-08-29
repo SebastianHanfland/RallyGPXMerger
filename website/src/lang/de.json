@@ -177,6 +177,8 @@
     "msg.editStreetEnd": "Straßenende bearbeiten",
     "msg.cancelStreetStartEdit": "Bearbeitung des Straßenstarts abbrechen",
     "msg.cancelStreetEndEdit": "Bearbeitung des Straßenendes abbrechen",
+    "msg.addStreet": "Straße hinzufügen",
+    "msg.cancelAddStreet": "Hinzufügen der Straße abbrechen",
     "msg.arrival": "Ankunft",
     "msg.end": "Ende",
     "msg.lengthInKm": "Länge in km",

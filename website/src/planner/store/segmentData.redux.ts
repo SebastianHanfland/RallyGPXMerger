@@ -56,10 +56,10 @@ const segmentDataSlice = createSlice({
         addStreetLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string | undefined>>) => {
             state.streetLookup = { ...state.streetLookup, ...action.payload };
         },
-        addPostCodeLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+        addPostCodeLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string | undefined>>) => {
             state.postCodeLookup = { ...state.postCodeLookup, ...action.payload };
         },
-        addDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
+        addDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string | undefined>>) => {
             state.districtLookup = { ...state.districtLookup, ...action.payload };
         },
         reserveStreetLookupIndexes: (state: SegmentDataState, action: PayloadAction<number>) => {

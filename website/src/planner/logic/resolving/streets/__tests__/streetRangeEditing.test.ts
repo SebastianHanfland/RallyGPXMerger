@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { SEGMENT, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../../store/types.ts';
-import { getRoutePointReferences, getStreetRange, getStreetRangeAssignments } from '../streetRangeEditing.ts';
+import {
+    getNewStreetRangeAssignments,
+    getRoutePointReferences,
+    getStreetRange,
+    getStreetRangeAssignments,
+} from '../streetRangeEditing.ts';
 
 const point = (s: number, m?: number): ParsedPoint => ({ l: 0, b: 0, e: 0, t: 0, s, m });
 const segment = (id: string, points: ParsedPoint[]): ParsedGpxSegment => ({ id, filename: id, points });
@@ -47,5 +52,13 @@ describe('street range editing', () => {
             point,
         }));
         expect(getStreetRange(points, 7)).toEqual({ start: 1, end: 2 });
+    });
+
+    it('assigns the complete inclusive range to a new street', () => {
+        const points = [1, 2, 3].map((s, pointIndex) => ({ segmentId: 'segment', pointIndex, point: point(s) }));
+        expect(getNewStreetRangeAssignments(points, 9, 1, 2)).toEqual([
+            { segmentId: 'segment', pointIndex: 1, lookupIndex: 9 },
+            { segmentId: 'segment', pointIndex: 2, lookupIndex: 9 },
+        ]);
     });
 });
