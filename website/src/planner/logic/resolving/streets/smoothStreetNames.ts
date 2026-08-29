@@ -1,20 +1,24 @@
 import { ParsedPoint } from '../../../store/types.ts';
 import { isSameStreetName } from './isSameStreetName.ts';
+import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
 
 export const isJunction = (point: ParsedPoint, index: number, points: ParsedPoint[]): boolean => {
     if (points.length <= 1) {
         return false;
     }
     if (index === 0) {
-        return point.s !== points[1].s;
+        return getStreetLookupIndex(point) !== getStreetLookupIndex(points[1]);
     }
     if (index === points.length - 1) {
-        return point.s !== points[points.length - 2].s;
+        return getStreetLookupIndex(point) !== getStreetLookupIndex(points[points.length - 2]);
     }
     const previousPoint = points[index - 1];
     const nextPoint = points[index + 1];
 
-    return previousPoint.s !== point.s && nextPoint.s !== point.s;
+    return (
+        getStreetLookupIndex(previousPoint) !== getStreetLookupIndex(point) &&
+        getStreetLookupIndex(nextPoint) !== getStreetLookupIndex(point)
+    );
 };
 
 function smoothJunction(point: ParsedPoint, index: number, points: ParsedPoint[]) {
@@ -38,8 +42,8 @@ export const isSameStreet = (
     }
 
     const previousPoint = points[index - 1];
-    const previousStreet = streetLookUp[previousPoint.s];
-    const street = streetLookUp[point.s];
+    const previousStreet = streetLookUp[getStreetLookupIndex(previousPoint)];
+    const street = streetLookUp[getStreetLookupIndex(point)];
 
     return isSameStreetName(previousStreet, street);
 };
@@ -55,8 +59,8 @@ function smoothSameStreet(
     }
 
     const previousPoint = points[index - 1];
-    const previousStreet = streetLookUp[previousPoint.s];
-    const street = streetLookUp[point.s];
+    const previousStreet = streetLookUp[getStreetLookupIndex(previousPoint)];
+    const street = streetLookUp[getStreetLookupIndex(point)];
 
     if (isSameStreetName(previousStreet, street)) {
         return { ...point, s: previousPoint.s };

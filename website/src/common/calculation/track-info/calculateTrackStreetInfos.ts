@@ -24,6 +24,7 @@ import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceI
 import { CalculatedTrack } from '../../types.ts';
 import { joinWayPointsAtSegmentsBorders } from './joinWayPointsAtSegmentsBorders.ts';
 import { getPointsEndingAtTime } from '../lastPointUtil.ts';
+import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex.ts';
 
 const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     lat: b,
@@ -31,7 +32,11 @@ const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     time: shiftDateBySeconds(arrivalDate, t),
 });
 
-const extractPathPoint = ({ b, l, s }: ParsedPoint) => ({ lat: b, lon: l, s });
+const extractPathPoint = (point: ParsedPoint) => ({
+    lat: point.b,
+    lon: point.l,
+    s: getStreetLookupIndex(point),
+});
 
 export const calculateTrackStreetInfos = (
     segments: ParsedGpxSegment[],
@@ -191,10 +196,11 @@ export function getWayPointsOfTrack(
                     arrivalTimeForPreviousSegment = shiftedPoint[0].t;
 
                     const wayPoints: WayPoint[] = (aggregatedPoints ?? []).map((point) => {
+                        const streetLookupIndex = getStreetLookupIndex(point);
                         return {
-                            streetName: lookups.streets[point.s] ?? null,
-                            district: lookups.districts[point.s] ?? null,
-                            postCode: lookups.postCodes[point.s] ?? null,
+                            streetName: lookups.streets[streetLookupIndex] ?? null,
+                            district: lookups.districts[streetLookupIndex] ?? null,
+                            postCode: lookups.postCodes[streetLookupIndex] ?? null,
                             backPassage: shiftDateBySeconds(
                                 arrivalDate,
                                 point.frontPassage +
@@ -215,7 +221,7 @@ export function getWayPointsOfTrack(
                             distanceInKm: point.distanceInKm,
                             speed: point.speed,
                             type: TrackWayPointType.Track,
-                            s: point.s,
+                            s: streetLookupIndex,
                         };
                     });
 

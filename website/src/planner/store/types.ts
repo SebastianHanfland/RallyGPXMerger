@@ -193,6 +193,7 @@ export interface ParsedPoint {
     e: number; // elevation
     t: number; // time in seconds from start of segment
     s: number; // index of street resolving
+    m?: number; // manually assigned index of street resolving
 }
 
 export interface TimedPoint {
@@ -201,6 +202,7 @@ export interface TimedPoint {
     e: number; // elevation
     t: string; // Date time in isoformat
     s: number; // index of street resolving
+    m?: number; // manually assigned index of street resolving
 }
 
 export interface ParsedGpxSegment {

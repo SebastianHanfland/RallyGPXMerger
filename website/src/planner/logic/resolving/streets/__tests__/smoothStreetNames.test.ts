@@ -1,5 +1,6 @@
 import { ParsedPoint } from '../../../../store/types.ts';
 import { smoothStreetNames } from '../smoothStreetNames.ts';
+import { getStreetLookupIndex } from '../../helper/getStreetLookupIndex.ts';
 
 function getPoint(coordinate: number, streetIndex: number): ParsedPoint {
     return {
@@ -12,6 +13,19 @@ function getPoint(coordinate: number, streetIndex: number): ParsedPoint {
 }
 
 describe('smoothStreetNames', () => {
+    it('uses the manual index when deciding whether a point is a junction', () => {
+        const points: ParsedPoint[] = [
+            { ...getPoint(1, 1), m: 3 },
+            { ...getPoint(2, 2), m: 3 },
+            { ...getPoint(3, 3), m: 3 },
+        ];
+
+        const smoothedPoints = smoothStreetNames(points, { 2: 'junction', 3: 'street' });
+
+        expect(smoothedPoints.map(getStreetLookupIndex)).toEqual([3, 3, 3]);
+        expect(smoothedPoints.map((point) => point.m)).toEqual([3, 3, 3]);
+    });
+
     it('replace a single element at the start with the following', () => {
         // given
         const points: ParsedPoint[] = [getPoint(3, 1), getPoint(4, 2)];

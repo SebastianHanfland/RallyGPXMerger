@@ -12,6 +12,15 @@ function getPoint(coordinate: number, streetIndex: number): ParsedPoint {
 }
 
 describe('getConnectedPointWithTheSameStreetIndex', () => {
+    it('uses the manual index before the automatic index', () => {
+        const firstPoint = { ...getPoint(3, 1), m: 2 };
+        const points = [firstPoint, { ...getPoint(4, 2), m: 2 }];
+
+        expect(getConnectedPointWithTheSameStreetIndex(points, firstPoint, { 1: 'first', 2: 'manual' })).toEqual(
+            points
+        );
+    });
+
     it('should find points with same name but different index', () => {
         // given
         const points: ParsedPoint[] = [getPoint(3, 1), getPoint(4, 2)];

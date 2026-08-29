@@ -5,6 +5,7 @@ import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSam
 import { createSelector } from '@reduxjs/toolkit';
 import { getParsedGpxSegments } from '../../../planner/store/segmentData.redux.ts';
 import { getCorrectStreetLookup } from '../../../planner/logic/resolving/selectors/getLookups.ts';
+import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex.ts';
 
 export function getConnectedPointWithTheSameStreetIndex(
     enrichedPoints: ParsedPoint[],
@@ -12,13 +13,13 @@ export function getConnectedPointWithTheSameStreetIndex(
     streetLookup: Record<number, string | undefined>
 ): ParsedPoint[] {
     return enrichedPoints.filter((point, index) => {
-        if (point.s === firstPoint.s) {
+        if (getStreetLookupIndex(point) === getStreetLookupIndex(firstPoint)) {
             return true;
         }
         if (index > 0) {
-            const previousStreet = streetLookup[enrichedPoints[index - 1].s];
-            const wantedStreet = streetLookup[firstPoint.s];
-            const currentStreet = streetLookup[enrichedPoints[index].s];
+            const previousStreet = streetLookup[getStreetLookupIndex(enrichedPoints[index - 1])];
+            const wantedStreet = streetLookup[getStreetLookupIndex(firstPoint)];
+            const currentStreet = streetLookup[getStreetLookupIndex(enrichedPoints[index])];
             if (
                 (previousStreet && wantedStreet && !isSameStreetName(previousStreet, wantedStreet)) ||
                 currentStreet !== wantedStreet
@@ -31,13 +32,13 @@ export function getConnectedPointWithTheSameStreetIndex(
 
             while (searchIndex > 0) {
                 const previousPoint = enrichedPoints[searchIndex - 1];
-                const previousStreet = streetLookup[previousPoint.s];
-                const wantedStreet = streetLookup[firstPoint.s];
+                const previousStreet = streetLookup[getStreetLookupIndex(previousPoint)];
+                const wantedStreet = streetLookup[getStreetLookupIndex(firstPoint)];
                 searchIndex = searchIndex - 1;
                 if (previousStreet && wantedStreet && !isSameStreetName(previousStreet, wantedStreet)) {
                     return false;
                 }
-                if (previousPoint.s === firstPoint.s) {
+                if (getStreetLookupIndex(previousPoint) === getStreetLookupIndex(firstPoint)) {
                     return true;
                 }
             }
@@ -81,7 +82,7 @@ export function aggregateStreetPointsInSegment(
             path,
             distanceInKm,
             speed: (distanceInKm / (lastPoint.t - correctedFirstPoint.t)) * 3600,
-            s: firstPoint.s,
+            s: getStreetLookupIndex(firstPoint),
         });
         pointIndex += pointsWithSameStreet.length;
     }

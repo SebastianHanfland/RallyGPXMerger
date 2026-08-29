@@ -2,6 +2,7 @@ import { ParsedGpxSegment } from '../planner/store/types.ts';
 import { GeoCodingStateOld } from '../planner/store/typesOld.ts';
 import { toKey } from '../planner/logic/resolving/helper/pointKeys.ts';
 import { ReplacementWayPoint } from '../planner/logic/resolving/types.ts';
+import { getStreetLookupIndex } from '../planner/logic/resolving/helper/getStreetLookupIndex.ts';
 
 export function getWayPointKey(wayPoint: ReplacementWayPoint) {
     const lat = (wayPoint.pointTo.lat + wayPoint.pointFrom.lat) / 2;
@@ -20,7 +21,8 @@ export const createPostCodeAndDistrictLookups = (
 
     parsedSegments.forEach((segment) => {
         segment.points.forEach((point) => {
-            const streetName = streetLookup[point.s];
+            const streetLookupIndex = getStreetLookupIndex(point);
+            const streetName = streetLookup[streetLookupIndex];
 
             let district: string | null = null;
             let postCode: string | null = null;
@@ -38,10 +40,10 @@ export const createPostCodeAndDistrictLookups = (
                     district = geoCoding.resolvedDistricts[postCodeKey];
                     postCode = foundPostCode ? `${foundPostCode}` : null;
                     if (postCode) {
-                        postCodeLookup = { ...postCodeLookup, ...{ [point.s]: postCode } };
+                        postCodeLookup = { ...postCodeLookup, ...{ [streetLookupIndex]: postCode } };
                     }
                     if (district) {
-                        districtLookup = { ...districtLookup, ...{ [point.s]: district } };
+                        districtLookup = { ...districtLookup, ...{ [streetLookupIndex]: district } };
                     }
                 }
             });

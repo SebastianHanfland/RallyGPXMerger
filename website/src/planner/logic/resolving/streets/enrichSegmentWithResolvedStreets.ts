@@ -1,6 +1,7 @@
 import { toKey } from '../helper/pointKeys.ts';
 import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../store/types.ts';
 import { smoothStreetNames } from './smoothStreetNames.ts';
+import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
 
 function getHighestFound(
     streetLookUp: Record<number, string | undefined>,
@@ -47,7 +48,9 @@ export function enrichSegmentWithResolvedStreets(
         const foundInLookup = getHighestFound(streetLookUp, resolvedStreetName);
 
         const hasTheSameStreetAsPointBefore =
-            foundInLookup && points.length > 0 && points[points.length - 1].s === Number(foundInLookup[0]);
+            foundInLookup &&
+            points.length > 0 &&
+            getStreetLookupIndex(points[points.length - 1]) === Number(foundInLookup[0]);
         if (hasTheSameStreetAsPointBefore) {
             points.push({ ...point, s: Number(foundInLookup[0]) });
             return;

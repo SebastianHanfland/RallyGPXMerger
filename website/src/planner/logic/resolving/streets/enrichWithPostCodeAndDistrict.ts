@@ -4,9 +4,12 @@ import { AppDispatch } from '../../../store/planningStore.ts';
 import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { fetchAndStorePostCodeAndDistrict } from '../postcode/postCodeResolver.ts';
 import { getLookups } from '../selectors/getLookups.ts';
+import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
 
 function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: number; lon: number } | null {
-    const segmentsWithStreetIndex = segments.filter((segment) => segment.points.find((point) => `${point.s}` === key));
+    const segmentsWithStreetIndex = segments.filter((segment) =>
+        segment.points.find((point) => `${getStreetLookupIndex(point)}` === key)
+    );
     if (segmentsWithStreetIndex.length !== 1) {
         console.error(
             'Expected only one segment to contain information here, but got ',
@@ -15,7 +18,9 @@ function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: nu
         return null;
     }
     const relevantSegment = segmentsWithStreetIndex[0];
-    const pointsMatchingStreetIndex = relevantSegment.points.filter((point) => `${point.s}` === key);
+    const pointsMatchingStreetIndex = relevantSegment.points.filter(
+        (point) => `${getStreetLookupIndex(point)}` === key
+    );
 
     if (pointsMatchingStreetIndex.length === 0) {
         console.error(`No points found for key ${key}`);
