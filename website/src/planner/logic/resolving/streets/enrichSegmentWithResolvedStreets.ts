@@ -46,16 +46,11 @@ export function enrichSegmentWithResolvedStreets(
         streetForLastPointFound = true;
         const foundInLookup = getHighestFound(streetLookUp, resolvedStreetName);
 
-        if (foundInLookup) {
-            if (points.length > 0 && points[points.length - 1].s === Number(foundInLookup[0])) {
-                points.push({ ...point, s: Number(foundInLookup[0]) });
-                return;
-            } else {
-                indexCounter += 1;
-                streetLookUp[indexCounter] = resolvedStreetName;
-                points.push({ ...point, s: indexCounter });
-                return;
-            }
+        const hasTheSameStreetAsPointBefore =
+            foundInLookup && points.length > 0 && points[points.length - 1].s === Number(foundInLookup[0]);
+        if (hasTheSameStreetAsPointBefore) {
+            points.push({ ...point, s: Number(foundInLookup[0]) });
+            return;
         } else {
             indexCounter += 1;
             streetLookUp[indexCounter] = resolvedStreetName;
