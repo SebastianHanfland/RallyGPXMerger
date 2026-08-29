@@ -60,4 +60,35 @@ describe('segmentData reducer', () => {
         expect(getPostCodeLookup(store.getState())[9]).toBe('12345');
         expect(getDistrictLookup(store.getState())[9]).toBe('Old District');
     });
+
+    it('updates manual street ranges without changing automatic indexes', () => {
+        const store = createPlanningStore();
+        store.dispatch(
+            segmentDataActions.addGpxSegments([
+                {
+                    id: 'segment',
+                    filename: 'segment',
+                    points: [
+                        { b: 1, l: 1, e: 0, t: 0, s: 4 },
+                        { b: 2, l: 2, e: 0, t: 1, s: 5 },
+                    ],
+                },
+            ])
+        );
+        store.dispatch(
+            segmentDataActions.applyStreetRangeAssignments([
+                { segmentId: 'segment', pointIndex: 0, lookupIndex: 'unknown-start' },
+                { segmentId: 'segment', pointIndex: 1, lookupIndex: 5 },
+            ])
+        );
+
+        const points = getParsedGpxSegments(store.getState())[0]!.points;
+        expect(points.map(({ s, m }) => ({ s, m }))).toEqual([
+            { s: 4, m: 6 },
+            { s: 5, m: 5 },
+        ]);
+        expect(getStreetLookup(store.getState())[6]).toBeUndefined();
+        expect(getPostCodeLookup(store.getState())[6]).toBeUndefined();
+        expect(getDistrictLookup(store.getState())[6]).toBeUndefined();
+    });
 });

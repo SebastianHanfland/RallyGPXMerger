@@ -4,6 +4,7 @@ import { ClickOnSegment, ManualLookupField, ParsedGpxSegment, ParsedPoint, Segme
 import { storage } from './storage.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
 import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex.ts';
+import type { StreetPointAssignment } from '../logic/resolving/streets/streetRangeEditing.ts';
 
 const initialState: SegmentDataState = {
     segments: [],
@@ -96,6 +97,49 @@ const segmentDataSlice = createSlice({
                 ),
             }));
             state.streetLookupIndex = manualIndex;
+        },
+        applyStreetRangeAssignments: (state: SegmentDataState, action: PayloadAction<StreetPointAssignment[]>) => {
+            const unknownIndexes = new Map<StreetPointAssignment['lookupIndex'], number>();
+            const getAssignmentIndex = (lookupIndex: StreetPointAssignment['lookupIndex']): number => {
+                if (typeof lookupIndex === 'number') {
+                    return lookupIndex;
+                }
+                const existingIndex = unknownIndexes.get(lookupIndex);
+                if (existingIndex !== undefined) {
+                    return existingIndex;
+                }
+                const newIndex = getHighestStreetLookupIndex(state) + 1;
+                unknownIndexes.set(lookupIndex, newIndex);
+                state.streetLookup[newIndex] = undefined;
+                state.postCodeLookup[newIndex] = undefined;
+                state.districtLookup[newIndex] = undefined;
+                state.streetLookupIndex = newIndex;
+                return newIndex;
+            };
+
+            const assignmentsBySegment = new Map<string, Map<number, number>>();
+            action.payload.forEach((assignment) => {
+                let segmentAssignments = assignmentsBySegment.get(assignment.segmentId);
+                if (!segmentAssignments) {
+                    segmentAssignments = new Map<number, number>();
+                    assignmentsBySegment.set(assignment.segmentId, segmentAssignments);
+                }
+                segmentAssignments.set(assignment.pointIndex, getAssignmentIndex(assignment.lookupIndex));
+            });
+
+            state.segments = state.segments.map((segment) => {
+                const segmentAssignments = assignmentsBySegment.get(segment.id);
+                if (!segmentAssignments) {
+                    return segment;
+                }
+                return {
+                    ...segment,
+                    points: segment.points.map((point, pointIndex) => {
+                        const lookupIndex = segmentAssignments.get(pointIndex);
+                        return lookupIndex === undefined ? point : { ...point, m: lookupIndex };
+                    }),
+                };
+            });
         },
         clearResolvedStreetData: (state: SegmentDataState) => {
             const manualIndexes = new Set(

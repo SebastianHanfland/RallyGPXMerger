@@ -159,9 +159,10 @@ describe('Planner integration test', () => {
 
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(1), timeout);
             await user.click(streetsTab);
-            const streetEntries = within(screen.getByTestId('track-street-list')).getAllByRole('listitem');
-            expect(streetEntries.length).toBeGreaterThan(0);
-            const streetButtons = within(streetEntries[0]!).getAllByRole('button');
+            const streetTable = screen.getByTestId('track-street-list');
+            const streetEntries = within(streetTable).getAllByRole('row');
+            expect(streetEntries.length).toBeGreaterThan(1);
+            const streetButtons = within(streetEntries[1]!).getAllByRole('button');
             await user.click(streetButtons[0]!);
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
             expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
@@ -170,8 +171,13 @@ describe('Planner integration test', () => {
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
             expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
             await user.click(streetButtons[1]!);
-            expect(getHighlightedStreetPath(store.getState())).toBeDefined();
-            expect(getHighlightedStreetPath(store.getState())!.length).toBeGreaterThan(0);
+            const startDialog = screen.getByRole('dialog');
+            expect(startDialog).toBeInTheDocument();
+            await user.click(within(startDialog).getByRole('button', { name: /close/i }));
+            await user.click(streetButtons[3]!);
+            const endDialog = screen.getByRole('dialog');
+            expect(endDialog).toBeInTheDocument();
+            await user.click(within(endDialog).getByRole('button', { name: /close/i }));
             await user.click(segmentsTab);
             expect(getHighlightedStreetPath(store.getState())).toBeUndefined();
 
