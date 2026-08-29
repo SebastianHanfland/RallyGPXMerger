@@ -59,6 +59,11 @@ const segmentDataSlice = createSlice({
         addReplaceDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string>>) => {
             state.replaceDistrictLookup = { ...state.replaceDistrictLookup, ...action.payload };
         },
+        clearResolvedStreetData: (state: SegmentDataState) => {
+            state.streetLookup = {};
+            state.postCodeLookup = {};
+            state.districtLookup = {};
+        },
         removeGpxSegment: (state: SegmentDataState, action: PayloadAction<string>) => {
             state.segments = state.segments.filter((segment) => segment.id !== action.payload);
         },

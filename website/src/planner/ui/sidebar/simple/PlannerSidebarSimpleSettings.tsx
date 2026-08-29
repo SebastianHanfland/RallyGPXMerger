@@ -8,11 +8,13 @@ import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescript
 import { ReactNode } from 'react';
 import { PlannerSidebarServerSection } from '../../../server/ServerInteraction.tsx';
 import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
+import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
 
 export const PlannerSidebarSimpleSettings = () => {
     const accordionEntries: [string, ReactNode, string][] = [
         ['msg.gapSetting', <GapFinderParameters />, '0'],
         ['msg.ownApiKey', <ApiKeyInput />, '1'],
+        ['msg.resetAllStreets.title', <ResetAllResolvedStreets />, '2'],
     ];
     return (
         <div className={'m-2'}>
