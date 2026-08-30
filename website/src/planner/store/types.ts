@@ -144,6 +144,7 @@ export interface SettingsState {
     planningTitle?: string;
     participantDelay: number;
     averageSpeedInKmH?: number;
+    forcedAverageSpeed?: boolean;
     gapToleranceInKm?: number;
 }
 

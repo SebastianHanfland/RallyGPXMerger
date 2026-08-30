@@ -7,7 +7,7 @@ import { toParsedGpxSegment } from '../../../segments/segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../../../logic/resolving/streets/mapMatchingStreetResolver.ts';
 import { SEGMENT, TrackComposition } from '../../../store/types.ts';
 import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../../../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
-import { getAverageSpeedInKmH } from '../../../store/settings.reducer.ts';
+import { getAverageSpeedInKmH, getForcedAverageSpeed } from '../../../store/settings.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -15,28 +15,29 @@ export function GpxSegmentsUploadAndParseAndSetToTrack({ track }: { track: Track
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
+    const forcedAverageSpeed = useSelector(getForcedAverageSpeed);
 
     const handleChange = (newFiles: File | File[]) => {
-        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
-            (newGpxSegments) => {
-                dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
-                    dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
-                );
-                dispatch(
-                    trackMergeActions.setSegments({
-                        id: track.id,
-                        segments: [
-                            ...track.segments,
-                            ...newGpxSegments.map((segment) => ({
-                                type: SEGMENT,
-                                segmentId: segment.id,
-                                id: segment.id,
-                            })),
-                        ],
-                    })
-                );
-            }
-        );
+        Promise.all(
+            [...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed, forcedAverageSpeed))
+        ).then((newGpxSegments) => {
+            dispatch(enrichGpxSegmentsWithStreetNames(newGpxSegments)).then(() =>
+                dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)
+            );
+            dispatch(
+                trackMergeActions.setSegments({
+                    id: track.id,
+                    segments: [
+                        ...track.segments,
+                        ...newGpxSegments.map((segment) => ({
+                            type: SEGMENT,
+                            segmentId: segment.id,
+                            id: segment.id,
+                        })),
+                    ],
+                })
+            );
+        });
     };
     return (
         <FileUploader

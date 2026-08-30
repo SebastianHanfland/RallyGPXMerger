@@ -7,12 +7,13 @@ import {
     getSegmentSpeeds,
     segmentDataActions,
 } from '../store/segmentData.redux.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getAverageSpeedInKmH, getForcedAverageSpeed } from '../store/settings.reducer.ts';
 
 export const executeGpxSegmentReplacementWithUpload = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());
     const trackCompositions = getTrackCompositions(getState());
     const averageSpeed = getAverageSpeedInKmH(getState());
+    const forcedAverageSpeed = getForcedAverageSpeed(getState());
 
     if (!replaceProcess || replaceProcess.replacementSegments.length === 0) {
         return;
@@ -40,6 +41,7 @@ export const executeGpxSegmentReplacementWithUpload = (dispatch: AppDispatch, ge
                 speed: previousSegmentSpeed,
                 averageSpeed,
                 forced: previousForcedSpeed,
+                forcedAverageSpeed,
             })
         );
     });

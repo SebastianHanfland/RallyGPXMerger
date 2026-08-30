@@ -128,6 +128,7 @@
     "msg.participantsLength.short": "Länge von 100 Leuten",
     "msg.averageSpeed.title": "Durchschnittsgeschwindigkeit",
     "msg.averageSpeed": "Durchschnittsgeschwindigkeit",
+    "msg.averageSpeed.hint": "Geschwindigkeit in km/h eingeben. Ein ! vor oder nach der Zahl hält die Geschwindigkeit konstant, ohne Geländeanpassung.",
     "msg.externalDataOverview": "Übersicht der berechneten Daten",
     "msg.property": "Eigenschaft",
     "msg.value": "Wert",

@@ -123,6 +123,7 @@
     "msg.participantsLength.short": "Length of 100 people",
     "msg.averageSpeed.title": "Average speed",
     "msg.averageSpeed": "Average speed",
+    "msg.averageSpeed.hint": "Enter a speed in km/h. Add ! before or after the number to keep that speed constant, without terrain adjustment.",
     "msg.externalDataOverview": "Overview of calculated Data",
     "msg.property": "Property",
     "msg.value": "Value",

@@ -4,7 +4,7 @@ import flip from '../../assets/flip.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getAverageSpeedInKmH, getForcedAverageSpeed } from '../store/settings.reducer.ts';
 
 interface Props {
     id: string;
@@ -16,8 +16,9 @@ export function FlipGpxButton({ id, name, flipped }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
+    const forcedAverageSpeed = useSelector(getForcedAverageSpeed);
     const flipGpxSegment = () => {
-        dispatch(segmentDataActions.flipGpxSegment({ segmentId: id, averageSpeed }));
+        dispatch(segmentDataActions.flipGpxSegment({ segmentId: id, averageSpeed, forcedAverageSpeed }));
     };
     return (
         <>

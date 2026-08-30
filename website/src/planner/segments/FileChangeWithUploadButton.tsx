@@ -8,11 +8,17 @@ import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadT
 import { AppDispatch } from '../store/planningStore.ts';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getReplaceProcess, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
+import {
+    getForcedSegmentSpeeds,
+    getReplaceProcess,
+    getSegmentSpeeds,
+    segmentDataActions,
+} from '../store/segmentData.redux.ts';
 import { toParsedGpxSegment } from './segmentParsing.ts';
 import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getAverageSpeedInKmH, getForcedAverageSpeed } from '../store/settings.reducer.ts';
 import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
+import { isForcedSegmentSpeed } from './segmentSpeedUtil.ts';
 
 interface Props {
     id: string;
@@ -24,8 +30,16 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
     const [showModal, setShowModal] = useState(false);
     const replaceProcess = useSelector(getReplaceProcess);
     const averageSpeed = useSelector(getAverageSpeedInKmH);
+    const forcedAverageSpeed = useSelector(getForcedAverageSpeed);
     const segmentSpeeds = useSelector(getSegmentSpeeds);
-    const segmentSpeed = replaceProcess ? (segmentSpeeds[replaceProcess!.targetSegment] ?? averageSpeed) : averageSpeed;
+    const forcedSegmentSpeeds = useSelector(getForcedSegmentSpeeds);
+    const targetSegmentId = replaceProcess?.targetSegment;
+    const segmentSpeed = targetSegmentId ? (segmentSpeeds[targetSegmentId] ?? averageSpeed) : averageSpeed;
+    const hasCustomSegmentSpeed = targetSegmentId ? (segmentSpeeds[targetSegmentId] ?? 0) > 0 : false;
+    const parseForced =
+        hasCustomSegmentSpeed && targetSegmentId
+            ? isForcedSegmentSpeed(forcedSegmentSpeeds, segmentSpeeds, targetSegmentId)
+            : forcedAverageSpeed;
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +55,7 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
     };
 
     const handleChange = (newFiles: File | File[]) => {
-        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, segmentSpeed))).then(
+        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, segmentSpeed, parseForced))).then(
             (replacementSegments) => {
                 dispatch(enrichGpxSegmentsWithStreetNames(replacementSegments)).then(() =>
                     dispatch(enrichGpxSegmentsWithPostCodesAndDistricts)

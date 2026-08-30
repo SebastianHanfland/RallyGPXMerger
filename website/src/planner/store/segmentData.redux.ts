@@ -26,12 +26,14 @@ function getHighestStreetLookupIndex(state: SegmentDataState): number {
 function resolveSegmentTiming(
     state: SegmentDataState,
     segmentId: string,
-    averageSpeed: number
+    averageSpeed: number,
+    forcedAverageSpeed?: boolean
 ): { speed: number; forced: boolean } {
     const customSpeed = state.segmentSpeeds?.[segmentId];
+    const hasCustomSpeed = (customSpeed ?? 0) > 0;
     return {
         speed: customSpeed ?? averageSpeed,
-        forced: (customSpeed ?? 0) > 0 && !!state.forcedSegmentSpeeds?.[segmentId],
+        forced: hasCustomSpeed ? !!state.forcedSegmentSpeeds?.[segmentId] : !!forcedAverageSpeed,
     };
 }
 
@@ -77,13 +79,18 @@ const segmentDataSlice = createSlice({
         },
         flipGpxSegment: (
             state: SegmentDataState,
-            action: PayloadAction<{ segmentId: string; averageSpeed: number }>
+            action: PayloadAction<{ segmentId: string; averageSpeed: number; forcedAverageSpeed?: boolean }>
         ) => {
             state.segments = state.segments.map((segment) => {
                 if (segment.id !== action.payload.segmentId) {
                     return segment;
                 }
-                const { speed, forced } = resolveSegmentTiming(state, segment.id, action.payload.averageSpeed);
+                const { speed, forced } = resolveSegmentTiming(
+                    state,
+                    segment.id,
+                    action.payload.averageSpeed,
+                    action.payload.forcedAverageSpeed
+                );
                 return {
                     ...segment,
                     flipped: !segment.flipped,
@@ -120,19 +127,26 @@ const segmentDataSlice = createSlice({
         },
         setSegmentSpeeds: (
             state: SegmentDataState,
-            action: PayloadAction<{ id: string; speed?: number; averageSpeed: number; forced?: boolean }>
+            action: PayloadAction<{
+                id: string;
+                speed?: number;
+                averageSpeed: number;
+                forced?: boolean;
+                forcedAverageSpeed?: boolean;
+            }>
         ) => {
-            const { id, speed, averageSpeed, forced } = action.payload;
-            const appliedForced = !!forced && (speed ?? 0) > 0;
+            const { id, speed, averageSpeed, forced, forcedAverageSpeed } = action.payload;
+            const hasCustomSpeed = (speed ?? 0) > 0;
+            const appliedForced = hasCustomSpeed ? !!forced : !!forcedAverageSpeed;
             if (!state.segmentSpeeds) {
                 state.segmentSpeeds = { [id]: speed };
             } else {
                 state.segmentSpeeds[id] = speed;
             }
             if (!state.forcedSegmentSpeeds) {
-                state.forcedSegmentSpeeds = { [id]: appliedForced };
+                state.forcedSegmentSpeeds = { [id]: hasCustomSpeed && !!forced };
             } else {
-                state.forcedSegmentSpeeds[id] = appliedForced;
+                state.forcedSegmentSpeeds[id] = hasCustomSpeed && !!forced;
             }
             state.segments = state.segments.map((segment) => {
                 const adjustedPoints = generateParsedPointsForSegmentSpeed(
@@ -143,11 +157,14 @@ const segmentDataSlice = createSlice({
                 return segment.id === id ? { ...segment, points: adjustedPoints } : segment;
             });
         },
-        adjustTimesOfAllSegments: (state: SegmentDataState, action: PayloadAction<number>) => {
-            const averageSpeed = action.payload;
+        adjustTimesOfAllSegments: (
+            state: SegmentDataState,
+            action: PayloadAction<{ averageSpeed: number; forcedAverageSpeed?: boolean }>
+        ) => {
+            const { averageSpeed, forcedAverageSpeed } = action.payload;
 
             state.segments = state.segments.map((segment) => {
-                const { speed, forced } = resolveSegmentTiming(state, segment.id, averageSpeed);
+                const { speed, forced } = resolveSegmentTiming(state, segment.id, averageSpeed, forcedAverageSpeed);
                 const adjustedPoints = generateParsedPointsForSegmentSpeed(speed, segment.points, forced);
                 return { ...segment, points: adjustedPoints };
             });

@@ -32,8 +32,9 @@ const settingsSlice = createSlice({
         setParticipantsDelays: (state: SettingsState, action: PayloadAction<number>) => {
             state.participantDelay = action.payload;
         },
-        setAverageSpeed: (state: SettingsState, action: PayloadAction<number | undefined>) => {
-            state.averageSpeedInKmH = action.payload;
+        setAverageSpeed: (state: SettingsState, action: PayloadAction<{ speed?: number; forced?: boolean }>) => {
+            state.averageSpeedInKmH = action.payload.speed;
+            state.forcedAverageSpeed = !!action.payload.forced && (action.payload.speed ?? 0) > 0;
         },
         setGapToleranceInKm: (state: SettingsState, action: PayloadAction<number | undefined>) => {
             state.gapToleranceInKm = action.payload;
@@ -79,4 +80,5 @@ export const getPlanningLabel = (state: State) => getBase(state).planningLabel;
 export const getPlanningTitle = (state: State) => getBase(state).planningTitle;
 export const getParticipantsDelay = (state: State) => getBase(state).participantDelay;
 export const getAverageSpeedInKmH = (state: State) => getBase(state).averageSpeedInKmH ?? DEFAULT_AVERAGE_SPEED_IN_KM_H;
+export const getForcedAverageSpeed = (state: State) => !!getBase(state).forcedAverageSpeed;
 export const getGapToleranceInKm = (state: State) => getBase(state).gapToleranceInKm ?? DEFAULT_GAP_TOLERANCE;

@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getForcedSegmentSpeeds, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getAverageSpeedInKmH, getForcedAverageSpeed } from '../store/settings.reducer.ts';
 import {
     formatSegmentSpeedInput,
     isForcedSegmentSpeed,
@@ -18,7 +18,8 @@ export function debounceSettingOfSpeed(
     dispatch: AppDispatch,
     parsedSpeed: ParsedSegmentSpeedInput,
     id: string,
-    averageSpeed: number
+    averageSpeed: number,
+    forcedAverageSpeed: boolean
 ) {
     clearTimeout(constructTimeout);
     constructTimeout = setTimeout(() => {
@@ -28,6 +29,7 @@ export function debounceSettingOfSpeed(
                 speed: parsedSpeed.speed,
                 averageSpeed,
                 forced: parsedSpeed.forced,
+                forcedAverageSpeed,
             })
         );
     }, 500);
@@ -38,20 +40,22 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
     const { id } = gpxSegment;
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
+    const forcedAverageSpeed = useSelector(getForcedAverageSpeed);
     const segmentSpeeds = useSelector(getSegmentSpeeds);
     const forcedSegmentSpeeds = useSelector(getForcedSegmentSpeeds);
 
     const segmentSpeed = segmentSpeeds[id];
     const forced = isForcedSegmentSpeed(forcedSegmentSpeeds, segmentSpeeds, id);
     const hasCustomSpeed = (segmentSpeed ?? 0) > 0;
+    const displayedAverageSpeed = `${averageSpeed.toFixed(1)}${forcedAverageSpeed ? '!' : ''}`;
     return (
         <>
             {hasCustomSpeed ? (
                 <td style={{ backgroundColor: 'grey' }}>
-                    <s>{averageSpeed.toFixed(1)}</s>
+                    <s>{displayedAverageSpeed}</s>
                 </td>
             ) : (
-                <td>{averageSpeed.toFixed(1)}</td>
+                <td>{displayedAverageSpeed}</td>
             )}
             <td>
                 <Form.Control
@@ -60,7 +64,13 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
                     title={intl.formatMessage({ id: 'msg.customSpeed.hint' })}
                     defaultValue={formatSegmentSpeedInput(segmentSpeed, forced)}
                     onChange={(event) => {
-                        debounceSettingOfSpeed(dispatch, parseSegmentSpeedInput(event.target.value), id, averageSpeed);
+                        debounceSettingOfSpeed(
+                            dispatch,
+                            parseSegmentSpeedInput(event.target.value),
+                            id,
+                            averageSpeed,
+                            forcedAverageSpeed
+                        );
                     }}
                 />
             </td>

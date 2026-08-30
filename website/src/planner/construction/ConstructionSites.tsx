@@ -5,7 +5,7 @@ import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { getConstructionSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getAverageSpeedInKmH, getForcedAverageSpeed } from '../store/settings.reducer.ts';
 
 const fileTypes = ['GPX'];
 
@@ -13,14 +13,15 @@ export function ConstructionSites() {
     const intl = useIntl();
     const dispatch = useDispatch();
     const constructionSegments = useSelector(getConstructionSegments) ?? [];
-    const averageSpeed = useSelector(getAverageSpeedInKmH) ?? [];
+    const averageSpeed = useSelector(getAverageSpeedInKmH);
+    const forcedAverageSpeed = useSelector(getForcedAverageSpeed);
 
     const handleChange = (newFiles: File | File[]) => {
-        Promise.all([...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed))).then(
-            (newGpxSegments) => {
-                dispatch(segmentDataActions.addConstructionSegments(newGpxSegments));
-            }
-        );
+        Promise.all(
+            [...(newFiles as File[])].map((file) => toParsedGpxSegment(file, averageSpeed, forcedAverageSpeed))
+        ).then((newGpxSegments) => {
+            dispatch(segmentDataActions.addConstructionSegments(newGpxSegments));
+        });
     };
     return (
         <div style={{ height: '95%', overflow: 'auto' }}>

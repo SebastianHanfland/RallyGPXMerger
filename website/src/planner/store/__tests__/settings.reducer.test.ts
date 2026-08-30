@@ -4,6 +4,7 @@ import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DELAY_PER_PERSON_IN_SECONDS } from '../c
 import {
     getArrivalDateTime,
     getAverageSpeedInKmH,
+    getForcedAverageSpeed,
     getParticipantsDelay,
     settingsActions,
 } from '../settings.reducer.ts';
@@ -44,11 +45,17 @@ describe('Settings reducer', () => {
         expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
 
         // when & then
-        store.dispatch(settingsActions.setAverageSpeed(15));
+        store.dispatch(settingsActions.setAverageSpeed({ speed: 15 }));
         expect(getAverageSpeedInKmH(store.getState())).toEqual(15);
+        expect(getForcedAverageSpeed(store.getState())).toEqual(false);
+
+        store.dispatch(settingsActions.setAverageSpeed({ speed: 12, forced: true }));
+        expect(getAverageSpeedInKmH(store.getState())).toEqual(12);
+        expect(getForcedAverageSpeed(store.getState())).toEqual(true);
 
         // when & then
         store.dispatch(settingsActions.clear());
         expect(getAverageSpeedInKmH(store.getState())).toEqual(DEFAULT_AVERAGE_SPEED_IN_KM_H);
+        expect(getForcedAverageSpeed(store.getState())).toEqual(false);
     });
 });
