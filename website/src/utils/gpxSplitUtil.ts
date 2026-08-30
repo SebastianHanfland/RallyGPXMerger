@@ -3,6 +3,11 @@ import { getLatLng, getLatLon } from './pointUtil.ts';
 
 import { ParsedPoint } from '../planner/store/types.ts';
 
+function normalizeStartTime(points: ParsedPoint[]): ParsedPoint[] {
+    const initialTime = points[0]?.t ?? 0;
+    return points.map((point) => ({ ...point, t: point.t - initialTime }));
+}
+
 export const splitGpx = (
     points: ParsedPoint[],
     splitPoint: { lat: number; lng: number }
@@ -38,6 +43,5 @@ export const splitGpx = (
         }
     });
 
-    console.log({ pointsBefore, pointsAfter });
-    return [pointsBefore, pointsAfter];
+    return [normalizeStartTime(pointsBefore), normalizeStartTime(pointsAfter)];
 };

@@ -232,6 +232,12 @@ describe('Planner integration test', () => {
 
             await ui.splitSegment(firstSegment.id, store.dispatch);
             await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(4), timeout);
+
+            const splitSegments = getParsedGpxSegments(store.getState()).filter((segment) =>
+                segment.filename.startsWith(`${firstSegment.filename}-`)
+            );
+            expect(splitSegments).toHaveLength(2);
+            expect(splitSegments.map((segment) => segment.points[0]?.t)).toEqual([0, 0]);
         });
     });
 });
