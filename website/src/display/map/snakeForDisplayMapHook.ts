@@ -12,6 +12,6 @@ export function snakeForDisplayMapHook(snakeLayer: RefObject<LayerGroup | null>)
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addBikeSnakesToLayer(snakeLayer, pointsToDisplay, true);
+        addBikeSnakesToLayer(snakeLayer, pointsToDisplay);
     }, [displayTracks, currentMapTime]);
 }

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getCurrenMapTime, getShowCalculatedTracks } from '../../store/map.reducer.ts';
+import { getCurrenMapTime } from '../../store/map.reducer.ts';
 import { getBikeSnakesForPlanningMap } from './trackSimulationReader.ts';
 import { addBikeSnakesToLayer } from '../../../common/map/addSnakeWithBikeToMap.ts';
 import { CalculatedTrack } from '../../../common/types.ts';
@@ -10,12 +10,11 @@ import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reduce
 export function snakeForPlanningMapHook(snakeLayer: RefObject<LayerGroup | null>) {
     const calculatedTracks: CalculatedTrack[] = useSelector(getFilteredCalculatedTracks);
 
-    const showTracks = useSelector(getShowCalculatedTracks) ?? false;
     const currentMapTime = useSelector(getCurrenMapTime);
     const snakesToDisplay = useSelector(getBikeSnakesForPlanningMap);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        addBikeSnakesToLayer(snakeLayer, snakesToDisplay, showTracks);
-    }, [calculatedTracks, showTracks, currentMapTime]);
+        addBikeSnakesToLayer(snakeLayer, snakesToDisplay);
+    }, [calculatedTracks, currentMapTime, snakesToDisplay]);
 }

@@ -29,16 +29,13 @@ function addSnakeToLayer(snake: BikeSnake, routeLayer: LayerGroup) {
     trackSnake.addTo(routeLayer);
 }
 
-export function addBikeSnakesToLayer(mapLayer: RefObject<LayerGroup | null>, bikeSnakes: BikeSnake[], show: boolean) {
+export function addBikeSnakesToLayer(mapLayer: RefObject<LayerGroup | null>, bikeSnakes: BikeSnake[]) {
     const current = mapLayer.current;
 
     if (!mapLayer || !current) {
         return;
     }
     current.clearLayers();
-    if (!show) {
-        return;
-    }
     bikeSnakes.forEach((snake) => {
         addSnakeToLayer(snake, current);
     });
