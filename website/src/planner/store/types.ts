@@ -6,7 +6,7 @@ export interface CalculatedTracksState {
     tracks: CalculatedTrack[];
 }
 
-export type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
+export type SidebarSections = 'segments' | 'tracks' | 'overview' | 'documents' | 'settings' | 'simpleTrack';
 
 export interface LayoutState {
     language: SupportedLanguages;

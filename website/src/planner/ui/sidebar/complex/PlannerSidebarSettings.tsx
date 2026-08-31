@@ -10,7 +10,6 @@ import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
-import { StartNameOverwriteTable } from '../../../parameters/StartNameOverwriteTable.tsx';
 import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
 import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
 
@@ -28,7 +27,6 @@ export const PlannerSidebarSettings = () => {
         ['msg.prio', <TrackPriorityTable />],
         ['msg.nodes', <TrackNodesTable />],
         ['msg.communicatedStart', <StartTimeTable />],
-        ['msg.startNameOverwrite', <StartNameOverwriteTable />],
         ['msg.ownApiKey', <ApiKeyInput />],
         ['msg.resetAllStreets.title', <ResetAllResolvedStreets />],
         ['msg.constructions.title', <ConstructionSites />],

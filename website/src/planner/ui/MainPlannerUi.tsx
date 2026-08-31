@@ -6,8 +6,13 @@ import { PlannerHomeButton } from './elements/PlannerHomeButton.tsx';
 import { TimeSlider } from '../map/TimeSlider.tsx';
 import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
 import { HelpingTip } from './elements/HelpingTip.tsx';
+import { PlannerCloudActions } from './PlannerCloudActions.tsx';
+import { PlannerDownloadActions } from './PlannerDownloadActions.tsx';
+import { useSelector } from 'react-redux';
+import { getHasSingleTrack } from '../store/layout.reducer.ts';
 
 export const MainPlannerUi = () => {
+    const hasSingleTrack = useSelector(getHasSingleTrack);
     return (
         <>
             <div className={'canvas-wrapper'} style={{ left: 0, position: 'fixed', overflow: 'auto' }}>
@@ -19,6 +24,12 @@ export const MainPlannerUi = () => {
                 <PlannerHomeButton />
                 <TimeSlider />
                 <SharePlanningButton onMap={true} />
+                {!hasSingleTrack && (
+                    <div style={{ position: 'fixed', right: '52%', top: 10, zIndex: 300, display: 'flex' }}>
+                        <PlannerCloudActions />
+                        <PlannerDownloadActions />
+                    </div>
+                )}
             </div>
             <PlannerSidebar />
         </>

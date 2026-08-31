@@ -15,7 +15,7 @@ export function CleanDataButton() {
 
     const removeAllData = () => {
         resetData(dispatch);
-        navigateTo('?section=menu');
+        navigateTo({ pathname: window.location.pathname, search: '?section=menu' });
         setShowModal(false);
     };
     return (

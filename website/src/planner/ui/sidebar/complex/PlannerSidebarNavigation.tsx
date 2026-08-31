@@ -4,16 +4,13 @@ import { getSelectedSidebarSection } from '../../../store/layout.reducer.ts';
 import { SidebarNavItem } from '../SidebarNavItem.tsx';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { FormattedMessage } from 'react-intl';
-import { getHasChangesSinceLastUpload } from '../../../store/backend.reducer.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { TracksGapWarning } from '../../../tracks/TracksGapWarning.tsx';
-import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
 
 export const PlannerSidebarNavigation = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
     const segmentsCount = useSelector(getParsedGpxSegments).length;
     const tracksCount = useSelector(getTrackCompositions).length;
-    const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     return (
         <div style={{ height: '40px', zIndex: 1000000, backgroundColor: 'white', display: 'flex' }}>
@@ -31,12 +28,11 @@ export const PlannerSidebarNavigation = () => {
                     <TracksGapWarning />
                     <FormattedMessage id={'msg.tracks'} />({tracksCount})
                 </SidebarNavItem>
-                <SidebarNavItem section={'settings'} tabIndex={2}>
-                    <FormattedMessage id={'msg.settings'} />
+                <SidebarNavItem section={'overview'} tabIndex={2}>
+                    <FormattedMessage id={'msg.overview'} />
                 </SidebarNavItem>
-                <SidebarNavItem section={'documents'} tabIndex={3}>
-                    {hasChangesSinceLastUpload && <WarningIcon size={10} />}
-                    <FormattedMessage id={'msg.documents'} />
+                <SidebarNavItem section={'settings'} tabIndex={3}>
+                    <FormattedMessage id={'msg.settings'} />
                 </SidebarNavItem>
             </Nav>
         </div>

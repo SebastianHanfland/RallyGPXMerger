@@ -4,6 +4,7 @@ import { PlannerSidebarDocuments } from './PlannerSidebarDocuments.tsx';
 import { PlannerSidebarSettings } from './PlannerSidebarSettings.tsx';
 import { useSelector } from 'react-redux';
 import { getSelectedSidebarSection } from '../../../store/layout.reducer.ts';
+import { PlannerSidebarOverview } from './PlannerSidebarOverview.tsx';
 
 export const PlannerSidebarContent = () => {
     const selectedSection = useSelector(getSelectedSidebarSection);
@@ -14,6 +15,8 @@ export const PlannerSidebarContent = () => {
             return <PlannerSidebarTracks />;
         case 'documents':
             return <PlannerSidebarDocuments />;
+        case 'overview':
+            return <PlannerSidebarOverview />;
         case 'settings':
             return <PlannerSidebarSettings />;
     }

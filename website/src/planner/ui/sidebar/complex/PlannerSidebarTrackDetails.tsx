@@ -10,6 +10,7 @@ import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts
 import { Tab, Tabs } from 'react-bootstrap';
 import { useState } from 'react';
 import { PlannerSidebarTrackStreets } from './PlannerSidebarTrackStreets.tsx';
+import { TrackStartName } from '../../../tracks/components/TrackStartName.tsx';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
@@ -57,6 +58,10 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
                         unmountOnExit={true}
                     >
                         <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
+                        <label className="form-label">
+                            <FormattedMessage id="msg.startName" />
+                        </label>
+                        <TrackStartName track={track} />
                     </Tab>
                 </Tabs>
             </div>

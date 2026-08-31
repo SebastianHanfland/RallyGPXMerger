@@ -15,5 +15,5 @@ export function snakeForComparisonMapHook(snakeLayer: RefObject<LayerGroup | nul
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         addBikeSnakesToLayer(snakeLayer, pointsToDisplay);
-    }, [comparisonParsedTracks, currentMapTime, selectedTracks, selectedVersions]);
+    }, [comparisonParsedTracks, currentMapTime, selectedTracks, selectedVersions, pointsToDisplay]);
 }

@@ -78,13 +78,13 @@ describe('Planner integration test', () => {
                 within(segmentsDescriptionDialog).getAllByRole('button', { name: messages['msg.close'] })[0]
             );
 
-            await user.click(screen.getByRole('button', { name: messages['msg.documents'] }));
-            expect(screen.queryByText(messages['msg.description.documents'])).toBeNull();
-            await user.click(screen.getAllByRole('button', { name: messages['msg.documents'] })[1]);
-            const documentsDescriptionDialog = screen.getByRole('dialog');
-            await user.click(
-                within(documentsDescriptionDialog).getAllByRole('button', { name: messages['msg.close'] })[0]
-            );
+            expect(screen.getByRole('button', { name: messages['msg.overview'] })).toBeInTheDocument();
+            expect(screen.queryByRole('button', { name: messages['msg.documents'] })).toBeNull();
+            await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
+            expect(screen.getByText(messages['msg.checks'])).toBeInTheDocument();
+            await user.click(screen.getByRole('button', { name: messages['msg.cloudActions'] }));
+            expect(screen.getByText(messages['msg.cloudSaving'])).toBeInTheDocument();
+            await user.click(screen.getByRole('button', { name: messages['msg.cloudActions'] }));
             ui.complexTracksTab(0);
         });
     });
