@@ -5,11 +5,38 @@ import {
     getFixedSegmentSpeeds,
     getParsedGpxSegments,
     getPostCodeLookup,
+    getSegmentSortDirection,
+    getSegmentSortField,
+    getSegmentUsageFilter,
     getStreetLookup,
     segmentDataActions,
 } from '../segmentData.redux.ts';
 
 describe('segmentData reducer', () => {
+    it('stores segment table sorting and usage filter preferences', () => {
+        const store = createPlanningStore();
+
+        expect(getSegmentSortField(store.getState())).toBe('name');
+        expect(getSegmentSortDirection(store.getState())).toBe('ascending');
+        expect(getSegmentUsageFilter(store.getState())).toBe('all');
+
+        store.dispatch(segmentDataActions.toggleSegmentSort('distance'));
+        expect(getSegmentSortField(store.getState())).toBe('distance');
+        expect(getSegmentSortDirection(store.getState())).toBe('ascending');
+        store.dispatch(segmentDataActions.toggleSegmentSort('distance'));
+        expect(getSegmentSortDirection(store.getState())).toBe('descending');
+        store.dispatch(segmentDataActions.toggleSegmentSort('speed'));
+        expect(getSegmentSortField(store.getState())).toBe('speed');
+        expect(getSegmentSortDirection(store.getState())).toBe('ascending');
+
+        store.dispatch(segmentDataActions.cycleSegmentUsageFilter());
+        expect(getSegmentUsageFilter(store.getState())).toBe('used');
+        store.dispatch(segmentDataActions.cycleSegmentUsageFilter());
+        expect(getSegmentUsageFilter(store.getState())).toBe('unused');
+        store.dispatch(segmentDataActions.cycleSegmentUsageFilter());
+        expect(getSegmentUsageFilter(store.getState())).toBe('all');
+    });
+
     it('stores fixed speed mode and recalculates using fixed velocity', () => {
         const store = createPlanningStore();
         store.dispatch(

@@ -1,6 +1,16 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { filterItems } from '../../utils/filterUtil.ts';
-import { ClickOnSegment, ManualLookupField, ParsedGpxSegment, ParsedPoint, SegmentDataState, State } from './types.ts';
+import {
+    ClickOnSegment,
+    ManualLookupField,
+    ParsedGpxSegment,
+    ParsedPoint,
+    SegmentDataState,
+    SegmentSortDirection,
+    SegmentSortField,
+    State,
+    SegmentUsageFilter,
+} from './types.ts';
 import { storage } from './storage.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
 import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex.ts';
@@ -15,6 +25,9 @@ const initialState: SegmentDataState = {
     postCodeLookup: {},
     districtLookup: {},
     streetLookupIndex: 0,
+    segmentSortField: 'name',
+    segmentSortDirection: 'ascending',
+    segmentUsageFilter: 'all',
 };
 
 function getHighestStreetLookupIndex(state: SegmentDataState): number {
@@ -242,6 +255,19 @@ const segmentDataSlice = createSlice({
         setClickOnSegment: (state: SegmentDataState, action: PayloadAction<ClickOnSegment | undefined>) => {
             state.clickOnSegment = action.payload;
         },
+        toggleSegmentSort: (state: SegmentDataState, action: PayloadAction<SegmentSortField>) => {
+            const sortField = state.segmentSortField ?? 'name';
+            if (sortField === action.payload) {
+                state.segmentSortDirection = state.segmentSortDirection === 'ascending' ? 'descending' : 'ascending';
+            } else {
+                state.segmentSortField = action.payload;
+                state.segmentSortDirection = 'ascending';
+            }
+        },
+        cycleSegmentUsageFilter: (state: SegmentDataState) => {
+            const usageFilter = state.segmentUsageFilter ?? 'all';
+            state.segmentUsageFilter = usageFilter === 'all' ? 'used' : usageFilter === 'used' ? 'unused' : 'all';
+        },
         clear: () => initialState,
     },
 });
@@ -259,6 +285,10 @@ export const getDistrictLookup = (state: State) => getBase(state).districtLookup
 
 export const getConstructionSegments = (state: State) => getBase(state).constructionSegments;
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
+export const getSegmentSortField = (state: State): SegmentSortField => getBase(state).segmentSortField ?? 'name';
+export const getSegmentSortDirection = (state: State): SegmentSortDirection =>
+    getBase(state).segmentSortDirection ?? 'ascending';
+export const getSegmentUsageFilter = (state: State): SegmentUsageFilter => getBase(state).segmentUsageFilter ?? 'all';
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;
 const defaultFixedSegmentSpeeds: Record<string, boolean> = {};

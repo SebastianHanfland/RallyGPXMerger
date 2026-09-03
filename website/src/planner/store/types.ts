@@ -225,11 +225,18 @@ export interface ParsedGpxSegment {
     points: ParsedPoint[];
 }
 
+export type SegmentSortField = 'name' | 'speed' | 'distance';
+export type SegmentSortDirection = 'ascending' | 'descending';
+export type SegmentUsageFilter = 'all' | 'used' | 'unused';
+
 export interface SegmentDataState {
     segments: ParsedGpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds: Record<string, number | undefined>;
     fixedSegmentSpeeds?: Record<string, boolean>;
+    segmentSortField?: SegmentSortField;
+    segmentSortDirection?: SegmentSortDirection;
+    segmentUsageFilter?: SegmentUsageFilter;
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;
