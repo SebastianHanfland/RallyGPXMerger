@@ -9,7 +9,21 @@ import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { useIntl } from 'react-intl';
 import { formatNumber } from '../../../utils/numberUtil.ts';
 
-function createTooltip(
+function escapeTooltipText(value: string): string {
+    return value.replace(
+        /[&<>"']/g,
+        (character) =>
+            ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+            })[character]!
+    );
+}
+
+export function createStreetTooltip(
     info: BlockedStreetInfo,
     trackUsages: BlockedStreetTrackUsage[],
     labels: Record<string, string>
@@ -17,17 +31,19 @@ function createTooltip(
     const usages = trackUsages
         .map(
             (usage) =>
-                `${usage.trackName}: ${formatTimeOnly(usage.frontArrival)}–${formatTimeOnly(usage.backPassage)}; ${
-                    labels.distance
-                }: ${formatNumber(usage.distanceInKm ?? 0, 2)} km; ${labels.speed}: ${formatNumber(
-                    usage.speed ?? 0,
-                    1
-                )} km/h`
+                `${escapeTooltipText(usage.trackName)}: ${formatTimeOnly(usage.frontArrival)}–${formatTimeOnly(
+                    usage.backPassage
+                )}; ${labels.distance}: ${formatNumber(usage.distanceInKm ?? 0, 2)} km; ${
+                    labels.speed
+                }: ${formatNumber(usage.speed ?? 0, 1)} km/h`
         )
-        .join('\n');
-    return `${info.streetName ?? labels.unknown}, ${info.postCode ?? labels.unknown}\n${labels.blockage}: ${formatTimeOnly(
-        info.frontArrival
-    )}–${formatTimeOnly(info.backPassage)}\n${labels.tracks}:\n${usages}`;
+        .join('<br>');
+    return [
+        `${escapeTooltipText(info.streetName ?? labels.unknown)}, ${escapeTooltipText(info.postCode ?? labels.unknown)}`,
+        `${labels.blockage}: ${formatTimeOnly(info.frontArrival)}–${formatTimeOnly(info.backPassage)}`,
+        `${labels.tracks}:`,
+        usages,
+    ].join('<br>');
 }
 
 export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGroup | null>) {
@@ -53,7 +69,7 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGr
                     weight: 4,
                     dashArray: '5',
                 }).bindTooltip(
-                    createTooltip(blockedStreet, trackUsages, {
+                    createStreetTooltip(blockedStreet, trackUsages, {
                         distance: intl.formatMessage({ id: 'msg.distance' }),
                         speed: intl.formatMessage({ id: 'msg.speed' }),
                         tracks: intl.formatMessage({ id: 'msg.tracks' }),
