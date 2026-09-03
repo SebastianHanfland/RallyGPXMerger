@@ -21,7 +21,7 @@ function getLatLngFromParsedPoint(b: Omit<ParsedPoint, 't'>) {
     return { lat: b.b, lng: b.l };
 }
 
-export function generateParsedPointsWithTimeInSeconds(avg: number, points: Omit<ParsedPoint, 't'>[]): ParsedPoint[] {
+function generateParsedPointsWithElevationTimeInSeconds(avg: number, points: Omit<ParsedPoint, 't'>[]): ParsedPoint[] {
     const alpha = 0.15;
     let last_speed = avg;
     let previousPoint: ParsedPoint | undefined = undefined;
@@ -45,4 +45,36 @@ export function generateParsedPointsWithTimeInSeconds(avg: number, points: Omit<
         previousPoint = { ...point, t: time };
         return { ...point, t: time };
     });
+}
+
+function generateParsedPointsWithFixedTimeInSeconds(avg: number, points: Omit<ParsedPoint, 't'>[]): ParsedPoint[] {
+    let previousPoint: ParsedPoint | undefined;
+
+    return points.map((point, index, allPoints) => {
+        if (index === 0) {
+            previousPoint = { ...point, t: 0 };
+            return { ...point, t: 0 };
+        }
+
+        const currentPoint = previousPoint as ParsedPoint;
+        const nextPoint = allPoints[index];
+        const distInKm = geoDistance(
+            getLatLngFromParsedPoint(nextPoint),
+            getLatLngFromParsedPoint(currentPoint)
+        ) as number;
+        const time = Number((currentPoint.t + (60 * 60 * distInKm) / avg).toFixed(2));
+
+        previousPoint = { ...point, t: time };
+        return { ...point, t: time };
+    });
+}
+
+export function generateParsedPointsWithTimeInSeconds(
+    avg: number,
+    points: Omit<ParsedPoint, 't'>[],
+    fixedVelocity = false
+): ParsedPoint[] {
+    return fixedVelocity
+        ? generateParsedPointsWithFixedTimeInSeconds(avg, points)
+        : generateParsedPointsWithElevationTimeInSeconds(avg, points);
 }

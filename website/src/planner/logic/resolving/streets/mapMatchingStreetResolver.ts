@@ -40,7 +40,6 @@ export const enrichGpxSegmentsWithStreetNames =
 
         let currentStreetResolveStart = streetResolveStart;
         const promises = parsedSegments.map((segment) => {
-            console.log({ segment });
             const segmentStreetResolveStart = currentStreetResolveStart;
             currentStreetResolveStart += segment.points.length;
             return dispatch(enrichOneGpxSegment(segment, segmentStreetResolveStart));

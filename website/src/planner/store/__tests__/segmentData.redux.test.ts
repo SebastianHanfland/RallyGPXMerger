@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createPlanningStore } from '../planningStore.ts';
 import {
     getDistrictLookup,
+    getFixedSegmentSpeeds,
     getParsedGpxSegments,
     getPostCodeLookup,
     getStreetLookup,
@@ -9,6 +10,32 @@ import {
 } from '../segmentData.redux.ts';
 
 describe('segmentData reducer', () => {
+    it('stores fixed speed mode and recalculates using fixed velocity', () => {
+        const store = createPlanningStore();
+        store.dispatch(
+            segmentDataActions.addGpxSegments([
+                {
+                    id: 'segment',
+                    filename: 'segment',
+                    points: [
+                        { b: 1, l: 1, e: 0, t: 0, s: -1 },
+                        { b: 1, l: 1.01, e: 1000, t: 0, s: -1 },
+                    ],
+                },
+            ])
+        );
+
+        store.dispatch(
+            segmentDataActions.setSegmentSpeeds({ id: 'segment', speed: 20, averageSpeed: 20, fixedVelocity: true })
+        );
+
+        expect(getFixedSegmentSpeeds(store.getState())).toEqual({ segment: true });
+        expect(getParsedGpxSegments(store.getState())[0]!.points[1]!.t).toBeGreaterThan(0);
+
+        store.dispatch(segmentDataActions.setSegmentSpeeds({ id: 'segment', speed: 20, averageSpeed: 20 }));
+        expect(getFixedSegmentSpeeds(store.getState())).toEqual({ segment: false });
+    });
+
     it('preserves lookup rows referenced by manual point indexes when clearing resolved data', () => {
         const store = createPlanningStore();
         store.dispatch(

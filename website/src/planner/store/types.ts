@@ -229,6 +229,7 @@ export interface SegmentDataState {
     segments: ParsedGpxSegment[];
     segmentFilterTerm?: string;
     segmentSpeeds: Record<string, number | undefined>;
+    fixedSegmentSpeeds?: Record<string, boolean>;
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;

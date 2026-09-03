@@ -3,20 +3,24 @@ import { SimpleGPX } from '../../utils/SimpleGPX.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
 import { ParsedGpxSegment, ParsedPoint } from '../store/types.ts';
 
-export function getPointsFromGpx(gpxString: string, averageSpeed: number): ParsedPoint[] {
+export function getPointsFromGpx(gpxString: string, averageSpeed: number, fixedVelocity = false): ParsedPoint[] {
     const points = SimpleGPX.fromString(gpxString).getPoints();
     const parsedPoints = points.map((point) => ({ l: point.lon, b: point.lat, e: point.ele, s: -1, t: 0 }));
-    return generateParsedPointsWithTimeInSeconds(averageSpeed, parsedPoints);
+    return generateParsedPointsWithTimeInSeconds(averageSpeed, parsedPoints, fixedVelocity);
 }
 
-export async function toParsedGpxSegment(file: File, averageSpeed: number): Promise<ParsedGpxSegment> {
+export async function toParsedGpxSegment(
+    file: File,
+    averageSpeed: number,
+    fixedVelocity = false
+): Promise<ParsedGpxSegment> {
     return file.arrayBuffer().then((buffer) => {
         const gpxString = new TextDecoder().decode(buffer);
         return {
             id: uuidv4(),
             filename: file.name.replace('.gpx', ''),
             flipped: false,
-            points: getPointsFromGpx(gpxString, averageSpeed),
+            points: getPointsFromGpx(gpxString, averageSpeed, fixedVelocity),
         };
     });
 }

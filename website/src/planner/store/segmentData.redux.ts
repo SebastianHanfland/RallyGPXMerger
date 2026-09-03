@@ -10,6 +10,7 @@ const initialState: SegmentDataState = {
     segments: [],
     constructionSegments: [],
     segmentSpeeds: {},
+    fixedSegmentSpeeds: {},
     streetLookup: {},
     postCodeLookup: {},
     districtLookup: {},
@@ -163,10 +164,11 @@ const segmentDataSlice = createSlice({
                     return segment;
                 }
                 const speed = state.segmentSpeeds[segment.id] ?? action.payload.averageSpeed;
+                const fixedVelocity = state.fixedSegmentSpeeds?.[segment.id] ?? false;
                 return {
                     ...segment,
                     flipped: !segment.flipped,
-                    points: generateParsedPointsWithTimeInSeconds(speed, segment.points.reverse()),
+                    points: generateParsedPointsWithTimeInSeconds(speed, segment.points.reverse(), fixedVelocity),
                 };
             });
         },
@@ -199,16 +201,21 @@ const segmentDataSlice = createSlice({
         },
         setSegmentSpeeds: (
             state: SegmentDataState,
-            action: PayloadAction<{ id: string; speed?: number; averageSpeed: number }>
+            action: PayloadAction<{ id: string; speed?: number; averageSpeed: number; fixedVelocity?: boolean }>
         ) => {
-            const { id, speed, averageSpeed } = action.payload;
+            const { id, speed, averageSpeed, fixedVelocity = false } = action.payload;
             if (!state.segmentSpeeds) {
                 state.segmentSpeeds = { [id]: speed };
             } else {
                 state.segmentSpeeds[id] = speed;
             }
+            state.fixedSegmentSpeeds = { ...(state.fixedSegmentSpeeds ?? {}), [id]: fixedVelocity };
             state.segments = state.segments.map((segment) => {
-                const adjustedPoints = generateParsedPointsWithTimeInSeconds(speed ?? averageSpeed, segment.points);
+                const adjustedPoints = generateParsedPointsWithTimeInSeconds(
+                    speed ?? averageSpeed,
+                    segment.points,
+                    fixedVelocity
+                );
                 return segment.id === id ? { ...segment, points: adjustedPoints } : segment;
             });
         },
@@ -217,7 +224,12 @@ const segmentDataSlice = createSlice({
 
             state.segments = state.segments.map((segment) => {
                 const segmentSpeed = state.segmentSpeeds[segment.id] ?? averageSpeed;
-                const adjustedPoints = generateParsedPointsWithTimeInSeconds(segmentSpeed, segment.points);
+                const fixedVelocity = state.fixedSegmentSpeeds?.[segment.id] ?? false;
+                const adjustedPoints = generateParsedPointsWithTimeInSeconds(
+                    segmentSpeed,
+                    segment.points,
+                    fixedVelocity
+                );
                 return { ...segment, points: adjustedPoints };
             });
         },
@@ -249,6 +261,8 @@ export const getConstructionSegments = (state: State) => getBase(state).construc
 export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilterTerm;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;
+const defaultFixedSegmentSpeeds: Record<string, boolean> = {};
+export const getFixedSegmentSpeeds = (state: State) => getBase(state).fixedSegmentSpeeds ?? defaultFixedSegmentSpeeds;
 export const getClickOnSegment = (state: State) => getBase(state).clickOnSegment;
 
 export const getFilteredGpxSegments = createSelector(

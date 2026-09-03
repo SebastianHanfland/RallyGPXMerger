@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
-import { getCount } from '../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
-import { getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
+import { getFixedSegmentSpeeds, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
 import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
 import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
@@ -15,12 +14,13 @@ let constructTimeout: undefined | NodeJS.Timeout;
 export function debounceSettingOfSpeed(
     dispatch: AppDispatch,
     speed: number | undefined,
+    fixedVelocity: boolean,
     id: string,
     averageSpeed: number
 ) {
     clearTimeout(constructTimeout);
     constructTimeout = setTimeout(() => {
-        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed: speed, averageSpeed }));
+        dispatch(segmentDataActions.setSegmentSpeeds({ id, speed, averageSpeed, fixedVelocity }));
     }, 500);
 }
 
@@ -30,9 +30,11 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
     const segmentSpeeds = useSelector(getSegmentSpeeds);
+    const fixedSegmentSpeeds = useSelector(getFixedSegmentSpeeds);
     const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
 
     const segmentSpeed = segmentSpeeds[id];
+    const fixedVelocity = fixedSegmentSpeeds[id] ?? false;
     const calculatedSpeed = getSegmentSpeed(aggregatedSegments[id]);
     const hasCustomSpeed = (segmentSpeed ?? 0) > 0;
     return (
@@ -49,9 +51,22 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
                     type="text"
                     placeholder={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
                     title={intl.formatMessage({ id: 'msg.customSpeed.placeholder' })}
-                    defaultValue={segmentSpeed?.toString() ?? ''}
+                    defaultValue={segmentSpeed === undefined ? '' : `${segmentSpeed}${fixedVelocity ? '!' : ''}`}
                     onChange={(value) => {
-                        debounceSettingOfSpeed(dispatch, getCount(value), id, averageSpeed);
+                        const input = value.target.value.trim();
+                        const isFixed = input.endsWith('!');
+                        const numericInput = isFixed ? input.slice(0, -1) : input;
+                        const parsedSpeed = numericInput ? Number(numericInput) : undefined;
+                        if (numericInput && (parsedSpeed === undefined || !Number.isFinite(parsedSpeed))) {
+                            return;
+                        }
+                        debounceSettingOfSpeed(
+                            dispatch,
+                            parsedSpeed === undefined ? undefined : Math.max(0, parsedSpeed),
+                            isFixed,
+                            id,
+                            averageSpeed
+                        );
                     }}
                 />
             </td>
