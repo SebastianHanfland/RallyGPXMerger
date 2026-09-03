@@ -89,6 +89,16 @@ export interface BlockedStreetInfo {
     path?: StreetPathPoint[];
     peopleCount: number;
     tracksIds: string[];
+    trackUsages?: BlockedStreetTrackUsage[];
+}
+
+export interface BlockedStreetTrackUsage {
+    trackId: string;
+    trackName: string;
+    frontArrival: string;
+    backPassage: string;
+    distanceInKm?: number;
+    speed?: number;
 }
 
 export interface AggregatedPoints {

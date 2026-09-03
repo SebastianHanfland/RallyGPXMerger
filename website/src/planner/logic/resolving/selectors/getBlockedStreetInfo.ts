@@ -1,4 +1,4 @@
-import { WayPoint, BlockedStreetInfo, TrackWayPointType } from '../types.ts';
+import { WayPoint, BlockedStreetInfo, BlockedStreetTrackUsage, TrackWayPointType } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
@@ -21,6 +21,30 @@ function addTrackId(tracksIds: string[], id: string) {
         return tracksIds;
     }
     return [...tracksIds, id];
+}
+
+function addTrackUsage(usages: BlockedStreetTrackUsage[], usage: BlockedStreetTrackUsage) {
+    const existing = usages.find((item) => item.trackId === usage.trackId);
+    if (!existing) return [...usages, usage];
+    return usages.map((item) =>
+        item.trackId === usage.trackId
+            ? {
+                  ...item,
+                  frontArrival: takeEarlierOne(item.frontArrival, usage.frontArrival),
+                  backPassage: takeLaterOne(item.backPassage, usage.backPassage),
+                  distanceInKm:
+                      item.distanceInKm === undefined && usage.distanceInKm === undefined
+                          ? undefined
+                          : (item.distanceInKm ?? 0) + (usage.distanceInKm ?? 0),
+                  speed:
+                      item.speed === undefined
+                          ? usage.speed
+                          : usage.speed === undefined
+                            ? item.speed
+                            : (item.speed + usage.speed) / 2,
+              }
+            : item
+    );
 }
 
 function countPeopleOnTracks(tracks: TrackComposition[], tracksIds: string[]): number {
@@ -65,6 +89,16 @@ export const getBlockedStreetInfo = createSelector(
                             path: waypoint.path,
                             peopleCount: 0,
                             tracksIds: [foundTrack!.id],
+                            trackUsages: [
+                                {
+                                    trackId: foundTrack!.id,
+                                    trackName: foundTrack!.name || foundTrack!.id,
+                                    frontArrival: waypoint.frontArrival,
+                                    backPassage: waypoint.backPassage,
+                                    distanceInKm: waypoint.distanceInKm,
+                                    speed: waypoint.speed,
+                                },
+                            ],
                         });
                         return;
                     }
@@ -76,6 +110,14 @@ export const getBlockedStreetInfo = createSelector(
                                   frontArrival: takeEarlierOne(info.frontArrival, waypoint.frontArrival),
                                   tracksIds: addTrackId(info.tracksIds, foundTrack!.id),
                                   path: joinPaths(info.path, waypoint.path),
+                                  trackUsages: addTrackUsage(info.trackUsages ?? [], {
+                                      trackId: foundTrack!.id,
+                                      trackName: foundTrack!.name || foundTrack!.id,
+                                      frontArrival: waypoint.frontArrival,
+                                      backPassage: waypoint.backPassage,
+                                      distanceInKm: waypoint.distanceInKm,
+                                      speed: waypoint.speed,
+                                  }),
                               }
                             : info
                     );

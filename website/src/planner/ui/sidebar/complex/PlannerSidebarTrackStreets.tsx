@@ -238,6 +238,8 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                     rowRefs.current[index] = row;
                                 }}
                                 key={`${wayPoint.s ?? 'street'}-${index}`}
+                                onMouseEnter={() => highlightStreetPath(wayPoint)}
+                                onMouseLeave={() => dispatch(mapActions.setHighlightedStreetPath(undefined))}
                             >
                                 {/** The active boundary is identified by the effective street index and boundary. */}
                                 {(() => {

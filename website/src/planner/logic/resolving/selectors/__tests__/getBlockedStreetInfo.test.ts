@@ -81,6 +81,20 @@ describe('getBlockedStreetInfo', () => {
                 backPassage: latestEnd,
                 peopleCount: 30,
                 tracksIds: ['1', '2'],
+                trackUsages: [
+                    {
+                        trackId: '1',
+                        trackName: '1',
+                        frontArrival: '2022-02-02T02:10:00.000Z',
+                        backPassage: latestEnd,
+                    },
+                    {
+                        trackId: '2',
+                        trackName: '2',
+                        frontArrival: earliestStart,
+                        backPassage: '2022-02-02T02:10:00.000Z',
+                    },
+                ],
                 path: [
                     { lat: 48, lon: 11 },
                     { lat: 48.1, lon: 11.1 },
