@@ -6,6 +6,9 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
 import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
+import { getSegmentSpeed } from '../tracks/segment-selection/getSegmentInfo.ts';
+import { formatNumber } from '../../utils/numberUtil.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
@@ -27,8 +30,10 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
     const segmentSpeeds = useSelector(getSegmentSpeeds);
+    const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
 
     const segmentSpeed = segmentSpeeds[id];
+    const calculatedSpeed = getSegmentSpeed(aggregatedSegments[id]);
     const hasCustomSpeed = (segmentSpeed ?? 0) > 0;
     return (
         <>
@@ -50,6 +55,7 @@ export function SegmentSpeedCells({ gpxSegment }: { gpxSegment: ParsedGpxSegment
                     }}
                 />
             </td>
+            <td>{calculatedSpeed !== undefined ? formatNumber(calculatedSpeed) : null}</td>
         </>
     );
 }

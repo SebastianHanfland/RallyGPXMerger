@@ -1,4 +1,4 @@
-import { getSegmentInfo } from '../getSegmentInfo.ts';
+import { getSegmentInfo, getSegmentSpeed } from '../getSegmentInfo.ts';
 import { AggregatedPoints } from '../../../logic/resolving/types.ts';
 
 describe('getSegmentInfo', () => {
@@ -18,6 +18,12 @@ describe('getSegmentInfo', () => {
         expect(segmentInfo).toEqual(undefined);
     });
 
+    it('returns undefined when the segment has no elapsed time', () => {
+        expect(getSegmentSpeed([{ frontArrival: 200, frontPassage: 200, distanceInKm: 1 }] as AggregatedPoints[])).toBe(
+            undefined
+        );
+    });
+
     it('should extract information', () => {
         // when
         const aggregatedInfo = [
@@ -27,6 +33,7 @@ describe('getSegmentInfo', () => {
 
         // then
         expect(segmentInfo).toEqual('1 km, 18 km/h, 3.3 min');
+        expect(getSegmentSpeed(aggregatedInfo)).toEqual(18);
     });
 
     it('should extract information', () => {

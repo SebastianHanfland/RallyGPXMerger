@@ -43,6 +43,9 @@ export function GpxSegments({ noFilter }: Props) {
                             <th style={{ width: '30%', minWidth: '150px' }}>
                                 <FormattedMessage id={'msg.customSpeed'} />
                             </th>
+                            <th style={{ width: '30%', minWidth: '150px' }}>
+                                <FormattedMessage id={'msg.calculatedSpeed'} />
+                            </th>
                             <th style={{ width: '70px', minWidth: '70px' }}>
                                 <FormattedMessage id={'msg.actions'} />
                             </th>
@@ -51,7 +54,7 @@ export function GpxSegments({ noFilter }: Props) {
                     <tbody>
                         {filteredSegments.length > 5 && (
                             <tr>
-                                <td colSpan={3}>
+                                <td colSpan={5}>
                                     <GpxSegmentsUploadAndParse />
                                 </td>
                             </tr>
@@ -60,7 +63,7 @@ export function GpxSegments({ noFilter }: Props) {
                             <GpxSegmentRow key={gpxSegment.id} gpxSegment={gpxSegment} />
                         ))}
                         <tr>
-                            <td colSpan={3}>
+                            <td colSpan={5}>
                                 <GpxSegmentsUploadAndParse />
                             </td>
                         </tr>

@@ -130,6 +130,10 @@ describe('Planner integration test', () => {
             await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3), timeout);
             expect(getCalculateTracks(store.getState())).toHaveLength(0);
 
+            await user.click(ui.complexSegmentsTab());
+            expect(screen.getByRole('columnheader', { name: messages['msg.calculatedSpeed'] })).toBeInTheDocument();
+            expect(screen.getAllByText(/km\/h/)).toHaveLength(3);
+
             await user.click(ui.complexTracksTab(0));
             await user.click(ui.newTrackButton());
             expect(getTrackCompositions(store.getState())).toHaveLength(1);
