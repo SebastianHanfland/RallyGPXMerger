@@ -23,13 +23,25 @@ export const MainPlannerUi = () => {
                 <MapContentSelection />
                 <PlannerHomeButton />
                 <TimeSlider />
-                <SharePlanningButton onMap={true} />
-                {!hasSingleTrack && (
-                    <div style={{ position: 'fixed', right: '52%', top: 10, zIndex: 300, display: 'flex' }}>
-                        <PlannerCloudActions />
-                        <PlannerDownloadActions />
-                    </div>
-                )}
+                <div
+                    style={{
+                        position: 'fixed',
+                        left: 10,
+                        bottom: 60,
+                        zIndex: 300,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                    }}
+                >
+                    {!hasSingleTrack && (
+                        <>
+                            <PlannerCloudActions onMap={true} />
+                            <PlannerDownloadActions onMap={true} />
+                        </>
+                    )}
+                    <SharePlanningButton onMap={true} />
+                </div>
             </div>
             <PlannerSidebar />
         </>

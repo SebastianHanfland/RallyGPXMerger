@@ -6,11 +6,15 @@ import { RemoveUploadedDataButton } from '../server/RemoveUploadedDataButton.tsx
 import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
 import { CloudIcon } from '../../utils/icons/CloudIcon.tsx';
 
-export const PlannerCloudActions = () => {
+export const PlannerCloudActions = ({ onMap = false }: { onMap?: boolean }) => {
     const intl = useIntl();
     return (
-        <Dropdown className="m-1">
-            <Dropdown.Toggle variant="success" title={intl.formatMessage({ id: 'msg.cloudActions' })}>
+        <Dropdown className="m-1" drop={onMap ? 'down' : undefined}>
+            <Dropdown.Toggle
+                variant="success"
+                title={intl.formatMessage({ id: 'msg.cloudActions' })}
+                style={onMap ? { width: '45px', height: '45px', padding: 0 } : undefined}
+            >
                 <CloudIcon />
             </Dropdown.Toggle>
             <Dropdown.Menu>

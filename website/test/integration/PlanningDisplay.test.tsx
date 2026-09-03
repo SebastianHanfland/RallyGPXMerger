@@ -79,6 +79,13 @@ describe('Planner integration test', () => {
             expect(screen.queryByRole('button', { name: messages['msg.documents'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
             expect(screen.getByText(messages['msg.checks'])).toBeInTheDocument();
+            expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
+            expect(screen.getByTitle(messages['msg.downloads'])).toHaveStyle({ width: '45px', height: '45px' });
+            expect(
+                screen
+                    .getByTitle(messages['msg.cloudActions'])
+                    .compareDocumentPosition(screen.getByTitle(messages['msg.downloads']))
+            ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
             await user.click(screen.getByRole('button', { name: messages['msg.cloudActions'] }));
             expect(screen.getByText(messages['msg.cloudSaving'])).toBeInTheDocument();
             await user.click(screen.getByRole('button', { name: messages['msg.cloudActions'] }));

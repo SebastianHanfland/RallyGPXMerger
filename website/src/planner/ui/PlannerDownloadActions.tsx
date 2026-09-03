@@ -11,11 +11,15 @@ import type { ReactNode } from 'react';
 
 const Action = ({ children }: { children: ReactNode }) => <Dropdown.Item as="div">{children}</Dropdown.Item>;
 
-export const PlannerDownloadActions = () => {
+export const PlannerDownloadActions = ({ onMap = false }: { onMap?: boolean }) => {
     const intl = useIntl();
     return (
-        <Dropdown className="m-1">
-            <Dropdown.Toggle variant="info" title={intl.formatMessage({ id: 'msg.downloads' })}>
+        <Dropdown className="m-1" drop={onMap ? 'down' : undefined}>
+            <Dropdown.Toggle
+                variant="info"
+                title={intl.formatMessage({ id: 'msg.downloads' })}
+                style={onMap ? { width: '45px', height: '45px', padding: 0 } : undefined}
+            >
                 <DownloadIcon size={20} />
             </Dropdown.Toggle>
             <Dropdown.Menu>
