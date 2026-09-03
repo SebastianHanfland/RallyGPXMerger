@@ -15,7 +15,7 @@ export function getSegmentSpeed(aggregatedInfo: AggregatedPoints[] | undefined) 
     return seconds > 0 ? (distance / seconds) * 3600 : undefined;
 }
 
-export function getSegmentInfo(aggregatedInfo: AggregatedPoints[] | undefined) {
+export function getSegmentInfo(aggregatedInfo: AggregatedPoints[] | undefined, calculatedSpeed?: number) {
     if (!aggregatedInfo) {
         return undefined;
     }
@@ -24,7 +24,7 @@ export function getSegmentInfo(aggregatedInfo: AggregatedPoints[] | undefined) {
     }
     const seconds = aggregatedInfo[aggregatedInfo.length - 1].frontPassage - aggregatedInfo[0].frontArrival;
     const distance = aggregatedInfo.reduce((sum, info) => sum + (info.distanceInKm ?? 0), 0);
-    const speed = getSegmentSpeed(aggregatedInfo);
+    const speed = calculatedSpeed ?? getSegmentSpeed(aggregatedInfo);
 
     const speedString = speed ? `${formatNumber(speed)} km/h` : undefined;
 

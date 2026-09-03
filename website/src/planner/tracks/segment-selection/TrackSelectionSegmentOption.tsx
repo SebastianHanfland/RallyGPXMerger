@@ -100,7 +100,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                         <FileChangeButton id={id} name={filename} />
                         <RemoveFileButton id={id} name={filename} />
                         <FlipGpxButton id={id} name={filename} flipped={flipped} />
-                        <EditSegmentColorButton segment={gpxSegment} />
+                        <EditSegmentColorButton id={id} name={filename} color={gpxSegment.color} />
                         <ResetResolvedStreetsButton id={id} name={filename} />
                     </DropdownButton>
                 </div>

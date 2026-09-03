@@ -7,22 +7,24 @@ import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getColor } from '../../utils/colorUtil.ts';
 import { useEffect, useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { ParsedGpxSegment } from '../store/types.ts';
 import { ColorPicker } from '../../utils/ColorPicker.tsx';
 
 interface Props {
-    segment: ParsedGpxSegment;
+    id: string;
+    name: string;
+    color?: string;
 }
 
-export function EditSegmentColorButton({ segment }: Props) {
+export function EditSegmentColorButton({ id, name, color: segmentColor }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showColorModal, setShowColorModal] = useState(false);
+    const segment = { id, color: segmentColor };
     const [color, setColor] = useState(getColor(segment));
 
     useEffect(() => {
         setColor(getColor(segment));
-    }, [segment.id]);
+    }, [id, segmentColor]);
 
     return (
         <>
@@ -35,11 +37,11 @@ export function EditSegmentColorButton({ segment }: Props) {
             {showColorModal && (
                 <ConfirmationModal
                     onConfirm={() => {
-                        dispatch(segmentDataActions.setSegmentColor({ id: segment.id, color }));
+                        dispatch(segmentDataActions.setSegmentColor({ id, color }));
                         setShowColorModal(false);
                     }}
                     closeModal={() => setShowColorModal(false)}
-                    title={`${intl.formatMessage({ id: 'msg.setColor' })} ${segment.filename ?? ''}`}
+                    title={`${intl.formatMessage({ id: 'msg.setColor' })} ${name}`}
                     body={<ColorPicker color={color} setColor={setColor} />}
                 />
             )}

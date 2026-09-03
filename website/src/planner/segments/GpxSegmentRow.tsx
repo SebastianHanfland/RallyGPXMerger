@@ -1,6 +1,6 @@
 import { ButtonGroup, DropdownButton, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
+import { useDispatch } from 'react-redux';
+import { SegmentDownloadDropdownItem } from './SegmentDownloadDropdownItem.tsx';
 import { FileChangeWithUploadButton } from './FileChangeWithUploadButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
 import { getUsagesOfSegment, SegmentUsages } from './segmentUsageCounter.ts';
@@ -10,33 +10,40 @@ import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from './SegmentSpeedCells.tsx';
-import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { ParsedGpxSegment } from '../store/types.ts';
 import { EditSegmentColorButton } from './EditSegmentColor.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
-import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
-import { getSegmentInfo } from '../tracks/segment-selection/getSegmentInfo.ts';
 import { formatNumber } from '../../utils/numberUtil.ts';
+import { memo } from 'react';
 
 interface Props {
-    gpxSegment: ParsedGpxSegment;
+    id: string;
+    filename: string;
+    flipped?: boolean;
+    color?: string;
     hideChangeButton?: boolean;
     distance?: number;
     segmentUsages: SegmentUsages;
     planningHasTracks: boolean;
+    calculatedSpeed: number | undefined;
+    info: string | undefined;
 }
 
-export function GpxSegmentRow({ gpxSegment, hideChangeButton, distance, segmentUsages, planningHasTracks }: Props) {
-    const { id, filename, flipped } = gpxSegment;
-    const content = useOnTheFlyCreatedGpx(gpxSegment);
+function GpxSegmentRow({
+    id,
+    filename,
+    flipped,
+    color,
+    hideChangeButton,
+    distance,
+    segmentUsages,
+    planningHasTracks,
+    calculatedSpeed,
+    info,
+}: Props) {
     const intl = useIntl();
     const dispatch = useDispatch();
     const { alert, tooltip } = getUsagesOfSegment(segmentUsages, id, intl, planningHasTracks);
-    const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
-    const aggregatedInfo = aggregatedSegments[id];
-    const info = getSegmentInfo(aggregatedInfo);
-
     return (
         <tr
             title={info ? info + '\n\n' + tooltip : tooltip}
@@ -55,7 +62,7 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton, distance, segmentU
                 />
             </td>
             <td>{distance === undefined ? null : `${formatNumber(distance)} km`}</td>
-            <SegmentSpeedCells gpxSegment={gpxSegment} />
+            <SegmentSpeedCells id={id} calculatedSpeed={calculatedSpeed} />
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 {flipped && <img src={flip} className="m-1" alt="flip" />}
                 <DropdownButton
@@ -65,16 +72,18 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton, distance, segmentU
                     variant={'primary'.toLowerCase()}
                     title={''}
                 >
-                    <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
+                    <SegmentDownloadDropdownItem id={id} name={`${filename}.gpx`} />
 
                     {!hideChangeButton && <FileChangeWithUploadButton id={id} name={filename} />}
                     {!hideChangeButton && <FileChangeButton id={id} name={filename} />}
                     <RemoveFileButton id={id} name={filename} />
                     <FlipGpxButton id={id} name={filename} flipped={flipped} />
-                    <EditSegmentColorButton segment={gpxSegment} />
+                    <EditSegmentColorButton id={id} name={filename} color={color} />
                     <ResetResolvedStreetsButton id={id} name={filename} />
                 </DropdownButton>
             </td>
         </tr>
     );
 }
+
+export const MemoizedGpxSegmentRow = memo(GpxSegmentRow);

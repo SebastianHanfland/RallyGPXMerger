@@ -296,6 +296,10 @@ export const segmentDataReducer: Reducer<SegmentDataState> = segmentDataSlice.re
 const getBase = (state: State) => state.segmentData;
 
 export const getParsedGpxSegments = (state: State) => getBase(state).segments;
+export const makeGetParsedGpxSegment = () =>
+    createSelector([getParsedGpxSegments, (_state: State, segmentId: string) => segmentId], (segments, segmentId) =>
+        segments.find((segment) => segment.id === segmentId)
+    );
 export const getStreetLookup = (state: State) => getBase(state).streetLookup;
 export const getNextStreetLookupIndex = (state: State) => getHighestStreetLookupIndex(getBase(state));
 export const getPostCodeLookup = (state: State) => getBase(state).postCodeLookup;

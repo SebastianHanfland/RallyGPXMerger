@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Table } from 'react-bootstrap';
 import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
-import { GpxSegmentRow } from './GpxSegmentRow.tsx';
+import { MemoizedGpxSegmentRow } from './GpxSegmentRow.tsx';
 import { SegmentSortButton } from './SegmentSortButton.tsx';
 import { SegmentTableRow } from './segmentTableData.ts';
 import { SegmentUsages } from './segmentUsageCounter.ts';
@@ -54,11 +54,16 @@ export function GpxSegmentsTable({
                         <td colSpan={6}>{upload}</td>
                     </tr>
                 )}
-                {rows.map(({ segment, distance }) => (
-                    <GpxSegmentRow
-                        key={segment.id}
-                        gpxSegment={segment}
+                {rows.map(({ id, filename, flipped, color, distance, speed, info }) => (
+                    <MemoizedGpxSegmentRow
+                        key={id}
+                        id={id}
+                        filename={filename}
+                        flipped={flipped}
+                        color={color}
                         distance={distance}
+                        calculatedSpeed={speed}
+                        info={info}
                         segmentUsages={segmentUsages}
                         planningHasTracks={planningHasTracks}
                     />

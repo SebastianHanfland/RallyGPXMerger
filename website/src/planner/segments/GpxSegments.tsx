@@ -3,19 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
-import {
-    getFilteredGpxSegments,
-    getSegmentFilterTerm,
-    getSegmentSortDirection,
-    getSegmentSortField,
-    getShowUnusedSegments,
-    getShowUsedSegments,
-    segmentDataActions,
-} from '../store/segmentData.redux.ts';
+import { getSegmentFilterTerm, segmentDataActions } from '../store/segmentData.redux.ts';
 import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
 import { GpxCreationHint } from './GpxCreationHint.tsx';
 import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
 import { getSegmentTableRows } from './segmentTableData.ts';
 import { SegmentUsageFilter } from './SegmentUsageFilter.tsx';
 import { GpxSegmentsTable } from './GpxSegmentsTable.tsx';
@@ -29,23 +20,9 @@ export function GpxSegments({ noFilter }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const filterTerm = useSelector(getSegmentFilterTerm);
-    const segments = useSelector(getFilteredGpxSegments);
     const trackCompositions = useSelector(getTrackCompositions);
     const segmentUsages = useSelector(getSegmentUsages);
-    const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
-    const sortField = useSelector(getSegmentSortField);
-    const sortDirection = useSelector(getSegmentSortDirection);
-    const showUsedSegments = useSelector(getShowUsedSegments);
-    const showUnusedSegments = useSelector(getShowUnusedSegments);
-    const rows = getSegmentTableRows(
-        segments,
-        aggregatedSegments,
-        segmentUsages,
-        showUsedSegments,
-        showUnusedSegments,
-        sortField,
-        sortDirection
-    );
+    const rows = useSelector(getSegmentTableRows);
 
     return (
         <div>
