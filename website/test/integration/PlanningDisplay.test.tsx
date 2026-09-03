@@ -167,7 +167,10 @@ describe('Planner integration test', () => {
             expect(within(screen.getByTestId('track-street-list')).queryByTestId('street-insertion-rail')).toBeNull();
             await user.click(insertionButtons[0]!);
             expect(getStreetPointSelection(store.getState())?.mode).toBe('add-start');
-            await user.click(insertionButtons[0]!);
+            const activeInsertionButton = within(screen.getByTestId('street-insertion-rail')).getByRole('button', {
+                name: messages['msg.cancelAddStreet'],
+            });
+            await user.click(activeInsertionButton);
             expect(getStreetPointSelection(store.getState())).toBeUndefined();
             const streetTable = screen.getByTestId('track-street-list');
             const streetEntries = within(streetTable).getAllByRole('row');
