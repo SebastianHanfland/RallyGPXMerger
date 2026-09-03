@@ -38,7 +38,10 @@ export function GpxSegments({ noFilter }: Props) {
                     </DescriptionInfoButton>
                 </div>
             ) : (
-                <GpxCreationHint />
+                <div>
+                    <FormattedMessage id={'msg.description.segments'} />
+                    <GpxCreationHint />
+                </div>
             )}
             {filteredSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }} size="sm">
