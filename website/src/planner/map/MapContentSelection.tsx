@@ -23,13 +23,13 @@ import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
-    width: '140px',
-    height: '410px',
+    width: '190px',
+    height: '340px',
     borderRadius: '2px',
     left: 10,
     top: 130,
     zIndex: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     overflow: 'hidden',
     cursor: 'pointer',
 };
@@ -62,7 +62,6 @@ export function MapContentSelection() {
         intl.formatMessage({ id: 'msg.tracks' }) +
         (showTrackExtra ? ` (${numberOfFilteredTracks}/${numberOfAllTracks})` : '');
 
-    const className = 'shadow my-1';
     const markerIconStyle = { width: '24px', height: '24px' };
 
     const primaryContent = showGpxSegments
@@ -77,15 +76,18 @@ export function MapContentSelection() {
         dispatch(mapActions.setPrimaryMapContent(primaryContent === content ? undefined : content));
     };
 
+    const primaryButtonClassName = (content: 'segments' | 'tracks' | 'streets') =>
+        primaryContent === content ? 'my-1' : 'my-1 border rounded';
+
     return (
-        <div style={mapContentStyle}>
+        <div style={mapContentStyle} className={'bg-white shadow rounded p-2'}>
             <Form className={'d-flex flex-column'}>
                 <div className={'d-flex flex-column'}>
                     <Button
                         id={'segments'}
                         title={'GPX Segments'}
                         variant={primaryContent === 'segments' ? 'info' : 'light'}
-                        className={className}
+                        className={primaryButtonClassName('segments')}
                         onClick={() => setPrimaryContent('segments')}
                     >
                         {sectionLabel}
@@ -94,7 +96,7 @@ export function MapContentSelection() {
                         id={'tracks'}
                         title={'Calculated Tracks'}
                         variant={primaryContent === 'tracks' ? 'info' : 'light'}
-                        className={className}
+                        className={primaryButtonClassName('tracks')}
                         onClick={() => setPrimaryContent('tracks')}
                     >
                         {trackLabel}
@@ -103,7 +105,7 @@ export function MapContentSelection() {
                         id={'blocked streets'}
                         title={'Blocked Streets'}
                         variant={primaryContent === 'streets' ? 'info' : 'light'}
-                        className={className}
+                        className={primaryButtonClassName('streets')}
                         onClick={() => setPrimaryContent('streets')}
                     >
                         {intl.formatMessage({ id: 'msg.streets' })}
