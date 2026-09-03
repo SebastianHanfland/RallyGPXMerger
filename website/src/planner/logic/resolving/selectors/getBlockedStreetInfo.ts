@@ -12,8 +12,22 @@ function takeEarlierOne(start: string, from: string): string {
     return start <= from ? start : from;
 }
 
-function streetAndPostCodeMatch(waypoint: WayPoint, info: BlockedStreetInfo) {
-    return info.streetName === waypoint.streetName && info.postCode === waypoint.postCode;
+function isKnown(value: string | null | undefined): value is string {
+    return value !== null && value !== undefined && value.trim().length > 0;
+}
+
+function streetIdentityMatches(waypoint: WayPoint, info: BlockedStreetInfo) {
+    return (
+        isKnown(waypoint.streetName) &&
+        isKnown(waypoint.postCode) &&
+        isKnown(waypoint.district) &&
+        isKnown(info.streetName) &&
+        isKnown(info.postCode) &&
+        isKnown(info.district) &&
+        waypoint.streetName === info.streetName &&
+        waypoint.postCode === info.postCode &&
+        waypoint.district === info.district
+    );
 }
 
 function addTrackId(tracksIds: string[], id: string) {
@@ -76,7 +90,7 @@ export const getBlockedStreetInfo = createSelector(
             trackStreetInfo.wayPoints
                 .filter((wayPoint) => wayPoint.type === TrackWayPointType.Track)
                 .forEach((waypoint) => {
-                    if (!blockedStreetsInfo.find((info) => streetAndPostCodeMatch(waypoint, info))) {
+                    if (!blockedStreetsInfo.find((info) => streetIdentityMatches(waypoint, info))) {
                         blockedStreetsInfo.push({
                             streetName: waypoint.streetName,
                             frontArrival: waypoint.frontArrival,
@@ -103,7 +117,7 @@ export const getBlockedStreetInfo = createSelector(
                         return;
                     }
                     blockedStreetsInfo = blockedStreetsInfo.map((info) =>
-                        streetAndPostCodeMatch(waypoint, info)
+                        streetIdentityMatches(waypoint, info)
                             ? {
                                   ...info,
                                   backPassage: takeLaterOne(info.backPassage, waypoint.backPassage),

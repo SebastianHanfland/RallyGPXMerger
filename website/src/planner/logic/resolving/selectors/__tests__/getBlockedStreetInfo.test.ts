@@ -1,6 +1,6 @@
 import { getBlockedStreetInfo } from '../getBlockedStreetInfo.ts';
 import { Mock } from 'vitest';
-import { BlockedStreetInfo, TrackStreetInfo, TrackWayPointType } from '../../types.ts';
+import { BlockedStreetInfo, TrackStreetInfo, TrackWayPointType, WayPoint } from '../../types.ts';
 import { State, TrackComposition } from '../../../../store/types.ts';
 import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos.ts';
 
@@ -32,6 +32,8 @@ describe('getBlockedStreetInfo', () => {
                 wayPoints: [
                     {
                         streetName: 'A',
+                        postCode: '12345',
+                        district: 'Central',
                         frontArrival: '2022-02-02T02:10:00.000Z',
                         backPassage: '2022-02-02T02:12:00.000Z',
                         type: TrackWayPointType.Track,
@@ -42,6 +44,8 @@ describe('getBlockedStreetInfo', () => {
                     },
                     {
                         streetName: 'A',
+                        postCode: '12345',
+                        district: 'Central',
                         frontArrival: '2022-02-02T02:14:00.000Z',
                         backPassage: latestEnd,
                         type: TrackWayPointType.Track,
@@ -57,6 +61,8 @@ describe('getBlockedStreetInfo', () => {
                 wayPoints: [
                     {
                         streetName: 'A',
+                        postCode: '12345',
+                        district: 'Central',
                         frontArrival: earliestStart,
                         backPassage: '2022-02-02T02:10:00.000Z',
                         type: TrackWayPointType.Track,
@@ -77,8 +83,11 @@ describe('getBlockedStreetInfo', () => {
         const expectedBlockedStreets: BlockedStreetInfo[] = [
             {
                 streetName: 'A',
+                postCode: '12345',
+                district: 'Central',
                 frontArrival: earliestStart,
                 backPassage: latestEnd,
+                distanceInKm: undefined,
                 peopleCount: 30,
                 tracksIds: ['1', '2'],
                 trackUsages: [
@@ -87,12 +96,16 @@ describe('getBlockedStreetInfo', () => {
                         trackName: '1',
                         frontArrival: '2022-02-02T02:10:00.000Z',
                         backPassage: latestEnd,
+                        distanceInKm: undefined,
+                        speed: undefined,
                     },
                     {
                         trackId: '2',
                         trackName: '2',
                         frontArrival: earliestStart,
                         backPassage: '2022-02-02T02:10:00.000Z',
+                        distanceInKm: undefined,
+                        speed: undefined,
                     },
                 ],
                 path: [
@@ -112,5 +125,87 @@ describe('getBlockedStreetInfo', () => {
 
         // then
         expect(blockedStreetInfo).toEqual(expectedBlockedStreets);
+    });
+
+    it('keeps streets with unknown postcode and district separate', () => {
+        const trackStreetInfos: TrackStreetInfo[] = [
+            {
+                id: '1',
+                wayPoints: [
+                    {
+                        streetName: 'Unknown Street',
+                        postCode: null,
+                        district: null,
+                        frontArrival: '2022-02-02T02:00:00.000Z',
+                        backPassage: '2022-02-02T02:05:00.000Z',
+                        type: TrackWayPointType.Track,
+                    },
+                    {
+                        streetName: 'Unknown Street',
+                        postCode: undefined,
+                        district: undefined,
+                        frontArrival: '2022-02-02T02:10:00.000Z',
+                        backPassage: '2022-02-02T02:15:00.000Z',
+                        type: TrackWayPointType.Track,
+                    },
+                ],
+            },
+        ] as TrackStreetInfo[];
+        (getTrackStreetInfos as unknown as Mock).mockReturnValue(trackStreetInfos);
+
+        const blockedStreetInfo = getBlockedStreetInfo({
+            trackMerge: { trackCompositions: [{ id: '1', peopleCount: 10 }] },
+        } as State);
+
+        expect(blockedStreetInfo).toHaveLength(2);
+    });
+
+    it('keeps streets with different districts separate', () => {
+        const createWaypoint = (district: string): WayPoint => ({
+            streetName: 'Main Street',
+            postCode: '12345',
+            district,
+            frontArrival: '2022-02-02T02:00:00.000Z',
+            frontPassage: '2022-02-02T02:00:00.000Z',
+            backPassage: '2022-02-02T02:05:00.000Z',
+            pointFrom: { lat: 48, lon: 11, time: '2022-02-02T02:00:00.000Z' },
+            pointTo: { lat: 48.1, lon: 11.1, time: '2022-02-02T02:05:00.000Z' },
+            type: TrackWayPointType.Track,
+        });
+        (getTrackStreetInfos as unknown as Mock).mockReturnValue([
+            { id: '1', wayPoints: [createWaypoint('North'), createWaypoint('South')] },
+        ] as TrackStreetInfo[]);
+
+        const blockedStreetInfo = getBlockedStreetInfo({
+            trackMerge: { trackCompositions: [{ id: '1', peopleCount: 10 }] },
+        } as State);
+
+        expect(blockedStreetInfo).toHaveLength(2);
+    });
+
+    it('aggregates fully resolved matching streets', () => {
+        const createWaypoint = (frontArrival: string): WayPoint => ({
+            streetName: 'Main Street',
+            postCode: '12345',
+            district: 'Central',
+            frontArrival,
+            frontPassage: frontArrival,
+            backPassage: '2022-02-02T02:05:00.000Z',
+            pointFrom: { lat: 48, lon: 11, time: frontArrival },
+            pointTo: { lat: 48.1, lon: 11.1, time: '2022-02-02T02:05:00.000Z' },
+            type: TrackWayPointType.Track,
+        });
+        (getTrackStreetInfos as unknown as Mock).mockReturnValue([
+            {
+                id: '1',
+                wayPoints: [createWaypoint('2022-02-02T02:00:00.000Z'), createWaypoint('2022-02-02T02:10:00.000Z')],
+            },
+        ] as TrackStreetInfo[]);
+
+        const blockedStreetInfo = getBlockedStreetInfo({
+            trackMerge: { trackCompositions: [{ id: '1', peopleCount: 10 }] },
+        } as State);
+
+        expect(blockedStreetInfo).toHaveLength(1);
     });
 });
