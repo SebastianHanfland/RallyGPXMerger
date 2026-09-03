@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getShowBlockStreets,
@@ -16,6 +16,10 @@ import { useIntl } from 'react-intl';
 import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { CSSProperties } from 'react';
 import { getConstructionSegments, getFilteredGpxSegments, getParsedGpxSegments } from '../store/segmentData.redux.ts';
+import { ArrowRightIcon } from '../../utils/icons/ArrowRightIcon.tsx';
+import { BreakIcon } from '../../utils/icons/BreakIcon.tsx';
+import { NodeIcon } from '../../utils/icons/NodeIcon.tsx';
+import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',
@@ -59,97 +63,141 @@ export function MapContentSelection() {
         (showTrackExtra ? ` (${numberOfFilteredTracks}/${numberOfAllTracks})` : '');
 
     const className = 'shadow my-1';
+    const markerIconStyle = { width: '24px', height: '24px' };
+
+    const primaryContent = showGpxSegments
+        ? 'segments'
+        : showCalculatedTracks
+          ? 'tracks'
+          : showBlockStreets
+            ? 'streets'
+            : undefined;
+
+    const setPrimaryContent = (content: 'segments' | 'tracks' | 'streets') => {
+        dispatch(mapActions.setPrimaryMapContent(primaryContent === content ? undefined : content));
+    };
+
     return (
         <div style={mapContentStyle}>
-            <ButtonGroup>
-                <Form className={'d-flex flex-column'}>
+            <Form className={'d-flex flex-column'}>
+                <div className={'d-flex flex-column'}>
                     <Button
                         id={'segments'}
                         title={'GPX Segments'}
-                        variant={showGpxSegments ? 'info' : 'light'}
+                        variant={primaryContent === 'segments' ? 'info' : 'light'}
                         className={className}
-                        onClick={() => dispatch(mapActions.setShowGpxSegments(!showGpxSegments))}
+                        onClick={() => setPrimaryContent('segments')}
                     >
                         {sectionLabel}
                     </Button>
                     <Button
                         id={'tracks'}
                         title={'Calculated Tracks'}
-                        variant={showCalculatedTracks ? 'info' : 'light'}
+                        variant={primaryContent === 'tracks' ? 'info' : 'light'}
                         className={className}
-                        onClick={() => dispatch(mapActions.setShowCalculatedTracks(!showCalculatedTracks))}
+                        onClick={() => setPrimaryContent('tracks')}
                     >
                         {trackLabel}
                     </Button>
                     <Button
                         id={'blocked streets'}
                         title={'Blocked Streets'}
-                        variant={showBlockStreets ? 'info' : 'light'}
+                        variant={primaryContent === 'streets' ? 'info' : 'light'}
                         className={className}
-                        onClick={() => dispatch(mapActions.setShowBlockStreets(!showBlockStreets))}
+                        onClick={() => setPrimaryContent('streets')}
                     >
                         {intl.formatMessage({ id: 'msg.streets' })}
                     </Button>
-                    <Button
+                </div>
+                <div className={'d-flex flex-column mt-2'}>
+                    <Form.Check
                         id={'marker'}
-                        title={showMapMarker ? 'Hide marker' : 'Show marker'}
-                        variant={showMapMarker ? 'info' : 'light'}
-                        className={className}
-                        onClick={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
-                    >
-                        {intl.formatMessage({ id: 'msg.marker' })}
-                    </Button>{' '}
-                    <Button
+                        type={'checkbox'}
+                        checked={Boolean(showMapMarker)}
+                        onChange={() => dispatch(mapActions.setShowMapMarker(!showMapMarker))}
+                        label={
+                            <>
+                                <span aria-hidden={'true'}>
+                                    <img src={'geo-alt-filled.svg'} alt={''} style={markerIconStyle} />
+                                </span>
+                                {intl.formatMessage({ id: 'msg.marker' })}
+                            </>
+                        }
+                    />
+                    <Form.Check
                         id={'nodes'}
-                        title={showNodeMarker ? 'Hide nodes' : 'Show nodes'}
-                        variant={showNodeMarker ? 'info' : 'light'}
-                        className={className}
-                        onClick={() => dispatch(mapActions.setShowNodeMarker(!showNodeMarker))}
-                    >
-                        {intl.formatMessage({ id: 'msg.nodes' })}
-                    </Button>
-                    <Button
+                        type={'checkbox'}
+                        checked={Boolean(showNodeMarker)}
+                        onChange={() => dispatch(mapActions.setShowNodeMarker(!showNodeMarker))}
+                        label={
+                            <>
+                                <span aria-hidden={'true'}>
+                                    <NodeIcon size={24} />
+                                </span>
+                                {intl.formatMessage({ id: 'msg.nodes' })}
+                            </>
+                        }
+                    />
+                    <Form.Check
                         id={'break'}
-                        title={intl.formatMessage({
-                            id: showBreakMarker ? 'msg.hideBreakMarker' : 'msg.showBreakMarker',
-                        })}
-                        variant={showBreakMarker ? 'info' : 'light'}
-                        className={className}
-                        onClick={() => dispatch(mapActions.setShowBreakMarker(!showBreakMarker))}
-                    >
-                        {intl.formatMessage({ id: 'msg.breaks' })}
-                    </Button>
-                    <Button
+                        type={'checkbox'}
+                        checked={Boolean(showBreakMarker)}
+                        onChange={() => dispatch(mapActions.setShowBreakMarker(!showBreakMarker))}
+                        label={
+                            <>
+                                <span aria-hidden={'true'}>
+                                    <BreakIcon />
+                                </span>
+                                {intl.formatMessage({ id: 'msg.breaks' })}
+                            </>
+                        }
+                    />
+                    <Form.Check
                         id={'entryPoints'}
-                        title={showEntryPointMarker ? 'Hide Points' : 'Show Points'}
-                        variant={showEntryPointMarker ? 'info' : 'light'}
-                        className={className}
-                        onClick={() => dispatch(mapActions.setShowEntryPointMarker(!showEntryPointMarker))}
-                    >
-                        {intl.formatMessage({ id: 'msg.entryPoints' })}
-                    </Button>
-                    <Button
+                        type={'checkbox'}
+                        checked={Boolean(showEntryPointMarker)}
+                        onChange={() => dispatch(mapActions.setShowEntryPointMarker(!showEntryPointMarker))}
+                        label={
+                            <>
+                                <span aria-hidden={'true'}>
+                                    <ArrowRightIcon />
+                                </span>
+                                {intl.formatMessage({ id: 'msg.entryPoints' })}
+                            </>
+                        }
+                    />
+                    <Form.Check
                         id={'points'}
-                        title={showPointsOfInterest ? 'Hide Points' : 'Show Points'}
-                        variant={showPointsOfInterest ? 'info' : 'light'}
-                        className={className}
-                        onClick={() => dispatch(mapActions.setShowPointsOfInterest(!showPointsOfInterest))}
-                    >
-                        {intl.formatMessage({ id: 'msg.points' })}
-                    </Button>
+                        type={'checkbox'}
+                        checked={Boolean(showPointsOfInterest)}
+                        onChange={() => dispatch(mapActions.setShowPointsOfInterest(!showPointsOfInterest))}
+                        label={
+                            <>
+                                <span aria-hidden={'true'}>
+                                    <img src={'geo-alt-filled.svg'} alt={''} style={markerIconStyle} />
+                                </span>
+                                {intl.formatMessage({ id: 'msg.points' })}
+                            </>
+                        }
+                    />
                     {hasConstructions && (
-                        <Button
+                        <Form.Check
                             id={'constructions'}
-                            title={'Constructions'}
-                            variant={showConstructions ? 'info' : 'light'}
-                            className={className}
-                            onClick={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
-                        >
-                            {intl.formatMessage({ id: 'msg.constructions' })}
-                        </Button>
+                            type={'checkbox'}
+                            checked={Boolean(showConstructions)}
+                            onChange={() => dispatch(mapActions.setShowConstructions(!showConstructions))}
+                            label={
+                                <>
+                                    <span aria-hidden={'true'}>
+                                        <WarningIcon />
+                                    </span>
+                                    {intl.formatMessage({ id: 'msg.constructions' })}
+                                </>
+                            }
+                        />
                     )}
-                </Form>
-            </ButtonGroup>
+                </div>
+            </Form>
         </div>
     );
 }

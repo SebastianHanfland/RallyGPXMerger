@@ -2,6 +2,8 @@ import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { MapState, State } from './types.ts';
 import { storage } from './storage.ts';
 
+export type PrimaryMapContent = 'segments' | 'tracks' | 'streets' | undefined;
+
 const initialState: MapState = {
     currentTime: 0,
 };
@@ -27,6 +29,11 @@ const mapSlice = createSlice({
         },
         setShowBlockStreets: (state: MapState, action: PayloadAction<boolean>) => {
             state.showBlockStreets = action.payload;
+        },
+        setPrimaryMapContent: (state: MapState, action: PayloadAction<PrimaryMapContent>) => {
+            state.showGpxSegments = action.payload === 'segments';
+            state.showCalculatedTracks = action.payload === 'tracks';
+            state.showBlockStreets = action.payload === 'streets';
         },
         setShowCalculatedTracks: (state: MapState, action: PayloadAction<boolean>) => {
             state.showCalculatedTracks = action.payload;
