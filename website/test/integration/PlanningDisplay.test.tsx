@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
@@ -12,6 +12,7 @@ import { SEGMENT } from '../../src/planner/store/types';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
+import { getGapToleranceInKm } from '../../src/planner/store/settings.reducer';
 import { getHighlightedStreetPath, getStreetPointSelection, mapActions } from '../../src/planner/store/map.reducer';
 
 const messages = getMessages('en');
@@ -56,6 +57,10 @@ describe('Planner integration test', () => {
             await user.click(ui.simpleSettingsTab());
             expect(screen.queryByText(messages['msg.serverData'])).toBeNull();
             expect(screen.queryByText(messages['msg.localData'])).toBeNull();
+            const gapToleranceInput = screen.getByTitle(messages['msg.gapTolerance.hint']);
+            expect(gapToleranceInput).toHaveValue(10);
+            fireEvent.change(gapToleranceInput, { target: { value: '25' } });
+            expect(getGapToleranceInKm(store.getState())).toBe(0.025);
         });
 
         it('Starts a new complex planning', async () => {
@@ -84,6 +89,10 @@ describe('Planner integration test', () => {
             expect(screen.queryByRole('button', { name: messages['msg.documents'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
             expect(screen.getByText(messages['msg.checks'])).toBeInTheDocument();
+            const pointsAccordion = screen.getByRole('button', { name: messages['msg.points'] });
+            expect(pointsAccordion).toBeInTheDocument();
+            await user.click(pointsAccordion);
+            expect(screen.getByText(messages['msg.pointsOfInterest'])).toBeInTheDocument();
             expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
             expect(screen.getByTitle(messages['msg.downloads'])).toHaveStyle({ width: '45px', height: '45px' });
             expect(

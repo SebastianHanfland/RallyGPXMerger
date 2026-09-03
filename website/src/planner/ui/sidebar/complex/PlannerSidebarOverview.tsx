@@ -11,6 +11,7 @@ import { StreetInfoModal } from '../../elements/StreetInfoModal.tsx';
 import { TrackStartName } from '../../../tracks/components/TrackStartName.tsx';
 import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
 import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
+import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 
 export const PlannerSidebarOverview = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -74,6 +75,14 @@ export const PlannerSidebarOverview = () => {
                             </tbody>
                         </Table>
                         <GapFinderParameters />
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="points">
+                    <Accordion.Header>
+                        <FormattedMessage id="msg.points" />
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <PointsOfInterest />
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="streets">

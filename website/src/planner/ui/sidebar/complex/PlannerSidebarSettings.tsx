@@ -9,7 +9,6 @@ import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
 import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
-import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
 import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
 
@@ -30,7 +29,6 @@ export const PlannerSidebarSettings = () => {
         ['msg.ownApiKey', <ApiKeyInput />],
         ['msg.resetAllStreets.title', <ResetAllResolvedStreets />],
         ['msg.constructions.title', <ConstructionSites />],
-        ['msg.points', <PointsOfInterest />],
     ];
     return (
         <div className={'m-2'}>

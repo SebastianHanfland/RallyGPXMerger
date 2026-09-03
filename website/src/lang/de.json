@@ -292,7 +292,7 @@
     "msg.loadingStreetNames": "...lädt Straßennamen",
     "msg.trackSettings": "Routeneinstellungen",
     "msg.gapSetting": "Lückenfinder",
-    "msg.gapTolerance.hint": "Lücken Grenzwert zwischen Abschnitten (in km)",
+    "msg.gapTolerance.hint": "Lücken Grenzwert zwischen Abschnitten (in m)",
     "msg.defaultArrivalTime": "Es wurde noch keine Ankunftszeit gesetzt. Aktueller Wert",
     "msg.defaultTitle": "Es wurde noch kein Titel für die Planung vergeben",
     "msg.setArrivalDateTime": "Jetzt die Ankunftszeit setzen",

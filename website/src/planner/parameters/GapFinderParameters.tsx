@@ -8,6 +8,7 @@ export const GapFinderParameters = () => {
     const intl = useIntl();
     const gapToleranceInKm = useSelector(getGapToleranceInKm);
     const dispatch = useDispatch();
+    const gapToleranceInMeters = gapToleranceInKm === undefined ? undefined : gapToleranceInKm * 1000;
     return (
         <div>
             <Form>
@@ -16,10 +17,17 @@ export const GapFinderParameters = () => {
                 </Form.Label>
                 <Form.Control
                     type="number"
-                    step={0.01}
+                    step={1}
                     title={intl.formatMessage({ id: 'msg.gapTolerance.hint' })}
-                    value={gapToleranceInKm?.toString() ?? ''}
-                    onChange={(value) => dispatch(settingsActions.setGapToleranceInKm(getCount(value)))}
+                    value={gapToleranceInMeters?.toString() ?? ''}
+                    onChange={(value) => {
+                        const gapTolerance = getCount(value);
+                        dispatch(
+                            settingsActions.setGapToleranceInKm(
+                                gapTolerance === undefined ? undefined : gapTolerance / 1000
+                            )
+                        );
+                    }}
                 />
             </Form>
         </div>

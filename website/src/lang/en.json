@@ -288,7 +288,7 @@
     "msg.loadingStreetNames": "...is loading street data",
     "msg.trackSettings": "Track Settings",
     "msg.gapSetting": "Gap Finder",
-    "msg.gapTolerance.hint": "Gap tolerance between segments (in km)",
+    "msg.gapTolerance.hint": "Gap tolerance between segments (in m)",
     "msg.defaultArrivalTime": "You have not yet set an arrival time. Current value",
     "msg.defaultTitle": "You have not yet set a title for the planning",
     "msg.setArrivalDateTime": "Set now the arrival time",
