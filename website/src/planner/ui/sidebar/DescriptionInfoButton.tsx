@@ -7,9 +7,10 @@ import { InfoIcon } from '../../../utils/icons/InfoIcon.tsx';
 interface Props {
     titleMessageId: string;
     descriptionMessageId: string;
+    children?: React.ReactNode;
 }
 
-export const DescriptionInfoButton = ({ titleMessageId, descriptionMessageId }: Props) => {
+export const DescriptionInfoButton = ({ children, titleMessageId, descriptionMessageId }: Props) => {
     const [open, setOpen] = useState(false);
     const intl = useIntl();
     const title = intl.formatMessage({ id: titleMessageId });
@@ -29,7 +30,12 @@ export const DescriptionInfoButton = ({ titleMessageId, descriptionMessageId }: 
                 <ConfirmationModal
                     closeModal={() => setOpen(false)}
                     title={title}
-                    body={<FormattedMessage id={descriptionMessageId} />}
+                    body={
+                        <div>
+                            <FormattedMessage id={descriptionMessageId} />
+                            {children}
+                        </div>
+                    }
                 />
             )}
         </>

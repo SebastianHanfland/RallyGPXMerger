@@ -6,6 +6,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
 import { getFilteredGpxSegments, getSegmentFilterTerm, segmentDataActions } from '../store/segmentData.redux.ts';
+import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
+import { GpxCreationHint } from './GpxCreationHint.tsx';
 
 interface Props {
     noFilter?: boolean;
@@ -20,15 +22,23 @@ export function GpxSegments({ noFilter }: Props) {
 
     return (
         <div>
-            {!noFilter && (
-                <div className={'my-2'}>
+            {!noFilter ? (
+                <div className={'my-2 d-flex justify-content-between'}>
                     <Form.Control
                         type="text"
                         placeholder={intl.formatMessage({ id: 'msg.filterSegments' })}
                         value={filterTerm ?? ''}
                         onChange={(value) => setFilterTerm(value.target.value)}
                     />
+                    <DescriptionInfoButton
+                        titleMessageId={'msg.segment'}
+                        descriptionMessageId={'msg.description.segments'}
+                    >
+                        <GpxCreationHint />
+                    </DescriptionInfoButton>
                 </div>
+            ) : (
+                <GpxCreationHint />
             )}
             {filteredSegments.length > 0 ? (
                 <Table striped bordered hover style={{ width: '100%' }} size="sm">
@@ -41,7 +51,13 @@ export function GpxSegments({ noFilter }: Props) {
                                 <FormattedMessage id={'msg.globalSpeed'} />
                             </th>
                             <th style={{ width: '30%', minWidth: '150px' }}>
-                                <FormattedMessage id={'msg.customSpeed'} />
+                                <div className={'d-flex align-items-center justify-content-between'}>
+                                    <FormattedMessage id={'msg.customSpeed'} />
+                                    <DescriptionInfoButton
+                                        titleMessageId={'msg.customSpeed.title'}
+                                        descriptionMessageId={'msg.description.customSpeed'}
+                                    />
+                                </div>
                             </th>
                             <th style={{ width: '30%', minWidth: '150px' }}>
                                 <FormattedMessage id={'msg.calculatedSpeed'} />
