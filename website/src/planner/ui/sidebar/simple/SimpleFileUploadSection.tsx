@@ -8,7 +8,7 @@ import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker
 import { TrackPeople } from '../../../tracks/components/TrackPeople.tsx';
 import { AverageSpeedSetter } from '../../../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../../../parameters/ParticipantsDelaySetter.tsx';
-import { TrackInfoDownloadButtons } from '../../../tracks/components/TrackInfoDownloadButtons.tsx';
+import { TrackStreetInfoButton } from '../../../tracks/components/TrackStreetInfoButton.tsx';
 import { FormattedMessage } from 'react-intl';
 import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
@@ -81,7 +81,7 @@ export function SimpleFileUploadSection() {
                 </Col>
             </Row>
             <hr />
-            <TrackInfoDownloadButtons matchedTrackInfo={matchedTrackInfo} />
+            <TrackStreetInfoButton matchedTrackInfo={matchedTrackInfo} />
             <SimpleGpxSegments />
             <div style={{ height: '250px' }} />
         </div>

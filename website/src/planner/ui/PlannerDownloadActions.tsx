@@ -14,7 +14,7 @@ const Action = ({ children }: { children: ReactNode }) => <Dropdown.Item as="div
 export const PlannerDownloadActions = ({ onMap = false }: { onMap?: boolean }) => {
     const intl = useIntl();
     return (
-        <Dropdown className="m-1" drop={onMap ? 'down' : undefined}>
+        <Dropdown className="my-1" drop={onMap ? 'down' : undefined}>
             <Dropdown.Toggle
                 variant="info"
                 title={intl.formatMessage({ id: 'msg.downloads' })}

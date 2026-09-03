@@ -9,7 +9,7 @@ import { CloudIcon } from '../../utils/icons/CloudIcon.tsx';
 export const PlannerCloudActions = ({ onMap = false }: { onMap?: boolean }) => {
     const intl = useIntl();
     return (
-        <Dropdown className="m-1" drop={onMap ? 'down' : undefined}>
+        <Dropdown drop={onMap ? 'down' : undefined}>
             <Dropdown.Toggle
                 variant="success"
                 title={intl.formatMessage({ id: 'msg.cloudActions' })}

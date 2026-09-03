@@ -51,6 +51,11 @@ describe('Planner integration test', () => {
             ui.segmentHeading();
             ui.simpleSegmentTab();
             ui.simpleSettingsTab();
+            expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
+            expect(screen.getByTitle(messages['msg.downloads'])).toHaveStyle({ width: '45px', height: '45px' });
+            await user.click(ui.simpleSettingsTab());
+            expect(screen.queryByText(messages['msg.serverData'])).toBeNull();
+            expect(screen.queryByText(messages['msg.localData'])).toBeNull();
         });
 
         it('Starts a new complex planning', async () => {
@@ -109,6 +114,7 @@ describe('Planner integration test', () => {
             await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2), timeout);
             expect(getCalculateTracks(store.getState())).toHaveLength(1);
 
+            await user.click(screen.getByTitle(messages['msg.downloads']));
             await waitFor(() => ui.pdfDownloadButton(), timeout);
         });
     });

@@ -8,11 +8,8 @@ import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
 import { HelpingTip } from './elements/HelpingTip.tsx';
 import { PlannerCloudActions } from './PlannerCloudActions.tsx';
 import { PlannerDownloadActions } from './PlannerDownloadActions.tsx';
-import { useSelector } from 'react-redux';
-import { getHasSingleTrack } from '../store/layout.reducer.ts';
 
 export const MainPlannerUi = () => {
-    const hasSingleTrack = useSelector(getHasSingleTrack);
     return (
         <>
             <div className={'canvas-wrapper'} style={{ left: 0, position: 'fixed', overflow: 'auto' }}>
@@ -34,12 +31,8 @@ export const MainPlannerUi = () => {
                         alignItems: 'flex-start',
                     }}
                 >
-                    {!hasSingleTrack && (
-                        <>
-                            <PlannerCloudActions onMap={true} />
-                            <PlannerDownloadActions onMap={true} />
-                        </>
-                    )}
+                    <PlannerCloudActions onMap={true} />
+                    <PlannerDownloadActions onMap={true} />
                     <SharePlanningButton onMap={true} />
                 </div>
             </div>
