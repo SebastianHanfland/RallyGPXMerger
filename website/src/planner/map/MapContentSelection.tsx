@@ -176,7 +176,16 @@ export function MapContentSelection() {
                         label={
                             <>
                                 <span aria-hidden={'true'}>
-                                    <img src={'geo-alt-filled.svg'} alt={''} style={markerIconStyle} />
+                                    <span
+                                        style={{
+                                            display: 'inline-block',
+                                            width: '15px',
+                                            height: '15px',
+                                            margin: '0 5px',
+                                            backgroundColor: 'red',
+                                            borderRadius: '50%',
+                                        }}
+                                    />
                                 </span>
                                 {intl.formatMessage({ id: 'msg.points' })}
                             </>
