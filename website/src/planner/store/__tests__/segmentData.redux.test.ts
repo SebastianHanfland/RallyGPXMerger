@@ -7,7 +7,8 @@ import {
     getPostCodeLookup,
     getSegmentSortDirection,
     getSegmentSortField,
-    getSegmentUsageFilter,
+    getShowUnusedSegments,
+    getShowUsedSegments,
     getStreetLookup,
     segmentDataActions,
 } from '../segmentData.redux.ts';
@@ -18,7 +19,8 @@ describe('segmentData reducer', () => {
 
         expect(getSegmentSortField(store.getState())).toBe('name');
         expect(getSegmentSortDirection(store.getState())).toBe('ascending');
-        expect(getSegmentUsageFilter(store.getState())).toBe('all');
+        expect(getShowUsedSegments(store.getState())).toBe(true);
+        expect(getShowUnusedSegments(store.getState())).toBe(true);
 
         store.dispatch(segmentDataActions.toggleSegmentSort('distance'));
         expect(getSegmentSortField(store.getState())).toBe('distance');
@@ -29,12 +31,18 @@ describe('segmentData reducer', () => {
         expect(getSegmentSortField(store.getState())).toBe('speed');
         expect(getSegmentSortDirection(store.getState())).toBe('ascending');
 
-        store.dispatch(segmentDataActions.cycleSegmentUsageFilter());
-        expect(getSegmentUsageFilter(store.getState())).toBe('used');
-        store.dispatch(segmentDataActions.cycleSegmentUsageFilter());
-        expect(getSegmentUsageFilter(store.getState())).toBe('unused');
-        store.dispatch(segmentDataActions.cycleSegmentUsageFilter());
-        expect(getSegmentUsageFilter(store.getState())).toBe('all');
+        store.dispatch(segmentDataActions.toggleShowUsedSegments());
+        expect(getShowUsedSegments(store.getState())).toBe(false);
+        expect(getShowUnusedSegments(store.getState())).toBe(true);
+        store.dispatch(segmentDataActions.toggleShowUnusedSegments());
+        expect(getShowUsedSegments(store.getState())).toBe(true);
+        expect(getShowUnusedSegments(store.getState())).toBe(true);
+        store.dispatch(segmentDataActions.toggleShowUnusedSegments());
+        expect(getShowUsedSegments(store.getState())).toBe(true);
+        expect(getShowUnusedSegments(store.getState())).toBe(false);
+        store.dispatch(segmentDataActions.toggleShowUsedSegments());
+        expect(getShowUsedSegments(store.getState())).toBe(true);
+        expect(getShowUnusedSegments(store.getState())).toBe(true);
     });
 
     it('stores fixed speed mode and recalculates using fixed velocity', () => {

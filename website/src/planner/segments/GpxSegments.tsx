@@ -8,7 +8,8 @@ import {
     getSegmentFilterTerm,
     getSegmentSortDirection,
     getSegmentSortField,
-    getSegmentUsageFilter,
+    getShowUnusedSegments,
+    getShowUsedSegments,
     segmentDataActions,
 } from '../store/segmentData.redux.ts';
 import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
@@ -32,12 +33,14 @@ export function GpxSegments({ noFilter }: Props) {
     const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
     const sortField = useSelector(getSegmentSortField);
     const sortDirection = useSelector(getSegmentSortDirection);
-    const usageFilter = useSelector(getSegmentUsageFilter);
+    const showUsedSegments = useSelector(getShowUsedSegments);
+    const showUnusedSegments = useSelector(getShowUnusedSegments);
     const rows = getSegmentTableRows(
         segments,
         aggregatedSegments,
         trackCompositions,
-        usageFilter,
+        showUsedSegments,
+        showUnusedSegments,
         sortField,
         sortDirection
     );

@@ -9,7 +9,6 @@ import {
     SegmentSortDirection,
     SegmentSortField,
     State,
-    SegmentUsageFilter,
 } from './types.ts';
 import { storage } from './storage.ts';
 import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
@@ -27,7 +26,8 @@ const initialState: SegmentDataState = {
     streetLookupIndex: 0,
     segmentSortField: 'name',
     segmentSortDirection: 'ascending',
-    segmentUsageFilter: 'all',
+    showUsedSegments: true,
+    showUnusedSegments: true,
 };
 
 function getHighestStreetLookupIndex(state: SegmentDataState): number {
@@ -264,9 +264,27 @@ const segmentDataSlice = createSlice({
                 state.segmentSortDirection = 'ascending';
             }
         },
-        cycleSegmentUsageFilter: (state: SegmentDataState) => {
-            const usageFilter = state.segmentUsageFilter ?? 'all';
-            state.segmentUsageFilter = usageFilter === 'all' ? 'used' : usageFilter === 'used' ? 'unused' : 'all';
+        toggleShowUsedSegments: (state: SegmentDataState) => {
+            const showUsedSegments = !(state.showUsedSegments ?? true);
+            const showUnusedSegments = state.showUnusedSegments ?? true;
+            if (!showUsedSegments && !showUnusedSegments) {
+                state.showUsedSegments = true;
+                state.showUnusedSegments = true;
+            } else {
+                state.showUsedSegments = showUsedSegments;
+                state.showUnusedSegments = showUnusedSegments;
+            }
+        },
+        toggleShowUnusedSegments: (state: SegmentDataState) => {
+            const showUsedSegments = state.showUsedSegments ?? true;
+            const showUnusedSegments = !(state.showUnusedSegments ?? true);
+            if (!showUsedSegments && !showUnusedSegments) {
+                state.showUsedSegments = true;
+                state.showUnusedSegments = true;
+            } else {
+                state.showUsedSegments = showUsedSegments;
+                state.showUnusedSegments = showUnusedSegments;
+            }
         },
         clear: () => initialState,
     },
@@ -288,7 +306,8 @@ export const getSegmentFilterTerm = (state: State) => getBase(state).segmentFilt
 export const getSegmentSortField = (state: State): SegmentSortField => getBase(state).segmentSortField ?? 'name';
 export const getSegmentSortDirection = (state: State): SegmentSortDirection =>
     getBase(state).segmentSortDirection ?? 'ascending';
-export const getSegmentUsageFilter = (state: State): SegmentUsageFilter => getBase(state).segmentUsageFilter ?? 'all';
+export const getShowUsedSegments = (state: State) => getBase(state).showUsedSegments ?? true;
+export const getShowUnusedSegments = (state: State) => getBase(state).showUnusedSegments ?? true;
 export const getReplaceProcess = (state: State) => getBase(state).replaceProcess;
 export const getSegmentSpeeds = (state: State) => getBase(state).segmentSpeeds ?? defaultSegmentSpeeds;
 const defaultFixedSegmentSpeeds: Record<string, boolean> = {};

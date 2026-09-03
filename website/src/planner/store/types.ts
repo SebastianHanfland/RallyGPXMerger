@@ -227,7 +227,6 @@ export interface ParsedGpxSegment {
 
 export type SegmentSortField = 'name' | 'speed' | 'distance';
 export type SegmentSortDirection = 'ascending' | 'descending';
-export type SegmentUsageFilter = 'all' | 'used' | 'unused';
 
 export interface SegmentDataState {
     segments: ParsedGpxSegment[];
@@ -236,7 +235,8 @@ export interface SegmentDataState {
     fixedSegmentSpeeds?: Record<string, boolean>;
     segmentSortField?: SegmentSortField;
     segmentSortDirection?: SegmentSortDirection;
-    segmentUsageFilter?: SegmentUsageFilter;
+    showUsedSegments?: boolean;
+    showUnusedSegments?: boolean;
     constructionSegments: ParsedGpxSegment[];
     replaceProcess?: { targetSegment: string; replacementSegments: ParsedGpxSegment[] };
     clickOnSegment?: ClickOnSegment;

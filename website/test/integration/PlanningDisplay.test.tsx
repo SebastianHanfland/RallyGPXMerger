@@ -153,11 +153,19 @@ describe('Planner integration test', () => {
                 })
             );
 
-            await user.click(screen.getByRole('checkbox', { name: messages['msg.segmentUsageFilter.all'] }));
-            expect(getNames()).toEqual([firstSegment.filename]);
-            await user.click(screen.getByRole('checkbox', { name: messages['msg.segmentUsageFilter.used'] }));
+            const usedButton = screen.getByRole('button', { name: messages['msg.segmentUsage.used'] });
+            const unusedButton = screen.getByRole('button', { name: messages['msg.segmentUsage.unused'] });
+            expect(usedButton).toHaveClass('btn-success');
+            expect(unusedButton).toHaveClass('btn-danger');
+
+            await user.click(usedButton);
             expect(getNames()).not.toContain(firstSegment.filename);
-            await user.click(screen.getByRole('checkbox', { name: messages['msg.segmentUsageFilter.unused'] }));
+            expect(usedButton).toHaveClass('btn-outline-success');
+            await user.click(unusedButton);
+            expect(getNames()).toHaveLength(3);
+            await user.click(unusedButton);
+            expect(getNames()).toEqual([firstSegment.filename]);
+            await user.click(usedButton);
             expect(getNames()).toHaveLength(3);
         });
 

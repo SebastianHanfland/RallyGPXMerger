@@ -23,7 +23,8 @@ export function getSegmentTableRows(
     segments: ParsedGpxSegment[],
     aggregatedSegments: Record<string, AggregatedPoints[] | undefined>,
     trackCompositions: TrackComposition[],
-    usageFilter: 'all' | 'used' | 'unused',
+    showUsedSegments: boolean,
+    showUnusedSegments: boolean,
     sortField: SegmentSortField,
     sortDirection: SegmentSortDirection
 ): SegmentTableRow[] {
@@ -35,7 +36,7 @@ export function getSegmentTableRows(
             speed: getSegmentSpeed(aggregatedSegments[segment.id]),
             used: usedSegmentIds.has(segment.id),
         }))
-        .filter(({ used }) => usageFilter === 'all' || used === (usageFilter === 'used'))
+        .filter(({ used }) => (used ? showUsedSegments : showUnusedSegments))
         .sort((first, second) => {
             const firstValue = sortField === 'name' ? first.segment.filename : first[sortField];
             const secondValue = sortField === 'name' ? second.segment.filename : second[sortField];

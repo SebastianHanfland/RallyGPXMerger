@@ -1,29 +1,31 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from 'react-intl';
-import { getSegmentUsageFilter, segmentDataActions } from '../store/segmentData.redux.ts';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { getShowUnusedSegments, getShowUsedSegments, segmentDataActions } from '../store/segmentData.redux.ts';
 
 export function SegmentUsageFilter() {
     const dispatch = useDispatch();
     const intl = useIntl();
-    const usageFilter = useSelector(getSegmentUsageFilter);
-    const label = intl.formatMessage({ id: `msg.segmentUsageFilter.${usageFilter}` });
+    const showUsedSegments = useSelector(getShowUsedSegments);
+    const showUnusedSegments = useSelector(getShowUnusedSegments);
 
     return (
-        <div className="form-check me-2">
-            <input
-                id="segment-usage-filter"
-                className="form-check-input"
-                type="checkbox"
-                checked={usageFilter === 'used'}
-                ref={(element) => {
-                    if (element) element.indeterminate = usageFilter === 'unused';
-                }}
-                onChange={() => dispatch(segmentDataActions.cycleSegmentUsageFilter())}
-                aria-label={label}
-            />
-            <label className="form-check-label" htmlFor="segment-usage-filter">
-                {label}
-            </label>
+        <div className="d-flex gap-2 me-2" aria-label={intl.formatMessage({ id: 'msg.segmentUsageFilter' })}>
+            <button
+                type="button"
+                className={`btn rounded-pill ${showUsedSegments ? 'btn-success' : 'btn-outline-success'}`}
+                aria-pressed={showUsedSegments}
+                onClick={() => dispatch(segmentDataActions.toggleShowUsedSegments())}
+            >
+                <FormattedMessage id="msg.segmentUsage.used" />
+            </button>
+            <button
+                type="button"
+                className={`btn rounded-pill ${showUnusedSegments ? 'btn-danger' : 'btn-outline-danger'}`}
+                aria-pressed={showUnusedSegments}
+                onClick={() => dispatch(segmentDataActions.toggleShowUnusedSegments())}
+            >
+                <FormattedMessage id="msg.segmentUsage.unused" />
+            </button>
         </div>
     );
 }
