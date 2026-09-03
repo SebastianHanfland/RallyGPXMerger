@@ -1,7 +1,8 @@
 import { calculateDistanceInKm } from '../../common/calculation/aggregated-segments/calculateDistanceInKm.ts';
 import { AggregatedPoints } from '../logic/resolving/types.ts';
 import { getSegmentSpeed } from '../tracks/segment-selection/getSegmentInfo.ts';
-import { ParsedGpxSegment, SegmentSortDirection, SegmentSortField, TrackComposition } from '../store/types.ts';
+import { ParsedGpxSegment, SegmentSortDirection, SegmentSortField } from '../store/types.ts';
+import { SegmentUsages } from './segmentUsageCounter.ts';
 
 export interface SegmentTableRow {
     segment: ParsedGpxSegment;
@@ -22,19 +23,18 @@ function compareValues(first: number | string | undefined, second: number | stri
 export function getSegmentTableRows(
     segments: ParsedGpxSegment[],
     aggregatedSegments: Record<string, AggregatedPoints[] | undefined>,
-    trackCompositions: TrackComposition[],
+    segmentUsages: SegmentUsages,
     showUsedSegments: boolean,
     showUnusedSegments: boolean,
     sortField: SegmentSortField,
     sortDirection: SegmentSortDirection
 ): SegmentTableRow[] {
-    const usedSegmentIds = new Set(trackCompositions.flatMap((track) => track.segments.map((segment) => segment.id)));
     return segments
         .map((segment) => ({
             segment,
             distance: calculateDistanceInKm(segment.points),
             speed: getSegmentSpeed(aggregatedSegments[segment.id]),
-            used: usedSegmentIds.has(segment.id),
+            used: (segmentUsages[segment.id]?.counter ?? 0) > 0,
         }))
         .filter(({ used }) => (used ? showUsedSegments : showUnusedSegments))
         .sort((first, second) => {

@@ -19,6 +19,7 @@ import { getAggregateStreetsInSegments } from '../../common/calculation/aggregat
 import { getSegmentTableRows } from './segmentTableData.ts';
 import { SegmentUsageFilter } from './SegmentUsageFilter.tsx';
 import { GpxSegmentsTable } from './GpxSegmentsTable.tsx';
+import { getSegmentUsages } from './segmentUsageCounter.ts';
 
 interface Props {
     noFilter?: boolean;
@@ -30,6 +31,7 @@ export function GpxSegments({ noFilter }: Props) {
     const filterTerm = useSelector(getSegmentFilterTerm);
     const segments = useSelector(getFilteredGpxSegments);
     const trackCompositions = useSelector(getTrackCompositions);
+    const segmentUsages = useSelector(getSegmentUsages);
     const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
     const sortField = useSelector(getSegmentSortField);
     const sortDirection = useSelector(getSegmentSortDirection);
@@ -38,7 +40,7 @@ export function GpxSegments({ noFilter }: Props) {
     const rows = getSegmentTableRows(
         segments,
         aggregatedSegments,
-        trackCompositions,
+        segmentUsages,
         showUsedSegments,
         showUnusedSegments,
         sortField,
@@ -72,7 +74,12 @@ export function GpxSegments({ noFilter }: Props) {
                 </div>
             )}
             {rows.length > 0 ? (
-                <GpxSegmentsTable rows={rows} upload={<GpxSegmentsUploadAndParse />} />
+                <GpxSegmentsTable
+                    rows={rows}
+                    upload={<GpxSegmentsUploadAndParse />}
+                    segmentUsages={segmentUsages}
+                    planningHasTracks={trackCompositions.length > 0}
+                />
             ) : (
                 <div>
                     <div>

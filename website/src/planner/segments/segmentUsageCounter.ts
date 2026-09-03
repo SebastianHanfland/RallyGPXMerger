@@ -1,5 +1,31 @@
-import { TrackComposition } from '../store/types.ts';
+import { createSelector } from '@reduxjs/toolkit';
 import { IntlShape } from 'react-intl';
+import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+
+export interface SegmentUsage {
+    counter: number;
+    tracks: string[];
+}
+
+export type SegmentUsages = Record<string, SegmentUsage>;
+
+export const getSegmentUsages = createSelector([getTrackCompositions], (trackCompositions): SegmentUsages => {
+    const usages: SegmentUsages = {};
+
+    trackCompositions.forEach((track) => {
+        const segmentIds = new Set(track.segments.map((segment) => segment.id));
+        segmentIds.forEach((segmentId) => {
+            const usage = usages[segmentId] ?? { counter: 0, tracks: [] };
+            usage.counter++;
+            if (track.name) {
+                usage.tracks.push(track.name);
+            }
+            usages[segmentId] = usage;
+        });
+    });
+
+    return usages;
+});
 
 function createTooltip(intl: IntlShape, counter: number, tracks: string[], planningHasTracks: boolean) {
     if (!planningHasTracks) {
@@ -10,18 +36,16 @@ function createTooltip(intl: IntlShape, counter: number, tracks: string[], plann
         : intl.formatMessage({ id: 'msg.segmentUsed.hint' }, { counter, tracks: tracks.join('\n') });
 }
 
-export function getUsagesOfSegment(trackCompositions: TrackComposition[], segmentId: string, intl: IntlShape) {
-    let counter = 0;
-    const tracks: string[] = [];
-    trackCompositions.forEach((track) => {
-        if (track.segments.map((segment) => segment.id).includes(segmentId)) {
-            counter++;
-            if (track.name) {
-                tracks.push(track.name);
-            }
-        }
-    });
-    const tooltip = createTooltip(intl, counter, tracks, trackCompositions.length > 0);
-    const alert = counter === 0 && trackCompositions.length > 0;
+export function getUsagesOfSegment(
+    usageLookup: SegmentUsages,
+    segmentId: string,
+    intl: IntlShape,
+    planningHasTracks: boolean
+) {
+    const usage = usageLookup[segmentId];
+    const counter = usage?.counter ?? 0;
+    const tracks = usage?.tracks ?? [];
+    const tooltip = createTooltip(intl, counter, tracks, planningHasTracks);
+    const alert = counter === 0 && planningHasTracks;
     return { alert, tooltip };
 }

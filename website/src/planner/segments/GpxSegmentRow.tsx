@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import { FileChangeWithUploadButton } from './FileChangeWithUploadButton.tsx';
 import { RemoveFileButton } from './RemoveFileButton.tsx';
-import { getUsagesOfSegment } from './segmentUsageCounter.ts';
+import { getUsagesOfSegment, SegmentUsages } from './segmentUsageCounter.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer.ts';
 import { FlipGpxButton } from './FlipGpxButton.tsx';
 import flip from '../../assets/flip.svg';
 import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
 import { SegmentSpeedCells } from './SegmentSpeedCells.tsx';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
 import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { ParsedGpxSegment } from '../store/types.ts';
@@ -24,15 +23,16 @@ interface Props {
     gpxSegment: ParsedGpxSegment;
     hideChangeButton?: boolean;
     distance?: number;
+    segmentUsages: SegmentUsages;
+    planningHasTracks: boolean;
 }
 
-export function GpxSegmentRow({ gpxSegment, hideChangeButton, distance }: Props) {
+export function GpxSegmentRow({ gpxSegment, hideChangeButton, distance, segmentUsages, planningHasTracks }: Props) {
     const { id, filename, flipped } = gpxSegment;
     const content = useOnTheFlyCreatedGpx(gpxSegment);
     const intl = useIntl();
     const dispatch = useDispatch();
-    const trackCompositions = useSelector(getTrackCompositions);
-    const { alert, tooltip } = getUsagesOfSegment(trackCompositions, id, intl);
+    const { alert, tooltip } = getUsagesOfSegment(segmentUsages, id, intl, planningHasTracks);
     const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
     const aggregatedInfo = aggregatedSegments[id];
     const info = getSegmentInfo(aggregatedInfo);

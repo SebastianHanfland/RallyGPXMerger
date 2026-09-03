@@ -14,7 +14,7 @@ import flip from '../../../assets/flip.svg';
 import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
 import { useOnTheFlyCreatedGpx } from '../../../utils/gpxUtil.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
-import { getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
+import { getSegmentUsages, getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
 import { EditSegmentColorButton } from '../../segments/EditSegmentColor.tsx';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
@@ -38,7 +38,8 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
     const info = getSegmentInfo(aggregatedInfo);
 
     const trackCompositions = useSelector(getTrackCompositions);
-    const { tooltip } = getUsagesOfSegment(trackCompositions, segmentId, intl);
+    const segmentUsages = useSelector(getSegmentUsages);
+    const { tooltip } = getUsagesOfSegment(segmentUsages, segmentId, intl, trackCompositions.length > 0);
 
     const gpxSegment = useSelector(getParsedGpxSegments).find((segment) => segment.id === segmentId);
     const content = useOnTheFlyCreatedGpx(gpxSegment);
