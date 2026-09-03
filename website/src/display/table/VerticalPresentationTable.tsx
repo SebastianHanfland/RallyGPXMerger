@@ -57,13 +57,13 @@ function TrackSection({ track, entryPoints }: { track: CalculatedTrack; entryPoi
     const startName = foundInfo.startName ?? startingPoint.streetName;
     return (
         <section className={'mb-4'}>
-            <h2 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                {foundInfo.name}{' '}
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                <h2>{foundInfo.name} </h2>
                 <div style={{ marginLeft: '15px' }}>
                     <TrackFileDownloader track={track} />
                     <TrackInfoPdfDownloadButton trackStreets={foundInfo} planningLabel={planningLabel} />
                 </div>
-            </h2>
+            </div>
             <Table striped bordered hover style={{ width: '100%', tableLayout: 'fixed' }}>
                 <colgroup>
                     <col style={{ width: locationColumnStyle.width }} />
