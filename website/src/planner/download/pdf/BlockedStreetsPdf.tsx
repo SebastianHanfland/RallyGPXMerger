@@ -49,16 +49,24 @@ export const BlockedStreetsTablePdf = ({ blockedStreets, intl }: Props) => {
                 </View>
                 {...blockedStreets.map((streetPoint, index) => {
                     const streetName = streetPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
-                    const streetPath = streetPoint.path ?? [streetPoint.pointFrom, streetPoint.pointTo];
+                    const streetPaths = streetPoint.paths ?? [
+                        streetPoint.path ?? [streetPoint.pointFrom, streetPoint.pointTo],
+                    ];
                     return (
                         <View key={index} style={pdfStyles.row} wrap={false}>
                             <Text style={colWidths[0]}>{streetPoint.postCode ?? ''}</Text>
                             <Text style={colWidths[1]}>{streetPoint.district?.replace('Wahlkreis', '') ?? ''}</Text>
                             <Text style={colWidths[2]}>
                                 <Text style={pdfStyles.bold}>
-                                    <Link src={createStreetPathUrl(streetPath, streetName)} style={{ color: 'blue' }}>
-                                        {streetName}
-                                    </Link>
+                                    {streetPaths.map((streetPath, pathIndex) => (
+                                        <Link
+                                            key={pathIndex}
+                                            src={createStreetPathUrl(streetPath, streetName)}
+                                            style={{ color: 'blue' }}
+                                        >
+                                            {pathIndex === 0 ? streetName : ' ↗'}
+                                        </Link>
+                                    ))}
                                 </Text>
                             </Text>
                             <Text style={colWidths[3]}>

@@ -87,6 +87,7 @@ export interface BlockedStreetInfo {
     pointFrom: { lat: number; lon: number };
     pointTo: { lat: number; lon: number };
     path?: StreetPathPoint[];
+    paths?: StreetPathPoint[][];
     peopleCount: number;
     tracksIds: string[];
     trackUsages?: BlockedStreetTrackUsage[];

@@ -60,29 +60,34 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGr
         current.clearLayers();
         if (showStreets) {
             blockedStreetInfos.forEach((blockedStreet) => {
-                const streetPoints = (blockedStreet.path ?? [blockedStreet.pointFrom, blockedStreet.pointTo]).map(
-                    (point) => ({ lat: point.lat, lng: point.lon })
-                );
+                const streetPaths = blockedStreet.paths?.length
+                    ? blockedStreet.paths
+                    : [blockedStreet.path ?? [blockedStreet.pointFrom, blockedStreet.pointTo]];
                 const trackUsages = blockedStreet.trackUsages ?? [];
-                const connection = L.polyline(streetPoints, {
-                    color: getColorFromString(blockedStreet.streetName ?? 'unknown'),
-                    weight: 4,
-                    dashArray: '5',
-                }).bindTooltip(
-                    createStreetTooltip(blockedStreet, trackUsages, {
-                        distance: intl.formatMessage({ id: 'msg.distance' }),
-                        speed: intl.formatMessage({ id: 'msg.speed' }),
-                        tracks: intl.formatMessage({ id: 'msg.tracks' }),
-                        unknown: intl.formatMessage({ id: 'msg.unknown' }),
-                        blockage: intl.formatMessage({ id: 'msg.blockage' }),
-                    }),
-                    {
-                        sticky: true,
-                    }
-                );
-                connection.on('mouseover', () => connection.setStyle({ weight: 10 }));
-                connection.on('mouseout', () => connection.setStyle({ weight: 4 }));
-                connection.addTo(current);
+                streetPaths.forEach((streetPath) => {
+                    const connection = L.polyline(
+                        streetPath.map((point) => ({ lat: point.lat, lng: point.lon })),
+                        {
+                            color: getColorFromString(blockedStreet.streetName ?? 'unknown'),
+                            weight: 4,
+                            dashArray: '5',
+                        }
+                    ).bindTooltip(
+                        createStreetTooltip(blockedStreet, trackUsages, {
+                            distance: intl.formatMessage({ id: 'msg.distance' }),
+                            speed: intl.formatMessage({ id: 'msg.speed' }),
+                            tracks: intl.formatMessage({ id: 'msg.tracks' }),
+                            unknown: intl.formatMessage({ id: 'msg.unknown' }),
+                            blockage: intl.formatMessage({ id: 'msg.blockage' }),
+                        }),
+                        {
+                            sticky: true,
+                        }
+                    );
+                    connection.on('mouseover', () => connection.setStyle({ weight: 10 }));
+                    connection.on('mouseout', () => connection.setStyle({ weight: 4 }));
+                    connection.addTo(current);
+                });
             });
         }
     }, [blockedStreetInfos, blockedStreetInfos.length, showStreets, intl]);

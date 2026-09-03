@@ -3,15 +3,29 @@ import { StreetPathPoint } from '../logic/resolving/types.ts';
 import { createStreetPathUrl } from '../../utils/streetPathUrl.ts';
 
 interface Props {
-    path: StreetPathPoint[];
+    path?: StreetPathPoint[];
+    paths?: StreetPathPoint[][];
     streetName?: string;
 }
 
-export function StreetMapLink({ path, streetName }: Props) {
-    const link = createStreetPathUrl(path, streetName);
+export function StreetMapLink({ path, paths, streetName }: Props) {
+    const streetPaths = paths ?? (path ? [path] : []);
     return (
-        <a href={link} target={'_blank'} referrerPolicy={'no-referrer'} title={'Open street segment on map'}>
-            <GeoLinkIcon />
-        </a>
+        <>
+            {streetPaths.map((streetPath, index) => {
+                const link = createStreetPathUrl(streetPath, streetName);
+                return (
+                    <a
+                        href={link}
+                        target={'_blank'}
+                        referrerPolicy={'no-referrer'}
+                        title={'Open street segment on map'}
+                        key={index}
+                    >
+                        <GeoLinkIcon />
+                    </a>
+                );
+            })}
+        </>
     );
 }

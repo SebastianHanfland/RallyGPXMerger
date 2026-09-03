@@ -1,4 +1,4 @@
-import { WayPoint, BlockedStreetInfo, BlockedStreetTrackUsage, TrackWayPointType } from '../types.ts';
+import { WayPoint, BlockedStreetInfo, BlockedStreetTrackUsage, StreetPathPoint, TrackWayPointType } from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
@@ -71,14 +71,46 @@ function countPeopleOnTracks(tracks: TrackComposition[], tracksIds: string[]): n
     return counter;
 }
 
-function joinPaths(first: WayPoint['path'], second: WayPoint['path']): WayPoint['path'] {
-    if (!first) return second;
-    if (!second) return first;
-    const lastFirst = first[first.length - 1];
-    const firstSecond = second[0];
-    const secondWithoutDuplicate =
-        lastFirst?.lat === firstSecond?.lat && lastFirst?.lon === firstSecond?.lon ? second.slice(1) : second;
-    return [...first, ...secondWithoutDuplicate];
+function samePoint(first: StreetPathPoint | undefined, second: StreetPathPoint | undefined) {
+    return first?.lat === second?.lat && first?.lon === second?.lon;
+}
+
+function samePath(first: StreetPathPoint[] | undefined, second: StreetPathPoint[] | undefined): boolean {
+    if (!first || !second || first.length !== second.length) return false;
+    return first.every((point, index) => samePoint(point, second[index]));
+}
+
+function reversePath(path: NonNullable<WayPoint['path']>) {
+    return [...path].reverse();
+}
+
+function addStreetPath(paths: StreetPathPoint[][], path: WayPoint['path']): StreetPathPoint[][] {
+    if (!path || path.length === 0) return paths;
+    if (paths.some((existingPath) => samePath(existingPath, path) || samePath(existingPath, reversePath(path)))) {
+        return paths;
+    }
+
+    const endingPathIndex = paths.findIndex((existingPath) =>
+        samePoint(existingPath[existingPath.length - 1], path[0])
+    );
+    if (endingPathIndex >= 0) {
+        return paths.map((existingPath, index) =>
+            index === endingPathIndex ? [...existingPath, ...path.slice(1)] : existingPath
+        );
+    }
+
+    const startingPathIndex = paths.findIndex((existingPath) => samePoint(path[path.length - 1], existingPath[0]));
+    if (startingPathIndex >= 0) {
+        return paths.map((existingPath, index) =>
+            index === startingPathIndex ? [...path.slice(0, -1), ...existingPath] : existingPath
+        );
+    }
+
+    return [...paths, path];
+}
+
+function getStreetPaths(info: BlockedStreetInfo): StreetPathPoint[][] {
+    return info.paths ?? (info.path ? [info.path] : []);
 }
 
 export const getBlockedStreetInfo = createSelector(
@@ -101,6 +133,7 @@ export const getBlockedStreetInfo = createSelector(
                             pointFrom: waypoint.pointFrom,
                             pointTo: waypoint.pointTo,
                             path: waypoint.path,
+                            paths: waypoint.path ? [waypoint.path] : undefined,
                             peopleCount: 0,
                             tracksIds: [foundTrack!.id],
                             trackUsages: [
@@ -123,7 +156,13 @@ export const getBlockedStreetInfo = createSelector(
                                   backPassage: takeLaterOne(info.backPassage, waypoint.backPassage),
                                   frontArrival: takeEarlierOne(info.frontArrival, waypoint.frontArrival),
                                   tracksIds: addTrackId(info.tracksIds, foundTrack!.id),
-                                  path: joinPaths(info.path, waypoint.path),
+                                  ...(() => {
+                                      const paths = addStreetPath(getStreetPaths(info), waypoint.path);
+                                      return {
+                                          path: paths.length === 1 ? paths[0] : undefined,
+                                          paths: paths.length > 0 ? paths : undefined,
+                                      };
+                                  })(),
                                   trackUsages: addTrackUsage(info.trackUsages ?? [], {
                                       trackId: foundTrack!.id,
                                       trackName: foundTrack!.name || foundTrack!.id,

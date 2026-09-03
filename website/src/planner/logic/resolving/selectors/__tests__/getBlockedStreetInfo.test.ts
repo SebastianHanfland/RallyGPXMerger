@@ -108,12 +108,17 @@ describe('getBlockedStreetInfo', () => {
                         speed: undefined,
                     },
                 ],
-                path: [
-                    { lat: 48, lon: 11 },
-                    { lat: 48.1, lon: 11.1 },
-                    { lat: 48.2, lon: 11.2 },
-                    { lat: 48.3, lon: 11.3 },
-                    { lat: 48.4, lon: 11.4 },
+                path: undefined,
+                paths: [
+                    [
+                        { lat: 48, lon: 11 },
+                        { lat: 48.1, lon: 11.1 },
+                        { lat: 48.2, lon: 11.2 },
+                    ],
+                    [
+                        { lat: 48.3, lon: 11.3 },
+                        { lat: 48.4, lon: 11.4 },
+                    ],
                 ],
             } as BlockedStreetInfo,
         ];
@@ -207,5 +212,45 @@ describe('getBlockedStreetInfo', () => {
         } as State);
 
         expect(blockedStreetInfo).toHaveLength(1);
+    });
+
+    it('does not connect or duplicate identical paths from multiple tracks', () => {
+        const path = [
+            { lat: 48, lon: 11 },
+            { lat: 48.1, lon: 11.1 },
+            { lat: 48.2, lon: 11.2 },
+        ];
+        const createWaypoint = (trackId: string): TrackStreetInfo =>
+            ({
+                id: trackId,
+                wayPoints: [
+                    {
+                        streetName: 'St 2544',
+                        postCode: '82110',
+                        district: 'District of Furstenfeldbruck',
+                        frontArrival: '2022-02-02T02:00:00.000Z',
+                        frontPassage: '2022-02-02T02:01:00.000Z',
+                        backPassage: '2022-02-02T02:05:00.000Z',
+                        pointFrom: { lat: 48, lon: 11, time: '2022-02-02T02:00:00.000Z' },
+                        pointTo: { lat: 48.2, lon: 11.2, time: '2022-02-02T02:05:00.000Z' },
+                        path,
+                        type: TrackWayPointType.Track,
+                    },
+                ],
+            }) as TrackStreetInfo;
+        (getTrackStreetInfos as unknown as Mock).mockReturnValue([createWaypoint('1'), createWaypoint('2')]);
+
+        const blockedStreetInfo = getBlockedStreetInfo({
+            trackMerge: {
+                trackCompositions: [
+                    { id: '1', peopleCount: 10 },
+                    { id: '2', peopleCount: 20 },
+                ],
+            },
+        } as State);
+
+        expect(blockedStreetInfo).toHaveLength(1);
+        expect(blockedStreetInfo[0]?.path).toEqual(path);
+        expect(blockedStreetInfo[0]?.paths).toEqual([path]);
     });
 });
