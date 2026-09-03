@@ -92,7 +92,13 @@ describe('Planner integration test', () => {
             const pointsAccordion = screen.getByRole('button', { name: messages['msg.points'] });
             expect(pointsAccordion).toBeInTheDocument();
             await user.click(pointsAccordion);
-            expect(screen.getByText(messages['msg.pointsOfInterest'])).toBeInTheDocument();
+            const gapToleranceInputs = screen.getAllByTitle(messages['msg.gapTolerance.hint']);
+            expect(gapToleranceInputs).toHaveLength(2);
+            const pointsOfInterest = screen.getByText(messages['msg.pointsOfInterest']);
+            expect(pointsOfInterest).toBeInTheDocument();
+            expect(gapToleranceInputs[1]!.compareDocumentPosition(pointsOfInterest)).toBe(
+                Node.DOCUMENT_POSITION_FOLLOWING
+            );
             expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
             expect(screen.getByTitle(messages['msg.downloads'])).toHaveStyle({ width: '45px', height: '45px' });
             expect(

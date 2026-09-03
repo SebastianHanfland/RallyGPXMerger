@@ -82,6 +82,7 @@ export const PlannerSidebarOverview = () => {
                         <FormattedMessage id="msg.points" />
                     </Accordion.Header>
                     <Accordion.Body>
+                        <GapFinderParameters />
                         <PointsOfInterest />
                     </Accordion.Body>
                 </Accordion.Item>
