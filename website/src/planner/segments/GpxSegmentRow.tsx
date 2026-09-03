@@ -18,13 +18,15 @@ import { EditSegmentColorButton } from './EditSegmentColor.tsx';
 import { FileChangeButton } from './FileChangeButton.tsx';
 import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
 import { getSegmentInfo } from '../tracks/segment-selection/getSegmentInfo.ts';
+import { formatNumber } from '../../utils/numberUtil.ts';
 
 interface Props {
     gpxSegment: ParsedGpxSegment;
     hideChangeButton?: boolean;
+    distance?: number;
 }
 
-export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
+export function GpxSegmentRow({ gpxSegment, hideChangeButton, distance }: Props) {
     const { id, filename, flipped } = gpxSegment;
     const content = useOnTheFlyCreatedGpx(gpxSegment);
     const intl = useIntl();
@@ -52,6 +54,7 @@ export function GpxSegmentRow({ gpxSegment, hideChangeButton }: Props) {
                     }}
                 />
             </td>
+            <td>{distance === undefined ? null : `${formatNumber(distance)} km`}</td>
             <SegmentSpeedCells gpxSegment={gpxSegment} />
             <td style={alert ? { backgroundColor: 'red' } : undefined}>
                 {flipped && <img src={flip} className="m-1" alt="flip" />}

@@ -7,6 +7,8 @@ import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
+import { trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
+import { SEGMENT } from '../../src/planner/store/types';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
@@ -105,6 +107,60 @@ describe('Planner integration test', () => {
     });
 
     describe('Complex planning', () => {
+        it('shows segment distances and supports sorting and usage filtering', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(<RallyPlannerWrapper store={store} />, { wrapper: MemoryRouter });
+
+            const user = userEvent.setup();
+
+            await user.click(ui.startButton());
+            await user.click(ui.complexButton());
+            await ui.uploadGpxSegment('segment1');
+            await ui.uploadGpxSegment('segment2');
+            await ui.uploadGpxSegment('segment3');
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3), timeout);
+
+            const table = screen.getByRole('table');
+            const getRows = () =>
+                within(table)
+                    .getAllByRole('row')
+                    .filter((row) => within(row).queryAllByRole('textbox').length > 0);
+            const getNames = () =>
+                getRows().map((row) => (within(row).getAllByRole('textbox')[0] as HTMLInputElement).value);
+            const getDistances = () =>
+                getRows().map((row) => Number(within(row).getAllByRole('cell')[1]?.textContent?.replace(' km', '')));
+
+            const initialNames = getNames();
+            const initialDistances = getDistances();
+            expect(initialDistances.every((distance) => distance > 0)).toBe(true);
+
+            await user.click(screen.getByRole('button', { name: messages['msg.file'] }));
+            expect(getNames()).toEqual([...initialNames].sort((first, second) => second.localeCompare(first)));
+            await user.click(screen.getByRole('button', { name: messages['msg.file'] }));
+            expect(getNames()).toEqual([...initialNames].sort((first, second) => first.localeCompare(second)));
+
+            await user.click(screen.getByRole('button', { name: messages['msg.distanceInKm'] }));
+            expect(getDistances()).toEqual([...initialDistances].sort((first, second) => first - second));
+
+            const firstSegment = getParsedGpxSegments(store.getState())[0]!;
+            store.dispatch(trackMergeActions.addTrackComposition());
+            const track = getTrackCompositions(store.getState())[0]!;
+            store.dispatch(
+                trackMergeActions.setSegments({
+                    id: track.id,
+                    segments: [{ id: firstSegment.id, segmentId: firstSegment.id, type: SEGMENT }],
+                })
+            );
+
+            await user.click(screen.getByRole('checkbox', { name: messages['msg.segmentUsageFilter.all'] }));
+            expect(getNames()).toEqual([firstSegment.filename]);
+            await user.click(screen.getByRole('checkbox', { name: messages['msg.segmentUsageFilter.used'] }));
+            expect(getNames()).not.toContain(firstSegment.filename);
+            await user.click(screen.getByRole('checkbox', { name: messages['msg.segmentUsageFilter.unused'] }));
+            expect(getNames()).toHaveLength(3);
+        });
+
         it('Create a complex planning with two tracks', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();
