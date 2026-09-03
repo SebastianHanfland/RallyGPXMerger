@@ -3,11 +3,10 @@ import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { getShowBlockStreets } from '../../store/map.reducer.ts';
 import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getColor } from '../../../utils/colorUtil.ts';
+import { getColorFromString } from '../../../utils/colorUtil.ts';
 import { BlockedStreetInfo, BlockedStreetTrackUsage } from '../../logic/resolving/types.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { useIntl } from 'react-intl';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { formatNumber } from '../../../utils/numberUtil.ts';
 
 function createTooltip(
@@ -31,24 +30,8 @@ function createTooltip(
     )}–${formatTimeOnly(info.backPassage)}\n${labels.tracks}:\n${usages}`;
 }
 
-function getCompositeColor(colors: string[]): string {
-    const rgb = colors.map((color) => {
-        const value = color.replace('#', '');
-        return [0, 2, 4].map((index) => parseInt(value.slice(index, index + 2), 16));
-    });
-    if (rgb.length === 0) return '#666666';
-    return `#${[0, 1, 2]
-        .map((channel) =>
-            Math.round(rgb.reduce((sum, color) => sum + color[channel]!, 0) / rgb.length)
-                .toString(16)
-                .padStart(2, '0')
-        )
-        .join('')}`;
-}
-
 export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGroup | null>) {
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
-    const tracks = useSelector(getTrackCompositions);
     const showStreets = useSelector(getShowBlockStreets);
     const intl = useIntl();
 
@@ -65,12 +48,8 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGr
                     (point) => ({ lat: point.lat, lng: point.lon })
                 );
                 const trackUsages = blockedStreet.trackUsages ?? [];
-                const colors = blockedStreet.tracksIds.map((trackId) => {
-                    const track = tracks.find((item) => item.id === trackId);
-                    return getColor(track ?? { id: trackId });
-                });
                 const connection = L.polyline(streetPoints, {
-                    color: getCompositeColor(colors),
+                    color: getColorFromString(blockedStreet.streetName ?? 'unknown'),
                     weight: 4,
                     dashArray: '5',
                 }).bindTooltip(
@@ -85,8 +64,10 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGr
                         sticky: true,
                     }
                 );
+                connection.on('mouseover', () => connection.setStyle({ weight: 10 }));
+                connection.on('mouseout', () => connection.setStyle({ weight: 4 }));
                 connection.addTo(current);
             });
         }
-    }, [blockedStreetInfos, blockedStreetInfos.length, showStreets, tracks, intl]);
+    }, [blockedStreetInfos, blockedStreetInfos.length, showStreets, intl]);
 }
