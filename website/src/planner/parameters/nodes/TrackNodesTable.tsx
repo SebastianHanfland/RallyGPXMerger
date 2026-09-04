@@ -6,6 +6,7 @@ import { TrackNodesBranchCell } from './TrackNodesBranchCell.tsx';
 import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell.tsx';
 import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton.tsx';
 import { NodeOverviewButton } from './NodeOverviewButton.tsx';
+import { TrackNodeType } from './TrackNodeType.tsx';
 
 export const TrackNodesTable = () => {
     const trackNodes = useSelector(trackNodesBySegmentSizeSelector);
@@ -18,6 +19,9 @@ export const TrackNodesTable = () => {
                             <FormattedMessage id={'msg.branches'} />
                         </th>
                         <th>
+                            <FormattedMessage id={'msg.type'} />
+                        </th>
+                        <th>
                             <FormattedMessage id={'msg.customBehavior'} />
                         </th>
                     </tr>
@@ -27,6 +31,9 @@ export const TrackNodesTable = () => {
                         <tr key={trackNode.segmentIdAfterNode}>
                             <td>
                                 <TrackNodesBranchCell trackNode={trackNode} />
+                            </td>
+                            <td>
+                                <TrackNodeType trackNode={trackNode} />
                             </td>
                             <td>
                                 <TrackNodesNodeSpecCell trackNode={trackNode} />

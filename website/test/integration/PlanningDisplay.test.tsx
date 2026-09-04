@@ -108,6 +108,7 @@ describe('Planner integration test', () => {
             expect(screen.getByText(messages['msg.publicStart'])).toBeInTheDocument();
             await user.click(nodesAccordion);
             expect(screen.getByRole('columnheader', { name: messages['msg.branches'] })).toBeInTheDocument();
+            expect(screen.getByRole('columnheader', { name: messages['msg.type'] })).toBeInTheDocument();
 
             await user.click(screen.getByRole('button', { name: messages['msg.settings'] }));
             expect(screen.queryByRole('button', { name: messages['msg.communicatedStart'] })).toBeNull();
