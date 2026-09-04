@@ -3,7 +3,6 @@ import { ApiKeyInput } from '../../../streets/ApiKeyInput.tsx';
 import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { ConstructionSites } from '../../../construction/ConstructionSites.tsx';
-import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
@@ -20,7 +19,6 @@ export const PlannerSidebarSettings = () => {
             </>,
         ],
         ['msg.trackSettings', <TrackMergeParameters />],
-        ['msg.gapSetting', <GapFinderParameters />],
         ['msg.prio', <TrackPriorityTable />],
         ['msg.ownApiKey', <ApiKeyInput />],
         ['msg.resetAllStreets.title', <ResetAllResolvedStreets />],
