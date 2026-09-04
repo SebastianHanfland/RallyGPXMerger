@@ -14,6 +14,8 @@ import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
+import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton.tsx';
+import { NodeOverviewButton } from '../../../parameters/nodes/NodeOverviewButton.tsx';
 
 export const PlannerSidebarOverview = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -26,8 +28,15 @@ export const PlannerSidebarOverview = () => {
 
     return (
         <div className="m-2">
-            <div className="d-flex justify-content-end">
-                <DescriptionInfoButton titleMessageId="msg.overview" descriptionMessageId="msg.description.overview" />
+            <div className={'d-flex'}>
+                <TrackOverviewButton />
+                <NodeOverviewButton />
+                <div className="d-flex justify-content-end">
+                    <DescriptionInfoButton
+                        titleMessageId="msg.overview"
+                        descriptionMessageId="msg.description.overview"
+                    />
+                </div>
             </div>
             <Accordion defaultActiveKey="checks">
                 <Accordion.Item eventKey="checks">
