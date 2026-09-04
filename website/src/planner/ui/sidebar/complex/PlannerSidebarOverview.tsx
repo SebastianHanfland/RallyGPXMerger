@@ -12,6 +12,7 @@ import { TrackStartName } from '../../../tracks/components/TrackStartName.tsx';
 import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
 import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
+import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 
 export const PlannerSidebarOverview = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -116,6 +117,14 @@ export const PlannerSidebarOverview = () => {
                                 <TrackStartName track={track} />
                             </div>
                         ))}
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="communicated-start">
+                    <Accordion.Header>
+                        <FormattedMessage id="msg.communicatedStart" />
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <StartTimeTable />
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>

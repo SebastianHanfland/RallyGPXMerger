@@ -6,7 +6,6 @@ import { ConstructionSites } from '../../../construction/ConstructionSites.tsx';
 import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
-import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
 import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
@@ -25,7 +24,6 @@ export const PlannerSidebarSettings = () => {
         ['msg.gapSetting', <GapFinderParameters />],
         ['msg.prio', <TrackPriorityTable />],
         ['msg.nodes', <TrackNodesTable />],
-        ['msg.communicatedStart', <StartTimeTable />],
         ['msg.ownApiKey', <ApiKeyInput />],
         ['msg.resetAllStreets.title', <ResetAllResolvedStreets />],
         ['msg.constructions.title', <ConstructionSites />],
