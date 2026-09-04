@@ -98,11 +98,18 @@ describe('Planner integration test', () => {
                     .getByRole('button', { name: messages['msg.startNameOverwrite'] })
                     .compareDocumentPosition(communicatedStartAccordion)
             ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+            const nodesAccordion = screen.getByRole('button', { name: messages['msg.nodes'] });
+            expect(communicatedStartAccordion.compareDocumentPosition(nodesAccordion)).toBe(
+                Node.DOCUMENT_POSITION_FOLLOWING
+            );
             await user.click(communicatedStartAccordion);
             expect(screen.getByText(messages['msg.publicStart'])).toBeInTheDocument();
+            await user.click(nodesAccordion);
+            expect(screen.getByRole('columnheader', { name: messages['msg.branches'] })).toBeInTheDocument();
 
             await user.click(screen.getByRole('button', { name: messages['msg.settings'] }));
             expect(screen.queryByRole('button', { name: messages['msg.communicatedStart'] })).toBeNull();
+            expect(screen.queryByRole('button', { name: messages['msg.nodes'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
             const pointsAccordion = screen.getByRole('button', { name: messages['msg.points'] });
             expect(pointsAccordion).toBeInTheDocument();

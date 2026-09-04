@@ -8,7 +8,6 @@ import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
-import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
 import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
 
 export const PlannerSidebarSettings = () => {
@@ -23,7 +22,6 @@ export const PlannerSidebarSettings = () => {
         ['msg.trackSettings', <TrackMergeParameters />],
         ['msg.gapSetting', <GapFinderParameters />],
         ['msg.prio', <TrackPriorityTable />],
-        ['msg.nodes', <TrackNodesTable />],
         ['msg.ownApiKey', <ApiKeyInput />],
         ['msg.resetAllStreets.title', <ResetAllResolvedStreets />],
         ['msg.constructions.title', <ConstructionSites />],

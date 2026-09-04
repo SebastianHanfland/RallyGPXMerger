@@ -13,6 +13,7 @@ import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx
 import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
+import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
 
 export const PlannerSidebarOverview = () => {
     const tracks = useSelector(getTrackCompositions);
@@ -125,6 +126,14 @@ export const PlannerSidebarOverview = () => {
                     </Accordion.Header>
                     <Accordion.Body>
                         <StartTimeTable />
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="nodes">
+                    <Accordion.Header>
+                        <FormattedMessage id="msg.nodes" />
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <TrackNodesTable />
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
