@@ -7,10 +7,12 @@ import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { TrackDocuments } from '../../../tracks/components/TrackDocuments.tsx';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import { useState } from 'react';
 import { PlannerSidebarTrackStreets } from './PlannerSidebarTrackStreets.tsx';
 import { TrackStartName } from '../../../tracks/components/TrackStartName.tsx';
+import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
+import { TrackRounding } from '../../../tracks/components/TrackRounding.tsx';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
@@ -57,11 +59,29 @@ export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition 
                         mountOnEnter={true}
                         unmountOnExit={true}
                     >
-                        <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
-                        <label className="form-label">
-                            <FormattedMessage id="msg.startName" />
-                        </label>
-                        <TrackStartName track={track} />
+                        <div className="m-3">
+                            <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
+                            <Form.Group as={Row}>
+                                <Col>
+                                    <Form.Label>
+                                        <FormattedMessage id="msg.startName" />
+                                    </Form.Label>
+                                    <TrackStartName track={track} />
+                                </Col>
+                                <Col>
+                                    <Form.Label>
+                                        <FormattedMessage id="msg.buffer" />
+                                    </Form.Label>
+                                    <TrackBuffer track={track} />
+                                </Col>
+                                <Col>
+                                    <Form.Label>
+                                        <FormattedMessage id="msg.rounding" />
+                                    </Form.Label>
+                                    <TrackRounding track={track} />
+                                </Col>
+                            </Form.Group>
+                        </div>
                     </Tab>
                 </Tabs>
             </div>

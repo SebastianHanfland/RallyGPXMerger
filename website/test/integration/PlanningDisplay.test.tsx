@@ -12,6 +12,8 @@ import { SEGMENT } from '../../src/planner/store/types';
 import { plannerUi as ui } from './data/PlannerTestAccess';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
+import { getTrackStreetInfos } from '../../src/planner/calculation/getTrackStreetInfos';
+import { formatTimeOnly } from '../../src/utils/dateUtil';
 import { getGapToleranceInKm } from '../../src/planner/store/settings.reducer';
 import { getHighlightedStreetPath, getStreetPointSelection, mapActions } from '../../src/planner/store/map.reducer';
 
@@ -271,6 +273,35 @@ describe('Planner integration test', () => {
             expect(getTrackCompositions(store.getState())[0].segments).toHaveLength(2);
 
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(1), timeout);
+            const infoTab = screen.getByRole('tab', { name: messages['msg.info'] });
+            await user.click(infoTab);
+            const infoRow = screen.getByText(messages['msg.startName']).closest('.row');
+            expect(infoRow).toBeInTheDocument();
+            const infoColumns = Array.from(infoRow!.querySelectorAll('.col'));
+            expect(infoColumns).toHaveLength(3);
+            expect(infoColumns.map((column) => column.textContent)).toEqual([
+                messages['msg.startName'],
+                messages['msg.buffer'],
+                messages['msg.rounding'],
+            ]);
+            const bufferInput = within(infoColumns[1] as HTMLElement).getByRole('textbox');
+            const roundingInput = within(infoColumns[2] as HTMLElement).getByRole('textbox');
+            expect(bufferInput).toBeDefined();
+            expect(roundingInput).toBeDefined();
+            await user.type(bufferInput!, '5');
+            await user.type(roundingInput!, '10');
+            await waitFor(() => {
+                expect(getTrackCompositions(store.getState())[0]).toMatchObject({ buffer: 5, rounding: 10 });
+            });
+            const infoSummary = screen.getByRole('table');
+            const infoHeaders = within(infoSummary).getAllByRole('columnheader');
+            expect(infoHeaders.slice(0, 2).map((header) => header.textContent)).toEqual([
+                messages['msg.publicStart'],
+                messages['msg.start'],
+            ]);
+            expect(within(infoSummary).getAllByRole('cell')[0]).toHaveTextContent(
+                formatTimeOnly(getTrackStreetInfos(store.getState())[0]!.publicStart!)
+            );
             await user.click(streetsTab);
             const insertionRail = screen.getByTestId('street-insertion-rail');
             const insertionButtons = within(insertionRail).getAllByRole('button');
