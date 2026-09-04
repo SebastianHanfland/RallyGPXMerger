@@ -12,21 +12,13 @@ import type { ReactNode } from 'react';
 import { PlannerSidebarOverviewStartNames } from './PlannerSidebarOverviewStartNames.tsx';
 
 export const PlannerSidebarOverview = () => {
-    const accordionEntries: { key: string; title: string; component: ReactNode }[] = [
-        { key: 'checks', title: 'msg.checks', component: <PlannerSidebarOverviewChecks /> },
-        {
-            key: 'points',
-            title: 'msg.points',
-            component: <PointsOfInterest />,
-        },
-        { key: 'streets', title: 'msg.streetOverview', component: <PlannerSidebarOverviewStreets /> },
-        {
-            key: 'start-names',
-            title: 'msg.startNameOverwrite',
-            component: <PlannerSidebarOverviewStartNames />,
-        },
-        { key: 'communicated-start', title: 'msg.communicatedStart', component: <StartTimeTable /> },
-        { key: 'nodes', title: 'msg.nodes', component: <TrackNodesTable /> },
+    const accordionEntries: [string, ReactNode][] = [
+        ['msg.checks', <PlannerSidebarOverviewChecks />],
+        ['msg.points', <PointsOfInterest />],
+        ['msg.streetOverview', <PlannerSidebarOverviewStreets />],
+        ['msg.startNameOverwrite', <PlannerSidebarOverviewStartNames />],
+        ['msg.communicatedStart', <StartTimeTable />],
+        ['msg.nodes', <TrackNodesTable />],
     ];
 
     return (
@@ -41,9 +33,9 @@ export const PlannerSidebarOverview = () => {
                     />
                 </div>
             </div>
-            <Accordion defaultActiveKey="checks">
-                {accordionEntries.map(({ key, title, component }) => (
-                    <Accordion.Item eventKey={key} key={key}>
+            <Accordion defaultActiveKey="msg.checks">
+                {accordionEntries.map(([title, component]) => (
+                    <Accordion.Item eventKey={title} key={title}>
                         <Accordion.Header>
                             <FormattedMessage id={title} />
                         </Accordion.Header>

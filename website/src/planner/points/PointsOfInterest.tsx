@@ -13,10 +13,10 @@ export function PointsOfInterest() {
 
     return (
         <div style={{ height: '95%', overflow: 'auto' }}>
+            <GapFinderParameters />
             <h4>
                 <FormattedMessage id={'msg.gaps'} />
             </h4>
-            <GapFinderParameters />
 
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
