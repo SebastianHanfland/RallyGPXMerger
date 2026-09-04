@@ -7,7 +7,6 @@ import { TrackNodesTable } from '../../../parameters/nodes/TrackNodesTable.tsx';
 import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton.tsx';
 import { NodeOverviewButton } from '../../../parameters/nodes/NodeOverviewButton.tsx';
 import { PlannerSidebarOverviewChecks } from './PlannerSidebarOverviewChecks.tsx';
-import { PlannerSidebarOverviewStreets } from './PlannerSidebarOverviewStreets.tsx';
 import type { ReactNode } from 'react';
 import { PlannerSidebarOverviewStartNames } from './PlannerSidebarOverviewStartNames.tsx';
 
@@ -15,7 +14,6 @@ export const PlannerSidebarOverview = () => {
     const accordionEntries: [string, ReactNode][] = [
         ['msg.checks', <PlannerSidebarOverviewChecks />],
         ['msg.points', <PointsOfInterest />],
-        ['msg.streetOverview', <PlannerSidebarOverviewStreets />],
         ['msg.startNameOverwrite', <PlannerSidebarOverviewStartNames />],
         ['msg.communicatedStart', <StartTimeTable />],
         ['msg.nodes', <TrackNodesTable />],
