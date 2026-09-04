@@ -5,6 +5,7 @@ import { getPoints } from '../store/points.reducer.ts';
 import { getGaps } from '../calculation/getGaps.ts';
 import { PointOfInterestDisplay } from './PointOfInterestDisplay.tsx';
 import { FormattedMessage } from 'react-intl';
+import { GapFinderParameters } from '../parameters/GapFinderParameters.tsx';
 
 export function PointsOfInterest() {
     const pointOfInterests = useSelector(getPoints) ?? [];
@@ -15,6 +16,8 @@ export function PointsOfInterest() {
             <h4>
                 <FormattedMessage id={'msg.gaps'} />
             </h4>
+            <GapFinderParameters />
+
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>
