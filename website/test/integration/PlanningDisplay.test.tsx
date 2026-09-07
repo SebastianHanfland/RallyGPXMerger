@@ -15,7 +15,12 @@ import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedT
 import { getTrackStreetInfos } from '../../src/planner/calculation/getTrackStreetInfos';
 import { formatTimeOnly } from '../../src/utils/dateUtil';
 import { getGapToleranceInKm } from '../../src/planner/store/settings.reducer';
-import { getHighlightedStreetPath, getStreetPointSelection, mapActions } from '../../src/planner/store/map.reducer';
+import {
+    getHighlightedStreetPath,
+    getPointToCenter,
+    getStreetPointSelection,
+    mapActions,
+} from '../../src/planner/store/map.reducer';
 
 const messages = getMessages('en');
 
@@ -378,6 +383,15 @@ describe('Planner integration test', () => {
                 firstStreetName ?? messages['msg.unknown']
             );
             expect(within(startNameTable).getAllByRole('textbox')).toHaveLength(2);
+            const startLinks = within(startNameTable).getAllByRole('button', { name: messages['msg.goToStart'] });
+            expect(startLinks).toHaveLength(2);
+            const firstStartPoint = getTrackStreetInfos(store.getState())[0]!.wayPoints[0]!.pointFrom;
+            await user.click(startLinks[0]!);
+            expect(getPointToCenter(store.getState())).toMatchObject({
+                lat: firstStartPoint.lat,
+                lng: firstStartPoint.lon + 0.01,
+                zoom: 15,
+            });
 
             const firstTrack = getTrackCompositions(store.getState())[0]!;
             store.dispatch(trackMergeActions.setTrackStartName({ id: firstTrack.id, startName: 'Published start' }));
