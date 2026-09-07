@@ -16,13 +16,13 @@ import { PointsOfInterestHeader } from '../../../points/PointsOfInterestHeader.t
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
 
-    const accordionEntries: [string | ReactNode, ReactNode][] = [
-        [intl.formatMessage({ id: 'msg.checks' }), <PlannerSidebarOverviewChecks />],
-        [<GapOverviewHeader />, <GapOverview />],
-        [<PointsOfInterestHeader />, <PointsOfInterest />],
-        [intl.formatMessage({ id: 'msg.startNameOverwrite' }), <PlannerSidebarOverviewStartNames />],
-        [intl.formatMessage({ id: 'msg.communicatedStart' }), <StartTimeTable />],
-        [intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
+    const accordionEntries: [string, string | ReactNode, ReactNode][] = [
+        ['checks', intl.formatMessage({ id: 'msg.checks' }), <PlannerSidebarOverviewChecks />],
+        ['gaps', <GapOverviewHeader />, <GapOverview />],
+        ['points', <PointsOfInterestHeader />, <PointsOfInterest />],
+        ['start', intl.formatMessage({ id: 'msg.startNameOverwrite' }), <PlannerSidebarOverviewStartNames />],
+        ['comStart', intl.formatMessage({ id: 'msg.communicatedStart' }), <StartTimeTable />],
+        ['nodes', intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
     ];
 
     return (
@@ -38,8 +38,8 @@ export const PlannerSidebarOverview = () => {
                 </div>
             </div>
             <Accordion defaultActiveKey="msg.checks">
-                {accordionEntries.map(([title, component]) => (
-                    <Accordion.Item eventKey={title} key={title}>
+                {accordionEntries.map(([key, title, component]) => (
+                    <Accordion.Item eventKey={key} key={key}>
                         <Accordion.Header>{title}</Accordion.Header>
                         <Accordion.Body>{component}</Accordion.Body>
                     </Accordion.Item>
