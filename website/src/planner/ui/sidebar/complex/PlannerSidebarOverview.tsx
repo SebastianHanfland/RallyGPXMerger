@@ -14,6 +14,7 @@ import { GapOverviewHeader } from '../../../points/GapOverviewHeader.tsx';
 import { PointsOfInterestHeader } from '../../../points/PointsOfInterestHeader.tsx';
 import { OverviewChecksHeader } from './OverviewChecksHeader.tsx';
 import { PlannerSidebarOverviewStartNamesHeader } from './PlannerSidebarOverviewStartNamesHeader.tsx';
+import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader.tsx';
 
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
@@ -23,7 +24,7 @@ export const PlannerSidebarOverview = () => {
         ['gaps', <GapOverviewHeader />, <GapOverview />],
         ['points', <PointsOfInterestHeader />, <PointsOfInterest />],
         ['start', <PlannerSidebarOverviewStartNamesHeader />, <PlannerSidebarOverviewStartNames />],
-        ['comStart', intl.formatMessage({ id: 'msg.communicatedStart' }), <StartTimeTable />],
+        ['comStart', <PlannerSidebarOverviewStartTimesHeader />, <StartTimeTable />],
         ['nodes', intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
     ];
 
