@@ -1,5 +1,14 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { BreakEditInfo, EntryPointEditInfo, State, TrackComposition, TrackElement, TrackMergeState } from './types.ts';
+import {
+    BreakEditInfo,
+    EntryPointEditInfo,
+    isTrackEntryPoint,
+    State,
+    TrackComposition,
+    TrackElement,
+    TrackEntry,
+    TrackMergeState,
+} from './types.ts';
 import { storage } from './storage.ts';
 import { v4 as uuidv4 } from 'uuid';
 import { filterItems } from '../../utils/filterUtil.ts';
@@ -28,6 +37,28 @@ const trackMergeSlice = createSlice({
         setSegments: (state: TrackMergeState, action: PayloadAction<{ id: string; segments: TrackElement[] }>) => {
             state.trackCompositions = state.trackCompositions.map((track) =>
                 track.id === action.payload.id ? { ...track, segments: action.payload.segments } : track
+            );
+        },
+        updateEntryPoint: (
+            state: TrackMergeState,
+            action: PayloadAction<{
+                trackId: string;
+                entryPointId: string;
+                values: Partial<Pick<TrackEntry, 'streetName' | 'buffer' | 'rounding' | 'extraInfo'>>;
+            }>
+        ) => {
+            const { trackId, entryPointId, values } = action.payload;
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id !== trackId
+                    ? track
+                    : {
+                          ...track,
+                          segments: track.segments.map((element) =>
+                              element.id === entryPointId && isTrackEntryPoint(element)
+                                  ? { ...element, ...values }
+                                  : element
+                          ),
+                      }
             );
         },
         removeSegmentFromTrack: (state: TrackMergeState, action: PayloadAction<{ id: string; segmentId: string }>) => {

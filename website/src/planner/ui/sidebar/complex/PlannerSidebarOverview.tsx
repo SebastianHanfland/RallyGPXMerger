@@ -15,6 +15,7 @@ import { PointsOfInterestHeader } from '../../../points/PointsOfInterestHeader.t
 import { OverviewChecksHeader } from './OverviewChecksHeader.tsx';
 import { PlannerSidebarOverviewStartNamesHeader } from './PlannerSidebarOverviewStartNamesHeader.tsx';
 import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader.tsx';
+import { PlannerSidebarOverviewEntryPoints } from './PlannerSidebarOverviewEntryPoints.tsx';
 
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
@@ -25,6 +26,7 @@ export const PlannerSidebarOverview = () => {
         ['points', <PointsOfInterestHeader />, <PointsOfInterest />],
         ['start', <PlannerSidebarOverviewStartNamesHeader />, <PlannerSidebarOverviewStartNames />],
         ['comStart', <PlannerSidebarOverviewStartTimesHeader />, <StartTimeTable />],
+        ['entryPoints', intl.formatMessage({ id: 'msg.entryPoints' }), <PlannerSidebarOverviewEntryPoints />],
         ['nodes', intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
     ];
 
