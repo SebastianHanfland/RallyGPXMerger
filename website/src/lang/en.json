@@ -258,6 +258,7 @@
     "msg.gaps": "Gaps",
     "msg.gapOnTrack": "{count} gap bigger than {distance} m on the track",
     "msg.gapsOnTrack": "{count} gaps bigger than {distance} m on the track",
+    "msg.gapSize": "Gap size in m",
     "msg.title": "Title",
     "msg.description": "Description",
     "msg.radius": "Radius in m",

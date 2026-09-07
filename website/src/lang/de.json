@@ -262,6 +262,7 @@
     "msg.gaps": "Lücken",
     "msg.gapOnTrack": "{count} Lücke größer als {distance} m auf der Route",
     "msg.gapsOnTrack": "{count} Lücken größer als {distance} m auf der Route",
+    "msg.gapSize": "Lückengröße in m",
     "msg.title": "Titel",
     "msg.description": "Beschreibung",
     "msg.radius": "Radius in m",

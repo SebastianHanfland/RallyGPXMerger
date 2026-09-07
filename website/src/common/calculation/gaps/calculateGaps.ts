@@ -35,11 +35,8 @@ export const calculateGaps = (tracks: TrackComposition[], segments: ParsedGpxSeg
                         lng,
                         type: PointOfInterestType.GAP,
                         radiusInM: (distance * 1000) / 2,
-                        title: `Gap bigger than ${Math.round(tolerance * 1000)} m`,
-                        description:
-                            'Distance ' +
-                            Math.round(distance * 1000) +
-                            ` m between "${lastSegment?.filename ?? ''}" and "${foundSegment.filename}"`,
+                        title: `${Math.round(distance * 1000)} m Gap`,
+                        description: `between "${lastSegment?.filename ?? ''}" and "${foundSegment.filename}"`,
                         trackId: track.id,
                         segmentIdBefore: lastSegmentId,
                         segmentIdAfter: segment.segmentId,
