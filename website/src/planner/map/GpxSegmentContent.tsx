@@ -6,7 +6,7 @@ import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
 import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
 import { SplitSegmentDropdownItem } from '../segments/SplitSegment.tsx';
 import { getClickOnSegment, getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { useOnTheFlyCreatedGpx } from '../../utils/gpxUtil.ts';
+import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints.ts';
 import { EditSegmentColorButton } from '../segments/EditSegmentColor.tsx';
 import { FileChangeButton } from '../segments/FileChangeButton.tsx';
 
@@ -14,8 +14,6 @@ export const GpxSegmentContent = () => {
     const clickOnSegment = useSelector(getClickOnSegment);
     const segments = useSelector(getParsedGpxSegments);
     const clickedSegment = segments.find((segment) => segment.id === clickOnSegment?.segmentId);
-    const gpxContent = useOnTheFlyCreatedGpx(clickedSegment);
-
     if (!clickedSegment) {
         return null;
     }
@@ -23,7 +21,10 @@ export const GpxSegmentContent = () => {
 
     return (
         <div>
-            <FileDownloaderDropdownItem content={gpxContent} name={`${filename}.gpx`} />
+            <FileDownloaderDropdownItem
+                content={() => getGpxContentStringFromParsedSegment(clickedSegment)}
+                name={`${filename}.gpx`}
+            />
             <SplitSegmentDropdownItem />
 
             <FileChangeWithUploadButton id={id} name={filename} />

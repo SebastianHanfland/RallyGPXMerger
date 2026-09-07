@@ -6,7 +6,7 @@ import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
 
 interface Props {
     id: string;
-    content: string;
+    content: string | (() => string);
     name: string;
     color?: string;
     onlyIcon?: boolean;
@@ -15,8 +15,12 @@ interface Props {
 }
 
 interface DropdownProps {
-    content: string;
+    content: string | (() => string);
     name: string;
+}
+
+function getContent(content: string | (() => string)) {
+    return typeof content === 'function' ? content() : content;
 }
 
 function getType(name: string) {
@@ -39,7 +43,7 @@ export const FileDownloader = (props: Props) => {
     const intl = useIntl();
     return (
         <Button
-            onClick={() => downloadFile(name, content)}
+            onClick={() => downloadFile(name, getContent(content))}
             style={{ backgroundColor: getColor(props) }}
             size={size}
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
@@ -55,7 +59,7 @@ export const FileDownloaderDropdownItem = ({ name, content }: DropdownProps) => 
     const intl = useIntl();
     return (
         <Dropdown.Item
-            onClick={() => downloadFile(name, content)}
+            onClick={() => downloadFile(name, getContent(content))}
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
         >
             <DownloadIcon black={true} />

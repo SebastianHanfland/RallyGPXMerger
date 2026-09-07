@@ -24,15 +24,15 @@ export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackSt
         return null;
     }
     const calculatedTrack = calculatedTracks.find((track) => track.id === matchedTrackInfo?.id);
-    const content = getGpxContentFromTimedPoints(calculatedTrack?.points ?? [], calculatedTrack?.filename ?? 'Track');
-
     return (
         <div className={'d-flex flex-row'}>
             <TrackInfoPdfDownloadButton trackStreets={matchedTrackInfo} planningLabel={planningLabel} />
             {calculatedTrack && (
                 <FileDownloader
                     name={`${calculatedTrack.filename}.gpx`}
-                    content={content}
+                    content={() =>
+                        getGpxContentFromTimedPoints(calculatedTrack.points, calculatedTrack.filename ?? 'Track')
+                    }
                     id={calculatedTrack.id}
                     color={calculatedTrack.color}
                     label={'GPX'}

@@ -12,7 +12,7 @@ import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsB
 import { AppDispatch } from '../../store/planningStore.ts';
 import flip from '../../../assets/flip.svg';
 import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
-import { useOnTheFlyCreatedGpx } from '../../../utils/gpxUtil.ts';
+import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
 import { getSegmentUsages, getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
@@ -42,8 +42,6 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
     const { tooltip } = getUsagesOfSegment(segmentUsages, segmentId, intl, trackCompositions.length > 0);
 
     const gpxSegment = useSelector(getParsedGpxSegments).find((segment) => segment.id === segmentId);
-    const content = useOnTheFlyCreatedGpx(gpxSegment);
-
     if (!gpxSegment) {
         return null;
     }
@@ -95,7 +93,10 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                         variant={'primary'}
                         title={''}
                     >
-                        <FileDownloaderDropdownItem content={content} name={`${filename}.gpx`} />
+                        <FileDownloaderDropdownItem
+                            content={() => getGpxContentStringFromParsedSegment(gpxSegment)}
+                            name={`${filename}.gpx`}
+                        />
                         <FileChangeWithUploadButton id={id} name={filename} />
                         <FileChangeButton id={id} name={filename} />
                         <RemoveFileButton id={id} name={filename} />

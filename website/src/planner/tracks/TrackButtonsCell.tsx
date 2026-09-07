@@ -30,8 +30,6 @@ export function TrackButtonsCell({ track }: Props) {
 
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
 
-    const content = getGpxContentFromTimedPoints(calculatedTrack?.points ?? [], calculatedTrack?.filename ?? 'Track');
-
     useEffect(() => {
         setColor(getColor(track));
     }, [track.id]);
@@ -99,7 +97,12 @@ export function TrackButtonsCell({ track }: Props) {
                 />
             )}
             {calculatedTrack && (
-                <FileDownloaderDropdownItem content={content} name={calculatedTrack.filename + '.gpx'} />
+                <FileDownloaderDropdownItem
+                    content={() =>
+                        getGpxContentFromTimedPoints(calculatedTrack.points, calculatedTrack.filename ?? 'Track')
+                    }
+                    name={calculatedTrack.filename + '.gpx'}
+                />
             )}
         </DropdownButton>
     );
