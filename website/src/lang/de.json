@@ -13,7 +13,7 @@
     "msg.planning": "Planung",
     "msg.settings": "Einstellungen",
     "msg.overview": "Übersicht",
-    "msg.checks": "Prüfungen",
+    "msg.checks": "Straßennamenauflösung überprüfen",
     "msg.cloudActions": "Cloud-Speicherung",
     "msg.cloudSaving": "Cloud-Speicherung",
     "msg.description.overview": "Prüfen Sie unbekannte Straßen und Lücken für alle Routen, öffnen Sie detaillierte Straßeninformationen und bearbeiten Sie den Startnamen jeder Route.",

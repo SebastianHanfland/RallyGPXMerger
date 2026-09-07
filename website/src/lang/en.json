@@ -13,7 +13,7 @@
     "msg.planning": "Planning",
     "msg.settings": "Settings",
     "msg.overview": "Overview",
-    "msg.checks": "Checks",
+    "msg.checks": "Check street resolving",
     "msg.cloudActions": "Cloud saving",
     "msg.cloudSaving": "Cloud saving",
     "msg.description.overview": "Review unknown streets and gaps for all tracks, open detailed street information, and edit the start name of each track.",
