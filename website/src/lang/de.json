@@ -259,6 +259,8 @@
     "msg.delete": "Löschen",
     "msg.save": "Speichern",
     "msg.points": "Punkte",
+    "msg.noOpenPoints": "Keine offenen Problempunkte",
+    "msg.openPoints": "Offene Problempunkte",
     "msg.gaps": "Lücken",
     "msg.noGaps": "Keine Lücken",
     "msg.gapOnTrack": "{count} Lücke größer als {distance} m auf der Route",
