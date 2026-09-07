@@ -286,6 +286,8 @@
     "msg.resetAllStreets.warning": "Achtung: Die Auflösung aller Straßen kann viele Geoapify-API-Token verbrauchen.",
     "msg.resetAllStreets.apiKeyAdvice": "Wenn Sie diese Funktion häufig verwenden, wird die Verwendung eines eigenen Geoapify-API-Schlüssels empfohlen.",
     "msg.communicatedStart": "Veröffentliche Startzeiten",
+    "msg.setBufferForAllTracks": "Puffer für alle Routen setzen",
+    "msg.setRoundingForAllTracks": "Rundung für alle Routen setzen",
     "msg.allTracksHaveStartTimeConfiguration": "Für alle Routen ist ein Puffer oder eine Rundung gesetzt",
     "msg.tracksWithoutStartTimeConfiguration": "Bei {amount} Routen ist weder Puffer noch Rundung gesetzt",
     "msg.priority": "Prio",

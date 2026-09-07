@@ -79,6 +79,18 @@ const trackMergeSlice = createSlice({
                 track.id === action.payload.id ? { ...track, buffer: action.payload.buffer } : track
             );
         },
+        setTrackBufferForAll: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
+            state.trackCompositions = state.trackCompositions.map((track) => ({
+                ...track,
+                buffer: action.payload,
+            }));
+        },
+        setTrackRoundingForAll: (state: TrackMergeState, action: PayloadAction<number | undefined>) => {
+            state.trackCompositions = state.trackCompositions.map((track) => ({
+                ...track,
+                rounding: action.payload,
+            }));
+        },
         setTrackStartName: (
             state: TrackMergeState,
             action: PayloadAction<{ id: string; startName: string | undefined }>

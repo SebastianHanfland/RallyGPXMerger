@@ -282,6 +282,8 @@
     "msg.resetAllStreets.warning": "Caution: resolving all streets can consume many Geoapify API tokens.",
     "msg.resetAllStreets.apiKeyAdvice": "If you use this operation frequently, configuring your own Geoapify API key is recommended.",
     "msg.communicatedStart": "Published start times",
+    "msg.setBufferForAllTracks": "Set buffer for all tracks",
+    "msg.setRoundingForAllTracks": "Set rounding for all tracks",
     "msg.allTracksHaveStartTimeConfiguration": "All tracks have a buffer or rounding set",
     "msg.tracksWithoutStartTimeConfiguration": "{amount} tracks have neither buffer nor rounding set",
     "msg.priority": "Prio",

@@ -5,6 +5,7 @@ import { getCount } from '../../../utils/inputUtil.ts';
 import { useIntl } from 'react-intl';
 import { TrackComposition } from '../../store/types.ts';
 import { AppDispatch } from '../../store/planningStore.ts';
+import { useEffect, useState } from 'react';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
@@ -20,13 +21,20 @@ export const TrackRounding = ({ track }: { track: TrackComposition }) => {
     const dispatch: AppDispatch = useDispatch();
 
     const { id, rounding } = track;
+    const [value, setValue] = useState(rounding?.toString() ?? '');
+
+    useEffect(() => {
+        setValue(rounding?.toString() ?? '');
+    }, [rounding]);
+
     return (
         <Form.Control
             type="text"
             placeholder={intl.formatMessage({ id: 'msg.rounding' })}
-            defaultValue={rounding?.toString() ?? ''}
-            onChange={(value) => {
-                debounceSettingOfRounding(dispatch, getCount(value), id);
+            value={value}
+            onChange={(event) => {
+                setValue(event.target.value);
+                debounceSettingOfRounding(dispatch, getCount(event), id);
             }}
         />
     );
