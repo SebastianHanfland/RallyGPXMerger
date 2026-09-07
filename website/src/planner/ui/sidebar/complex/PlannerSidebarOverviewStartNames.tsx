@@ -19,7 +19,7 @@ export const PlannerSidebarOverviewStartNames = () => {
                         <FormattedMessage id="msg.trackName" />
                     </th>
                     <th style={{ width: '30%' }}>
-                        <FormattedMessage id="msg.originalStartName" />
+                        <FormattedMessage id="msg.publicStart" />
                     </th>
                     <th style={{ width: '40%' }}>
                         <FormattedMessage id="msg.startName" />
@@ -31,12 +31,20 @@ export const PlannerSidebarOverviewStartNames = () => {
                     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
                     const firstStreetName = matchedTrackInfo?.wayPoints[0]?.streetName;
                     const isUnknown = !firstStreetName || firstStreetName === unknown;
+                    const originalStartName = isUnknown ? unknown : firstStreetName!;
+                    const overwrittenStartName = track.startName?.trim();
 
                     return (
                         <tr key={track.id}>
                             <td>{track.name || '---'}</td>
                             <td>
-                                <HighlightUnknown value={isUnknown ? unknown : firstStreetName} />
+                                {overwrittenStartName ? (
+                                    <span title={originalStartName} style={{ fontWeight: 'bold' }}>
+                                        {track.startName}
+                                    </span>
+                                ) : (
+                                    <HighlightUnknown value={originalStartName} />
+                                )}
                             </td>
                             <td>
                                 <TrackStartName track={track} />

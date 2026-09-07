@@ -371,7 +371,7 @@ describe('Planner integration test', () => {
                 within(startNameTable)
                     .getAllByRole('columnheader')
                     .map((header) => header.textContent)
-            ).toEqual([messages['msg.trackName'], messages['msg.originalStartName'], messages['msg.startName']]);
+            ).toEqual([messages['msg.trackName'], messages['msg.publicStart'], messages['msg.startName']]);
             const firstStreetName = getTrackStreetInfos(store.getState())[0]!.wayPoints[0]!.streetName;
             const startNameRows = within(startNameTable).getAllByRole('row');
             expect(within(startNameRows[1]!).getAllByRole('cell')[1]).toHaveTextContent(
@@ -379,10 +379,20 @@ describe('Planner integration test', () => {
             );
             expect(within(startNameTable).getAllByRole('textbox')).toHaveLength(2);
 
+            const firstTrack = getTrackCompositions(store.getState())[0]!;
+            store.dispatch(trackMergeActions.setTrackStartName({ id: firstTrack.id, startName: 'Published start' }));
+            const firstPublishedCell = within(startNameTable).getAllByRole('row')[1]!.querySelectorAll('td')[1]!;
+            await waitFor(() => expect(firstPublishedCell).toHaveTextContent('Published start'));
+            expect(firstPublishedCell.querySelector('span')).toHaveStyle({ fontWeight: 'bold' });
+            expect(firstPublishedCell.querySelector('span')).toHaveAttribute(
+                'title',
+                firstStreetName ?? messages['msg.unknown']
+            );
+
             const unknownOriginalStartNames = getTrackCompositions(store.getState()).filter((track) => {
                 const firstStreetName = getTrackStreetInfos(store.getState()).find((info) => info.id === track.id)
                     ?.wayPoints[0]?.streetName;
-                return !firstStreetName || firstStreetName === messages['msg.unknown'];
+                return (!firstStreetName || firstStreetName === messages['msg.unknown']) && !track.startName?.trim();
             }).length;
             if (unknownOriginalStartNames === 0) {
                 expect(
