@@ -256,6 +256,7 @@
     "msg.save": "Save",
     "msg.points": "Points",
     "msg.gaps": "Gaps",
+    "msg.noGaps": "No gaps",
     "msg.gapOnTrack": "{count} gap bigger than {distance} m on the track",
     "msg.gapsOnTrack": "{count} gaps bigger than {distance} m on the track",
     "msg.gapSize": "Gap size in m",

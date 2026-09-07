@@ -260,6 +260,7 @@
     "msg.save": "Speichern",
     "msg.points": "Punkte",
     "msg.gaps": "Lücken",
+    "msg.noGaps": "Keine Lücken",
     "msg.gapOnTrack": "{count} Lücke größer als {distance} m auf der Route",
     "msg.gapsOnTrack": "{count} Lücken größer als {distance} m auf der Route",
     "msg.gapSize": "Lückengröße in m",

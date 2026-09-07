@@ -10,12 +10,14 @@ import { PlannerSidebarOverviewChecks } from './PlannerSidebarOverviewChecks.tsx
 import type { ReactNode } from 'react';
 import { PlannerSidebarOverviewStartNames } from './PlannerSidebarOverviewStartNames.tsx';
 import { GapOverview } from '../../../points/GapOverview.tsx';
+import { GapOverviewHeader } from '../../../points/GapOverviewHeader.tsx';
 
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
-    const accordionEntries: [string, ReactNode][] = [
+
+    const accordionEntries: [string | ReactNode, ReactNode][] = [
         [intl.formatMessage({ id: 'msg.checks' }), <PlannerSidebarOverviewChecks />],
-        [intl.formatMessage({ id: 'msg.gaps' }), <GapOverview />],
+        [<GapOverviewHeader />, <GapOverview />],
         [intl.formatMessage({ id: 'msg.points' }), <PointsOfInterest />],
         [intl.formatMessage({ id: 'msg.startNameOverwrite' }), <PlannerSidebarOverviewStartNames />],
         [intl.formatMessage({ id: 'msg.communicatedStart' }), <StartTimeTable />],
