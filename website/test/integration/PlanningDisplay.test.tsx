@@ -359,6 +359,21 @@ describe('Planner integration test', () => {
             expect(getTrackCompositions(store.getState())[1].segments).toHaveLength(2);
 
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2), timeout);
+
+            await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
+            const startNameAccordion = screen.getByRole('button', { name: messages['msg.startNameOverwrite'] });
+            await user.click(startNameAccordion);
+            const startNameTable = within(startNameAccordion.closest('.accordion-item')!).getByRole('table');
+            expect(
+                within(startNameTable)
+                    .getAllByRole('columnheader')
+                    .map((header) => header.textContent)
+            ).toEqual([messages['msg.trackName'], messages['msg.originalStartName'], messages['msg.startName']]);
+            const firstStreetName = getTrackStreetInfos(store.getState())[0]!.wayPoints[0]!.streetName;
+            const startNameRows = within(startNameTable).getAllByRole('row');
+            expect(within(startNameRows[1]!).getAllByRole('cell')[1]).toHaveTextContent(firstStreetName ?? '');
+            expect(within(startNameTable).getAllByRole('textbox')).toHaveLength(2);
+
             ui.pdfDownloadButton();
         });
 
