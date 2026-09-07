@@ -79,6 +79,8 @@
     "msg.bufferedTime": "Buffered time",
     "msg.realTime": "Real time",
     "msg.entryPointsCount": "({amount} entry points)",
+    "msg.allEntryPointsConfigured": "All entry points have a street name and buffer or rounding set",
+    "msg.entryPointsMissingConfiguration": "{amount} entry points lack a street name or buffer or rounding",
     "msg.people": "People",
     "msg.trackSegments": "Track segments",
     "msg.trackPeople": "People on Track",

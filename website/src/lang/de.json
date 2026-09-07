@@ -79,6 +79,8 @@
     "msg.bufferedTime": "Zeit mit Puffer",
     "msg.realTime": "Tatsächliche Zeit",
     "msg.entryPointsCount": "({amount} Einstiegspunkte)",
+    "msg.allEntryPointsConfigured": "Für alle Einstiegspunkte sind Straßenname und Puffer oder Rundung gesetzt",
+    "msg.entryPointsMissingConfiguration": "Bei {amount} Einstiegspunkten fehlen Straßenname oder Puffer oder Rundung",
     "msg.people": "Leute",
     "msg.trackPeople": "Leute auf der Route",
     "msg.trackSegments": "Routensegmente",
