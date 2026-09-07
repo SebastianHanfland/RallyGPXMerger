@@ -8,6 +8,7 @@ import { TrashIcon } from '../../../../utils/icons/TrashIcon.tsx';
 import { getColor } from '../../../../utils/colorUtil.ts';
 import { getCount } from '../../../../utils/inputUtil.ts';
 import { getEntryPointTime } from '../../../../utils/entryPointUtil.ts';
+import { formatTimeOnly } from '../../../../utils/dateUtil.ts';
 import { toLatLng } from '../../../../utils/pointUtil.ts';
 import { ConfirmationModal } from '../../../../common/ConfirmationModal.tsx';
 import { mapActions } from '../../../store/map.reducer.ts';
@@ -81,15 +82,13 @@ function EntryPointRow({
 
     return (
         <tr title={entryPoint.extraInfo ?? undefined}>
-            <td>
-                <ColorBlob color={getColor(track)} />
-                {track.name || '---'}
-            </td>
             <td>{position ? getEntryPointTime(position) : ''}</td>
+            <td>{position ? formatTimeOnly(position.passageAt, true) : ''}</td>
             <td>
                 <Form.Control
                     type="number"
                     min={0}
+                    style={{ width: '4rem' }}
                     value={entryPoint.rounding ?? ''}
                     aria-label={`${intl.formatMessage({ id: 'msg.rounding' })} ${track.name ?? ''}`}
                     onChange={(event) => update({ rounding: getCount(event) })}
@@ -99,12 +98,13 @@ function EntryPointRow({
                 <Form.Control
                     type="number"
                     min={0}
+                    style={{ width: '4rem' }}
                     value={entryPoint.buffer ?? ''}
                     aria-label={`${intl.formatMessage({ id: 'msg.buffer' })} ${track.name ?? ''}`}
                     onChange={(event) => update({ buffer: getCount(event) })}
                 />
             </td>
-            <td>
+            <td style={{ whiteSpace: 'nowrap' }}>
                 <div className="d-flex align-items-center">
                     {position && (
                         <Button
@@ -180,46 +180,63 @@ export const PlannerSidebarOverviewEntryPoints = () => {
     const intl = useIntl();
     const tracks = useSelector(getTrackCompositions);
     const positions = useSelector(getAllEntryPointPositions);
-    const rows = tracks.flatMap((track) =>
-        track.segments
-            .filter(isTrackEntryPoint)
-            .map((entryPoint) => (
-                <EntryPointRow
-                    key={`${track.id}-${entryPoint.id}`}
-                    track={track}
-                    entryPoint={entryPoint}
-                    position={positions.find(
-                        (position) => position.trackId === track.id && position.id === entryPoint.id
-                    )}
-                />
-            ))
-    );
 
     return (
-        <Table striped bordered hover style={{ width: '100%' }} size="sm">
-            <thead>
-                <tr>
-                    <th>
-                        <FormattedMessage id="msg.trackName" />
-                    </th>
-                    <th>
-                        <FormattedMessage id="msg.time" />
-                    </th>
-                    <th>
-                        <FormattedMessage id="msg.rounding" />
-                    </th>
-                    <th>
-                        <FormattedMessage id="msg.buffer" />
-                    </th>
-                    <th>
-                        <FormattedMessage id="msg.street" />
-                    </th>
-                    <th>
-                        <span className="visually-hidden">{intl.formatMessage({ id: 'msg.actions' })}</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-        </Table>
+        <div>
+            {tracks.map((track) => {
+                const entryPoints = track.segments.filter(isTrackEntryPoint);
+                if (entryPoints.length === 0) {
+                    return null;
+                }
+
+                return (
+                    <div key={track.id} className="mb-3">
+                        <div className="fw-bold mb-1">
+                            <ColorBlob color={getColor(track)} />
+                            {track.name || '---'}{' '}
+                            <FormattedMessage id="msg.entryPointsCount" values={{ amount: entryPoints.length }} />
+                        </div>
+                        <Table striped bordered hover style={{ width: '100%' }} size="sm">
+                            <thead>
+                                <tr>
+                                    <th style={{ whiteSpace: 'normal' }}>
+                                        <FormattedMessage id="msg.bufferedTime" />
+                                    </th>
+                                    <th style={{ whiteSpace: 'normal' }}>
+                                        <FormattedMessage id="msg.realTime" />
+                                    </th>
+                                    <th style={{ whiteSpace: 'normal' }}>
+                                        <FormattedMessage id="msg.rounding" />
+                                    </th>
+                                    <th style={{ whiteSpace: 'normal' }}>
+                                        <FormattedMessage id="msg.buffer" />
+                                    </th>
+                                    <th style={{ whiteSpace: 'normal' }}>
+                                        <FormattedMessage id="msg.street" />
+                                    </th>
+                                    <th style={{ whiteSpace: 'nowrap' }}>
+                                        <span className="visually-hidden">
+                                            {intl.formatMessage({ id: 'msg.actions' })}
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {entryPoints.map((entryPoint) => (
+                                    <EntryPointRow
+                                        key={`${track.id}-${entryPoint.id}`}
+                                        track={track}
+                                        entryPoint={entryPoint}
+                                        position={positions.find(
+                                            (position) => position.trackId === track.id && position.id === entryPoint.id
+                                        )}
+                                    />
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                );
+            })}
+        </div>
     );
 };
