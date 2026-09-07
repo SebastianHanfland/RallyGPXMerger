@@ -261,6 +261,7 @@
     "msg.points": "Punkte",
     "msg.noOpenPoints": "Keine offenen Problempunkte",
     "msg.openPoints": "Offene Problempunkte",
+    "msg.pointsOnPublicMap": "veröffentlichte Punkte auf der Karte",
     "msg.gaps": "Lücken",
     "msg.noGaps": "Keine Lücken",
     "msg.gapOnTrack": "{count} Lücke größer als {distance} m auf der Route",

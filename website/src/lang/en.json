@@ -257,6 +257,7 @@
     "msg.points": "Points",
     "msg.noOpenPoints": "No open problem points",
     "msg.openPoints": "Open problem points",
+    "msg.pointsOnPublicMap": "public points on map",
     "msg.gaps": "Gaps",
     "msg.noGaps": "No gaps",
     "msg.gapOnTrack": "{count} gap bigger than {distance} m on the track",
