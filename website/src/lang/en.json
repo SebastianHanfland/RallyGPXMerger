@@ -363,6 +363,8 @@
     "msg.fileSaved.success.title": "File saved",
     "msg.fileSaved.success.message": "A file with all relevant information was downloaded. With it, you can access the planning again",
     "msg.publicLink": "Public link",
+    "msg.publicLinks": "Public links",
+    "msg.publicLinks.unsaved": "Public links are available after the planning has been saved.",
     "msg.publicLink.times.section": "Advanced functionality for entry points",
     "msg.publicLink.times.defaultOn": "Times per default on",
     "msg.publicLink.times.defaultOff": "Times per default off",

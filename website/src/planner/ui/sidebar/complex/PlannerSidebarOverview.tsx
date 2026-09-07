@@ -17,6 +17,7 @@ import { PlannerSidebarOverviewStartNamesHeader } from './PlannerSidebarOverview
 import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader.tsx';
 import { PlannerSidebarOverviewEntryPoints } from './PlannerSidebarOverviewEntryPoints.tsx';
 import { PlannerSidebarOverviewEntryPointsHeader } from './PlannerSidebarOverviewEntryPointsHeader.tsx';
+import { PlannerSidebarOverviewPublicLinks } from './PlannerSidebarOverviewPublicLinks.tsx';
 
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
@@ -29,6 +30,7 @@ export const PlannerSidebarOverview = () => {
         ['comStart', <PlannerSidebarOverviewStartTimesHeader />, <StartTimeTable />],
         ['entryPoints', <PlannerSidebarOverviewEntryPointsHeader />, <PlannerSidebarOverviewEntryPoints />],
         ['nodes', intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
+        ['publicLinks', intl.formatMessage({ id: 'msg.publicLinks' }), <PlannerSidebarOverviewPublicLinks />],
     ];
 
     return (

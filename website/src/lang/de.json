@@ -363,6 +363,8 @@
     "msg.fileSaved.success.title": "Datei Gespeichert",
     "msg.fileSaved.success.message": "Eine Datei mit allen wichtigen Infos zur Planung wurde heruntergeladen. Damit können Sie wieder auf die Planung zugreifen",
     "msg.publicLink": "Öffentlicher Link",
+    "msg.publicLinks": "Öffentliche Links",
+    "msg.publicLinks.unsaved": "Öffentliche Links sind verfügbar, sobald die Planung gespeichert wurde.",
     "msg.publicLink.times.section": "Erweiterte Funktionalität für Einstiegspunkte",
     "msg.publicLink.times.defaultOn": "Zeiten standardmäßig an",
     "msg.publicLink.times.defaultOff": "Zeiten standardmäßig aus",

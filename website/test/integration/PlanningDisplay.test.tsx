@@ -15,6 +15,7 @@ import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedT
 import { getTrackStreetInfos } from '../../src/planner/calculation/getTrackStreetInfos';
 import { formatTimeOnly } from '../../src/utils/dateUtil';
 import { getGapToleranceInKm } from '../../src/planner/store/settings.reducer';
+import { backendActions } from '../../src/planner/store/backend.reducer';
 import {
     getHighlightedStreetPath,
     getPointToCenter,
@@ -114,6 +115,24 @@ describe('Planner integration test', () => {
             await user.click(nodesAccordion);
             expect(screen.getByRole('columnheader', { name: messages['msg.branches'] })).toBeInTheDocument();
             expect(screen.getByRole('columnheader', { name: messages['msg.type'] })).toBeInTheDocument();
+            const publicLinksAccordion = screen.getByRole('button', { name: messages['msg.publicLinks'] });
+            expect(nodesAccordion.compareDocumentPosition(publicLinksAccordion)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+            await user.click(publicLinksAccordion);
+            const publicLinksItem = publicLinksAccordion.closest('.accordion-item')!;
+            expect(within(publicLinksItem).getByText(messages['msg.publicLinks.unsaved'])).toBeInTheDocument();
+
+            store.dispatch(backendActions.setPlanningId('test-planning'));
+            store.dispatch(backendActions.setIsPlanningSaved(true));
+            expect(within(publicLinksItem).getByRole('link', { name: messages['msg.publicLink'] })).toHaveAttribute(
+                'href',
+                expect.stringContaining('?display=test-planning')
+            );
+            expect(
+                within(publicLinksItem).getByRole('link', { name: messages['msg.publicTableLink'] })
+            ).toHaveAttribute('href', expect.stringContaining('?table=test-planning'));
+            expect(
+                within(publicLinksItem).getByRole('link', { name: messages['msg.publicTableLink.withIndex'] })
+            ).toHaveAttribute('target', '_blank');
 
             await user.click(screen.getByRole('button', { name: messages['msg.settings'] }));
             expect(screen.queryByRole('button', { name: messages['msg.communicatedStart'] })).toBeNull();
