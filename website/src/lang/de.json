@@ -212,6 +212,8 @@
     "msg.startNameOverwrite": "Überschreiben der Startnamen",
     "msg.startName": "Startname",
     "msg.originalStartName": "Ursprünglicher Startname",
+    "msg.numberOfUnknownOriginalStartNames": "Es gibt {amount} unbekannte ursprüngliche Startstraßennamen",
+    "msg.noUnknownOriginalStartNames": "Alle ursprünglichen Startstraßennamen sind bekannt oder überschrieben",
     "msg.breakLength": "Pausenlänge",
     "msg.pointInTime": "Zeitpunkt",
     "msg.otherTracks": "Andere Routen",

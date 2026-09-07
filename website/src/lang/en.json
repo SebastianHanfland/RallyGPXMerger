@@ -208,6 +208,8 @@
     "msg.startNameOverwrite": "Start name overwrite",
     "msg.startName": "Start name",
     "msg.originalStartName": "Original start name",
+    "msg.numberOfUnknownOriginalStartNames": "There are {amount} unknown original start street names",
+    "msg.noUnknownOriginalStartNames": "All original start street names are known or overwritten",
     "msg.breakLength": "Break length",
     "msg.pointInTime": "Time",
     "msg.otherTracks": "Other tracks",

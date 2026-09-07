@@ -97,7 +97,7 @@ describe('Planner integration test', () => {
             expect(communicatedStartAccordion).toBeInTheDocument();
             expect(
                 screen
-                    .getByRole('button', { name: messages['msg.startNameOverwrite'] })
+                    .getByRole('button', { name: messages['msg.startNameOverwrite'], exact: false })
                     .compareDocumentPosition(communicatedStartAccordion)
             ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
             const nodesAccordion = screen.getByRole('button', { name: messages['msg.nodes'] });
@@ -361,7 +361,10 @@ describe('Planner integration test', () => {
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2), timeout);
 
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
-            const startNameAccordion = screen.getByRole('button', { name: messages['msg.startNameOverwrite'] });
+            const startNameAccordion = screen.getByRole('button', {
+                name: messages['msg.startNameOverwrite'],
+                exact: false,
+            });
             await user.click(startNameAccordion);
             const startNameTable = within(startNameAccordion.closest('.accordion-item')!).getByRole('table');
             expect(
@@ -371,8 +374,23 @@ describe('Planner integration test', () => {
             ).toEqual([messages['msg.trackName'], messages['msg.originalStartName'], messages['msg.startName']]);
             const firstStreetName = getTrackStreetInfos(store.getState())[0]!.wayPoints[0]!.streetName;
             const startNameRows = within(startNameTable).getAllByRole('row');
-            expect(within(startNameRows[1]!).getAllByRole('cell')[1]).toHaveTextContent(firstStreetName ?? '');
+            expect(within(startNameRows[1]!).getAllByRole('cell')[1]).toHaveTextContent(
+                firstStreetName ?? messages['msg.unknown']
+            );
             expect(within(startNameTable).getAllByRole('textbox')).toHaveLength(2);
+
+            const unknownOriginalStartNames = getTrackCompositions(store.getState()).filter((track) => {
+                const firstStreetName = getTrackStreetInfos(store.getState()).find((info) => info.id === track.id)
+                    ?.wayPoints[0]?.streetName;
+                return !firstStreetName || firstStreetName === messages['msg.unknown'];
+            }).length;
+            if (unknownOriginalStartNames === 0) {
+                expect(
+                    within(startNameAccordion.closest('.accordion-item')!).getByAltText('checkIcon')
+                ).toBeInTheDocument();
+            } else {
+                expect(startNameAccordion).toHaveTextContent(String(unknownOriginalStartNames));
+            }
 
             ui.pdfDownloadButton();
         });
