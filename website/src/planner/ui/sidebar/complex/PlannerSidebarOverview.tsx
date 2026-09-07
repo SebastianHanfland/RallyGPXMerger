@@ -9,10 +9,12 @@ import { NodeOverviewButton } from '../../../parameters/nodes/NodeOverviewButton
 import { PlannerSidebarOverviewChecks } from './PlannerSidebarOverviewChecks.tsx';
 import type { ReactNode } from 'react';
 import { PlannerSidebarOverviewStartNames } from './PlannerSidebarOverviewStartNames.tsx';
+import { GapOverview } from '../../../points/GapOverview.tsx';
 
 export const PlannerSidebarOverview = () => {
     const accordionEntries: [string, ReactNode][] = [
         ['msg.checks', <PlannerSidebarOverviewChecks />],
+        ['msg.gaps', <GapOverview />],
         ['msg.points', <PointsOfInterest />],
         ['msg.startNameOverwrite', <PlannerSidebarOverviewStartNames />],
         ['msg.communicatedStart', <StartTimeTable />],

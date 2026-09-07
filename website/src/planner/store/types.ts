@@ -273,8 +273,6 @@ export enum PointOfInterestType {
     COMMENT = 'COMMENT',
     GAP = 'GAP',
     OTHER = 'OTHER',
-    BREAK = 'BREAK',
-    NODE = 'NODE',
 }
 
 export interface State {

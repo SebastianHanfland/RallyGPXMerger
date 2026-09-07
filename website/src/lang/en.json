@@ -433,5 +433,6 @@
     "msg.times": "Times",
     "msg.activeApps": "Active apps: {counter}",
     "msg.criticalMaps.title": "Critical Maps App",
-    "msg.criticalMaps.body": "If you have running the Critical Maps App on your phone, there will appear a small bike icon for you on the map. This way the other participants can see the plan and the actual current status of the demonstration. You find more information about how to download and install the Critical Maps App here: "
+    "msg.criticalMaps.body": "If you have running the Critical Maps App on your phone, there will appear a small bike icon for you on the map. This way the other participants can see the plan and the actual current status of the demonstration. You find more information about how to download and install the Critical Maps App here: ",
+    "msg.pointsOfInterest.hint": "Points of interest can be created via a right click on the map. You can use them as a todo list or as additional information for the participants."
 }

@@ -1,46 +1,27 @@
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { GapPointDisplay } from './GapPointDisplay.tsx';
 import { getPoints } from '../store/points.reducer.ts';
-import { getGaps } from '../calculation/getGaps.ts';
 import { PointOfInterestDisplay } from './PointOfInterestDisplay.tsx';
 import { FormattedMessage } from 'react-intl';
-import { GapFinderParameters } from '../parameters/GapFinderParameters.tsx';
+import { GpxCreationHint } from '../segments/GpxCreationHint.tsx';
+import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
 
 export function PointsOfInterest() {
     const pointOfInterests = useSelector(getPoints) ?? [];
-    const gapPoints = useSelector(getGaps) ?? [];
 
     return (
         <div style={{ height: '95%', overflow: 'auto' }}>
-            <GapFinderParameters />
-            <h4>
-                <FormattedMessage id={'msg.gaps'} />
-            </h4>
-
-            <Table striped bordered hover style={{ width: '100%' }}>
-                <thead>
-                    <tr>
-                        <th style={{ width: '20%' }}>
-                            <FormattedMessage id={'msg.title'} />
-                        </th>
-                        <th style={{ width: '70%', minWidth: '150px' }}>
-                            <FormattedMessage id={'msg.description'} />
-                        </th>
-                        <th style={{ width: '10%', minWidth: '100px' }}>
-                            <FormattedMessage id={'msg.actions'} />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {gapPoints.map((gapPoint) => (
-                        <GapPointDisplay key={gapPoint.id} gapPoint={gapPoint} />
-                    ))}
-                </tbody>
-            </Table>
-            <h4>
-                <FormattedMessage id={'msg.pointsOfInterest'} />
-            </h4>
+            <div className={'d-flex align-items-center justify-content-center mb-3'}>
+                <h4>
+                    <FormattedMessage id={'msg.pointsOfInterest'} />
+                </h4>
+                <DescriptionInfoButton
+                    titleMessageId={'msg.pointsOfInterest'}
+                    descriptionMessageId={'msg.pointsOfInterest.hint'}
+                >
+                    <GpxCreationHint />
+                </DescriptionInfoButton>
+            </div>
             <Table striped bordered hover style={{ width: '100%' }}>
                 <thead>
                     <tr>
