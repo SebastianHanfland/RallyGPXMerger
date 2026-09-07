@@ -11,6 +11,6 @@ export function getColorFromString(value: string): string {
     return `#${(hash >>> 0).toString(16).slice(-6).padStart(6, '0')}`;
 }
 
-export function getColor(element: { color?: string; id: string }): string {
+export function getColor(element: { color?: string; id?: string }): string {
     return element.color ?? getColorFromUuid(element.id);
 }

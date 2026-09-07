@@ -267,13 +267,28 @@ export interface GapPoint extends PointOfInterest {
 }
 
 export enum PointOfInterestType {
-    TOILET = 'TOILET',
-    IMPEDIMENT = 'IMPEDIMENT',
-    GATHERING = 'GATHERING',
+    // Only in planner
+    TODO = 'TODO',
     COMMENT = 'COMMENT',
     GAP = 'GAP',
+    IMPEDIMENT = 'IMPEDIMENT',
+    // Also in display map
+    TOILET = 'TOILET',
+    GATHERING = 'GATHERING',
+    PUBLIC_COMMENT = 'PUBLIC_COMMENT',
     OTHER = 'OTHER',
 }
+
+export const pointOfInterestColors: Record<PointOfInterestType, string | undefined> = {
+    [PointOfInterestType.TODO]: 'orange',
+    [PointOfInterestType.COMMENT]: 'yellow',
+    [PointOfInterestType.GAP]: 'red',
+    [PointOfInterestType.IMPEDIMENT]: 'darkred',
+    [PointOfInterestType.TOILET]: undefined,
+    [PointOfInterestType.GATHERING]: 'green',
+    [PointOfInterestType.PUBLIC_COMMENT]: 'blue',
+    [PointOfInterestType.OTHER]: 'blue',
+};
 
 export interface State {
     layout: LayoutState;
