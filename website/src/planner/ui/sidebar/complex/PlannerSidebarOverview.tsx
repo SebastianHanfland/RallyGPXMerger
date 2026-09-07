@@ -1,5 +1,5 @@
 import { Accordion } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 import { PointsOfInterest } from '../../../points/PointsOfInterest.tsx';
 import { StartTimeTable } from '../../../parameters/StartTimeTable.tsx';
@@ -12,13 +12,14 @@ import { PlannerSidebarOverviewStartNames } from './PlannerSidebarOverviewStartN
 import { GapOverview } from '../../../points/GapOverview.tsx';
 
 export const PlannerSidebarOverview = () => {
+    const intl = useIntl();
     const accordionEntries: [string, ReactNode][] = [
-        ['msg.checks', <PlannerSidebarOverviewChecks />],
-        ['msg.gaps', <GapOverview />],
-        ['msg.points', <PointsOfInterest />],
-        ['msg.startNameOverwrite', <PlannerSidebarOverviewStartNames />],
-        ['msg.communicatedStart', <StartTimeTable />],
-        ['msg.nodes', <TrackNodesTable />],
+        [intl.formatMessage({ id: 'msg.checks' }), <PlannerSidebarOverviewChecks />],
+        [intl.formatMessage({ id: 'msg.gaps' }), <GapOverview />],
+        [intl.formatMessage({ id: 'msg.points' }), <PointsOfInterest />],
+        [intl.formatMessage({ id: 'msg.startNameOverwrite' }), <PlannerSidebarOverviewStartNames />],
+        [intl.formatMessage({ id: 'msg.communicatedStart' }), <StartTimeTable />],
+        [intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
     ];
 
     return (
@@ -36,9 +37,7 @@ export const PlannerSidebarOverview = () => {
             <Accordion defaultActiveKey="msg.checks">
                 {accordionEntries.map(([title, component]) => (
                     <Accordion.Item eventKey={title} key={title}>
-                        <Accordion.Header>
-                            <FormattedMessage id={title} />
-                        </Accordion.Header>
+                        <Accordion.Header>{title}</Accordion.Header>
                         <Accordion.Body>{component}</Accordion.Body>
                     </Accordion.Item>
                 ))}
