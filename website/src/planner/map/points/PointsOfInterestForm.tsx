@@ -2,14 +2,20 @@ import { Form } from 'react-bootstrap';
 import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
 import Select from 'react-select';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getPointTypeMessageId } from '../../points/pointOfInterestConfig.ts';
+import { getPointTypeMessageId, pointOfInterestTypesByDialogGroup } from '../../points/pointOfInterestConfig.ts';
 
 interface Props {
     values: Partial<PointOfInterest>;
     setValues: (point: Partial<PointOfInterest>) => void;
 }
 
-const typeOptions = Object.values(PointOfInterestType).map((value) => ({ value, label: getPointTypeMessageId(value) }));
+const typeOptions = (['open', 'internal', 'public'] as const).map((group) => ({
+    label: `msg.pointDialogGroup.${group}`,
+    options: pointOfInterestTypesByDialogGroup[group].map((value) => ({
+        value,
+        label: getPointTypeMessageId(value),
+    })),
+}));
 
 export function PointsOfInterestForm({ values, setValues }: Props) {
     const intl = useIntl();
@@ -53,8 +59,9 @@ export function PointsOfInterestForm({ values, setValues }: Props) {
                 <Select
                     aria-label="Default select example"
                     options={typeOptions}
-                    value={typeOptions.find((option) => option.value === values.type)}
+                    value={typeOptions.flatMap((group) => group.options).find((option) => option.value === values.type)}
                     formatOptionLabel={(option) => <FormattedMessage id={option.label} />}
+                    formatGroupLabel={(group) => <FormattedMessage id={group.label} />}
                     onChange={(option) => {
                         setValues({ ...values, type: option?.value ?? PointOfInterestType.OTHER });
                         // if (option) {

@@ -4,9 +4,13 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContextMenuPoint, getEditPointOfInterest, pointsActions } from '../../store/points.reducer.ts';
 import { v4 as uuidv4 } from 'uuid';
-import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
+import { PointOfInterest } from '../../store/types.ts';
 import { useEffect, useState } from 'react';
 import { PointsOfInterestForm } from './PointsOfInterestForm.tsx';
+import {
+    DEFAULT_POINT_OF_INTEREST_RADIUS_IN_M,
+    DEFAULT_POINT_OF_INTEREST_TYPE,
+} from '../../points/pointOfInterestConfig.ts';
 
 export function PointsOfInterestModal() {
     const dispatch = useDispatch();
@@ -19,8 +23,13 @@ export function PointsOfInterestModal() {
     useEffect(() => {
         if (editPointOfInterest) {
             setPointOfInterestValues(editPointOfInterest);
+        } else if (markedPoint) {
+            setPointOfInterestValues({
+                type: DEFAULT_POINT_OF_INTEREST_TYPE,
+                radiusInM: DEFAULT_POINT_OF_INTEREST_RADIUS_IN_M,
+            });
         }
-    }, [editPointOfInterest]);
+    }, [editPointOfInterest, markedPoint]);
 
     const closeModal = () => {
         dispatch(pointsActions.setContextMenuPoint(undefined));
@@ -48,8 +57,8 @@ export function PointsOfInterestModal() {
                 id: uuidv4(),
                 title: pointOfInterestValues?.title ?? '',
                 description: pointOfInterestValues?.description ?? '',
-                radiusInM: pointOfInterestValues?.radiusInM ?? 0,
-                type: pointOfInterestValues?.type ?? PointOfInterestType.OTHER,
+                radiusInM: pointOfInterestValues?.radiusInM ?? DEFAULT_POINT_OF_INTEREST_RADIUS_IN_M,
+                type: pointOfInterestValues?.type ?? DEFAULT_POINT_OF_INTEREST_TYPE,
             };
             dispatch(pointsActions.addPoint(newPoint));
         }

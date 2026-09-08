@@ -32,5 +32,5 @@ export const nodesReducer: Reducer<NodesState> = nodesSlice.reducer;
 const getBase = (state: State) => state.nodes;
 
 export const getNodeEditInfo = (state: State) => getBase(state).nodeEditInfo;
-const defaultNodeSpecification = {};
+const defaultNodeSpecification: Record<string, NodeSpecification> = {};
 export const getNodeSpecifications = (state: State) => getBase(state).nodeSpecifications ?? defaultNodeSpecification;
