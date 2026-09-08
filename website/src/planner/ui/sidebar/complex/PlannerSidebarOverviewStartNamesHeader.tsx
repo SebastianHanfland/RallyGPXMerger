@@ -1,24 +1,12 @@
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { CheckIcon } from '../../../../utils/icons/CheckIcon.tsx';
 import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { useOverviewAccordionStatuses } from './overviewStatus.ts';
 
 export const PlannerSidebarOverviewStartNamesHeader = () => {
-    const tracks = useSelector(getTrackCompositions);
-    const trackInfos = useSelector(getTrackStreetInfos);
-    const unknown = useIntl().formatMessage({ id: 'msg.unknown' });
+    const { start } = useOverviewAccordionStatuses();
 
-    const numberOfUnknownOriginalStartNames = tracks.filter((track) => {
-        const trackInfo = trackInfos.find((info) => info.id === track.id);
-        const firstStreetName = trackInfo?.wayPoints[0]?.streetName;
-        const isUnknown = !firstStreetName || firstStreetName === unknown;
-        const hasOverwrite = Boolean(track.startName?.trim());
-        return isUnknown && !hasOverwrite;
-    }).length;
-
-    if (numberOfUnknownOriginalStartNames === 0) {
+    if (!start.warning) {
         return (
             <div>
                 <CheckIcon />
@@ -34,7 +22,7 @@ export const PlannerSidebarOverviewStartNamesHeader = () => {
             <FormattedMessage id="msg.startNameOverwrite" /> {': '}
             <FormattedMessage
                 id="msg.numberOfUnknownOriginalStartNames"
-                values={{ amount: numberOfUnknownOriginalStartNames }}
+                values={{ amount: start.unknownStartNameCount }}
             />
         </div>
     );

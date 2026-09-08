@@ -1,16 +1,12 @@
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { CheckIcon } from '../../../../utils/icons/CheckIcon.tsx';
 import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { useOverviewAccordionStatuses } from './overviewStatus.ts';
 
 export const PlannerSidebarOverviewStartTimesHeader = () => {
-    const tracks = useSelector(getTrackCompositions);
-    const tracksWithoutStartTimeConfiguration = tracks.filter(
-        (track) => track.buffer === undefined && track.rounding === undefined
-    ).length;
+    const { comStart } = useOverviewAccordionStatuses();
 
-    if (tracksWithoutStartTimeConfiguration === 0) {
+    if (!comStart.warning) {
         return (
             <div>
                 <CheckIcon />
@@ -26,7 +22,7 @@ export const PlannerSidebarOverviewStartTimesHeader = () => {
             <FormattedMessage id="msg.communicatedStart" /> {': '}
             <FormattedMessage
                 id="msg.tracksWithoutStartTimeConfiguration"
-                values={{ amount: tracksWithoutStartTimeConfiguration }}
+                values={{ amount: comStart.unconfiguredTrackCount }}
             />
         </div>
     );

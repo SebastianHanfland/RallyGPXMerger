@@ -1,22 +1,12 @@
-import { useSelector } from 'react-redux';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { CheckIcon } from '../../../../utils/icons/CheckIcon.tsx';
 import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
-import { wayPointHasUnknown } from '../../../streets/unknownUtil.ts';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { useOverviewAccordionStatuses } from './overviewStatus.ts';
 
 export const OverviewChecksHeader = () => {
-    const trackStreetInfos = useSelector(getTrackStreetInfos);
-    const intl = useIntl();
-    const unknown = intl.formatMessage({ id: 'msg.unknown' });
+    const { checks } = useOverviewAccordionStatuses();
 
-    let counterUnknown = 0;
-    trackStreetInfos.forEach((info) => {
-        const numberOfUnknown = info.wayPoints.filter((waypoint) => wayPointHasUnknown(waypoint, unknown)).length;
-        counterUnknown += numberOfUnknown;
-    });
-
-    if (counterUnknown === 0) {
+    if (!checks.warning) {
         return (
             <div>
                 <CheckIcon />
@@ -28,7 +18,7 @@ export const OverviewChecksHeader = () => {
     return (
         <div>
             <WarningIcon />
-            <FormattedMessage id={'msg.numberOfUnknown'} values={{ amount: counterUnknown }} />
+            <FormattedMessage id={'msg.numberOfUnknown'} values={{ amount: checks.unknownCount }} />
         </div>
     );
 };

@@ -18,6 +18,7 @@ import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverview
 import { PlannerSidebarOverviewEntryPoints } from './PlannerSidebarOverviewEntryPoints.tsx';
 import { PlannerSidebarOverviewEntryPointsHeader } from './PlannerSidebarOverviewEntryPointsHeader.tsx';
 import { PlannerSidebarOverviewPublicLinks } from './PlannerSidebarOverviewPublicLinks.tsx';
+import { FlowOverviewButton } from '../../../flow/FlowOverviewButton.tsx';
 
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
@@ -38,6 +39,7 @@ export const PlannerSidebarOverview = () => {
             <div className={'d-flex my-2 justify-content-between'}>
                 <TrackOverviewButton />
                 <NodeOverviewButton />
+                <FlowOverviewButton />
                 <div className="d-flex justify-content-end">
                     <DescriptionInfoButton
                         titleMessageId="msg.overview"

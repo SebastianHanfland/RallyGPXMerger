@@ -1,13 +1,12 @@
-import { useSelector } from 'react-redux';
-import { getGaps } from '../calculation/getGaps.ts';
 import { FormattedMessage } from 'react-intl';
 import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
 import { CheckIcon } from '../../utils/icons/CheckIcon.tsx';
+import { useOverviewAccordionStatuses } from '../ui/sidebar/complex/overviewStatus.ts';
 
 export function GapOverviewHeader() {
-    const gapPoints = useSelector(getGaps) ?? [];
+    const { gaps } = useOverviewAccordionStatuses();
 
-    if (gapPoints.length === 0) {
+    if (!gaps.warning) {
         return (
             <div>
                 <CheckIcon />
@@ -19,7 +18,7 @@ export function GapOverviewHeader() {
     return (
         <div>
             <WarningIcon />
-            {gapPoints.length} <FormattedMessage id={'msg.gaps'} />
+            {gaps.gapCount} <FormattedMessage id={'msg.gaps'} />
         </div>
     );
 }
