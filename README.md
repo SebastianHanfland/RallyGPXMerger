@@ -1,6 +1,11 @@
 # RallyGPXMerger
 A web tool to merge GPX tracks for big bike rallies written in React and TypeScript, with a simple backend storing JSON files.
 
+_"Planning a Sternfahrt becomes really easy"_ (Sternfahrt: German for a big star shaped bike demonstration)
+
+Quote: Long-time Power User LeTaPe
+
+
 ## Current deployment
 
 The current version of this tool is deployed here: 
