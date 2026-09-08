@@ -64,7 +64,7 @@ export const useHelpingHook = (): [string, string, () => void] => {
             return inform('name', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
         }
         if (!planningId) {
-            return inform('upload', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
+            return inform('upload', () => {});
         }
         return inform('share', () => {
             dispatch(layoutActions.setIsShareModalOpen(true));

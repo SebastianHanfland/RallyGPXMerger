@@ -113,7 +113,7 @@ interface CalculatedTracksState {
     tracks: CalculatedTrack[];
 }
 
-type SidebarSections = 'segments' | 'tracks' | 'documents' | 'settings' | 'simpleTrack';
+type SidebarSections = 'segments' | 'tracks' | 'settings' | 'simpleTrack';
 
 interface LayoutState {
     selectedSection: Sections;
