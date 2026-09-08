@@ -116,6 +116,7 @@ rules in `src/common/calculation/**/__tests__` where possible.
   user explicitly requests that exact action in the current conversation.
   File edits and verification commands do not imply permission to commit.
 - For planner features, update both translations, add one focused integration test where appropriate, and run Prettier plus the targeted Vitest command
+- tests reside in a __tests__ folder next to the file
 ## Suggested agent workflow
 
 1. Read the closest component, reducer/selector, and an existing nearby test.

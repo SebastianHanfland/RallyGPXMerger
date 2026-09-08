@@ -5,9 +5,11 @@ import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getStreetPointSelection, mapActions } from '../../store/map.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
+import { getStreetLookupIndex } from '../../logic/resolving/helper/getStreetLookupIndex.ts';
 import { STREET_POINT_SELECTION } from '../panes.ts';
 
 const SELECTABLE_POINT_COLOR = '#0d6efd';
+const CURRENT_STREET_POINT_COLOR = '#00bfff';
 const DISABLED_POINT_COLOR = '#808080';
 
 function getSelectionRenderKey(
@@ -66,7 +68,12 @@ export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerG
                 selection.boundary === 'start'
                     ? routeIndex <= selection.range.end
                     : routeIndex >= selection.range.start;
-            const color = selectable ? SELECTABLE_POINT_COLOR : DISABLED_POINT_COLOR;
+            const currentStreet = getStreetLookupIndex(point) === selection.streetIndex;
+            const color = !selectable
+                ? DISABLED_POINT_COLOR
+                : currentStreet
+                  ? CURRENT_STREET_POINT_COLOR
+                  : SELECTABLE_POINT_COLOR;
             const marker = L.circleMarker(
                 { lat: point.b, lng: point.l },
                 {
