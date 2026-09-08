@@ -64,6 +64,9 @@ const mapSlice = createSlice({
         setStreetPointSelection: (state: MapState, action: PayloadAction<MapState['streetPointSelection']>) => {
             state.streetPointSelection = action.payload;
         },
+        setClickOnStreet: (state: MapState, action: PayloadAction<MapState['clickOnStreet']>) => {
+            state.clickOnStreet = action.payload;
+        },
         setSelectedStreetPoint: (
             state: MapState,
             action: PayloadAction<{ segmentId: string; pointIndex: number } | undefined>
@@ -92,3 +95,4 @@ export const getHighlightedSegmentId = (state: State) => getBase(state).highligh
 export const getHighlightedStreetPath = (state: State) => getBase(state).highlightedStreetPath;
 export const getPointToCenter = (state: State) => getBase(state).pointToCenter;
 export const getStreetPointSelection = (state: State) => getBase(state).streetPointSelection;
+export const getClickOnStreet = (state: State) => getBase(state).clickOnStreet;

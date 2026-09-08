@@ -13,17 +13,12 @@ import { HighlightUnknown } from '../../../streets/HighlightUnknown.tsx';
 import { EditStreetNameButton } from '../../../streets/EditStreetNameButton.tsx';
 import { EditPostCodeButton } from '../../../streets/EditPostCodeButton.tsx';
 import { EditDistrictButton } from '../../../streets/EditDistrictButton.tsx';
-import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { getNextStreetLookupIndex } from '../../../store/segmentData.redux.ts';
 import { getStreetPointSelection, mapActions } from '../../../store/map.reducer.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
-import {
-    getRoutePointReferences,
-    getNewStreetRangeAssignments,
-    getStreetRange,
-    getStreetRangeAssignments,
-} from '../../../logic/resolving/streets/streetRangeEditing.ts';
-import { enrichStreetWithPostCodeAndDistrict } from '../../../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
+import { getRoutePointReferences } from '../../../logic/resolving/streets/streetRangeEditing.ts';
+import { beginNewStreet, beginStreetBoundaryEdit, getStreetPath } from '../../../streets/streetEditing.ts';
 
 interface Props {
     track: TrackComposition;
@@ -39,11 +34,6 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
     const tableRef = useRef<HTMLTableElement>(null);
     const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
     const [insertionPositions, setInsertionPositions] = useState<number[]>([0]);
-    const getStreetPath = (wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number]) =>
-        wayPoint.path ?? [
-            { lat: wayPoint.pointFrom.lat, lon: wayPoint.pointFrom.lon, s: wayPoint.s },
-            { lat: wayPoint.pointTo.lat, lon: wayPoint.pointTo.lon, s: wayPoint.s },
-        ];
     const highlightStreetPath = (wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number]) =>
         dispatch(mapActions.setHighlightedStreetPath(getStreetPath(wayPoint)));
     const centerPoint = (lat: number, lon: number) => dispatch(mapActions.setPointToCenter({ lat, lng: lon }));
@@ -51,89 +41,11 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
         wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number],
         boundary: 'start' | 'end'
     ) => {
-        const streetIndex = wayPoint.s;
-        if (streetIndex === undefined) return;
-        if (routePoints.length === 0) return;
-        const range = getStreetRange(routePoints, streetIndex);
-        if (range && range.start >= 0 && range.end >= range.start && range.end < routePoints.length) {
-            highlightStreetPath(wayPoint);
-            centerPoint(wayPoint.pointFrom.lat, wayPoint.pointFrom.lon);
-            dispatch(
-                mapActions.setStreetPointSelection({
-                    trackId: track.id,
-                    streetIndex,
-                    boundary,
-                    range,
-                })
-            );
-        }
+        beginStreetBoundaryEdit(dispatch, track, routePoints, wayPoint, boundary);
     };
     const startNewStreet = (insertionIndex: number) => {
-        if (routePoints.length === 0) return;
-        const streetIndex = nextStreetLookupIndex + 1;
-        dispatch(segmentDataActions.addStreetLookup({ [streetIndex]: undefined }));
-        dispatch(segmentDataActions.addPostCodeLookup({ [streetIndex]: undefined }));
-        dispatch(segmentDataActions.addDistrictLookup({ [streetIndex]: undefined }));
-        dispatch(
-            mapActions.setStreetPointSelection({
-                trackId: track.id,
-                streetIndex,
-                boundary: 'start',
-                range: { start: 0, end: routePoints.length - 1 },
-                mode: 'add-start',
-                insertionIndex,
-            })
-        );
+        beginNewStreet(dispatch, nextStreetLookupIndex, track, routePoints, insertionIndex);
     };
-    useEffect(() => {
-        if (!selection?.selectedPoint || selection.trackId !== track.id) return;
-        const selectedRouteIndex = routePoints.findIndex(
-            ({ segmentId, pointIndex }) =>
-                segmentId === selection.selectedPoint?.segmentId && pointIndex === selection.selectedPoint?.pointIndex
-        );
-        if (selectedRouteIndex < 0) return;
-        if (selection.mode === 'add-start') {
-            dispatch(
-                mapActions.setStreetPointSelection({
-                    ...selection,
-                    boundary: 'end',
-                    mode: 'add-end',
-                    range: { start: selectedRouteIndex, end: routePoints.length - 1 },
-                    startRouteIndex: selectedRouteIndex,
-                    selectedPoint: undefined,
-                })
-            );
-            return;
-        }
-        if (selection.mode === 'add-end') {
-            if (selection.startRouteIndex === undefined || selectedRouteIndex < selection.startRouteIndex) return;
-            dispatch(
-                segmentDataActions.applyStreetRangeAssignments(
-                    getNewStreetRangeAssignments(
-                        routePoints,
-                        selection.streetIndex,
-                        selection.startRouteIndex,
-                        selectedRouteIndex
-                    )
-                )
-            );
-            dispatch(enrichStreetWithPostCodeAndDistrict(selection.streetIndex));
-            dispatch(mapActions.setStreetPointSelection(undefined));
-            return;
-        }
-        dispatch(
-            segmentDataActions.applyStreetRangeAssignments(
-                getStreetRangeAssignments(
-                    routePoints,
-                    selection.streetIndex,
-                    selection.range,
-                    selection.boundary,
-                    selectedRouteIndex
-                )
-            )
-        );
-        dispatch(mapActions.setStreetPointSelection(undefined));
-    }, [dispatch, routePoints, selection, track.id]);
     useEffect(
         () => () => {
             dispatch(mapActions.setHighlightedStreetPath(undefined));

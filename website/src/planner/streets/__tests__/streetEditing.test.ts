@@ -1,0 +1,49 @@
+import { describe, expect, it, vi } from 'vitest';
+import { SEGMENT, ParsedPoint, TrackComposition } from '../../store/types.ts';
+import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
+import { beginNewStreet, getStreetPath } from '../streetEditing.ts';
+
+const track: TrackComposition = {
+    id: 'track',
+    segments: [{ id: 'segment', segmentId: 'segment', type: SEGMENT }],
+};
+
+const point = (s: number): ParsedPoint => ({ l: 11, b: 48, e: 0, t: 0, s });
+
+describe('street map editing actions', () => {
+    it('starts a new street selection at the requested insertion position', () => {
+        const dispatch = vi.fn();
+        const routePoints = getRoutePointReferences(track, [
+            { id: 'segment', filename: 'segment', points: [point(1), point(1)] },
+        ]);
+
+        beginNewStreet(dispatch, 4, track, routePoints, 2);
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'segmentData/addStreetLookup' }));
+        expect(dispatch).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+                type: 'map/setStreetPointSelection',
+                payload: expect.objectContaining({ trackId: 'track', streetIndex: 5, insertionIndex: 2 }),
+            })
+        );
+    });
+
+    it('keeps the existing waypoint fallback path available to map rendering', () => {
+        expect(
+            getStreetPath({
+                streetName: 'Main',
+                postCode: null,
+                district: null,
+                frontArrival: '',
+                frontPassage: '',
+                backPassage: '',
+                pointFrom: { lat: 48, lon: 11, time: '' },
+                pointTo: { lat: 49, lon: 12, time: '' },
+                s: 1,
+            })
+        ).toEqual([
+            { lat: 48, lon: 11, s: 1 },
+            { lat: 49, lon: 12, s: 1 },
+        ]);
+    });
+});

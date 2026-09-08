@@ -171,6 +171,13 @@ export interface StreetPointSelection {
     selectedPoint?: { segmentId: string; pointIndex: number };
 }
 
+export interface ClickOnStreet {
+    trackId: string;
+    streetIndex: number;
+    lat: number;
+    lng: number;
+}
+
 export interface MapState {
     currentTime: number;
     showMapMarker?: boolean;
@@ -186,6 +193,7 @@ export interface MapState {
     highlightedStreetPath?: StreetPathPoint[];
     pointToCenter?: PointToCenter;
     streetPointSelection?: StreetPointSelection;
+    clickOnStreet?: ClickOnStreet;
 }
 
 export interface PointsState {
