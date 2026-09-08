@@ -5,7 +5,6 @@ import { getBaseUrl } from '../../utils/linkUtil.ts';
 
 const initialState: BackendState = {
     isPlanningAlreadySaved: false,
-    hasChangesSinceLastUpload: false,
 };
 
 function setPlanningIdInUrl(currentSearch: string, newSearch: string) {
@@ -31,9 +30,6 @@ const backendSlice = createSlice({
         setPlanningPassword: (state: BackendState, action: PayloadAction<string>) => {
             state.planningPassword = action.payload;
         },
-        setHasChangesSinceLastUpload: (state: BackendState, action: PayloadAction<boolean>) => {
-            state.hasChangesSinceLastUpload = action.payload;
-        },
         setIsPlanningSaved: (state: BackendState, action: PayloadAction<boolean>) => {
             state.isPlanningAlreadySaved = action.payload;
             if (!action.payload) {
@@ -51,4 +47,3 @@ const getBase = (state: State) => state.backend;
 export const getPlanningId = (state: State) => getBase(state)?.planningId;
 export const getPlanningPassword = (state: State) => getBase(state)?.planningPassword;
 export const getIsPlanningAlreadySaved = (state: State) => getBase(state)?.isPlanningAlreadySaved;
-export const getHasChangesSinceLastUpload = (state: State) => getBase(state)?.hasChangesSinceLastUpload;

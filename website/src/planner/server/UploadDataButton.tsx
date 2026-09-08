@@ -6,7 +6,6 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     backendActions,
-    getHasChangesSinceLastUpload,
     getIsPlanningAlreadySaved,
     getPlanningId,
     getPlanningPassword,
@@ -19,8 +18,6 @@ import { downloadFile } from '../download/FileDownloader.tsx';
 import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { layoutActions } from '../store/layout.reducer.ts';
 import Modal from 'react-bootstrap/Modal';
-
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
 import { getPlanningTitle } from '../store/settings.reducer.ts';
 
 export function UploadDataButton() {
@@ -31,7 +28,6 @@ export function UploadDataButton() {
     const planningId = useSelector(getPlanningId);
     const planningPassword = useSelector(getPlanningPassword);
     const planningTitle = useSelector(getPlanningTitle);
-    const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     const planningState = useSelector((state: State) => state);
     const intl = useIntl();
@@ -66,7 +62,6 @@ export function UploadDataButton() {
                         intl.formatMessage({ id: 'msg.fileSaved.success.title' }),
                         intl.formatMessage({ id: 'msg.fileSaved.success.message' })
                     );
-                    dispatch(backendActions.setHasChangesSinceLastUpload(false));
                 })
                 .catch(() =>
                     errorNotification(
@@ -86,7 +81,6 @@ export function UploadDataButton() {
                         intl.formatMessage({ id: 'msg.dataUpdated.success.title' }),
                         intl.formatMessage({ id: 'msg.dataUpdated.success.message' })
                     );
-                    dispatch(backendActions.setHasChangesSinceLastUpload(false));
                 })
                 .catch(() =>
                     errorNotification(
@@ -137,7 +131,6 @@ export function UploadDataButton() {
                                     intl.formatMessage({ id: 'msg.dataUpdated.success.title' }),
                                     intl.formatMessage({ id: 'msg.dataUpdated.success.message' })
                                 );
-                                dispatch(backendActions.setHasChangesSinceLastUpload(false));
                             })
                             .catch(() =>
                                 errorNotification(
@@ -150,7 +143,6 @@ export function UploadDataButton() {
                     }
                 }}
             >
-                {hasChangesSinceLastUpload && <WarningIcon white={true} />}
                 <img src={fileUp} className="m-1" alt="fileUp" style={{ height: '20px', width: '20px' }} />
                 {intl.formatMessage({ id: 'msg.uploadCurrentPlanning' })}
             </Button>

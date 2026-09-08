@@ -32,7 +32,6 @@ export function RemoveUploadedDataButton() {
                 .then(() => {
                     dispatch(backendActions.setIsPlanningSaved(false));
                     dispatch(backendActions.setPlanningPassword(''));
-                    dispatch(backendActions.setHasChangesSinceLastUpload(false));
                     setShowModal(false);
                     history.replaceState('', '', `${getBaseUrl()}?section=gps`);
                 })

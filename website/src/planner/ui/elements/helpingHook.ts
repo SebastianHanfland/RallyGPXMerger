@@ -1,7 +1,7 @@
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { getHasChangesSinceLastUpload, getPlanningId } from '../../store/backend.reducer.ts';
+import { getPlanningId } from '../../store/backend.reducer.ts';
 import { getHasSingleTrack, layoutActions } from '../../store/layout.reducer.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../../store/settings.reducer.ts';
@@ -16,7 +16,6 @@ export const useHelpingHook = (): [string, string, () => void] => {
     const planningTitle = useSelector(getPlanningTitle);
     const planningId = useSelector(getPlanningId);
     const hasSingleTrack = useSelector(getHasSingleTrack);
-    const hasChangesSinceLastUpload = useSelector(getHasChangesSinceLastUpload);
 
     function inform(topic: string, callBack: () => void = () => {}): [string, string, () => void] {
         return [
@@ -38,9 +37,6 @@ export const useHelpingHook = (): [string, string, () => void] => {
         }
         if (!planningId) {
             return inform('upload', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
-        }
-        if (hasChangesSinceLastUpload) {
-            return inform('changes', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
         }
         return inform('share', () => {
             dispatch(layoutActions.setSelectedSidebarSection('settings'));
@@ -69,9 +65,6 @@ export const useHelpingHook = (): [string, string, () => void] => {
         }
         if (!planningId) {
             return inform('upload', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
-        }
-        if (hasChangesSinceLastUpload) {
-            return inform('changes', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
         }
         return inform('share', () => {
             dispatch(layoutActions.setIsShareModalOpen(true));
