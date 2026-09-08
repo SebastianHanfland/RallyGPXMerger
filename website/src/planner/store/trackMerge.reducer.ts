@@ -2,6 +2,7 @@ import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/to
 import {
     BreakEditInfo,
     EntryPointEditInfo,
+    isTrackBreak,
     isTrackEntryPoint,
     State,
     TrackComposition,
@@ -168,6 +169,22 @@ const trackMergeSlice = createSlice({
                           ),
                       }
                     : track
+            );
+        },
+        setBreakStreetName: (
+            state: TrackMergeState,
+            action: PayloadAction<{ breakId: string; trackId: string; streetName: string | undefined }>
+        ) => {
+            const { breakId, trackId, streetName } = action.payload;
+            state.trackCompositions = state.trackCompositions.map((track) =>
+                track.id !== trackId
+                    ? track
+                    : {
+                          ...track,
+                          segments: track.segments.map((segment) =>
+                              segment.id === breakId && isTrackBreak(segment) ? { ...segment, streetName } : segment
+                          ),
+                      }
             );
         },
         clear: () => initialState,

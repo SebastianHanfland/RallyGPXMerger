@@ -9,6 +9,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { segmentDataActions } from '../store/segmentData.redux.ts';
 import { EditIcon } from '../../utils/icons/EditIcon.tsx';
 import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { nodesActions } from '../store/nodes.reducer.ts';
 
 interface Props {
     waypoint: WayPoint;
@@ -36,25 +37,44 @@ export function EditStreetNameButton(props: Props) {
             <span onClick={() => setShowModal(true)}>
                 <EditIcon />
             </span>
-            {showModal && <EditStreetNameModal waypoint={waypoint} closeModal={() => setShowModal(false)} />}
+            {showModal && (
+                <EditStreetNameModal waypoint={waypoint} trackId={trackId} closeModal={() => setShowModal(false)} />
+            )}
         </>
     );
 }
 
 interface ModalProps {
     waypoint: WayPoint;
+    trackId: string;
     closeModal: () => void;
 }
 
 export function EditStreetNameModal(props: ModalProps) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
-    const { waypoint, closeModal } = props;
+    const { waypoint, trackId, closeModal } = props;
 
     const [streetName, setStreetName] = useState(waypoint.streetName ?? '');
 
     const onConfirm = () => {
-        if (waypoint.s !== undefined) {
+        const normalizedStreetName = streetName.trim() || undefined;
+        if (waypoint.type === TrackWayPointType.Break && waypoint.breakId) {
+            dispatch(
+                trackMergeActions.setBreakStreetName({
+                    breakId: waypoint.breakId,
+                    trackId,
+                    streetName: normalizedStreetName,
+                })
+            );
+        } else if (waypoint.type === TrackWayPointType.Node && waypoint.segmentAfterId) {
+            dispatch(
+                nodesActions.setNodeStreetName({
+                    segmentAfter: waypoint.segmentAfterId,
+                    streetName: normalizedStreetName,
+                })
+            );
+        } else if (waypoint.s !== undefined) {
             dispatch(
                 segmentDataActions.applyManualLookup({ sourceIndex: waypoint.s, field: 'street', value: streetName })
             );

@@ -82,7 +82,11 @@ export const StreetDialog = () => {
                     </Button>
                 </div>
                 {editField === 'street' && (
-                    <EditStreetNameModal waypoint={waypoint} closeModal={() => setEditField(undefined)} />
+                    <EditStreetNameModal
+                        waypoint={waypoint}
+                        trackId={track.id}
+                        closeModal={() => setEditField(undefined)}
+                    />
                 )}
                 {editField === 'district' && (
                     <EditDistrictModal waypoint={waypoint} closeModal={() => setEditField(undefined)} />

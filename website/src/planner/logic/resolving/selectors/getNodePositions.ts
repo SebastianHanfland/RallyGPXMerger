@@ -4,11 +4,13 @@ import { listAllNodesOfTracks, NodeAtTrack } from '../../../../common/calculatio
 import { TrackComposition } from '../../../store/types.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { getLatLon } from '../../../../utils/pointUtil.ts';
+import { getNodeStreetNames } from '../../../store/nodes.reducer.ts';
 
 export interface NodePosition {
     point: { lat: number; lon: number };
     tracks: string[];
     segmentIdAfter: string;
+    streetName?: string;
 }
 
 function getTracks(segmentId: string, trackNodes: NodeAtTrack[], trackCompositions: TrackComposition[]): string[] {
@@ -24,7 +26,8 @@ function getTracks(segmentId: string, trackNodes: NodeAtTrack[], trackCompositio
 export const getNodePositions = createSelector(
     getTrackCompositions,
     getParsedGpxSegments,
-    (trackCompositions, parsedTracks): NodePosition[] => {
+    getNodeStreetNames,
+    (trackCompositions, parsedTracks, nodeStreetNames): NodePosition[] => {
         const trackNodes = listAllNodesOfTracks(trackCompositions);
         const segmentIdsAfterNode = trackNodes.map((trackNode) => trackNode.segmentIdAfterNode);
 
@@ -38,6 +41,7 @@ export const getNodePositions = createSelector(
                     point: getLatLon(lastPointOfSegment),
                     tracks: getTracks(segmentId, trackNodes, trackCompositions),
                     segmentIdAfter: segmentId,
+                    streetName: nodeStreetNames[segmentId],
                 });
             }
         });

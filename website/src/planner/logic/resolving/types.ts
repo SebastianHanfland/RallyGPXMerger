@@ -139,6 +139,7 @@ export interface WayPoint {
     s?: number;
     breakId?: string;
     entryId?: string;
+    segmentAfterId?: string;
 }
 
 export interface StreetPathPoint {

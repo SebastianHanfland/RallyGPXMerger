@@ -18,6 +18,7 @@ export const EditBreakDialog = () => {
         minutes: foundBreak?.minutes,
         description: foundBreak?.description,
         hasToilet: foundBreak?.hasToilet,
+        streetName: foundBreak?.streetName,
     });
 
     const closeModal = () => {
@@ -37,6 +38,7 @@ export const EditBreakDialog = () => {
                       minutes: values.minutes ?? 0,
                       description: values.description ?? '',
                       hasToilet: values.hasToilet ?? false,
+                      streetName: values.streetName,
                   }
         );
         dispatch(trackMergeActions.setSegments({ id: track.id, segments: segments }));
@@ -48,6 +50,7 @@ export const EditBreakDialog = () => {
             minutes: foundBreak?.minutes,
             description: foundBreak?.description,
             hasToilet: foundBreak?.hasToilet,
+            streetName: foundBreak?.streetName,
         });
     }, [breakEditInfo]);
 

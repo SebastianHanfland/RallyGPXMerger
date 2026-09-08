@@ -70,6 +70,7 @@ export interface TrackBreak extends TrackElementBase {
     type: typeof BREAK;
     description: string;
     hasToilet: boolean;
+    streetName?: string;
 }
 
 export interface TrackNode extends TrackElementBase {
@@ -152,6 +153,7 @@ export interface SettingsState {
 export interface NodesState {
     nodeEditInfo?: NodeEditInfo;
     nodeSpecifications?: NodeSpecifications;
+    nodeStreetNames?: Record<string, string | undefined>;
 }
 
 export interface PointToCenter {

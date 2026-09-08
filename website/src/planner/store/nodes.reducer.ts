@@ -5,6 +5,7 @@ import { storage } from './storage.ts';
 const initialState: NodesState = {
     nodeEditInfo: undefined,
     nodeSpecifications: {},
+    nodeStreetNames: {},
 };
 
 const nodesSlice = createSlice({
@@ -23,6 +24,19 @@ const nodesSlice = createSlice({
                 state.nodeSpecifications = { ...(state.nodeSpecifications ?? {}), [segmentAfter]: nodeSpecs };
             }
         },
+        setNodeStreetName: (
+            state: NodesState,
+            action: PayloadAction<{ segmentAfter: string; streetName: string | undefined }>
+        ) => {
+            if (action.payload.streetName === undefined) {
+                delete state.nodeStreetNames?.[action.payload.segmentAfter];
+            } else {
+                state.nodeStreetNames = {
+                    ...(state.nodeStreetNames ?? {}),
+                    [action.payload.segmentAfter]: action.payload.streetName,
+                };
+            }
+        },
         clear: () => initialState,
     },
 });
@@ -34,3 +48,5 @@ const getBase = (state: State) => state.nodes;
 export const getNodeEditInfo = (state: State) => getBase(state).nodeEditInfo;
 const defaultNodeSpecification: Record<string, NodeSpecification> = {};
 export const getNodeSpecifications = (state: State) => getBase(state).nodeSpecifications ?? defaultNodeSpecification;
+const defaultNodeStreetNames: Record<string, string | undefined> = {};
+export const getNodeStreetNames = (state: State) => getBase(state).nodeStreetNames ?? defaultNodeStreetNames;

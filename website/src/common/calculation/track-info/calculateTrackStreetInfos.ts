@@ -124,7 +124,7 @@ export function getWayPointsOfTrack(
             if (instanceOfBreak(gpxOrBreak)) {
                 arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
                 const trackBreak: WayPoint = {
-                    streetName: getPreviousPoint(trackPoints, arrivalDate).streetName,
+                    streetName: gpxOrBreak.streetName ?? getPreviousPoint(trackPoints, arrivalDate).streetName,
                     breakLength: gpxOrBreak.minutes,
                     type: TrackWayPointType.Break,
                     pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
@@ -172,7 +172,7 @@ export function getWayPointsOfTrack(
             } else if (instanceOfNode(gpxOrBreak)) {
                 const trackNode: WayPoint = {
                     ...getPreviousPoint(trackPoints, arrivalDate),
-                    streetName: getPreviousPoint(trackPoints, arrivalDate).streetName,
+                    streetName: gpxOrBreak.streetName ?? getPreviousPoint(trackPoints, arrivalDate).streetName,
                     type: TrackWayPointType.Node,
                     nodeTracks: gpxOrBreak.tracks,
                     pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
@@ -187,6 +187,7 @@ export function getWayPointsOfTrack(
                     postCode: '',
                     distanceInKm: undefined,
                     district: '',
+                    segmentAfterId: gpxOrBreak.segmentIdAfter,
                 };
                 trackPoints = [trackNode, ...trackPoints];
             } else {
