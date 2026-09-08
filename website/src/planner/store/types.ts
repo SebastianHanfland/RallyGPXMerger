@@ -12,6 +12,7 @@ export interface LayoutState {
     language: SupportedLanguages;
     hasSingleTrack: boolean;
     isSidebarOpen: boolean;
+    isShareModalOpen?: boolean;
     selectedSidebarSection: SidebarSections;
     selectedTrackId?: string;
 }

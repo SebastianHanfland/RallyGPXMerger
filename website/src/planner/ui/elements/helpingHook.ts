@@ -42,7 +42,10 @@ export const useHelpingHook = (): [string, string, () => void] => {
         if (hasChangesSinceLastUpload) {
             return inform('changes', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
         }
-        return inform('share', () => dispatch(layoutActions.setSelectedSidebarSection('settings')));
+        return inform('share', () => {
+            dispatch(layoutActions.setSelectedSidebarSection('settings'));
+            dispatch(layoutActions.setIsShareModalOpen(true));
+        });
     };
 
     const helpWithNotificationComplex = () => {
@@ -70,7 +73,9 @@ export const useHelpingHook = (): [string, string, () => void] => {
         if (hasChangesSinceLastUpload) {
             return inform('changes', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
         }
-        return inform('share', () => dispatch(layoutActions.setSelectedSidebarSection('documents')));
+        return inform('share', () => {
+            dispatch(layoutActions.setIsShareModalOpen(true));
+        });
     };
 
     return hasSingleTrack ? helpWithNotificationSimple() : helpWithNotificationComplex();

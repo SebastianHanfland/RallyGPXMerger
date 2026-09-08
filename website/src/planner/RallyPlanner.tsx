@@ -10,6 +10,7 @@ import { ToastWrapper } from './toasts/ToastWrapper.tsx';
 import { Store } from '@reduxjs/toolkit';
 import { LoadingDataFromServerModal } from './loading/LoadingDataFromServerModal.tsx';
 import { TitleSetter } from './layout/TitleSetter.tsx';
+import { SharePlanningModal } from './sharing/SharePlanningModal.tsx';
 
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);
@@ -19,6 +20,7 @@ export function RallyPlanner() {
             <TitleSetter />
             <ToastWrapper />
             <RallyPlannerRouter />
+            <SharePlanningModal />
             <LoadingDataFromServerModal />
             <AppFooter />
         </IntlProvider>
