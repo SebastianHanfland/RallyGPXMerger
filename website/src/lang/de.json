@@ -157,6 +157,7 @@
     "msg.allEntries": "Alle Einträge anzeigen",
     "msg.onlyUnknown": "Nur \"Unbekannte\" anzeigen",
     "msg.unknown": "Unbekannt",
+    "msg.noUnknownStreets": "Alle Straßenabschnitte sind bekannt und aufgelöst",
     "msg.streetPath.title": "Straßenverlauf",
     "msg.streetPath.invalid": "Dieser Link zum Straßenverlauf ist ungültig oder unvollständig.",
     "msg.streetPath.start": "Start des Straßenabschnitts",

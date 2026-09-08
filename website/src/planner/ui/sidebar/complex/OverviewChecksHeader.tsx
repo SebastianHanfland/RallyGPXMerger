@@ -20,7 +20,7 @@ export const OverviewChecksHeader = () => {
         return (
             <div>
                 <CheckIcon />
-                <FormattedMessage id={'msg.noGaps'} />
+                <FormattedMessage id={'msg.noUnknownStreets'} />
             </div>
         );
     }

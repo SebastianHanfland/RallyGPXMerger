@@ -152,6 +152,7 @@
     "msg.allEntries": "Show all entries",
     "msg.onlyUnknown": "Only show \"Unknown\"",
     "msg.unknown": "Unknown",
+    "msg.noUnknownStreets": "All street parts are known and resolved",
     "msg.streetPath.title": "Street path",
     "msg.streetPath.invalid": "This street path link is invalid or incomplete.",
     "msg.streetPath.start": "Start of street segment",
