@@ -35,7 +35,7 @@ export const PlannerSidebarOverview = () => {
 
     return (
         <div className="m-2">
-            <div className={'d-flex my-2'}>
+            <div className={'d-flex my-2 justify-content-between'}>
                 <TrackOverviewButton />
                 <NodeOverviewButton />
                 <div className="d-flex justify-content-end">

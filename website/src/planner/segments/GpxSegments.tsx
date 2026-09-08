@@ -27,7 +27,7 @@ export function GpxSegments({ noFilter }: Props) {
     return (
         <div>
             {!noFilter ? (
-                <div className="my-2 d-flex justify-content-between">
+                <div className="mb-2 d-flex justify-content-between">
                     <Form.Control
                         type="text"
                         placeholder={intl.formatMessage({ id: 'msg.filterSegments' })}
