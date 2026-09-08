@@ -9,6 +9,10 @@ import { formatNumber } from '../../../../utils/numberUtil.ts';
 import { TrackComposition } from '../../../store/types.ts';
 import { TrackWayPointType } from '../../../logic/resolving/types.ts';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { HighlightUnknown } from '../../../streets/HighlightUnknown.tsx';
+import { EditStreetNameButton } from '../../../streets/EditStreetNameButton.tsx';
+import { EditPostCodeButton } from '../../../streets/EditPostCodeButton.tsx';
+import { EditDistrictButton } from '../../../streets/EditDistrictButton.tsx';
 import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { getNextStreetLookupIndex } from '../../../store/segmentData.redux.ts';
 import { getStreetPointSelection, mapActions } from '../../../store/map.reducer.ts';
@@ -224,6 +228,12 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                 <FormattedMessage id={'msg.street'} />
                             </th>
                             <th>
+                                <FormattedMessage id={'msg.postCode'} />
+                            </th>
+                            <th>
+                                <FormattedMessage id={'msg.district'} />
+                            </th>
+                            <th>
                                 <FormattedMessage id={'msg.length'} />
                             </th>
                             <th>
@@ -327,7 +337,31 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                                     {editingEnd ? <CancelIcon /> : <EditIcon />}
                                                 </Button>
                                             </td>
-                                            <td>{wayPoint.streetName ?? <FormattedMessage id={'msg.unknown'} />}</td>
+                                            <td>
+                                                <HighlightUnknown
+                                                    value={
+                                                        wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
+                                                    }
+                                                />
+                                                <EditStreetNameButton waypoint={wayPoint} trackId={track.id} />
+                                            </td>
+                                            <td>
+                                                <HighlightUnknown
+                                                    value={
+                                                        wayPoint.postCode?.toString() ??
+                                                        intl.formatMessage({ id: 'msg.unknown' })
+                                                    }
+                                                />
+                                                <EditPostCodeButton waypoint={wayPoint} />
+                                            </td>
+                                            <td>
+                                                <HighlightUnknown
+                                                    value={
+                                                        wayPoint.district ?? intl.formatMessage({ id: 'msg.unknown' })
+                                                    }
+                                                />
+                                                <EditDistrictButton waypoint={wayPoint} />
+                                            </td>
                                             <td>{formatNumber(wayPoint.distanceInKm ?? 0, 2)}</td>
                                             <td>{getStreetPath(wayPoint).length}</td>
                                         </>

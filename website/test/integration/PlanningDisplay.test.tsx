@@ -318,7 +318,9 @@ describe('Planner integration test', () => {
             await waitFor(() => {
                 expect(getTrackCompositions(store.getState())[0]).toMatchObject({ buffer: 5, rounding: 10 });
             });
-            const infoSummary = screen.getByRole('table');
+            const infoSummary = screen
+                .getByRole('columnheader', { name: messages['msg.publicStart'] })
+                .closest('table')!;
             const infoHeaders = within(infoSummary).getAllByRole('columnheader');
             expect(infoHeaders.slice(0, 2).map((header) => header.textContent)).toEqual([
                 messages['msg.publicStart'],
@@ -345,6 +347,19 @@ describe('Planner integration test', () => {
             const streetTable = screen.getByTestId('track-street-list');
             const streetEntries = within(streetTable).getAllByRole('row');
             expect(streetEntries.length).toBeGreaterThan(1);
+            expect(
+                within(streetTable)
+                    .getAllByRole('columnheader')
+                    .map((header) => header.textContent)
+            ).toEqual([
+                messages['msg.start'],
+                messages['msg.end'],
+                messages['msg.street'],
+                messages['msg.postCode'],
+                messages['msg.district'],
+                messages['msg.length'],
+                messages['msg.streetPoints'],
+            ]);
             const streetButtons = within(streetEntries[1]!).getAllByRole('button');
             await user.click(streetButtons[0]!);
             expect(getHighlightedStreetPath(store.getState())).toBeDefined();
@@ -364,7 +379,18 @@ describe('Planner integration test', () => {
             const firstSegment = getParsedGpxSegments(store.getState())[0]!;
             store.dispatch(mapActions.setSelectedStreetPoint({ segmentId: firstSegment.id, pointIndex: 0 }));
             await waitFor(() => expect(getStreetPointSelection(store.getState())).toBeUndefined());
-            await user.click(streetButtons[3]!);
+            const editedStreetRow = within(screen.getByTestId('track-street-list')).getAllByRole('row')[1]!;
+            await user.click(within(editedStreetRow.cells[2]!).getByAltText('upload file'));
+            const streetEditDialog = screen.getByRole('dialog');
+            const streetEditInput = within(streetEditDialog).getByRole('textbox');
+            await user.clear(streetEditInput);
+            await user.type(streetEditInput, 'Edited street');
+            await user.click(within(streetEditDialog).getByRole('button', { name: messages['msg.confirm'] }));
+            await waitFor(() =>
+                expect(getTrackStreetInfos(store.getState())[0]!.wayPoints[0]!.streetName).toBe('Edited street')
+            );
+            const refreshedStreetRow = within(screen.getByTestId('track-street-list')).getAllByRole('row')[1]!;
+            await user.click(within(refreshedStreetRow).getAllByRole('button')[3]!);
             expect(getStreetPointSelection(store.getState())?.boundary).toBe('end');
             store.dispatch(mapActions.setStreetPointSelection(undefined));
             await user.click(segmentsTab);

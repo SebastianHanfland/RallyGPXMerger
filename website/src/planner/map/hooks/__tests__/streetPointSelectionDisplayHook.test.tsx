@@ -84,7 +84,7 @@ describe('streetPointSelectionDisplayHook', () => {
         expect(leafletMocks.circleMarker).toHaveBeenNthCalledWith(
             1,
             { lat: 48, lng: 11 },
-            expect.objectContaining({ color: '#198754', radius: 10, pane: 'streetPointSelection' })
+            expect.objectContaining({ color: '#0d6efd', radius: 10, pane: 'streetPointSelection' })
         );
         expect(leafletMocks.circleMarker).toHaveBeenNthCalledWith(
             2,
@@ -153,7 +153,7 @@ describe('streetPointSelectionDisplayHook', () => {
         expect(leafletMocks.circleMarker.mock.calls.length).toBeGreaterThan(initialMarkerCount);
         expect(leafletMocks.circleMarker).toHaveBeenLastCalledWith(
             { lat: 48.2, lng: 11.2 },
-            expect.objectContaining({ color: '#198754', radius: 10, pane: 'streetPointSelection' })
+            expect.objectContaining({ color: '#0d6efd', radius: 10, pane: 'streetPointSelection' })
         );
     });
 });

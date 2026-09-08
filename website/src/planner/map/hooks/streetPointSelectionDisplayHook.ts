@@ -7,7 +7,7 @@ import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
 import { STREET_POINT_SELECTION } from '../panes.ts';
 
-const SELECTABLE_POINT_COLOR = '#198754';
+const SELECTABLE_POINT_COLOR = '#0d6efd';
 const DISABLED_POINT_COLOR = '#808080';
 
 function getSelectionRenderKey(

@@ -17,10 +17,6 @@ export function EditDistrictButton(props: Props) {
     const { waypoint } = props;
 
     const [showModal, setShowModal] = useState(false);
-    if (waypoint.district === '') {
-        return null;
-    }
-
     return (
         <>
             <span onClick={() => setShowModal(true)}>

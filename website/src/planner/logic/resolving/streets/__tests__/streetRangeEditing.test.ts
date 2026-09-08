@@ -36,6 +36,15 @@ describe('street range editing', () => {
         ]);
     });
 
+    it('leaves points before the first street without a street', () => {
+        const points = [1, 1, 2].map((s, pointIndex) => ({ segmentId: 'segment', pointIndex, point: point(s) }));
+        const assignments = getStreetRangeAssignments(points, 1, { start: 0, end: 1 }, 'start', 1);
+        expect(assignments.map(({ pointIndex, lookupIndex }) => [pointIndex, lookupIndex])).toEqual([
+            [1, 1],
+            [0, 'unknown-start'],
+        ]);
+    });
+
     it('assigns a shortened end to the street and creates an unknown edge section', () => {
         const points = [1, 2, 2].map((s, pointIndex) => ({ segmentId: 'segment', pointIndex, point: point(s) }));
         const assignments = getStreetRangeAssignments(points, 2, { start: 1, end: 2 }, 'end', 1);
@@ -43,6 +52,12 @@ describe('street range editing', () => {
             { segmentId: 'segment', pointIndex: 1, lookupIndex: 2 },
             { segmentId: 'segment', pointIndex: 2, lookupIndex: 'unknown-end' },
         ]);
+    });
+
+    it('leaves points after the last street without a street', () => {
+        const points = [1, 2, 2].map((s, pointIndex) => ({ segmentId: 'segment', pointIndex, point: point(s) }));
+        const assignments = getStreetRangeAssignments(points, 2, { start: 1, end: 2 }, 'end', 1);
+        expect(assignments).toContainEqual({ segmentId: 'segment', pointIndex: 2, lookupIndex: 'unknown-end' });
     });
 
     it('finds the effective range when a point has a manual lookup', () => {

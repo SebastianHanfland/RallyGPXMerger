@@ -17,10 +17,6 @@ export function EditPostCodeButton(props: Props) {
     const { waypoint } = props;
 
     const [showModal, setShowModal] = useState(false);
-    if (waypoint.postCode === '') {
-        return null;
-    }
-
     return (
         <>
             <span onClick={() => setShowModal(true)}>
