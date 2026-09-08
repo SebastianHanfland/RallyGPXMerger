@@ -38,7 +38,6 @@ describe('point of interest configuration', () => {
         ]);
         expect(pointOfInterestTypesByDialogGroup.internal).toEqual([
             PointOfInterestType.COMMENT,
-            PointOfInterestType.GAP,
             PointOfInterestType.OTHER,
         ]);
         expect(pointOfInterestTypesByDialogGroup.public).toEqual([
@@ -48,5 +47,6 @@ describe('point of interest configuration', () => {
         ]);
         expect(DEFAULT_POINT_OF_INTEREST_TYPE).toBe(PointOfInterestType.OTHER);
         expect(DEFAULT_POINT_OF_INTEREST_RADIUS_IN_M).toBe(200);
+        expect(pointOfInterestConfig[PointOfInterestType.GAP].selectable).toBe(false);
     });
 });

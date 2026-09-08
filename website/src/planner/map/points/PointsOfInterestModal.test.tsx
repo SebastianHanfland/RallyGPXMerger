@@ -31,6 +31,7 @@ describe('Points of interest modal', () => {
         expect(screen.getByText('Public')).toBeInTheDocument();
         expect(screen.getByText('Todo')).toBeInTheDocument();
         expect(screen.getByText('Impediment')).toBeInTheDocument();
+        expect(screen.queryByText('Gap')).toBeNull();
         expect(screen.getByText('Public comment')).toBeInTheDocument();
     });
 });
