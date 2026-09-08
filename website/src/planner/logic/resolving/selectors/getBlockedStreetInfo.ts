@@ -1,4 +1,11 @@
-import { WayPoint, BlockedStreetInfo, BlockedStreetTrackUsage, StreetPathPoint, TrackWayPointType } from '../types.ts';
+import {
+    WayPoint,
+    BlockedStreetInfo,
+    BlockedStreetTrackUsage,
+    StreetPathPoint,
+    TrackWayPointType,
+    BlockedStreetReference,
+} from '../types.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
@@ -59,6 +66,19 @@ function addTrackUsage(usages: BlockedStreetTrackUsage[], usage: BlockedStreetTr
               }
             : item
     );
+}
+
+function addStreetReference(
+    references: BlockedStreetReference[] | undefined,
+    trackId: string,
+    streetIndex: number | undefined
+): BlockedStreetReference[] | undefined {
+    if (streetIndex === undefined) return references;
+    const nextReference = { trackId, streetIndex };
+    if (references?.some((reference) => reference.trackId === trackId && reference.streetIndex === streetIndex)) {
+        return references;
+    }
+    return [...(references ?? []), nextReference];
 }
 
 function countPeopleOnTracks(tracks: TrackComposition[], tracksIds: string[]): number {
@@ -146,6 +166,7 @@ export const getBlockedStreetInfo = createSelector(
                                     speed: waypoint.speed,
                                 },
                             ],
+                            streetReferences: addStreetReference(undefined, foundTrack!.id, waypoint.s),
                         });
                         return;
                     }
@@ -171,6 +192,11 @@ export const getBlockedStreetInfo = createSelector(
                                       distanceInKm: waypoint.distanceInKm,
                                       speed: waypoint.speed,
                                   }),
+                                  streetReferences: addStreetReference(
+                                      info.streetReferences,
+                                      foundTrack!.id,
+                                      waypoint.s
+                                  ),
                               }
                             : info
                     );

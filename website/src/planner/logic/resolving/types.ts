@@ -91,6 +91,12 @@ export interface BlockedStreetInfo {
     peopleCount: number;
     tracksIds: string[];
     trackUsages?: BlockedStreetTrackUsage[];
+    streetReferences?: BlockedStreetReference[];
+}
+
+export interface BlockedStreetReference {
+    trackId: string;
+    streetIndex: number;
 }
 
 export interface BlockedStreetTrackUsage {

@@ -31,7 +31,6 @@ import { entryPointsDisplayHook } from './hooks/entryPointsDisplayHook.ts';
 import { STREET_POINT_SELECTION, TRACK_MARKER } from './panes.ts';
 import { streetHighlightDisplayHook } from './hooks/streetHighlightDisplayHook.ts';
 import { streetPointSelectionDisplayHook } from './hooks/streetPointSelectionDisplayHook.ts';
-import { streetDisplayHook } from './hooks/streetDisplayHook.ts';
 import { streetSelectionCompletionHook } from './hooks/streetSelectionCompletionHook.ts';
 import { StreetDialog } from './StreetDialog.tsx';
 
@@ -100,7 +99,6 @@ export const InteractionMap = () => {
     const entryPointsLayer = useRef<LayerGroup>(null);
     const streetHighlightLayer = useRef<LayerGroup>(null);
     const streetPointSelectionLayer = useRef<LayerGroup>(null);
-    const streetsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         if (!myMap) {
@@ -128,7 +126,6 @@ export const InteractionMap = () => {
         streetHighlightLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         streetPointSelectionLayer.current = L.layerGroup().addTo(myMap);
-        streetsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     blockedStreetsDisplayHook(blockedStreetLayer);
@@ -142,7 +139,6 @@ export const InteractionMap = () => {
     gpxSegmentDisplayHook(gpxSegmentsLayer);
     streetHighlightDisplayHook(streetHighlightLayer);
     streetPointSelectionDisplayHook(streetPointSelectionLayer);
-    streetDisplayHook(streetsLayer);
     streetSelectionCompletionHook();
 
     return (

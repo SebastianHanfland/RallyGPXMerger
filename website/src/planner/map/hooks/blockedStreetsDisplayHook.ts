@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
-import L, { LayerGroup } from 'leaflet';
+import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
 import { getShowBlockStreets } from '../../store/map.reducer.ts';
 import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
 import { getColorFromString } from '../../../utils/colorUtil.ts';
@@ -8,6 +8,7 @@ import { BlockedStreetInfo, BlockedStreetTrackUsage } from '../../logic/resolvin
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
 import { useIntl } from 'react-intl';
 import { formatNumber } from '../../../utils/numberUtil.ts';
+import { mapActions } from '../../store/map.reducer.ts';
 
 function escapeTooltipText(value: string): string {
     return value.replace(
@@ -50,6 +51,7 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGr
     const blockedStreetInfos = useSelector(getBlockedStreetInfo);
     const showStreets = useSelector(getShowBlockStreets);
     const intl = useIntl();
+    const dispatch = useDispatch();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -84,11 +86,25 @@ export function blockedStreetsDisplayHook(blockedStreetsLayer: RefObject<LayerGr
                             sticky: true,
                         }
                     );
+                    connection.on('click', (event: LeafletMouseEvent) => {
+                        event.originalEvent?.stopPropagation();
+                        const reference = blockedStreet.streetReferences?.[0];
+                        if (reference) {
+                            dispatch(
+                                mapActions.setClickOnStreet({
+                                    trackId: reference.trackId,
+                                    streetIndex: reference.streetIndex,
+                                    lat: event.latlng.lat,
+                                    lng: event.latlng.lng,
+                                })
+                            );
+                        }
+                    });
                     connection.on('mouseover', () => connection.setStyle({ weight: 10 }));
                     connection.on('mouseout', () => connection.setStyle({ weight: 4 }));
                     connection.addTo(current);
                 });
             });
         }
-    }, [blockedStreetInfos, blockedStreetInfos.length, showStreets, intl]);
+    }, [blockedStreetInfos, blockedStreetInfos.length, dispatch, showStreets, intl]);
 }
