@@ -1,45 +1,26 @@
-import { pointOfInterestColors, PointOfInterestType } from '../store/types.ts';
 import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getColor } from '../../utils/colorUtil.ts';
 import { WcIcon } from '../../utils/icons/WcIcon.tsx';
-
-const plannerTypes = [
-    PointOfInterestType.COMMENT,
-    PointOfInterestType.GAP,
-    PointOfInterestType.TODO,
-    PointOfInterestType.IMPEDIMENT,
-    PointOfInterestType.OTHER,
-];
-
-const publicTypes = [PointOfInterestType.PUBLIC_COMMENT, PointOfInterestType.TOILET, PointOfInterestType.GATHERING];
+import { FormattedMessage } from 'react-intl';
+import { getPointTypeMessageId, pointOfInterestConfig, pointOfInterestTypesByGroup } from './pointOfInterestConfig.ts';
 
 export function PointsOfInterestTypeHint() {
     return (
         <p>
-            <ul>
-                {plannerTypes.map((type) => {
-                    const color = pointOfInterestColors[type];
-                    return (
-                        <li key={type}>
-                            {color && <ColorBlob color={getColor({ color })} />}
-                            {type}
-                        </li>
-                    );
-                })}
-            </ul>
-
-            <ul>
-                {publicTypes.map((type) => {
-                    const color = pointOfInterestColors[type];
-                    return (
-                        <li key={type}>
-                            {type === PointOfInterestType.TOILET && <WcIcon />}
-                            {color && <ColorBlob color={getColor({ color })} />}
-                            {type}
-                        </li>
-                    );
-                })}
-            </ul>
+            {(['public', 'todo', 'impediment', 'internal'] as const).map((group) => (
+                <ul key={group}>
+                    {pointOfInterestTypesByGroup[group].map((type) => {
+                        const config = pointOfInterestConfig[type];
+                        return (
+                            <li key={type}>
+                                {config.mapShape === 'toilet' && <WcIcon />}
+                                {config.color && <ColorBlob color={getColor({ color: config.color })} />}
+                                <FormattedMessage id={getPointTypeMessageId(type)} />
+                            </li>
+                        );
+                    })}
+                </ul>
+            ))}
         </p>
     );
 }

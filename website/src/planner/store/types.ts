@@ -280,17 +280,6 @@ export enum PointOfInterestType {
     OTHER = 'OTHER',
 }
 
-export const pointOfInterestColors: Record<PointOfInterestType, string | undefined> = {
-    [PointOfInterestType.TODO]: 'orange',
-    [PointOfInterestType.COMMENT]: 'yellow',
-    [PointOfInterestType.GAP]: 'red',
-    [PointOfInterestType.IMPEDIMENT]: 'darkred',
-    [PointOfInterestType.TOILET]: undefined,
-    [PointOfInterestType.GATHERING]: 'green',
-    [PointOfInterestType.PUBLIC_COMMENT]: 'blue',
-    [PointOfInterestType.OTHER]: 'blue',
-};
-
 export interface State {
     layout: LayoutState;
     backend?: BackendState;

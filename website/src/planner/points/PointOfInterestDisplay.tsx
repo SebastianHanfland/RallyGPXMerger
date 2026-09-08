@@ -1,4 +1,9 @@
 import { PointOfInterest } from '../store/types.ts';
+import { FormattedMessage } from 'react-intl';
+import { getPointTypeMessageId, pointOfInterestConfig } from './pointOfInterestConfig.ts';
+import { ColorBlob } from '../../utils/ColorBlob.tsx';
+import { getColor } from '../../utils/colorUtil.ts';
+import { WcIcon } from '../../utils/icons/WcIcon.tsx';
 import { mapActions } from '../store/map.reducer.ts';
 import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon.tsx';
 import { useDispatch } from 'react-redux';
@@ -6,7 +11,8 @@ import { pointsActions } from '../store/points.reducer.ts';
 import { EditIcon } from '../../utils/icons/EditIcon.tsx';
 
 export function PointOfInterestDisplay({ pointOfInterest }: { pointOfInterest: PointOfInterest }) {
-    const { title, description } = pointOfInterest;
+    const { title, description, type } = pointOfInterest;
+    const config = pointOfInterestConfig[type];
     const dispatch = useDispatch();
 
     return (
@@ -16,6 +22,11 @@ export function PointOfInterestDisplay({ pointOfInterest }: { pointOfInterest: P
             </td>
             <td key={'description'}>
                 <div>{description}</div>
+            </td>
+            <td key={'type'}>
+                {config.mapShape === 'toilet' && <WcIcon />}
+                {config.color && <ColorBlob color={getColor({ color: config.color })} />}
+                <FormattedMessage id={getPointTypeMessageId(type)} />
             </td>
             <td key={'actions'}>
                 <span

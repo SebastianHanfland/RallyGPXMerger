@@ -1,14 +1,15 @@
 import { Form } from 'react-bootstrap';
 import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
 import Select from 'react-select';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { getPointTypeMessageId } from '../../points/pointOfInterestConfig.ts';
 
 interface Props {
     values: Partial<PointOfInterest>;
     setValues: (point: Partial<PointOfInterest>) => void;
 }
 
-const typeOptions = Object.values(PointOfInterestType).map((value) => ({ value, label: value }));
+const typeOptions = Object.values(PointOfInterestType).map((value) => ({ value, label: getPointTypeMessageId(value) }));
 
 export function PointsOfInterestForm({ values, setValues }: Props) {
     const intl = useIntl();
@@ -53,6 +54,7 @@ export function PointsOfInterestForm({ values, setValues }: Props) {
                     aria-label="Default select example"
                     options={typeOptions}
                     value={typeOptions.find((option) => option.value === values.type)}
+                    formatOptionLabel={(option) => <FormattedMessage id={option.label} />}
                     onChange={(option) => {
                         setValues({ ...values, type: option?.value ?? PointOfInterestType.OTHER });
                         // if (option) {

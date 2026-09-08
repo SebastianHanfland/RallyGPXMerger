@@ -15,6 +15,7 @@ import { getDisplayTracks } from '../store/displayTracksReducer.ts';
 import { breaksForDisplayMapHook } from './breaksForDisplayMapHook.ts';
 import { entryPointsForDisplayMapHook } from './entryPointsForDisplayMapHook.ts';
 import { getCenterPoint } from '../../common/map/centerUtil.ts';
+import { pointsForDisplayMapHook } from './pointsForDisplayMapHook.ts';
 
 let myMap: L.Map;
 
@@ -48,6 +49,7 @@ export const PresentationMap = () => {
     const trackLayer = useRef<LayerGroup>(null);
     const snakeLayer = useRef<LayerGroup>(null);
     const criticalMapsLayer = useRef<LayerGroup>(null);
+    const pointsLayer = useRef<LayerGroup>(null);
 
     useEffect(() => {
         // @ts-ignore
@@ -60,6 +62,8 @@ export const PresentationMap = () => {
         snakeLayer.current = L.layerGroup().addTo(myMap);
         // @ts-ignore
         criticalMapsLayer.current = L.layerGroup().addTo(myMap);
+        // @ts-ignore
+        pointsLayer.current = L.layerGroup().addTo(myMap);
     }, []);
 
     tracksForDisplayMapHook(trackLayer);
@@ -67,6 +71,7 @@ export const PresentationMap = () => {
     entryPointsForDisplayMapHook(entryPointLayer);
     snakeForDisplayMapHook(snakeLayer);
     criticalMapsHook(criticalMapsLayer);
+    pointsForDisplayMapHook(pointsLayer);
 
     return (
         <div onMouseLeave={() => dispatch(displayMapActions.setHighlightedTrack())}>

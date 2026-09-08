@@ -1,31 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
-import L, { LayerGroup } from 'leaflet';
+import { LayerGroup } from 'leaflet';
 import { getShowPointsOfInterest } from '../../store/map.reducer.ts';
 import { getPoints, pointsActions } from '../../store/points.reducer.ts';
-import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
-import { wcIcon } from '../../../common/map/MapIcons.ts';
+import { createPointOfInterestMarker } from '../../../common/map/pointOfInterestMarker.ts';
 import { getGaps } from '../../calculation/getGaps.ts';
-
-function createPointOfInterest(point: PointOfInterest) {
-    if (point.type === PointOfInterestType.TOILET) {
-        return L.marker(point, { icon: wcIcon });
-    }
-
-    if (point.type === PointOfInterestType.IMPEDIMENT || point.type === PointOfInterestType.GAP) {
-        return L.circle(point, { radius: point.radiusInM, color: 'red' });
-    }
-
-    if (point.type === PointOfInterestType.COMMENT) {
-        return L.circle(point, { radius: point.radiusInM, color: 'yellow' });
-    }
-
-    if (point.type === PointOfInterestType.GATHERING) {
-        return L.circle(point, { radius: point.radiusInM, color: 'green' });
-    }
-
-    return L.circle(point, { radius: point.radiusInM, color: 'blue' });
-}
 
 export function pointsOfInterestDisplayHook(pointsOfInterestLayer: RefObject<LayerGroup | null>) {
     const points = useSelector(getPoints);
@@ -42,7 +21,7 @@ export function pointsOfInterestDisplayHook(pointsOfInterestLayer: RefObject<Lay
         }
         current.clearLayers();
         pointsToDisplay.forEach((point) => {
-            const pointOfInterest = createPointOfInterest(point).bindTooltip(
+            const pointOfInterest = createPointOfInterestMarker(point).bindTooltip(
                 point.title + '\n' + '\n' + point.description,
                 { sticky: true }
             );
