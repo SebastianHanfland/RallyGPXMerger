@@ -16,12 +16,14 @@ import { EditDistrictButton } from '../../../streets/EditDistrictButton.tsx';
 import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { getNextStreetLookupIndex } from '../../../store/segmentData.redux.ts';
 import { getStreetPointSelection, mapActions } from '../../../store/map.reducer.ts';
+import { AppDispatch } from '../../../store/planningStore.ts';
 import {
     getRoutePointReferences,
     getNewStreetRangeAssignments,
     getStreetRange,
     getStreetRangeAssignments,
 } from '../../../logic/resolving/streets/streetRangeEditing.ts';
+import { enrichStreetWithPostCodeAndDistrict } from '../../../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
 
 interface Props {
     track: TrackComposition;
@@ -29,7 +31,7 @@ interface Props {
 export const PlannerSidebarTrackStreets = ({ track }: Props) => {
     const trackStreetInfo = useSelector(getTrackStreetInfos).find((trackInfo) => trackInfo.id === track.id);
     const parsedSegments = useSelector(getParsedGpxSegments);
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const intl = useIntl();
     const selection = useSelector(getStreetPointSelection);
     const routePoints = useMemo(() => getRoutePointReferences(track, parsedSegments), [track, parsedSegments]);
@@ -115,6 +117,7 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                     )
                 )
             );
+            dispatch(enrichStreetWithPostCodeAndDistrict(selection.streetIndex));
             dispatch(mapActions.setStreetPointSelection(undefined));
             return;
         }

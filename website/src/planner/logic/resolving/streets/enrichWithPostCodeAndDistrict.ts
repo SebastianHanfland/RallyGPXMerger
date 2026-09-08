@@ -7,33 +7,38 @@ import { getLookups } from '../selectors/getLookups.ts';
 import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
 
 function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: number; lon: number } | null {
-    const segmentsWithStreetIndex = segments.filter((segment) =>
-        segment.points.find((point) => `${getStreetLookupIndex(point)}` === key)
-    );
-    if (segmentsWithStreetIndex.length !== 1) {
-        console.error(
-            'Expected only one segment to contain information here, but got ',
-            segmentsWithStreetIndex.length
-        );
-        return null;
-    }
-    const relevantSegment = segmentsWithStreetIndex[0];
-    const pointsMatchingStreetIndex = relevantSegment.points.filter(
-        (point) => `${getStreetLookupIndex(point)}` === key
+    const pointsMatchingStreetIndex = segments.flatMap((segment) =>
+        segment.points.filter((point) => `${getStreetLookupIndex(point)}` === key)
     );
 
     if (pointsMatchingStreetIndex.length === 0) {
-        console.error(`No points found for key ${key}`);
         return null;
     }
-    const lastPoint = pointsMatchingStreetIndex[pointsMatchingStreetIndex.length - 1];
-    const firstPoint = pointsMatchingStreetIndex[0];
 
     return {
-        lat: (firstPoint.b + lastPoint.b) / 2,
-        lon: (firstPoint.l + lastPoint.l) / 2,
+        lat: pointsMatchingStreetIndex.reduce((total, point) => total + point.b, 0) / pointsMatchingStreetIndex.length,
+        lon: pointsMatchingStreetIndex.reduce((total, point) => total + point.l, 0) / pointsMatchingStreetIndex.length,
     };
 }
+
+export const enrichStreetWithPostCodeAndDistrict =
+    (streetIndex: number) =>
+    async (dispatch: AppDispatch, getState: () => State): Promise<void> => {
+        const bigDataCloudKey = getBigDataCloudKey(getState()) || 'bdc_649ce9cdfba14851ab77c6410ace035e';
+        const position = getPositionForKey(`${streetIndex}`, getParsedGpxSegments(getState()));
+        if (!position) {
+            return;
+        }
+
+        const result = await fetchAndStorePostCodeAndDistrict(bigDataCloudKey, streetIndex, position.lat, position.lon);
+        const postCodes: Record<number, string> = { [result.key]: result.postCode };
+        const districts: Record<number, string> = {};
+        if (result.district) {
+            districts[result.key] = result.district;
+        }
+        dispatch(segmentDataActions.addPostCodeLookup(postCodes));
+        dispatch(segmentDataActions.addDistrictLookup(districts));
+    };
 
 export const enrichGpxSegmentsWithPostCodesAndDistricts = async (
     dispatch: AppDispatch,
