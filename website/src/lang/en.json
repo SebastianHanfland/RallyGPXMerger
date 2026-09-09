@@ -87,6 +87,7 @@
     "msg.downloadSegments.hint": "Download all GPX files of segments",
     "msg.calculationSettings.title": "Calculation settings",
     "msg.trackName": "Track name",
+    "msg.trackArrivals": "Track arrivals",
     "msg.bufferedTime": "Buffered time",
     "msg.realTime": "Real time",
     "msg.entryPointsCount": "({amount} entry points)",

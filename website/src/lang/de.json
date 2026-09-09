@@ -87,6 +87,7 @@
     "msg.downloadSegments.hint": "Alle GPX Dateien für die Abschnitte herunterladen",
     "msg.calculationSettings.title": "Einstellungen",
     "msg.trackName": "Routenname",
+    "msg.trackArrivals": "Ankunft der Routen",
     "msg.bufferedTime": "Zeit mit Puffer",
     "msg.realTime": "Tatsächliche Zeit",
     "msg.entryPointsCount": "({amount} Einstiegspunkte)",
