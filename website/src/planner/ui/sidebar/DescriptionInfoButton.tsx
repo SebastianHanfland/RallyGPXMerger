@@ -30,6 +30,7 @@ export const DescriptionInfoButton = ({ children, titleMessageId, descriptionMes
                 <ConfirmationModal
                     closeModal={() => setOpen(false)}
                     title={title}
+                    size={'lg'}
                     body={
                         <div>
                             <FormattedMessage id={descriptionMessageId} />
