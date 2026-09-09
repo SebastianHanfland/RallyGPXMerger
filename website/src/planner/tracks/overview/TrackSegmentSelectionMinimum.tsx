@@ -8,6 +8,7 @@ import { isDefined } from '../../../utils/typeUtil.ts';
 import { SimpleElementDisplay } from './SimpleElementDisplay.tsx';
 import { limitString } from '../../../utils/stringUtil.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
+import { getColor } from '../../../utils/colorUtil.ts';
 
 interface Props {
     track: TrackComposition;
@@ -17,11 +18,7 @@ interface Props {
 
 export function TrackSegmentSelectionMinimum({ track }: Props) {
     const { id, segments } = track;
-    const gpxSegment = useSelector(getParsedGpxSegments);
-    const colorMap: Record<string, string | undefined> = {};
-    gpxSegment.forEach((segment) => {
-        colorMap[segment.id] = segment.color;
-    });
+    const gpxSegments = useSelector(getParsedGpxSegments);
 
     const dispatch: AppDispatch = useDispatch();
 
@@ -44,7 +41,12 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
             >
                 {segments.map((trackElement) => {
                     const elementWithColor = isTrackSegment(trackElement)
-                        ? { ...trackElement, color: colorMap[trackElement.segmentId] || undefined }
+                        ? {
+                              ...trackElement,
+                              color: getColor(
+                                  gpxSegments.find((segment) => segment.id === trackElement.id) ?? trackElement
+                              ),
+                          }
                         : trackElement;
                     return (
                         <SimpleElementDisplay

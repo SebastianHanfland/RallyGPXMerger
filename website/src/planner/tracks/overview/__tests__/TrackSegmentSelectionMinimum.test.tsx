@@ -23,15 +23,30 @@ describe('TrackSegmentSelectionMinimum', () => {
         simpleElementDisplay.mockClear();
     });
 
-    it('uses the manually assigned color of the referenced parsed segment', () => {
-        const trackSegment: TrackSegment = { id: 'track-element-id', segmentId: 'parsed-segment-id', type: SEGMENT };
-        useSelector.mockReturnValue([{ id: 'parsed-segment-id', filename: 'route.gpx', color: '#123456', points: [] }]);
+    it('uses the manually assigned color of the parsed segment', () => {
+        const trackSegment: TrackSegment = { id: 'segment-id', segmentId: 'segment-id', type: SEGMENT };
+        useSelector.mockReturnValue([{ id: 'segment-id', filename: 'route.gpx', color: '#123456', points: [] }]);
 
         render(<TrackSegmentSelectionMinimum track={{ id: 'track-id', name: 'Track', segments: [trackSegment] }} />);
 
         expect(simpleElementDisplay).toHaveBeenCalledWith(
             {
                 trackElement: { ...trackSegment, color: '#123456' },
+                trackId: 'track-id',
+            },
+            undefined
+        );
+    });
+
+    it('uses the generated segment color when no manual color is assigned', () => {
+        const trackSegment: TrackSegment = { id: 'segment-id', segmentId: 'segment-id', type: SEGMENT };
+        useSelector.mockReturnValue([{ id: 'segment-id', filename: 'route.gpx', points: [] }]);
+
+        render(<TrackSegmentSelectionMinimum track={{ id: 'track-id', name: 'Track', segments: [trackSegment] }} />);
+
+        expect(simpleElementDisplay).toHaveBeenCalledWith(
+            {
+                trackElement: { ...trackSegment, color: '#segmen' },
                 trackId: 'track-id',
             },
             undefined
