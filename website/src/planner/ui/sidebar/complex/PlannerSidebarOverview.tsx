@@ -20,6 +20,7 @@ import { PlannerSidebarOverviewEntryPointsHeader } from './PlannerSidebarOvervie
 import { PlannerSidebarOverviewPublicLinks } from './PlannerSidebarOverviewPublicLinks.tsx';
 import { FlowOverviewButton } from '../../../flow/FlowOverviewButton.tsx';
 import { PlannerSidebarOverviewTrackArrivals } from './PlannerSidebarOverviewTrackArrivals.tsx';
+import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
 
 export const PlannerSidebarOverview = () => {
     const intl = useIntl();
@@ -31,6 +32,7 @@ export const PlannerSidebarOverview = () => {
         ['start', <PlannerSidebarOverviewStartNamesHeader />, <PlannerSidebarOverviewStartNames />],
         ['comStart', <PlannerSidebarOverviewStartTimesHeader />, <StartTimeTable />],
         ['entryPoints', <PlannerSidebarOverviewEntryPointsHeader />, <PlannerSidebarOverviewEntryPoints />],
+        ['priorities', intl.formatMessage({ id: 'msg.prio' }), <TrackPriorityTable />],
         ['trackArrivals', intl.formatMessage({ id: 'msg.trackArrivals' }), <PlannerSidebarOverviewTrackArrivals />],
         ['nodes', intl.formatMessage({ id: 'msg.nodes' }), <TrackNodesTable />],
         ['publicLinks', intl.formatMessage({ id: 'msg.publicLinks' }), <PlannerSidebarOverviewPublicLinks />],

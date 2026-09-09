@@ -4,7 +4,6 @@ import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { ConstructionSites } from '../../../construction/ConstructionSites.tsx';
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
-import { TrackPriorityTable } from '../../../parameters/TrackPriorityTable.tsx';
 import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
 import { ReactNode } from 'react';
 import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
@@ -19,7 +18,6 @@ export const PlannerSidebarSettings = () => {
             </>,
         ],
         ['msg.trackSettings', <TrackMergeParameters />],
-        ['msg.prio', <TrackPriorityTable />],
         ['msg.ownApiKey', <ApiKeyInput />],
         ['msg.resetAllStreets.title', <ResetAllResolvedStreets />],
         ['msg.constructions.title', <ConstructionSites />],

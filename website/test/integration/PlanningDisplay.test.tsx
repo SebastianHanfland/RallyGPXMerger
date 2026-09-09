@@ -97,6 +97,11 @@ describe('Planner integration test', () => {
             expect(screen.queryByRole('button', { name: messages['msg.documents'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
             expect(screen.getByText(messages['msg.checks'])).toBeInTheDocument();
+            const priorityAccordion = screen.getByRole('button', { name: messages['msg.prio'] });
+            expect(priorityAccordion).toBeInTheDocument();
+            await user.click(priorityAccordion);
+            expect(screen.getByRole('columnheader', { name: messages['msg.priority'] })).toBeInTheDocument();
+            expect(screen.getByRole('columnheader', { name: messages['msg.trackPeople'] })).toBeInTheDocument();
             const communicatedStartAccordion = screen.getByRole('button', {
                 name: messages['msg.communicatedStart'],
             });
@@ -148,6 +153,7 @@ describe('Planner integration test', () => {
             await user.click(screen.getByRole('button', { name: messages['msg.settings'] }));
             expect(screen.queryByRole('button', { name: messages['msg.communicatedStart'] })).toBeNull();
             expect(screen.queryByRole('button', { name: messages['msg.nodes'] })).toBeNull();
+            expect(screen.queryByRole('button', { name: messages['msg.prio'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
             const pointsAccordion = screen.getByRole('button', { name: messages['msg.points'] });
             expect(pointsAccordion).toBeInTheDocument();
