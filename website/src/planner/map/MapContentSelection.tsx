@@ -111,7 +111,7 @@ export function MapContentSelection() {
                         {intl.formatMessage({ id: 'msg.streets' })}
                     </Button>
                 </div>
-                <div className={'d-flex flex-column mt-2'}>
+                <div className={'d-flex flex-column mt-2'} style={{ textAlign: 'left' }}>
                     <Form.Check
                         id={'marker'}
                         type={'checkbox'}
