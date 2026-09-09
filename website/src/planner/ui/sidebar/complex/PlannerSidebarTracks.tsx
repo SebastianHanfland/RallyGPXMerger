@@ -53,9 +53,14 @@ export const PlannerSidebarTracks = () => {
         }
 
         const closeOnOutsideClick = (event: MouseEvent) => {
-            if (!contextMenuRef.current?.contains(event.target as Node)) {
-                setContextMenu(undefined);
+            const target = event.target as Node;
+            if (contextMenuRef.current?.contains(target)) {
+                return;
             }
+            if (target instanceof Element && target.closest('.modal')) {
+                return;
+            }
+            setContextMenu(undefined);
         };
         const closeOnEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {

@@ -74,7 +74,6 @@ export function TrackActionItems({ track, onAction }: Props) {
             </Dropdown.Item>
             <Dropdown.Item
                 onClick={() => {
-                    closeMenu();
                     setShowColorModal(true);
                 }}
             >

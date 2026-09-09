@@ -347,7 +347,22 @@ describe('Planner integration test', () => {
             expect(within(contextMenu).getByText(messages['msg.setColor'])).toBeInTheDocument();
             expect(getSelectedTrackId(store.getState())).toBe(secondTrack.id);
 
-            await user.click(within(contextMenu).getByText(messages['msg.copySegments']));
+            await user.click(within(contextMenu).getByText(messages['msg.setColor']));
+            const colorDialog = screen.getByRole('dialog');
+            const colorInput = within(colorDialog).getByRole('textbox');
+            await user.click(colorInput);
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+            await user.clear(colorInput);
+            await user.type(colorInput, '123456');
+            await user.click(within(colorDialog).getByRole('button', { name: messages['msg.confirm'] }));
+            expect(screen.queryByRole('dialog')).toBeNull();
+            expect(getTrackCompositions(store.getState()).find((track) => track.id === firstTrack.id)?.color).toBe(
+                '#123456'
+            );
+
+            fireEvent.contextMenu(screen.getByTestId(`track-tab-${firstTrack.id}`));
+            const colorContextMenu = await screen.findByTestId('track-context-menu');
+            await user.click(within(colorContextMenu).getByText(messages['msg.copySegments']));
             expect(getSegmentIdClipboard(store.getState())).toEqual(firstTrack.segments);
             expect(screen.queryByTestId('track-context-menu')).toBeNull();
         });
