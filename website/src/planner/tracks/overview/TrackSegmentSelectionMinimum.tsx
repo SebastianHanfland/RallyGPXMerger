@@ -1,4 +1,4 @@
-import { TrackComposition } from '../../store/types.ts';
+import { isTrackSegment, TrackComposition } from '../../store/types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 
@@ -23,7 +23,6 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
         colorMap[segment.id] = segment.color;
     });
 
-    console.log(segments, colorMap);
     const dispatch: AppDispatch = useDispatch();
 
     const setSegmentIds = (items: { id: string }[]) => {
@@ -44,7 +43,9 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
                 setList={setSegmentIds}
             >
                 {segments.map((trackElement) => {
-                    const elementWithColor = { ...trackElement, color: colorMap[trackElement.id] || undefined };
+                    const elementWithColor = isTrackSegment(trackElement)
+                        ? { ...trackElement, color: colorMap[trackElement.segmentId] || undefined }
+                        : trackElement;
                     return (
                         <SimpleElementDisplay
                             trackElement={elementWithColor}
