@@ -48,62 +48,64 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
     const { id, filename, flipped } = gpxSegment;
 
     return (
-        <div
-            onMouseEnter={() => dispatch(mapActions.setHighlightedSegmentId(segmentId))}
-            onMouseLeave={() => dispatch(mapActions.setHighlightedSegmentId(undefined))}
-        >
+        <div>
+            <TrackSelectionNodeButton segmentId={segmentId} />
             <div
-                className={'rounded-2 d-flex justify-content-between'}
-                style={{
-                    border: '1px solid transparent',
-                    borderColor: 'black',
-                    cursor: 'pointer',
-                    margin: '1px',
-                    backgroundColor: getColor(gpxSegment),
-                }}
-                key={segmentId}
+                onMouseEnter={() => dispatch(mapActions.setHighlightedSegmentId(segmentId))}
+                onMouseLeave={() => dispatch(mapActions.setHighlightedSegmentId(undefined))}
             >
-                <div className={'my-2'} title={segmentName + '\n' + tooltip}>
-                    <DraggableIcon />
-                    <span className={'m-1'}>{segmentName}</span>
-                    {info && <span>({info})</span>}
-                </div>
-                <div>
-                    <TrackSelectionGapDisplay segmentId={segmentId} trackId={trackId} />
-                    <TrackSelectionNodeButton segmentId={segmentId} />
-                    {flipped && <img src={flip} className="m-1" alt="flip" />}
-                    <Button
-                        variant="danger"
-                        size={'sm'}
-                        className={'m-1'}
-                        onClick={() => {
-                            dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
-                            if (fullGpxDelete) {
-                                dispatch(segmentDataActions.removeGpxSegment(segmentId));
-                            }
-                        }}
-                        title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
-                    >
-                        X
-                    </Button>
-                    <DropdownButton
-                        as={ButtonGroup}
-                        key={'primary'}
-                        id={`dropdown-variants-${'primary'}`}
-                        variant={'primary'}
-                        title={''}
-                    >
-                        <FileDownloaderDropdownItem
-                            content={() => getGpxContentStringFromParsedSegment(gpxSegment)}
-                            name={`${filename}.gpx`}
-                        />
-                        <FileChangeWithUploadButton id={id} name={filename} />
-                        <FileChangeButton id={id} name={filename} />
-                        <RemoveFileButton id={id} name={filename} />
-                        <FlipGpxButton id={id} name={filename} flipped={flipped} />
-                        <EditSegmentColorButton id={id} name={filename} color={gpxSegment.color} />
-                        <ResetResolvedStreetsButton id={id} name={filename} />
-                    </DropdownButton>
+                <div
+                    className={'rounded-2 d-flex justify-content-between'}
+                    style={{
+                        border: '1px solid transparent',
+                        borderColor: 'black',
+                        cursor: 'pointer',
+                        margin: '1px',
+                        backgroundColor: getColor(gpxSegment),
+                    }}
+                    key={segmentId}
+                >
+                    <div className={'my-2'} title={segmentName + '\n' + tooltip}>
+                        <DraggableIcon />
+                        <span className={'m-1'}>{segmentName}</span>
+                        {info && <span>({info})</span>}
+                    </div>
+                    <div>
+                        <TrackSelectionGapDisplay segmentId={segmentId} trackId={trackId} />
+                        {flipped && <img src={flip} className="m-1" alt="flip" />}
+                        <Button
+                            variant="danger"
+                            size={'sm'}
+                            className={'m-1'}
+                            onClick={() => {
+                                dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
+                                if (fullGpxDelete) {
+                                    dispatch(segmentDataActions.removeGpxSegment(segmentId));
+                                }
+                            }}
+                            title={intl.formatMessage({ id: 'msg.removeTrackSegment' }, { segmentName })}
+                        >
+                            X
+                        </Button>
+                        <DropdownButton
+                            as={ButtonGroup}
+                            key={'primary'}
+                            id={`dropdown-variants-${'primary'}`}
+                            variant={'primary'}
+                            title={''}
+                        >
+                            <FileDownloaderDropdownItem
+                                content={() => getGpxContentStringFromParsedSegment(gpxSegment)}
+                                name={`${filename}.gpx`}
+                            />
+                            <FileChangeWithUploadButton id={id} name={filename} />
+                            <FileChangeButton id={id} name={filename} />
+                            <RemoveFileButton id={id} name={filename} />
+                            <FlipGpxButton id={id} name={filename} flipped={flipped} />
+                            <EditSegmentColorButton id={id} name={filename} color={gpxSegment.color} />
+                            <ResetResolvedStreetsButton id={id} name={filename} />
+                        </DropdownButton>
+                    </div>
                 </div>
             </div>
         </div>

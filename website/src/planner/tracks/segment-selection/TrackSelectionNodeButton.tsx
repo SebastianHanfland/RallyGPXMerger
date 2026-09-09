@@ -29,9 +29,15 @@ export function TrackSelectionNodeButton({ segmentId }: Props) {
     const tracksAtNode = getTracksAtNode(foundNode, tracks);
 
     return (
-        <span
+        <div
             title={tracksAtNode.map((track) => track.name).join('\n')}
-            style={{ backgroundColor: 'white', padding: '5px' }}
+            style={{
+                backgroundColor: 'white',
+                padding: '5px',
+                margin: '10px',
+                border: '1px solid #ccc',
+                cursor: 'pointer',
+            }}
             className={'rounded-2'}
             onClick={() => dispatch(nodesActions.setNodeEditInfo({ segmentAfterId: segmentId }))}
         >
@@ -39,6 +45,6 @@ export function TrackSelectionNodeButton({ segmentId }: Props) {
                 <NodeIcon />
             </span>
             <FormattedMessage id={'msg.nodePoint'} values={{ counter: foundNode.segmentsBeforeNode.length }} />
-        </span>
+        </div>
     );
 }
