@@ -34,7 +34,8 @@ export function TrackSelectionNodeButton({ segmentId }: Props) {
             style={{
                 backgroundColor: 'white',
                 padding: '5px',
-                margin: '10px',
+                marginLeft: '50px',
+                marginRight: '50px',
                 border: '1px solid #ccc',
                 cursor: 'pointer',
             }}
