@@ -122,7 +122,7 @@ export interface NodeEditInfo {
 }
 
 export interface NodeSpecification {
-    trackOffsets: Record<string, number>;
+    trackOffsets?: Record<string, number>;
     trackOffsetPercentages?: Record<string, number>;
     nodeInfo?: string;
     totalCount: number;

@@ -105,10 +105,10 @@ export const getDelaysOfTracks = (
                 ])
             );
             const total = Object.values(branchSizes).reduce((sum, size) => sum + size, 0);
-            const segmentIds = new Set([
-                ...Object.keys(foundNodeSpec.trackOffsets),
-                ...Object.keys(foundNodeSpec.trackOffsetPercentages ?? {}),
-            ]);
+            const segmentIds =
+                foundNodeSpec.trackOffsetPercentages !== undefined
+                    ? Object.keys(getBranchTrackIds(trackNode))
+                    : Object.keys(foundNodeSpec.trackOffsets ?? {});
             segmentIds.forEach((segId) => {
                 const offset = getNodeOffset(foundNodeSpec, segId, branchSizes[segId] ?? 0, total);
                 const tracksWithSegment = trackCompositions.filter((track) =>

@@ -2,27 +2,17 @@ import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-bootstrap';
 import { NodeSpecification } from '../store/types.ts';
 import { getCount } from '../../utils/inputUtil.ts';
-import { getNodeOffset } from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
+import { setNodeOffsetPercentage } from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
 
 interface Props {
     nodeSpecs: NodeSpecification;
     setNodeSpecs: (nodeSpecs: NodeSpecification) => void;
-    branchSize: number;
     segmentId: string;
-    total: number;
     peopleOffset: number;
     percentage: number;
 }
 
-export const EditNodeDialogDelayInput = ({
-    nodeSpecs,
-    setNodeSpecs,
-    segmentId,
-    branchSize,
-    total,
-    peopleOffset,
-    percentage,
-}: Props) => {
+export const EditNodeDialogDelayInput = ({ nodeSpecs, setNodeSpecs, segmentId, peopleOffset, percentage }: Props) => {
     return (
         <div className={'mx-2'}>
             <Form.Group>
@@ -38,22 +28,7 @@ export const EditNodeDialogDelayInput = ({
                     value={percentage}
                     onChange={(value) => {
                         const newValue = Math.max(0, Math.min(100, getCount(value) ?? 0));
-                        setNodeSpecs({
-                            ...nodeSpecs,
-                            trackOffsetPercentages: {
-                                ...(nodeSpecs.trackOffsetPercentages ?? {}),
-                                [segmentId]: newValue,
-                            },
-                            trackOffsets: {
-                                ...nodeSpecs.trackOffsets,
-                                [segmentId]: getNodeOffset(
-                                    { ...nodeSpecs, trackOffsetPercentages: { [segmentId]: newValue } },
-                                    segmentId,
-                                    branchSize,
-                                    total
-                                ),
-                            },
-                        });
+                        setNodeSpecs(setNodeOffsetPercentage(nodeSpecs, segmentId, newValue));
                     }}
                 />
                 <Form.Text>

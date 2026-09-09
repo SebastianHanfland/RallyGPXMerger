@@ -17,14 +17,12 @@ describe('EditNodeDialogDelayInput', () => {
             trackOffsets: { A1: 0 },
         };
 
-        render(
+        const { rerender } = render(
             <IntlProvider locale="en" messages={messages}>
                 <EditNodeDialogDelayInput
                     nodeSpecs={nodeSpecs}
                     setNodeSpecs={setNodeSpecs}
-                    branchSize={100}
                     segmentId="A1"
-                    total={300}
                     peopleOffset={100}
                     percentage={50}
                 />
@@ -35,9 +33,22 @@ describe('EditNodeDialogDelayInput', () => {
 
         expect(setNodeSpecs).toHaveBeenCalledWith({
             totalCount: 300,
-            trackOffsets: { A1: 120 },
             trackOffsetPercentages: { A1: 60 },
         });
         expect(screen.getByText('Calculated offset: 100 people')).toBeInTheDocument();
+
+        rerender(
+            <IntlProvider locale="en" messages={messages}>
+                <EditNodeDialogDelayInput
+                    nodeSpecs={nodeSpecs}
+                    setNodeSpecs={setNodeSpecs}
+                    segmentId="A1"
+                    peopleOffset={300}
+                    percentage={60}
+                />
+            </IntlProvider>
+        );
+
+        expect(screen.getByText('Calculated offset: 300 people')).toBeInTheDocument();
     });
 });

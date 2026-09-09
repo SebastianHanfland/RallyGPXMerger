@@ -8,6 +8,7 @@ import {
 } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
 import { getNodeSpecifications } from '../../store/nodes.reducer.ts';
 import { NodeSpecifications } from '../../store/types.ts';
+import { getNodeOffset } from '../../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
 
 type TrackNodeKind = 'headsMeet' | 'headsOnTail' | 'headIntoMiddle';
 
@@ -33,16 +34,21 @@ export function getTrackNodeType(
         }
         const branchSize = branchNumbers[getBranchId(trackIds)] ?? 0;
         const maximumOffset = total - branchSize;
-        return (nodeSpecification?.trackOffsets[segmentId] ?? 0) === maximumOffset && maximumOffset > 0;
+        return getNodeOffset(nodeSpecification, segmentId, branchSize, total) === maximumOffset && maximumOffset > 0;
     });
 
     if (hasMaximumOffset) {
         return 'headsOnTail';
     }
 
-    const hasOffset = Object.keys(branchTrackIds).some(
-        (segmentId) => (nodeSpecification?.trackOffsets[segmentId] ?? 0) > 0
-    );
+    const hasOffset = Object.keys(branchTrackIds).some((segmentId) => {
+        const trackIds = branchTrackIds[segmentId];
+        if (!trackIds) {
+            return false;
+        }
+        const branchSize = branchNumbers[getBranchId(trackIds)] ?? 0;
+        return getNodeOffset(nodeSpecification, segmentId, branchSize, total) > 0;
+    });
     return hasOffset ? 'headIntoMiddle' : 'headsMeet';
 }
 

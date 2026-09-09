@@ -387,6 +387,23 @@ describe('getSpecifiedDelayPerTrack', () => {
                 expect(delays[0]?.delays[0]).toEqual({ segmentId: 'AB', extraDelay: 100, by: NODE_SPEC });
                 expect(delays[1]?.delays[0]).toEqual({ segmentId: 'AB', extraDelay: 0, by: NODE_SPEC });
             });
+
+            it('recalculates a 100 percent delay when the other branch changes', () => {
+                const nodeSpecifications: NodeSpecifications = {
+                    AB: {
+                        totalCount: 300,
+                        trackOffsets: { A1: 200, B1: 0 },
+                        trackOffsetPercentages: { A1: 100, B1: 0 },
+                    },
+                };
+
+                const delaysBefore = getDelaysOfTracks([createTrack1(100), createTrack2(200)], 1, nodeSpecifications);
+                const delaysAfter = getDelaysOfTracks([createTrack1(100), createTrack2(300)], 1, nodeSpecifications);
+
+                expect(delaysBefore[0]?.delays[0]?.extraDelay).toBe(200);
+                expect(delaysAfter[0]?.delays[0]?.extraDelay).toBe(300);
+                expect(nodeSpecifications.AB?.trackOffsetPercentages?.A1).toBe(100);
+            });
         });
     });
 });

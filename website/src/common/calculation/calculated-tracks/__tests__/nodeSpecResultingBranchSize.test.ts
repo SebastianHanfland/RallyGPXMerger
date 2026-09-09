@@ -52,4 +52,22 @@ describe('test block', () => {
             expect(branchNumbers).toEqual(testCase.expectedBranchNumbers);
         })
     );
+
+    it('recalculates a stored 100 percent offset when the other branch changes', () => {
+        const nodeSpecs: NodeSpecifications = {
+            AB: {
+                totalCount: 300,
+                trackOffsets: { A1: 200, B1: 0 },
+                trackOffsetPercentages: { A1: 100, B1: 0 },
+            },
+        };
+
+        expect(getBranchNumbers(nodeSpecs, [createTrack1(100), createTrack2(200)])).toMatchObject({
+            '1-2': 300,
+        });
+        expect(getBranchNumbers(nodeSpecs, [createTrack1(100), createTrack2(300)])).toMatchObject({
+            '1-2': 400,
+        });
+        expect(nodeSpecs.AB?.trackOffsetPercentages?.A1).toBe(100);
+    });
 });

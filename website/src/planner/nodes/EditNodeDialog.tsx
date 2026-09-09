@@ -35,7 +35,7 @@ export const EditNodeDialog = () => {
 
     useEffect(() => {
         if (branchesAtNode) {
-            setNodeSpecs({ totalCount: branchesAtNode.totalCount, trackOffsets: branchesAtNode?.trackOffsets });
+            setNodeSpecs(branchesAtNode);
         } else {
             setNodeSpecs(undefined);
         }

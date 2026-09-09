@@ -13,7 +13,11 @@ import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
 import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar.tsx';
 import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput.tsx';
 import { getBranchTracks } from './getBranchTracks.ts';
-import { getNodeOffset, getNodeOffsetPercentage } from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
+import {
+    getNodeOffset,
+    getNodeOffsetPercentage,
+    setNodeOffsetPercentage,
+} from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
 
 interface Props {
     nodeSpecs: NodeSpecification;
@@ -57,22 +61,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
 
                 const setPercentage = (newPercentage: number) => () => {
                     const boundedPercentage = Math.max(0, Math.min(100, newPercentage));
-                    setNodeSpecs({
-                        ...nodeSpecs,
-                        trackOffsetPercentages: {
-                            ...(nodeSpecs.trackOffsetPercentages ?? {}),
-                            [segmentId]: boundedPercentage,
-                        },
-                        trackOffsets: {
-                            ...nodeSpecs.trackOffsets,
-                            [segmentId]: getNodeOffset(
-                                { ...nodeSpecs, trackOffsetPercentages: { [segmentId]: boundedPercentage } },
-                                segmentId,
-                                branchSize,
-                                total
-                            ),
-                        },
-                    });
+                    setNodeSpecs(setNodeOffsetPercentage(nodeSpecs, segmentId, boundedPercentage));
                 };
                 return (
                     <div key={segmentId}>
@@ -101,8 +90,6 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 nodeSpecs={nodeSpecs}
                                 setNodeSpecs={setNodeSpecs}
                                 segmentId={segmentId}
-                                branchSize={branchSize}
-                                total={total}
                                 peopleOffset={peopleOffset}
                                 percentage={percentage}
                             />
