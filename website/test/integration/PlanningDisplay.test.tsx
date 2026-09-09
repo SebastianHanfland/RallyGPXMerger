@@ -242,6 +242,17 @@ describe('Planner integration test', () => {
 
             const firstSegmentId = getTrackCompositions(store.getState())[0]!.segments[0]!.id;
             fireEvent.contextMenu(screen.getByTestId(`track-segment-${firstSegmentId}`));
+            await user.click(screen.getByText(messages['msg.setColor']));
+            const colorDialog = screen.getByRole('dialog');
+            const colorInput = within(colorDialog).getByRole('textbox');
+            await user.click(colorInput);
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+            const colorDialogCloseButtons = within(colorDialog).getAllByRole('button', {
+                name: messages['msg.close'],
+            });
+            await user.click(colorDialogCloseButtons[colorDialogCloseButtons.length - 1]!);
+
+            fireEvent.contextMenu(screen.getByTestId(`track-segment-${firstSegmentId}`));
             await user.click(screen.getByText(messages['msg.addBreakBefore']));
             const breakDialog = screen.getByRole('dialog');
             await user.clear(within(breakDialog).getByTitle(messages['msg.minutes.details']));

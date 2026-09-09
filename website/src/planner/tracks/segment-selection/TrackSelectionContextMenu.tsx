@@ -14,9 +14,14 @@ export function TrackSelectionContextMenu({ x: initialX, y: initialY, onClose, c
 
     useEffect(() => {
         const closeOnOutsideClick = (event: MouseEvent) => {
-            if (!menuRef.current?.contains(event.target as Node)) {
-                onClose();
+            const target = event.target as Node;
+            if (menuRef.current?.contains(target)) {
+                return;
             }
+            if (target instanceof Element && target.closest('.modal')) {
+                return;
+            }
+            onClose();
         };
         const closeOnEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {

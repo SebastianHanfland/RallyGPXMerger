@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 interface Props {
@@ -14,7 +14,13 @@ interface Props {
 
 export function ConfirmationModal({ onConfirm, closeModal, title, body, confirmDisabled, size }: Props) {
     return (
-        <Modal show={true} onHide={closeModal} backdrop="static" size={size}>
+        <Modal
+            show={true}
+            onHide={closeModal}
+            onMouseDown={(event: MouseEvent<HTMLElement>) => event.stopPropagation()}
+            backdrop="static"
+            size={size}
+        >
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
