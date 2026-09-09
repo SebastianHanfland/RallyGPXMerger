@@ -96,19 +96,29 @@ describe('Planner integration test', () => {
             expect(screen.getByRole('button', { name: messages['msg.overview'] })).toBeInTheDocument();
             expect(screen.queryByRole('button', { name: messages['msg.documents'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
-            expect(screen.getByText(messages['msg.checks'])).toBeInTheDocument();
+            const checksItem = screen
+                .getByRole('heading', { name: /unknown elements|All street parts are known and resolved/ })
+                .closest('.accordion-item')!;
+            expect(
+                within(checksItem).getByRole('columnheader', { name: messages['msg.trackName'] })
+            ).toBeInTheDocument();
             const priorityAccordion = screen.getByRole('button', { name: messages['msg.prio'] });
             expect(priorityAccordion).toBeInTheDocument();
             await user.click(priorityAccordion);
             expect(screen.getByRole('columnheader', { name: messages['msg.priority'] })).toBeInTheDocument();
             expect(screen.getByRole('columnheader', { name: messages['msg.trackPeople'] })).toBeInTheDocument();
-            const communicatedStartAccordion = screen.getByRole('button', {
-                name: messages['msg.communicatedStart'],
-            });
+            const communicatedStartItem = screen
+                .getByRole('heading', { name: /Published start times/ })
+                .closest('.accordion-item')!;
+            const communicatedStartAccordion = within(
+                communicatedStartItem.querySelector('.accordion-header')!
+            ).getByRole('button');
             expect(communicatedStartAccordion).toBeInTheDocument();
             expect(
                 screen
-                    .getByRole('button', { name: messages['msg.startNameOverwrite'], exact: false })
+                    .getByRole('heading', { name: /Start name overwrite/ })
+                    .closest('.accordion-item')!
+                    .querySelector('.accordion-header button')!
                     .compareDocumentPosition(communicatedStartAccordion)
             ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
             const nodesAccordion = screen.getByRole('button', { name: messages['msg.nodes'] });
@@ -116,7 +126,7 @@ describe('Planner integration test', () => {
                 Node.DOCUMENT_POSITION_FOLLOWING
             );
             await user.click(communicatedStartAccordion);
-            expect(screen.getByText(messages['msg.publicStart'])).toBeInTheDocument();
+            expect(within(communicatedStartItem).getByText(messages['msg.publicStart'])).toBeInTheDocument();
             await user.click(nodesAccordion);
             expect(screen.getByText(messages['msg.nodes.specificBehavior'])).toBeInTheDocument();
             expect(screen.getByRole('columnheader', { name: messages['msg.branches'] })).toBeInTheDocument();
@@ -139,9 +149,11 @@ describe('Planner integration test', () => {
 
             store.dispatch(backendActions.setPlanningId('test-planning'));
             store.dispatch(backendActions.setIsPlanningSaved(true));
-            expect(within(publicLinksItem).getByRole('link', { name: messages['msg.publicLink'] })).toHaveAttribute(
-                'href',
-                expect.stringContaining('?display=test-planning')
+            await waitFor(() =>
+                expect(within(publicLinksItem).getByRole('link', { name: messages['msg.publicLink'] })).toHaveAttribute(
+                    'href',
+                    expect.stringContaining('?display=test-planning')
+                )
             );
             expect(
                 within(publicLinksItem).getByRole('link', { name: messages['msg.publicTableLink'] })
@@ -155,14 +167,18 @@ describe('Planner integration test', () => {
             expect(screen.queryByRole('button', { name: messages['msg.nodes'] })).toBeNull();
             expect(screen.queryByRole('button', { name: messages['msg.prio'] })).toBeNull();
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
-            const pointsAccordion = screen.getByRole('button', { name: messages['msg.points'] });
+            const pointsItem = screen
+                .getAllByRole('heading', { name: /Points of interest|open problem points/ })
+                .find((heading) => heading.tagName === 'H2')!
+                .closest('.accordion-item')!;
+            const pointsAccordion = within(pointsItem.querySelector('.accordion-header')!).getByRole('button');
             expect(pointsAccordion).toBeInTheDocument();
             await user.click(pointsAccordion);
             const gapToleranceInputs = screen.getAllByTitle(messages['msg.gapTolerance.hint']);
-            expect(gapToleranceInputs).toHaveLength(2);
+            expect(gapToleranceInputs).toHaveLength(1);
             const pointsOfInterest = screen.getByText(messages['msg.pointsOfInterest']);
             expect(pointsOfInterest).toBeInTheDocument();
-            expect(gapToleranceInputs[1]!.compareDocumentPosition(pointsOfInterest)).toBe(
+            expect(gapToleranceInputs[0]!.compareDocumentPosition(pointsOfInterest)).toBe(
                 Node.DOCUMENT_POSITION_FOLLOWING
             );
             expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
@@ -428,12 +444,12 @@ describe('Planner integration test', () => {
             await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2), timeout);
 
             await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
-            const startNameAccordion = screen.getByRole('button', {
-                name: messages['msg.startNameOverwrite'],
-                exact: false,
-            });
+            const startNameItem = screen
+                .getByRole('heading', { name: /Start name overwrite/ })
+                .closest('.accordion-item')!;
+            const startNameAccordion = within(startNameItem.querySelector('.accordion-header')!).getByRole('button');
             await user.click(startNameAccordion);
-            const startNameTable = within(startNameAccordion.closest('.accordion-item')!).getByRole('table');
+            const startNameTable = within(startNameItem).getByRole('table');
             expect(
                 within(startNameTable)
                     .getAllByRole('columnheader')
@@ -448,8 +464,16 @@ describe('Planner integration test', () => {
             const startLinks = within(startNameTable).getAllByRole('button', { name: messages['msg.goToStart'] });
             expect(startLinks).toHaveLength(2);
             const firstStartPoint = getTrackStreetInfos(store.getState())[0]!.wayPoints[0]!.pointFrom;
+            let centeredPoint: ReturnType<typeof getPointToCenter>;
+            const unsubscribe = store.subscribe(() => {
+                const point = getPointToCenter(store.getState());
+                if (point) {
+                    centeredPoint = point;
+                }
+            });
             await user.click(startLinks[0]!);
-            expect(getPointToCenter(store.getState())).toMatchObject({
+            unsubscribe();
+            expect(centeredPoint).toMatchObject({
                 lat: firstStartPoint.lat,
                 lng: firstStartPoint.lon + 0.01,
                 zoom: 15,
@@ -478,6 +502,7 @@ describe('Planner integration test', () => {
                 expect(startNameAccordion).toHaveTextContent(String(unknownOriginalStartNames));
             }
 
+            await user.click(screen.getByTitle(messages['msg.downloads']));
             ui.pdfDownloadButton();
         });
 

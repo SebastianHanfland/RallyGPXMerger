@@ -51,7 +51,7 @@ export const PlannerSidebarOverview = () => {
                     />
                 </div>
             </div>
-            <Accordion defaultActiveKey="msg.checks">
+            <Accordion defaultActiveKey="checks">
                 {accordionEntries.map(([key, title, component]) => (
                     <Accordion.Item eventKey={key} key={key}>
                         <Accordion.Header>{title}</Accordion.Header>
