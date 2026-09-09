@@ -6,7 +6,7 @@ import { getLanguage } from '../../src/language';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getMessages } from '../../src/lang/getMessages';
 import { createPlanningStore } from '../../src/planner/store/planningStore';
-import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
+import { getSegmentIdClipboard, getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
 import { SEGMENT } from '../../src/planner/store/types';
 import { plannerUi as ui } from './data/PlannerTestAccess';
@@ -15,6 +15,7 @@ import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedT
 import { getTrackStreetInfos } from '../../src/planner/calculation/getTrackStreetInfos';
 import { formatTimeOnly } from '../../src/utils/dateUtil';
 import { getGapToleranceInKm } from '../../src/planner/store/settings.reducer';
+import { getSelectedTrackId } from '../../src/planner/store/layout.reducer';
 import { backendActions } from '../../src/planner/store/backend.reducer';
 import {
     getHighlightedStreetPath,
@@ -217,6 +218,43 @@ describe('Planner integration test', () => {
     });
 
     describe('Complex planning', () => {
+        it('opens track actions from a right-click menu without changing the selected track', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(
+                <MemoryRouter>
+                    <RallyPlannerWrapper store={store} />
+                </MemoryRouter>
+            );
+
+            const user = userEvent.setup();
+            await user.click(ui.startButton());
+            await user.click(ui.complexButton());
+            await user.click(ui.complexTracksTab(0));
+            await user.click(ui.newTrackButton());
+            await user.click(ui.newTrackButton());
+
+            const tracks = getTrackCompositions(store.getState());
+            const firstTrack = tracks[0]!;
+            const secondTrack = tracks[1]!;
+            store.dispatch(trackMergeActions.setTrackName({ id: firstTrack.id, trackName: 'First track' }));
+            store.dispatch(trackMergeActions.setTrackName({ id: secondTrack.id, trackName: 'Second track' }));
+            expect(getSelectedTrackId(store.getState())).toBe(secondTrack.id);
+
+            fireEvent.contextMenu(screen.getByTestId(`track-tab-${firstTrack.id}`));
+
+            const contextMenu = await screen.findByTestId('track-context-menu');
+            expect(within(contextMenu).getByText(messages['msg.removeTrack'])).toBeInTheDocument();
+            expect(within(contextMenu).getByText(messages['msg.copySegments'])).toBeInTheDocument();
+            expect(within(contextMenu).getByText(messages['msg.pasteSegments'])).toBeInTheDocument();
+            expect(within(contextMenu).getByText(messages['msg.setColor'])).toBeInTheDocument();
+            expect(getSelectedTrackId(store.getState())).toBe(secondTrack.id);
+
+            await user.click(within(contextMenu).getByText(messages['msg.copySegments']));
+            expect(getSegmentIdClipboard(store.getState())).toEqual(firstTrack.segments);
+            expect(screen.queryByTestId('track-context-menu')).toBeNull();
+        });
+
         it('shows segment distances and supports sorting and usage filtering', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();

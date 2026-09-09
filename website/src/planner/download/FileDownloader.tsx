@@ -17,6 +17,7 @@ interface Props {
 interface DropdownProps {
     content: string | (() => string);
     name: string;
+    onClick?: () => void;
 }
 
 function getContent(content: string | (() => string)) {
@@ -55,11 +56,14 @@ export const FileDownloader = (props: Props) => {
     );
 };
 
-export const FileDownloaderDropdownItem = ({ name, content }: DropdownProps) => {
+export const FileDownloaderDropdownItem = ({ name, content, onClick }: DropdownProps) => {
     const intl = useIntl();
     return (
         <Dropdown.Item
-            onClick={() => downloadFile(name, getContent(content))}
+            onClick={() => {
+                downloadFile(name, getContent(content));
+                onClick?.();
+            }}
             title={intl.formatMessage({ id: 'msg.downloadFile.hint' }, { name })}
         >
             <DownloadIcon black={true} />
