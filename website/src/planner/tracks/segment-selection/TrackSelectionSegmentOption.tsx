@@ -79,7 +79,9 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                             variant="danger"
                             size={'sm'}
                             className={'m-1'}
-                            onClick={() => {
+                            onMouseDown={(event) => event.stopPropagation()}
+                            onClick={(event) => {
+                                event.stopPropagation();
                                 dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId }));
                                 if (fullGpxDelete) {
                                     dispatch(segmentDataActions.removeGpxSegment(segmentId));
@@ -95,6 +97,8 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                             id={`dropdown-variants-${'primary'}`}
                             variant={'primary'}
                             title={''}
+                            onMouseDown={(event) => event.stopPropagation()}
+                            onClick={(event) => event.stopPropagation()}
                         >
                             <TrackSelectionSegmentActionItems segment={gpxSegment} segmentIndex={segmentIndex} />
                         </DropdownButton>

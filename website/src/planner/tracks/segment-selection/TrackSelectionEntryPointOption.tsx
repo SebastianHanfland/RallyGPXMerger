@@ -63,7 +63,9 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
                         title={intl.formatMessage({ id: 'msg.jumpToEntryPoint' })}
                         style={{ padding: '5px' }}
                         className={'rounded-2'}
-                        onClick={() => {
+                        onMouseDown={(event) => event.stopPropagation()}
+                        onClick={(event) => {
+                            event.stopPropagation();
                             dispatch(mapActions.setPointToCenter(toLatLng(foundPosition?.point)));
                             dispatch(mapActions.setShowEntryPointMarker(true));
                         }}
@@ -75,7 +77,9 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
                     variant="danger"
                     size={'sm'}
                     className={'mx-2 my-1'}
-                    onClick={() => {
+                    onMouseDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                        event.stopPropagation();
                         dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId: trackElement.id }));
                     }}
                     title={intl.formatMessage({ id: 'msg.removeEntryPoint' })}
@@ -84,9 +88,12 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
                 </Button>
                 <span
                     className={'m-1'}
-                    onClick={() =>
-                        dispatch(trackMergeActions.setEntryPointEditInfo({ entryPointId: trackElement.id, trackId }))
-                    }
+                    aria-label={intl.formatMessage({ id: 'msg.editEntryPoint' })}
+                    onMouseDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(trackMergeActions.setEntryPointEditInfo({ entryPointId: trackElement.id, trackId }));
+                    }}
                 >
                     <EditIcon />
                 </span>

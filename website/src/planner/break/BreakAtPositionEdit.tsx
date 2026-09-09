@@ -60,7 +60,11 @@ export function BreakAtPositionEdit({ trackElement }: Props) {
             <span
                 title={tooltip}
                 className={'mx-1 p-2 rounded-2 border-1 border-black border'}
-                onClick={() => setOpenDialog(true)}
+                onMouseDown={(event) => event.stopPropagation()}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    setOpenDialog(true);
+                }}
             >
                 {` (${numberOfTracksWithBreaks}) ${tracksLabel}`}
                 <EditIcon />

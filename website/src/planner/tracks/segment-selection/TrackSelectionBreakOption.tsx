@@ -73,7 +73,9 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                         title={intl.formatMessage({ id: 'msg.jumpToBreak' })}
                         style={{ padding: '5px' }}
                         className={'rounded-2'}
-                        onClick={() => {
+                        onMouseDown={(event) => event.stopPropagation()}
+                        onClick={(event) => {
+                            event.stopPropagation();
                             dispatch(mapActions.setPointToCenter(toLatLng(foundBreak?.point)));
                             dispatch(mapActions.setShowBreakMarker(true));
                         }}
@@ -85,7 +87,9 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                     variant="danger"
                     size={'sm'}
                     className={'mx-2 my-1'}
-                    onClick={() => {
+                    onMouseDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                        event.stopPropagation();
                         dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId: trackElement.id }));
                     }}
                     title={intl.formatMessage(
@@ -97,9 +101,12 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                 </Button>
                 <span
                     className={'m-1'}
-                    onClick={() =>
-                        dispatch(trackMergeActions.setBreakEditInfo({ breakId: trackElement.id, trackId: trackId }))
-                    }
+                    aria-label={intl.formatMessage({ id: 'msg.editBreak' })}
+                    onMouseDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(trackMergeActions.setBreakEditInfo({ breakId: trackElement.id, trackId: trackId }));
+                    }}
                 >
                     <EditIcon />
                 </span>

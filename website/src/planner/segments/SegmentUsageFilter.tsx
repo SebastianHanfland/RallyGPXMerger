@@ -12,7 +12,8 @@ export function SegmentUsageFilter() {
         <div className="d-flex gap-2 me-2" aria-label={intl.formatMessage({ id: 'msg.segmentUsageFilter' })}>
             <button
                 type="button"
-                className={`btn rounded-pill ${showUsedSegments ? 'btn-success' : 'btn-outline-success'}`}
+                className={`btn rounded-pill`}
+                style={{ backgroundColor: showUsedSegments ? '#52b152' : 'white', border: '1px solid #ccc' }}
                 aria-pressed={showUsedSegments}
                 onClick={() => dispatch(segmentDataActions.toggleShowUsedSegments())}
             >
@@ -20,7 +21,8 @@ export function SegmentUsageFilter() {
             </button>
             <button
                 type="button"
-                className={`btn rounded-pill ${showUnusedSegments ? 'btn-danger' : 'btn-outline-danger'}`}
+                className={`btn rounded-pill`}
+                style={{ backgroundColor: showUnusedSegments ? '#f37b7b' : 'white', border: '1px solid #ccc' }}
                 aria-pressed={showUnusedSegments}
                 onClick={() => dispatch(segmentDataActions.toggleShowUnusedSegments())}
             >

@@ -241,8 +241,19 @@ describe('Planner integration test', () => {
             await user.click(screen.getByText('segment2'));
 
             const firstSegmentId = getTrackCompositions(store.getState())[0]!.segments[0]!.id;
+            const segmentActions = within(screen.getByTestId(`track-segment-${firstSegmentId}`)).getAllByRole(
+                'button'
+            )[1]!;
+            await user.click(segmentActions);
+            expect(screen.getByText(messages['msg.setColor'])).toBeInTheDocument();
+            await user.click(screen.getAllByText(messages['msg.setColor'])[0]!);
+            const leftColorDialog = screen.getByRole('dialog');
+            const leftColorCloseButtons = within(leftColorDialog).getAllByRole('button', {
+                name: messages['msg.close'],
+            });
+            await user.click(leftColorCloseButtons[leftColorCloseButtons.length - 1]!);
             fireEvent.contextMenu(screen.getByTestId(`track-segment-${firstSegmentId}`));
-            await user.click(screen.getByText(messages['msg.setColor']));
+            await user.click(screen.getAllByText(messages['msg.setColor'])[1]!);
             const colorDialog = screen.getByRole('dialog');
             const colorInput = within(colorDialog).getByRole('textbox');
             await user.click(colorInput);
@@ -279,6 +290,13 @@ describe('Planner integration test', () => {
 
             const finalTrack = getTrackCompositions(store.getState())[0]!;
             const breakId = finalTrack.segments.find((element) => element.type === 'BREAK')!.id;
+            await user.click(screen.getByLabelText(messages['msg.editBreak']));
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+            const leftBreakCloseButtons = within(screen.getByRole('dialog')).getAllByRole('button', {
+                name: messages['msg.close'],
+            });
+            await user.click(leftBreakCloseButtons[leftBreakCloseButtons.length - 1]!);
+
             fireEvent.contextMenu(screen.getByTestId(`track-break-${breakId}`));
             await user.click(screen.getByText(messages['msg.editBreak']));
             const breakEditDialog = screen.getByRole('dialog');
@@ -301,6 +319,13 @@ describe('Planner integration test', () => {
             expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(3);
 
             const entryId = finalTrack.segments.find((element) => element.type === 'ENTRY')!.id;
+            await user.click(screen.getByLabelText(messages['msg.editEntryPoint']));
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+            const leftEntryCloseButtons = within(screen.getByRole('dialog')).getAllByRole('button', {
+                name: messages['msg.close'],
+            });
+            await user.click(leftEntryCloseButtons[leftEntryCloseButtons.length - 1]!);
+
             fireEvent.contextMenu(screen.getByTestId(`track-entry-point-${entryId}`));
             await user.click(screen.getByText(messages['msg.editEntryPoint']));
             const entryEditDialog = screen.getByRole('dialog');
@@ -313,6 +338,9 @@ describe('Planner integration test', () => {
             const entryDeleteDialog = screen.getByRole('dialog');
             await user.click(within(entryDeleteDialog).getByRole('button', { name: messages['msg.confirm'] }));
             expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(2);
+
+            await user.click(screen.getAllByRole('button', { name: 'X' }).at(-1)!);
+            expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(1);
         });
 
         it('opens track actions from a right-click menu without changing the selected track', async () => {
