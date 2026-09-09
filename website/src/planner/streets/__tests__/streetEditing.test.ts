@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { SEGMENT, ParsedPoint, TrackComposition } from '../../store/types.ts';
 import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
-import { beginNewStreet, getStreetPath } from '../streetEditing.ts';
+import { applyStreetSelection, beginNewStreet, getStreetPath } from '../streetEditing.ts';
 
 const track: TrackComposition = {
     id: 'track',
@@ -45,5 +45,79 @@ describe('street map editing actions', () => {
             { lat: 48, lon: 11, s: 1 },
             { lat: 49, lon: 12, s: 1 },
         ]);
+    });
+
+    it.each(['start', 'end'] as const)('clears the street highlight after editing the %s boundary', (boundary) => {
+        const dispatch = vi.fn();
+        const routePoints = getRoutePointReferences(track, [
+            { id: 'segment', filename: 'segment', points: [point(1), point(1)] },
+        ]);
+
+        applyStreetSelection(
+            dispatch,
+            {
+                trackId: 'track',
+                streetIndex: 1,
+                boundary,
+                range: { start: 0, end: 1 },
+            },
+            routePoints,
+            1
+        );
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'map/setHighlightedStreetPath', payload: undefined });
+        expect(dispatch).toHaveBeenLastCalledWith({ type: 'map/setStreetPointSelection', payload: undefined });
+    });
+
+    it('keeps the highlight active between the two steps of adding a street', () => {
+        const dispatch = vi.fn();
+        const routePoints = getRoutePointReferences(track, [
+            { id: 'segment', filename: 'segment', points: [point(1), point(1)] },
+        ]);
+
+        applyStreetSelection(
+            dispatch,
+            {
+                trackId: 'track',
+                streetIndex: 2,
+                boundary: 'start',
+                mode: 'add-start',
+                range: { start: 0, end: 1 },
+            },
+            routePoints,
+            0
+        );
+
+        expect(dispatch).not.toHaveBeenCalledWith({ type: 'map/setHighlightedStreetPath', payload: undefined });
+        expect(dispatch).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+                type: 'map/setStreetPointSelection',
+                payload: expect.objectContaining({ mode: 'add-end' }),
+            })
+        );
+    });
+
+    it('clears the street highlight after completing the second step of adding a street', () => {
+        const dispatch = vi.fn();
+        const routePoints = getRoutePointReferences(track, [
+            { id: 'segment', filename: 'segment', points: [point(1), point(1)] },
+        ]);
+
+        applyStreetSelection(
+            dispatch,
+            {
+                trackId: 'track',
+                streetIndex: 2,
+                boundary: 'end',
+                mode: 'add-end',
+                range: { start: 0, end: 1 },
+                startRouteIndex: 0,
+            },
+            routePoints,
+            1
+        );
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'map/setHighlightedStreetPath', payload: undefined });
+        expect(dispatch).toHaveBeenLastCalledWith({ type: 'map/setStreetPointSelection', payload: undefined });
     });
 });

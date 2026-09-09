@@ -94,6 +94,7 @@ export function applyStreetSelection(
             )
         );
         dispatch(enrichStreetWithPostCodeAndDistrict(selection.streetIndex));
+        dispatch(mapActions.setHighlightedStreetPath(undefined));
         dispatch(mapActions.setStreetPointSelection(undefined));
         return;
     }
@@ -108,5 +109,6 @@ export function applyStreetSelection(
             )
         )
     );
+    dispatch(mapActions.setHighlightedStreetPath(undefined));
     dispatch(mapActions.setStreetPointSelection(undefined));
 }
