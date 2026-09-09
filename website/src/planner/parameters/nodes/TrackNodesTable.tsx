@@ -7,11 +7,18 @@ import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell.tsx';
 import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton.tsx';
 import { NodeOverviewButton } from './NodeOverviewButton.tsx';
 import { TrackNodeType } from './TrackNodeType.tsx';
+import { NodeDescriptionInfo } from '../../ui/sidebar/complex/NodeDescriptionInfo.tsx';
 
 export const TrackNodesTable = () => {
     const trackNodes = useSelector(trackNodesBySegmentSizeSelector);
     return (
         <div>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+                <h5 className="mb-0">
+                    <FormattedMessage id="msg.nodes.specificBehavior" />
+                </h5>
+                <NodeDescriptionInfo />
+            </div>
             <Table striped bordered hover style={{ width: '100%' }} size="sm">
                 <thead>
                     <tr>

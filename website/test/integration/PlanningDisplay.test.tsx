@@ -113,8 +113,19 @@ describe('Planner integration test', () => {
             await user.click(communicatedStartAccordion);
             expect(screen.getByText(messages['msg.publicStart'])).toBeInTheDocument();
             await user.click(nodesAccordion);
+            expect(screen.getByText(messages['msg.nodes.specificBehavior'])).toBeInTheDocument();
             expect(screen.getByRole('columnheader', { name: messages['msg.branches'] })).toBeInTheDocument();
             expect(screen.getByRole('columnheader', { name: messages['msg.type'] })).toBeInTheDocument();
+            const nodeInfoButton = within(nodesAccordion.closest('.accordion-item')!).getByRole('button', {
+                name: messages['msg.nodes.specificBehavior'],
+            });
+            await user.click(nodeInfoButton);
+            expect(screen.getByText(messages['msg.description.nodes'], { exact: false })).toBeInTheDocument();
+            expect(screen.getByText(messages['msg.description.nodes.people'], { exact: false })).toBeInTheDocument();
+            expect(screen.getByText(messages['msg.description.nodes.priority'], { exact: false })).toBeInTheDocument();
+            expect(
+                screen.getByText(messages['msg.description.nodes.percentage'], { exact: false })
+            ).toBeInTheDocument();
             const publicLinksAccordion = screen.getByRole('button', { name: messages['msg.publicLinks'] });
             expect(nodesAccordion.compareDocumentPosition(publicLinksAccordion)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
             await user.click(publicLinksAccordion);
