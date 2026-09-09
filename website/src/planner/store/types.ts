@@ -136,6 +136,8 @@ export interface TrackMergeState {
     segmentIdClipboard?: TrackElement[];
     trackIdForAddingABreak?: string;
     trackIdForAddingAnEntryPoint?: string;
+    breakInsertionIndex?: number;
+    entryPointInsertionIndex?: number;
     breakEditInfo?: BreakEditInfo;
     entryPointEditInfo?: EntryPointEditInfo;
 }

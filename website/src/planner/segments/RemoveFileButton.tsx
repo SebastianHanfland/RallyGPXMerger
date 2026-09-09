@@ -10,15 +10,17 @@ import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
 interface Props {
     id: string;
     name: string;
+    onAction?: () => void;
 }
 
-export function RemoveFileButton({ id, name }: Props) {
+export function RemoveFileButton({ id, name, onAction }: Props) {
     const intl = useIntl();
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const removeGpxSegment = () => {
         dispatch(segmentDataActions.removeGpxSegment(id));
         dispatch(trackMergeActions.removeGpxSegment(id));
+        onAction?.();
     };
     return (
         <>
@@ -34,7 +36,10 @@ export function RemoveFileButton({ id, name }: Props) {
             {showModal && (
                 <ConfirmationModal
                     onConfirm={removeGpxSegment}
-                    closeModal={() => setShowModal(false)}
+                    closeModal={() => {
+                        setShowModal(false);
+                        onAction?.();
+                    }}
                     title={intl.formatMessage({ id: 'msg.removeSegment.modalTitle' })}
                     body={intl.formatMessage({ id: 'msg.removeSegment.modalBody' }, { name })}
                 />

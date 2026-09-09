@@ -15,20 +15,32 @@ interface Props {
     trackElement: TrackBreak;
 }
 
+export function getBreaksAtPlace(
+    foundBreak: BreakPosition | undefined,
+    breakPositions: BreakPosition[]
+): Record<string, BreakPosition[]> {
+    if (!foundBreak) {
+        return {};
+    }
+    const breaks: Record<string, BreakPosition[]> = {};
+    breakPositions
+        .filter(
+            (breakPosition) =>
+                breakPosition.point.lat === foundBreak.point.lat && breakPosition.point.lon === foundBreak.point.lon
+        )
+        .forEach(
+            (breakAtPlace) => (breaks[breakAtPlace.trackId] = [...(breaks[breakAtPlace.trackId] ?? []), breakAtPlace])
+        );
+    return breaks;
+}
+
 export function BreakAtPositionEdit({ trackElement }: Props) {
     const intl = useIntl();
     const [openDialog, setOpenDialog] = useState(false);
     const breakPositions = useSelector(getBreakPositions);
     const tracks = useSelector(getTrackCompositions);
     const foundBreak = breakPositions.find((breakPosition) => breakPosition.breakId === trackElement.id);
-    const breaksAtPlace = breakPositions.filter(
-        (breakPosition) =>
-            breakPosition.point.lat === foundBreak?.point.lat && breakPosition.point.lon === foundBreak?.point.lon
-    );
-    const breaks: Record<string, BreakPosition[]> = {};
-    breaksAtPlace.forEach(
-        (breaksAtPlace) => (breaks[breaksAtPlace.trackId] = [...(breaks[breaksAtPlace.trackId] ?? []), breaksAtPlace])
-    );
+    const breaks = getBreaksAtPlace(foundBreak, breakPositions);
 
     const numberOfTracksWithBreaks = Object.keys(breaks).length;
     if (numberOfTracksWithBreaks <= 1) {

@@ -145,9 +145,25 @@ const trackMergeSlice = createSlice({
         },
         setTrackIdForAddingABreak: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.trackIdForAddingABreak = action.payload;
+            state.breakInsertionIndex = undefined;
         },
         setTrackIdForEntryPoint: (state: TrackMergeState, action: PayloadAction<string | undefined>) => {
             state.trackIdForAddingAnEntryPoint = action.payload;
+            state.entryPointInsertionIndex = undefined;
+        },
+        setBreakInsertion: (
+            state: TrackMergeState,
+            action: PayloadAction<{ trackId: string; insertionIndex: number }>
+        ) => {
+            state.trackIdForAddingABreak = action.payload.trackId;
+            state.breakInsertionIndex = action.payload.insertionIndex;
+        },
+        setEntryPointInsertion: (
+            state: TrackMergeState,
+            action: PayloadAction<{ trackId: string; insertionIndex: number }>
+        ) => {
+            state.trackIdForAddingAnEntryPoint = action.payload.trackId;
+            state.entryPointInsertionIndex = action.payload.insertionIndex;
         },
         setBreakEditInfo: (state: TrackMergeState, action: PayloadAction<BreakEditInfo | undefined>) => {
             state.breakEditInfo = action.payload;
@@ -201,6 +217,8 @@ export const getTrackCompositionFilterTerm = (state: State) => getBase(state).fi
 export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
 export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
 export const getTrackIdForAddingAnEntryPoint = (state: State) => getBase(state).trackIdForAddingAnEntryPoint;
+export const getBreakInsertionIndex = (state: State) => getBase(state).breakInsertionIndex;
+export const getEntryPointInsertionIndex = (state: State) => getBase(state).entryPointInsertionIndex;
 export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
 export const getEntryPointEditInfo = (state: State) => getBase(state).entryPointEditInfo;
 

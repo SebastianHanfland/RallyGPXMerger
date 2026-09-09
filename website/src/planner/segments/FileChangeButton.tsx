@@ -13,8 +13,9 @@ import { executeGpxSegmentReplacementWithExisting } from './fileReplaceWithExist
 interface Props {
     id: string;
     name: string;
+    onAction?: () => void;
 }
-export function FileChangeButton({ id, name }: Props) {
+export function FileChangeButton({ id, name, onAction }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -31,6 +32,7 @@ export function FileChangeButton({ id, name }: Props) {
     const replaceGpxSegment = () => {
         dispatch(executeGpxSegmentReplacementWithExisting);
         setShowModal(false);
+        onAction?.();
     };
 
     return (
@@ -50,7 +52,10 @@ export function FileChangeButton({ id, name }: Props) {
             {showModal && (
                 <ConfirmationModal
                     onConfirm={replaceGpxSegment}
-                    closeModal={() => setShowModal(false)}
+                    closeModal={() => {
+                        setShowModal(false);
+                        onAction?.();
+                    }}
                     title={intl.formatMessage({ id: 'msg.replaceSegment.modalTitle' })}
                     body={
                         <div>

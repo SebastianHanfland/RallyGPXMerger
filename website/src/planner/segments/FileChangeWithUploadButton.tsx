@@ -22,8 +22,9 @@ import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/s
 interface Props {
     id: string;
     name: string;
+    onAction?: () => void;
 }
-export function FileChangeWithUploadButton({ id, name }: Props) {
+export function FileChangeWithUploadButton({ id, name, onAction }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -45,6 +46,7 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
     const replaceGpxSegment = () => {
         dispatch(executeGpxSegmentReplacementWithUpload);
         setShowModal(false);
+        onAction?.();
     };
 
     const handleChange = (newFiles: File | File[]) => {
@@ -80,7 +82,10 @@ export function FileChangeWithUploadButton({ id, name }: Props) {
             {showModal && (
                 <ConfirmationModal
                     onConfirm={replaceGpxSegment}
-                    closeModal={() => setShowModal(false)}
+                    closeModal={() => {
+                        setShowModal(false);
+                        onAction?.();
+                    }}
                     title={intl.formatMessage({ id: 'msg.replaceSegment.modalTitle' })}
                     body={
                         <div>

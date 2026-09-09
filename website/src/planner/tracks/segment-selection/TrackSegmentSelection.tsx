@@ -40,7 +40,7 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
                 list={segments.map((segment) => ({ id: segment.id }))}
                 setList={setSegmentIds}
             >
-                {segments.map((trackElement) => {
+                {segments.map((trackElement, segmentIndex) => {
                     const segmentName = gpxSegments
                         .find((segment) => segment.id === trackElement.id)
                         ?.filename.replace('.gpx', '');
@@ -49,6 +49,7 @@ export function TrackSegmentSelection({ track, hideSelect, fullGpxDelete }: Prop
                             key={trackElement.id}
                             trackElement={trackElement}
                             trackId={id}
+                            segmentIndex={segmentIndex}
                             segmentName={segmentName ?? 'Currently blank'}
                             fullGpxDelete={!!fullGpxDelete}
                         />

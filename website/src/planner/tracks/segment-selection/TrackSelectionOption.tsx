@@ -6,11 +6,12 @@ import { TrackSelectionEntryPointOption } from './TrackSelectionEntryPointOption
 interface Props {
     trackId: string;
     trackElement: TrackElement;
+    segmentIndex: number;
     segmentName: string;
     fullGpxDelete: boolean;
 }
 
-export function TrackSelectionOption({ trackElement, segmentName, trackId, fullGpxDelete }: Props) {
+export function TrackSelectionOption({ trackElement, segmentName, trackId, fullGpxDelete, segmentIndex }: Props) {
     if (isTrackBreak(trackElement)) {
         return <TrackSelectionBreakOption trackId={trackId} trackElement={trackElement} />;
     }
@@ -23,6 +24,7 @@ export function TrackSelectionOption({ trackElement, segmentName, trackId, fullG
             segmentId={trackElement.id}
             segmentName={segmentName}
             trackId={trackId}
+            segmentIndex={segmentIndex}
             fullGpxDelete={fullGpxDelete}
         />
     );

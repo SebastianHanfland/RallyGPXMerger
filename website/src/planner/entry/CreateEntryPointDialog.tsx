@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
 import {
     getTrackCompositions,
+    getEntryPointInsertionIndex,
     getTrackIdForAddingAnEntryPoint,
     trackMergeActions,
 } from '../store/trackMerge.reducer.ts';
@@ -15,6 +16,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 
 export const CreateEntryPointDialog = () => {
     const trackIdForEntryPoint = useSelector(getTrackIdForAddingAnEntryPoint);
+    const insertionIndex = useSelector(getEntryPointInsertionIndex);
     const track = useSelector(getTrackCompositions).find(({ id }) => id === trackIdForEntryPoint);
     const dispatch: AppDispatch = useDispatch();
     const [values, setValues] = useState<Partial<TrackEntry>>({});
@@ -35,7 +37,8 @@ export const CreateEntryPointDialog = () => {
             buffer: values.buffer,
             rounding: values.rounding,
         };
-        const segments = [newEntryPoint, ...track.segments];
+        const segments = [...track.segments];
+        segments.splice(insertionIndex ?? 0, 0, newEntryPoint);
         dispatch(trackMergeActions.setSegments({ id: track.id, segments: segments }));
         closeModal();
     };

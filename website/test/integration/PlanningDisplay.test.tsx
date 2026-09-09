@@ -218,6 +218,69 @@ describe('Planner integration test', () => {
     });
 
     describe('Complex planning', () => {
+        it('inserts breaks and entry points from the segment context menu', async () => {
+            (getLanguage as Mock).mockImplementation(() => 'en');
+            const store = createPlanningStore();
+            render(
+                <MemoryRouter>
+                    <RallyPlannerWrapper store={store} />
+                </MemoryRouter>
+            );
+
+            const user = userEvent.setup();
+            await user.click(ui.startButton());
+            await user.click(ui.complexButton());
+            await ui.uploadGpxSegment('segment1');
+            await ui.uploadGpxSegment('segment2');
+            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2), timeout);
+            await user.click(ui.complexTracksTab(0));
+            await user.click(ui.newTrackButton());
+            await user.click(ui.segmentSelect());
+            await user.click(screen.getByText('segment1'));
+            await user.click(ui.segmentSelect());
+            await user.click(screen.getByText('segment2'));
+
+            const firstSegmentId = getTrackCompositions(store.getState())[0]!.segments[0]!.id;
+            fireEvent.contextMenu(screen.getByTestId(`track-segment-${firstSegmentId}`));
+            await user.click(screen.getByText(messages['msg.addBreakBefore']));
+            const breakDialog = screen.getByRole('dialog');
+            await user.clear(within(breakDialog).getByTitle(messages['msg.minutes.details']));
+            await user.type(within(breakDialog).getByTitle(messages['msg.minutes.details']), '10');
+            await user.click(within(breakDialog).getByRole('button', { name: messages['msg.add'] }));
+
+            await waitFor(() => expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(3));
+            const trackAfterBreak = getTrackCompositions(store.getState())[0]!;
+            expect(trackAfterBreak.segments.map((element) => element.type)).toEqual(['BREAK', 'SEGMENT', 'SEGMENT']);
+
+            fireEvent.contextMenu(screen.getByTestId(`track-segment-${firstSegmentId}`));
+            await user.click(screen.getByText(messages['msg.addEntryPointAfter']));
+            const entryDialog = screen.getByRole('dialog');
+            await user.type(within(entryDialog).getByPlaceholderText(messages['msg.street']), 'Start Street');
+            await user.click(within(entryDialog).getByRole('button', { name: messages['msg.add'] }));
+
+            await waitFor(() => expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(4));
+            expect(getTrackCompositions(store.getState())[0]!.segments.map((element) => element.type)).toEqual([
+                'BREAK',
+                'SEGMENT',
+                'ENTRY',
+                'SEGMENT',
+            ]);
+
+            const finalTrack = getTrackCompositions(store.getState())[0]!;
+            const breakId = finalTrack.segments.find((element) => element.type === 'BREAK')!.id;
+            fireEvent.contextMenu(screen.getByTestId(`track-break-${breakId}`));
+            await user.click(screen.getByText(messages['msg.editBreak']));
+            const breakEditDialog = screen.getByRole('dialog');
+            expect(breakEditDialog).toBeInTheDocument();
+            const breakCloseButtons = within(breakEditDialog).getAllByRole('button', { name: messages['msg.close'] });
+            await user.click(breakCloseButtons[breakCloseButtons.length - 1]!);
+
+            const entryId = finalTrack.segments.find((element) => element.type === 'ENTRY')!.id;
+            fireEvent.contextMenu(screen.getByTestId(`track-entry-point-${entryId}`));
+            await user.click(screen.getByText(messages['msg.editEntryPoint']));
+            expect(screen.getByRole('dialog')).toBeInTheDocument();
+        });
+
         it('opens track actions from a right-click menu without changing the selected track', async () => {
             (getLanguage as Mock).mockImplementation(() => 'en');
             const store = createPlanningStore();

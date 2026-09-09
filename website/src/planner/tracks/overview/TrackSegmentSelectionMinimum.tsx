@@ -1,5 +1,5 @@
 import { TrackComposition } from '../../store/types.ts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
 
 import { ReactSortable } from 'react-sortablejs';
@@ -7,6 +7,7 @@ import { AppDispatch } from '../../store/planningStore.ts';
 import { isDefined } from '../../../utils/typeUtil.ts';
 import { SimpleElementDisplay } from './SimpleElementDisplay.tsx';
 import { limitString } from '../../../utils/stringUtil.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 
 interface Props {
     track: TrackComposition;
@@ -16,6 +17,13 @@ interface Props {
 
 export function TrackSegmentSelectionMinimum({ track }: Props) {
     const { id, segments } = track;
+    const gpxSegment = useSelector(getParsedGpxSegments);
+    const colorMap: Record<string, string | undefined> = {};
+    gpxSegment.forEach((segment) => {
+        colorMap[segment.id] = segment.color;
+    });
+
+    console.log(segments, colorMap);
     const dispatch: AppDispatch = useDispatch();
 
     const setSegmentIds = (items: { id: string }[]) => {
@@ -36,8 +44,13 @@ export function TrackSegmentSelectionMinimum({ track }: Props) {
                 setList={setSegmentIds}
             >
                 {segments.map((trackElement) => {
+                    const elementWithColor = { ...trackElement, color: colorMap[trackElement.id] || undefined };
                     return (
-                        <SimpleElementDisplay trackElement={trackElement} key={trackElement.id} trackId={track.id} />
+                        <SimpleElementDisplay
+                            trackElement={elementWithColor}
+                            key={trackElement.id}
+                            trackId={track.id}
+                        />
                     );
                 })}
             </ReactSortable>

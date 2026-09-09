@@ -9,19 +9,21 @@ import { resolveStreetNames } from '../logic/resolving/streets/resolveStreetName
 interface Props {
     id: string;
     name: string;
+    onAction?: () => void;
 }
 
-export function ResetResolvedStreetsButton({ id, name }: Props) {
+export function ResetResolvedStreetsButton({ id, name, onAction }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const resetStreets = () => {
-        dispatch(resolveStreetNames(id)).then(() =>
+        dispatch(resolveStreetNames(id)).then(() => {
             successNotification(
                 dispatch,
                 intl.formatMessage({ id: 'msg.streetsResolved' }),
                 intl.formatMessage({ id: 'msg.streetsResolved' })
-            )
-        );
+            );
+            onAction?.();
+        });
     };
     return (
         <>

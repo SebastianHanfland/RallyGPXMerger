@@ -10,9 +10,10 @@ interface Props {
     id: string;
     name: string;
     flipped?: boolean;
+    onAction?: () => void;
 }
 
-export function FlipGpxButton({ id, name, flipped }: Props) {
+export function FlipGpxButton({ id, name, flipped, onAction }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const averageSpeed = useSelector(getAverageSpeedInKmH);
@@ -23,7 +24,10 @@ export function FlipGpxButton({ id, name, flipped }: Props) {
         <>
             <Dropdown.Item
                 title={intl.formatMessage({ id: 'msg.flipGpx.hint' }, { name })}
-                onClick={() => flipGpxSegment()}
+                onClick={() => {
+                    flipGpxSegment();
+                    onAction?.();
+                }}
             >
                 <img src={flip} className="m-1" alt="flip" />
                 <span>

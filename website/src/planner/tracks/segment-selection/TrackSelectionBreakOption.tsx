@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
-import { Button } from 'react-bootstrap';
-import { useIntl } from 'react-intl';
+import { Button, Dropdown } from 'react-bootstrap';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../../store/planningStore.ts';
 import { TrackBreak } from '../../store/types.ts';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
@@ -13,7 +13,10 @@ import { mapActions } from '../../store/map.reducer.ts';
 import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
-import { BreakAtPositionEdit } from '../../break/BreakAtPositionEdit.tsx';
+import { BreakAtPositionEdit, getBreaksAtPlace } from '../../break/BreakAtPositionEdit.tsx';
+import { useState } from 'react';
+import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
+import { BreakMultiEditDialog } from '../../break/BreakMultiEditDialog.tsx';
 
 interface Props {
     trackId: string;
@@ -34,9 +37,13 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
     const dispatch: AppDispatch = useDispatch();
     const breakPositions = useSelector(getBreakPositions);
     const foundBreak = breakPositions.find((breakPosition) => breakPosition.breakId === trackElement.id);
+    const [contextMenu, setContextMenu] = useState<{ x: number; y: number }>();
+    const [showMultiEdit, setShowMultiEdit] = useState(false);
+    const breaks = getBreaksAtPlace(foundBreak, breakPositions);
 
     return (
         <div
+            data-testid={`track-break-${trackElement.id}`}
             className={'rounded-2 d-flex justify-content-between'}
             style={{
                 border: '1px solid transparent',
@@ -47,6 +54,10 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
             }}
             title={trackElement.description}
             key={trackElement.id}
+            onContextMenu={(event) => {
+                event.preventDefault();
+                setContextMenu({ x: event.clientX, y: event.clientY });
+            }}
         >
             <DraggableIcon />
             <div className={'m-2'}>
@@ -91,6 +102,23 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                     <EditIcon />
                 </span>
             </div>
+            {contextMenu && (
+                <TrackSelectionContextMenu {...contextMenu} onClose={() => setContextMenu(undefined)}>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setContextMenu(undefined);
+                            if (Object.keys(breaks).length > 1) {
+                                setShowMultiEdit(true);
+                            } else {
+                                dispatch(trackMergeActions.setBreakEditInfo({ breakId: trackElement.id, trackId }));
+                            }
+                        }}
+                    >
+                        <FormattedMessage id={'msg.editBreak'} />
+                    </Dropdown.Item>
+                </TrackSelectionContextMenu>
+            )}
+            {showMultiEdit && <BreakMultiEditDialog breaks={breaks} closeModal={() => setShowMultiEdit(false)} />}
         </div>
     );
 }

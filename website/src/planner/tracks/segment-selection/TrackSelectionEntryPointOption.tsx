@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
-import { Button } from 'react-bootstrap';
-import { useIntl } from 'react-intl';
+import { Button, Dropdown } from 'react-bootstrap';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { AppDispatch } from '../../store/planningStore.ts';
 import { TrackEntry } from '../../store/types.ts';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
@@ -12,6 +12,8 @@ import { mapActions } from '../../store/map.reducer.ts';
 import { toLatLng } from '../../../utils/pointUtil.ts';
 import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
 import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
+import { useState } from 'react';
+import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
 
 interface Props {
     trackId: string;
@@ -28,9 +30,11 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
     const entryPointPositions = useSelector(getEntryPointPositions);
 
     const foundPosition = entryPointPositions.find((position) => position.id === trackElement.id);
+    const [contextMenu, setContextMenu] = useState<{ x: number; y: number }>();
 
     return (
         <div
+            data-testid={`track-entry-point-${trackElement.id}`}
             className={'rounded-2 d-flex justify-content-between'}
             style={{
                 border: '1px solid transparent',
@@ -41,6 +45,10 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
             }}
             title={trackElement.extraInfo}
             key={trackElement.id}
+            onContextMenu={(event) => {
+                event.preventDefault();
+                setContextMenu({ x: event.clientX, y: event.clientY });
+            }}
         >
             <DraggableIcon />
             <div className={'m-2'}>
@@ -81,6 +89,23 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
                     <EditIcon />
                 </span>
             </div>
+            {contextMenu && (
+                <TrackSelectionContextMenu {...contextMenu} onClose={() => setContextMenu(undefined)}>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setContextMenu(undefined);
+                            dispatch(
+                                trackMergeActions.setEntryPointEditInfo({
+                                    entryPointId: trackElement.id,
+                                    trackId,
+                                })
+                            );
+                        }}
+                    >
+                        <FormattedMessage id={'msg.editEntryPoint'} />
+                    </Dropdown.Item>
+                </TrackSelectionContextMenu>
+            )}
         </div>
     );
 }

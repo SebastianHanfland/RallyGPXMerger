@@ -1,37 +1,34 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer.ts';
 import { Button, ButtonGroup, DropdownButton } from 'react-bootstrap';
+import { useState } from 'react';
 import { getColor } from '../../../utils/colorUtil.ts';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../../store/map.reducer.ts';
-import { FileDownloaderDropdownItem } from '../../download/FileDownloader.tsx';
-import { FileChangeWithUploadButton } from '../../segments/FileChangeWithUploadButton.tsx';
-import { RemoveFileButton } from '../../segments/RemoveFileButton.tsx';
-import { FlipGpxButton } from '../../segments/FlipGpxButton.tsx';
-import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsButton.tsx';
 import { AppDispatch } from '../../store/planningStore.ts';
 import flip from '../../../assets/flip.svg';
 import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
-import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints.ts';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
 import { getSegmentUsages, getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
-import { EditSegmentColorButton } from '../../segments/EditSegmentColor.tsx';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
-import { FileChangeButton } from '../../segments/FileChangeButton.tsx';
 import { getAggregateStreetsInSegments } from '../../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
 import { getSegmentInfo } from './getSegmentInfo.ts';
+import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
+import { TrackSelectionSegmentActionItems } from './TrackSelectionSegmentActionItems.tsx';
 
 interface Props {
     trackId: string;
     segmentId: string;
     segmentName: string;
     fullGpxDelete: boolean;
+    segmentIndex: number;
 }
 
-export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, fullGpxDelete }: Props) {
+export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, fullGpxDelete, segmentIndex }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
+    const [contextMenu, setContextMenu] = useState<{ x: number; y: number }>();
     const aggregatedSegments = useSelector(getAggregateStreetsInSegments);
     const aggregatedInfo = aggregatedSegments[segmentId];
 
@@ -45,7 +42,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
     if (!gpxSegment) {
         return null;
     }
-    const { id, filename, flipped } = gpxSegment;
+    const { flipped } = gpxSegment;
 
     return (
         <div>
@@ -55,6 +52,7 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                 onMouseLeave={() => dispatch(mapActions.setHighlightedSegmentId(undefined))}
             >
                 <div
+                    data-testid={`track-segment-${segmentId}`}
                     className={'rounded-2 d-flex justify-content-between'}
                     style={{
                         border: '1px solid transparent',
@@ -64,6 +62,10 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                         backgroundColor: getColor(gpxSegment),
                     }}
                     key={segmentId}
+                    onContextMenu={(event) => {
+                        event.preventDefault();
+                        setContextMenu({ x: event.clientX, y: event.clientY });
+                    }}
                 >
                     <div className={'my-2'} title={segmentName + '\n' + tooltip}>
                         <DraggableIcon />
@@ -94,20 +96,29 @@ export function TrackSelectionSegmentOption({ segmentId, segmentName, trackId, f
                             variant={'primary'}
                             title={''}
                         >
-                            <FileDownloaderDropdownItem
-                                content={() => getGpxContentStringFromParsedSegment(gpxSegment)}
-                                name={`${filename}.gpx`}
-                            />
-                            <FileChangeWithUploadButton id={id} name={filename} />
-                            <FileChangeButton id={id} name={filename} />
-                            <RemoveFileButton id={id} name={filename} />
-                            <FlipGpxButton id={id} name={filename} flipped={flipped} />
-                            <EditSegmentColorButton id={id} name={filename} color={gpxSegment.color} />
-                            <ResetResolvedStreetsButton id={id} name={filename} />
+                            <TrackSelectionSegmentActionItems segment={gpxSegment} segmentIndex={segmentIndex} />
                         </DropdownButton>
                     </div>
                 </div>
             </div>
+            {contextMenu && (
+                <TrackSelectionContextMenu {...contextMenu} onClose={() => setContextMenu(undefined)}>
+                    <TrackSelectionSegmentActionItems
+                        segment={gpxSegment}
+                        segmentIndex={segmentIndex}
+                        includeInsertionActions
+                        onAction={() => setContextMenu(undefined)}
+                        onAddBreak={(insertionIndex) => {
+                            dispatch(trackMergeActions.setBreakInsertion({ trackId, insertionIndex }));
+                            setContextMenu(undefined);
+                        }}
+                        onAddEntryPoint={(insertionIndex) => {
+                            dispatch(trackMergeActions.setEntryPointInsertion({ trackId, insertionIndex }));
+                            setContextMenu(undefined);
+                        }}
+                    />
+                </TrackSelectionContextMenu>
+            )}
         </div>
     );
 }

@@ -13,9 +13,10 @@ interface Props {
     id: string;
     name: string;
     color?: string;
+    onAction?: () => void;
 }
 
-export function EditSegmentColorButton({ id, name, color: segmentColor }: Props) {
+export function EditSegmentColorButton({ id, name, color: segmentColor, onAction }: Props) {
     const intl = useIntl();
     const dispatch: AppDispatch = useDispatch();
     const [showColorModal, setShowColorModal] = useState(false);
@@ -39,8 +40,12 @@ export function EditSegmentColorButton({ id, name, color: segmentColor }: Props)
                     onConfirm={() => {
                         dispatch(segmentDataActions.setSegmentColor({ id, color }));
                         setShowColorModal(false);
+                        onAction?.();
                     }}
-                    closeModal={() => setShowColorModal(false)}
+                    closeModal={() => {
+                        setShowColorModal(false);
+                        onAction?.();
+                    }}
                     title={`${intl.formatMessage({ id: 'msg.setColor' })} ${name}`}
                     body={<ColorPicker color={color} setColor={setColor} />}
                 />
