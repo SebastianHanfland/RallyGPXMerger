@@ -14,6 +14,7 @@ import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
 import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
 import { useState } from 'react';
 import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
+import { ConfirmationModal } from '../../../common/ConfirmationModal.tsx';
 
 interface Props {
     trackId: string;
@@ -31,6 +32,7 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
 
     const foundPosition = entryPointPositions.find((position) => position.id === trackElement.id);
     const [contextMenu, setContextMenu] = useState<{ x: number; y: number }>();
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     return (
         <div
@@ -104,7 +106,29 @@ export function TrackSelectionEntryPointOption({ trackElement, trackId }: Props)
                     >
                         <FormattedMessage id={'msg.editEntryPoint'} />
                     </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setContextMenu(undefined);
+                            setShowDeleteModal(true);
+                        }}
+                    >
+                        <FormattedMessage id={'msg.removeEntryPoint'} />
+                    </Dropdown.Item>
                 </TrackSelectionContextMenu>
+            )}
+            {showDeleteModal && (
+                <ConfirmationModal
+                    onConfirm={() => {
+                        dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId: trackElement.id }));
+                        setShowDeleteModal(false);
+                    }}
+                    closeModal={() => setShowDeleteModal(false)}
+                    title={intl.formatMessage({ id: 'msg.removeEntryPointModalTitle' })}
+                    body={intl.formatMessage(
+                        { id: 'msg.removeEntryPointModalBody' },
+                        { name: trackElement.streetName }
+                    )}
+                />
             )}
         </div>
     );

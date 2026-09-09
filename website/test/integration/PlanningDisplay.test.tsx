@@ -275,10 +275,33 @@ describe('Planner integration test', () => {
             const breakCloseButtons = within(breakEditDialog).getAllByRole('button', { name: messages['msg.close'] });
             await user.click(breakCloseButtons[breakCloseButtons.length - 1]!);
 
+            fireEvent.contextMenu(screen.getByTestId(`track-break-${breakId}`));
+            await user.click(screen.getByText(messages['msg.removeBreakSegment']));
+            const breakDeleteDialog = screen.getByRole('dialog');
+            const breakDeleteCloseButtons = within(breakDeleteDialog).getAllByRole('button', {
+                name: messages['msg.close'],
+            });
+            await user.click(breakDeleteCloseButtons[breakDeleteCloseButtons.length - 1]!);
+            expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(4);
+
+            fireEvent.contextMenu(screen.getByTestId(`track-break-${breakId}`));
+            await user.click(screen.getByText(messages['msg.removeBreakSegment']));
+            await user.click(screen.getByRole('button', { name: messages['msg.confirm'] }));
+            expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(3);
+
             const entryId = finalTrack.segments.find((element) => element.type === 'ENTRY')!.id;
             fireEvent.contextMenu(screen.getByTestId(`track-entry-point-${entryId}`));
             await user.click(screen.getByText(messages['msg.editEntryPoint']));
-            expect(screen.getByRole('dialog')).toBeInTheDocument();
+            const entryEditDialog = screen.getByRole('dialog');
+            expect(entryEditDialog).toBeInTheDocument();
+            const entryCloseButtons = within(entryEditDialog).getAllByRole('button', { name: messages['msg.close'] });
+            await user.click(entryCloseButtons[entryCloseButtons.length - 1]!);
+
+            fireEvent.contextMenu(screen.getByTestId(`track-entry-point-${entryId}`));
+            await user.click(screen.getByText(messages['msg.removeEntryPoint']));
+            const entryDeleteDialog = screen.getByRole('dialog');
+            await user.click(within(entryDeleteDialog).getByRole('button', { name: messages['msg.confirm'] }));
+            expect(getTrackCompositions(store.getState())[0]!.segments).toHaveLength(2);
         });
 
         it('opens track actions from a right-click menu without changing the selected track', async () => {

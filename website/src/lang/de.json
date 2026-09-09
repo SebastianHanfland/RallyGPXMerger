@@ -452,6 +452,8 @@
     "msg.publicTableLink.withIndex": "Öffentlicher Link mit Tabelle, zeigt nur einzelne Zeilen",
     "msg.iframeTableExample": "Öffentlicher Link mit Tabelle im iframe",
     "msg.removeBreakSegment": "Pause entfernen",
+    "msg.removeBreakModalTitle": "Pause entfernen",
+    "msg.removeBreakModalBody": "Möchten Sie die Pause \"{name}\" wirklich entfernen?",
     "msg.removeEntryPoint": "Einstiegspunkt entfernen",
     "msg.removeEntryPointModalTitle": "Einstiegspunkt entfernen",
     "msg.removeEntryPointModalBody": "Möchten Sie den Einstiegspunkt \"{name}\" wirklich entfernen?",

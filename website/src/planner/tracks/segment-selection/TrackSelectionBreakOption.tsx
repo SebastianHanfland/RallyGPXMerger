@@ -17,6 +17,7 @@ import { BreakAtPositionEdit, getBreaksAtPlace } from '../../break/BreakAtPositi
 import { useState } from 'react';
 import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
 import { BreakMultiEditDialog } from '../../break/BreakMultiEditDialog.tsx';
+import { ConfirmationModal } from '../../../common/ConfirmationModal.tsx';
 
 interface Props {
     trackId: string;
@@ -39,6 +40,7 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
     const foundBreak = breakPositions.find((breakPosition) => breakPosition.breakId === trackElement.id);
     const [contextMenu, setContextMenu] = useState<{ x: number; y: number }>();
     const [showMultiEdit, setShowMultiEdit] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const breaks = getBreaksAtPlace(foundBreak, breakPositions);
 
     return (
@@ -116,9 +118,31 @@ export function TrackSelectionBreakOption({ trackElement, trackId }: Props) {
                     >
                         <FormattedMessage id={'msg.editBreak'} />
                     </Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => {
+                            setContextMenu(undefined);
+                            setShowDeleteModal(true);
+                        }}
+                    >
+                        <FormattedMessage id={'msg.removeBreakSegment'} />
+                    </Dropdown.Item>
                 </TrackSelectionContextMenu>
             )}
             {showMultiEdit && <BreakMultiEditDialog breaks={breaks} closeModal={() => setShowMultiEdit(false)} />}
+            {showDeleteModal && (
+                <ConfirmationModal
+                    onConfirm={() => {
+                        dispatch(trackMergeActions.removeSegmentFromTrack({ id: trackId, segmentId: trackElement.id }));
+                        setShowDeleteModal(false);
+                    }}
+                    closeModal={() => setShowDeleteModal(false)}
+                    title={intl.formatMessage({ id: 'msg.removeBreakModalTitle' })}
+                    body={intl.formatMessage(
+                        { id: 'msg.removeBreakModalBody' },
+                        { name: getBreakLabel(trackElement, foundBreak) }
+                    )}
+                />
+            )}
         </div>
     );
 }
