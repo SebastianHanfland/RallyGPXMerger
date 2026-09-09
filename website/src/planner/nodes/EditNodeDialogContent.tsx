@@ -13,17 +13,7 @@ import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
 import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar.tsx';
 import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput.tsx';
 import { getBranchTracks } from './getBranchTracks.ts';
-
-function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
-    const maximum = (total ?? 0) - branchParticipants;
-    if (numberValue > maximum) {
-        return maximum;
-    }
-    if (numberValue < 0) {
-        return 0;
-    }
-    return numberValue;
-}
+import { getNodeOffset, getNodeOffsetPercentage } from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
 
 interface Props {
     nodeSpecs: NodeSpecification;
@@ -61,14 +51,27 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
         <>
             <div>{`${direction} =>`}</div>
             {Object.entries(branchTracks).map(([segmentId, tracks]) => {
-                const peopleOffset = nodeSpecs.trackOffsets[segmentId] ?? 0;
                 const branchSize = branchNumbers[getBranchId(tracks.map(({ id }) => id))] ?? 0;
+                const peopleOffset = getNodeOffset(nodeSpecs, segmentId, branchSize, total);
+                const percentage = getNodeOffsetPercentage(nodeSpecs, segmentId, branchSize, total);
 
-                const shiftOffset = (offSet: number) => () => {
-                    const newValue = getNodeDelayValue((peopleOffset ?? 0) + offSet, branchSize, total);
+                const setPercentage = (newPercentage: number) => () => {
+                    const boundedPercentage = Math.max(0, Math.min(100, newPercentage));
                     setNodeSpecs({
                         ...nodeSpecs,
-                        trackOffsets: { ...nodeSpecs.trackOffsets, [segmentId]: newValue },
+                        trackOffsetPercentages: {
+                            ...(nodeSpecs.trackOffsetPercentages ?? {}),
+                            [segmentId]: boundedPercentage,
+                        },
+                        trackOffsets: {
+                            ...nodeSpecs.trackOffsets,
+                            [segmentId]: getNodeOffset(
+                                { ...nodeSpecs, trackOffsetPercentages: { [segmentId]: boundedPercentage } },
+                                segmentId,
+                                branchSize,
+                                total
+                            ),
+                        },
                     });
                 };
                 return (
@@ -79,7 +82,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                             style={{ display: 'flex', justifyContent: 'row', alignItems: 'flex-end' }}
                         >
                             <div key={segmentId + '3'}>
-                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(100000000)}>
+                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={setPercentage(100)}>
                                     {'<-'}
                                 </Button>
                             </div>
@@ -90,7 +93,7 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 offset={peopleOffset}
                             />
                             <div key={segmentId + '4'}>
-                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={shiftOffset(-100000000)}>
+                                <Button size={'sm'} style={{ height: buttonHeight }} onClick={setPercentage(0)}>
                                     {'->'}
                                 </Button>
                             </div>
@@ -100,6 +103,8 @@ export const EditNodeDialogContent = ({ nodeSpecs, setNodeSpecs, nodeEditInfo }:
                                 segmentId={segmentId}
                                 branchSize={branchSize}
                                 total={total}
+                                peopleOffset={peopleOffset}
+                                percentage={percentage}
                             />
                         </div>
                     </div>

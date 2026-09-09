@@ -1,18 +1,8 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-bootstrap';
 import { NodeSpecification } from '../store/types.ts';
 import { getCount } from '../../utils/inputUtil.ts';
-
-function getNodeDelayValue(numberValue: number, branchParticipants: number, total: number) {
-    const maximum = (total ?? 0) - branchParticipants;
-    if (numberValue > maximum) {
-        return maximum;
-    }
-    if (numberValue < 0) {
-        return 0;
-    }
-    return numberValue;
-}
+import { getNodeOffset } from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
 
 interface Props {
     nodeSpecs: NodeSpecification;
@@ -20,29 +10,55 @@ interface Props {
     branchSize: number;
     segmentId: string;
     total: number;
+    peopleOffset: number;
+    percentage: number;
 }
 
-export const EditNodeDialogDelayInput = ({ nodeSpecs, setNodeSpecs, segmentId, total, branchSize }: Props) => {
-    const intl = useIntl();
-
+export const EditNodeDialogDelayInput = ({
+    nodeSpecs,
+    setNodeSpecs,
+    segmentId,
+    branchSize,
+    total,
+    peopleOffset,
+    percentage,
+}: Props) => {
     return (
         <div className={'mx-2'}>
             <Form.Group>
                 <Form.Label>
-                    <FormattedMessage id={'msg.nodeOffset'} />
+                    <FormattedMessage id={'msg.nodeOffsetPercentage'} />
                 </Form.Label>
                 <Form.Control
-                    type="text"
-                    placeholder={intl.formatMessage({ id: 'msg.trackPeople' })}
-                    value={nodeSpecs.trackOffsets[segmentId] ?? ''}
+                    type={'number'}
+                    min={0}
+                    max={100}
+                    step={0.1}
+                    placeholder={'%'}
+                    value={percentage}
                     onChange={(value) => {
-                        const newValue = getNodeDelayValue(getCount(value) ?? 0, branchSize, total);
+                        const newValue = Math.max(0, Math.min(100, getCount(value) ?? 0));
                         setNodeSpecs({
                             ...nodeSpecs,
-                            trackOffsets: { ...nodeSpecs.trackOffsets, [segmentId]: newValue },
+                            trackOffsetPercentages: {
+                                ...(nodeSpecs.trackOffsetPercentages ?? {}),
+                                [segmentId]: newValue,
+                            },
+                            trackOffsets: {
+                                ...nodeSpecs.trackOffsets,
+                                [segmentId]: getNodeOffset(
+                                    { ...nodeSpecs, trackOffsetPercentages: { [segmentId]: newValue } },
+                                    segmentId,
+                                    branchSize,
+                                    total
+                                ),
+                            },
                         });
                     }}
                 />
+                <Form.Text>
+                    <FormattedMessage id={'msg.nodeOffsetCalculated'} values={{ people: peopleOffset }} />
+                </Form.Text>
             </Form.Group>
         </div>
     );

@@ -22,11 +22,11 @@ describe('getSpecifiedDelayPerTrack', () => {
         }
 
         const createTrack1 = (peopleCount: number, priority?: number) =>
-            ({ id: '1', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+            ({ id: '1', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount, priority }) as TrackComposition;
         const createTrack2 = (peopleCount: number, priority?: number) =>
-            ({ id: '2', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+            ({ id: '2', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount, priority }) as TrackComposition;
         const createTrack3 = (peopleCount: number, priority?: number) =>
-            ({ id: '3', segments: ['C1', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+            ({ id: '3', segments: ['C1', 'ABC'].map(getSegment), peopleCount, priority }) as TrackComposition;
 
         const createTestCase = (
             tracks: TrackComposition[],
@@ -375,10 +375,17 @@ describe('getSpecifiedDelayPerTrack', () => {
         });
 
         describe('with people, priority and node specifications', () => {
-            it('should just pass', () => {
-                // given
-                // when
-                // then
+            it('scales a node delay percentage with the other branch sizes', () => {
+                const delays = getDelaysOfTracks([createTrack1(100), createTrack2(200)], 1, {
+                    AB: {
+                        totalCount: 300,
+                        trackOffsets: { A1: 0, B1: 0 },
+                        trackOffsetPercentages: { A1: 50, B1: 0 },
+                    },
+                });
+
+                expect(delays[0]?.delays[0]).toEqual({ segmentId: 'AB', extraDelay: 100, by: NODE_SPEC });
+                expect(delays[1]?.delays[0]).toEqual({ segmentId: 'AB', extraDelay: 0, by: NODE_SPEC });
             });
         });
     });

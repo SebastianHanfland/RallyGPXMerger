@@ -15,6 +15,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
 import { getParticipantsDelay } from '../../../planner/store/settings.reducer.ts';
 import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
+import { getNodeOffset } from './nodeSpecOffset.ts';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 
@@ -97,7 +98,19 @@ export const getDelaysOfTracks = (
         // Node Spec
         //////////////////////////
         if (foundNodeSpec) {
-            Object.entries(foundNodeSpec.trackOffsets).forEach(([segId, offset]) => {
+            const branchSizes = Object.fromEntries(
+                Object.entries(getBranchTrackIds(trackNode)).map(([segId, trackIds]) => [
+                    segId,
+                    trackIds ? (branchNumbers[getBranchId(trackIds)] ?? 0) : 0,
+                ])
+            );
+            const total = Object.values(branchSizes).reduce((sum, size) => sum + size, 0);
+            const segmentIds = new Set([
+                ...Object.keys(foundNodeSpec.trackOffsets),
+                ...Object.keys(foundNodeSpec.trackOffsetPercentages ?? {}),
+            ]);
+            segmentIds.forEach((segId) => {
+                const offset = getNodeOffset(foundNodeSpec, segId, branchSizes[segId] ?? 0, total);
                 const tracksWithSegment = trackCompositions.filter((track) =>
                     track.segments.map((segment) => segment.id).includes(segId)
                 );

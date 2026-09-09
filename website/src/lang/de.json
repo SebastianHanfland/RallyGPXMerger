@@ -23,6 +23,8 @@
     "msg.segment": "Abschnitt",
     "msg.tracks": "Routen",
     "msg.nodeOffset": "Verschiebung am Knoten in Teilnehmenden",
+    "msg.nodeOffsetPercentage": "Verschiebung am Knoten in Prozent",
+    "msg.nodeOffsetCalculated": "Berechnete Verschiebung: {people} Teilnehmende",
     "msg.offsetByXs": "Verschiebung um {seconds} Sekunden",
     "msg.calculateTracks": "Routen berechnen",
     "msg.triggerAll": "Alle starten",

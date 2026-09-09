@@ -7,11 +7,11 @@ describe('test block', () => {
     }
 
     const createTrack1 = (peopleCount: number, priority?: number) =>
-        ({ id: '1', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+        ({ id: '1', segments: ['A1', 'AB', 'ABC'].map(getSegment), peopleCount, priority }) as TrackComposition;
     const createTrack2 = (peopleCount: number, priority?: number) =>
-        ({ id: '2', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+        ({ id: '2', segments: ['B1', 'AB', 'ABC'].map(getSegment), peopleCount, priority }) as TrackComposition;
     const createTrack3 = (peopleCount: number, priority?: number) =>
-        ({ id: '3', segments: ['C1', 'ABC'].map(getSegment), peopleCount, priority } as TrackComposition);
+        ({ id: '3', segments: ['C1', 'ABC'].map(getSegment), peopleCount, priority }) as TrackComposition;
 
     interface TestCase {
         tracks: TrackComposition[];
@@ -32,6 +32,14 @@ describe('test block', () => {
             nodeSpecs: { AB: { trackOffsets: { '1': 0, '2': 0 }, totalCount: 0 } },
             expectedBranchNumbers: { '1': 10, '2': 20, '3': 30, '1-2': 20, '1-2-3': 50 },
             description: 'should just fill all track occurrences with plain numbers of tracks',
+        },
+        {
+            tracks: [createTrack1(10), createTrack2(20), createTrack3(30)],
+            nodeSpecs: {
+                AB: { trackOffsets: { '1': 0, '2': 0 }, trackOffsetPercentages: { '1': 50, '2': 0 }, totalCount: 0 },
+            },
+            expectedBranchNumbers: { '1': 10, '2': 20, '3': 30, '1-2': 20, '1-2-3': 50 },
+            description: 'should scale percentage offsets with the people in the other branches',
         },
     ];
 

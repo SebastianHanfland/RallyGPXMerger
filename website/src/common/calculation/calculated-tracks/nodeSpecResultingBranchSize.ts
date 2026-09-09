@@ -3,6 +3,7 @@ import { listAllNodesOfTracks, NodeAtTrack } from '../nodes/nodeFinder.ts';
 import { createSelector } from '@reduxjs/toolkit';
 import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
 import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
+import { getNodeOffset } from './nodeSpecOffset.ts';
 
 export const getBranchId = (trackIds: string[]): string => {
     const sortedIds = trackIds.sort();
@@ -58,8 +59,13 @@ export const getBranchNumbers = (
             Object.entries(branchTracks).forEach(([segmentId, trackIds]) => {
                 if (trackIds) {
                     afterNodeTrackIds = [...afterNodeTrackIds, ...trackIds];
-                    const offset = nodeSpec.trackOffsets[segmentId] ?? 0;
-                    const peopleSize = offset + (correctedSegmentPeople[getBranchId(trackIds)] ?? 0);
+                    const branchSize = correctedSegmentPeople[getBranchId(trackIds)] ?? 0;
+                    const total = Object.values(branchTracks).reduce(
+                        (sum, ids) => sum + (ids ? (correctedSegmentPeople[getBranchId(ids)] ?? 0) : 0),
+                        0
+                    );
+                    const offset = getNodeOffset(nodeSpec, segmentId, branchSize, total);
+                    const peopleSize = offset + branchSize;
                     peopleSizeCounter = [...peopleSizeCounter, peopleSize];
                 }
             });
