@@ -1,23 +1,26 @@
 import { ParsedPoint } from '../../../store/types.ts';
 import { isSameStreetName } from './isSameStreetName.ts';
-import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
+
+function getSmoothingStreetIndex(point: ParsedPoint): number {
+    return point.m ?? point.r ?? point.s;
+}
 
 export const isJunction = (point: ParsedPoint, index: number, points: ParsedPoint[]): boolean => {
     if (points.length <= 1) {
         return false;
     }
     if (index === 0) {
-        return getStreetLookupIndex(point) !== getStreetLookupIndex(points[1]);
+        return getSmoothingStreetIndex(point) !== getSmoothingStreetIndex(points[1]);
     }
     if (index === points.length - 1) {
-        return getStreetLookupIndex(point) !== getStreetLookupIndex(points[points.length - 2]);
+        return getSmoothingStreetIndex(point) !== getSmoothingStreetIndex(points[points.length - 2]);
     }
     const previousPoint = points[index - 1];
     const nextPoint = points[index + 1];
 
     return (
-        getStreetLookupIndex(previousPoint) !== getStreetLookupIndex(point) &&
-        getStreetLookupIndex(nextPoint) !== getStreetLookupIndex(point)
+        getSmoothingStreetIndex(previousPoint) !== getSmoothingStreetIndex(point) &&
+        getSmoothingStreetIndex(nextPoint) !== getSmoothingStreetIndex(point)
     );
 };
 
@@ -42,8 +45,8 @@ export const isSameStreet = (
     }
 
     const previousPoint = points[index - 1];
-    const previousStreet = streetLookUp[getStreetLookupIndex(previousPoint)];
-    const street = streetLookUp[getStreetLookupIndex(point)];
+    const previousStreet = streetLookUp[getSmoothingStreetIndex(previousPoint)];
+    const street = streetLookUp[getSmoothingStreetIndex(point)];
 
     return isSameStreetName(previousStreet, street);
 };
@@ -59,8 +62,8 @@ function smoothSameStreet(
     }
 
     const previousPoint = points[index - 1];
-    const previousStreet = streetLookUp[getStreetLookupIndex(previousPoint)];
-    const street = streetLookUp[getStreetLookupIndex(point)];
+    const previousStreet = streetLookUp[getSmoothingStreetIndex(previousPoint)];
+    const street = streetLookUp[getSmoothingStreetIndex(point)];
 
     if (isSameStreetName(previousStreet, street)) {
         return { ...point, s: previousPoint.s };

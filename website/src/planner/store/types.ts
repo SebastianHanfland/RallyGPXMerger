@@ -218,6 +218,7 @@ export interface ParsedPoint {
     b: number; // latitude
     e: number; // elevation
     t: number; // time in seconds from start of segment
+    r?: number; // raw index of street resolving
     s: number; // index of street resolving
     m?: number; // manually assigned index of street resolving
 }
@@ -227,6 +228,7 @@ export interface TimedPoint {
     b: number; // latitude
     e: number; // elevation
     t: string; // Date time in isoformat
+    r?: number; // raw index of street resolving
     s: number; // index of street resolving
     m?: number; // manually assigned index of street resolving
 }

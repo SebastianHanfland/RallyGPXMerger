@@ -1,23 +1,6 @@
 import { toKey } from '../helper/pointKeys.ts';
 import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../store/types.ts';
 import { smoothStreetNames } from './smoothStreetNames.ts';
-import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
-
-function getHighestFound(
-    streetLookUp: Record<number, string | undefined>,
-    resolvedStreetName: string
-): [string, string] | null {
-    const entriesWithSameStreetName = Object.entries(streetLookUp).filter((entry) => entry[1] === resolvedStreetName);
-    if (entriesWithSameStreetName.length === 0) {
-        return null;
-    }
-    const [key, value] = entriesWithSameStreetName[entriesWithSameStreetName.length - 1];
-    if (value) {
-        return [key, value];
-    }
-    return null;
-}
-
 export function enrichSegmentWithResolvedStreets(
     segmentWithoutStreets: ParsedGpxSegment,
     allResolvedStreetNames: ResolvedPositions,
@@ -25,41 +8,25 @@ export function enrichSegmentWithResolvedStreets(
 ): { segment: ParsedGpxSegment; streetLookUp: Record<number, string | undefined> } {
     let indexCounter = streetResolveStart;
     const streetLookUp: Record<number, string | undefined> = {};
-    let streetForLastPointFound: boolean = false;
+    let previousStreetName: string | undefined;
+    let previousWasResolved = false;
 
     const points: ParsedPoint[] = [];
     segmentWithoutStreets.points.forEach((point) => {
         const key = toKey({ lat: point.b, lon: point.l });
-        const resolvedStreetName = allResolvedStreetNames[key];
-        if (!resolvedStreetName) {
-            if (!streetForLastPointFound) {
-                indexCounter += 1;
-                streetLookUp[indexCounter] = undefined;
-                points.push({ ...point, s: indexCounter });
-                streetForLastPointFound = false;
-                return;
-            } else {
-                streetForLastPointFound = false;
-                points.push({ ...point, s: indexCounter });
-                return;
-            }
-        }
-        streetForLastPointFound = true;
-        const foundInLookup = getHighestFound(streetLookUp, resolvedStreetName);
+        const resolvedStreetName = allResolvedStreetNames[key] ?? undefined;
+        const isResolved = resolvedStreetName !== undefined;
+        const continuesPreviousRawStreet =
+            isResolved && previousWasResolved && resolvedStreetName === previousStreetName;
 
-        const hasTheSameStreetAsPointBefore =
-            foundInLookup &&
-            points.length > 0 &&
-            getStreetLookupIndex(points[points.length - 1]) === Number(foundInLookup[0]);
-        if (hasTheSameStreetAsPointBefore) {
-            points.push({ ...point, s: Number(foundInLookup[0]) });
-            return;
-        } else {
+        if (!continuesPreviousRawStreet) {
             indexCounter += 1;
             streetLookUp[indexCounter] = resolvedStreetName;
-            points.push({ ...point, s: indexCounter });
-            return;
         }
+
+        points.push({ ...point, r: indexCounter, s: indexCounter });
+        previousStreetName = resolvedStreetName;
+        previousWasResolved = isResolved;
     });
 
     const segment = {

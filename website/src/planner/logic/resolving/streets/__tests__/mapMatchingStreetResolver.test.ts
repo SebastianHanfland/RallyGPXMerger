@@ -23,7 +23,7 @@ describe('mapMatchingStreetResolver', () => {
         const streetLookup = getStreetLookup(planningStore.getState());
         expect(Object.keys(streetLookup).length).toEqual(10);
         const segments = getParsedGpxSegments(planningStore.getState());
-        segments;
+        expect(segments[0]?.points.every((point) => point.r !== undefined)).toBe(true);
     });
 
     it('reserves distinct lookup indexes for overlapping asynchronous resolutions', async () => {

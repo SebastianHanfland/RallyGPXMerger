@@ -51,7 +51,32 @@ describe('enrichSegmentWithResolvedStreets', () => {
         );
 
         // then
+        expect(segment.points.map(({ r }) => r)).toEqual([1001, 1001, 1002, 1002]);
         expect(segment.points.map(({ s }) => s)).toEqual([1001, 1001, 1002, 1002]);
         expect(streetLookUp).toEqual({ 1001: 'Main road', 1002: 'Small road' });
+    });
+
+    it('keeps repeated street names separate in the raw result', () => {
+        const segmentWithoutStreets: ParsedGpxSegment = {
+            points: [createPoint(3, 2), createPoint(4, 2), createPoint(5, 2), createPoint(6, 2)],
+            filename: 'fname',
+            id: '123',
+        };
+        const allResolvedStreetNames = {
+            [getKey(3, 2)]: 'Main road',
+            [getKey(4, 2)]: 'Side road',
+            [getKey(5, 2)]: 'Main road',
+            [getKey(6, 2)]: 'Main road',
+        };
+
+        const { segment, streetLookUp } = enrichSegmentWithResolvedStreets(
+            segmentWithoutStreets,
+            allResolvedStreetNames,
+            1000
+        );
+
+        expect(segment.points.map(({ r }) => r)).toEqual([1001, 1002, 1003, 1003]);
+        expect(segment.points.map(({ s }) => s)).toEqual([1002, 1002, 1003, 1003]);
+        expect(streetLookUp).toEqual({ 1001: 'Main road', 1002: 'Side road', 1003: 'Main road' });
     });
 });

@@ -36,7 +36,9 @@ function getHighestStreetLookupIndex(state: SegmentDataState): number {
         .map(Number)
         .filter(Number.isFinite);
     const manualIndexes = state.segments.flatMap((segment) =>
-        segment.points.flatMap((point) => [point.s, point.m]).filter((index): index is number => index !== undefined)
+        segment.points
+            .flatMap((point) => [point.r, point.s, point.m])
+            .filter((index): index is number => index !== undefined)
     );
     return Math.max(state.streetLookupIndex ?? 0, ...lookupIndexes, ...manualIndexes, 0);
 }
