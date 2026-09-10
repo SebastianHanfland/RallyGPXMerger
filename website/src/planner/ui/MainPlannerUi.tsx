@@ -8,6 +8,7 @@ import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
 import { HelpingTip } from './elements/HelpingTip.tsx';
 import { PlannerCloudActions } from './PlannerCloudActions.tsx';
 import { PlannerDownloadActions } from './PlannerDownloadActions.tsx';
+import { AbortStreetSelectionButton } from './elements/AbortStreetSelectionButton.tsx';
 
 export const MainPlannerUi = () => {
     return (
@@ -31,6 +32,7 @@ export const MainPlannerUi = () => {
                         alignItems: 'flex-start',
                     }}
                 >
+                    <AbortStreetSelectionButton />
                     <PlannerCloudActions onMap={true} />
                     <PlannerDownloadActions onMap={true} />
                     <SharePlanningButton onMap={true} />

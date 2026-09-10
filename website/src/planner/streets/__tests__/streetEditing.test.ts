@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { SEGMENT, ParsedPoint, TrackComposition } from '../../store/types.ts';
 import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
-import { applyStreetSelection, beginNewStreet, getStreetPath } from '../streetEditing.ts';
+import { abortStreetSelection, applyStreetSelection, beginNewStreet, getStreetPath } from '../streetEditing.ts';
 
 const track: TrackComposition = {
     id: 'track',
@@ -117,6 +117,23 @@ describe('street map editing actions', () => {
             1
         );
 
+        expect(dispatch).toHaveBeenCalledWith({ type: 'map/setHighlightedStreetPath', payload: undefined });
+        expect(dispatch).toHaveBeenLastCalledWith({ type: 'map/setStreetPointSelection', payload: undefined });
+    });
+
+    it('aborts a new street selection and removes its temporary lookup entry', () => {
+        const dispatch = vi.fn();
+
+        abortStreetSelection(dispatch, {
+            trackId: 'track',
+            streetIndex: 2,
+            boundary: 'end',
+            mode: 'add-end',
+            range: { start: 0, end: 1 },
+            startRouteIndex: 0,
+        });
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'segmentData/removeStreetLookup', payload: 2 });
         expect(dispatch).toHaveBeenCalledWith({ type: 'map/setHighlightedStreetPath', payload: undefined });
         expect(dispatch).toHaveBeenLastCalledWith({ type: 'map/setStreetPointSelection', payload: undefined });
     });

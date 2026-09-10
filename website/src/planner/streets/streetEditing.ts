@@ -62,6 +62,14 @@ export function beginNewStreet(
     return true;
 }
 
+export function abortStreetSelection(dispatch: AppDispatch, selection: StreetPointSelection) {
+    if (selection.mode === 'add-start' || selection.mode === 'add-end') {
+        dispatch(segmentDataActions.removeStreetLookup(selection.streetIndex));
+    }
+    dispatch(mapActions.setHighlightedStreetPath(undefined));
+    dispatch(mapActions.setStreetPointSelection(undefined));
+}
+
 export function applyStreetSelection(
     dispatch: AppDispatch,
     selection: StreetPointSelection,

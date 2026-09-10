@@ -78,6 +78,11 @@ const segmentDataSlice = createSlice({
         addDistrictLookup: (state: SegmentDataState, action: PayloadAction<Record<number, string | undefined>>) => {
             state.districtLookup = { ...state.districtLookup, ...action.payload };
         },
+        removeStreetLookup: (state: SegmentDataState, action: PayloadAction<number>) => {
+            delete state.streetLookup[action.payload];
+            delete state.postCodeLookup[action.payload];
+            delete state.districtLookup[action.payload];
+        },
         reserveStreetLookupIndexes: (state: SegmentDataState, action: PayloadAction<number>) => {
             state.streetLookupIndex = getHighestStreetLookupIndex(state) + action.payload;
         },

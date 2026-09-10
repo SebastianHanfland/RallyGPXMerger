@@ -18,7 +18,12 @@ import { getNextStreetLookupIndex } from '../../../store/segmentData.redux.ts';
 import { getStreetPointSelection, mapActions } from '../../../store/map.reducer.ts';
 import { AppDispatch } from '../../../store/planningStore.ts';
 import { getRoutePointReferences } from '../../../logic/resolving/streets/streetRangeEditing.ts';
-import { beginNewStreet, beginStreetBoundaryEdit, getStreetPath } from '../../../streets/streetEditing.ts';
+import {
+    abortStreetSelection,
+    beginNewStreet,
+    beginStreetBoundaryEdit,
+    getStreetPath,
+} from '../../../streets/streetEditing.ts';
 
 interface Props {
     track: TrackComposition;
@@ -109,9 +114,7 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                     id: active ? 'msg.cancelAddStreet' : 'msg.addStreet',
                                 })}
                                 onClick={() =>
-                                    active
-                                        ? dispatch(mapActions.setStreetPointSelection(undefined))
-                                        : startNewStreet(insertionIndex)
+                                    active ? abortStreetSelection(dispatch, selection) : startNewStreet(insertionIndex)
                                 }
                                 className={'p-0'}
                                 style={{
@@ -208,7 +211,7 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                                     })}
                                                     onClick={() =>
                                                         editingStart
-                                                            ? dispatch(mapActions.setStreetPointSelection(undefined))
+                                                            ? abortStreetSelection(dispatch, selection)
                                                             : openSelection(wayPoint, 'start')
                                                     }
                                                 >
@@ -245,7 +248,7 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
                                                     })}
                                                     onClick={() =>
                                                         editingEnd
-                                                            ? dispatch(mapActions.setStreetPointSelection(undefined))
+                                                            ? abortStreetSelection(dispatch, selection)
                                                             : openSelection(wayPoint, 'end')
                                                     }
                                                 >
