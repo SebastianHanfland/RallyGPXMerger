@@ -5,6 +5,24 @@ function getSmoothingStreetIndex(point: ParsedPoint): number {
     return point.m ?? point.r ?? point.s;
 }
 
+function getStreetNameParts(streetName: string | undefined): string[] {
+    return (
+        streetName
+            ?.split(',')
+            .map((part) => part.trim())
+            .filter(Boolean) ?? []
+    );
+}
+
+function getCommonStreetName(street1: string | undefined, street2: string | undefined): string | undefined {
+    const street2Parts = new Set(getStreetNameParts(street2));
+    return getStreetNameParts(street1).find((part) => street2Parts.has(part));
+}
+
+function getNextStreetLookupIndex(streetLookUp: Record<number, string | undefined>): number {
+    return Math.max(0, ...Object.keys(streetLookUp).map(Number)) + 1;
+}
+
 export const isJunction = (point: ParsedPoint, index: number, points: ParsedPoint[]): boolean => {
     if (points.length <= 1) {
         return false;
@@ -71,6 +89,45 @@ function smoothSameStreet(
     return point;
 }
 
+function smoothCommonStreet(
+    point: ParsedPoint,
+    index: number,
+    points: ParsedPoint[],
+    streetLookUp: Record<number, string | undefined>,
+    commonStreetName: string
+): ParsedPoint {
+    const previousPoint = points[index - 1];
+    const previousRawStreetIndex = previousPoint.r;
+    const currentRawStreetIndex = point.r;
+
+    if (previousRawStreetIndex === undefined || currentRawStreetIndex === undefined) {
+        return point;
+    }
+
+    const currentStreetName = streetLookUp[currentRawStreetIndex];
+    const previousSmoothedStreetName = streetLookUp[previousPoint.s];
+
+    if (previousPoint.s !== previousRawStreetIndex && previousSmoothedStreetName === commonStreetName) {
+        return { ...point, s: previousPoint.s };
+    }
+
+    const mergedStreetIndex = getNextStreetLookupIndex(streetLookUp);
+    streetLookUp[mergedStreetIndex] = commonStreetName;
+
+    for (let pointIndex = index - 1; pointIndex >= 0; pointIndex -= 1) {
+        const rawStreetIndex = points[pointIndex].r;
+        if (
+            rawStreetIndex === undefined ||
+            getCommonStreetName(streetLookUp[rawStreetIndex], currentStreetName) !== commonStreetName
+        ) {
+            break;
+        }
+        points[pointIndex] = { ...points[pointIndex], s: mergedStreetIndex };
+    }
+
+    return { ...point, s: mergedStreetIndex };
+}
+
 const getCurrentPoints = (newPoints: ParsedPoint[], points: ParsedPoint[]): ParsedPoint[] => {
     return points.map((point, index) => (index < newPoints.length ? newPoints[index] : point));
 };
@@ -80,10 +137,26 @@ export function smoothStreetNames(points: ParsedPoint[], streetLookUp: Record<nu
 
     points.forEach((point, index) => {
         const currentPoints = getCurrentPoints(newPoints, points);
+        if (index > 0 && point.r !== undefined && currentPoints[index - 1].r !== undefined) {
+            const previousStreet = streetLookUp[currentPoints[index - 1].r!];
+            const street = streetLookUp[point.r];
+            const commonStreetName = getCommonStreetName(previousStreet, street);
+
+            if (point.r !== currentPoints[index - 1].r && commonStreetName !== undefined) {
+                const smoothedPoint = smoothCommonStreet(point, index, currentPoints, streetLookUp, commonStreetName);
+                currentPoints.slice(0, index).forEach((currentPoint, currentIndex) => {
+                    newPoints[currentIndex] = currentPoint;
+                });
+                newPoints.push(smoothedPoint);
+                return;
+            }
+        }
+
         if (isJunction(point, index, currentPoints)) {
             newPoints.push(smoothJunction(point, index, currentPoints));
             return;
         }
+
         if (isSameStreet(point, index, currentPoints, streetLookUp)) {
             newPoints.push(smoothSameStreet(point, index, currentPoints, streetLookUp));
             return;

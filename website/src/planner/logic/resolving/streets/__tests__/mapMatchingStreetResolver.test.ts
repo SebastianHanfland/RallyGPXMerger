@@ -21,7 +21,8 @@ describe('mapMatchingStreetResolver', () => {
 
         // then
         const streetLookup = getStreetLookup(planningStore.getState());
-        expect(Object.keys(streetLookup).length).toEqual(10);
+        expect(Object.keys(streetLookup).length).toEqual(12);
+        expect(Object.values(streetLookup)).toContain('L 40');
         const segments = getParsedGpxSegments(planningStore.getState());
         expect(segments[0]?.points.every((point) => point.r !== undefined)).toBe(true);
     });

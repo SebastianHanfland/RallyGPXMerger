@@ -35,13 +35,16 @@ export const enrichGpxSegmentsWithStreetNames =
     (parsedSegments: ParsedGpxSegment[]) =>
     async (dispatch: AppDispatch, getState: () => State): Promise<void> => {
         const streetResolveStart = getNextStreetLookupIndex(getState());
-        const numberOfIndexesToReserve = parsedSegments.reduce((total, segment) => total + segment.points.length, 0);
+        const numberOfIndexesToReserve = parsedSegments.reduce(
+            (total, segment) => total + segment.points.length * 2,
+            0
+        );
         dispatch(segmentDataActions.reserveStreetLookupIndexes(numberOfIndexesToReserve));
 
         let currentStreetResolveStart = streetResolveStart;
         const promises = parsedSegments.map((segment) => {
             const segmentStreetResolveStart = currentStreetResolveStart;
-            currentStreetResolveStart += segment.points.length;
+            currentStreetResolveStart += segment.points.length * 2;
             return dispatch(enrichOneGpxSegment(segment, segmentStreetResolveStart));
         });
         await Promise.all(promises);
