@@ -1,7 +1,8 @@
 import { RefObject, useEffect, useMemo } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
+import { useIntl } from 'react-intl';
+import { getParsedGpxSegments, getStreetLookup } from '../../store/segmentData.redux.ts';
 import { getStreetPointSelection, mapActions } from '../../store/map.reducer.ts';
 import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
 import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
@@ -11,6 +12,52 @@ import { STREET_POINT_SELECTION } from '../panes.ts';
 const SELECTABLE_POINT_COLOR = '#0d6efd';
 const CURRENT_STREET_POINT_COLOR = '#00bfff';
 const DISABLED_POINT_COLOR = '#808080';
+
+function escapeTooltipText(value: string): string {
+    return value.replace(/[&<>"']/g, (character) => {
+        const escapedCharacters: Record<string, string> = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+        };
+        return escapedCharacters[character]!;
+    });
+}
+
+function getResolvedStreetName(
+    index: number | undefined,
+    streetLookup: Record<number, string | undefined>,
+    unknown: string
+): string {
+    return index === undefined ? unknown : (streetLookup[index] ?? unknown);
+}
+
+function getStreetAssignmentTooltip(
+    intl: ReturnType<typeof useIntl>,
+    routeIndex: number,
+    point: ReturnType<typeof getRoutePointReferences>[number]['point'],
+    streetLookup: Record<number, string | undefined>
+): string {
+    const unknown = intl.formatMessage({ id: 'msg.unknown' });
+    const rows = [
+        intl.formatMessage({ id: 'msg.streetAssignment.point' }, { number: routeIndex + 1 }),
+        intl.formatMessage(
+            { id: 'msg.streetAssignment.raw' },
+            { index: point.r ?? '—', name: getResolvedStreetName(point.r, streetLookup, unknown) }
+        ),
+        intl.formatMessage(
+            { id: 'msg.streetAssignment.manual' },
+            { index: point.m ?? '—', name: getResolvedStreetName(point.m, streetLookup, unknown) }
+        ),
+        intl.formatMessage(
+            { id: 'msg.streetAssignment.smoothed' },
+            { index: point.s, name: getResolvedStreetName(point.s, streetLookup, unknown) }
+        ),
+    ];
+    return rows.map(escapeTooltipText).join('<br>');
+}
 
 function getSelectionRenderKey(
     selection: ReturnType<typeof getStreetPointSelection>,
@@ -33,7 +80,7 @@ function getSelectionRenderKey(
     const routePointKey = routePoints
         .map(
             ({ segmentId, pointIndex, point }) =>
-                `${segmentId}:${pointIndex}:${point.b}:${point.l}:${point.s}:${point.m}`
+                `${segmentId}:${pointIndex}:${point.b}:${point.l}:${point.r}:${point.s}:${point.m}`
         )
         .join('|');
     return `${selectionKey}|${routePointKey}`;
@@ -43,6 +90,8 @@ export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerG
     const selection = useSelector(getStreetPointSelection);
     const track = useSelector(getTrackCompositions).find(({ id }) => id === selection?.trackId);
     const segments = useSelector(getParsedGpxSegments);
+    const streetLookup = useSelector(getStreetLookup);
+    const intl = useIntl();
     const dispatch = useDispatch();
     const routePoints = useMemo(() => (track ? getRoutePointReferences(track, segments) : []), [track, segments]);
     const selectionRenderKey = getSelectionRenderKey(selection, routePoints);
@@ -86,7 +135,7 @@ export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerG
                     interactive: selectable,
                 }
             );
-            marker.bindTooltip(`${routeIndex + 1}`, { sticky: true });
+            marker.bindTooltip(getStreetAssignmentTooltip(intl, routeIndex, point, streetLookup), { sticky: true });
             if (selectable) {
                 marker.on('click', (event) => {
                     event.originalEvent?.stopPropagation();
@@ -95,5 +144,5 @@ export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerG
             }
             marker.addTo(current);
         });
-    }, [dispatch, routePoints, selection, selectionLayer, selectionRenderKey]);
+    }, [dispatch, intl, routePoints, selection, selectionLayer, selectionRenderKey, streetLookup]);
 }

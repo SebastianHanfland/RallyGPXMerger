@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { act } from 'react';
@@ -8,10 +9,19 @@ import { mapActions, mapReducer } from '../../../store/map.reducer.ts';
 import { segmentDataReducer, segmentDataActions } from '../../../store/segmentData.redux.ts';
 import { trackMergeActions, trackMergeReducer } from '../../../store/trackMerge.reducer.ts';
 import { streetPointSelectionDisplayHook } from '../streetPointSelectionDisplayHook.ts';
+import messages from '../../../../lang/en.json';
 
 const leafletMocks = vi.hoisted(() => ({
     circleMarker: vi.fn(() => ({ addTo: vi.fn(), bindTooltip: vi.fn(), on: vi.fn() })),
 }));
+
+function createWrapper(store: ReturnType<typeof configureStore>) {
+    return ({ children }: { children: React.ReactNode }) => (
+        <IntlProvider locale="en" messages={messages}>
+            <Provider store={store}>{children}</Provider>
+        </IntlProvider>
+    );
+}
 
 vi.mock('leaflet', async (importOriginal) => {
     const actual = await importOriginal<typeof import('leaflet')>();
@@ -29,7 +39,7 @@ describe('streetPointSelectionDisplayHook', () => {
         });
         const clearLayers = vi.fn();
         const layer = { current: { clearLayers } } as never;
-        const wrapper = ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>;
+        const wrapper = createWrapper(store);
 
         act(() =>
             store.dispatch(
@@ -55,7 +65,7 @@ describe('streetPointSelectionDisplayHook', () => {
             segments: [{ id: 'segment', segmentId: 'segment', type: SEGMENT }],
         };
         const layer = { current: { clearLayers: vi.fn() } } as never;
-        const wrapper = ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>;
+        const wrapper = createWrapper(store);
 
         act(() => store.dispatch(trackMergeActions.addTrackComposition(track)));
         act(() =>
@@ -97,6 +107,61 @@ describe('streetPointSelectionDisplayHook', () => {
         );
         expect(leafletMocks.circleMarker.mock.results[0]!.value.on).toHaveBeenCalledWith('click', expect.any(Function));
         expect(leafletMocks.circleMarker.mock.results[1]!.value.on).not.toHaveBeenCalled();
+        expect(leafletMocks.circleMarker.mock.results[1]!.value.bindTooltip).toHaveBeenCalledWith(
+            'Point 2<br>Raw (r —): Unknown<br>Manual (m —): Unknown<br>Smoothed (s 2): Unknown',
+            { sticky: true }
+        );
+    });
+
+    it('shows raw, manual, and smoothed street names in point tooltips', () => {
+        const store = configureStore({
+            reducer: { map: mapReducer, segmentData: segmentDataReducer, trackMerge: trackMergeReducer },
+        });
+        const track: TrackComposition = {
+            id: 'track',
+            segments: [{ id: 'segment', segmentId: 'segment', type: SEGMENT }],
+        };
+        const layer = { current: { clearLayers: vi.fn() } } as never;
+        const wrapper = createWrapper(store);
+
+        act(() => store.dispatch(trackMergeActions.addTrackComposition(track)));
+        act(() =>
+            store.dispatch(
+                segmentDataActions.addGpxSegments([
+                    {
+                        id: 'segment',
+                        filename: 'segment',
+                        points: [{ b: 48, l: 11, e: 0, t: 0, r: 10, m: 11, s: 12 }],
+                    },
+                ])
+            )
+        );
+        act(() =>
+            store.dispatch(
+                segmentDataActions.addStreetLookup({
+                    10: 'Raw Street',
+                    11: 'Manual Street',
+                    12: 'Smoothed Street',
+                })
+            )
+        );
+        act(() =>
+            store.dispatch(
+                mapActions.setStreetPointSelection({
+                    trackId: 'track',
+                    streetIndex: 12,
+                    boundary: 'start',
+                    range: { start: 0, end: 0 },
+                })
+            )
+        );
+
+        renderHook(() => streetPointSelectionDisplayHook(layer), { wrapper });
+
+        expect(leafletMocks.circleMarker.mock.results[0]!.value.bindTooltip).toHaveBeenCalledWith(
+            'Point 1<br>Raw (r 10): Raw Street<br>Manual (m 11): Manual Street<br>Smoothed (s 12): Smoothed Street',
+            { sticky: true }
+        );
     });
 
     it('highlights currently assigned points brighter than other selectable points', () => {
@@ -108,7 +173,7 @@ describe('streetPointSelectionDisplayHook', () => {
             segments: [{ id: 'segment', segmentId: 'segment', type: SEGMENT }],
         };
         const layer = { current: { clearLayers: vi.fn() } } as never;
-        const wrapper = ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>;
+        const wrapper = createWrapper(store);
 
         act(() => store.dispatch(trackMergeActions.addTrackComposition(track)));
         act(() =>
@@ -162,7 +227,7 @@ describe('streetPointSelectionDisplayHook', () => {
         });
         const clearLayers = vi.fn();
         const layer = { current: { clearLayers } } as never;
-        const wrapper = ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>;
+        const wrapper = createWrapper(store);
         const track: TrackComposition = {
             id: 'track',
             segments: [{ id: 'segment', segmentId: 'segment', type: SEGMENT }],
