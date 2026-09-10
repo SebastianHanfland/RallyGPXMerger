@@ -2,14 +2,14 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
-import { getLanguage } from '../../src/language.ts';
-import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner.tsx';
-import { getMessages } from '../../src/lang/getMessages.ts';
-import { createPlanningStore } from '../../src/planner/store/planningStore.ts';
-import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer.ts';
-import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks.ts';
-import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux.ts';
-import { plannerUi as ui } from './data/PlannerTestAccess.ts';
+import { getLanguage } from '../../src/language';
+import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
+import { getMessages } from '../../src/lang/getMessages';
+import { createPlanningStore } from '../../src/planner/store/planningStore';
+import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
+import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
+import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
+import { plannerUi as ui } from './data/PlannerTestAccess';
 
 const messages = getMessages('en');
 

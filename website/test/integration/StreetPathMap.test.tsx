@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
-import { App } from '../../src/App.tsx';
-import { createStreetPathUrl } from '../../src/utils/streetPathUrl.ts';
-import { getData } from '../../src/api/api.ts';
+import { App } from '../../src/App';
+import { createStreetPathUrl } from '../../src/utils/streetPathUrl';
+import { getData } from '../../src/api/api';
 
 vi.mock('../../src/api/api.ts');
 vi.mock('leaflet.locatecontrol', () => ({ LocateControl: vi.fn() }));

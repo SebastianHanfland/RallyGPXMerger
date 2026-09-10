@@ -1,7 +1,7 @@
 import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import { Mock, vi, vitest } from 'vitest';
+import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { getMessages } from '../../src/lang/getMessages';
 import * as fs from 'node:fs';
@@ -11,8 +11,6 @@ import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer
 import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
-import { storage } from '../../src/planner/store/storage';
-import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
 import { State } from '../../src/planner/store/types';
 
 const messages = getMessages('en');
