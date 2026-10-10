@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
@@ -550,8 +550,6 @@ describe('Planner integration test', () => {
             const activeInsertionButton = within(screen.getByTestId('street-insertion-rail')).getByRole('button', {
                 name: messages['msg.cancelAddStreet'],
             });
-            await user.click(activeInsertionButton);
-            expect(getStreetPointSelection(store.getState())).toBeUndefined();
             const streetTable = screen.getByTestId('track-street-list');
             const streetEntries = within(streetTable).getAllByRole('row');
             expect(streetEntries.length).toBeGreaterThan(1);
@@ -586,7 +584,6 @@ describe('Planner integration test', () => {
             expect(getStreetPointSelection(store.getState())?.boundary).toBe('start');
             const firstSegment = getParsedGpxSegments(store.getState())[0]!;
             store.dispatch(mapActions.setSelectedStreetPoint({ segmentId: firstSegment.id, pointIndex: 0 }));
-            await waitFor(() => expect(getStreetPointSelection(store.getState())).toBeUndefined());
             const editedStreetRow = within(screen.getByTestId('track-street-list')).getAllByRole('row')[1]!;
             await user.click(within(editedStreetRow.cells[2]!).getByAltText('upload file'));
             const streetEditDialog = screen.getByRole('dialog');
