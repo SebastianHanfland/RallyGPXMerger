@@ -12,9 +12,10 @@ export const PlannerSidebarContent = () => {
             return <FileUploadSection />;
         case 'tracks':
             return <PlannerSidebarTracks />;
-        case 'overview':
-            return <PlannerSidebarOverview />;
         case 'settings':
             return <PlannerSidebarSettings />;
+        case 'overview':
+        default:
+            return <PlannerSidebarOverview />;
     }
 };
