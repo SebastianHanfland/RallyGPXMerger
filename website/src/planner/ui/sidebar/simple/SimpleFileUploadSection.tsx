@@ -43,7 +43,7 @@ export function SimpleFileUploadSection() {
                     <h5>
                         <FormattedMessage id={'msg.track'} />
                         {distanceInfo && <span>{distanceInfo}</span>}
-                        <TrackButtonsCell track={track} />
+                        <TrackButtonsCell track={track} single={true} />
                     </h5>
                     <BlockTextDescription messageId={'msg.description.simpleTracks'} />
 

@@ -1,7 +1,7 @@
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
@@ -9,11 +9,9 @@ import { TrackComposition } from '../store/types.ts';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
-import { getColor } from '../../utils/colorUtil.ts';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
 import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
 import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
-import { ColorPicker } from '../../utils/ColorPicker.tsx';
+import { TrackColorActionItem } from './TrackColorActionItem.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -25,14 +23,8 @@ export function TrackActionItems({ track, onAction }: Props) {
     const dispatch = useDispatch();
     const { id } = track;
     const [showModal, setShowModal] = useState(false);
-    const [showColorModal, setShowColorModal] = useState(false);
-    const [color, setColor] = useState(getColor(track));
     const calculatedTrack = useSelector(getCalculateTracks).find((candidate) => candidate.id === id);
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
-
-    useEffect(() => {
-        setColor(getColor(track));
-    }, [track]);
 
     const closeMenu = () => onAction?.();
 
@@ -72,31 +64,7 @@ export function TrackActionItems({ track, onAction }: Props) {
                     <FormattedMessage id={'msg.pasteSegments'} />
                 </span>
             </Dropdown.Item>
-            <Dropdown.Item
-                onClick={() => {
-                    setShowColorModal(true);
-                }}
-            >
-                <ColorBlob color={getColor(track)} />
-                <span>
-                    <FormattedMessage id={'msg.setColor'} />
-                </span>
-            </Dropdown.Item>
-            {showColorModal && (
-                <ConfirmationModal
-                    onConfirm={() => {
-                        dispatch(trackMergeActions.setTrackColor({ id, color }));
-                        setShowColorModal(false);
-                        closeMenu();
-                    }}
-                    closeModal={() => {
-                        setShowColorModal(false);
-                        closeMenu();
-                    }}
-                    title={`${intl.formatMessage({ id: 'msg.setColor' })} ${track.name ?? ''}`}
-                    body={<ColorPicker color={color} setColor={setColor} />}
-                />
-            )}
+            <TrackColorActionItem track={track} onAction={onAction} />
             {showModal && (
                 <ConfirmationModal
                     onConfirm={() => {
