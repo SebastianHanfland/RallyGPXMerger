@@ -3,15 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useState } from 'react';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
 import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
 import { TrackComposition } from '../store/types.ts';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
-import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
-import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
 import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
 import { TrackColorActionItem } from './TrackColorActionItem.tsx';
+import { TrackDownloadActionItem } from './TrackDownloadActionItem.tsx';
 
 interface Props {
     track: TrackComposition;
@@ -23,7 +21,6 @@ export function TrackActionItems({ track, onAction }: Props) {
     const dispatch = useDispatch();
     const { id } = track;
     const [showModal, setShowModal] = useState(false);
-    const calculatedTrack = useSelector(getCalculateTracks).find((candidate) => candidate.id === id);
     const segmentIdClipboard = useSelector(getSegmentIdClipboard);
 
     const closeMenu = () => onAction?.();
@@ -80,15 +77,7 @@ export function TrackActionItems({ track, onAction }: Props) {
                     body={`Do you really want to remove the track ${track.name ?? ''}?`}
                 />
             )}
-            {calculatedTrack && (
-                <FileDownloaderDropdownItem
-                    content={() =>
-                        getGpxContentFromTimedPoints(calculatedTrack.points, calculatedTrack.filename ?? 'Track')
-                    }
-                    name={calculatedTrack.filename + '.gpx'}
-                    onClick={closeMenu}
-                />
-            )}
+            <TrackDownloadActionItem track={track} onAction={onAction} />
         </>
     );
 }
