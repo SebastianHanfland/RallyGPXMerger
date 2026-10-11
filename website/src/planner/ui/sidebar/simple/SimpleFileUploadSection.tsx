@@ -14,6 +14,7 @@ import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescript
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
+import { TrackButtonsCell } from '../../../tracks/TrackButtonsCell.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -42,6 +43,7 @@ export function SimpleFileUploadSection() {
                     <h5>
                         <FormattedMessage id={'msg.track'} />
                         {distanceInfo && <span>{distanceInfo}</span>}
+                        <TrackButtonsCell track={track} />
                     </h5>
                     <BlockTextDescription messageId={'msg.description.simpleTracks'} />
 
