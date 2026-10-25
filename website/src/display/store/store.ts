@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
-import { displayMapReducer } from './displayMapReducer.ts';
-import { planningReducer } from './displayTracksReducer.ts';
+import { displayMapReducer } from './displayMapReducer';
+import { planningReducer } from './displayTracksReducer';
 
 const displayReducer: Reducer = combineReducers({
     displayMap: displayMapReducer,

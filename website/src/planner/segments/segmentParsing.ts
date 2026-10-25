@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { SimpleGPX } from '../../utils/SimpleGPX.ts';
-import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
-import { ParsedGpxSegment, ParsedPoint } from '../store/types.ts';
+import { SimpleGPX } from '../../utils/SimpleGPX';
+import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds';
+import { ParsedGpxSegment, ParsedPoint } from '../store/types';
 
 export function getPointsFromGpx(gpxString: string, averageSpeed: number, fixedVelocity = false): ParsedPoint[] {
     const points = SimpleGPX.fromString(gpxString).getPoints();

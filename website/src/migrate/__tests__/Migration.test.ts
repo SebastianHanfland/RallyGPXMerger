@@ -1,7 +1,7 @@
 import stateVersion1 from './stateVersion1.json';
-import { migrateVersion1To2 } from '../migrateVersion1To2.ts';
-import { StateOld } from '../../planner/store/typesOld.ts';
-import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
+import { migrateVersion1To2 } from '../migrateVersion1To2';
+import { StateOld } from '../../planner/store/typesOld';
+import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks';
 
 describe('test migration', () => {
     it('testing segment data', () => {

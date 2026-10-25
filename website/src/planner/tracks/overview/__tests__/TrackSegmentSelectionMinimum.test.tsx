@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { SEGMENT, State, TrackSegment } from '../../../store/types.ts';
-import { TrackSegmentSelectionMinimum } from '../TrackSegmentSelectionMinimum.tsx';
+import { SEGMENT, State, TrackSegment } from '../../../store/types';
+import { TrackSegmentSelectionMinimum } from '../TrackSegmentSelectionMinimum';
 
 const useSelector = vi.hoisted(() => vi.fn());
 const useDispatch = vi.hoisted(() => vi.fn());
@@ -12,7 +12,7 @@ vi.mock('react-redux', () => ({ useSelector, useDispatch }));
 vi.mock('react-sortablejs', () => ({
     ReactSortable: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
-vi.mock('../SimpleElementDisplay.tsx', () => ({ SimpleElementDisplay: simpleElementDisplay }));
+vi.mock('../SimpleElementDisplay', () => ({ SimpleElementDisplay: simpleElementDisplay }));
 
 describe('TrackSegmentSelectionMinimum', () => {
     beforeEach(() => {

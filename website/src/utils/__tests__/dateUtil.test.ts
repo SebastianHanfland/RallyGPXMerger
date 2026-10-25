@@ -1,4 +1,4 @@
-import { getTimeDifferenceInSeconds, roundPublishedStartTimes } from '../dateUtil.ts';
+import { getTimeDifferenceInSeconds, roundPublishedStartTimes } from '../dateUtil';
 
 describe('dateUtil', () => {
     it('should calculate difference in seconds and shift date accordingly', () => {

@@ -1,13 +1,13 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { comparisonActions } from '../store/tracks.reducer.ts';
-import { State } from '../../planner/store/types.ts';
-import { getTrackCompositions } from '../../planner/store/trackMerge.reducer.ts';
-import { getData } from '../../api/api.ts';
-import { mapActions } from '../store/map.reducer.ts';
-import { getStartAndEndPlanning } from '../../utils/parsedTracksUtil.ts';
-import { getParticipantsDelay, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
-import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
-import { getConstructionSegments } from '../../planner/store/segmentData.redux.ts';
+import { comparisonActions } from '../store/tracks.reducer';
+import { State } from '../../planner/store/types';
+import { getTrackCompositions } from '../../planner/store/trackMerge.reducer';
+import { getData } from '../../api/api';
+import { mapActions } from '../store/map.reducer';
+import { getStartAndEndPlanning } from '../../utils/parsedTracksUtil';
+import { getParticipantsDelay, getPlanningTitle } from '../../planner/store/settings.reducer';
+import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks';
+import { getConstructionSegments } from '../../planner/store/segmentData.redux';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)

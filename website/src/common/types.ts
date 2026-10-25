@@ -1,4 +1,4 @@
-import { ParsedPoint, TimedPoint } from '../planner/store/types.ts';
+import { ParsedPoint, TimedPoint } from '../planner/store/types';
 
 /*
 List of domain objects that are used

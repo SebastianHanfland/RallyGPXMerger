@@ -1,7 +1,7 @@
 import geoDistance from 'geo-distance-helper';
-import { getLatLng, getLatLon } from './pointUtil.ts';
+import { getLatLng, getLatLon } from './pointUtil';
 
-import { ParsedPoint } from '../planner/store/types.ts';
+import { ParsedPoint } from '../planner/store/types';
 
 function normalizeStartTime(points: ParsedPoint[]): ParsedPoint[] {
     const initialTime = points[0]?.t ?? 0;

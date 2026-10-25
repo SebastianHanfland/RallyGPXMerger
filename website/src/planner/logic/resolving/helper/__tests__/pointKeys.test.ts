@@ -1,4 +1,4 @@
-import { toKey } from '../pointKeys.ts';
+import { toKey } from '../pointKeys';
 
 describe('pointKeys', () => {
     const key1 = 'lat:23.2300000000-lng:34.2300000000';

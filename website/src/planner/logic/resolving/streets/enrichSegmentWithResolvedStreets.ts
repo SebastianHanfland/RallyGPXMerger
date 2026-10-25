@@ -1,6 +1,6 @@
-import { toKey } from '../helper/pointKeys.ts';
-import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../store/types.ts';
-import { smoothStreetNames } from './smoothStreetNames.ts';
+import { toKey } from '../helper/pointKeys';
+import { ParsedGpxSegment, ParsedPoint, ResolvedPositions } from '../../../store/types';
+import { smoothStreetNames } from './smoothStreetNames';
 export function enrichSegmentWithResolvedStreets(
     segmentWithoutStreets: ParsedGpxSegment,
     allResolvedStreetNames: ResolvedPositions,

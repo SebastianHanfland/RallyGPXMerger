@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getShowBreakMarker } from '../../store/map.reducer.ts';
-import { breakIcon, wcIcon } from '../../../common/map/MapIcons.ts';
-import { toLatLng } from '../../../utils/pointUtil.ts';
-import { getBreakPositions, getBreakTooltip } from '../../logic/resolving/selectors/getBreakPositions.ts';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
-import { layoutActions } from '../../store/layout.reducer.ts';
-import { TRACK_MARKER } from '../panes.ts';
+import { getShowBreakMarker } from '../../store/map.reducer';
+import { breakIcon, wcIcon } from '../../../common/map/MapIcons';
+import { toLatLng } from '../../../utils/pointUtil';
+import { getBreakPositions, getBreakTooltip } from '../../logic/resolving/selectors/getBreakPositions';
+import { trackMergeActions } from '../../store/trackMerge.reducer';
+import { layoutActions } from '../../store/layout.reducer';
+import { TRACK_MARKER } from '../panes';
 
 export function breakPointsDisplayHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const breakPoints = useSelector(getBreakPositions);

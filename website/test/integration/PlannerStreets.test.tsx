@@ -5,8 +5,8 @@ import { getMessages } from '../../src/lang/getMessages';
 import { getTrackStreetInfos } from '../../src/planner/calculation/getTrackStreetInfos';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getHighlightedStreetPath, getStreetPointSelection, mapActions } from '../../src/planner/store/map.reducer';
-import { plannerUi } from './accessObjects/PlannerTestAccess.ts';
-import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup.tsx';
+import { plannerUi } from './accessObjects/PlannerTestAccess';
+import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup';
 
 const messages = getMessages('en');
 

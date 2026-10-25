@@ -1,5 +1,5 @@
-import { splitGpx } from '../gpxSplitUtil.ts';
-import { ParsedPoint } from '../../planner/store/types.ts';
+import { splitGpx } from '../gpxSplitUtil';
+import { ParsedPoint } from '../../planner/store/types';
 
 function getPoint(longitude: number, time: number): ParsedPoint {
     return { l: longitude, b: 48, e: 0, t: time, s: 0 };

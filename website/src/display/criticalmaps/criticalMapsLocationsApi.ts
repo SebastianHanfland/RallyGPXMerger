@@ -1,4 +1,4 @@
-import { CriticalMapsLocation } from './types.ts';
+import { CriticalMapsLocation } from './types';
 
 const criticalMapsUrl = 'https://api-cdn.criticalmaps.net/locations';
 

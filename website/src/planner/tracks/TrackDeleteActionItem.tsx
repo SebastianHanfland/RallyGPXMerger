@@ -2,10 +2,10 @@ import { Dropdown } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useState } from 'react';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { TrackComposition } from '../store/types.ts';
-import { TrashIcon } from '../../utils/icons/TrashIcon.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { trackMergeActions } from '../store/trackMerge.reducer';
+import { TrackComposition } from '../store/types';
+import { TrashIcon } from '../../utils/icons/TrashIcon';
 
 interface Props {
     track: TrackComposition;

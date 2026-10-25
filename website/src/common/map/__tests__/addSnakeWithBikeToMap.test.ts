@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { addBikeSnakesToLayer } from '../addSnakeWithBikeToMap.ts';
+import { addBikeSnakesToLayer } from '../addSnakeWithBikeToMap';
 
 const leafletMocks = vi.hoisted(() => ({
     icon: vi.fn(() => ({})),

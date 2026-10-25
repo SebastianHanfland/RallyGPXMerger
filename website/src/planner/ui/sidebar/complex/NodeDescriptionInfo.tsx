@@ -1,4 +1,4 @@
-import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
+import { DescriptionInfoButton } from '../DescriptionInfoButton';
 import { FormattedMessage } from 'react-intl';
 
 const Sketch = ({ messageId }: { messageId: string }) => (

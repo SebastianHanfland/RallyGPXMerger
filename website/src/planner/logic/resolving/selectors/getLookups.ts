@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getDistrictLookup, getPostCodeLookup, getStreetLookup } from '../../../store/segmentData.redux.ts';
+import { getDistrictLookup, getPostCodeLookup, getStreetLookup } from '../../../store/segmentData.redux';
 
 export interface Lookups {
     streets: Record<number, string | undefined>;

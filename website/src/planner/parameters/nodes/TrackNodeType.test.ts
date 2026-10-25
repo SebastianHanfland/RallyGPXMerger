@@ -1,6 +1,6 @@
-import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
-import { NodeSpecifications } from '../../store/types.ts';
-import { getTrackNodeType } from './TrackNodeType.tsx';
+import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder';
+import { NodeSpecifications } from '../../store/types';
+import { getTrackNodeType } from './TrackNodeType';
 
 const trackNode: NodeAtTrack = {
     segmentIdAfterNode: 'after',

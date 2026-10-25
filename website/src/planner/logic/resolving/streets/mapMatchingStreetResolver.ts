@@ -1,12 +1,12 @@
-import { ParsedGpxSegment, ParsedPoint, ResolvedPositions, State } from '../../../store/types.ts';
-import { getGeoApifyKey } from '../../../store/geoCoding.reducer.ts';
-import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching.ts';
-import { splitListIntoSections } from '../helper/splitPointsService.ts';
-import { AppDispatch } from '../../../store/planningStore.ts';
-import { errorNotification } from '../../../store/toast.reducer.ts';
-import { Point } from '../../../../utils/gpxTypes.ts';
-import { getNextStreetLookupIndex, segmentDataActions } from '../../../store/segmentData.redux.ts';
-import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets.ts';
+import { ParsedGpxSegment, ParsedPoint, ResolvedPositions, State } from '../../../store/types';
+import { getGeoApifyKey } from '../../../store/geoCoding.reducer';
+import { geoApifyFetchMapMatching, GeoApifyMapMatching } from './geoApifyMapMatching';
+import { splitListIntoSections } from '../helper/splitPointsService';
+import { AppDispatch } from '../../../store/planningStore';
+import { errorNotification } from '../../../store/toast.reducer';
+import { Point } from '../../../../utils/gpxTypes';
+import { getNextStreetLookupIndex, segmentDataActions } from '../../../store/segmentData.redux';
+import { enrichSegmentWithResolvedStreets } from './enrichSegmentWithResolvedStreets';
 
 function toGeoApifyMapMatchingBody(points: Point[]): GeoApifyMapMatching {
     return {

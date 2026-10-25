@@ -1,15 +1,15 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapTime, mapActions } from './store/map.reducer.ts';
-import { MAX_SLIDER_TIME } from '../common/constants.ts';
-import { getCurrentComparisonTimeStamps } from './map/dataReading.ts';
+import { getCurrenMapTime, mapActions } from './store/map.reducer';
+import { MAX_SLIDER_TIME } from '../common/constants';
+import { getCurrentComparisonTimeStamps } from './map/dataReading';
 import { useIntl } from 'react-intl';
-import { DateTimeFormat } from '../utils/dateUtil.ts';
+import { DateTimeFormat } from '../utils/dateUtil';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
-import { getPlanningIds, getComparisonTrackTitles } from './store/tracks.reducer.ts';
-import { InfoIcon } from '../utils/icons/InfoIcon.tsx';
+import { getPlanningIds, getComparisonTrackTitles } from './store/tracks.reducer';
+import { InfoIcon } from '../utils/icons/InfoIcon';
 
 let interval: NodeJS.Timeout | undefined;
 

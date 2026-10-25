@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getBreakEditInfo, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { BreakDialogContent } from './BreakDialogContent.tsx';
+import { getBreakEditInfo, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer';
+import { BreakDialogContent } from './BreakDialogContent';
 import { useEffect, useState } from 'react';
-import { BREAK, isTrackBreak, TrackBreak } from '../store/types.ts';
-import { AppDispatch } from '../store/planningStore.ts';
+import { BREAK, isTrackBreak, TrackBreak } from '../store/types';
+import { AppDispatch } from '../store/planningStore';
 
 export const EditBreakDialog = () => {
     const breakEditInfo = useSelector(getBreakEditInfo);

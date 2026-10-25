@@ -1,15 +1,15 @@
-import { StreetPointSelection, TrackComposition } from '../store/types.ts';
-import { AppDispatch } from '../store/planningStore.ts';
-import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { mapActions } from '../store/map.reducer.ts';
+import { StreetPointSelection, TrackComposition } from '../store/types';
+import { AppDispatch } from '../store/planningStore';
+import { segmentDataActions } from '../store/segmentData.redux';
+import { mapActions } from '../store/map.reducer';
 import {
     getNewStreetRangeAssignments,
     getRoutePointReferences,
     getStreetRange,
     getStreetRangeAssignments,
-} from '../logic/resolving/streets/streetRangeEditing.ts';
-import { WayPoint } from '../logic/resolving/types.ts';
-import { enrichStreetWithPostCodeAndDistrict } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
+} from '../logic/resolving/streets/streetRangeEditing';
+import { WayPoint } from '../logic/resolving/types';
+import { enrichStreetWithPostCodeAndDistrict } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict';
 
 export function getStreetPath(waypoint: WayPoint) {
     return (

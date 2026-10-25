@@ -1,11 +1,11 @@
-import { createPlanningStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore';
 import {
     getCurrenMapTime,
     getShowBlockStreets,
     getShowCalculatedTracks,
     getShowGpxSegments,
     mapActions,
-} from '../map.reducer.ts';
+} from '../map.reducer';
 
 describe('Map reducer test', () => {
     it('should set map time', () => {

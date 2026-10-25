@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getDisplayBreaks, getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
-import { toLatLng } from '../../utils/pointUtil.ts';
-import { breakIcon, loweredBreakIcon, loweredWcIcon, wcIcon } from '../../common/map/MapIcons.ts';
-import { getBreakTooltip } from '../../planner/logic/resolving/selectors/getBreakPositions.ts';
+import { getDisplayBreaks, getDisplayEntryPoints } from '../store/displayTracksReducer';
+import { toLatLng } from '../../utils/pointUtil';
+import { breakIcon, loweredBreakIcon, loweredWcIcon, wcIcon } from '../../common/map/MapIcons';
+import { getBreakTooltip } from '../../planner/logic/resolving/selectors/getBreakPositions';
 
 function getLocationKey(point: { lat: number; lon: number }): string {
     return `${point.lat}${point.lon}`;

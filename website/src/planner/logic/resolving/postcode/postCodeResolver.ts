@@ -1,4 +1,4 @@
-import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate.ts';
+import { fetchPostCodeForCoordinate } from './fetchPostCodeForCoordinate';
 
 const correctionTuples: [string, string][] = [
     ['constituency for the Bundestag election ', ''],

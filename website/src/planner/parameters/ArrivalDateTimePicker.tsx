@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-datepicker/dist/react-datepicker.css';
-import { AppDispatch } from '../store/planningStore.ts';
-import { getArrivalDateTime, settingsActions } from '../store/settings.reducer.ts';
-import { DateTimePicker } from './DateTimePicker.tsx';
+import { AppDispatch } from '../store/planningStore';
+import { getArrivalDateTime, settingsActions } from '../store/settings.reducer';
+import { DateTimePicker } from './DateTimePicker';
 
 export function ArrivalDateTimePicker() {
     const dispatch: AppDispatch = useDispatch();

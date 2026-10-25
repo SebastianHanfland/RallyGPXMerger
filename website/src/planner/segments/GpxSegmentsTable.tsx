@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Table } from 'react-bootstrap';
-import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
-import { MemoizedGpxSegmentRow } from './GpxSegmentRow.tsx';
-import { SegmentSortButton } from './SegmentSortButton.tsx';
-import { SegmentTableRow } from './segmentTableData.ts';
-import { SegmentUsages } from './segmentUsageCounter.ts';
+import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton';
+import { MemoizedGpxSegmentRow } from './GpxSegmentRow';
+import { SegmentSortButton } from './SegmentSortButton';
+import { SegmentTableRow } from './segmentTableData';
+import { SegmentUsages } from './segmentUsageCounter';
 
 export function GpxSegmentsTable({
     rows,

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../store/planningStore.ts';
-import { getStartDate, settingsActions } from '../store/settings.reducer.ts';
-import { DateTimePicker } from './DateTimePicker.tsx';
+import { AppDispatch } from '../store/planningStore';
+import { getStartDate, settingsActions } from '../store/settings.reducer';
+import { DateTimePicker } from './DateTimePicker';
 
 export function StartDateTimePicker() {
     const dispatch: AppDispatch = useDispatch();

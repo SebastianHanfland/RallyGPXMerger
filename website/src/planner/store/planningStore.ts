@@ -1,17 +1,17 @@
 import { Action, AnyAction, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
 import reduceReducer from 'reduce-reducers';
-import { State } from './types.ts';
-import { trackMergeReducer } from './trackMerge.reducer.ts';
-import { mapReducer } from './map.reducer.ts';
-import { geoCodingReducer } from './geoCoding.reducer.ts';
-import { storage } from './storage.ts';
-import { layoutReducer } from './layout.reducer.ts';
-import { pointsReducer } from './points.reducer.ts';
-import { backendReducer } from './backend.reducer.ts';
-import { toastsReducer } from './toast.reducer.ts';
-import { segmentDataReducer } from './segmentData.redux.ts';
-import { nodesReducer } from './nodes.reducer.ts';
-import { settingsReducer } from './settings.reducer.ts';
+import { State } from './types';
+import { trackMergeReducer } from './trackMerge.reducer';
+import { mapReducer } from './map.reducer';
+import { geoCodingReducer } from './geoCoding.reducer';
+import { storage } from './storage';
+import { layoutReducer } from './layout.reducer';
+import { pointsReducer } from './points.reducer';
+import { backendReducer } from './backend.reducer';
+import { toastsReducer } from './toast.reducer';
+import { segmentDataReducer } from './segmentData.redux';
+import { nodesReducer } from './nodes.reducer';
+import { settingsReducer } from './settings.reducer';
 
 const rootReducer: Reducer = combineReducers({
     backend: backendReducer,

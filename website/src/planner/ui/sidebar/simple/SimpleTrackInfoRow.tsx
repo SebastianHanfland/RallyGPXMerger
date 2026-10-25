@@ -1,8 +1,8 @@
 import { Col, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { TrackStreetInfo } from '../../../logic/resolving/types.ts';
-import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil.ts';
-import { formatFixedNumber } from '../../../../utils/numberUtil.ts';
+import { TrackStreetInfo } from '../../../logic/resolving/types';
+import { getTimeDifferenceInSeconds } from '../../../../utils/dateUtil';
+import { formatFixedNumber } from '../../../../utils/numberUtil';
 
 interface Props {
     trackInfo?: TrackStreetInfo;

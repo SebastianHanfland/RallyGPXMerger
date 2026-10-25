@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { BreakPosition } from '../logic/resolving/selectors/getBreakPositions.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { BreakPosition } from '../logic/resolving/selectors/getBreakPositions';
+import { trackMergeActions } from '../store/trackMerge.reducer';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
-import { getCount } from '../../utils/inputUtil.ts';
-import { successNotification } from '../store/toast.reducer.ts';
+import { getCount } from '../../utils/inputUtil';
+import { successNotification } from '../store/toast.reducer';
 
 interface Props {
     breakInfo: BreakPosition;

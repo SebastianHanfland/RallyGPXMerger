@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getShowNodeMarker } from '../../store/map.reducer.ts';
-import { nodeMergeIcon } from '../../../common/map/MapIcons.ts';
-import { getNodePositions } from '../../logic/resolving/selectors/getNodePositions.ts';
-import { toLatLng } from '../../../utils/pointUtil.ts';
-import { nodesActions } from '../../store/nodes.reducer.ts';
-import { TRACK_MARKER } from '../panes.ts';
+import { getShowNodeMarker } from '../../store/map.reducer';
+import { nodeMergeIcon } from '../../../common/map/MapIcons';
+import { getNodePositions } from '../../logic/resolving/selectors/getNodePositions';
+import { toLatLng } from '../../../utils/pointUtil';
+import { nodesActions } from '../../store/nodes.reducer';
+import { TRACK_MARKER } from '../panes';
 
 export function nodePointsDisplayHook(pointsOfInterestLayer: RefObject<LayerGroup | null>) {
     const nodes = useSelector(getNodePositions);

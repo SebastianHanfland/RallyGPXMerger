@@ -1,13 +1,13 @@
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { trackNodesBySegmentSizeSelector } from '../../../common/calculation/nodes/nodeFinder.ts';
-import { TrackNodesBranchCell } from './TrackNodesBranchCell.tsx';
-import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell.tsx';
-import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton.tsx';
-import { NodeOverviewButton } from './NodeOverviewButton.tsx';
-import { TrackNodeType } from './TrackNodeType.tsx';
-import { NodeDescriptionInfo } from '../../ui/sidebar/complex/NodeDescriptionInfo.tsx';
+import { trackNodesBySegmentSizeSelector } from '../../../common/calculation/nodes/nodeFinder';
+import { TrackNodesBranchCell } from './TrackNodesBranchCell';
+import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell';
+import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton';
+import { NodeOverviewButton } from './NodeOverviewButton';
+import { TrackNodeType } from './TrackNodeType';
+import { NodeDescriptionInfo } from '../../ui/sidebar/complex/NodeDescriptionInfo';
 
 export const TrackNodesTable = () => {
     const trackNodes = useSelector(trackNodesBySegmentSizeSelector);

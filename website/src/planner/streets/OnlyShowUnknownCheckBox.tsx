@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { geoCodingActions, getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
+import { geoCodingActions, getOnlyShowUnknown } from '../store/geoCoding.reducer';
 
 export const OnlyShowUnknownCheckBox = () => {
     const onlyShowUnknown = useSelector(getOnlyShowUnknown);

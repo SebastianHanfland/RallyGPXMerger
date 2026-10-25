@@ -2,20 +2,20 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { createPlanningStore } from '../../store/planningStore.ts';
-import { segmentDataActions } from '../../store/segmentData.redux.ts';
-import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints.ts';
-import { downloadFile } from '../../download/FileDownloader.tsx';
-import { SegmentDownloadDropdownItem } from '../SegmentDownloadDropdownItem.tsx';
-import { getMessages } from '../../../lang/getMessages.ts';
+import { createPlanningStore } from '../../store/planningStore';
+import { segmentDataActions } from '../../store/segmentData.redux';
+import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints';
+import { downloadFile } from '../../download/FileDownloader';
+import { SegmentDownloadDropdownItem } from '../SegmentDownloadDropdownItem';
+import { getMessages } from '../../../lang/getMessages';
 
-vi.mock('../../../utils/SimpleGPXFromPoints.ts', () => ({
+vi.mock('../../../utils/SimpleGPXFromPoints', () => ({
     getGpxContentStringFromParsedSegment: vi.fn(() => 'gpx-content'),
 }));
 
-vi.mock('../../download/FileDownloader.tsx', async () => {
-    const actual = await vi.importActual<typeof import('../../download/FileDownloader.tsx')>(
-        '../../download/FileDownloader.tsx'
+vi.mock('../../download/FileDownloader', async () => {
+    const actual = await vi.importActual<typeof import('../../download/FileDownloader')>(
+        '../../download/FileDownloader'
     );
     return { ...actual, downloadFile: vi.fn() };
 });

@@ -1,13 +1,13 @@
 import { useIntl } from 'react-intl';
 import { useEffect, useState } from 'react';
-import { getColorFromUuid } from '../utils/colorUtil.ts';
-import { ColorBlob } from '../utils/ColorBlob.tsx';
-import { ConfirmationModal } from '../common/ConfirmationModal.tsx';
-import { EditIcon } from '../utils/icons/EditIcon.tsx';
-import { useGetVersionColors } from './versionColorsHook.ts';
-import { useGetUrlParam } from '../utils/linkUtil.ts';
+import { getColorFromUuid } from '../utils/colorUtil';
+import { ColorBlob } from '../utils/ColorBlob';
+import { ConfirmationModal } from '../common/ConfirmationModal';
+import { EditIcon } from '../utils/icons/EditIcon';
+import { useGetVersionColors } from './versionColorsHook';
+import { useGetUrlParam } from '../utils/linkUtil';
 import { NavigateFunction, useNavigate } from 'react-router';
-import { ColorPicker } from '../utils/ColorPicker.tsx';
+import { ColorPicker } from '../utils/ColorPicker';
 
 interface Props {
     index: number;

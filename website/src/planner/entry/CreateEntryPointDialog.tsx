@@ -7,12 +7,12 @@ import {
     getEntryPointInsertionIndex,
     getTrackIdForAddingAnEntryPoint,
     trackMergeActions,
-} from '../store/trackMerge.reducer.ts';
-import { EntryPointDialogContent } from './EntryPointDialogContent.tsx';
+} from '../store/trackMerge.reducer';
+import { EntryPointDialogContent } from './EntryPointDialogContent';
 import { useEffect, useState } from 'react';
-import { ENTRY, TrackEntry } from '../store/types.ts';
+import { ENTRY, TrackEntry } from '../store/types';
 import { v4 as uuidv4 } from 'uuid';
-import { AppDispatch } from '../store/planningStore.ts';
+import { AppDispatch } from '../store/planningStore';
 
 export const CreateEntryPointDialog = () => {
     const trackIdForEntryPoint = useSelector(getTrackIdForAddingAnEntryPoint);

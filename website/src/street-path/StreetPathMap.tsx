@@ -2,12 +2,12 @@ import { useEffect, useMemo, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { IntlProvider, useIntl } from 'react-intl';
-import { decodeStreetPath } from '../utils/streetPathUrl.ts';
-import { getMapConfiguration } from '../common/map/mapConfig.ts';
-import { getLanguage } from '../language.ts';
-import { getMessages } from '../lang/getMessages.ts';
-import { endIcon, markerIcon, startIcon } from '../common/map/MapIcons.ts';
-import { getStreetPathDirection } from './getStreetPathDirection.ts';
+import { decodeStreetPath } from '../utils/streetPathUrl';
+import { getMapConfiguration } from '../common/map/mapConfig';
+import { getLanguage } from '../language';
+import { getMessages } from '../lang/getMessages';
+import { endIcon, markerIcon, startIcon } from '../common/map/MapIcons';
+import { getStreetPathDirection } from './getStreetPathDirection';
 
 interface Props {
     encodedPath: string;

@@ -1,11 +1,11 @@
-import { AggregatedPoints } from '../../../planner/logic/resolving/types.ts';
-import { ParsedPoint } from '../../../planner/store/types.ts';
-import { calculateDistanceInKm } from './calculateDistanceInKm.ts';
-import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName.ts';
+import { AggregatedPoints } from '../../../planner/logic/resolving/types';
+import { ParsedPoint } from '../../../planner/store/types';
+import { calculateDistanceInKm } from './calculateDistanceInKm';
+import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName';
 import { createSelector } from '@reduxjs/toolkit';
-import { getParsedGpxSegments } from '../../../planner/store/segmentData.redux.ts';
-import { getStreetLookup } from '../../../planner/store/segmentData.redux.ts';
-import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex.ts';
+import { getParsedGpxSegments } from '../../../planner/store/segmentData.redux';
+import { getStreetLookup } from '../../../planner/store/segmentData.redux';
+import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex';
 
 export function getConnectedPointWithTheSameStreetIndex(
     enrichedPoints: ParsedPoint[],

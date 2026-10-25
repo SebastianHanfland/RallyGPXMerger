@@ -2,15 +2,15 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContextMenuPoint, getEditPointOfInterest, pointsActions } from '../../store/points.reducer.ts';
+import { getContextMenuPoint, getEditPointOfInterest, pointsActions } from '../../store/points.reducer';
 import { v4 as uuidv4 } from 'uuid';
-import { PointOfInterest } from '../../store/types.ts';
+import { PointOfInterest } from '../../store/types';
 import { useEffect, useState } from 'react';
-import { PointsOfInterestForm } from './PointsOfInterestForm.tsx';
+import { PointsOfInterestForm } from './PointsOfInterestForm';
 import {
     DEFAULT_POINT_OF_INTEREST_RADIUS_IN_M,
     DEFAULT_POINT_OF_INTEREST_TYPE,
-} from '../../points/pointOfInterestConfig.ts';
+} from '../../points/pointOfInterestConfig';
 
 export function PointsOfInterestModal() {
     const dispatch = useDispatch();

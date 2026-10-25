@@ -1,8 +1,8 @@
 import FileSaver from 'file-saver';
 import { Button, Dropdown } from 'react-bootstrap';
-import { getColor } from '../../utils/colorUtil.ts';
+import { getColor } from '../../utils/colorUtil';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon';
 
 interface Props {
     id: string;

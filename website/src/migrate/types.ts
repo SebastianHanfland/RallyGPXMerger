@@ -1,5 +1,5 @@
-import { State } from '../planner/store/types.ts';
-import { StateOld } from '../planner/store/typesOld.ts';
+import { State } from '../planner/store/types';
+import { StateOld } from '../planner/store/typesOld';
 
 export type StateVersion1 = StateOld;
 export type StateVersion2 = State;

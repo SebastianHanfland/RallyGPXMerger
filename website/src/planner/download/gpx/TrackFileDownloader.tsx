@@ -1,6 +1,6 @@
-import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
-import { FileDownloader } from '../FileDownloader.tsx';
-import { CalculatedTrack } from '../../../common/types.ts';
+import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints';
+import { FileDownloader } from '../FileDownloader';
+import { CalculatedTrack } from '../../../common/types';
 
 export const TrackFileDownloader = ({ track }: { track: CalculatedTrack }) => {
     return (

@@ -1,13 +1,13 @@
-import { WayPoint } from '../logic/resolving/types.ts';
+import { WayPoint } from '../logic/resolving/types';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/planningStore.ts';
-import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { EditIcon } from '../../utils/icons/EditIcon.tsx';
+import { AppDispatch } from '../store/planningStore';
+import { segmentDataActions } from '../store/segmentData.redux';
+import { EditIcon } from '../../utils/icons/EditIcon';
 
 interface Props {
     waypoint: WayPoint;

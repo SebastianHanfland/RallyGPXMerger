@@ -1,4 +1,4 @@
-import { getStreetLookupIndex } from '../getStreetLookupIndex.ts';
+import { getStreetLookupIndex } from '../getStreetLookupIndex';
 
 describe('getStreetLookupIndex', () => {
     it('uses s when m is absent', () => {

@@ -1,10 +1,10 @@
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayMapActions, getShowTimes } from '../store/displayMapReducer.ts';
-import { DisplayDispatch } from '../store/store.ts';
+import { displayMapActions, getShowTimes } from '../store/displayMapReducer';
+import { DisplayDispatch } from '../store/store';
 import { Form } from 'react-bootstrap';
-import { getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
-import { useTimesConfig } from '../map/useTimesConfig.ts';
+import { getDisplayEntryPoints } from '../store/displayTracksReducer';
+import { useTimesConfig } from '../map/useTimesConfig';
 
 export function TimeDisplayCheckbox() {
     const dispatch: DisplayDispatch = useDispatch();

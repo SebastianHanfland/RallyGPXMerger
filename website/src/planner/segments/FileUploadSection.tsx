@@ -1,6 +1,6 @@
-import { GpxSegments } from './GpxSegments.tsx';
+import { GpxSegments } from './GpxSegments';
 import { useSelector } from 'react-redux';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
+import { getParsedGpxSegments } from '../store/segmentData.redux';
 
 export function FileUploadSection() {
     const hasNoGPXSegments = useSelector(getParsedGpxSegments).length === 0;

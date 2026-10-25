@@ -1,4 +1,4 @@
-import { isSameStreetName } from '../isSameStreetName.ts';
+import { isSameStreetName } from '../isSameStreetName';
 
 function createTestCase(street1: string, street2: string, expected: boolean) {
     return {

@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { act } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { SEGMENT, TrackComposition } from '../../../store/types.ts';
-import { mapActions, mapReducer } from '../../../store/map.reducer.ts';
-import { segmentDataReducer, segmentDataActions } from '../../../store/segmentData.redux.ts';
-import { trackMergeActions, trackMergeReducer } from '../../../store/trackMerge.reducer.ts';
-import { streetPointSelectionDisplayHook } from '../streetPointSelectionDisplayHook.ts';
+import { SEGMENT, TrackComposition } from '../../../store/types';
+import { mapActions, mapReducer } from '../../../store/map.reducer';
+import { segmentDataReducer, segmentDataActions } from '../../../store/segmentData.redux';
+import { trackMergeActions, trackMergeReducer } from '../../../store/trackMerge.reducer';
+import { streetPointSelectionDisplayHook } from '../streetPointSelectionDisplayHook';
 import messages from '../../../../lang/en.json';
 
 const leafletMocks = vi.hoisted(() => ({

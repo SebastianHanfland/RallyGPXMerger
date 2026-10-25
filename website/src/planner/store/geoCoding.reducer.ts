@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { GeoCodingState, State } from './types.ts';
-import { storage } from './storage.ts';
+import { GeoCodingState, State } from './types';
+import { storage } from './storage';
 
 const initialState: GeoCodingState = {};
 

@@ -1,8 +1,8 @@
-import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../planner/store/types.ts';
-import { instanceOfBreak } from '../types.ts';
-import { resolveGpxSegments } from './solvingHelper.ts';
-import { PreCalculatedTrack } from '../../types.ts';
-import { getPointsEndingAtTime } from '../lastPointUtil.ts';
+import { ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../planner/store/types';
+import { instanceOfBreak } from '../types';
+import { resolveGpxSegments } from './solvingHelper';
+import { PreCalculatedTrack } from '../../types';
+import { getPointsEndingAtTime } from '../lastPointUtil';
 
 export function assembleTrackFromSegments(
     track: TrackComposition,

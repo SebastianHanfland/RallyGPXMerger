@@ -1,10 +1,10 @@
-import { WayPoint } from '../../logic/resolving/types.ts';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
-import { createStreetPointUrl } from '../../../utils/streetPathUrl.ts';
+import { WayPoint } from '../../logic/resolving/types';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil';
+import { createStreetPointUrl } from '../../../utils/streetPathUrl';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles.ts';
-import { formatNumber } from '../../../utils/numberUtil.ts';
+import { pdfStyles } from './pdfStyles';
+import { formatNumber } from '../../../utils/numberUtil';
 
 interface Props {
     wayPoint: WayPoint;

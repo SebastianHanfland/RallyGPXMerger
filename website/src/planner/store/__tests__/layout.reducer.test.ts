@@ -1,5 +1,5 @@
-import { createPlanningStore } from '../planningStore.ts';
-import { getIsShareModalOpen, layoutActions } from '../layout.reducer.ts';
+import { createPlanningStore } from '../planningStore';
+import { getIsShareModalOpen, layoutActions } from '../layout.reducer';
 
 describe('Layout reducer', () => {
     it('should control the share modal state while remaining absent in old states', () => {

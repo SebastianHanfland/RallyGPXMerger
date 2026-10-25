@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
-import { getHighlightedTrack, displayMapActions } from '../store/displayMapReducer.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
+import { addTracksToLayer } from '../../common/map/addTrackToMapLayer';
+import { getHighlightedTrack, displayMapActions } from '../store/displayMapReducer';
+import { getDisplayTracks } from '../store/displayTracksReducer';
 
 export function tracksForDisplayMapHook(calculatedTracksLayer: RefObject<LayerGroup | null>) {
     const displayTracks = useSelector(getDisplayTracks);

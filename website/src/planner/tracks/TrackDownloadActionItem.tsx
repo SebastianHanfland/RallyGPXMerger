@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
-import { TrackComposition } from '../store/types.ts';
-import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
-import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
+import { FileDownloaderDropdownItem } from '../download/FileDownloader';
+import { TrackComposition } from '../store/types';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints';
+import { getCalculateTracks } from '../calculation/getCalculatedTracks';
 
 interface Props {
     track: TrackComposition;

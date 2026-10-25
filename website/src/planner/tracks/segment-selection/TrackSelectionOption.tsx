@@ -1,7 +1,7 @@
-import { TrackSelectionBreakOption } from './TrackSelectionBreakOption.tsx';
-import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption.tsx';
-import { isTrackBreak, isTrackEntryPoint, TrackElement } from '../../store/types.ts';
-import { TrackSelectionEntryPointOption } from './TrackSelectionEntryPointOption.tsx';
+import { TrackSelectionBreakOption } from './TrackSelectionBreakOption';
+import { TrackSelectionSegmentOption } from './TrackSelectionSegmentOption';
+import { isTrackBreak, isTrackEntryPoint, TrackElement } from '../../store/types';
+import { TrackSelectionEntryPointOption } from './TrackSelectionEntryPointOption';
 
 interface Props {
     trackId: string;

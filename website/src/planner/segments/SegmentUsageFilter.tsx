@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getShowUnusedSegments, getShowUsedSegments, segmentDataActions } from '../store/segmentData.redux.ts';
+import { getShowUnusedSegments, getShowUsedSegments, segmentDataActions } from '../store/segmentData.redux';
 
 export function SegmentUsageFilter() {
     const dispatch = useDispatch();

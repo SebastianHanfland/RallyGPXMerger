@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { filterItems } from '../../utils/filterUtil.ts';
-import { calculateDistanceInKm } from '../../common/calculation/aggregated-segments/calculateDistanceInKm.ts';
-import { getSegmentInfo, getSegmentSpeed } from '../tracks/segment-selection/getSegmentInfo.ts';
+import { filterItems } from '../../utils/filterUtil';
+import { calculateDistanceInKm } from '../../common/calculation/aggregated-segments/calculateDistanceInKm';
+import { getSegmentInfo, getSegmentSpeed } from '../tracks/segment-selection/getSegmentInfo';
 import {
     getParsedGpxSegments,
     getSegmentFilterTerm,
@@ -9,9 +9,9 @@ import {
     getSegmentSortField,
     getShowUnusedSegments,
     getShowUsedSegments,
-} from '../store/segmentData.redux.ts';
-import { getSegmentUsages } from './segmentUsageCounter.ts';
-import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
+} from '../store/segmentData.redux';
+import { getSegmentUsages } from './segmentUsageCounter';
+import { getAggregateStreetsInSegments } from '../../common/calculation/aggregated-segments/aggregatePointsSelector';
 
 export interface SegmentTableRow {
     id: string;

@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { SingleTrackStreetInfo } from '../../streets/SingleTrackStreetInfo.tsx';
+import { SingleTrackStreetInfo } from '../../streets/SingleTrackStreetInfo';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { TrackStreetInfo } from '../../logic/resolving/types.ts';
-import { UnknownWarning } from '../../streets/UnknownWarning.tsx';
+import { TrackStreetInfo } from '../../logic/resolving/types';
+import { UnknownWarning } from '../../streets/UnknownWarning';
 
 interface Props {
     selectedTrack: TrackStreetInfo;

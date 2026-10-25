@@ -1,6 +1,6 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import type { CSSProperties } from 'react';
-import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
+import { CopyToClipboardButton } from './CopyToClipboardButton';
 import { Button } from 'react-bootstrap';
 import openInNew from '../../assets/open-in-new.svg';
 

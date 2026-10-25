@@ -1,4 +1,4 @@
-import { PointOfInterestType } from '../../store/types.ts';
+import { PointOfInterestType } from '../../store/types';
 import {
     DEFAULT_POINT_OF_INTEREST_RADIUS_IN_M,
     DEFAULT_POINT_OF_INTEREST_TYPE,
@@ -6,7 +6,7 @@ import {
     pointOfInterestConfig,
     pointOfInterestTypesByDialogGroup,
     pointOfInterestTypesByGroup,
-} from '../pointOfInterestConfig.ts';
+} from '../pointOfInterestConfig';
 
 describe('point of interest configuration', () => {
     it('classifies public points and keeps internal points private', () => {

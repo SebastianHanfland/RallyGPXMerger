@@ -1,5 +1,5 @@
-import { TrackComposition } from '../../../planner/store/types.ts';
-import { getBranchTracks } from '../../../planner/nodes/getBranchTracks.ts';
+import { TrackComposition } from '../../../planner/store/types';
+import { getBranchTracks } from '../../../planner/nodes/getBranchTracks';
 
 function getHighestPriorityOfTrack(tracks: TrackComposition[]): number {
     let highestPriority = 0;

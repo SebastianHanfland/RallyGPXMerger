@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getColor } from '../../utils/colorUtil.ts';
-import { TrackComposition } from '../store/types.ts';
-import { getParticipantsDelay } from '../store/settings.reducer.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
+import { getColor } from '../../utils/colorUtil';
+import { TrackComposition } from '../store/types';
+import { getParticipantsDelay } from '../store/settings.reducer';
+import { formatNumber } from '../../utils/numberUtil';
 
 interface Props {
     segmentId: string;

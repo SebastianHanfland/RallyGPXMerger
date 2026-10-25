@@ -1,8 +1,8 @@
 import { Form } from 'react-bootstrap';
-import { PointOfInterest, PointOfInterestType } from '../../store/types.ts';
+import { PointOfInterest, PointOfInterestType } from '../../store/types';
 import Select from 'react-select';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getPointTypeMessageId, pointOfInterestTypesByDialogGroup } from '../../points/pointOfInterestConfig.ts';
+import { getPointTypeMessageId, pointOfInterestTypesByDialogGroup } from '../../points/pointOfInterestConfig';
 
 interface Props {
     values: Partial<PointOfInterest>;

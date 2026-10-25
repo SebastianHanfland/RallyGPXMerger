@@ -1,19 +1,19 @@
 import { ButtonGroup, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { SegmentDownloadDropdownItem } from './SegmentDownloadDropdownItem.tsx';
-import { FileChangeWithUploadButton } from './FileChangeWithUploadButton.tsx';
-import { RemoveFileButton } from './RemoveFileButton.tsx';
-import { getUsagesOfSegment, SegmentUsages } from './segmentUsageCounter.ts';
+import { SegmentDownloadDropdownItem } from './SegmentDownloadDropdownItem';
+import { FileChangeWithUploadButton } from './FileChangeWithUploadButton';
+import { RemoveFileButton } from './RemoveFileButton';
+import { getUsagesOfSegment, SegmentUsages } from './segmentUsageCounter';
 import { useIntl } from 'react-intl';
-import { mapActions } from '../store/map.reducer.ts';
-import { FlipGpxButton } from './FlipGpxButton.tsx';
+import { mapActions } from '../store/map.reducer';
+import { FlipGpxButton } from './FlipGpxButton';
 import flip from '../../assets/flip.svg';
-import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton.tsx';
-import { SegmentSpeedCells } from './SegmentSpeedCells.tsx';
-import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { EditSegmentColorButton } from './EditSegmentColor.tsx';
-import { FileChangeButton } from './FileChangeButton.tsx';
-import { formatNumber } from '../../utils/numberUtil.ts';
+import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton';
+import { SegmentSpeedCells } from './SegmentSpeedCells';
+import { segmentDataActions } from '../store/segmentData.redux';
+import { EditSegmentColorButton } from './EditSegmentColor';
+import { FileChangeButton } from './FileChangeButton';
+import { formatNumber } from '../../utils/numberUtil';
 import { memo } from 'react';
 
 interface Props {

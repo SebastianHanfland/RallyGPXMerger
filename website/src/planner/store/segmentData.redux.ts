@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { filterItems } from '../../utils/filterUtil.ts';
+import { filterItems } from '../../utils/filterUtil';
 import {
     ClickOnSegment,
     ManualLookupField,
@@ -9,11 +9,11 @@ import {
     SegmentSortDirection,
     SegmentSortField,
     State,
-} from './types.ts';
-import { storage } from './storage.ts';
-import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
-import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex.ts';
-import type { StreetPointAssignment } from '../logic/resolving/streets/streetRangeEditing.ts';
+} from './types';
+import { storage } from './storage';
+import { generateParsedPointsWithTimeInSeconds } from '../../common/calculation/speed/speedSimulatorTimeInSeconds';
+import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex';
+import type { StreetPointAssignment } from '../logic/resolving/streets/streetRangeEditing';
 
 const initialState: SegmentDataState = {
     segments: [],

@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup, LeafletMouseEvent } from 'leaflet';
-import { getShowBlockStreets } from '../../store/map.reducer.ts';
-import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { getColorFromString } from '../../../utils/colorUtil.ts';
-import { BlockedStreetInfo, BlockedStreetTrackUsage } from '../../logic/resolving/types.ts';
-import { formatTimeOnly } from '../../../utils/dateUtil.ts';
+import { getShowBlockStreets } from '../../store/map.reducer';
+import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo';
+import { getColorFromString } from '../../../utils/colorUtil';
+import { BlockedStreetInfo, BlockedStreetTrackUsage } from '../../logic/resolving/types';
+import { formatTimeOnly } from '../../../utils/dateUtil';
 import { useIntl } from 'react-intl';
-import { formatNumber } from '../../../utils/numberUtil.ts';
-import { mapActions } from '../../store/map.reducer.ts';
+import { formatNumber } from '../../../utils/numberUtil';
+import { mapActions } from '../../store/map.reducer';
 
 function escapeTooltipText(value: string): string {
     return value.replace(

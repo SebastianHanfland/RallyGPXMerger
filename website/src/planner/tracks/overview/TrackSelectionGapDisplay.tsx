@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import arrowDown from '../../../assets/arrow-down.svg';
 import arrowUp from '../../../assets/arrow-up.svg';
-import { GapPoint } from '../../store/types.ts';
-import { getGaps } from '../../calculation/getGaps.ts';
+import { GapPoint } from '../../store/types';
+import { getGaps } from '../../calculation/getGaps';
 
 interface Props {
     segmentId: string;

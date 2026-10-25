@@ -6,8 +6,8 @@ import {
     ParsedPoint,
     PointOfInterestType,
     TrackComposition,
-} from '../../../planner/store/types.ts';
-import { getLatLng } from '../../../utils/pointUtil.ts';
+} from '../../../planner/store/types';
+import { getLatLng } from '../../../utils/pointUtil';
 import { v4 as uuidv4 } from 'uuid';
 
 export const calculateGaps = (tracks: TrackComposition[], segments: ParsedGpxSegment[], tolerance: number) => {

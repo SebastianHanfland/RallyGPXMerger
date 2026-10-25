@@ -1,11 +1,11 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { downloadFilesInZip } from './CalculatedFilesDownloader.tsx';
+import { downloadFilesInZip } from './CalculatedFilesDownloader';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
-import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints.ts';
-import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
-import { getPlanningTitle } from '../../store/settings.reducer.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux';
+import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints';
+import { DownloadIcon } from '../../../utils/icons/DownloadIcon';
+import { getPlanningTitle } from '../../store/settings.reducer';
 
 export const SegmentFilesDownloader = () => {
     const intl = useIntl();

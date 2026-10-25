@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../../store/planningStore.ts';
-import { segmentDataActions } from '../../store/segmentData.redux.ts';
-import { getSegmentCoreData, getSegmentTableRows } from '../segmentTableData.ts';
+import { createPlanningStore } from '../../store/planningStore';
+import { segmentDataActions } from '../../store/segmentData.redux';
+import { getSegmentCoreData, getSegmentTableRows } from '../segmentTableData';
 
 describe('segment table selectors', () => {
     it('does not recalculate segment metrics when only usage filters change', () => {

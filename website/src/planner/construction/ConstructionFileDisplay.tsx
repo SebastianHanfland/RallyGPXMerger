@@ -1,7 +1,7 @@
-import { FileDownloader } from '../download/FileDownloader.tsx';
-import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton.tsx';
-import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints.ts';
-import { ParsedGpxSegment } from '../store/types.ts';
+import { FileDownloader } from '../download/FileDownloader';
+import { ConstructionRemoveFileButton } from './ConstructionRemoveFileButton';
+import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints';
+import { ParsedGpxSegment } from '../store/types';
 
 export function ConstructionFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const { id, filename, color } = gpxSegment;

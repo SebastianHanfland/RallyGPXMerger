@@ -6,14 +6,14 @@ import {
     getDisplayPlanningLabel,
     getDisplayTracks,
     getDisplayTrackStreetInfos,
-} from '../store/displayTracksReducer.ts';
-import { CalculatedTrack } from '../../common/types.ts';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
-import { createStreetPointUrl } from '../../utils/streetPathUrl.ts';
-import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
-import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
-import { useTableIndices } from './useTableIndices.ts';
-import { EntryPointPosition } from '../../planner/logic/resolving/selectors/getEntryPointPositions.ts';
+} from '../store/displayTracksReducer';
+import { CalculatedTrack } from '../../common/types';
+import { formatTimeOnly } from '../../utils/dateUtil';
+import { createStreetPointUrl } from '../../utils/streetPathUrl';
+import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton';
+import { useTableIndices } from './useTableIndices';
+import { EntryPointPosition } from '../../planner/logic/resolving/selectors/getEntryPointPositions';
 
 const hideSeconds = true;
 const timeColumnStyle = { width: '180px', whiteSpace: 'nowrap' as const };

@@ -1,9 +1,9 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useState } from 'react';
-import { TrackStreetInfo } from '../../logic/resolving/types.ts';
-import { UnknownWarning } from '../../streets/UnknownWarning.tsx';
-import { StreetInfoModal } from '../../ui/elements/StreetInfoModal.tsx';
+import { TrackStreetInfo } from '../../logic/resolving/types';
+import { UnknownWarning } from '../../streets/UnknownWarning';
+import { StreetInfoModal } from '../../ui/elements/StreetInfoModal';
 
 export function TrackStreetInfoButton({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {
     const [displayStreetInfo, setDisplayStreetInfo] = useState(false);

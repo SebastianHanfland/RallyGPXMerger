@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { TrackOverviewContent } from './TrackOverviewContent.tsx';
+import { TrackOverviewContent } from './TrackOverviewContent';
 
 export const TrackOverviewButton = () => {
     const [open, setOpen] = useState(false);

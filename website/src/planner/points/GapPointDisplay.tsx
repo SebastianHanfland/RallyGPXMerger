@@ -1,8 +1,8 @@
-import { GapPoint } from '../store/types.ts';
-import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon.tsx';
+import { GapPoint } from '../store/types';
+import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon';
 import { useDispatch } from 'react-redux';
-import { mapActions } from '../store/map.reducer.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
+import { mapActions } from '../store/map.reducer';
+import { formatNumber } from '../../utils/numberUtil';
 
 export function GapPointDisplay({ gapPoint }: { gapPoint: GapPoint }) {
     const { description, radiusInM } = gapPoint;

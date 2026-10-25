@@ -1,5 +1,5 @@
-import { ParsedGpxSegment } from '../planner/store/types.ts';
-import { generateParsedPointsWithTimeInSeconds } from '../common/calculation/speed/speedSimulatorTimeInSeconds.ts';
+import { ParsedGpxSegment } from '../planner/store/types';
+import { generateParsedPointsWithTimeInSeconds } from '../common/calculation/speed/speedSimulatorTimeInSeconds';
 
 export const setTimingsForSegments = (
     parsedSegments: ParsedGpxSegment[],

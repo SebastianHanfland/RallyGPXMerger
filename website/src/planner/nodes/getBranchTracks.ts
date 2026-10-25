@@ -1,5 +1,5 @@
-import { TrackComposition } from '../store/types.ts';
-import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
+import { TrackComposition } from '../store/types';
+import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder';
 
 export const getBranchTracks = (segmentAfterId: string, tracks: TrackComposition[]) => {
     const trackNodes = listAllNodesOfTracks(tracks);

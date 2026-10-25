@@ -1,4 +1,4 @@
-import { getLanguage, SupportedLanguages } from '../language.ts';
+import { getLanguage, SupportedLanguages } from '../language';
 import en from './en.json';
 import de from './de.json';
 export function getMessages(displayLanguage?: SupportedLanguages) {

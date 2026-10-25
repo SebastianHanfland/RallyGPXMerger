@@ -2,11 +2,11 @@ import { useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getColor } from '../../utils/colorUtil.ts';
-import { BreakPosition } from '../logic/resolving/selectors/getBreakPositions.ts';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { SingleBreakEdit } from './SingleBreakEdit.tsx';
+import { getColor } from '../../utils/colorUtil';
+import { BreakPosition } from '../logic/resolving/selectors/getBreakPositions';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { ColorBlob } from '../../utils/ColorBlob';
+import { SingleBreakEdit } from './SingleBreakEdit';
 
 interface Props {
     breaks: Record<string, BreakPosition[]>;

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import { ComparisonState, ComparisonTrackState } from './types';
-import { CalculatedTrack } from '../../common/types.ts';
-import { ParsedGpxSegment } from '../../planner/store/types.ts';
+import { CalculatedTrack } from '../../common/types';
+import { ParsedGpxSegment } from '../../planner/store/types';
 
 const initialState: ComparisonState = {
     parsedTracks: {},

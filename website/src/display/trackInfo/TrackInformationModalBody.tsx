@@ -1,17 +1,13 @@
 import { useSelector } from 'react-redux';
-import {
-    getDisplayPlanningLabel,
-    getDisplayTracks,
-    getDisplayTrackStreetInfos,
-} from '../store/displayTracksReducer.ts';
+import { getDisplayPlanningLabel, getDisplayTracks, getDisplayTrackStreetInfos } from '../store/displayTracksReducer';
 import { Card, Col, Row } from 'react-bootstrap';
-import { getShowSingleTrackInfo } from '../store/displayMapReducer.ts';
-import { CalculatedTrack } from '../../common/types.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { getShowSingleTrackInfo } from '../store/displayMapReducer';
+import { CalculatedTrack } from '../../common/types';
+import { formatNumber } from '../../utils/numberUtil';
+import { formatTimeOnly } from '../../utils/dateUtil';
 import L from 'leaflet';
-import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
-import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
+import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton';
 
 const cardStyle = {
     style: { width: '170px', minHeight: '145px', cursor: 'default' },

@@ -1,4 +1,4 @@
-import { StreetPathPoint } from '../planner/logic/resolving/types.ts';
+import { StreetPathPoint } from '../planner/logic/resolving/types';
 
 interface StreetPathDirection {
     position: StreetPathPoint;

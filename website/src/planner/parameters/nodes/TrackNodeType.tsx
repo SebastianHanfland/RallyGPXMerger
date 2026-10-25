@@ -1,14 +1,14 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
+import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder';
 import {
     getBranchId,
     getBranchNumbersSelector,
     getBranchTrackIds,
-} from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
-import { getNodeSpecifications } from '../../store/nodes.reducer.ts';
-import { NodeSpecifications } from '../../store/types.ts';
-import { getNodeOffset } from '../../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
+} from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize';
+import { getNodeSpecifications } from '../../store/nodes.reducer';
+import { NodeSpecifications } from '../../store/types';
+import { getNodeOffset } from '../../../common/calculation/calculated-tracks/nodeSpecOffset';
 
 type TrackNodeKind = 'headsMeet' | 'headsOnTail' | 'headIntoMiddle';
 

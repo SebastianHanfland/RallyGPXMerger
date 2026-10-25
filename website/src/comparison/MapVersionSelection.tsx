@@ -5,7 +5,7 @@ import {
     getShowMapMarker,
     getUseVersionColor,
     mapActions,
-} from './store/map.reducer.ts';
+} from './store/map.reducer';
 import {
     comparisonActions,
     getComparisonMapConstructions,
@@ -14,12 +14,12 @@ import {
     getPlanningIds,
     getSelectedTracks,
     getSelectedVersions,
-} from './store/tracks.reducer.ts';
+} from './store/tracks.reducer';
 import Select from 'react-select';
-import { ComparisonTimeSlider } from './ComparisonTimeSlider.tsx';
+import { ComparisonTimeSlider } from './ComparisonTimeSlider';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getBaseUrl } from '../utils/linkUtil.ts';
-import { EditVersionColorButton } from './VersionColorEdit.tsx';
+import { getBaseUrl } from '../utils/linkUtil';
+import { EditVersionColorButton } from './VersionColorEdit';
 
 export function MapVersionSelection() {
     const showMapMarker = useSelector(getShowMapMarker);

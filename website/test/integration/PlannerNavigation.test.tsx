@@ -1,7 +1,7 @@
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
-import { plannerUi } from './accessObjects/PlannerTestAccess.ts';
-import { renderPlanner, startComplexPlanning, startSimplePlanning } from './data/PlannerTestSetup.tsx';
+import { plannerUi } from './accessObjects/PlannerTestAccess';
+import { renderPlanner, startComplexPlanning, startSimplePlanning } from './data/PlannerTestSetup';
 
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');

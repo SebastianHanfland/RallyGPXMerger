@@ -2,12 +2,12 @@ import { RefObject, useEffect, useMemo } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { getParsedGpxSegments, getStreetLookup } from '../../store/segmentData.redux.ts';
-import { getStreetPointSelection, mapActions } from '../../store/map.reducer.ts';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
-import { getStreetLookupIndex } from '../../logic/resolving/helper/getStreetLookupIndex.ts';
-import { STREET_POINT_SELECTION } from '../panes.ts';
+import { getParsedGpxSegments, getStreetLookup } from '../../store/segmentData.redux';
+import { getStreetPointSelection, mapActions } from '../../store/map.reducer';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
+import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing';
+import { getStreetLookupIndex } from '../../logic/resolving/helper/getStreetLookupIndex';
+import { STREET_POINT_SELECTION } from '../panes';
 
 const SELECTABLE_POINT_COLOR = '#0d6efd';
 const CURRENT_STREET_POINT_COLOR = '#00bfff';

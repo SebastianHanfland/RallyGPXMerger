@@ -2,14 +2,14 @@ import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types.ts';
-import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv.ts';
-import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv.ts';
+import { BlockedStreetInfo, TrackStreetInfo } from '../logic/resolving/types';
+import { getBlockedStreetInfo } from '../logic/resolving/selectors/getBlockedStreetInfo';
+import { convertTrackInfoToCsv } from '../download/csv/trackStreetsCsv';
+import { convertStreetInfoToCsv } from '../download/csv/blockedStreetsCsv';
 import { IntlShape, useIntl } from 'react-intl';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
-import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
-import { getPlanningTitle } from '../store/settings.reducer.ts';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos';
+import { getPlanningTitle } from '../store/settings.reducer';
 
 function createCsv(csv: string) {
     return new Blob([new Uint8Array([0xef, 0xbb, 0xbf]), csv], { type: 'csv;charset=utf-8' });

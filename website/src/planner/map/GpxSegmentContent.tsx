@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
-import { FileDownloaderDropdownItem } from '../download/FileDownloader.tsx';
-import { FileChangeWithUploadButton } from '../segments/FileChangeWithUploadButton.tsx';
-import { RemoveFileButton } from '../segments/RemoveFileButton.tsx';
-import { FlipGpxButton } from '../segments/FlipGpxButton.tsx';
-import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton.tsx';
-import { SplitSegmentDropdownItem } from '../segments/SplitSegment.tsx';
-import { getClickOnSegment, getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints.ts';
-import { EditSegmentColorButton } from '../segments/EditSegmentColor.tsx';
-import { FileChangeButton } from '../segments/FileChangeButton.tsx';
+import { FileDownloaderDropdownItem } from '../download/FileDownloader';
+import { FileChangeWithUploadButton } from '../segments/FileChangeWithUploadButton';
+import { RemoveFileButton } from '../segments/RemoveFileButton';
+import { FlipGpxButton } from '../segments/FlipGpxButton';
+import { ResetResolvedStreetsButton } from '../segments/ResetResolvedStreetsButton';
+import { SplitSegmentDropdownItem } from '../segments/SplitSegment';
+import { getClickOnSegment, getParsedGpxSegments } from '../store/segmentData.redux';
+import { getGpxContentStringFromParsedSegment } from '../../utils/SimpleGPXFromPoints';
+import { EditSegmentColorButton } from '../segments/EditSegmentColor';
+import { FileChangeButton } from '../segments/FileChangeButton';
 
 export const GpxSegmentContent = () => {
     const clickOnSegment = useSelector(getClickOnSegment);

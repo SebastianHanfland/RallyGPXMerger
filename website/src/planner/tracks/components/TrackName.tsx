@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer';
 import { Form } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { TrackComposition } from '../../store/types.ts';
-import { AppDispatch } from '../../store/planningStore.ts';
+import { TrackComposition } from '../../store/types';
+import { AppDispatch } from '../../store/planningStore';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 

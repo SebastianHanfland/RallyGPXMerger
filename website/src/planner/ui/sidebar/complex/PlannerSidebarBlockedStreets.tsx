@@ -1,7 +1,7 @@
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { BlockedStreetsModal } from './BlockedStreetsModal.tsx';
+import { BlockedStreetsModal } from './BlockedStreetsModal';
 
 export const PlannerSidebarBlockedStreets = () => {
     const [showModal, setShowModal] = useState<boolean>(false);

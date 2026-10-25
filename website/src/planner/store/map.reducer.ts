@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { MapState, State } from './types.ts';
-import { storage } from './storage.ts';
+import { MapState, State } from './types';
+import { storage } from './storage';
 
 export type PrimaryMapContent = 'segments' | 'tracks' | 'streets' | undefined;
 

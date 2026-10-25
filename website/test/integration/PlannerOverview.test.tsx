@@ -5,8 +5,8 @@ import { getMessages } from '../../src/lang/getMessages';
 import { backendActions } from '../../src/planner/store/backend.reducer';
 import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
 import { getPointToCenter } from '../../src/planner/store/map.reducer';
-import { plannerUi } from './accessObjects/PlannerTestAccess.ts';
-import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup.tsx';
+import { plannerUi } from './accessObjects/PlannerTestAccess';
+import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup';
 
 const messages = getMessages('en');
 

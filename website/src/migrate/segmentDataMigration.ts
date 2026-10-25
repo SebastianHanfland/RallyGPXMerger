@@ -1,11 +1,11 @@
-import { SimpleGPX } from '../utils/SimpleGPX.ts';
-import { GeoCodingStateOld, GpxSegmentOld, GpxSegmentsStateOld } from '../planner/store/typesOld.ts';
-import { ParsedGpxSegment, SegmentDataState } from '../planner/store/types.ts';
-import { Point } from '../utils/gpxTypes.ts';
-import { optionallyDecompress } from '../planner/store/compressHelper.ts';
-import { enrichGpxSegmentsWithStreetNames } from './streetNameResolvingHelper.ts';
-import { createPostCodeAndDistrictLookups } from './postCodeAndDistrictResolvingHelper.ts';
-import { setTimingsForSegments } from './segmentTimingResolver.ts';
+import { SimpleGPX } from '../utils/SimpleGPX';
+import { GeoCodingStateOld, GpxSegmentOld, GpxSegmentsStateOld } from '../planner/store/typesOld';
+import { ParsedGpxSegment, SegmentDataState } from '../planner/store/types';
+import { Point } from '../utils/gpxTypes';
+import { optionallyDecompress } from '../planner/store/compressHelper';
+import { enrichGpxSegmentsWithStreetNames } from './streetNameResolvingHelper';
+import { createPostCodeAndDistrictLookups } from './postCodeAndDistrictResolvingHelper';
+import { setTimingsForSegments } from './segmentTimingResolver';
 
 function gpxSegmentToParsedSegment(gpxSegment: GpxSegmentOld): ParsedGpxSegment {
     return {

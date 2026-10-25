@@ -1,5 +1,5 @@
-import { TrackCompositionOld, TrackMergeStateOld } from '../planner/store/typesOld.ts';
-import { BREAK, SEGMENT, TrackBreak, TrackComposition, TrackMergeState, TrackSegment } from '../planner/store/types.ts';
+import { TrackCompositionOld, TrackMergeStateOld } from '../planner/store/typesOld';
+import { BREAK, SEGMENT, TrackBreak, TrackComposition, TrackMergeState, TrackSegment } from '../planner/store/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export const BREAK_IDENTIFIER = '%%min-%%';

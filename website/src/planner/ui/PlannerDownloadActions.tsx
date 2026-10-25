@@ -1,12 +1,12 @@
 import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
-import { DownloadDataButton } from '../server/DownloadDataButton.tsx';
-import { DownloadDataForCopyButton } from '../server/DownloadDataForCopyButton.tsx';
-import { CalculatedFilesDownloader } from '../download/gpx/CalculatedFilesDownloader.tsx';
-import { SegmentFilesDownloader } from '../download/gpx/SegmentFilesDownloader.tsx';
-import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
-import { PdfDocumentInZipButton } from '../download/pdf/PdfDocumentInZip.tsx';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon';
+import { DownloadDataButton } from '../server/DownloadDataButton';
+import { DownloadDataForCopyButton } from '../server/DownloadDataForCopyButton';
+import { CalculatedFilesDownloader } from '../download/gpx/CalculatedFilesDownloader';
+import { SegmentFilesDownloader } from '../download/gpx/SegmentFilesDownloader';
+import { StreetFilesDownloader } from '../streets/StreetFilesDownloader';
+import { PdfDocumentInZipButton } from '../download/pdf/PdfDocumentInZip';
 import type { ReactNode } from 'react';
 
 const Action = ({ children }: { children: ReactNode }) => <Dropdown.Item as="div">{children}</Dropdown.Item>;

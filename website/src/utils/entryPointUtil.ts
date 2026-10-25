@@ -1,6 +1,6 @@
-import { getLanguage } from '../language.ts';
-import { formatTimeOnly } from './dateUtil.ts';
-import { EntryPointPosition } from '../planner/logic/resolving/selectors/getEntryPointPositions.ts';
+import { getLanguage } from '../language';
+import { formatTimeOnly } from './dateUtil';
+import { EntryPointPosition } from '../planner/logic/resolving/selectors/getEntryPointPositions';
 
 export function getEntryPointTime(entryPoint: EntryPointPosition): string {
     return formatTimeOnly(entryPoint.at, true);

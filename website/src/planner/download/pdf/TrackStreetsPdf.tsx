@@ -1,13 +1,13 @@
 import { Document, Page, Text, View } from '@react-pdf/renderer';
 import { IntlShape } from 'react-intl';
-import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
-import { InfoTablePdf } from './InfoTablePdf.tsx';
-import { EntryPointOverviewPdf } from './EntryPointOverviewPdf.tsx';
-import { BreakOverviewPdf } from './BreakOverviewPdf.tsx';
-import { NodeOverviewTablePdf } from './NodeOverviewTablePdf.tsx';
-import { TrackStreetTablePdf } from './TrackStreetTablePdf.tsx';
-import { pdfStyles } from './pdfStyles.ts';
-import { chunkList } from './chunkUtil.t.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types';
+import { InfoTablePdf } from './InfoTablePdf';
+import { EntryPointOverviewPdf } from './EntryPointOverviewPdf';
+import { BreakOverviewPdf } from './BreakOverviewPdf';
+import { NodeOverviewTablePdf } from './NodeOverviewTablePdf';
+import { TrackStreetTablePdf } from './TrackStreetTablePdf';
+import { pdfStyles } from './pdfStyles';
+import { chunkList } from './chunkUtil.t';
 
 interface Props {
     intl: IntlShape;

@@ -1,14 +1,14 @@
 import { Container } from 'react-bootstrap';
-import { InteractionMap } from '../map/InteractionMap.tsx';
-import { PlannerSidebar } from './sidebar/PlannerSidebar.tsx';
-import { MapContentSelection } from '../map/MapContentSelection.tsx';
-import { PlannerHomeButton } from './elements/PlannerHomeButton.tsx';
-import { TimeSlider } from '../map/TimeSlider.tsx';
-import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
-import { HelpingTip } from './elements/HelpingTip.tsx';
-import { PlannerCloudActions } from './PlannerCloudActions.tsx';
-import { PlannerDownloadActions } from './PlannerDownloadActions.tsx';
-import { AbortStreetSelectionButton } from './elements/AbortStreetSelectionButton.tsx';
+import { InteractionMap } from '../map/InteractionMap';
+import { PlannerSidebar } from './sidebar/PlannerSidebar';
+import { MapContentSelection } from '../map/MapContentSelection';
+import { PlannerHomeButton } from './elements/PlannerHomeButton';
+import { TimeSlider } from '../map/TimeSlider';
+import { SharePlanningButton } from '../sharing/SharePlanningButton';
+import { HelpingTip } from './elements/HelpingTip';
+import { PlannerCloudActions } from './PlannerCloudActions';
+import { PlannerDownloadActions } from './PlannerDownloadActions';
+import { AbortStreetSelectionButton } from './elements/AbortStreetSelectionButton';
 
 export const MainPlannerUi = () => {
     return (

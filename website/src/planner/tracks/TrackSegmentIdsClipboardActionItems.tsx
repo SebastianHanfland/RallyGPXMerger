@@ -1,8 +1,8 @@
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { TrackComposition } from '../store/types.ts';
+import { getSegmentIdClipboard, trackMergeActions } from '../store/trackMerge.reducer';
+import { TrackComposition } from '../store/types';
 import copyToClipboard from '../../assets/copy-to-clipboard.svg';
 import inputFromClipboard from '../../assets/input-from-clipboard.svg';
 

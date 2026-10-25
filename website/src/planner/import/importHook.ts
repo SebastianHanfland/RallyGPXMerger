@@ -1,13 +1,13 @@
 import { useRef } from 'react';
-import { gpxShortener } from './gpxShortener.ts';
-import { storage } from '../store/storage.ts';
-import { State } from '../store/types.ts';
+import { gpxShortener } from './gpxShortener';
+import { storage } from '../store/storage';
+import { State } from '../store/types';
 import { useDispatch } from 'react-redux';
-import { loadStateAndSetUpPlanner } from '../loading/loadPlanningFromServer.ts';
+import { loadStateAndSetUpPlanner } from '../loading/loadPlanningFromServer';
 import { useNavigate } from 'react-router';
-import { StateOld } from '../store/typesOld.ts';
-import { isOldState } from '../../migrate/types.ts';
-import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
+import { StateOld } from '../store/typesOld';
+import { isOldState } from '../../migrate/types';
+import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2';
 
 export function importHook() {
     const uploadInput = useRef<HTMLInputElement>(null);

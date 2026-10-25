@@ -1,15 +1,15 @@
-import { TrackWayPointType, WayPoint } from '../logic/resolving/types.ts';
+import { TrackWayPointType, WayPoint } from '../logic/resolving/types';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/planningStore.ts';
-import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { EditIcon } from '../../utils/icons/EditIcon.tsx';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { nodesActions } from '../store/nodes.reducer.ts';
+import { AppDispatch } from '../store/planningStore';
+import { segmentDataActions } from '../store/segmentData.redux';
+import { EditIcon } from '../../utils/icons/EditIcon';
+import { trackMergeActions } from '../store/trackMerge.reducer';
+import { nodesActions } from '../store/nodes.reducer';
 
 interface Props {
     waypoint: WayPoint;

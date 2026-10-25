@@ -1,12 +1,12 @@
-import { SimpleGPX } from '../../../../../utils/SimpleGPX.ts';
-import { ParsedGpxSegment } from '../../../../store/types.ts';
-import { GeoApifyMapMatchingResult } from '../../types.ts';
-import { enrichSegmentWithResolvedStreets } from '../enrichSegmentWithResolvedStreets.ts';
-import { mapToPositionMap } from '../mapToPositionMap.ts';
-import { StreetResolverTestCase } from './fixtureHelpers.ts';
-import { exampleStreetTransitionTestCase } from './fixtures/example-street-transition/testcase.ts';
-import { exampleUnmatchedMiddleTestCase } from './fixtures/example-unmatched-middle/testcase.ts';
-import { evaluateDistanceOfResolving } from './fixtures/evaluate-distance-of-resolving/testcase.ts';
+import { SimpleGPX } from '../../../../../utils/SimpleGPX';
+import { ParsedGpxSegment } from '../../../../store/types';
+import { GeoApifyMapMatchingResult } from '../../types';
+import { enrichSegmentWithResolvedStreets } from '../enrichSegmentWithResolvedStreets';
+import { mapToPositionMap } from '../mapToPositionMap';
+import { StreetResolverTestCase } from './fixtureHelpers';
+import { exampleStreetTransitionTestCase } from './fixtures/example-street-transition/testcase';
+import { exampleUnmatchedMiddleTestCase } from './fixtures/example-unmatched-middle/testcase';
+import { evaluateDistanceOfResolving } from './fixtures/evaluate-distance-of-resolving/testcase';
 
 function toParsedSegment(rawGpx: string): ParsedGpxSegment {
     const parsed = SimpleGPX.fromString(rawGpx);

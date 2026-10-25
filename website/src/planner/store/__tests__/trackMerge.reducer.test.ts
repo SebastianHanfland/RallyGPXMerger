@@ -1,6 +1,6 @@
-import { createPlanningStore } from '../planningStore.ts';
-import { getTrackCompositions, trackMergeActions } from '../trackMerge.reducer.ts';
-import { SEGMENT } from '../types.ts';
+import { createPlanningStore } from '../planningStore';
+import { getTrackCompositions, trackMergeActions } from '../trackMerge.reducer';
+import { SEGMENT } from '../types';
 
 vi.mock('uuid', () => ({
     v4: () => '1',

@@ -1,16 +1,16 @@
 import '../App.css';
 import { Provider, useSelector } from 'react-redux';
-import { RallyPlannerRouter } from './layout/RallyPlannerRouter.tsx';
-import { getDisplayLanguage } from './store/layout.reducer.ts';
-import { getMessages } from '../lang/getMessages.ts';
+import { RallyPlannerRouter } from './layout/RallyPlannerRouter';
+import { getDisplayLanguage } from './store/layout.reducer';
+import { getMessages } from '../lang/getMessages';
 import { IntlProvider } from 'react-intl';
-import { getLanguage } from '../language.ts';
-import { AppFooter } from './layout/Footer.tsx';
-import { ToastWrapper } from './toasts/ToastWrapper.tsx';
+import { getLanguage } from '../language';
+import { AppFooter } from './layout/Footer';
+import { ToastWrapper } from './toasts/ToastWrapper';
 import { Store } from '@reduxjs/toolkit';
-import { LoadingDataFromServerModal } from './loading/LoadingDataFromServerModal.tsx';
-import { TitleSetter } from './layout/TitleSetter.tsx';
-import { SharePlanningModal } from './sharing/SharePlanningModal.tsx';
+import { LoadingDataFromServerModal } from './loading/LoadingDataFromServerModal';
+import { TitleSetter } from './layout/TitleSetter';
+import { SharePlanningModal } from './sharing/SharePlanningModal';
 
 export function RallyPlanner() {
     const language = useSelector(getDisplayLanguage);

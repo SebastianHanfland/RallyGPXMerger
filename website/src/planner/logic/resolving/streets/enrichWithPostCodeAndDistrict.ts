@@ -1,10 +1,10 @@
-import { ParsedGpxSegment, State } from '../../../store/types.ts';
-import { getBigDataCloudKey } from '../../../store/geoCoding.reducer.ts';
-import { AppDispatch } from '../../../store/planningStore.ts';
-import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux.ts';
-import { fetchAndStorePostCodeAndDistrict } from '../postcode/postCodeResolver.ts';
-import { getLookups } from '../selectors/getLookups.ts';
-import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
+import { ParsedGpxSegment, State } from '../../../store/types';
+import { getBigDataCloudKey } from '../../../store/geoCoding.reducer';
+import { AppDispatch } from '../../../store/planningStore';
+import { getParsedGpxSegments, segmentDataActions } from '../../../store/segmentData.redux';
+import { fetchAndStorePostCodeAndDistrict } from '../postcode/postCodeResolver';
+import { getLookups } from '../selectors/getLookups';
+import { getStreetLookupIndex } from '../helper/getStreetLookupIndex';
 
 function getPositionForKey(key: string, segments: ParsedGpxSegment[]): { lat: number; lon: number } | null {
     const pointsMatchingStreetIndex = segments.flatMap((segment) =>

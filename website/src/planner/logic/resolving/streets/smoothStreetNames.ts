@@ -1,5 +1,5 @@
-import { ParsedPoint } from '../../../store/types.ts';
-import { isSameStreetName } from './isSameStreetName.ts';
+import { ParsedPoint } from '../../../store/types';
+import { isSameStreetName } from './isSameStreetName';
 
 function getSmoothingStreetIndex(point: ParsedPoint): number {
     return point.m ?? point.r ?? point.s;

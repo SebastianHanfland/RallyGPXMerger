@@ -1,11 +1,11 @@
 import { Button } from 'react-bootstrap';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { useState } from 'react';
 import keyIcon from '../../assets/key.svg';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { getIsPlanningAlreadySaved } from '../store/backend.reducer.ts';
-import { UploadModalBody } from './UploadModalBody.tsx';
+import { getIsPlanningAlreadySaved } from '../store/backend.reducer';
+import { UploadModalBody } from './UploadModalBody';
 
 export function PasswordButton() {
     const [showModal, setShowModal] = useState(false);

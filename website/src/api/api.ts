@@ -1,7 +1,7 @@
-import { State } from '../planner/store/types.ts';
-import { isOldState } from '../migrate/types.ts';
-import { migrateVersion1To2 } from '../migrate/migrateVersion1To2.ts';
-import { StateOld } from '../planner/store/typesOld.ts';
+import { State } from '../planner/store/types';
+import { isOldState } from '../migrate/types';
+import { migrateVersion1To2 } from '../migrate/migrateVersion1To2';
+import { StateOld } from '../planner/store/typesOld';
 
 // const baseUrl = 'http://localhost:3000';
 const baseUrl = 'https://hase.uber.space/bike';

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createStreetTooltip } from '../blockedStreetsDisplayHook.ts';
-import { BlockedStreetInfo } from '../../../logic/resolving/types.ts';
+import { createStreetTooltip } from '../blockedStreetsDisplayHook';
+import { BlockedStreetInfo } from '../../../logic/resolving/types';
 
 describe('createStreetTooltip', () => {
     it('renders each tooltip section on a separate line', () => {

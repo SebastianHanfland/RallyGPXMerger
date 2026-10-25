@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { getBranchNumbers } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
-import { listAllNodesOfTracks } from '../../../common/calculation/nodes/nodeFinder.ts';
-import { BREAK, ENTRY, SEGMENT, TrackComposition, TrackElement, TrackSegment } from '../../store/types.ts';
-import { TrackStreetInfo, TrackWayPointType, WayPoint } from '../../logic/resolving/types.ts';
-import { buildFlowGraph } from '../flowGraph.ts';
+import { getBranchNumbers } from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize';
+import { listAllNodesOfTracks } from '../../../common/calculation/nodes/nodeFinder';
+import { BREAK, ENTRY, SEGMENT, TrackComposition, TrackElement, TrackSegment } from '../../store/types';
+import { TrackStreetInfo, TrackWayPointType, WayPoint } from '../../logic/resolving/types';
+import { buildFlowGraph } from '../flowGraph';
 
 const firstTime = '2025-01-01T10:00:00.000Z';
 

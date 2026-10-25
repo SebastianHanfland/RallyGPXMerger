@@ -2,12 +2,12 @@ import { Dropdown } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useEffect, useState } from 'react';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { TrackComposition } from '../store/types.ts';
-import { getColor } from '../../utils/colorUtil.ts';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { ColorPicker } from '../../utils/ColorPicker.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { trackMergeActions } from '../store/trackMerge.reducer';
+import { TrackComposition } from '../store/types';
+import { getColor } from '../../utils/colorUtil';
+import { ColorBlob } from '../../utils/ColorBlob';
+import { ColorPicker } from '../../utils/ColorPicker';
 
 interface Props {
     track: TrackComposition;

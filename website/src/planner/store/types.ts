@@ -1,6 +1,6 @@
-import { CalculatedTrack } from '../../common/types.ts';
-import { SupportedLanguages } from '../../language.ts';
-import type { StreetPathPoint } from '../logic/resolving/types.ts';
+import { CalculatedTrack } from '../../common/types';
+import { SupportedLanguages } from '../../language';
+import type { StreetPathPoint } from '../logic/resolving/types';
 
 export interface CalculatedTracksState {
     tracks: CalculatedTrack[];

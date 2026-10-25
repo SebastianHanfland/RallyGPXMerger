@@ -1,17 +1,17 @@
 import { Col, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { UploadDataButton } from './UploadDataButton.tsx';
-import { PasswordButton } from './PasswordButton.tsx';
-import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
-import { RemoveUploadedDataButton } from './RemoveUploadedDataButton.tsx';
-import { DownloadDataButton } from './DownloadDataButton.tsx';
-import { SegmentFilesDownloader } from '../download/gpx/SegmentFilesDownloader.tsx';
-import { CalculatedFilesDownloader } from '../download/gpx/CalculatedFilesDownloader.tsx';
-import { StreetFilesDownloader } from '../streets/StreetFilesDownloader.tsx';
-import { CleanDataButton } from './CleanDataButton.tsx';
-import { DownloadDataForCopyButton } from './DownloadDataForCopyButton.tsx';
-import { BlockedStreetsPdfDownloadButton } from '../download/pdf/BlockedStreetsPdfDownloadButton.tsx';
-import { PdfDocumentInZipButton } from '../download/pdf/PdfDocumentInZip.tsx';
+import { UploadDataButton } from './UploadDataButton';
+import { PasswordButton } from './PasswordButton';
+import { SharePlanningButton } from '../sharing/SharePlanningButton';
+import { RemoveUploadedDataButton } from './RemoveUploadedDataButton';
+import { DownloadDataButton } from './DownloadDataButton';
+import { SegmentFilesDownloader } from '../download/gpx/SegmentFilesDownloader';
+import { CalculatedFilesDownloader } from '../download/gpx/CalculatedFilesDownloader';
+import { StreetFilesDownloader } from '../streets/StreetFilesDownloader';
+import { CleanDataButton } from './CleanDataButton';
+import { DownloadDataForCopyButton } from './DownloadDataForCopyButton';
+import { BlockedStreetsPdfDownloadButton } from '../download/pdf/BlockedStreetsPdfDownloadButton';
+import { PdfDocumentInZipButton } from '../download/pdf/PdfDocumentInZip';
 
 export const PlannerSidebarServerSection = () => {
     const className = 'm-1';

@@ -1,4 +1,4 @@
-import { BREAK, ParsedGpxSegment, TrackBreak, TrackComposition } from '../../../planner/store/types.ts';
+import { BREAK, ParsedGpxSegment, TrackBreak, TrackComposition } from '../../../planner/store/types';
 
 export function resolveGpxSegments(
     track: TrackComposition,

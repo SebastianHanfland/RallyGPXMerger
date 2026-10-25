@@ -1,15 +1,15 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayMapActions, getCurrenDisplayMapTime, getIsLive } from './store/displayMapReducer.ts';
-import { MAX_SLIDER_TIME } from '../common/constants.ts';
-import { getDisplayTimeStamp } from './map/dataReading.ts';
+import { displayMapActions, getCurrenDisplayMapTime, getIsLive } from './store/displayMapReducer';
+import { MAX_SLIDER_TIME } from '../common/constants';
+import { getDisplayTimeStamp } from './map/dataReading';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { DateTimeFormat } from '../utils/dateUtil.ts';
+import { DateTimeFormat } from '../utils/dateUtil';
 import play from '../assets/play.svg';
 import stop from '../assets/stop.svg';
 import { useEffect, useState } from 'react';
-import { bikeCounterMirror } from './criticalmaps/criticalMapsHook.ts';
-import { AppInfoIcon } from './menu/AppInfoIcon.tsx';
+import { bikeCounterMirror } from './criticalmaps/criticalMapsHook';
+import { AppInfoIcon } from './menu/AppInfoIcon';
 
 let interval: NodeJS.Timeout | undefined;
 

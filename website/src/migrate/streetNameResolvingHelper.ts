@@ -1,6 +1,6 @@
-import { ParsedGpxSegment } from '../planner/store/types.ts';
-import { enrichSegmentWithResolvedStreets } from '../planner/logic/resolving/streets/enrichSegmentWithResolvedStreets.ts';
-import { GeoCodingStateOld } from '../planner/store/typesOld.ts';
+import { ParsedGpxSegment } from '../planner/store/types';
+import { enrichSegmentWithResolvedStreets } from '../planner/logic/resolving/streets/enrichSegmentWithResolvedStreets';
+import { GeoCodingStateOld } from '../planner/store/typesOld';
 
 export const enrichGpxSegmentsWithStreetNames = (
     parsedSegments: ParsedGpxSegment[],

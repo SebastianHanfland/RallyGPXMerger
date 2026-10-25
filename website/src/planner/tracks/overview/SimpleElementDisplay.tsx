@@ -1,10 +1,10 @@
-import { isTrackBreak, isTrackSegment, TrackElement } from '../../store/types.ts';
+import { isTrackBreak, isTrackSegment, TrackElement } from '../../store/types';
 import { useSelector } from 'react-redux';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
-import { getColor } from '../../../utils/colorUtil.ts';
-import { limitString } from '../../../utils/stringUtil.ts';
-import { SegmentGapDisplay } from './TrackSelectionGapDisplay.tsx';
-import { getGaps } from '../../calculation/getGaps.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux';
+import { getColor } from '../../../utils/colorUtil';
+import { limitString } from '../../../utils/stringUtil';
+import { SegmentGapDisplay } from './TrackSelectionGapDisplay';
+import { getGaps } from '../../calculation/getGaps';
 
 interface Props {
     trackElement: TrackElement;

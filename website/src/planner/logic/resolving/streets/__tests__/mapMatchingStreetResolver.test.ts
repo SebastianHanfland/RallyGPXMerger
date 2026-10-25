@@ -1,12 +1,12 @@
-import { createPlanningStore } from '../../../../store/planningStore.ts';
-import { enrichGpxSegmentsWithStreetNames } from '../mapMatchingStreetResolver.ts';
-import { dummySegment } from './dummySegment.ts';
-import { geoApifyResponse } from './dummyResponse.ts';
-import { getParsedGpxSegments, getStreetLookup, segmentDataActions } from '../../../../store/segmentData.redux.ts';
+import { createPlanningStore } from '../../../../store/planningStore';
+import { enrichGpxSegmentsWithStreetNames } from '../mapMatchingStreetResolver';
+import { dummySegment } from './dummySegment';
+import { geoApifyResponse } from './dummyResponse';
+import { getParsedGpxSegments, getStreetLookup, segmentDataActions } from '../../../../store/segmentData.redux';
 import { Mock } from 'vitest';
-import { trackMergeActions, getTrackCompositions } from '../../../../store/trackMerge.reducer.ts';
-import { SEGMENT } from '../../../../store/types.ts';
-import { executeGpxSegmentReplacementWithUpload } from '../../../../segments/fileReplaceWithUploadThunk.ts';
+import { trackMergeActions, getTrackCompositions } from '../../../../store/trackMerge.reducer';
+import { SEGMENT } from '../../../../store/types';
+import { executeGpxSegmentReplacementWithUpload } from '../../../../segments/fileReplaceWithUploadThunk';
 
 // @ts-ignore
 global.fetch = vi.fn();

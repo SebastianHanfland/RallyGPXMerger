@@ -1,11 +1,11 @@
-import { SegmentDataState, State } from './types.ts';
+import { SegmentDataState, State } from './types';
 
-import { optionallyCompress } from './compressHelper.ts';
-import { GpxSegment } from '../../common/types.ts';
-import { StateOld } from './typesOld.ts';
-import { isOldState } from '../../migrate/types.ts';
-import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2.ts';
-import { migrateManualLookupOverrides } from './migrateManualLookupOverrides.ts';
+import { optionallyCompress } from './compressHelper';
+import { GpxSegment } from '../../common/types';
+import { StateOld } from './typesOld';
+import { isOldState } from '../../migrate/types';
+import { migrateVersion1To2 } from '../../migrate/migrateVersion1To2';
+import { migrateManualLookupOverrides } from './migrateManualLookupOverrides';
 
 const localStorage = window.localStorage;
 

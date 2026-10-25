@@ -5,17 +5,17 @@ import 'leaflet/dist/leaflet.js';
 import { LocateControl } from 'leaflet.locatecontrol';
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'; // Import styles
 import L, { LayerGroup } from 'leaflet';
-import { tracksForDisplayMapHook } from './tracksForDisplayMapHook.ts';
-import { snakeForDisplayMapHook } from './snakeForDisplayMapHook.ts';
-import { getMapConfiguration } from '../../common/map/mapConfig.ts';
+import { tracksForDisplayMapHook } from './tracksForDisplayMapHook';
+import { snakeForDisplayMapHook } from './snakeForDisplayMapHook';
+import { getMapConfiguration } from '../../common/map/mapConfig';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayMapActions, getIsLive } from '../store/displayMapReducer.ts';
-import { criticalMapsHook } from '../criticalmaps/criticalMapsHook.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
-import { breaksForDisplayMapHook } from './breaksForDisplayMapHook.ts';
-import { entryPointsForDisplayMapHook } from './entryPointsForDisplayMapHook.ts';
-import { getCenterPoint } from '../../common/map/centerUtil.ts';
-import { pointsForDisplayMapHook } from './pointsForDisplayMapHook.ts';
+import { displayMapActions, getIsLive } from '../store/displayMapReducer';
+import { criticalMapsHook } from '../criticalmaps/criticalMapsHook';
+import { getDisplayTracks } from '../store/displayTracksReducer';
+import { breaksForDisplayMapHook } from './breaksForDisplayMapHook';
+import { entryPointsForDisplayMapHook } from './entryPointsForDisplayMapHook';
+import { getCenterPoint } from '../../common/map/centerUtil';
+import { pointsForDisplayMapHook } from './pointsForDisplayMapHook';
 
 let myMap: L.Map;
 

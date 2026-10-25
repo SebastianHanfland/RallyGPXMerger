@@ -6,8 +6,8 @@ import {
     getDisplayPlanningLabel,
     getDisplayTitle,
     getDisplayTrackStreetInfos,
-} from '../store/displayTracksReducer.ts';
-import { generatePdfsInZip } from '../../planner/download/pdf/pdfDownload.tsx';
+} from '../store/displayTracksReducer';
+import { generatePdfsInZip } from '../../planner/download/pdf/pdfDownload';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 

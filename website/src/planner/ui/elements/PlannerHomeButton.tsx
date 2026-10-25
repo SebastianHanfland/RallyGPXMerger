@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import house from '../../../assets/house.svg';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import { getPlanningId } from '../../store/backend.reducer.ts';
+import { getPlanningId } from '../../store/backend.reducer';
 
 const homeStyle: CSSProperties = {
     position: 'fixed',

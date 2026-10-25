@@ -1,4 +1,4 @@
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
+import { useGetUrlParam } from '../../utils/linkUtil';
 
 export function useTableIndices(): number[] | undefined {
     const tableIndices = useGetUrlParam('rows');

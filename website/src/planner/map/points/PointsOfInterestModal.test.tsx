@@ -2,10 +2,10 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createPlanningStore } from '../../store/planningStore.ts';
-import { pointsActions } from '../../store/points.reducer.ts';
-import { getMessages } from '../../../lang/getMessages.ts';
-import { PointsOfInterestModal } from './PointsOfInterestModal.tsx';
+import { createPlanningStore } from '../../store/planningStore';
+import { pointsActions } from '../../store/points.reducer';
+import { getMessages } from '../../../lang/getMessages';
+import { PointsOfInterestModal } from './PointsOfInterestModal';
 
 describe('Points of interest modal', () => {
     it('uses the creation defaults and groups the type options', async () => {

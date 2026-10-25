@@ -1,18 +1,18 @@
-import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil';
 import { Table } from 'react-bootstrap';
-import { StreetMapLink } from './StreetMapLink.tsx';
-import { HighlightUnknown } from './HighlightUnknown.tsx';
+import { StreetMapLink } from './StreetMapLink';
+import { HighlightUnknown } from './HighlightUnknown';
 import { useSelector } from 'react-redux';
-import { getOnlyShowUnknown } from '../store/geoCoding.reducer.ts';
+import { getOnlyShowUnknown } from '../store/geoCoding.reducer';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { EditStreetNameButton } from './EditStreetNameButton.tsx';
-import { EditDistrictButton } from './EditDistrictButton.tsx';
-import { EditPostCodeButton } from './EditPostCodeButton.tsx';
-import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox.tsx';
-import { wayPointHasUnknown } from './unknownUtil.ts';
-import { formatFixedNumber, formatNumber } from '../../utils/numberUtil.ts';
-import { InfoIcon } from '../../utils/icons/InfoIcon.tsx';
+import { EditStreetNameButton } from './EditStreetNameButton';
+import { EditDistrictButton } from './EditDistrictButton';
+import { EditPostCodeButton } from './EditPostCodeButton';
+import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox';
+import { wayPointHasUnknown } from './unknownUtil';
+import { formatFixedNumber, formatNumber } from '../../utils/numberUtil';
+import { InfoIcon } from '../../utils/icons/InfoIcon';
 
 interface Props {
     trackStreetInfo: TrackStreetInfo;

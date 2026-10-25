@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { LayoutState, SidebarSections, State } from './types.ts';
-import { storage } from './storage.ts';
-import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../language.ts';
+import { LayoutState, SidebarSections, State } from './types';
+import { storage } from './storage';
+import { getInitialLanguage, setLanguage, SupportedLanguages } from '../../language';
 
 const initialState: LayoutState = {
     hasSingleTrack: false,

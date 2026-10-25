@@ -4,12 +4,12 @@ import { vi } from 'vitest';
 import { App } from '../../src/App';
 import { createStreetPathUrl } from '../../src/utils/streetPathUrl';
 import { getData } from '../../src/api/api';
-import { streetPathUi } from './accessObjects/StreetPathTestAccess.ts';
+import { streetPathUi } from './accessObjects/StreetPathTestAccess';
 
-vi.mock('../../src/api/api.ts');
+vi.mock('../../src/api/api');
 vi.mock('leaflet.locatecontrol', () => ({ LocateControl: vi.fn() }));
 vi.mock('@react-pdf/renderer', () => ({ StyleSheet: { create: () => ({}) } }));
-vi.mock('../../src/street-path/StreetPathMap.tsx', () => ({
+vi.mock('../../src/street-path/StreetPathMap', () => ({
     StreetPathMapWrapper: ({ encodedPath, streetName }: { encodedPath: string; streetName?: string }) => (
         <div data-testid="street-path-map" data-path={encodedPath}>
             {streetName}

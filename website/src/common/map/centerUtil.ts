@@ -1,6 +1,6 @@
-import { CalculatedTrack } from '../types.ts';
-import { Munich } from './locations.ts';
-import { getLatLng } from '../../utils/pointUtil.ts';
+import { CalculatedTrack } from '../types';
+import { Munich } from './locations';
+import { getLatLng } from '../../utils/pointUtil';
 
 export function getCenterPoint(parsedTracks: CalculatedTrack[] | undefined): { lat: number; lng: number } {
     if (!parsedTracks || parsedTracks.length === 0) {

@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
 import { useIntl } from 'react-intl';
-import { TrackBreak, TrackComposition } from '../store/types.ts';
-import { EditIcon } from '../../utils/icons/EditIcon.tsx';
-import { BreakPosition, getBreakPositions } from '../logic/resolving/selectors/getBreakPositions.ts';
+import { TrackBreak, TrackComposition } from '../store/types';
+import { EditIcon } from '../../utils/icons/EditIcon';
+import { BreakPosition, getBreakPositions } from '../logic/resolving/selectors/getBreakPositions';
 import { useState } from 'react';
-import { BreakMultiEditDialog } from './BreakMultiEditDialog.tsx';
+import { BreakMultiEditDialog } from './BreakMultiEditDialog';
 
 const getTrackName = (trackId: string, tracks: TrackComposition[]): string => {
     return tracks.find((track) => track.id === trackId)?.name ?? 'n.n.';

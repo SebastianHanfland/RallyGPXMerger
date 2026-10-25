@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer';
 import { Button, ButtonGroup, DropdownButton } from 'react-bootstrap';
 import { useState } from 'react';
-import { getColor } from '../../../utils/colorUtil.ts';
+import { getColor } from '../../../utils/colorUtil';
 import { useIntl } from 'react-intl';
-import { mapActions } from '../../store/map.reducer.ts';
-import { AppDispatch } from '../../store/planningStore.ts';
+import { mapActions } from '../../store/map.reducer';
+import { AppDispatch } from '../../store/planningStore';
 import flip from '../../../assets/flip.svg';
-import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
-import { TrackSelectionNodeButton } from './TrackSelectionNodeButton.tsx';
-import { getSegmentUsages, getUsagesOfSegment } from '../../segments/segmentUsageCounter.ts';
-import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay.tsx';
-import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
-import { getAggregateStreetsInSegments } from '../../../common/calculation/aggregated-segments/aggregatePointsSelector.ts';
-import { getSegmentInfo } from './getSegmentInfo.ts';
-import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
-import { TrackSelectionSegmentActionItems } from './TrackSelectionSegmentActionItems.tsx';
+import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux';
+import { TrackSelectionNodeButton } from './TrackSelectionNodeButton';
+import { getSegmentUsages, getUsagesOfSegment } from '../../segments/segmentUsageCounter';
+import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay';
+import { DraggableIcon } from '../../../utils/icons/DraggableIcon';
+import { getAggregateStreetsInSegments } from '../../../common/calculation/aggregated-segments/aggregatePointsSelector';
+import { getSegmentInfo } from './getSegmentInfo';
+import { TrackSelectionContextMenu } from './TrackSelectionContextMenu';
+import { TrackSelectionSegmentActionItems } from './TrackSelectionSegmentActionItems';
 
 interface Props {
     trackId: string;

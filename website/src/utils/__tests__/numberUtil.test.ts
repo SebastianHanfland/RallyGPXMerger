@@ -1,5 +1,5 @@
-import { getLanguage, setLanguage } from '../../language.ts';
-import { formatFixedNumber } from '../numberUtil.ts';
+import { getLanguage, setLanguage } from '../../language';
+import { formatFixedNumber } from '../numberUtil';
 
 const initialLanguage = getLanguage();
 

@@ -3,14 +3,14 @@ import { useEffect, useRef } from 'react';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import L, { LayerGroup } from 'leaflet';
-import { comparisonTracksDisplayHook } from './comparisonTracksDisplayHook.ts';
-import { snakeForComparisonMapHook } from './snakeForComparisonMapHook.ts';
-import { getMapConfiguration } from '../../common/map/mapConfig.ts';
-import { Munich } from '../../common/map/locations.ts';
-import { constructionsForComparisonMapHook } from './constructionsForComparisonMapHook.ts';
+import { comparisonTracksDisplayHook } from './comparisonTracksDisplayHook';
+import { snakeForComparisonMapHook } from './snakeForComparisonMapHook';
+import { getMapConfiguration } from '../../common/map/mapConfig';
+import { Munich } from '../../common/map/locations';
+import { constructionsForComparisonMapHook } from './constructionsForComparisonMapHook';
 import { useSelector } from 'react-redux';
-import { getComparisonParsedTracks } from '../store/tracks.reducer.ts';
-import { getCenterPoint } from '../../common/map/centerUtil.ts';
+import { getComparisonParsedTracks } from '../store/tracks.reducer';
+import { getCenterPoint } from '../../common/map/centerUtil';
 
 let myMap: L.Map | undefined;
 

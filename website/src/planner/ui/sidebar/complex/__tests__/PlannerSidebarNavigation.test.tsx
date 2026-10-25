@@ -2,12 +2,12 @@ import { act, render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { describe, expect, it } from 'vitest';
-import { getMessages } from '../../../../../lang/getMessages.ts';
-import { createPlanningStore } from '../../../../store/planningStore.ts';
-import { pointsActions } from '../../../../store/points.reducer.ts';
-import { trackMergeActions } from '../../../../store/trackMerge.reducer.ts';
-import { PointOfInterestType } from '../../../../store/types.ts';
-import { PlannerSidebarNavigation } from '../PlannerSidebarNavigation.tsx';
+import { getMessages } from '../../../../../lang/getMessages';
+import { createPlanningStore } from '../../../../store/planningStore';
+import { pointsActions } from '../../../../store/points.reducer';
+import { trackMergeActions } from '../../../../store/trackMerge.reducer';
+import { PointOfInterestType } from '../../../../store/types';
+import { PlannerSidebarNavigation } from '../PlannerSidebarNavigation';
 
 const messages = getMessages('en');
 

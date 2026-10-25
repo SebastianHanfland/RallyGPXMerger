@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { comparisonActions, getComparisonTrackTitles } from '../store/tracks.reducer.ts';
-import { loadServerFile } from './loadServerFile.ts';
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
-import { mapActions } from '../store/map.reducer.ts';
+import { comparisonActions, getComparisonTrackTitles } from '../store/tracks.reducer';
+import { loadServerFile } from './loadServerFile';
+import { useGetUrlParam } from '../../utils/linkUtil';
+import { mapActions } from '../store/map.reducer';
 
 export function useLoadPlanningsHook(planningIds: string[]) {
     const dispatch = useDispatch();

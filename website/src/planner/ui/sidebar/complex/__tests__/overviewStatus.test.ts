@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { calculateOverviewAccordionStatuses, getWarningAccordionDefinitions } from '../overviewStatus.ts';
+import { calculateOverviewAccordionStatuses, getWarningAccordionDefinitions } from '../overviewStatus';
 import {
     ENTRY,
     GapPoint,
@@ -7,8 +7,8 @@ import {
     PointOfInterestType,
     TrackComposition,
     TrackEntry,
-} from '../../../../store/types.ts';
-import type { TrackStreetInfo, WayPoint } from '../../../../logic/resolving/types.ts';
+} from '../../../../store/types';
+import type { TrackStreetInfo, WayPoint } from '../../../../logic/resolving/types';
 
 const createWayPoint = (streetName: string | null): WayPoint => ({
     streetName,

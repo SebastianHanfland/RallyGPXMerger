@@ -1,7 +1,7 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getLanguage } from '../../language.ts';
+import { getLanguage } from '../../language';
 
 interface Props {
     value: string | undefined;

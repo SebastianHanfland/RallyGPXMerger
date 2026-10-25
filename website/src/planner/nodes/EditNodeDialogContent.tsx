@@ -1,23 +1,23 @@
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder.ts';
-import { getBranchesAtNode } from './getBranchesAtNode.ts';
-import { NodeEditInfo, NodeSpecification } from '../store/types.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { listAllNodesOfTracks } from '../../common/calculation/nodes/nodeFinder';
+import { getBranchesAtNode } from './getBranchesAtNode';
+import { NodeEditInfo, NodeSpecification } from '../store/types';
 import {
     getBranchId,
     getBranchNumbersSelector,
-} from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
-import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle.tsx';
-import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar.tsx';
-import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput.tsx';
-import { getBranchTracks } from './getBranchTracks.ts';
+} from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize';
+import { EditNodeDialogBranchTitle } from './EditNodeDialogBranchTitle';
+import { EditNodeDialogTrackProgressbar } from './EditNodeDialogTrackProgressbar';
+import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput';
+import { getBranchTracks } from './getBranchTracks';
 import {
     getNodeOffset,
     getNodeOffsetPercentage,
     setNodeOffsetPercentage,
-} from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
+} from '../../common/calculation/calculated-tracks/nodeSpecOffset';
 
 interface Props {
     nodeSpecs: NodeSpecification;

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { layoutActions } from '../../store/layout.reducer.ts';
+import { layoutActions } from '../../store/layout.reducer';
 import { Nav } from 'react-bootstrap';
-import { SidebarSections } from '../../store/types.ts';
+import { SidebarSections } from '../../store/types';
 import { ReactNode } from 'react';
 
 interface Props {

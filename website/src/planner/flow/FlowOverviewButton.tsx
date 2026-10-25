@@ -2,8 +2,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useState } from 'react';
-import { ArrowRightIcon } from '../../utils/icons/ArrowRightIcon.tsx';
-import { FlowOverviewContent } from './FlowOverviewContent.tsx';
+import { ArrowRightIcon } from '../../utils/icons/ArrowRightIcon';
+import { FlowOverviewContent } from './FlowOverviewContent';
 
 export const FlowOverviewButton = () => {
     const [open, setOpen] = useState(false);

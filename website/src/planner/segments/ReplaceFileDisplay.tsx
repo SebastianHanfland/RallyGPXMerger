@@ -1,9 +1,9 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { RemoveReplaceFileButton } from './RemoveReplaceFileButton.tsx';
+import { RemoveReplaceFileButton } from './RemoveReplaceFileButton';
 import { useIntl } from 'react-intl';
-import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux.ts';
-import { ParsedGpxSegment } from '../store/types.ts';
+import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux';
+import { ParsedGpxSegment } from '../store/types';
 
 export function ReplaceFileDisplay({ gpxSegment }: { gpxSegment: ParsedGpxSegment }) {
     const intl = useIntl();

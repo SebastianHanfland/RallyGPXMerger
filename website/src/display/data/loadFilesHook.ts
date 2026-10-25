@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { displayMapActions } from '../store/displayMapReducer.ts';
-import { DisplayState } from '../store/types.ts';
-import { getDisplayTracks } from '../store/displayTracksReducer.ts';
-import { getStartAndEndOfParsedTracks } from '../../utils/parsedTracksUtil.ts';
+import { displayMapActions } from '../store/displayMapReducer';
+import { DisplayState } from '../store/types';
+import { getDisplayTracks } from '../store/displayTracksReducer';
+import { getStartAndEndOfParsedTracks } from '../../utils/parsedTracksUtil';
 
 export function setStartAndEndTime(dispatch: Dispatch, getState: () => DisplayState) {
     const parsedTracks = getDisplayTracks(getState());

@@ -2,16 +2,16 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getMessages } from '../../../../../lang/getMessages.ts';
-import { createPlanningStore } from '../../../../store/planningStore.ts';
-import { trackMergeActions } from '../../../../store/trackMerge.reducer.ts';
-import type { TrackStreetInfo } from '../../../../logic/resolving/types.ts';
-import { formatTimeOnly } from '../../../../../utils/dateUtil.ts';
-import { PlannerSidebarOverviewTrackArrivals } from '../PlannerSidebarOverviewTrackArrivals.tsx';
+import { getMessages } from '../../../../../lang/getMessages';
+import { createPlanningStore } from '../../../../store/planningStore';
+import { trackMergeActions } from '../../../../store/trackMerge.reducer';
+import type { TrackStreetInfo } from '../../../../logic/resolving/types';
+import { formatTimeOnly } from '../../../../../utils/dateUtil';
+import { PlannerSidebarOverviewTrackArrivals } from '../PlannerSidebarOverviewTrackArrivals';
 
 const trackInfos = vi.hoisted(() => ({ value: [] as TrackStreetInfo[] }));
 
-vi.mock('../../../../calculation/getTrackStreetInfos.ts', () => ({
+vi.mock('../../../../calculation/getTrackStreetInfos', () => ({
     getTrackStreetInfos: vi.fn(() => trackInfos.value),
 }));
 

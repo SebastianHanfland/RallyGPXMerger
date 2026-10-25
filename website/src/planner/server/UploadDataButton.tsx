@@ -1,5 +1,5 @@
 import { Button, Spinner } from 'react-bootstrap';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { useState } from 'react';
 import fileUp from '../../assets/file-upW.svg';
 import { useIntl } from 'react-intl';
@@ -9,16 +9,16 @@ import {
     getIsPlanningAlreadySaved,
     getPlanningId,
     getPlanningPassword,
-} from '../store/backend.reducer.ts';
-import { createPlanning, updatePlanning } from '../../api/api.ts';
-import { State } from '../store/types.ts';
-import { UploadModalBody } from './UploadModalBody.tsx';
-import { errorNotification, successNotification } from '../store/toast.reducer.ts';
-import { downloadFile } from '../download/FileDownloader.tsx';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
-import { layoutActions } from '../store/layout.reducer.ts';
+} from '../store/backend.reducer';
+import { createPlanning, updatePlanning } from '../../api/api';
+import { State } from '../store/types';
+import { UploadModalBody } from './UploadModalBody';
+import { errorNotification, successNotification } from '../store/toast.reducer';
+import { downloadFile } from '../download/FileDownloader';
+import { getBaseUrl } from '../../utils/linkUtil';
+import { layoutActions } from '../store/layout.reducer';
 import Modal from 'react-bootstrap/Modal';
-import { getPlanningTitle } from '../store/settings.reducer.ts';
+import { getPlanningTitle } from '../store/settings.reducer';
 
 export function UploadDataButton() {
     const [showModal, setShowModal] = useState(false);

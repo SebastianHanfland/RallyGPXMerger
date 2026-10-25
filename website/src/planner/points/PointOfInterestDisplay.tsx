@@ -1,14 +1,14 @@
-import { PointOfInterest } from '../store/types.ts';
+import { PointOfInterest } from '../store/types';
 import { FormattedMessage } from 'react-intl';
-import { getPointTypeMessageId, pointOfInterestConfig } from './pointOfInterestConfig.ts';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { getColor } from '../../utils/colorUtil.ts';
-import { WcIcon } from '../../utils/icons/WcIcon.tsx';
-import { mapActions } from '../store/map.reducer.ts';
-import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon.tsx';
+import { getPointTypeMessageId, pointOfInterestConfig } from './pointOfInterestConfig';
+import { ColorBlob } from '../../utils/ColorBlob';
+import { getColor } from '../../utils/colorUtil';
+import { WcIcon } from '../../utils/icons/WcIcon';
+import { mapActions } from '../store/map.reducer';
+import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon';
 import { useDispatch } from 'react-redux';
-import { pointsActions } from '../store/points.reducer.ts';
-import { EditIcon } from '../../utils/icons/EditIcon.tsx';
+import { pointsActions } from '../store/points.reducer';
+import { EditIcon } from '../../utils/icons/EditIcon';
 
 export function PointOfInterestDisplay({
     pointOfInterest,

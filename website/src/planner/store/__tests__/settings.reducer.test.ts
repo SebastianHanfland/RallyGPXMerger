@@ -1,12 +1,7 @@
-import { createPlanningStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore';
 
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DELAY_PER_PERSON_IN_SECONDS } from '../constants.ts';
-import {
-    getArrivalDateTime,
-    getAverageSpeedInKmH,
-    getParticipantsDelay,
-    settingsActions,
-} from '../settings.reducer.ts';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DELAY_PER_PERSON_IN_SECONDS } from '../constants';
+import { getArrivalDateTime, getAverageSpeedInKmH, getParticipantsDelay, settingsActions } from '../settings.reducer';
 
 describe('Settings reducer', () => {
     it('should set and remove arrival date', () => {

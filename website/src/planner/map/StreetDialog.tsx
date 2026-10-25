@@ -3,17 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getClickOnStreet, mapActions } from '../store/map.reducer.ts';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getParsedGpxSegments, getNextStreetLookupIndex } from '../store/segmentData.redux.ts';
-import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
-import { TrackWayPointType } from '../logic/resolving/types.ts';
-import { getRoutePointReferences, getStreetRange } from '../logic/resolving/streets/streetRangeEditing.ts';
-import { beginNewStreet, beginStreetBoundaryEdit } from '../streets/streetEditing.ts';
-import { EditStreetNameModal } from '../streets/EditStreetNameButton.tsx';
-import { EditDistrictModal } from '../streets/EditDistrictButton.tsx';
-import { EditPostCodeModal } from '../streets/EditPostCodeButton.tsx';
-import { AppDispatch } from '../store/planningStore.ts';
+import { getClickOnStreet, mapActions } from '../store/map.reducer';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { getParsedGpxSegments, getNextStreetLookupIndex } from '../store/segmentData.redux';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos';
+import { TrackWayPointType } from '../logic/resolving/types';
+import { getRoutePointReferences, getStreetRange } from '../logic/resolving/streets/streetRangeEditing';
+import { beginNewStreet, beginStreetBoundaryEdit } from '../streets/streetEditing';
+import { EditStreetNameModal } from '../streets/EditStreetNameButton';
+import { EditDistrictModal } from '../streets/EditDistrictButton';
+import { EditPostCodeModal } from '../streets/EditPostCodeButton';
+import { AppDispatch } from '../store/planningStore';
 
 export const StreetDialog = () => {
     const clickOnStreet = useSelector(getClickOnStreet);

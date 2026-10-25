@@ -1,5 +1,5 @@
-import { TrackDelayDetails } from '../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
-import { BREAK } from '../planner/store/types.ts';
+import { TrackDelayDetails } from '../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack';
+import { BREAK } from '../planner/store/types';
 
 export function getTotalDelay(delaysOfTrack: TrackDelayDetails): number {
     let countDelay = 0;

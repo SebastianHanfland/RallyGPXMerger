@@ -1,4 +1,4 @@
-import { getLanguage } from '../../../../language.ts';
+import { getLanguage } from '../../../../language';
 
 type LocalityInfo = { name: string; order: number; description?: string };
 

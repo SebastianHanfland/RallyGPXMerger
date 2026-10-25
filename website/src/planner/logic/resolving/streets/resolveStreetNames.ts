@@ -1,9 +1,9 @@
-import { AppDispatch } from '../../../store/planningStore.ts';
-import { State } from '../../../store/types.ts';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { enrichGpxSegmentsWithStreetNames } from './mapMatchingStreetResolver.ts';
-import { enrichGpxSegmentsWithPostCodesAndDistricts } from './enrichWithPostCodeAndDistrict.ts';
-import { errorNotification } from '../../../store/toast.reducer.ts';
+import { AppDispatch } from '../../../store/planningStore';
+import { State } from '../../../store/types';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux';
+import { enrichGpxSegmentsWithStreetNames } from './mapMatchingStreetResolver';
+import { enrichGpxSegmentsWithPostCodesAndDistricts } from './enrichWithPostCodeAndDistrict';
+import { errorNotification } from '../../../store/toast.reducer';
 
 export const resolveStreetNames =
     (segmentId: string) =>

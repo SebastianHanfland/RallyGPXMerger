@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
-import { getHighlightedTrack, getShowMapMarker, getUseVersionColor, mapActions } from '../store/map.reducer.ts';
-import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer.ts';
-import { getColorFromUuid } from '../../utils/colorUtil.ts';
-import { CalculatedTrack } from '../../common/types.ts';
-import { useGetVersionColors } from '../versionColorsHook.ts';
+import { addTracksToLayer } from '../../common/map/addTrackToMapLayer';
+import { getHighlightedTrack, getShowMapMarker, getUseVersionColor, mapActions } from '../store/map.reducer';
+import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer';
+import { getColorFromUuid } from '../../utils/colorUtil';
+import { CalculatedTrack } from '../../common/types';
+import { useGetVersionColors } from '../versionColorsHook';
 
 function setColor(track: CalculatedTrack, useVersionColor: boolean, versionColor: string) {
     return {

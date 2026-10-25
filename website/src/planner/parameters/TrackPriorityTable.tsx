@@ -1,11 +1,11 @@
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
 import { useSelector } from 'react-redux';
-import { TrackPrio } from '../tracks/components/TrackPrio.tsx';
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { getColor } from '../../utils/colorUtil.ts';
-import { TrackPeople } from '../tracks/components/TrackPeople.tsx';
+import { TrackPrio } from '../tracks/components/TrackPrio';
+import { ColorBlob } from '../../utils/ColorBlob';
+import { getColor } from '../../utils/colorUtil';
+import { TrackPeople } from '../tracks/components/TrackPeople';
 
 export const TrackPriorityTable = () => {
     const tracks = useSelector(getTrackCompositions);

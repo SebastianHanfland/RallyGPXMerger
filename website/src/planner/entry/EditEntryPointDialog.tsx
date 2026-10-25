@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getEntryPointEditInfo, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer.ts';
-import { EntryPointDialogContent } from './EntryPointDialogContent.tsx';
+import { getEntryPointEditInfo, getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer';
+import { EntryPointDialogContent } from './EntryPointDialogContent';
 import { useEffect, useState } from 'react';
-import { ENTRY, isTrackEntryPoint, TrackEntry } from '../store/types.ts';
-import { AppDispatch } from '../store/planningStore.ts';
+import { ENTRY, isTrackEntryPoint, TrackEntry } from '../store/types';
+import { AppDispatch } from '../store/planningStore';
 
 export const EditEntryPointDialog = () => {
     const entryPointEditInfo = useSelector(getEntryPointEditInfo);

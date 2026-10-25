@@ -1,5 +1,5 @@
-import { InfoIcon } from '../../utils/icons/InfoIcon.tsx';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { InfoIcon } from '../../utils/icons/InfoIcon';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 

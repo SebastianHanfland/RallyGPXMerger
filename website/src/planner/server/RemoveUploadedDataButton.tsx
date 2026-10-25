@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
@@ -8,11 +8,11 @@ import {
     getIsPlanningAlreadySaved,
     getPlanningId,
     getPlanningPassword,
-} from '../store/backend.reducer.ts';
-import { deletePlanning } from '../../api/api.ts';
-import { errorNotification, successNotification } from '../store/toast.reducer.ts';
+} from '../store/backend.reducer';
+import { deletePlanning } from '../../api/api';
+import { errorNotification, successNotification } from '../store/toast.reducer';
 import trash from '../../assets/trash.svg';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { getBaseUrl } from '../../utils/linkUtil';
 
 export function RemoveUploadedDataButton() {
     const dispatch = useDispatch();

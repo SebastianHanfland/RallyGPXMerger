@@ -1,8 +1,8 @@
-import { TrackComposition } from '../store/types.ts';
-import { TrackColorActionItem } from './TrackColorActionItem.tsx';
-import { TrackDownloadActionItem } from './TrackDownloadActionItem.tsx';
-import { TrackDeleteActionItem } from './TrackDeleteActionItem.tsx';
-import { TrackSegmentIdsClipboardActionItems } from './TrackSegmentIdsClipboardActionItems.tsx';
+import { TrackComposition } from '../store/types';
+import { TrackColorActionItem } from './TrackColorActionItem';
+import { TrackDownloadActionItem } from './TrackDownloadActionItem';
+import { TrackDeleteActionItem } from './TrackDeleteActionItem';
+import { TrackSegmentIdsClipboardActionItems } from './TrackSegmentIdsClipboardActionItems';
 
 interface Props {
     track: TrackComposition;

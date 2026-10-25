@@ -1,5 +1,5 @@
 import L, { LayerGroup } from 'leaflet';
-import { bikeIcon } from './MapIcons.ts';
+import { bikeIcon } from './MapIcons';
 import { RefObject } from 'react';
 
 export interface BikeSnake {

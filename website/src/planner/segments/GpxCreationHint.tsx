@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { getLanguage } from '../../language.ts';
+import { getLanguage } from '../../language';
 import { useSelector } from 'react-redux';
 import hand from '../../assets/hand.svg';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { getParsedGpxSegments } from '../store/segmentData.redux';
+import { WarningIcon } from '../../utils/icons/WarningIcon';
 
 export function GpxCreationHint() {
     const language = getLanguage();

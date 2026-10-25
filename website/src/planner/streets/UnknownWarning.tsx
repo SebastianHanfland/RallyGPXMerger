@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
-import { wayPointHasUnknown } from './unknownUtil.ts';
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos';
+import { wayPointHasUnknown } from './unknownUtil';
+import { WarningIcon } from '../../utils/icons/WarningIcon';
 import { useIntl } from 'react-intl';
 
 interface Props {

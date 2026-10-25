@@ -1,14 +1,14 @@
-import { isTrackSegment, TrackComposition } from '../../store/types.ts';
+import { isTrackSegment, TrackComposition } from '../../store/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer';
 
 import { ReactSortable } from 'react-sortablejs';
-import { AppDispatch } from '../../store/planningStore.ts';
-import { isDefined } from '../../../utils/typeUtil.ts';
-import { SimpleElementDisplay } from './SimpleElementDisplay.tsx';
-import { limitString } from '../../../utils/stringUtil.ts';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
-import { getColor } from '../../../utils/colorUtil.ts';
+import { AppDispatch } from '../../store/planningStore';
+import { isDefined } from '../../../utils/typeUtil';
+import { SimpleElementDisplay } from './SimpleElementDisplay';
+import { limitString } from '../../../utils/stringUtil';
+import { getParsedGpxSegments } from '../../store/segmentData.redux';
+import { getColor } from '../../../utils/colorUtil';
 
 interface Props {
     track: TrackComposition;

@@ -1,11 +1,11 @@
-import { DisplayTimeSlider } from '../DisplayTimeSlider.tsx';
+import { DisplayTimeSlider } from '../DisplayTimeSlider';
 import { CSSProperties } from 'react';
-import { TrackInformationModal } from '../trackInfo/TrackInformationModal.tsx';
-import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton.tsx';
+import { TrackInformationModal } from '../trackInfo/TrackInformationModal';
+import { TrackInformationModalButton } from '../trackInfo/TrackInformationModalButton';
 import { useSelector } from 'react-redux';
-import { getDisplayEntryPoints, getDisplayTitle } from '../store/displayTracksReducer.ts';
-import { TimeDisplayCheckbox } from '../trackInfo/TimeDisplayCheckbox.tsx';
-import { useTimesConfig } from '../map/useTimesConfig.ts';
+import { getDisplayEntryPoints, getDisplayTitle } from '../store/displayTracksReducer';
+import { TimeDisplayCheckbox } from '../trackInfo/TimeDisplayCheckbox';
+import { useTimesConfig } from '../map/useTimesConfig';
 
 const style: CSSProperties = {
     paddingLeft: '15px',

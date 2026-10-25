@@ -2,9 +2,9 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getPlanningState } from '../store/displayTracksReducer.ts';
-import { createPointOfInterestMarker } from '../../common/map/pointOfInterestMarker.ts';
-import { getPointTypeMessageId, isPublicPointType } from '../../planner/points/pointOfInterestConfig.ts';
+import { getPlanningState } from '../store/displayTracksReducer';
+import { createPointOfInterestMarker } from '../../common/map/pointOfInterestMarker';
+import { getPointTypeMessageId, isPublicPointType } from '../../planner/points/pointOfInterestConfig';
 
 export function pointsForDisplayMapHook(pointsLayer: RefObject<LayerGroup | null>) {
     const planningState = useSelector(getPlanningState);

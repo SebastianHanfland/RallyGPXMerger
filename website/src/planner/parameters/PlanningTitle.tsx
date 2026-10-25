@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getPlanningTitle, settingsActions } from '../store/settings.reducer.ts';
-import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
-import { debounceSettingOfName } from '../tracks/components/TrackName.tsx';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { TrackComposition } from '../store/types.ts';
-import { SingleTrackColor } from '../tracks/SingleTrackColor.tsx';
+import { getPlanningTitle, settingsActions } from '../store/settings.reducer';
+import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton';
+import { debounceSettingOfName } from '../tracks/components/TrackName';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { TrackComposition } from '../store/types';
+import { SingleTrackColor } from '../tracks/SingleTrackColor';
 
 interface Props {
     setTrackNameAsWell?: boolean;

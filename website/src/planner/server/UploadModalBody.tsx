@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { backendActions, getPlanningPassword } from '../store/backend.reducer.ts';
+import { backendActions, getPlanningPassword } from '../store/backend.reducer';
 import { useIntl } from 'react-intl';
 import { Form } from 'react-bootstrap';
 

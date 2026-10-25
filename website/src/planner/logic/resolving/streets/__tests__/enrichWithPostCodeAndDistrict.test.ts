@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createPlanningStore } from '../../../../store/planningStore.ts';
+import { createPlanningStore } from '../../../../store/planningStore';
 import {
     getDistrictLookup,
     getPostCodeLookup,
     getStreetLookup,
     segmentDataActions,
-} from '../../../../store/segmentData.redux.ts';
-import { enrichStreetWithPostCodeAndDistrict } from '../enrichWithPostCodeAndDistrict.ts';
+} from '../../../../store/segmentData.redux';
+import { enrichStreetWithPostCodeAndDistrict } from '../enrichWithPostCodeAndDistrict';
 
 describe('enrichStreetWithPostCodeAndDistrict', () => {
     afterEach(() => {

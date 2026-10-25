@@ -1,14 +1,14 @@
 import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { FileDownloaderDropdownItem } from '../../download/FileDownloader.tsx';
-import { FileChangeWithUploadButton } from '../../segments/FileChangeWithUploadButton.tsx';
-import { FileChangeButton } from '../../segments/FileChangeButton.tsx';
-import { RemoveFileButton } from '../../segments/RemoveFileButton.tsx';
-import { FlipGpxButton } from '../../segments/FlipGpxButton.tsx';
-import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsButton.tsx';
-import { EditSegmentColorButton } from '../../segments/EditSegmentColor.tsx';
-import { ParsedGpxSegment } from '../../store/types.ts';
-import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints.ts';
+import { FileDownloaderDropdownItem } from '../../download/FileDownloader';
+import { FileChangeWithUploadButton } from '../../segments/FileChangeWithUploadButton';
+import { FileChangeButton } from '../../segments/FileChangeButton';
+import { RemoveFileButton } from '../../segments/RemoveFileButton';
+import { FlipGpxButton } from '../../segments/FlipGpxButton';
+import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsButton';
+import { EditSegmentColorButton } from '../../segments/EditSegmentColor';
+import { ParsedGpxSegment } from '../../store/types';
+import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints';
 
 interface Props {
     segment: ParsedGpxSegment;

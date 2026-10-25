@@ -2,7 +2,7 @@ import { Button } from 'react-bootstrap';
 import german from '../../assets/german.svg';
 import english from '../../assets/english.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDisplayLanguage, layoutActions } from '../store/layout.reducer.ts';
+import { getDisplayLanguage, layoutActions } from '../store/layout.reducer';
 import { CSSProperties } from 'react';
 
 const languageStyle: CSSProperties = {

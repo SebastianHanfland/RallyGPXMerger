@@ -1,5 +1,5 @@
-import { NodeSpecifications, SEGMENT, TrackComposition } from '../../../../planner/store/types.ts';
-import { getBranchNumbers } from '../nodeSpecResultingBranchSize.ts';
+import { NodeSpecifications, SEGMENT, TrackComposition } from '../../../../planner/store/types';
+import { getBranchNumbers } from '../nodeSpecResultingBranchSize';
 
 describe('test block', () => {
     function getSegment(id: string) {

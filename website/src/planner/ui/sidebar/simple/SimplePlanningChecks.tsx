@@ -1,11 +1,11 @@
 import { Col, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { useOverviewAccordionStatuses } from '../complex/overviewStatus.ts';
-import type { TrackStreetInfo } from '../../../logic/resolving/types.ts';
-import { SimpleGapsButton } from './SimpleGapsButton.tsx';
-import { SimpleSettingsButton } from './SimpleSettingsButton.tsx';
-import { SimpleUnknownStreetsButton } from './SimpleUnknownStreetsButton.tsx';
-import { SimplePointsButton } from './SimplePointsButton.tsx';
+import { useOverviewAccordionStatuses } from '../complex/overviewStatus';
+import type { TrackStreetInfo } from '../../../logic/resolving/types';
+import { SimpleGapsButton } from './SimpleGapsButton';
+import { SimpleSettingsButton } from './SimpleSettingsButton';
+import { SimpleUnknownStreetsButton } from './SimpleUnknownStreetsButton';
+import { SimplePointsButton } from './SimplePointsButton';
 
 interface Props {
     matchedTrackInfo: TrackStreetInfo | undefined;

@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import { State } from '../../planner/store/types.ts';
-import { getData } from '../../api/api.ts';
-import { getPlanningTitle } from '../../planner/store/settings.reducer.ts';
-import { planningActions } from '../store/displayTracksReducer.ts';
+import { State } from '../../planner/store/types';
+import { getData } from '../../api/api';
+import { getPlanningTitle } from '../../planner/store/settings.reducer';
+import { planningActions } from '../store/displayTracksReducer';
 
 export async function loadServerFile(id: string, dispatch: Dispatch) {
     return getData(id)

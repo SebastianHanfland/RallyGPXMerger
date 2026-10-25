@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../../../store/planningStore.ts';
-import { trackMergeActions } from '../../../store/trackMerge.reducer.ts';
-import { getMessages } from '../../../../lang/getMessages.ts';
-import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader.tsx';
+import { createPlanningStore } from '../../../store/planningStore';
+import { trackMergeActions } from '../../../store/trackMerge.reducer';
+import { getMessages } from '../../../../lang/getMessages';
+import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader';
 
 const messages = getMessages('en');
 

@@ -1,6 +1,6 @@
 import { addSeconds, format, subtract } from 'date-and-time';
 import { FormatDateOptions } from 'react-intl';
-import { getLanguage } from '../language.ts';
+import { getLanguage } from '../language';
 
 export function shiftDateBySeconds(datetime: string, shiftInSeconds: number): string {
     return addSeconds(new Date(datetime), shiftInSeconds).toISOString();

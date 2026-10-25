@@ -1,10 +1,10 @@
-import { getBlockedStreetInfo } from '../getBlockedStreetInfo.ts';
+import { getBlockedStreetInfo } from '../getBlockedStreetInfo';
 import { Mock } from 'vitest';
-import { BlockedStreetInfo, TrackStreetInfo, TrackWayPointType, WayPoint } from '../../types.ts';
-import { State, TrackComposition } from '../../../../store/types.ts';
-import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos.ts';
+import { BlockedStreetInfo, TrackStreetInfo, TrackWayPointType, WayPoint } from '../../types';
+import { State, TrackComposition } from '../../../../store/types';
+import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos';
 
-vi.mock('../../../../calculation/getTrackStreetInfos.ts');
+vi.mock('../../../../calculation/getTrackStreetInfos');
 
 describe('getBlockedStreetInfo', () => {
     it('should work with empty lists', () => {

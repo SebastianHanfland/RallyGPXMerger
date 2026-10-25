@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { useHelpingHook } from './helpingHook.ts';
+import { useHelpingHook } from './helpingHook';
 import hand from '../../../assets/hand.svg';
 
 const helpingTipStyle: CSSProperties = {

@@ -1,16 +1,16 @@
 import { Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
-import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse.tsx';
-import { getSegmentFilterTerm, segmentDataActions } from '../store/segmentData.redux.ts';
-import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
-import { GpxCreationHint } from './GpxCreationHint.tsx';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getSegmentTableRows } from './segmentTableData.ts';
-import { SegmentUsageFilter } from './SegmentUsageFilter.tsx';
-import { GpxSegmentsTable } from './GpxSegmentsTable.tsx';
-import { getSegmentUsages } from './segmentUsageCounter.ts';
+import { AppDispatch } from '../store/planningStore';
+import { GpxSegmentsUploadAndParse } from './GpxSegmentsUploadAndParse';
+import { getSegmentFilterTerm, segmentDataActions } from '../store/segmentData.redux';
+import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton';
+import { GpxCreationHint } from './GpxCreationHint';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { getSegmentTableRows } from './segmentTableData';
+import { SegmentUsageFilter } from './SegmentUsageFilter';
+import { GpxSegmentsTable } from './GpxSegmentsTable';
+import { getSegmentUsages } from './segmentUsageCounter';
 
 interface Props {
     noFilter?: boolean;

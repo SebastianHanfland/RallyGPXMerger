@@ -1,8 +1,8 @@
-import { CalculatedTrack } from '../../types.ts';
-import { shiftDateBySeconds } from '../../../utils/dateUtil.ts';
-import { updateExtraDelayOnTracks } from './delayCalculation.ts';
-import { assembleTrackFromSegments } from './assembleTrackFromSegments.ts';
-import { NodeSpecifications, ParsedGpxSegment, TrackComposition } from '../../../planner/store/types.ts';
+import { CalculatedTrack } from '../../types';
+import { shiftDateBySeconds } from '../../../utils/dateUtil';
+import { updateExtraDelayOnTracks } from './delayCalculation';
+import { assembleTrackFromSegments } from './assembleTrackFromSegments';
+import { NodeSpecifications, ParsedGpxSegment, TrackComposition } from '../../../planner/store/types';
 
 export const calculateTracks = (
     arrivalDate: string | undefined,

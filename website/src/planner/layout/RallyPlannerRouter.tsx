@@ -1,7 +1,7 @@
-import { WizardStartPage } from '../ui/wizard/WizardStartPage.tsx';
-import { WizardsComplexity } from '../ui/wizard/WizardComplexity.tsx';
-import { MainPlannerUi } from '../ui/MainPlannerUi.tsx';
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
+import { WizardStartPage } from '../ui/wizard/WizardStartPage';
+import { WizardsComplexity } from '../ui/wizard/WizardComplexity';
+import { MainPlannerUi } from '../ui/MainPlannerUi';
+import { useGetUrlParam } from '../../utils/linkUtil';
 
 export const RallyPlannerRouter = () => {
     const section = useGetUrlParam('section');

@@ -5,8 +5,8 @@ import {
     PRIORITY,
     SEGMENT,
     TrackComposition,
-} from '../../../../planner/store/types.ts';
-import { getDelaysOfTracks, TrackDelayDetails } from '../getSpecifiedDelayPerTrack.ts';
+} from '../../../../planner/store/types';
+import { getDelaysOfTracks, TrackDelayDetails } from '../getSpecifiedDelayPerTrack';
 
 function getSegment(id: string) {
     return { id, segmentId: id, type: SEGMENT };

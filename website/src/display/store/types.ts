@@ -1,4 +1,4 @@
-import { State } from '../../planner/store/types.ts';
+import { State } from '../../planner/store/types';
 
 export interface MapState {
     currentTime: number;

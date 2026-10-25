@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { resetData } from '../import/resetData.ts';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { ExportStateJson } from '../download/json/ExportStateJson.tsx';
+import { resetData } from '../import/resetData';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { ExportStateJson } from '../download/json/ExportStateJson';
 import { useState } from 'react';
 
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { WarningIcon } from '../../utils/icons/WarningIcon';
 
 export function DataLossDialog(props: { closeModal: () => void; onConfirm?: () => void; importWarning: boolean }) {
     const dispatch = useDispatch();

@@ -1,13 +1,13 @@
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { getGaps } from '../../../calculation/getGaps.ts';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { pointOfInterestTypesByGroup } from '../../../points/pointOfInterestConfig.ts';
-import { wayPointHasUnknown } from '../../../streets/unknownUtil.ts';
-import { getPoints } from '../../../store/points.reducer.ts';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { GapPoint, isTrackEntryPoint, PointOfInterest, TrackComposition } from '../../../store/types.ts';
-import type { TrackStreetInfo } from '../../../logic/resolving/types.ts';
+import { getGaps } from '../../../calculation/getGaps';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { pointOfInterestTypesByGroup } from '../../../points/pointOfInterestConfig';
+import { wayPointHasUnknown } from '../../../streets/unknownUtil';
+import { getPoints } from '../../../store/points.reducer';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { GapPoint, isTrackEntryPoint, PointOfInterest, TrackComposition } from '../../../store/types';
+import type { TrackStreetInfo } from '../../../logic/resolving/types';
 
 export const overviewAccordionDefinitions = [
     { key: 'checks', messageId: 'msg.checks' },

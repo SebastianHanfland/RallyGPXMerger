@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
-import { CheckIcon } from '../../utils/icons/CheckIcon.tsx';
-import { useOverviewAccordionStatuses } from '../ui/sidebar/complex/overviewStatus.ts';
+import { WarningIcon } from '../../utils/icons/WarningIcon';
+import { CheckIcon } from '../../utils/icons/CheckIcon';
+import { useOverviewAccordionStatuses } from '../ui/sidebar/complex/overviewStatus';
 
 export function GapOverviewHeader() {
     const { gaps } = useOverviewAccordionStatuses();

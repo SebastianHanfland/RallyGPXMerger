@@ -1,5 +1,5 @@
-import { migrateManualLookupOverrides } from '../migrateManualLookupOverrides.ts';
-import { SegmentDataState } from '../types.ts';
+import { migrateManualLookupOverrides } from '../migrateManualLookupOverrides';
+import { SegmentDataState } from '../types';
 
 describe('migrateManualLookupOverrides', () => {
     it('converts legacy replacement rows into point-level manual rows', () => {

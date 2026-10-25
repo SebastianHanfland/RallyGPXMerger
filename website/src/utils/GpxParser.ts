@@ -1,4 +1,4 @@
-import { GpxJson, Point, Route, Track } from './gpxTypes.ts';
+import { GpxJson, Point, Route, Track } from './gpxTypes';
 import { JPathOrMatcher, X2jOptions, XMLParser } from 'fast-xml-parser';
 import { Util } from 'leaflet';
 import isArray = Util.isArray;

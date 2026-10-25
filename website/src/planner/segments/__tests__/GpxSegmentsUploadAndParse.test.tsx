@@ -2,17 +2,17 @@ import { render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { Provider } from 'react-redux';
-import { GpxSegmentsUploadAndParse } from '../GpxSegmentsUploadAndParse.tsx';
-import { getLanguage } from '../../../language.ts';
-import { createPlanningStore } from '../../store/planningStore.ts';
-import { plannerUi as ui } from '../../../../test/integration/accessObjects/PlannerTestAccess.ts';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
+import { GpxSegmentsUploadAndParse } from '../GpxSegmentsUploadAndParse';
+import { getLanguage } from '../../../language';
+import { createPlanningStore } from '../../store/planningStore';
+import { plannerUi as ui } from '../../../../test/integration/accessObjects/PlannerTestAccess';
+import { getParsedGpxSegments } from '../../store/segmentData.redux';
 import { IntlProvider } from 'react-intl';
-import { getMessages } from '../../../lang/getMessages.ts';
+import { getMessages } from '../../../lang/getMessages';
 
 vi.mock('../../../language');
 vi.mock('../../src/api/api');
-vi.mock('../../logic/resolving/street-new/geoApifyMapMatching.ts', () => ({
+vi.mock('../../logic/resolving/street-new/geoApifyMapMatching', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({

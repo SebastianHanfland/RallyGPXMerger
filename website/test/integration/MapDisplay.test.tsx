@@ -12,7 +12,7 @@ import { getBikeSnakesForDisplayMap } from '../../src/display/map/dataReading';
 import { displayMapActions } from '../../src/display/store/displayMapReducer';
 import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
 import { StateOld } from '../../src/planner/store/typesOld';
-import { mapDisplayUi } from './accessObjects/MapDisplayTestAccess.ts';
+import { mapDisplayUi } from './accessObjects/MapDisplayTestAccess';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');

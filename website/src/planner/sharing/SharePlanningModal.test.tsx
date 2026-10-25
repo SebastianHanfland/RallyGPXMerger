@@ -2,12 +2,12 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createPlanningStore } from '../store/planningStore.ts';
-import { backendActions } from '../store/backend.reducer.ts';
-import { layoutActions } from '../store/layout.reducer.ts';
-import { SharePlanningButton } from './SharePlanningButton.tsx';
-import { SharePlanningModal } from './SharePlanningModal.tsx';
-import { getMessages } from '../../lang/getMessages.ts';
+import { createPlanningStore } from '../store/planningStore';
+import { backendActions } from '../store/backend.reducer';
+import { layoutActions } from '../store/layout.reducer';
+import { SharePlanningButton } from './SharePlanningButton';
+import { SharePlanningModal } from './SharePlanningModal';
+import { getMessages } from '../../lang/getMessages';
 
 describe('Share planning modal', () => {
     it('opens from the button and closes through the shared layout state', async () => {

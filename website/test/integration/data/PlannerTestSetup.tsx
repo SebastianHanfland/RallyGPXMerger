@@ -5,7 +5,7 @@ import { RallyPlannerWrapper } from '../../../src/planner/RallyPlanner';
 import { createPlanningStore } from '../../../src/planner/store/planningStore';
 import { getParsedGpxSegments } from '../../../src/planner/store/segmentData.redux';
 import { getTrackCompositions } from '../../../src/planner/store/trackMerge.reducer';
-import { plannerUi } from '../accessObjects/PlannerTestAccess.ts';
+import { plannerUi } from '../accessObjects/PlannerTestAccess';
 
 const timeout = { timeout: 3000 };
 

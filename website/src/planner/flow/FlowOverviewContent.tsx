@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { FlowLayout, FlowPointLayout, layoutFlowGraph, getFlowOverviewGraph } from './flowGraph.ts';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { FlowLayout, FlowPointLayout, layoutFlowGraph, getFlowOverviewGraph } from './flowGraph';
+import { formatTimeOnly } from '../../utils/dateUtil';
 import breakIcon from '../../assets/break.svg';
 import arrowRightIcon from '../../assets/arrow-right.svg';
 

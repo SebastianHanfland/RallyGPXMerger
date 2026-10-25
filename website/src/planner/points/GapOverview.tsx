@@ -1,9 +1,9 @@
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { GapPointDisplay } from './GapPointDisplay.tsx';
-import { getGaps } from '../calculation/getGaps.ts';
+import { GapPointDisplay } from './GapPointDisplay';
+import { getGaps } from '../calculation/getGaps';
 import { FormattedMessage } from 'react-intl';
-import { GapFinderParameters } from '../parameters/GapFinderParameters.tsx';
+import { GapFinderParameters } from '../parameters/GapFinderParameters';
 
 export function GapOverview() {
     const gapPoints = useSelector(getGaps) ?? [];

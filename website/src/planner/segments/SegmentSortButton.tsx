@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { segmentDataActions, getSegmentSortDirection, getSegmentSortField } from '../store/segmentData.redux.ts';
-import { SegmentSortField } from '../store/types.ts';
+import { segmentDataActions, getSegmentSortDirection, getSegmentSortField } from '../store/segmentData.redux';
+import { SegmentSortField } from '../store/types';
 
 export function SegmentSortButton({ field, messageId }: { field: SegmentSortField; messageId: string }) {
     const dispatch = useDispatch();

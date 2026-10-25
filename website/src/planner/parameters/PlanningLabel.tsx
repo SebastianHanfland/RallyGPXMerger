@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
-import { getPlanningLabel, settingsActions } from '../store/settings.reducer.ts';
+import { AppDispatch } from '../store/planningStore';
+import { getPlanningLabel, settingsActions } from '../store/settings.reducer';
 
 export function PlanningLabel() {
     const intl = useIntl();

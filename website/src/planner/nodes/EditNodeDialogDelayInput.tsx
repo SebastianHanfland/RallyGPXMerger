@@ -1,8 +1,8 @@
 import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-bootstrap';
-import { NodeSpecification } from '../store/types.ts';
-import { getCount } from '../../utils/inputUtil.ts';
-import { setNodeOffsetPercentage } from '../../common/calculation/calculated-tracks/nodeSpecOffset.ts';
+import { NodeSpecification } from '../store/types';
+import { getCount } from '../../utils/inputUtil';
+import { setNodeOffsetPercentage } from '../../common/calculation/calculated-tracks/nodeSpecOffset';
 
 interface Props {
     nodeSpecs: NodeSpecification;

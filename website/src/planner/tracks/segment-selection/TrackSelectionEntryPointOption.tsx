@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
+import { trackMergeActions } from '../../store/trackMerge.reducer';
 import { Button, Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../../store/planningStore.ts';
-import { TrackEntry } from '../../store/types.ts';
-import { DraggableIcon } from '../../../utils/icons/DraggableIcon.tsx';
-import { ArrowRightIcon } from '../../../utils/icons/ArrowRightIcon.tsx';
-import { EditIcon } from '../../../utils/icons/EditIcon.tsx';
-import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntryPointPositions.ts';
-import { mapActions } from '../../store/map.reducer.ts';
-import { toLatLng } from '../../../utils/pointUtil.ts';
-import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
-import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
+import { AppDispatch } from '../../store/planningStore';
+import { TrackEntry } from '../../store/types';
+import { DraggableIcon } from '../../../utils/icons/DraggableIcon';
+import { ArrowRightIcon } from '../../../utils/icons/ArrowRightIcon';
+import { EditIcon } from '../../../utils/icons/EditIcon';
+import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntryPointPositions';
+import { mapActions } from '../../store/map.reducer';
+import { toLatLng } from '../../../utils/pointUtil';
+import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon';
+import { getEntryPointTooltip } from '../../../utils/entryPointUtil';
 import { useState } from 'react';
-import { TrackSelectionContextMenu } from './TrackSelectionContextMenu.tsx';
-import { ConfirmationModal } from '../../../common/ConfirmationModal.tsx';
+import { TrackSelectionContextMenu } from './TrackSelectionContextMenu';
+import { ConfirmationModal } from '../../../common/ConfirmationModal';
 
 interface Props {
     trackId: string;

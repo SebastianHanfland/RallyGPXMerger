@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { getWayPointsOfTrack } from '../calculateTrackStreetInfos.ts';
-import { AggregatedPoints } from '../../../../planner/logic/resolving/types.ts';
-import { BREAK, SEGMENT, ParsedGpxSegment, TrackBreak, TrackComposition } from '../../../../planner/store/types.ts';
+import { getWayPointsOfTrack } from '../calculateTrackStreetInfos';
+import { AggregatedPoints } from '../../../../planner/logic/resolving/types';
+import { BREAK, SEGMENT, ParsedGpxSegment, TrackBreak, TrackComposition } from '../../../../planner/store/types';
 
 function segment(id: string, streetIndex: number): { segment: ParsedGpxSegment; aggregated: AggregatedPoints[] } {
     const first = { l: 11, b: 48, e: 0, t: 0, s: streetIndex };

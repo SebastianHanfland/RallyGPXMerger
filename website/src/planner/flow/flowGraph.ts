@@ -3,13 +3,13 @@ import {
     getBranchId,
     getBranchNumbersSelector,
     getBranchTrackIds,
-} from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
-import { listAllNodesOfTracks, NodeAtTrack } from '../../common/calculation/nodes/nodeFinder.ts';
-import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { isTrackSegment, TrackComposition } from '../store/types.ts';
-import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types.ts';
-import { getColor } from '../../utils/colorUtil.ts';
+} from '../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize';
+import { listAllNodesOfTracks, NodeAtTrack } from '../../common/calculation/nodes/nodeFinder';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { isTrackSegment, TrackComposition } from '../store/types';
+import { TrackStreetInfo, TrackWayPointType } from '../logic/resolving/types';
+import { getColor } from '../../utils/colorUtil';
 
 export interface FlowTrack {
     id: string;

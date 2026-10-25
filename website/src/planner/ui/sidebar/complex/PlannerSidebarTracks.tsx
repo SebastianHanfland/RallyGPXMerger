@@ -4,22 +4,22 @@ import {
     getTrackCompositionFilterTerm,
     getTrackCompositions,
     trackMergeActions,
-} from '../../../store/trackMerge.reducer.ts';
+} from '../../../store/trackMerge.reducer';
 import { Dropdown, Form, PageItem, Pagination } from 'react-bootstrap';
-import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails.tsx';
+import { PlannerSidebarTrackDetails } from './PlannerSidebarTrackDetails';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
-import { TrackGapWarning } from '../../../tracks/TrackGapWarning.tsx';
-import { getColor } from '../../../../utils/colorUtil.ts';
-import { ColorBlob } from '../../../../utils/ColorBlob.tsx';
-import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer.ts';
-import { isDefined } from '../../../../utils/typeUtil.ts';
+import { TrackGapWarning } from '../../../tracks/TrackGapWarning';
+import { getColor } from '../../../../utils/colorUtil';
+import { ColorBlob } from '../../../../utils/ColorBlob';
+import { getSelectedTrackId, layoutActions } from '../../../store/layout.reducer';
+import { isDefined } from '../../../../utils/typeUtil';
 import { ReactSortable } from 'react-sortablejs';
-import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton.tsx';
-import { TrackDescriptionInfoButton } from './TrackDescriptionInfoButton.tsx';
-import { TrackActionItems } from '../../../tracks/TrackActionItems.tsx';
-import { TrackComposition } from '../../../store/types.ts';
+import { TrackOverviewButton } from '../../../tracks/overview/TrackOverviewButton';
+import { TrackDescriptionInfoButton } from './TrackDescriptionInfoButton';
+import { TrackActionItems } from '../../../tracks/TrackActionItems';
+import { TrackComposition } from '../../../store/types';
 
 interface TrackContextMenu {
     track: TrackComposition;

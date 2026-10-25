@@ -1,15 +1,15 @@
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrenMapTime, mapActions } from '../store/map.reducer.ts';
-import { getCurrentTimeStamp } from './hooks/trackSimulationReader.ts';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
+import { getCurrenMapTime, mapActions } from '../store/map.reducer';
+import { getCurrentTimeStamp } from './hooks/trackSimulationReader';
+import { formatTimeOnly } from '../../utils/dateUtil';
 import { CSSProperties, useEffect, useState } from 'react';
 import play from '../../assets/play.svg';
 import stop from '../../assets/stop.svg';
-import { MAX_SLIDER_TIME } from '../../common/constants.ts';
+import { MAX_SLIDER_TIME } from '../../common/constants';
 import { useIntl } from 'react-intl';
-import { getIsSidebarOpen } from '../store/layout.reducer.ts';
-import { getCount } from '../../utils/inputUtil.ts';
+import { getIsSidebarOpen } from '../store/layout.reducer';
+import { getCount } from '../../utils/inputUtil';
 
 let interval: NodeJS.Timeout | undefined;
 

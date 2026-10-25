@@ -1,14 +1,14 @@
 import { Provider, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { FormattedMessage, IntlProvider } from 'react-intl';
-import { getLanguage } from '../language.ts';
-import { getMessages } from '../lang/getMessages.ts';
-import { useGetUrlParam } from '../utils/linkUtil.ts';
-import { PresentationTable } from './table/PresentationTable.tsx';
-import { VerticalPresentationTable } from './table/VerticalPresentationTable.tsx';
-import { useLoadPlanningById } from './data/loadPlanningHook.ts';
+import { getLanguage } from '../language';
+import { getMessages } from '../lang/getMessages';
+import { useGetUrlParam } from '../utils/linkUtil';
+import { PresentationTable } from './table/PresentationTable';
+import { VerticalPresentationTable } from './table/VerticalPresentationTable';
+import { useLoadPlanningById } from './data/loadPlanningHook';
 import { Store } from '@reduxjs/toolkit';
-import { getIsDisplayMapLoading } from './store/displayMapReducer.ts';
+import { getIsDisplayMapLoading } from './store/displayMapReducer';
 
 function RallyTable() {
     const planningId = useGetUrlParam('table');

@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { AppDispatch } from '../../../store/planningStore.ts';
-import { TrackSegmentSelection } from '../../../tracks/segment-selection/TrackSegmentSelection.tsx';
-import { getTrackCompositions, trackMergeActions } from '../../../store/trackMerge.reducer.ts';
-import { GpxCreationHint } from '../../../segments/GpxCreationHint.tsx';
-import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
+import { AppDispatch } from '../../../store/planningStore';
+import { TrackSegmentSelection } from '../../../tracks/segment-selection/TrackSegmentSelection';
+import { getTrackCompositions, trackMergeActions } from '../../../store/trackMerge.reducer';
+import { GpxCreationHint } from '../../../segments/GpxCreationHint';
+import { DescriptionInfoButton } from '../DescriptionInfoButton';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux';
 
 export function SimpleGpxSegments() {
     const dispatch: AppDispatch = useDispatch();

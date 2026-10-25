@@ -1,24 +1,21 @@
-import { CalculatedTrack } from '../../common/types.ts';
-import { ComparisonTrackState } from '../store/types.ts';
-import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
+import { CalculatedTrack } from '../../common/types';
+import { ComparisonTrackState } from '../store/types';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack';
 import {
     getComparisonParsedTracks,
     getComparisonParticipantsDelay,
     getPlanningIds,
     getSelectedTracks,
     getSelectedVersions,
-} from '../store/tracks.reducer.ts';
-import {
-    getComparisonMapStartAndEndTimes,
-    getCurrenMapTime as getCurrenComparisonMapTime,
-} from '../store/map.reducer.ts';
-import { MAX_SLIDER_TIME } from '../../common/constants.ts';
-import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+} from '../store/tracks.reducer';
+import { getComparisonMapStartAndEndTimes, getCurrenMapTime as getCurrenComparisonMapTime } from '../store/map.reducer';
+import { MAX_SLIDER_TIME } from '../../common/constants';
+import { getTimeDifferenceInSeconds } from '../../utils/dateUtil';
 import { addSeconds } from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
-import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
-import { getColor } from '../../utils/colorUtil.ts';
+import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants';
+import { getColor } from '../../utils/colorUtil';
 
 const extractLocationComparison =
     (timeStampsFront: Record<string, string>, participantsDelayInSeconds: Record<string, number | undefined>) =>

@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { UnknownWarning } from '../../../streets/UnknownWarning.tsx';
-import { StreetInfoModal } from '../../elements/StreetInfoModal.tsx';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { UnknownWarning } from '../../../streets/UnknownWarning';
+import { StreetInfoModal } from '../../elements/StreetInfoModal';
 
 export const PlannerSidebarOverviewChecks = () => {
     const tracks = useSelector(getTrackCompositions);

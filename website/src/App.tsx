@@ -1,17 +1,17 @@
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import { ErrorBoundary } from './common/ErrorBoundary.tsx';
-import { RallyPlannerWrapper } from './planner/RallyPlanner.tsx';
-import { RallyDisplayWrapper } from './display/RallyDisplayWrapper.tsx';
-import { RallyTableWrapper } from './display/RallyTableWrapper.tsx';
-import { RallyComparisonWrapper } from './comparison/RallyComparisonWrapper.tsx';
-import { useGetUrlParam } from './utils/linkUtil.ts';
-import { planningStore } from './planner/store/planningStore.ts';
-import { displayStore } from './display/store/store.ts';
-import { comparisonStore } from './comparison/store/store.ts';
-import { Imprint } from './Imprint.tsx';
-import { StreetPathMapWrapper } from './street-path/StreetPathMap.tsx';
+import { ErrorBoundary } from './common/ErrorBoundary';
+import { RallyPlannerWrapper } from './planner/RallyPlanner';
+import { RallyDisplayWrapper } from './display/RallyDisplayWrapper';
+import { RallyTableWrapper } from './display/RallyTableWrapper';
+import { RallyComparisonWrapper } from './comparison/RallyComparisonWrapper';
+import { useGetUrlParam } from './utils/linkUtil';
+import { planningStore } from './planner/store/planningStore';
+import { displayStore } from './display/store/store';
+import { comparisonStore } from './comparison/store/store';
+import { Imprint } from './Imprint';
+import { StreetPathMapWrapper } from './street-path/StreetPathMap';
 
 export function App() {
     const streetPath = useGetUrlParam('streetpath');

@@ -1,5 +1,5 @@
-import { isTrackSegment, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../store/types.ts';
-import { getStreetLookupIndex } from '../helper/getStreetLookupIndex.ts';
+import { isTrackSegment, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../store/types';
+import { getStreetLookupIndex } from '../helper/getStreetLookupIndex';
 
 export interface RoutePointReference {
     segmentId: string;

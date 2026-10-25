@@ -1,4 +1,4 @@
-import { ParsedPoint, TimedPoint } from '../../../store/types.ts';
+import { ParsedPoint, TimedPoint } from '../../../store/types';
 
 type PointWithStreetLookupIndex = Pick<ParsedPoint | TimedPoint, 's' | 'm'>;
 

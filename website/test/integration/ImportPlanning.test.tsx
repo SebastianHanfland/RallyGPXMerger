@@ -7,7 +7,7 @@ import { createPlanningStore } from '../../src/planner/store/planningStore';
 import * as fs from 'node:fs';
 import { State } from '../../src/planner/store/types';
 import { useGetUrlParam } from '../../src/utils/linkUtil';
-import { plannerUi as ui } from './accessObjects/PlannerTestAccess.ts';
+import { plannerUi as ui } from './accessObjects/PlannerTestAccess';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';

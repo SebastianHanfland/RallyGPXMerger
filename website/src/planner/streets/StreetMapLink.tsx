@@ -1,6 +1,6 @@
-import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon.tsx';
-import { StreetPathPoint } from '../logic/resolving/types.ts';
-import { createStreetPathUrl } from '../../utils/streetPathUrl.ts';
+import { GeoLinkIcon } from '../../utils/icons/GeoLinkIcon';
+import { StreetPathPoint } from '../logic/resolving/types';
+import { createStreetPathUrl } from '../../utils/streetPathUrl';
 
 interface Props {
     path?: StreetPathPoint[];

@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
-import { getGapToleranceInKm } from '../store/settings.reducer.ts';
-import { getGaps } from '../calculation/getGaps.ts';
+import { WarningIcon } from '../../utils/icons/WarningIcon';
+import { getGapToleranceInKm } from '../store/settings.reducer';
+import { getGaps } from '../calculation/getGaps';
 
 interface Props {
     trackId: string;

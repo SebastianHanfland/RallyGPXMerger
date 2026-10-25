@@ -1,9 +1,9 @@
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
 import { useSelector } from 'react-redux';
-import { getHighlightedStreetPath } from '../../store/map.reducer.ts';
-import { TRACK_MARKER } from '../panes.ts';
-import { getStreetLookup } from '../../store/segmentData.redux.ts';
+import { getHighlightedStreetPath } from '../../store/map.reducer';
+import { TRACK_MARKER } from '../panes';
+import { getStreetLookup } from '../../store/segmentData.redux';
 
 export function streetHighlightDisplayHook(streetHighlightLayer: RefObject<LayerGroup | null>) {
     const highlightedStreetPath = useSelector(getHighlightedStreetPath);

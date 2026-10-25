@@ -1,5 +1,5 @@
-import { ParticipantsDelaySetter } from './ParticipantsDelaySetter.tsx';
-import { AverageSpeedSetter } from './AverageSpeedSetter.tsx';
+import { ParticipantsDelaySetter } from './ParticipantsDelaySetter';
+import { AverageSpeedSetter } from './AverageSpeedSetter';
 
 export function TrackMergeParameters() {
     return (

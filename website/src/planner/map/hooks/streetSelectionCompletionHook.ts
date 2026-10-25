@@ -1,10 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
-import { getStreetPointSelection, mapActions } from '../../store/map.reducer.ts';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
-import { applyStreetSelection } from '../../streets/streetEditing.ts';
+import { getParsedGpxSegments } from '../../store/segmentData.redux';
+import { getStreetPointSelection, mapActions } from '../../store/map.reducer';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
+import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing';
+import { applyStreetSelection } from '../../streets/streetEditing';
 
 export function streetSelectionCompletionHook() {
     const selection = useSelector(getStreetPointSelection);

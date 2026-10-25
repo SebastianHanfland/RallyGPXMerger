@@ -1,11 +1,11 @@
 import { FileUploader } from 'react-drag-drop-files';
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { ConstructionFileDisplay } from './ConstructionFileDisplay.tsx';
+import { ConstructionFileDisplay } from './ConstructionFileDisplay';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getConstructionSegments, segmentDataActions } from '../store/segmentData.redux.ts';
-import { toParsedGpxSegment } from '../segments/segmentParsing.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
+import { getConstructionSegments, segmentDataActions } from '../store/segmentData.redux';
+import { toParsedGpxSegment } from '../segments/segmentParsing';
+import { getAverageSpeedInKmH } from '../store/settings.reducer';
 
 const fileTypes = ['GPX'];
 

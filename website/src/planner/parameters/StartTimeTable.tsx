@@ -1,16 +1,16 @@
 import { Button, Form, Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
 import { useSelector } from 'react-redux';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
-import { TrackBuffer } from '../tracks/components/TrackBuffer.tsx';
-import { TrackRounding } from '../tracks/components/TrackRounding.tsx';
-import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
+import { formatTimeOnly } from '../../utils/dateUtil';
+import { TrackBuffer } from '../tracks/components/TrackBuffer';
+import { TrackRounding } from '../tracks/components/TrackRounding';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos';
 import { useState } from 'react';
-import { getCount } from '../../utils/inputUtil.ts';
+import { getCount } from '../../utils/inputUtil';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/planningStore.ts';
-import { trackMergeActions } from '../store/trackMerge.reducer.ts';
+import { AppDispatch } from '../store/planningStore';
+import { trackMergeActions } from '../store/trackMerge.reducer';
 
 export const StartTimeTable = () => {
     const tracks = useSelector(getTrackCompositions);

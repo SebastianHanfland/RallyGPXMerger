@@ -1,14 +1,14 @@
 import { Provider, useSelector } from 'react-redux';
-import { ComparisonMap } from './map/ComparisonMap.tsx';
+import { ComparisonMap } from './map/ComparisonMap';
 import { Container } from 'react-bootstrap';
-import { NavigationBar } from './NavigationBar.tsx';
-import { getIsComparisonLoading } from './store/tracks.reducer.ts';
+import { NavigationBar } from './NavigationBar';
+import { getIsComparisonLoading } from './store/tracks.reducer';
 import { FormattedMessage, IntlProvider } from 'react-intl';
-import { getLanguage } from '../language.ts';
-import { getMessages } from '../lang/getMessages.ts';
-import { useGetUrlParam } from '../utils/linkUtil.ts';
+import { getLanguage } from '../language';
+import { getMessages } from '../lang/getMessages';
+import { useGetUrlParam } from '../utils/linkUtil';
 import { Store } from '@reduxjs/toolkit';
-import { useLoadPlanningsHook } from './data/useLoadPlanningsHook.ts';
+import { useLoadPlanningsHook } from './data/useLoadPlanningsHook';
 
 function RallyComparison() {
     const planningIds = useGetUrlParam('comparison')?.split(',') ?? [];

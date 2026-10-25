@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { SimpleSettingsModal } from './SimpleSettingsModal.tsx';
+import { SimpleSettingsModal } from './SimpleSettingsModal';
 
 export function SimpleSettingsButton() {
     const [displayModal, setDisplayModal] = useState(false);

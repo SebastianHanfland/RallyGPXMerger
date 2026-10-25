@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import { SEGMENT, ParsedPoint, TrackComposition } from '../../store/types.ts';
-import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing.ts';
-import { abortStreetSelection, applyStreetSelection, beginNewStreet, getStreetPath } from '../streetEditing.ts';
+import { SEGMENT, ParsedPoint, TrackComposition } from '../../store/types';
+import { getRoutePointReferences } from '../../logic/resolving/streets/streetRangeEditing';
+import { abortStreetSelection, applyStreetSelection, beginNewStreet, getStreetPath } from '../streetEditing';
 
 const track: TrackComposition = {
     id: 'track',

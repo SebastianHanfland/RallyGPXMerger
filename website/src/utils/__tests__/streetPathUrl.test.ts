@@ -1,9 +1,4 @@
-import {
-    createStreetPathUrl,
-    createStreetPointUrl,
-    decodeStreetPath,
-    STREET_PATH_URL_LIMIT,
-} from '../streetPathUrl.ts';
+import { createStreetPathUrl, createStreetPointUrl, decodeStreetPath, STREET_PATH_URL_LIMIT } from '../streetPathUrl';
 
 describe('street path URLs', () => {
     it('round-trips exact geometry and the street name when the URL fits', () => {

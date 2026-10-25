@@ -1,8 +1,8 @@
-import { ColorBlob } from '../../utils/ColorBlob.tsx';
-import { getColor } from '../../utils/colorUtil.ts';
-import { WcIcon } from '../../utils/icons/WcIcon.tsx';
+import { ColorBlob } from '../../utils/ColorBlob';
+import { getColor } from '../../utils/colorUtil';
+import { WcIcon } from '../../utils/icons/WcIcon';
 import { FormattedMessage } from 'react-intl';
-import { getPointTypeMessageId, pointOfInterestConfig, pointOfInterestTypesByGroup } from './pointOfInterestConfig.ts';
+import { getPointTypeMessageId, pointOfInterestConfig, pointOfInterestTypesByGroup } from './pointOfInterestConfig';
 
 export function PointsOfInterestTypeHint() {
     return (

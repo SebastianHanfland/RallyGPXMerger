@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer.ts';
+import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
-import { TrashIcon } from '../../../utils/icons/TrashIcon.tsx';
-import { isDefined } from '../../../utils/typeUtil.ts';
+import { TrashIcon } from '../../../utils/icons/TrashIcon';
+import { isDefined } from '../../../utils/typeUtil';
 
 export const ResetAllNodeSpecsButton = () => {
     const nodeSpecifications = useSelector(getNodeSpecifications);

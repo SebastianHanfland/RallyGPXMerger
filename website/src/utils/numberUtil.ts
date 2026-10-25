@@ -1,4 +1,4 @@
-import { getLanguage } from '../language.ts';
+import { getLanguage } from '../language';
 
 export function formatNumber(numberToFormat: number, maximumFractionDigits = 2) {
     const language = getLanguage();

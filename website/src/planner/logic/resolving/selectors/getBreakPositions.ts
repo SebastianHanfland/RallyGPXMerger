@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getFilteredTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { isTrackBreak } from '../../../store/types.ts';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { getLanguage } from '../../../../language.ts';
-import { formatTimeOnly } from '../../../../utils/dateUtil.ts';
+import { getFilteredTrackCompositions } from '../../../store/trackMerge.reducer';
+import { isTrackBreak } from '../../../store/types';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { getLanguage } from '../../../../language';
+import { formatTimeOnly } from '../../../../utils/dateUtil';
 
 export interface BreakPosition {
     point: { lat: number; lon: number };

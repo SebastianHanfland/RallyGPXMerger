@@ -1,12 +1,12 @@
 import { Table } from 'react-bootstrap';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getPoints } from '../store/points.reducer.ts';
-import { PointOfInterestDisplay } from './PointOfInterestDisplay.tsx';
+import { getPoints } from '../store/points.reducer';
+import { PointOfInterestDisplay } from './PointOfInterestDisplay';
 import { FormattedMessage } from 'react-intl';
-import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
-import { PointsOfInterestTypeHint } from './PointsOfInterestTypeHint.tsx';
-import { pointOfInterestTypesByGroup } from './pointOfInterestConfig.ts';
+import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton';
+import { PointsOfInterestTypeHint } from './PointsOfInterestTypeHint';
+import { pointOfInterestTypesByGroup } from './pointOfInterestConfig';
 
 export function PointsOfInterest({ onNavigateToPoint }: { onNavigateToPoint?: () => void }) {
     const pointOfInterests = useSelector(getPoints) ?? [];

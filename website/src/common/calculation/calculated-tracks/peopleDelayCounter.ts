@@ -1,5 +1,5 @@
-import { BREAK, NODE, NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
-import { getDelaysOfTracks } from './getSpecifiedDelayPerTrack.ts';
+import { BREAK, NODE, NodeSpecifications, TrackComposition } from '../../../planner/store/types';
+import { getDelaysOfTracks } from './getSpecifiedDelayPerTrack';
 
 export function getExtraDelayOnTrack(
     track: TrackComposition,

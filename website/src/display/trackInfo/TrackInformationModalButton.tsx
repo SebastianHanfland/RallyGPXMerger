@@ -1,14 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getEndDisplayMapTime,
-    getIsLive,
-    getStartDisplayMapTime,
-    displayMapActions,
-} from '../store/displayMapReducer.ts';
-import { setStartAndEndTime } from '../data/loadFilesHook.ts';
-import { DisplayDispatch } from '../store/store.ts';
+import { getEndDisplayMapTime, getIsLive, getStartDisplayMapTime, displayMapActions } from '../store/displayMapReducer';
+import { setStartAndEndTime } from '../data/loadFilesHook';
+import { DisplayDispatch } from '../store/store';
 
 export function TrackInformationModalButton() {
     const dispatch: DisplayDispatch = useDispatch();

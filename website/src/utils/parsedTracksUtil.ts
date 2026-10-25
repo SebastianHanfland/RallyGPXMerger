@@ -1,6 +1,6 @@
-import { CalculatedTrack } from '../common/types.ts';
-import { TrackComposition } from '../planner/store/types.ts';
-import { shiftEndTimeByParticipants } from './dateUtil.ts';
+import { CalculatedTrack } from '../common/types';
+import { TrackComposition } from '../planner/store/types';
+import { shiftEndTimeByParticipants } from './dateUtil';
 
 export function getStartAndEndOfParsedTracks(calculatedTracks: CalculatedTrack[]): { start: string; end: string } {
     let endDate = '1990-10-14T10:09:57.000Z';

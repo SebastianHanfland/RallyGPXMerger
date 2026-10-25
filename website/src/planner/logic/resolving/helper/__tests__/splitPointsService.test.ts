@@ -1,4 +1,4 @@
-import { splitListIntoSections } from '../splitPointsService.ts';
+import { splitListIntoSections } from '../splitPointsService';
 
 describe('splitPointsService', () => {
     it('should split lists', () => {

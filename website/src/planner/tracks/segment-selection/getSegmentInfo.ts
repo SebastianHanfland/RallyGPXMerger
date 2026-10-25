@@ -1,6 +1,6 @@
-import { AggregatedPoints } from '../../logic/resolving/types.ts';
-import { formatNumber } from '../../../utils/numberUtil.ts';
-import { isDefined } from '../../../utils/typeUtil.ts';
+import { AggregatedPoints } from '../../logic/resolving/types';
+import { formatNumber } from '../../../utils/numberUtil';
+import { isDefined } from '../../../utils/typeUtil';
 
 export function getSegmentSpeed(aggregatedInfo: AggregatedPoints[] | undefined) {
     if (!aggregatedInfo || aggregatedInfo.length === 0) {

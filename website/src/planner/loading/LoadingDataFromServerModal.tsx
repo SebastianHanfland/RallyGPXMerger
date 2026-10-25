@@ -1,17 +1,17 @@
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
+import { useGetUrlParam } from '../../utils/linkUtil';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { useEffect, useState } from 'react';
-import { getData } from '../../api/api.ts';
-import { backendActions, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
-import { AppDispatch } from '../store/planningStore.ts';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { storage } from '../store/storage.ts';
-import { loadPlanning } from './loadPlanningFromServer.ts';
-import { isStateTheSame } from './IsStateTheSame.ts';
-import { errorNotification } from '../store/toast.reducer.ts';
+import { getData } from '../../api/api';
+import { backendActions, getPlanningId, getPlanningPassword } from '../store/backend.reducer';
+import { AppDispatch } from '../store/planningStore';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { getParsedGpxSegments } from '../store/segmentData.redux';
+import { storage } from '../store/storage';
+import { loadPlanning } from './loadPlanningFromServer';
+import { isStateTheSame } from './IsStateTheSame';
+import { errorNotification } from '../store/toast.reducer';
 
 export function LoadingDataFromServerModal() {
     const planningId = useGetUrlParam('planning');

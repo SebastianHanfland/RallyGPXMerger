@@ -1,4 +1,4 @@
-import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { getBaseUrl } from '../../utils/linkUtil';
 
 export interface PlanningLink {
     messageId: string;

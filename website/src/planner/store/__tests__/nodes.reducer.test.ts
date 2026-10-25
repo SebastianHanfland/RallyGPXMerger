@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../planningStore.ts';
-import { getNodeStreetNames, nodesActions } from '../nodes.reducer.ts';
+import { createPlanningStore } from '../planningStore';
+import { getNodeStreetNames, nodesActions } from '../nodes.reducer';
 
 describe('nodes reducer street names', () => {
     it('stores and clears a shared node street name', () => {

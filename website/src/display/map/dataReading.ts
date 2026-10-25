@@ -1,21 +1,21 @@
-import { CalculatedTrack } from '../../common/types.ts';
-import { DisplayState } from '../store/types.ts';
-import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack.ts';
-import { getDisplayParticipantsDelay, getDisplayTracks } from '../store/displayTracksReducer.ts';
+import { CalculatedTrack } from '../../common/types';
+import { DisplayState } from '../store/types';
+import { extractSnakeTrackFromCalculatedTrack } from '../../common/calculation/snake/extractSnakeTrack';
+import { getDisplayParticipantsDelay, getDisplayTracks } from '../store/displayTracksReducer';
 import {
     getCurrenDisplayMapTime,
     getCurrentRealTime,
     getEndDisplayMapTime,
     getIsLive,
     getStartDisplayMapTime,
-} from '../store/displayMapReducer.ts';
-import { MAX_SLIDER_TIME } from '../../common/constants.ts';
-import { getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+} from '../store/displayMapReducer';
+import { MAX_SLIDER_TIME } from '../../common/constants';
+import { getTimeDifferenceInSeconds } from '../../utils/dateUtil';
 import { addSeconds } from 'date-and-time';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap.ts';
-import { getColor } from '../../utils/colorUtil.ts';
+import { BikeSnake } from '../../common/map/addSnakeWithBikeToMap';
+import { getColor } from '../../utils/colorUtil';
 
 const extractLocationDisplay =
     (timeStampFront: string, participantsDelayInSeconds: number) =>

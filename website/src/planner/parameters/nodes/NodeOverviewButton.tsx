@@ -2,8 +2,8 @@ import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { NodeOverviewContent } from './NodeOverviewContent.tsx';
-import { NodeIcon } from '../../../utils/icons/NodeIcon.tsx';
+import { NodeOverviewContent } from './NodeOverviewContent';
+import { NodeIcon } from '../../../utils/icons/NodeIcon';
 
 export const NodeOverviewButton = () => {
     const [open, setOpen] = useState(false);

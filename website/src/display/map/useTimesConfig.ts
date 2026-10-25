@@ -1,4 +1,4 @@
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
+import { useGetUrlParam } from '../../utils/linkUtil';
 
 export function useTimesConfig(): 'off' | 'defaultOff' | 'defaultOn' {
     const timesParam = useGetUrlParam('times');

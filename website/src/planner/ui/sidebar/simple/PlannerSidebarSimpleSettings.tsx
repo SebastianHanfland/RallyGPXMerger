@@ -1,5 +1,5 @@
-import { ApiKeyInput } from '../../../streets/ApiKeyInput.tsx';
-import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
+import { ApiKeyInput } from '../../../streets/ApiKeyInput';
+import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets';
 
 export const PlannerSidebarSimpleSettings = () => {
     return (

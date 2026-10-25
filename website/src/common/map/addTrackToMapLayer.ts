@@ -1,10 +1,10 @@
 import L, { LayerGroup, LeafletMouseEvent, Polyline } from 'leaflet';
-import { getColor } from '../../utils/colorUtil.ts';
-import { endIcon, startIcon } from './MapIcons.ts';
-import { CalculatedTrack } from '../types.ts';
-import { getLanguage } from '../../language.ts';
-import { getLatLng } from '../../utils/pointUtil.ts';
-import { ParsedGpxSegment } from '../../planner/store/types.ts';
+import { getColor } from '../../utils/colorUtil';
+import { endIcon, startIcon } from './MapIcons';
+import { CalculatedTrack } from '../types';
+import { getLanguage } from '../../language';
+import { getLatLng } from '../../utils/pointUtil';
+import { ParsedGpxSegment } from '../../planner/store/types';
 import { RefObject } from 'react';
 
 export interface MapOptions {

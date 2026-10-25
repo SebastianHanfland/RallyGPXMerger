@@ -1,5 +1,5 @@
-import { CalculatedTrack } from '../../common/types.ts';
-import { ParsedGpxSegment } from '../../planner/store/types.ts';
+import { CalculatedTrack } from '../../common/types';
+import { ParsedGpxSegment } from '../../planner/store/types';
 
 export interface ComparisonState {
     parsedTracks: Record<string, CalculatedTrack[] | undefined>;

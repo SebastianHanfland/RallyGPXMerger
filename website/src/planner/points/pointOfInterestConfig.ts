@@ -1,4 +1,4 @@
-import { PointOfInterestType } from '../store/types.ts';
+import { PointOfInterestType } from '../store/types';
 
 export type PointOfInterestGroup = 'public' | 'todo' | 'impediment' | 'internal';
 export type PointOfInterestDialogGroup = 'open' | 'internal' | 'public';

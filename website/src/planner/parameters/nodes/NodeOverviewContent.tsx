@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
-import { getDelaysOfTracksSelector } from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
-import { getColor } from '../../../utils/colorUtil.ts';
+import { getDelaysOfTracksSelector } from '../../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack';
+import { getColor } from '../../../utils/colorUtil';
 import { ProgressBar } from 'react-bootstrap';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { getParticipantsDelay } from '../../store/settings.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
+import { getParticipantsDelay } from '../../store/settings.reducer';
 import { useIntl } from 'react-intl';
-import { BREAK } from '../../store/types.ts';
-import { compareDelays, getTotalDelay } from '../../../utils/delayUtil.ts';
+import { BREAK } from '../../store/types';
+import { compareDelays, getTotalDelay } from '../../../utils/delayUtil';
 
 export const NodeOverviewContent = () => {
     const intl = useIntl();

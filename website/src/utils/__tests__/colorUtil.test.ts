@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getColorFromString } from '../colorUtil.ts';
+import { getColorFromString } from '../colorUtil';
 
 describe('getColorFromString', () => {
     it('returns a stable valid hex color for a street name', () => {

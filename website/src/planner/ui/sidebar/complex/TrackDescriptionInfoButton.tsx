@@ -1,4 +1,4 @@
-import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
+import { DescriptionInfoButton } from '../DescriptionInfoButton';
 
 export const TrackDescriptionInfoButton = () => {
     return (

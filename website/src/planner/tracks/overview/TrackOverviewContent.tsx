@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { TrackSegmentSelectionMinimum } from './TrackSegmentSelectionMinimum.tsx';
-import { isTrackSegment, TrackComposition } from '../../store/types.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
+import { TrackSegmentSelectionMinimum } from './TrackSegmentSelectionMinimum';
+import { isTrackSegment, TrackComposition } from '../../store/types';
 import { FormattedMessage } from 'react-intl';
 
 const getSegmentIds = (track: TrackComposition) => {

@@ -1,4 +1,4 @@
-import { BlockedStreetInfo, WayPoint } from '../logic/resolving/types.ts';
+import { BlockedStreetInfo, WayPoint } from '../logic/resolving/types';
 
 export function wayPointHasUnknown(wayPoint: WayPoint | BlockedStreetInfo, unknown: string) {
     return (

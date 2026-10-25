@@ -7,15 +7,15 @@ import {
     PEOPLE,
     PRIORITY,
     TrackComposition,
-} from '../../../planner/store/types.ts';
-import { NodeAtTrack, trackNodesBySegmentSize } from '../nodes/nodeFinder.ts';
-import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize.ts';
-import { getBranchPriorities } from './getBranchPriorities.ts';
+} from '../../../planner/store/types';
+import { NodeAtTrack, trackNodesBySegmentSize } from '../nodes/nodeFinder';
+import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize';
+import { getBranchPriorities } from './getBranchPriorities';
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
-import { getParticipantsDelay } from '../../../planner/store/settings.reducer.ts';
-import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
-import { getNodeOffset } from './nodeSpecOffset.ts';
+import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer';
+import { getParticipantsDelay } from '../../../planner/store/settings.reducer';
+import { getNodeSpecifications } from '../../../planner/store/nodes.reducer';
+import { getNodeOffset } from './nodeSpecOffset';
 
 type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
 

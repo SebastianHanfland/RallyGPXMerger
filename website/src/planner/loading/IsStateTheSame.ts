@@ -1,4 +1,4 @@
-import { State } from '../store/types.ts';
+import { State } from '../store/types';
 
 export function isStateTheSame(serverState: State, storedState: State): boolean {
     const stateAreas = [

@@ -1,14 +1,14 @@
-import { TrackWayPointType, WayPoint } from '../../logic/resolving/types.ts';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
+import { TrackWayPointType, WayPoint } from '../../logic/resolving/types';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil';
 import { IntlShape } from 'react-intl';
-import { getTrackTableHeaders } from '../getHeader.ts';
-import { formatNumber } from '../../../utils/numberUtil.ts';
+import { getTrackTableHeaders } from '../getHeader';
+import { formatNumber } from '../../../utils/numberUtil';
 import { Link, Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles.ts';
-import { TrackStreetTableNodeRow } from './TrackStreetTableNodeRow.tsx';
-import { TrackStreetTableBreakRow } from './TrackStreetTableBreakRow.tsx';
-import { TrackStreetTableEntryPointRow } from './TrackStreetTableEntryPointRow.tsx';
-import { createStreetPathUrl } from '../../../utils/streetPathUrl.ts';
+import { pdfStyles } from './pdfStyles';
+import { TrackStreetTableNodeRow } from './TrackStreetTableNodeRow';
+import { TrackStreetTableBreakRow } from './TrackStreetTableBreakRow';
+import { TrackStreetTableEntryPointRow } from './TrackStreetTableEntryPointRow';
+import { createStreetPathUrl } from '../../../utils/streetPathUrl';
 
 interface Props {
     wayPoints: WayPoint[];

@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositionFilterTerm } from './trackMerge.reducer.ts';
-import { filterItems } from '../../utils/filterUtil.ts';
-import { CalculatedTrack } from '../../common/types.ts';
-import { getCalculateTracks } from '../calculation/getCalculatedTracks.ts';
+import { getTrackCompositionFilterTerm } from './trackMerge.reducer';
+import { filterItems } from '../../utils/filterUtil';
+import { CalculatedTrack } from '../../common/types';
+import { getCalculateTracks } from '../calculation/getCalculatedTracks';
 
 export const getFilteredCalculatedTracks = createSelector(
     [getCalculateTracks, getTrackCompositionFilterTerm],

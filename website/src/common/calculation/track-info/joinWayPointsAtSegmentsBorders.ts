@@ -1,6 +1,6 @@
-import { TrackWayPointType, WayPoint } from '../../../planner/logic/resolving/types.ts';
-import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName.ts';
-import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
+import { TrackWayPointType, WayPoint } from '../../../planner/logic/resolving/types';
+import { isSameStreetName } from '../../../planner/logic/resolving/streets/isSameStreetName';
+import { getTimeDifferenceInSeconds } from '../../../utils/dateUtil';
 
 function mergePoints(matchedWayPoint: WayPoint, matchedTrackPoint: WayPoint): WayPoint {
     const totalDistance = (matchedWayPoint.distanceInKm ?? 0) + (matchedTrackPoint.distanceInKm ?? 0);

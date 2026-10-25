@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { ProgressBar } from 'react-bootstrap';
-import { getColor } from '../../utils/colorUtil.ts';
-import { BREAK, TrackComposition } from '../store/types.ts';
+import { getColor } from '../../utils/colorUtil';
+import { BREAK, TrackComposition } from '../store/types';
 import {
     getDelaysOfTracksSelector,
     TrackDelayDetails,
-} from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
-import { getParticipantsDelay } from '../store/settings.reducer.ts';
-import { getTotalDelay } from '../../utils/delayUtil.ts';
+} from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack';
+import { getParticipantsDelay } from '../store/settings.reducer';
+import { getTotalDelay } from '../../utils/delayUtil';
 
 interface Props {
     segmentId: string;

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { isTrackBreak, isTrackSegment, SettingsState, State } from './types.ts';
-import { storage } from './storage.ts';
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_IN_SECONDS } from './constants.ts';
-import { shiftDateBySeconds } from '../../utils/dateUtil.ts';
-import { getParsedGpxSegments } from './segmentData.redux.ts';
-import { getTrackCompositions } from './trackMerge.reducer.ts';
+import { isTrackBreak, isTrackSegment, SettingsState, State } from './types';
+import { storage } from './storage';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H, DEFAULT_GAP_TOLERANCE, DELAY_PER_PERSON_IN_SECONDS } from './constants';
+import { shiftDateBySeconds } from '../../utils/dateUtil';
+import { getParsedGpxSegments } from './segmentData.redux';
+import { getTrackCompositions } from './trackMerge.reducer';
 
 const initialState: SettingsState = {
     participantDelay: DELAY_PER_PERSON_IN_SECONDS,

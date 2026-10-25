@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getShowPointsOfInterest } from '../../store/map.reducer.ts';
-import { getPoints, pointsActions } from '../../store/points.reducer.ts';
-import { createPointOfInterestMarker } from '../../../common/map/pointOfInterestMarker.ts';
-import { getGaps } from '../../calculation/getGaps.ts';
+import { getShowPointsOfInterest } from '../../store/map.reducer';
+import { getPoints, pointsActions } from '../../store/points.reducer';
+import { createPointOfInterestMarker } from '../../../common/map/pointOfInterestMarker';
+import { getGaps } from '../../calculation/getGaps';
 
 export function pointsOfInterestDisplayHook(pointsOfInterestLayer: RefObject<LayerGroup | null>) {
     const points = useSelector(getPoints);

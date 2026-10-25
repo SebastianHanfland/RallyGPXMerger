@@ -1,9 +1,9 @@
 import { RefObject, useEffect, useState } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi.ts';
-import { blueBike } from '../../common/map/MapIcons.ts';
+import { fetchCriticalMapsLocation } from './criticalMapsLocationsApi';
+import { blueBike } from '../../common/map/MapIcons';
 import { useSelector } from 'react-redux';
-import { getIsLive } from '../store/displayMapReducer.ts';
+import { getIsLive } from '../store/displayMapReducer';
 
 const EVERY_MINUTE = 60 * 1000;
 const convertToCoord = (latitude: number) => {

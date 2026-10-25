@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { NodeEditInfo, NodeSpecification, NodesState, State } from './types.ts';
-import { storage } from './storage.ts';
+import { NodeEditInfo, NodeSpecification, NodesState, State } from './types';
+import { storage } from './storage';
 
 const initialState: NodesState = {
     nodeEditInfo: undefined,

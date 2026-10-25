@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
-import { listAllNodesOfTracks, NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
-import { TrackComposition } from '../../store/types.ts';
-import { nodesActions } from '../../store/nodes.reducer.ts';
-import { NodeIcon } from '../../../utils/icons/NodeIcon.tsx';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
+import { listAllNodesOfTracks, NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder';
+import { TrackComposition } from '../../store/types';
+import { nodesActions } from '../../store/nodes.reducer';
+import { NodeIcon } from '../../../utils/icons/NodeIcon';
 
 interface Props {
     segmentId: string;

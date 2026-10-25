@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getCurrenMapTime } from '../../store/map.reducer.ts';
-import { getBikeSnakesForPlanningMap } from './trackSimulationReader.ts';
-import { addBikeSnakesToLayer } from '../../../common/map/addSnakeWithBikeToMap.ts';
-import { CalculatedTrack } from '../../../common/types.ts';
-import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
+import { getCurrenMapTime } from '../../store/map.reducer';
+import { getBikeSnakesForPlanningMap } from './trackSimulationReader';
+import { addBikeSnakesToLayer } from '../../../common/map/addSnakeWithBikeToMap';
+import { CalculatedTrack } from '../../../common/types';
+import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer';
 
 export function snakeForPlanningMapHook(snakeLayer: RefObject<LayerGroup | null>) {
     const calculatedTracks: CalculatedTrack[] = useSelector(getFilteredCalculatedTracks);

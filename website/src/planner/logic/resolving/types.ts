@@ -1,4 +1,4 @@
-import { ParsedPoint } from '../../store/types.ts';
+import { ParsedPoint } from '../../store/types';
 
 export interface GeoApifyLegStep {
     osm_way_id: number;

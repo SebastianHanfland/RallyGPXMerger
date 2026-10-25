@@ -2,10 +2,10 @@ import { ProgressBar, Button, Modal } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux.ts';
-import { AppDispatch } from '../store/planningStore.ts';
-import { resolveStreetNames } from '../logic/resolving/streets/resolveStreetNames.ts';
-import { successNotification } from '../store/toast.reducer.ts';
+import { getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux';
+import { AppDispatch } from '../store/planningStore';
+import { resolveStreetNames } from '../logic/resolving/streets/resolveStreetNames';
+import { successNotification } from '../store/toast.reducer';
 
 export function ResetAllResolvedStreets() {
     const intl = useIntl();

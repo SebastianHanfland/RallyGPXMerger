@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { GpxSegmentContent } from './GpxSegmentContent.tsx';
-import { getClickOnSegment, segmentDataActions } from '../store/segmentData.redux.ts';
+import { GpxSegmentContent } from './GpxSegmentContent';
+import { getClickOnSegment, segmentDataActions } from '../store/segmentData.redux';
 
 export const GpxSegmentDialog = () => {
     const clickOnSegment = useSelector(getClickOnSegment);

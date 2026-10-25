@@ -1,9 +1,9 @@
-import { NodeSpecifications, TrackComposition } from '../../../planner/store/types.ts';
-import { listAllNodesOfTracks, NodeAtTrack } from '../nodes/nodeFinder.ts';
+import { NodeSpecifications, TrackComposition } from '../../../planner/store/types';
+import { listAllNodesOfTracks, NodeAtTrack } from '../nodes/nodeFinder';
 import { createSelector } from '@reduxjs/toolkit';
-import { getNodeSpecifications } from '../../../planner/store/nodes.reducer.ts';
-import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
-import { getNodeOffset } from './nodeSpecOffset.ts';
+import { getNodeSpecifications } from '../../../planner/store/nodes.reducer';
+import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer';
+import { getNodeOffset } from './nodeSpecOffset';
 
 export const getBranchId = (trackIds: string[]): string => {
     const sortedIds = trackIds.sort();

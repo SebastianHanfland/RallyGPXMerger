@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getFilteredTrackCompositions, getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { ENTRY, isTrackEntryPoint, TrackEntry } from '../../../store/types.ts';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
+import { getFilteredTrackCompositions, getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { ENTRY, isTrackEntryPoint, TrackEntry } from '../../../store/types';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
 
 export interface EntryPointPosition extends TrackEntry {
     point: { lat: number; lon: number };

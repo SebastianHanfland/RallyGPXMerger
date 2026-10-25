@@ -1,18 +1,18 @@
-import { getTrackCompositions } from '../../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { ColorBlob } from '../../../utils/ColorBlob.tsx';
-import { getColor } from '../../../utils/colorUtil.ts';
-import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
+import { ColorBlob } from '../../../utils/ColorBlob';
+import { getColor } from '../../../utils/colorUtil';
+import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder';
 import {
     getBranchId,
     getBranchNumbersSelector,
     getBranchTrackIds,
-} from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize.ts';
-import { isDefined } from '../../../utils/typeUtil.ts';
-import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
-import { mapActions } from '../../store/map.reducer.ts';
-import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
-import { getLatLng } from '../../../utils/pointUtil.ts';
+} from '../../../common/calculation/calculated-tracks/nodeSpecResultingBranchSize';
+import { isDefined } from '../../../utils/typeUtil';
+import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon';
+import { mapActions } from '../../store/map.reducer';
+import { getParsedGpxSegments } from '../../store/segmentData.redux';
+import { getLatLng } from '../../../utils/pointUtil';
 
 interface Props {
     trackNode: NodeAtTrack;

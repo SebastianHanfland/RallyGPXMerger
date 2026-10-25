@@ -1,10 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { listAllNodesOfTracks, NodeAtTrack } from '../../../../common/calculation/nodes/nodeFinder.ts';
-import { TrackComposition } from '../../../store/types.ts';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { getLatLon } from '../../../../utils/pointUtil.ts';
-import { getNodeStreetNames } from '../../../store/nodes.reducer.ts';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { listAllNodesOfTracks, NodeAtTrack } from '../../../../common/calculation/nodes/nodeFinder';
+import { TrackComposition } from '../../../store/types';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux';
+import { getLatLon } from '../../../../utils/pointUtil';
+import { getNodeStreetNames } from '../../../store/nodes.reducer';
 
 export interface NodePosition {
     point: { lat: number; lon: number };

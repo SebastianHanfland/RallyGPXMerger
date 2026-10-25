@@ -2,11 +2,11 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { displayMapActions, getShowSingleTrackInfo, getShowTrackInfo } from '../store/displayMapReducer.ts';
-import { TrackInformationModalBody } from './TrackInformationModalBody.tsx';
-import { ZipFilesDownloader } from './TracksDownload.tsx';
+import { displayMapActions, getShowSingleTrackInfo, getShowTrackInfo } from '../store/displayMapReducer';
+import { TrackInformationModalBody } from './TrackInformationModalBody';
+import { ZipFilesDownloader } from './TracksDownload';
 import L from 'leaflet';
-import { TrackInformationPdfZipDownloadButton } from './TrackInformationPdfZipDownloadButton.tsx';
+import { TrackInformationPdfZipDownloadButton } from './TrackInformationPdfZipDownloadButton';
 
 export function TrackInformationModal() {
     const dispatch = useDispatch();

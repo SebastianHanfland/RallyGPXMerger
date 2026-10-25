@@ -1,6 +1,6 @@
 import { ButtonGroup, DropdownButton } from 'react-bootstrap';
-import { TrackComposition } from '../store/types.ts';
-import { TrackActionItems } from './TrackActionItems.tsx';
+import { TrackComposition } from '../store/types';
+import { TrackActionItems } from './TrackActionItems';
 
 interface Props {
     track: TrackComposition;

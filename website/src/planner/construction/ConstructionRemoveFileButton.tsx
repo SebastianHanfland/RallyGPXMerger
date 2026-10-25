@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
 import { useIntl } from 'react-intl';
-import { segmentDataActions } from '../store/segmentData.redux.ts';
+import { segmentDataActions } from '../store/segmentData.redux';
 
 interface Props {
     id: string;

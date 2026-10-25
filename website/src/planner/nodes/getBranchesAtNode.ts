@@ -1,14 +1,14 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
-import { getNodeEditInfo, getNodeSpecifications } from '../store/nodes.reducer.ts';
-import { listAllNodesOfTracks, NodeAtTrack } from '../../common/calculation/nodes/nodeFinder.ts';
-import { NodeSpecification } from '../store/types.ts';
-import { getBranchTracks } from './getBranchTracks.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { getNodeEditInfo, getNodeSpecifications } from '../store/nodes.reducer';
+import { listAllNodesOfTracks, NodeAtTrack } from '../../common/calculation/nodes/nodeFinder';
+import { NodeSpecification } from '../store/types';
+import { getBranchTracks } from './getBranchTracks';
 import {
     getDelaysOfTracks,
     TrackDelayDetails,
-} from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack.ts';
-import { getParticipantsDelay } from '../store/settings.reducer.ts';
+} from '../../common/calculation/calculated-tracks/getSpecifiedDelayPerTrack';
+import { getParticipantsDelay } from '../store/settings.reducer';
 
 function getDelaysOfTrackAtNode(
     delaysOfTracks: TrackDelayDetails[],

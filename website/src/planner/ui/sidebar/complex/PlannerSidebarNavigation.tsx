@@ -1,14 +1,14 @@
 import { Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getSelectedSidebarSection } from '../../../store/layout.reducer.ts';
-import { SidebarNavItem } from '../SidebarNavItem.tsx';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { TracksGapWarning } from '../../../tracks/TracksGapWarning.tsx';
-import { CheckIcon } from '../../../../utils/icons/CheckIcon.tsx';
-import { WarningIcon } from '../../../../utils/icons/WarningIcon.tsx';
-import { getWarningAccordionDefinitions, useOverviewAccordionStatuses } from './overviewStatus.ts';
+import { getSelectedSidebarSection } from '../../../store/layout.reducer';
+import { SidebarNavItem } from '../SidebarNavItem';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux';
+import { TracksGapWarning } from '../../../tracks/TracksGapWarning';
+import { CheckIcon } from '../../../../utils/icons/CheckIcon';
+import { WarningIcon } from '../../../../utils/icons/WarningIcon';
+import { getWarningAccordionDefinitions, useOverviewAccordionStatuses } from './overviewStatus';
 
 export const PlannerSidebarNavigation = () => {
     const intl = useIntl();

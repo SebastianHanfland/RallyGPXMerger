@@ -1,19 +1,15 @@
 import { useSelector } from 'react-redux';
-import {
-    getDisplayPlanningLabel,
-    getDisplayTracks,
-    getDisplayTrackStreetInfos,
-} from '../store/displayTracksReducer.ts';
-import { CalculatedTrack } from '../../common/types.ts';
+import { getDisplayPlanningLabel, getDisplayTracks, getDisplayTrackStreetInfos } from '../store/displayTracksReducer';
+import { CalculatedTrack } from '../../common/types';
 import { FormattedMessage } from 'react-intl';
-import { formatTimeOnly } from '../../utils/dateUtil.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
+import { formatTimeOnly } from '../../utils/dateUtil';
+import { formatNumber } from '../../utils/numberUtil';
 import { Table } from 'react-bootstrap';
-import { createStreetPointUrl } from '../../utils/streetPathUrl.ts';
-import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader.tsx';
-import { TrackWayPointType } from '../../planner/logic/resolving/types.ts';
-import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton.tsx';
-import { useTableIndices } from './useTableIndices.ts';
+import { createStreetPointUrl } from '../../utils/streetPathUrl';
+import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader';
+import { TrackWayPointType } from '../../planner/logic/resolving/types';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton';
+import { useTableIndices } from './useTableIndices';
 
 const filterByIndex = (tableIndices: number[] | undefined) => (_: unknown, index: number) =>
     !tableIndices || tableIndices.includes(index);

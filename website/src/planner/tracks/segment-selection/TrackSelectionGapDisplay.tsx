@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import arrowDown from '../../../assets/arrow-down.svg';
 import arrowUp from '../../../assets/arrow-up.svg';
-import { GapPoint } from '../../store/types.ts';
+import { GapPoint } from '../../store/types';
 
-import { WarningIcon } from '../../../utils/icons/WarningIcon.tsx';
-import { getGaps } from '../../calculation/getGaps.ts';
-import { mapActions } from '../../store/map.reducer.ts';
-import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon.tsx';
+import { WarningIcon } from '../../../utils/icons/WarningIcon';
+import { getGaps } from '../../calculation/getGaps';
+import { mapActions } from '../../store/map.reducer';
+import { GeoLinkIcon } from '../../../utils/icons/GeoLinkIcon';
 
 interface Props {
     segmentId: string;

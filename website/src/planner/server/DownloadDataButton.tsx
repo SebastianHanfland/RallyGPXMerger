@@ -1,9 +1,9 @@
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { downloadFile } from '../download/FileDownloader.tsx';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
-import { getPlanningTitle } from '../store/settings.reducer.ts';
+import { downloadFile } from '../download/FileDownloader';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon';
+import { getPlanningTitle } from '../store/settings.reducer';
 
 export function DownloadDataButton() {
     const intl = useIntl();

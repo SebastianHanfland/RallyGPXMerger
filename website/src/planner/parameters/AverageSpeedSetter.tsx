@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { segmentDataActions } from '../store/segmentData.redux.ts';
-import { AppDispatch } from '../store/planningStore.ts';
-import { getAverageSpeedInKmH, settingsActions } from '../store/settings.reducer.ts';
-import { getCount } from '../../utils/inputUtil.ts';
-import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../store/constants.ts';
-import { formatFixedNumber } from '../../utils/numberUtil.ts';
+import { segmentDataActions } from '../store/segmentData.redux';
+import { AppDispatch } from '../store/planningStore';
+import { getAverageSpeedInKmH, settingsActions } from '../store/settings.reducer';
+import { getCount } from '../../utils/inputUtil';
+import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../store/constants';
+import { formatFixedNumber } from '../../utils/numberUtil';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 

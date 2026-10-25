@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import clear from '../../assets/clear.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
-import { successNotification } from '../store/toast.reducer.ts';
-import { resolveStreetNames } from '../logic/resolving/streets/resolveStreetNames.ts';
+import { AppDispatch } from '../store/planningStore';
+import { successNotification } from '../store/toast.reducer';
+import { resolveStreetNames } from '../logic/resolving/streets/resolveStreetNames';
 
 interface Props {
     id: string;

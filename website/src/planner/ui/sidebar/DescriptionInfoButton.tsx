@@ -1,8 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { ConfirmationModal } from '../../../common/ConfirmationModal.tsx';
-import { InfoIcon } from '../../../utils/icons/InfoIcon.tsx';
+import { ConfirmationModal } from '../../../common/ConfirmationModal';
+import { InfoIcon } from '../../../utils/icons/InfoIcon';
 
 interface Props {
     titleMessageId: string;

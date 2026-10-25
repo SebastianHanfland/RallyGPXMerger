@@ -1,6 +1,6 @@
 import { Toast, ToastContainer } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getToasts, toastsActions } from '../store/toast.reducer.ts';
+import { getToasts, toastsActions } from '../store/toast.reducer';
 
 export const ToastWrapper = () => {
     const toasts = useSelector(getToasts) ?? [];

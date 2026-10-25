@@ -3,11 +3,11 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { RefObject } from 'react';
 import { vi } from 'vitest';
-import { snakeForComparisonMapHook } from '../snakeForComparisonMapHook.ts';
+import { snakeForComparisonMapHook } from '../snakeForComparisonMapHook';
 
 const { addBikeSnakesToLayer } = vi.hoisted(() => ({ addBikeSnakesToLayer: vi.fn() }));
-vi.mock('../../../common/map/addSnakeWithBikeToMap.ts', () => ({ addBikeSnakesToLayer }));
-vi.mock('../dataReading.ts', () => ({
+vi.mock('../../../common/map/addSnakeWithBikeToMap', () => ({ addBikeSnakesToLayer }));
+vi.mock('../dataReading', () => ({
     getBikeSnakesForComparisonMap: (state: { points: unknown[] }) => state.points,
     getCurrentComparisonTimeStamps: () => ({}),
 }));

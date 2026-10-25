@@ -1,6 +1,6 @@
-import { ParsedPoint } from '../../../../store/types.ts';
-import { smoothStreetNames } from '../smoothStreetNames.ts';
-import { getStreetLookupIndex } from '../../helper/getStreetLookupIndex.ts';
+import { ParsedPoint } from '../../../../store/types';
+import { smoothStreetNames } from '../smoothStreetNames';
+import { getStreetLookupIndex } from '../../helper/getStreetLookupIndex';
 
 function getPoint(coordinate: number, streetIndex: number): ParsedPoint {
     return {

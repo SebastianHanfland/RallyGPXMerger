@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getDisplayEntryPoints } from '../store/displayTracksReducer.ts';
-import { toLatLng } from '../../utils/pointUtil.ts';
-import { markerIcon } from '../../common/map/MapIcons.ts';
+import { getDisplayEntryPoints } from '../store/displayTracksReducer';
+import { toLatLng } from '../../utils/pointUtil';
+import { markerIcon } from '../../common/map/MapIcons';
 
-import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil.ts';
-import { getShowTimes } from '../store/displayMapReducer.ts';
-import { useTimesConfig } from './useTimesConfig.ts';
+import { getEntryPointTime, getEntryPointTooltip } from '../../utils/entryPointUtil';
+import { getShowTimes } from '../store/displayMapReducer';
+import { useTimesConfig } from './useTimesConfig';
 
 export function entryPointsForDisplayMapHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getDisplayEntryPoints);

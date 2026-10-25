@@ -1,4 +1,4 @@
-import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX.ts';
+import { mergeSimpleGPXs, SimpleGPX } from '../SimpleGPX';
 
 describe('SimpleGPX', () => {
     const first =

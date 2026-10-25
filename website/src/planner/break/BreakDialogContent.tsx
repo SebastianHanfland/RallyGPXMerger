@@ -1,8 +1,8 @@
 import { Form } from 'react-bootstrap';
-import { TrackBreak } from '../store/types.ts';
+import { TrackBreak } from '../store/types';
 import wc from '../../assets/wc.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getCount } from '../../utils/inputUtil.ts';
+import { getCount } from '../../utils/inputUtil';
 import { ChangeEvent } from 'react';
 
 interface Props {

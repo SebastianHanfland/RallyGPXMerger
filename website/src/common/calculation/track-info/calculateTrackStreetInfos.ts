@@ -1,12 +1,7 @@
-import {
-    AggregatedPoints,
-    TrackStreetInfo,
-    TrackWayPointType,
-    WayPoint,
-} from '../../../planner/logic/resolving/types.ts';
-import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dateUtil.ts';
-import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups.ts';
-import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation.ts';
+import { AggregatedPoints, TrackStreetInfo, TrackWayPointType, WayPoint } from '../../../planner/logic/resolving/types';
+import { roundPublishedStartTimes, shiftDateBySeconds } from '../../../utils/dateUtil';
+import { Lookups } from '../../../planner/logic/resolving/selectors/getLookups';
+import { updateExtraDelayOnTracks } from '../calculated-tracks/delayCalculation';
 import {
     isTrackBreak,
     isTrackEntryPoint,
@@ -17,14 +12,14 @@ import {
     TrackBreak,
     TrackComposition,
     TrackEntry,
-} from '../../../planner/store/types.ts';
-import { instanceOfBreak, instanceOfEntry, instanceOfNode } from '../types.ts';
-import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions.ts';
-import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm.ts';
-import { CalculatedTrack } from '../../types.ts';
-import { joinWayPointsAtSegmentsBorders } from './joinWayPointsAtSegmentsBorders.ts';
-import { getPointsEndingAtTime } from '../lastPointUtil.ts';
-import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex.ts';
+} from '../../../planner/store/types';
+import { instanceOfBreak, instanceOfEntry, instanceOfNode } from '../types';
+import { NodePosition } from '../../../planner/logic/resolving/selectors/getNodePositions';
+import { calculateDistanceInKm } from '../aggregated-segments/calculateDistanceInKm';
+import { CalculatedTrack } from '../../types';
+import { joinWayPointsAtSegmentsBorders } from './joinWayPointsAtSegmentsBorders';
+import { getPointsEndingAtTime } from '../lastPointUtil';
+import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex';
 
 const extractLatLon = ({ b, l, t }: ParsedPoint, arrivalDate: string) => ({
     lat: b,

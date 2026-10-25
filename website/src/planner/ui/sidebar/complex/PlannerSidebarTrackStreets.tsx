@@ -2,28 +2,28 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table } from 'react-bootstrap';
-import { EditIcon } from '../../../../utils/icons/EditIcon.tsx';
-import { CancelIcon } from '../../../../utils/icons/CancelIcon.tsx';
-import { GeoLinkIcon } from '../../../../utils/icons/GeoLinkIcon.tsx';
-import { formatNumber } from '../../../../utils/numberUtil.ts';
-import { TrackComposition } from '../../../store/types.ts';
-import { TrackWayPointType } from '../../../logic/resolving/types.ts';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { HighlightUnknown } from '../../../streets/HighlightUnknown.tsx';
-import { EditStreetNameButton } from '../../../streets/EditStreetNameButton.tsx';
-import { EditPostCodeButton } from '../../../streets/EditPostCodeButton.tsx';
-import { EditDistrictButton } from '../../../streets/EditDistrictButton.tsx';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { getNextStreetLookupIndex } from '../../../store/segmentData.redux.ts';
-import { getStreetPointSelection, mapActions } from '../../../store/map.reducer.ts';
-import { AppDispatch } from '../../../store/planningStore.ts';
-import { getRoutePointReferences } from '../../../logic/resolving/streets/streetRangeEditing.ts';
+import { EditIcon } from '../../../../utils/icons/EditIcon';
+import { CancelIcon } from '../../../../utils/icons/CancelIcon';
+import { GeoLinkIcon } from '../../../../utils/icons/GeoLinkIcon';
+import { formatNumber } from '../../../../utils/numberUtil';
+import { TrackComposition } from '../../../store/types';
+import { TrackWayPointType } from '../../../logic/resolving/types';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { HighlightUnknown } from '../../../streets/HighlightUnknown';
+import { EditStreetNameButton } from '../../../streets/EditStreetNameButton';
+import { EditPostCodeButton } from '../../../streets/EditPostCodeButton';
+import { EditDistrictButton } from '../../../streets/EditDistrictButton';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux';
+import { getNextStreetLookupIndex } from '../../../store/segmentData.redux';
+import { getStreetPointSelection, mapActions } from '../../../store/map.reducer';
+import { AppDispatch } from '../../../store/planningStore';
+import { getRoutePointReferences } from '../../../logic/resolving/streets/streetRangeEditing';
 import {
     abortStreetSelection,
     beginNewStreet,
     beginStreetBoundaryEdit,
     getStreetPath,
-} from '../../../streets/streetEditing.ts';
+} from '../../../streets/streetEditing';
 
 interface Props {
     track: TrackComposition;

@@ -1,9 +1,9 @@
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../store/trackMerge.reducer';
 import { useSelector } from 'react-redux';
-import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos.ts';
-import { TrackStartName } from '../tracks/components/TrackStartName.tsx';
+import { getTrackStreetInfos } from '../calculation/getTrackStreetInfos';
+import { TrackStartName } from '../tracks/components/TrackStartName';
 
 export const StartNameOverwriteTable = () => {
     const tracks = useSelector(getTrackCompositions);

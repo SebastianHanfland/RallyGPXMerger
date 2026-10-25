@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder.ts';
-import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer.ts';
+import { NodeAtTrack } from '../../../common/calculation/nodes/nodeFinder';
+import { getNodeSpecifications, nodesActions } from '../../store/nodes.reducer';
 import Button from 'react-bootstrap/Button';
 import { FormattedMessage } from 'react-intl';
-import { TrashIcon } from '../../../utils/icons/TrashIcon.tsx';
-import { NodeIcon } from '../../../utils/icons/NodeIcon.tsx';
+import { TrashIcon } from '../../../utils/icons/TrashIcon';
+import { NodeIcon } from '../../../utils/icons/NodeIcon';
 
 interface Props {
     trackNode: NodeAtTrack;

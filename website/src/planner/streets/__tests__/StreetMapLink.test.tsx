@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { decodeStreetPath } from '../../../utils/streetPathUrl.ts';
-import { StreetMapLink } from '../StreetMapLink.tsx';
+import { decodeStreetPath } from '../../../utils/streetPathUrl';
+import { StreetMapLink } from '../StreetMapLink';
 
 describe('StreetMapLink', () => {
     it('opens the full street geometry in the standalone map', () => {

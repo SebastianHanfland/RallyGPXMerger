@@ -1,10 +1,10 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { downloadFilesInZip } from '../../planner/download/gpx/CalculatedFilesDownloader.tsx';
-import { getDisplayTitle, getDisplayTracks } from '../store/displayTracksReducer.ts';
-import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints.ts';
-import { DownloadIcon } from '../../utils/icons/DownloadIcon.tsx';
+import { downloadFilesInZip } from '../../planner/download/gpx/CalculatedFilesDownloader';
+import { getDisplayTitle, getDisplayTracks } from '../store/displayTracksReducer';
+import { getGpxContentFromTimedPoints } from '../../utils/SimpleGPXFromPoints';
+import { DownloadIcon } from '../../utils/icons/DownloadIcon';
 
 export const ZipFilesDownloader = () => {
     const intl = useIntl();

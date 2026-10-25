@@ -1,6 +1,6 @@
 import { Button, Modal } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { PlannerSidebarSimpleSettings } from './PlannerSidebarSimpleSettings.tsx';
+import { PlannerSidebarSimpleSettings } from './PlannerSidebarSimpleSettings';
 
 interface Props {
     onHide: () => void;

@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { CSSProperties } from 'react';
-import { useGetUrlParam } from '../../utils/linkUtil.ts';
+import { useGetUrlParam } from '../../utils/linkUtil';
 
 const style: CSSProperties = {
     position: 'fixed',

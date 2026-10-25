@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer.ts';
-import { getBikeSnakesForComparisonMap, getCurrentComparisonTimeStamps } from './dataReading.ts';
-import { addBikeSnakesToLayer } from '../../common/map/addSnakeWithBikeToMap.ts';
+import { getComparisonParsedTracks, getSelectedTracks, getSelectedVersions } from '../store/tracks.reducer';
+import { getBikeSnakesForComparisonMap, getCurrentComparisonTimeStamps } from './dataReading';
+import { addBikeSnakesToLayer } from '../../common/map/addSnakeWithBikeToMap';
 
 export function snakeForComparisonMapHook(snakeLayer: RefObject<LayerGroup | null>) {
     const comparisonParsedTracks = useSelector(getComparisonParsedTracks);

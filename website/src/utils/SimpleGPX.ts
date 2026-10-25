@@ -1,10 +1,10 @@
 import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
 import { addSeconds } from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
-import { GpxFileAccess } from '../common/calculation/types.ts';
-import { getTimeDifferenceInSeconds } from './dateUtil.ts';
-import { Link, Metadata, Point, Route, Track, Waypoint } from './gpxTypes.ts';
-import { GpxParser } from './GpxParser.ts';
+import { GpxFileAccess } from '../common/calculation/types';
+import { getTimeDifferenceInSeconds } from './dateUtil';
+import { Link, Metadata, Point, Route, Track, Waypoint } from './gpxTypes';
+import { GpxParser } from './GpxParser';
 
 export function mergeSimpleGPXs(parsers: SimpleGPX[]): SimpleGPX {
     const metadata = parsers[0].metadata;

@@ -1,7 +1,7 @@
-import { TrackStreetInfo } from '../logic/resolving/types.ts';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
+import { TrackStreetInfo } from '../logic/resolving/types';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil';
 import { IntlShape } from 'react-intl';
-import { formatFixedNumber } from '../../utils/numberUtil.ts';
+import { formatFixedNumber } from '../../utils/numberUtil';
 
 export const getTrackTableHeaders = (intl: IntlShape) =>
     [

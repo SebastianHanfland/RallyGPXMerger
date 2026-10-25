@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import geoDistance from 'geo-distance-helper';
-import { generateParsedPointsWithTimeInSeconds } from '../speedSimulatorTimeInSeconds.ts';
-import { ParsedPoint } from '../../../../planner/store/types.ts';
+import { generateParsedPointsWithTimeInSeconds } from '../speedSimulatorTimeInSeconds';
+import { ParsedPoint } from '../../../../planner/store/types';
 
 const points = (elevations: number[]): Omit<ParsedPoint, 't'>[] =>
     elevations.map((e, index) => ({ l: 1 + index * 0.01, b: 1, e, s: -1 }));

@@ -11,15 +11,15 @@ import {
     getShowNodeMarker,
     getShowPointsOfInterest,
     mapActions,
-} from '../store/map.reducer.ts';
+} from '../store/map.reducer';
 import { useIntl } from 'react-intl';
-import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer.ts';
+import { getFilteredTrackCompositions, getTrackCompositions } from '../store/trackMerge.reducer';
 import { CSSProperties } from 'react';
-import { getConstructionSegments, getFilteredGpxSegments, getParsedGpxSegments } from '../store/segmentData.redux.ts';
-import { ArrowRightIcon } from '../../utils/icons/ArrowRightIcon.tsx';
-import { BreakIcon } from '../../utils/icons/BreakIcon.tsx';
-import { NodeIcon } from '../../utils/icons/NodeIcon.tsx';
-import { WarningIcon } from '../../utils/icons/WarningIcon.tsx';
+import { getConstructionSegments, getFilteredGpxSegments, getParsedGpxSegments } from '../store/segmentData.redux';
+import { ArrowRightIcon } from '../../utils/icons/ArrowRightIcon';
+import { BreakIcon } from '../../utils/icons/BreakIcon';
+import { NodeIcon } from '../../utils/icons/NodeIcon';
+import { WarningIcon } from '../../utils/icons/WarningIcon';
 
 const mapContentStyle: CSSProperties = {
     position: 'fixed',

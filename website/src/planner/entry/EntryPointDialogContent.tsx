@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
-import { TrackEntry } from '../store/types.ts';
+import { TrackEntry } from '../store/types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getCount } from '../../utils/inputUtil.ts';
+import { getCount } from '../../utils/inputUtil';
 import { ChangeEvent } from 'react';
 
 interface Props {

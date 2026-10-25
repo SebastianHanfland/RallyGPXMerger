@@ -1,8 +1,8 @@
-import { ParsedGpxSegment } from '../planner/store/types.ts';
-import { GeoCodingStateOld } from '../planner/store/typesOld.ts';
-import { toKey } from '../planner/logic/resolving/helper/pointKeys.ts';
-import { ReplacementWayPoint } from '../planner/logic/resolving/types.ts';
-import { getStreetLookupIndex } from '../planner/logic/resolving/helper/getStreetLookupIndex.ts';
+import { ParsedGpxSegment } from '../planner/store/types';
+import { GeoCodingStateOld } from '../planner/store/typesOld';
+import { toKey } from '../planner/logic/resolving/helper/pointKeys';
+import { ReplacementWayPoint } from '../planner/logic/resolving/types';
+import { getStreetLookupIndex } from '../planner/logic/resolving/helper/getStreetLookupIndex';
 
 export function getWayPointKey(wayPoint: ReplacementWayPoint) {
     const lat = (wayPoint.pointTo.lat + wayPoint.pointFrom.lat) / 2;

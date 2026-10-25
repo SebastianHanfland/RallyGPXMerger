@@ -1,4 +1,4 @@
-import { getStreetPathDirection } from '../getStreetPathDirection.ts';
+import { getStreetPathDirection } from '../getStreetPathDirection';
 
 describe('getStreetPathDirection', () => {
     it('places an eastbound indicator at the distance midpoint', () => {

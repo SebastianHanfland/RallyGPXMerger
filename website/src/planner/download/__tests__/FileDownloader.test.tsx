@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import type { ReactElement } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { FileDownloader, FileDownloaderDropdownItem } from '../FileDownloader.tsx';
+import { FileDownloader, FileDownloaderDropdownItem } from '../FileDownloader';
 
 const saveAs = vi.hoisted(() => vi.fn());
 

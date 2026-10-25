@@ -1,5 +1,5 @@
-import { TrackMergeStateOld } from '../planner/store/typesOld.ts';
-import { SettingsState } from '../planner/store/types.ts';
+import { TrackMergeStateOld } from '../planner/store/typesOld';
+import { SettingsState } from '../planner/store/types';
 
 export function migrateSettings(trackMerge: TrackMergeStateOld): SettingsState {
     return {

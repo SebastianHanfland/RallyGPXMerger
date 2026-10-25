@@ -1,4 +1,4 @@
-import { assembleTrackFromSegments } from '../assembleTrackFromSegments.ts';
+import { assembleTrackFromSegments } from '../assembleTrackFromSegments';
 import {
     BREAK,
     ParsedGpxSegment,
@@ -7,8 +7,8 @@ import {
     TrackBreak,
     TrackComposition,
     TrackSegment,
-} from '../../../../planner/store/types.ts';
-import { PreCalculatedTrack } from '../../../types.ts';
+} from '../../../../planner/store/types';
+import { PreCalculatedTrack } from '../../../types';
 
 function getPoint(lat: number, time: number): ParsedPoint {
     return { s: -1, t: time, e: 0, b: lat, l: 0 };

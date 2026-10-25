@@ -7,12 +7,12 @@ import {
     getTrackCompositions,
     getTrackIdForAddingABreak,
     trackMergeActions,
-} from '../store/trackMerge.reducer.ts';
-import { BreakDialogContent } from './BreakDialogContent.tsx';
+} from '../store/trackMerge.reducer';
+import { BreakDialogContent } from './BreakDialogContent';
 import { useEffect, useState } from 'react';
-import { BREAK, TrackBreak } from '../store/types.ts';
+import { BREAK, TrackBreak } from '../store/types';
 import { v4 as uuidv4 } from 'uuid';
-import { AppDispatch } from '../store/planningStore.ts';
+import { AppDispatch } from '../store/planningStore';
 
 export const CreateBreakDialog = () => {
     const trackIdForBreak = useSelector(getTrackIdForAddingABreak);

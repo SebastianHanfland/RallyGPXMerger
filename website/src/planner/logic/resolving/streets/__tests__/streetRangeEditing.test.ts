@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { SEGMENT, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../../store/types.ts';
+import { SEGMENT, ParsedGpxSegment, ParsedPoint, TrackComposition } from '../../../../store/types';
 import {
     getNewStreetRangeAssignments,
     getRoutePointReferences,
     getStreetRange,
     getStreetRangeAssignments,
-} from '../streetRangeEditing.ts';
+} from '../streetRangeEditing';
 
 const point = (s: number, m?: number): ParsedPoint => ({ l: 0, b: 0, e: 0, t: 0, s, m });
 const segment = (id: string, points: ParsedPoint[]): ParsedGpxSegment => ({ id, filename: id, points });

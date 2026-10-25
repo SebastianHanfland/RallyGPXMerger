@@ -1,5 +1,5 @@
-import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex.ts';
-import { ManualLookupField, SegmentDataState } from './types.ts';
+import { getStreetLookupIndex } from '../logic/resolving/helper/getStreetLookupIndex';
+import { ManualLookupField, SegmentDataState } from './types';
 
 type SegmentDataWithLegacyOverrides = SegmentDataState & {
     replaceStreetLookup?: Record<number, string | undefined>;

@@ -1,5 +1,5 @@
-import { ParsedPoint } from '../../../../planner/store/types.ts';
-import { aggregateStreetPointsInSegment, getConnectedPointWithTheSameStreetIndex } from '../aggregatePointsSelector.ts';
+import { ParsedPoint } from '../../../../planner/store/types';
+import { aggregateStreetPointsInSegment, getConnectedPointWithTheSameStreetIndex } from '../aggregatePointsSelector';
 
 function getPoint(coordinate: number, streetIndex: number): ParsedPoint {
     return {

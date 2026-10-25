@@ -1,11 +1,11 @@
 import { CSSProperties } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { PlannerSidebarContent } from './complex/PlannerSidebarContent.tsx';
-import { PlannerSidebarNavigation } from './complex/PlannerSidebarNavigation.tsx';
+import { PlannerSidebarContent } from './complex/PlannerSidebarContent';
+import { PlannerSidebarNavigation } from './complex/PlannerSidebarNavigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../../store/layout.reducer.ts';
-import { ClosePlannerSidebar } from '../elements/ClosePlannerSidebar.tsx';
-import { SimpleFileUploadSection } from './simple/SimpleFileUploadSection.tsx';
+import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../../store/layout.reducer';
+import { ClosePlannerSidebar } from '../elements/ClosePlannerSidebar';
+import { SimpleFileUploadSection } from './simple/SimpleFileUploadSection';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
     position: 'fixed',

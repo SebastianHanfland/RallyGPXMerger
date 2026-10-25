@@ -1,9 +1,9 @@
-import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
-import { createStreetPointUrl } from '../../../utils/streetPathUrl.ts';
-import { formatTimeOnly } from '../../../utils/dateUtil.ts';
+import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types';
+import { createStreetPointUrl } from '../../../utils/streetPathUrl';
+import { formatTimeOnly } from '../../../utils/dateUtil';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles.ts';
+import { pdfStyles } from './pdfStyles';
 
 interface Props {
     trackStreets: TrackStreetInfo;

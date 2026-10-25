@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { PropsWithChildren } from 'react';
 import { MemoryRouter } from 'react-router';
-import { useGetUrlParam } from '../linkUtil.ts';
+import { useGetUrlParam } from '../linkUtil';
 
 function readParam(url: string, paramName: string) {
     const wrapper = ({ children }: PropsWithChildren) => <MemoryRouter initialEntries={[url]}>{children}</MemoryRouter>;

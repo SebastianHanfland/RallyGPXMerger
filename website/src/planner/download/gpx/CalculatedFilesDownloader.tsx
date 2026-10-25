@@ -3,10 +3,10 @@ import JSZip from 'jszip';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints.ts';
-import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
-import { getCalculateTracks } from '../../calculation/getCalculatedTracks.ts';
-import { getPlanningTitle } from '../../store/settings.reducer.ts';
+import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints';
+import { DownloadIcon } from '../../../utils/icons/DownloadIcon';
+import { getCalculateTracks } from '../../calculation/getCalculatedTracks';
+import { getPlanningTitle } from '../../store/settings.reducer';
 
 export const downloadFilesInZip = (calculatedTracks: { content: string; filename: string }[], zipName: string) => {
     const zip = new JSZip();

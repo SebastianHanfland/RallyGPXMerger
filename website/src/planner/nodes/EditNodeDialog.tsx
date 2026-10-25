@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { getNodeEditInfo, getNodeSpecifications, nodesActions } from '../store/nodes.reducer.ts';
-import { AppDispatch } from '../store/planningStore.ts';
+import { getNodeEditInfo, getNodeSpecifications, nodesActions } from '../store/nodes.reducer';
+import { AppDispatch } from '../store/planningStore';
 import { useEffect, useState } from 'react';
-import { getBranchesAtNode } from './getBranchesAtNode.ts';
-import { NodeSpecification } from '../store/types.ts';
-import { EditNodeDialogContent } from './EditNodeDialogContent.tsx';
+import { getBranchesAtNode } from './getBranchesAtNode';
+import { NodeSpecification } from '../store/types';
+import { EditNodeDialogContent } from './EditNodeDialogContent';
 
 export const EditNodeDialog = () => {
     const intl = useIntl();

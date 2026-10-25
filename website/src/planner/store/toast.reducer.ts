@@ -1,5 +1,5 @@
 import { createSlice, Dispatch, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { State, Toast, ToastsState } from './types.ts';
+import { State, Toast, ToastsState } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState: ToastsState = {

@@ -2,22 +2,22 @@ import { Dropdown, Table } from 'react-bootstrap';
 import exchange from '../../assets/exchange.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { FileUploader } from 'react-drag-drop-files';
-import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadThunk.ts';
-import { AppDispatch } from '../store/planningStore.ts';
-import { ReplaceFileDisplay } from './ReplaceFileDisplay.tsx';
+import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadThunk';
+import { AppDispatch } from '../store/planningStore';
+import { ReplaceFileDisplay } from './ReplaceFileDisplay';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
     getFixedSegmentSpeeds,
     getReplaceProcess,
     getSegmentSpeeds,
     segmentDataActions,
-} from '../store/segmentData.redux.ts';
-import { toParsedGpxSegment } from './segmentParsing.ts';
-import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver.ts';
-import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
-import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict.ts';
+} from '../store/segmentData.redux';
+import { toParsedGpxSegment } from './segmentParsing';
+import { enrichGpxSegmentsWithStreetNames } from '../logic/resolving/streets/mapMatchingStreetResolver';
+import { getAverageSpeedInKmH } from '../store/settings.reducer';
+import { enrichGpxSegmentsWithPostCodesAndDistricts } from '../logic/resolving/streets/enrichWithPostCodeAndDistrict';
 
 interface Props {
     id: string;

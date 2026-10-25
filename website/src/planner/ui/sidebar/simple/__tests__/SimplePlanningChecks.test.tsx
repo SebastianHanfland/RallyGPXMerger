@@ -3,14 +3,14 @@ import userEvent from '@testing-library/user-event';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { describe, expect, it } from 'vitest';
-import { getMessages } from '../../../../../lang/getMessages.ts';
-import { createPlanningStore } from '../../../../store/planningStore.ts';
-import { trackMergeActions } from '../../../../store/trackMerge.reducer.ts';
-import { pointsActions } from '../../../../store/points.reducer.ts';
-import { PointOfInterestType } from '../../../../store/types.ts';
-import { getPointToCenter, getShowPointsOfInterest } from '../../../../store/map.reducer.ts';
-import type { TrackStreetInfo } from '../../../../logic/resolving/types.ts';
-import { SimplePlanningChecks } from '../SimplePlanningChecks.tsx';
+import { getMessages } from '../../../../../lang/getMessages';
+import { createPlanningStore } from '../../../../store/planningStore';
+import { trackMergeActions } from '../../../../store/trackMerge.reducer';
+import { pointsActions } from '../../../../store/points.reducer';
+import { PointOfInterestType } from '../../../../store/types';
+import { getPointToCenter, getShowPointsOfInterest } from '../../../../store/map.reducer';
+import type { TrackStreetInfo } from '../../../../logic/resolving/types';
+import { SimplePlanningChecks } from '../SimplePlanningChecks';
 
 const messages = getMessages('en');
 

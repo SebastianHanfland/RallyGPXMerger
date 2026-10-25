@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
-import { getHighlightedSegmentId, getShowGpxSegments, getShowMapMarker, mapActions } from '../../store/map.reducer.ts';
-import { getFilteredGpxSegments, getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux.ts';
-import { AppDispatch } from '../../store/planningStore.ts';
-import { State } from '../../store/types.ts';
+import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer';
+import { getHighlightedSegmentId, getShowGpxSegments, getShowMapMarker, mapActions } from '../../store/map.reducer';
+import { getFilteredGpxSegments, getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux';
+import { AppDispatch } from '../../store/planningStore';
+import { State } from '../../store/types';
 
 const setMarkHighlightedTrackPlain =
     (trackId: string | undefined) => (dispatch: AppDispatch, getState: () => State) => {

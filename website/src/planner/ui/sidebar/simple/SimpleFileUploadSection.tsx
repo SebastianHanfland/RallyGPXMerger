@@ -1,20 +1,20 @@
-import { SimpleGpxSegments } from './SimpleGpxSegments.tsx';
+import { SimpleGpxSegments } from './SimpleGpxSegments';
 import { useSelector } from 'react-redux';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer';
 import { Col, Row } from 'react-bootstrap';
-import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
-import { TrackPeople } from '../../../tracks/components/TrackPeople.tsx';
-import { AverageSpeedSetter } from '../../../parameters/AverageSpeedSetter.tsx';
-import { ParticipantsDelaySetter } from '../../../parameters/ParticipantsDelaySetter.tsx';
+import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker';
+import { TrackPeople } from '../../../tracks/components/TrackPeople';
+import { AverageSpeedSetter } from '../../../parameters/AverageSpeedSetter';
+import { ParticipantsDelaySetter } from '../../../parameters/ParticipantsDelaySetter';
 import { FormattedMessage } from 'react-intl';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
-import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
-import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../../../store/settings.reducer.ts';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
-import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
-import { SimpleTrackInfoRow } from './SimpleTrackInfoRow.tsx';
-import { SimplePlanningChecks } from './SimplePlanningChecks.tsx';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker';
+import { PlanningTitle } from '../../../parameters/PlanningTitle';
+import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../../../store/settings.reducer';
+import { getParsedGpxSegments } from '../../../store/segmentData.redux';
+import { TrackBuffer } from '../../../tracks/components/TrackBuffer';
+import { SimpleTrackInfoRow } from './SimpleTrackInfoRow';
+import { SimplePlanningChecks } from './SimplePlanningChecks';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);

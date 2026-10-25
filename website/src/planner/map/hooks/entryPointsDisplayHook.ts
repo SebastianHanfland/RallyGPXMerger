@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import L, { LayerGroup } from 'leaflet';
-import { getShowEntryPointMarker } from '../../store/map.reducer.ts';
-import { entryIcon } from '../../../common/map/MapIcons.ts';
-import { toLatLng } from '../../../utils/pointUtil.ts';
-import { trackMergeActions } from '../../store/trackMerge.reducer.ts';
-import { layoutActions } from '../../store/layout.reducer.ts';
-import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntryPointPositions.ts';
-import { TRACK_MARKER } from '../panes.ts';
-import { getEntryPointTooltip } from '../../../utils/entryPointUtil.ts';
+import { getShowEntryPointMarker } from '../../store/map.reducer';
+import { entryIcon } from '../../../common/map/MapIcons';
+import { toLatLng } from '../../../utils/pointUtil';
+import { trackMergeActions } from '../../store/trackMerge.reducer';
+import { layoutActions } from '../../store/layout.reducer';
+import { getEntryPointPositions } from '../../logic/resolving/selectors/getEntryPointPositions';
+import { TRACK_MARKER } from '../panes';
+import { getEntryPointTooltip } from '../../../utils/entryPointUtil';
 
 export function entryPointsDisplayHook(breakPointsLayer: RefObject<LayerGroup | null>) {
     const entryPointPositions = useSelector(getEntryPointPositions);

@@ -2,10 +2,10 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
-import { CancelIcon } from '../../../utils/icons/CancelIcon.tsx';
-import { getStreetPointSelection } from '../../store/map.reducer.ts';
-import { AppDispatch } from '../../store/planningStore.ts';
-import { abortStreetSelection } from '../../streets/streetEditing.ts';
+import { CancelIcon } from '../../../utils/icons/CancelIcon';
+import { getStreetPointSelection } from '../../store/map.reducer';
+import { AppDispatch } from '../../store/planningStore';
+import { abortStreetSelection } from '../../streets/streetEditing';
 
 export function AbortStreetSelectionButton() {
     const selection = useSelector(getStreetPointSelection);

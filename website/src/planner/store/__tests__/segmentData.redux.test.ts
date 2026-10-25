@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../planningStore.ts';
+import { createPlanningStore } from '../planningStore';
 import {
     getDistrictLookup,
     getFixedSegmentSpeeds,
@@ -11,7 +11,7 @@ import {
     getShowUsedSegments,
     getStreetLookup,
     segmentDataActions,
-} from '../segmentData.redux.ts';
+} from '../segmentData.redux';
 
 describe('segmentData reducer', () => {
     it('stores segment table sorting and usage filter preferences', () => {

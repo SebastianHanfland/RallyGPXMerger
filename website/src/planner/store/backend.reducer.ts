@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { BackendState, State } from './types.ts';
-import { storage } from './storage.ts';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
+import { BackendState, State } from './types';
+import { storage } from './storage';
+import { getBaseUrl } from '../../utils/linkUtil';
 
 const initialState: BackendState = {
     isPlanningAlreadySaved: false,

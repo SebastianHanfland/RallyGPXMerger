@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer.ts';
-import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer.ts';
-import { getHighlightedSegmentId, getShowCalculatedTracks, getShowMapMarker } from '../../store/map.reducer.ts';
-import { getHasSingleTrack, layoutActions } from '../../store/layout.reducer.ts';
+import { getFilteredCalculatedTracks } from '../../store/calculatedTracks.reducer';
+import { addTracksToLayer } from '../../../common/map/addTrackToMapLayer';
+import { getHighlightedSegmentId, getShowCalculatedTracks, getShowMapMarker } from '../../store/map.reducer';
+import { getHasSingleTrack, layoutActions } from '../../store/layout.reducer';
 
 export function calculatedTracksDisplayHook(calculatedTracksLayer: RefObject<LayerGroup | null>) {
     const calculatedTracks = useSelector(getFilteredCalculatedTracks);

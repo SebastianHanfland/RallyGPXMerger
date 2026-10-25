@@ -1,5 +1,5 @@
 import geoDistance from 'geo-distance-helper';
-import { getLatLng } from '../../../utils/pointUtil.ts';
+import { getLatLng } from '../../../utils/pointUtil';
 
 export function calculateDistanceInKm<T extends { l: number; b: number }>(points: T[]): number {
     let lastPoint: T | null = null;

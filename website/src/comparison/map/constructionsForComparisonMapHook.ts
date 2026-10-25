@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { RefObject, useEffect } from 'react';
 import { LayerGroup } from 'leaflet';
-import { addTracksToLayer } from '../../common/map/addTrackToMapLayer.ts';
-import { getShowComparisonMapConstructions } from '../store/map.reducer.ts';
-import { getComparisonMapConstructions } from '../store/tracks.reducer.ts';
+import { addTracksToLayer } from '../../common/map/addTrackToMapLayer';
+import { getShowComparisonMapConstructions } from '../store/map.reducer';
+import { getComparisonMapConstructions } from '../store/tracks.reducer';
 
 export function constructionsForComparisonMapHook(constructionLayer: RefObject<LayerGroup | null>) {
     const constructions = useSelector(getComparisonMapConstructions);

@@ -1,5 +1,5 @@
-import { mapToPositionMap } from './mapToPositionMap.ts';
-import { ResolvedPositions } from '../../../store/types.ts';
+import { mapToPositionMap } from './mapToPositionMap';
+import { ResolvedPositions } from '../../../store/types';
 
 export type GeoApifyMapMatching = { mode: string; waypoints: { timestamp: string; location: [number, number] }[] };
 

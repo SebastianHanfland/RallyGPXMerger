@@ -1,5 +1,5 @@
-import { useGetUrlParam } from '../utils/linkUtil.ts';
-import { getColorFromUuid } from '../utils/colorUtil.ts';
+import { useGetUrlParam } from '../utils/linkUtil';
+import { getColorFromUuid } from '../utils/colorUtil';
 
 export function useGetVersionColors(): Record<string, string | undefined> {
     const planningIdsFromUrl = useGetUrlParam('comparison');

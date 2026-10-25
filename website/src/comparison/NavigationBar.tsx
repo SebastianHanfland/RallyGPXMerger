@@ -1,4 +1,4 @@
-import { MapVersionSelection } from './MapVersionSelection.tsx';
+import { MapVersionSelection } from './MapVersionSelection';
 
 export const NavigationBar = () => {
     return (

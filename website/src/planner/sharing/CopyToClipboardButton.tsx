@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { successNotification } from '../store/toast.reducer.ts';
+import { successNotification } from '../store/toast.reducer';
 import { useIntl } from 'react-intl';
 
 interface Props {

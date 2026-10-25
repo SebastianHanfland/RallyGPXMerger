@@ -1,13 +1,13 @@
 import Button from 'react-bootstrap/Button';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { getTrackStreetInfos } from '../../calculation/getTrackStreetInfos.ts';
-import { getPlanningLabel, getPlanningTitle } from '../../store/settings.reducer.ts';
-import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo.ts';
-import { generatePdfsInZip } from './pdfDownload.tsx';
+import { getTrackStreetInfos } from '../../calculation/getTrackStreetInfos';
+import { getPlanningLabel, getPlanningTitle } from '../../store/settings.reducer';
+import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo';
+import { generatePdfsInZip } from './pdfDownload';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-import { DownloadIcon } from '../../../utils/icons/DownloadIcon.tsx';
+import { DownloadIcon } from '../../../utils/icons/DownloadIcon';
 
 export const PdfDocumentInZipButton = () => {
     const trackStreetInfos = useSelector(getTrackStreetInfos);

@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { BlockedStreetsModalContent } from './BlockedStreetsModalContent.tsx';
+import { BlockedStreetsModalContent } from './BlockedStreetsModalContent';
 
 interface Props {
     onHide: () => void;

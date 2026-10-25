@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, vi } from 'vitest';
-import { createStreetPathUrl } from '../../utils/streetPathUrl.ts';
-import { StreetPathMapWrapper } from '../StreetPathMap.tsx';
+import { createStreetPathUrl } from '../../utils/streetPathUrl';
+import { StreetPathMapWrapper } from '../StreetPathMap';
 
 const leafletMocks = vi.hoisted(() => {
     const map = {
@@ -21,7 +21,7 @@ const leafletMocks = vi.hoisted(() => {
     };
 });
 
-vi.mock('../../language.ts', () => ({ getLanguage: () => 'en' }));
+vi.mock('../../language', () => ({ getLanguage: () => 'en' }));
 vi.mock('leaflet', () => ({
     default: {
         map: leafletMocks.createMap,

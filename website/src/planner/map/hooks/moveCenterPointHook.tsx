@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getPointToCenter, mapActions } from '../../store/map.reducer.ts';
+import { getPointToCenter, mapActions } from '../../store/map.reducer';
 
 export function moveCenterPointHook(map: L.Map | undefined) {
     const pointToCenter = useSelector(getPointToCenter);

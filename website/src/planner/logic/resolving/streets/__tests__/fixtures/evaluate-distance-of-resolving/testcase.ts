@@ -1,4 +1,4 @@
-import { StreetResolverTestCase, expectedStreet } from '../../fixtureHelpers.ts';
+import { StreetResolverTestCase, expectedStreet } from '../../fixtureHelpers';
 import geoApifyResponse from './geoapify-response.json';
 import routeGpx from './route.gpx?raw';
 

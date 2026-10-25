@@ -5,8 +5,8 @@ import { getMessages } from '../../src/lang/getMessages';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
 import { SEGMENT } from '../../src/planner/store/types';
-import { plannerUi } from './accessObjects/PlannerTestAccess.ts';
-import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup.tsx';
+import { plannerUi } from './accessObjects/PlannerTestAccess';
+import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup';
 
 const messages = getMessages('en');
 const timeout = { timeout: 3000 };

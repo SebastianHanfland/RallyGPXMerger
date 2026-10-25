@@ -1,4 +1,4 @@
-import { gpxShortener } from '../gpxShortener.ts';
+import { gpxShortener } from '../gpxShortener';
 
 describe('gpxShortener', () => {
     it('should remove unnecessary elements of gpx', () => {

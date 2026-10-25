@@ -9,10 +9,10 @@ import {
     TrackElement,
     TrackEntry,
     TrackMergeState,
-} from './types.ts';
-import { storage } from './storage.ts';
+} from './types';
+import { storage } from './storage';
 import { v4 as uuidv4 } from 'uuid';
-import { filterItems } from '../../utils/filterUtil.ts';
+import { filterItems } from '../../utils/filterUtil';
 
 const initialState: TrackMergeState = {
     trackCompositions: [],

@@ -1,6 +1,6 @@
 import polyline from '@mapbox/polyline';
-import { StreetPathPoint } from '../planner/logic/resolving/types.ts';
-import { getBaseUrl } from './linkUtil.ts';
+import { StreetPathPoint } from '../planner/logic/resolving/types';
+import { getBaseUrl } from './linkUtil';
 
 const POLYLINE_PRECISION = 5;
 export const STREET_PATH_URL_LIMIT = 1900;

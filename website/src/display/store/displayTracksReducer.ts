@@ -1,13 +1,13 @@
-import { getTrackStreetInfos } from '../../planner/calculation/getTrackStreetInfos.ts';
-import { getParticipantsDelay, getPlanningLabel, getPlanningTitle } from '../../planner/store/settings.reducer.ts';
-import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks.ts';
-import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo.ts';
+import { getTrackStreetInfos } from '../../planner/calculation/getTrackStreetInfos';
+import { getParticipantsDelay, getPlanningLabel, getPlanningTitle } from '../../planner/store/settings.reducer';
+import { getCalculateTracks } from '../../planner/calculation/getCalculatedTracks';
+import { getBlockedStreetInfo } from '../../planner/logic/resolving/selectors/getBlockedStreetInfo';
 import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
-import { DisplayState, PlanningState } from './types.ts';
-import { State } from '../../planner/store/types.ts';
-import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants.ts';
-import { getBreakPositions } from '../../planner/logic/resolving/selectors/getBreakPositions.ts';
-import { getEntryPointPositions } from '../../planner/logic/resolving/selectors/getEntryPointPositions.ts';
+import { DisplayState, PlanningState } from './types';
+import { State } from '../../planner/store/types';
+import { DELAY_PER_PERSON_IN_SECONDS } from '../../planner/store/constants';
+import { getBreakPositions } from '../../planner/logic/resolving/selectors/getBreakPositions';
+import { getEntryPointPositions } from '../../planner/logic/resolving/selectors/getEntryPointPositions';
 
 const initialState: PlanningState = {
     state: undefined,

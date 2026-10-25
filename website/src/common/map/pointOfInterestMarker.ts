@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import { PointOfInterest } from '../../planner/store/types.ts';
-import { pointOfInterestConfig } from '../../planner/points/pointOfInterestConfig.ts';
-import { wcIcon } from './MapIcons.ts';
+import { PointOfInterest } from '../../planner/store/types';
+import { pointOfInterestConfig } from '../../planner/points/pointOfInterestConfig';
+import { wcIcon } from './MapIcons';
 
 export function createPointOfInterestMarker(point: PointOfInterest): L.Circle | L.Marker {
     const config = pointOfInterestConfig[point.type];

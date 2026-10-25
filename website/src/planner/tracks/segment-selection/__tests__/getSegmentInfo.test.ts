@@ -1,5 +1,5 @@
-import { getSegmentInfo, getSegmentSpeed } from '../getSegmentInfo.ts';
-import { AggregatedPoints } from '../../../logic/resolving/types.ts';
+import { getSegmentInfo, getSegmentSpeed } from '../getSegmentInfo';
+import { AggregatedPoints } from '../../../logic/resolving/types';
 
 describe('getSegmentInfo', () => {
     it('return undefined for undefined input', () => {

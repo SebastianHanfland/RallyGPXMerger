@@ -1,10 +1,10 @@
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
 import { useState } from 'react';
 import trash from '../../assets/trash.svg';
 import { useIntl } from 'react-intl';
-import { resetData } from '../import/resetData.ts';
+import { resetData } from '../import/resetData';
 import { useNavigate } from 'react-router';
 
 export function CleanDataButton() {

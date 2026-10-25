@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { AppDispatch } from '../store/planningStore.ts';
-import { getAverageSpeedInKmH, getParticipantsDelay, settingsActions } from '../store/settings.reducer.ts';
-import { formatFixedNumber } from '../../utils/numberUtil.ts';
+import { AppDispatch } from '../store/planningStore';
+import { getAverageSpeedInKmH, getParticipantsDelay, settingsActions } from '../store/settings.reducer';
+import { formatFixedNumber } from '../../utils/numberUtil';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 

@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
-import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
-import { getIsShareModalOpen, layoutActions } from '../store/layout.reducer.ts';
-import { getPlanningTitle } from '../store/settings.reducer.ts';
-import { LinkAndClipboardCopy } from './LinkAndClipboardCopy.tsx';
-import { getEntryPointPositions } from '../logic/resolving/selectors/getEntryPointPositions.ts';
-import { getPlanningLinks } from './planningLinks.ts';
+import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer';
+import { getIsShareModalOpen, layoutActions } from '../store/layout.reducer';
+import { getPlanningTitle } from '../store/settings.reducer';
+import { LinkAndClipboardCopy } from './LinkAndClipboardCopy';
+import { getEntryPointPositions } from '../logic/resolving/selectors/getEntryPointPositions';
+import { getPlanningLinks } from './planningLinks';
 
 export function SharePlanningModal() {
     const isShareModalOpen = useSelector(getIsShareModalOpen);

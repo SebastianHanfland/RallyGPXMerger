@@ -1,5 +1,5 @@
-import { BREAK, ENTRY, ParsedGpxSegment, TrackBreak, TrackEntry } from '../../planner/store/types.ts';
-import { NodePosition } from '../../planner/logic/resolving/selectors/getNodePositions.ts';
+import { BREAK, ENTRY, ParsedGpxSegment, TrackBreak, TrackEntry } from '../../planner/store/types';
+import { NodePosition } from '../../planner/logic/resolving/selectors/getNodePositions';
 
 export interface GpxFileAccess {
     getStart: () => string;

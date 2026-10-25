@@ -3,8 +3,8 @@ import { CSSProperties } from 'react';
 import shareIcon from '../../assets/share.svg';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsPlanningAlreadySaved } from '../store/backend.reducer.ts';
-import { layoutActions } from '../store/layout.reducer.ts';
+import { getIsPlanningAlreadySaved } from '../store/backend.reducer';
+import { layoutActions } from '../store/layout.reducer';
 
 const sharePlanningStyle1: CSSProperties = {
     width: '45px',

@@ -1,6 +1,6 @@
 import { Button, Modal } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { GapOverview } from '../../../points/GapOverview.tsx';
+import { GapOverview } from '../../../points/GapOverview';
 
 interface Props {
     onHide: () => void;

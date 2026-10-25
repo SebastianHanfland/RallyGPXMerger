@@ -1,6 +1,6 @@
-import { FileDownloader } from '../FileDownloader.tsx';
+import { FileDownloader } from '../FileDownloader';
 import { useSelector } from 'react-redux';
-import { getPlanningTitle } from '../../store/settings.reducer.ts';
+import { getPlanningTitle } from '../../store/settings.reducer';
 
 export function ExportStateJson({ label }: { label: string }) {
     const state = useSelector((a) => a);

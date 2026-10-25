@@ -1,9 +1,9 @@
 import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { UploadDataButton } from '../server/UploadDataButton.tsx';
-import { PasswordButton } from '../server/PasswordButton.tsx';
-import { RemoveUploadedDataButton } from '../server/RemoveUploadedDataButton.tsx';
-import { CloudIcon } from '../../utils/icons/CloudIcon.tsx';
+import { UploadDataButton } from '../server/UploadDataButton';
+import { PasswordButton } from '../server/PasswordButton';
+import { RemoveUploadedDataButton } from '../server/RemoveUploadedDataButton';
+import { CloudIcon } from '../../utils/icons/CloudIcon';
 
 export const PlannerCloudActions = ({ onMap = false }: { onMap?: boolean }) => {
     const intl = useIntl();

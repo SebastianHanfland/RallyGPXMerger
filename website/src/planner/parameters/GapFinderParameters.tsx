@@ -1,8 +1,8 @@
 import { Form } from 'react-bootstrap';
-import { getCount } from '../../utils/inputUtil.ts';
+import { getCount } from '../../utils/inputUtil';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGapToleranceInKm, settingsActions } from '../store/settings.reducer.ts';
+import { getGapToleranceInKm, settingsActions } from '../store/settings.reducer';
 
 export const GapFinderParameters = () => {
     const intl = useIntl();

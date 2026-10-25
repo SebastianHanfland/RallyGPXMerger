@@ -1,5 +1,5 @@
-import { TrackWayPointType, WayPoint } from '../../../../planner/logic/resolving/types.ts';
-import { joinWayPointsAtSegmentsBorders } from '../joinWayPointsAtSegmentsBorders.ts';
+import { TrackWayPointType, WayPoint } from '../../../../planner/logic/resolving/types';
+import { joinWayPointsAtSegmentsBorders } from '../joinWayPointsAtSegmentsBorders';
 
 function waypoint(path: WayPoint['path']): WayPoint {
     return {

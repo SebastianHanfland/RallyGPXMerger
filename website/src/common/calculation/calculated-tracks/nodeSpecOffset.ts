@@ -1,4 +1,4 @@
-import { NodeSpecification } from '../../../planner/store/types.ts';
+import { NodeSpecification } from '../../../planner/store/types';
 
 export function getNodeOffset(
     nodeSpecification: NodeSpecification,

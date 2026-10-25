@@ -10,7 +10,7 @@ import { RallyComparisonWrapper } from '../../src/comparison/RallyComparisonWrap
 import { createComparisonStore } from '../../src/comparison/store/store';
 import { StateOld } from '../../src/planner/store/typesOld';
 import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
-import { comparisonDisplayUi } from './accessObjects/ComparisonDisplayTestAccess.ts';
+import { comparisonDisplayUi } from './accessObjects/ComparisonDisplayTestAccess';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');

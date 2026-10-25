@@ -1,6 +1,6 @@
-import { SEGMENT, TrackComposition } from '../../../planner/store/types.ts';
+import { SEGMENT, TrackComposition } from '../../../planner/store/types';
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer.ts';
+import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer';
 
 export interface TrackNodeSegment {
     segmentId: string;

@@ -1,4 +1,4 @@
-import { ParsedGpxSegment, ParsedPoint } from '../../planner/store/types.ts';
+import { ParsedGpxSegment, ParsedPoint } from '../../planner/store/types';
 
 export function getPointsEndingAtTime(gpxOrBreak: ParsedGpxSegment, endTime: number): ParsedPoint[] {
     const points = gpxOrBreak.points;

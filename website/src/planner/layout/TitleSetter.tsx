@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getPlanningTitle } from '../store/settings.reducer.ts';
+import { getPlanningTitle } from '../store/settings.reducer';
 
 export const TitleSetter = () => {
     const planningTitle = useSelector(getPlanningTitle);

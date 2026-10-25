@@ -5,11 +5,11 @@ import {
     StreetPathPoint,
     TrackWayPointType,
     BlockedStreetReference,
-} from '../types.ts';
+} from '../types';
 import { createSelector } from '@reduxjs/toolkit';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
-import { TrackComposition } from '../../../store/types.ts';
+import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { TrackComposition } from '../../../store/types';
 
 function takeLaterOne(end: string, to: string): string {
     return end >= to ? end : to;
