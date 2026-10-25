@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getFixedSegmentSpeeds, getSegmentSpeeds, segmentDataActions } from '../store/segmentData.redux.ts';
 import { getAverageSpeedInKmH } from '../store/settings.reducer.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
+import { formatFixedNumber, formatNumber } from '../../utils/numberUtil.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
@@ -35,10 +35,10 @@ export function SegmentSpeedCells({ id, calculatedSpeed }: { id: string; calcula
         <>
             {hasCustomSpeed ? (
                 <td style={{ backgroundColor: 'grey' }}>
-                    <s>{averageSpeed.toFixed(1)}</s>
+                    <s>{formatFixedNumber(averageSpeed, 1)}</s>
                 </td>
             ) : (
-                <td>{averageSpeed.toFixed(1)}</td>
+                <td>{formatFixedNumber(averageSpeed, 1)}</td>
             )}
             <td>
                 <Form.Control

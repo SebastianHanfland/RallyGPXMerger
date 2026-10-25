@@ -13,13 +13,16 @@ import { PlannerSidebarTrackStreets } from './PlannerSidebarTrackStreets.tsx';
 import { TrackStartName } from '../../../tracks/components/TrackStartName.tsx';
 import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
 import { TrackRounding } from '../../../tracks/components/TrackRounding.tsx';
+import { formatFixedNumber } from '../../../../utils/numberUtil.ts';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;
     const [activeTab, setActiveTab] = useState('segments');
     const trackInfos = useSelector(getTrackStreetInfos);
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
-    const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
+    const distanceInfo = matchedTrackInfo?.distanceInKm
+        ? ` (${formatFixedNumber(matchedTrackInfo.distanceInKm, 2)} km)`
+        : '';
     return (
         <div className={'m-2'}>
             <div className={'m-3'}>

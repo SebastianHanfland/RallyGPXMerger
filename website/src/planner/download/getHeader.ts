@@ -1,6 +1,7 @@
 import { TrackStreetInfo } from '../logic/resolving/types.ts';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../utils/dateUtil.ts';
 import { IntlShape } from 'react-intl';
+import { formatFixedNumber } from '../../utils/numberUtil.ts';
 
 export const getTrackTableHeaders = (intl: IntlShape) =>
     [
@@ -18,12 +19,15 @@ export const getTrackTableHeaders = (intl: IntlShape) =>
 
 export const getHeader = (trackInfo: TrackStreetInfo, intl: IntlShape): string => {
     const duration = getTimeDifferenceInSeconds(trackInfo.arrivalBack, trackInfo.startFront) / 60;
-    const durationString = `${intl.formatMessage({ id: 'msg.durationInMin' })};${duration.toFixed(2)}\n`;
-    const distance = `${intl.formatMessage({ id: 'msg.distanceInKm' })};${trackInfo.distanceInKm.toFixed(2)}\n`;
-    const averageSpeed = `${intl.formatMessage({ id: 'msg.averageSpeed' })};${(
-        (trackInfo.distanceInKm / duration) *
-        60
-    ).toFixed(2)}\n`;
+    const durationString = `${intl.formatMessage({ id: 'msg.durationInMin' })};${formatFixedNumber(duration, 2)}\n`;
+    const distance = `${intl.formatMessage({ id: 'msg.distanceInKm' })};${formatFixedNumber(
+        trackInfo.distanceInKm,
+        2
+    )}\n`;
+    const averageSpeed = `${intl.formatMessage({ id: 'msg.averageSpeed' })};${formatFixedNumber(
+        (trackInfo.distanceInKm / duration) * 60,
+        2
+    )}\n`;
 
     const times = `${intl.formatMessage({ id: 'msg.start' })};${formatTimeOnly(
         trackInfo.startFront

@@ -1,6 +1,7 @@
 import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types.ts';
 import { createStreetPointUrl } from '../../../utils/streetPathUrl.ts';
 import { formatTimeOnly } from '../../../utils/dateUtil.ts';
+import { formatFixedNumber } from '../../../utils/numberUtil.ts';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
 import { pdfStyles } from './pdfStyles.ts';
@@ -49,7 +50,9 @@ export const BreakOverviewPdf = ({ trackStreets, intl }: Props) => {
                             </Text>
                             <Text style={colWidths[1]}>{formatTimeOnly(breakWayPoint.frontArrival)}</Text>
                             <Text style={colWidths[2]}>
-                                {breakWayPoint.breakLength ? `${breakWayPoint.breakLength.toFixed(0)} min` : ''}
+                                {breakWayPoint.breakLength
+                                    ? `${formatFixedNumber(breakWayPoint.breakLength, 0)} min`
+                                    : ''}
                             </Text>
                         </View>
                     );

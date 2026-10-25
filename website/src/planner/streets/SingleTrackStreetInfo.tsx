@@ -11,7 +11,7 @@ import { EditDistrictButton } from './EditDistrictButton.tsx';
 import { EditPostCodeButton } from './EditPostCodeButton.tsx';
 import { OnlyShowUnknownCheckBox } from './OnlyShowUnknownCheckBox.tsx';
 import { wayPointHasUnknown } from './unknownUtil.ts';
-import { formatNumber } from '../../utils/numberUtil.ts';
+import { formatFixedNumber, formatNumber } from '../../utils/numberUtil.ts';
 import { InfoIcon } from '../../utils/icons/InfoIcon.tsx';
 
 interface Props {
@@ -34,7 +34,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
             <h5>{name}</h5>
             <OnlyShowUnknownCheckBox />
             <div className={'d-flex justify-content-between'}>
-                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.distance' })}: ${distanceInKm.toFixed(
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.distance' })}: ${formatFixedNumber(
+                    distanceInKm,
                     2
                 )} km`}</div>
                 <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.start' })}: ${formatTimeOnly(
@@ -46,7 +47,8 @@ export const SingleTrackStreetInfo = ({ trackStreetInfo }: Props) => {
                 <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.end' })}: ${formatTimeOnly(
                     arrivalBack
                 )}`}</div>
-                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.averageSpeed' })}: ${average.toFixed(
+                <div className={'m-3'}>{`${intl.formatMessage({ id: 'msg.averageSpeed' })}: ${formatFixedNumber(
+                    average,
                     1
                 )} km/h`}</div>
                 <div className={'m-3'}>{`#${intl.formatMessage({ id: 'msg.people' })}: ${peopleCount ?? '---'}`}</div>

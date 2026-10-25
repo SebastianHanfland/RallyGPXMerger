@@ -6,6 +6,7 @@ import { AppDispatch } from '../store/planningStore.ts';
 import { getAverageSpeedInKmH, settingsActions } from '../store/settings.reducer.ts';
 import { getCount } from '../../utils/inputUtil.ts';
 import { DEFAULT_AVERAGE_SPEED_IN_KM_H } from '../store/constants.ts';
+import { formatFixedNumber } from '../../utils/numberUtil.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
@@ -75,7 +76,7 @@ export function AverageSpeedSetter({ slim }: { slim?: boolean }) {
                 <div>
                     <h6>
                         <FormattedMessage id={'msg.averageSpeed.title'} />:
-                        <span className={'bg-info p-1'}>{averageSpeed.toFixed(1) + '\xa0km/h'}</span>
+                        <span className={'bg-info p-1'}>{formatFixedNumber(averageSpeed, 1) + '\xa0km/h'}</span>
                     </h6>
                 </div>
                 <AverageSpeedRangeInput />

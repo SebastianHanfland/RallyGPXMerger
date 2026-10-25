@@ -2,6 +2,7 @@ import { TrackStreetInfo } from '../../logic/resolving/types.ts';
 import { Row } from 'react-bootstrap';
 import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil.ts';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { formatFixedNumber } from '../../../utils/numberUtil.ts';
 
 interface Props {
     trackInfo: TrackStreetInfo | undefined;
@@ -15,7 +16,7 @@ export const PlannerSidebarTrackInfo = ({ trackInfo }: Props) => {
     const { distanceInKm, startFront, publicStart, arrivalBack, arrivalFront } = trackInfo;
     const average = (distanceInKm / getTimeDifferenceInSeconds(arrivalFront, startFront)) * 60 * 60;
 
-    const duration = (getTimeDifferenceInSeconds(arrivalBack, startFront) / 60 / 60).toFixed(1) + ' h';
+    const duration = formatFixedNumber(getTimeDifferenceInSeconds(arrivalBack, startFront) / 60 / 60, 1) + ' h';
 
     return (
         <div className={'mb-3'}>
@@ -30,7 +31,7 @@ export const PlannerSidebarTrackInfo = ({ trackInfo }: Props) => {
                     <tbody>
                         <tr>
                             <td>{duration}</td>
-                            <td>{average.toFixed(1)} km/h</td>
+                            <td>{formatFixedNumber(average, 1)} km/h</td>
                         </tr>
                     </tbody>
                 </table>

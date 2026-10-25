@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { AppDispatch } from '../store/planningStore.ts';
 import { getAverageSpeedInKmH, getParticipantsDelay, settingsActions } from '../store/settings.reducer.ts';
+import { formatFixedNumber } from '../../utils/numberUtil.ts';
 
 let constructTimeout: undefined | NodeJS.Timeout;
 
@@ -75,10 +76,13 @@ export function ParticipantsDelaySetter({ slim }: { slim?: boolean }) {
             </div>
             <h6 className="form-label m-3">
                 <FormattedMessage id={'msg.participantsDelay'} />
-                <span className={'bg-info p-1'}>{participantsDelay.toFixed(2) + '\xa0s'}</span>
+                <span className={'bg-info p-1'}>{formatFixedNumber(participantsDelay, 2) + '\xa0s'}</span>
             </h6>
             <h6 className="form-label m-3">
-                <FormattedMessage id={'msg.participantsLength'} values={{ speed: averageSpeed.toFixed(1) }} />
+                <FormattedMessage
+                    id={'msg.participantsLength'}
+                    values={{ speed: formatFixedNumber(averageSpeed, 1) }}
+                />
                 <span className={'bg-info p-1'}>
                     {Math.round((averageSpeed / 3.6) * 100 * participantsDelay) + '\xa0m'}
                 </span>
