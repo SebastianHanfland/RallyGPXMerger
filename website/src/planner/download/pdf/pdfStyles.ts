@@ -38,9 +38,14 @@ export const pdfStyles = StyleSheet.create({
     },
     sectionTitle: {
         fontWeight: 'bold',
+        marginTop: 10,
         marginLeft: 10,
         marginBottom: 5,
         fontSize: 14,
+    },
+    text: {
+        marginLeft: 10,
+        marginBottom: 5,
     },
     documentTitle: {
         fontWeight: 'bold',

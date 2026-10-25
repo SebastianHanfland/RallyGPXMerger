@@ -20,7 +20,7 @@ export const NodeOverviewTablePdf = ({ trackStreets, intl }: Props) => {
         return (
             <View wrap={false}>
                 <Text style={pdfStyles.sectionTitle}>{nodesTitle}</Text>
-                <Text>{intl.formatMessage({ id: 'msg.noNodePoints' })}</Text>
+                <Text style={pdfStyles.text}>{intl.formatMessage({ id: 'msg.noNodePoints' })}</Text>
             </View>
         );
     }

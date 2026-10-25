@@ -20,7 +20,7 @@ export const BreakOverviewPdf = ({ trackStreets, intl }: Props) => {
         return (
             <View wrap={false}>
                 <Text style={pdfStyles.sectionTitle}>{intl.formatMessage({ id: 'msg.breakPoints' })}</Text>
-                <Text>{intl.formatMessage({ id: 'msg.noBreakPoints' })}</Text>
+                <Text style={pdfStyles.text}>{intl.formatMessage({ id: 'msg.noBreakPoints' })}</Text>
             </View>
         );
     }
