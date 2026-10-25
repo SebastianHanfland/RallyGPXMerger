@@ -354,7 +354,7 @@
     "msg.defaultTitle": "Es wurde noch kein Titel für die Planung vergeben",
     "msg.setArrivalDateTime": "Jetzt die Ankunftszeit setzen",
     "msg.setTitle": "Jetzt den Titel für die Planung in den Einstellungen setzen",
-    "msg.titleOfPlanning": "Titel für die Planung",
+    "msg.titleOfPlanning": "Demoname",
     "msg.titleOfPlanning.hint": "Dieser Name wird auf dem öffentlichen Link benutzt",
     "msg.splitSegment": "Abschnitt hier aufteilen",
     "msg.onTheFly": "Automatisch",

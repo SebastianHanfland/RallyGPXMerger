@@ -2,11 +2,7 @@ import { ApiKeyInput } from '../../../streets/ApiKeyInput.tsx';
 import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { GapFinderParameters } from '../../../parameters/GapFinderParameters.tsx';
-import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
-import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker.tsx';
-import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { ReactNode } from 'react';
-import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
 import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets.tsx';
 
 export const PlannerSidebarSimpleSettings = () => {
@@ -17,15 +13,6 @@ export const PlannerSidebarSimpleSettings = () => {
     ];
     return (
         <div className={'m-2'}>
-            <BlockTextDescription messageId={'msg.description.documents'} />
-            <div className={'d-inline-block m-3'}>
-                <h5 className="form-label m-3">
-                    <FormattedMessage id={'msg.titleOfPlanning'} />
-                </h5>
-                <PlanningTitle />
-                <ArrivalDateTimePicker />
-                <StartDateTimePicker />
-            </div>
             <Accordion defaultActiveKey={'0'}>
                 {accordionEntries.map(([title, component, key]) => (
                     <Accordion.Item eventKey={key} key={key}>

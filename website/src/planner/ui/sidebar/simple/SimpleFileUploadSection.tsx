@@ -15,6 +15,7 @@ import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts
 import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
 import { TrackButtonsCell } from '../../../tracks/TrackButtonsCell.tsx';
 import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
+import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -40,6 +41,9 @@ export function SimpleFileUploadSection() {
         <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
             <div>
                 <Row>
+                    <div>
+                        <PlanningTitle />
+                    </div>
                     <div className={'d-flex justify-content-between'}>
                         <div />
                         <h5>
@@ -52,7 +56,6 @@ export function SimpleFileUploadSection() {
                             descriptionMessageId={'msg.description.simpleTracks'}
                         />
                     </div>
-
                     <Col>
                         <h6>
                             <FormattedMessage id={'msg.trackName'} />

@@ -348,7 +348,7 @@
     "msg.defaultTitle": "You have not yet set a title for the planning",
     "msg.setArrivalDateTime": "Set now the arrival time",
     "msg.setTitle": "Set now the title for the planning in the settings",
-    "msg.titleOfPlanning": "Title for the planning",
+    "msg.titleOfPlanning": "Demonstration name",
     "msg.titleOfPlanning.hint": "This name will be used for the public link",
     "msg.splitSegment": "Split segment here",
     "msg.onTheFly": "Automatic",
