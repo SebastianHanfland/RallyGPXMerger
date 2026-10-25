@@ -5,13 +5,14 @@ import type { TrackStreetInfo } from '../../../logic/resolving/types.ts';
 import { SimpleGapsButton } from './SimpleGapsButton.tsx';
 import { SimpleSettingsButton } from './SimpleSettingsButton.tsx';
 import { SimpleUnknownStreetsButton } from './SimpleUnknownStreetsButton.tsx';
+import { SimplePointsButton } from './SimplePointsButton.tsx';
 
 interface Props {
     matchedTrackInfo: TrackStreetInfo | undefined;
 }
 
 export function SimplePlanningChecks({ matchedTrackInfo }: Props) {
-    const { gaps, checks } = useOverviewAccordionStatuses();
+    const { gaps, checks, points } = useOverviewAccordionStatuses();
 
     return (
         <>
@@ -24,6 +25,9 @@ export function SimplePlanningChecks({ matchedTrackInfo }: Props) {
                 </Col>
                 <Col>
                     <SimpleUnknownStreetsButton warning={checks.warning} matchedTrackInfo={matchedTrackInfo} />
+                </Col>
+                <Col>
+                    <SimplePointsButton points={points} />
                 </Col>
                 <Col>
                     <SimpleSettingsButton />

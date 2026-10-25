@@ -8,7 +8,7 @@ import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton.tsx';
 import { PointsOfInterestTypeHint } from './PointsOfInterestTypeHint.tsx';
 import { pointOfInterestTypesByGroup } from './pointOfInterestConfig.ts';
 
-export function PointsOfInterest() {
+export function PointsOfInterest({ onNavigateToPoint }: { onNavigateToPoint?: () => void }) {
     const pointOfInterests = useSelector(getPoints) ?? [];
 
     return (
@@ -59,7 +59,11 @@ export function PointsOfInterest() {
                                         </th>
                                     </tr>
                                     {groupPoints.map((poi) => (
-                                        <PointOfInterestDisplay key={poi.id} pointOfInterest={poi} />
+                                        <PointOfInterestDisplay
+                                            key={poi.id}
+                                            pointOfInterest={poi}
+                                            onNavigateToPoint={onNavigateToPoint}
+                                        />
                                     ))}
                                 </React.Fragment>
                             );

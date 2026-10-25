@@ -10,7 +10,13 @@ import { useDispatch } from 'react-redux';
 import { pointsActions } from '../store/points.reducer.ts';
 import { EditIcon } from '../../utils/icons/EditIcon.tsx';
 
-export function PointOfInterestDisplay({ pointOfInterest }: { pointOfInterest: PointOfInterest }) {
+export function PointOfInterestDisplay({
+    pointOfInterest,
+    onNavigateToPoint,
+}: {
+    pointOfInterest: PointOfInterest;
+    onNavigateToPoint?: () => void;
+}) {
     const { title, description, type } = pointOfInterest;
     const config = pointOfInterestConfig[type];
     const dispatch = useDispatch();
@@ -33,6 +39,7 @@ export function PointOfInterestDisplay({ pointOfInterest }: { pointOfInterest: P
                     onClick={() => {
                         dispatch(mapActions.setShowPointsOfInterest(true));
                         dispatch(mapActions.setPointToCenter(pointOfInterest));
+                        onNavigateToPoint?.();
                     }}
                 >
                     <GeoLinkIcon />
