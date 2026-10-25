@@ -41,6 +41,12 @@ export function TrackSegmentSelect({ track }: Props) {
             filterOption={(option, filter) => option.label.toLowerCase().includes(filter.toLowerCase())}
             className="basic-multi-select"
             classNamePrefix="select"
+            styles={{
+                menu: (base) => {
+                    base.zIndex = 1000002;
+                    return base;
+                },
+            }}
             onChange={addSegmentToTrack}
         />
     );
