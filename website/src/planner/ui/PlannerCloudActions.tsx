@@ -3,7 +3,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { UploadDataButton } from '../server/UploadDataButton.tsx';
 import { PasswordButton } from '../server/PasswordButton.tsx';
 import { RemoveUploadedDataButton } from '../server/RemoveUploadedDataButton.tsx';
-import { SharePlanningButton } from '../sharing/SharePlanningButton.tsx';
 import { CloudIcon } from '../../utils/icons/CloudIcon.tsx';
 
 export const PlannerCloudActions = ({ onMap = false }: { onMap?: boolean }) => {
@@ -26,9 +25,6 @@ export const PlannerCloudActions = ({ onMap = false }: { onMap?: boolean }) => {
                 </Dropdown.Item>
                 <Dropdown.Item as="div">
                     <PasswordButton />
-                </Dropdown.Item>
-                <Dropdown.Item as="div">
-                    <SharePlanningButton />
                 </Dropdown.Item>
                 <Dropdown.Item as="div">
                     <RemoveUploadedDataButton />

@@ -434,7 +434,7 @@
     "msg.help.name.title": "Namen bestimmen",
     "msg.help.name.message": "Wählen Sie unter Einstellungen einen Namen für die Planung",
     "msg.help.upload.title": "Planung hochladen",
-    "msg.help.upload.message": "Laden Sie über den grünen Button mit Datei und Pfeil nach oben die Planung hoch",
+    "msg.help.upload.message": "Laden Sie über den grünen Button mit der Wolke die Planung hoch",
     "msg.help.share.title": "Planung teilen",
     "msg.help.share.message": "Über den Teilen Button oder die heruntergeladene Datei können Sie die Planung mit anderen teilen",
     "msg.help.edit.title": "Planung anpassen",

@@ -434,7 +434,7 @@
     "msg.help.name.title": "Set name",
     "msg.help.name.message": "Set a name for this planning at the settings tab",
     "msg.help.upload.title": "Upload planning",
-    "msg.help.upload.message": "Upload the planning via the green button with a file and arrow up symbol",
+    "msg.help.upload.message": "Upload the planning via the green button with the cloud and arrow up symbol",
     "msg.help.share.title": "Share planning",
     "msg.help.share.message": "Share the planning via the share button or the downloaded file with others",
     "msg.help.edit.title": "Edit planning",
