@@ -14,6 +14,7 @@ import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../../../store/settings.reducer.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
+import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -42,6 +43,12 @@ export function SimpleFileUploadSection() {
                     <Row>
                         <Col>
                             <StartDateTimePicker />
+                        </Col>
+                        <Col>
+                            <h6>
+                                <FormattedMessage id="msg.buffer" />
+                            </h6>
+                            <TrackBuffer track={track} />
                         </Col>
                         <Col>
                             <ArrivalDateTimePicker />
