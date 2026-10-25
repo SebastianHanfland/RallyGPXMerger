@@ -3,10 +3,10 @@ import { useIntl } from 'react-intl';
 import { ConfirmationModal } from '../../common/ConfirmationModal.tsx';
 import { getIsPlanningAlreadySaved, getPlanningId, getPlanningPassword } from '../store/backend.reducer.ts';
 import { getIsShareModalOpen, layoutActions } from '../store/layout.reducer.ts';
-import { getBaseUrl } from '../../utils/linkUtil.ts';
 import { getPlanningTitle } from '../store/settings.reducer.ts';
-import { EntryPointOptions } from './EntryPointOptions.tsx';
 import { LinkAndClipboardCopy } from './LinkAndClipboardCopy.tsx';
+import { getEntryPointPositions } from '../logic/resolving/selectors/getEntryPointPositions.ts';
+import { getPlanningLinks } from './planningLinks.ts';
 
 export function SharePlanningModal() {
     const isShareModalOpen = useSelector(getIsShareModalOpen);
@@ -44,28 +44,25 @@ const SharingModalBody = () => {
     const password = useSelector(getPlanningPassword);
     const planningId = useSelector(getPlanningId);
     const planningTitle = useSelector(getPlanningTitle);
-    const compareLink = `${getBaseUrl()}?comparison=${planningId},<other-planning-id>`;
-    const displayLink = `${getBaseUrl()}?display=${planningId}`;
-    const tableLink = `${getBaseUrl()}?table=${planningId}`;
-    const planningLink = `${getBaseUrl()}?section=gps&planning=${planningId}`;
-    const planningLinkWithAdmin = `${getBaseUrl()}?section=gps&planning=${planningId}&admin=${password}`;
+    const entryPointPositions = useSelector(getEntryPointPositions);
+    const planningLinks = getPlanningLinks({
+        planningId: planningId!,
+        password,
+        hasEntryPoints: entryPointPositions.length > 0,
+    });
+    const displayLink = planningLinks[0].href;
+    const tableLink = planningLinks[1].href;
     const iframeExample = getIframeExample(displayLink, planningTitle);
     const iframeTableExample = getIframeExample(tableLink, planningTitle);
 
     return (
         <div>
-            <LinkAndClipboardCopy messageId={'msg.publicLink'} link={displayLink} />
-            <LinkAndClipboardCopy messageId={'msg.publicTableLink'} link={tableLink} />
-            <LinkAndClipboardCopy messageId={'msg.publicTableLink.withIndex'} link={tableLink + '&rows=0,1,2'} />
-            <LinkAndClipboardCopy messageId={'msg.planningLink'} link={planningLink} />
-            <LinkAndClipboardCopy messageId={'msg.compareLink'} link={compareLink} />
-            <LinkAndClipboardCopy messageId={'msg.iframeExample'} link={iframeExample} />
-            <LinkAndClipboardCopy messageId={'msg.iframeTableExample'} link={iframeTableExample} />
-
-            {password && <LinkAndClipboardCopy messageId={'msg.planningLinkWithAdmin'} link={planningLinkWithAdmin} />}
-            {password && <LinkAndClipboardCopy messageId={'msg.planningPassword'} link={password} />}
-
-            <EntryPointOptions />
+            {planningLinks.map(({ messageId, href }) => (
+                <LinkAndClipboardCopy key={messageId} messageId={messageId} link={href} />
+            ))}
+            <LinkAndClipboardCopy messageId={'msg.iframeExample'} link={iframeExample} openLink={false} />
+            <LinkAndClipboardCopy messageId={'msg.iframeTableExample'} link={iframeTableExample} openLink={false} />
+            {password && <LinkAndClipboardCopy messageId={'msg.planningPassword'} link={password} openLink={false} />}
         </div>
     );
 };

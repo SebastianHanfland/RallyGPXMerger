@@ -1,8 +1,8 @@
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { getBaseUrl } from '../../../../utils/linkUtil.ts';
 import { getEntryPointPositions } from '../../../logic/resolving/selectors/getEntryPointPositions.ts';
-import { getPlanningId } from '../../../store/backend.reducer.ts';
+import { getPlanningId, getPlanningPassword } from '../../../store/backend.reducer.ts';
+import { getPlanningLinks } from '../../../sharing/planningLinks.ts';
 
 interface PublicLinkProps {
     href: string;
@@ -18,27 +18,23 @@ const PublicLink = ({ href, messageId }: PublicLinkProps) => (
 export const PlannerSidebarOverviewPublicLinks = () => {
     const planningId = useSelector(getPlanningId);
     const entryPointPositions = useSelector(getEntryPointPositions);
+    const password = useSelector(getPlanningPassword);
 
     if (!planningId) {
         return <FormattedMessage id="msg.publicLinks.unsaved" />;
     }
 
-    const baseUrl = getBaseUrl();
-    const displayLink = `${baseUrl}?display=${planningId}`;
-    const tableLink = `${baseUrl}?table=${planningId}`;
+    const planningLinks = getPlanningLinks({
+        planningId,
+        password,
+        hasEntryPoints: entryPointPositions.length > 0,
+    });
 
     return (
         <div>
-            <PublicLink href={displayLink} messageId="msg.publicLink" />
-            <PublicLink href={tableLink} messageId="msg.publicTableLink" />
-            <PublicLink href={`${tableLink}&rows=0,1,2`} messageId="msg.publicTableLink.withIndex" />
-            {entryPointPositions.length > 0 && (
-                <>
-                    <PublicLink href={`${displayLink}&times=defaultOn`} messageId="msg.publicLink.times.defaultOn" />
-                    <PublicLink href={`${displayLink}&times=defaultOff`} messageId="msg.publicLink.times.defaultOff" />
-                    <PublicLink href={`${displayLink}&times=off`} messageId="msg.publicLink.times.off" />
-                </>
-            )}
+            {planningLinks.map(({ messageId, href }) => (
+                <PublicLink key={messageId} href={href} messageId={messageId} />
+            ))}
         </div>
     );
 };

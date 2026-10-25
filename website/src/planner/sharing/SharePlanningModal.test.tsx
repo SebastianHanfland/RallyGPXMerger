@@ -30,6 +30,18 @@ describe('Share planning modal', () => {
         await user.click(screen.getByTitle('Share planning'));
         expect(screen.getByRole('dialog')).toBeInTheDocument();
         expect(store.getState().layout.isShareModalOpen).toBe(true);
+        const openButtons = within(screen.getByRole('dialog')).getAllByRole('button', { name: 'Open' });
+        expect(openButtons).toHaveLength(5);
+        openButtons.forEach((button) => {
+            expect(button).toHaveAttribute('target', '_blank');
+            expect(button).toHaveAttribute('href');
+        });
+        const iframeLabel = within(screen.getByRole('dialog')).getByText('Example for iframe code integration', {
+            exact: false,
+        });
+        const iframeRow = iframeLabel.closest('div');
+        expect(iframeRow).not.toBeNull();
+        expect(within(iframeRow!).queryByRole('button', { name: 'Open' })).toBeNull();
 
         await user.click(within(screen.getByRole('dialog')).getByText('Close'));
         expect(screen.queryByRole('dialog')).toBeNull();

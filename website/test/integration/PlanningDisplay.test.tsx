@@ -157,6 +157,14 @@ describe('Planner integration test', () => {
             expect(
                 within(publicLinksItem).getByRole('link', { name: messages['msg.publicTableLink.withIndex'] })
             ).toHaveAttribute('target', '_blank');
+            expect(within(publicLinksItem).getByRole('link', { name: messages['msg.planningLink'] })).toHaveAttribute(
+                'href',
+                expect.stringContaining('?section=gps&planning=test-planning')
+            );
+            expect(within(publicLinksItem).getByRole('link', { name: messages['msg.compareLink'] })).toHaveAttribute(
+                'href',
+                expect.stringContaining('?comparison=test-planning')
+            );
 
             await user.click(screen.getByRole('button', { name: messages['msg.settings'] }));
             expect(screen.queryByRole('button', { name: messages['msg.communicatedStart'] })).toBeNull();

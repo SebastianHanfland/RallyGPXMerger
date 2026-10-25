@@ -393,6 +393,8 @@
     "msg.copy": "Copy",
     "msg.aCopy": "Copy",
     "msg.copy.hint": "Copy to the clipboard",
+    "msg.open": "Open",
+    "msg.open.hint": "Open in a new tab",
     "msg.dataRemoved.success.title": "Data removed",
     "msg.dataRemoved.success.message": "The planning is successfully removed from the server",
     "msg.dataRemoved.error.title": "Error while removing data",

@@ -393,6 +393,8 @@
     "msg.copy": "Kopieren",
     "msg.aCopy": "Kopie",
     "msg.copy.hint": "In die Zwischenablage kopieren",
+    "msg.open": "Öffnen",
+    "msg.open.hint": "In einem neuen Tab öffnen",
     "msg.dataRemoved.success.title": "Daten entfernt",
     "msg.dataRemoved.success.message": "Die Daten für die Planung sind erfolgreich vom Sever gelöscht",
     "msg.dataRemoved.error.title": "Fehler beim Löschen der Planung",
