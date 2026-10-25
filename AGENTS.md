@@ -98,8 +98,7 @@ rules in `src/common/calculation/**/__tests__` where possible.
 
 ## Conventions and guardrails
 
-- Use TypeScript and existing relative imports with their explicit `.ts`/`.tsx`
-  extension style.
+- Use TypeScript and omit `.ts`/`.tsx` extensions from imports.
 - Keep React components focused; place state transitions in Redux actions,
   thunks, or selectors rather than component-local copies of planning data.
 - GPX parsing, segment splitting, breaks, shared segments, and branch joins are
