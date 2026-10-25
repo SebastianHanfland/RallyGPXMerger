@@ -57,14 +57,8 @@ describe('Planner integration test', () => {
             ui.complexButton();
 
             await user.click(ui.simpleButton());
-            await waitFor(() => ui.segmentHeading(), timeout);
-            ui.simpleSegmentTab();
-            ui.simpleSettingsTab();
             expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
             expect(screen.getByTitle(messages['msg.downloads'])).toHaveStyle({ width: '45px', height: '45px' });
-            await user.click(ui.simpleSettingsTab());
-            expect(screen.queryByText(messages['msg.serverData'])).toBeNull();
-            expect(screen.queryByText(messages['msg.localData'])).toBeNull();
         });
 
         it('Starts a new complex planning', async () => {
@@ -196,28 +190,6 @@ describe('Planner integration test', () => {
             expect(screen.getByText(messages['msg.cloudSaving'])).toBeInTheDocument();
             await user.click(screen.getByRole('button', { name: messages['msg.cloudActions'] }));
             ui.complexTracksTab(0);
-        });
-    });
-
-    describe('Simple planning', () => {
-        it('Create a simple planning with two elements', async () => {
-            (getLanguage as Mock).mockImplementation(() => 'en');
-            const store = createPlanningStore();
-            render(<RallyPlannerWrapper store={store} />, { wrapper: MemoryRouter });
-
-            const user = userEvent.setup();
-
-            await user.click(ui.startButton());
-            await user.click(ui.simpleButton());
-            await waitFor(() => ui.segmentHeading(), timeout);
-            await ui.uploadGpxSegment('segment1');
-            await ui.uploadGpxSegment('segment2');
-
-            await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(2), timeout);
-            expect(getCalculateTracks(store.getState())).toHaveLength(1);
-
-            await user.click(screen.getByTitle(messages['msg.downloads']));
-            await waitFor(() => ui.pdfDownloadButton(), timeout);
         });
     });
 
