@@ -1,14 +1,5 @@
-import {
-    BREAK,
-    NODE,
-    NODE_SPEC,
-    NodeSpecification,
-    NodeSpecifications,
-    PEOPLE,
-    PRIORITY,
-    TrackComposition,
-} from '../../../planner/store/types';
-import { NodeAtTrack, trackNodesBySegmentSize } from '../nodes/nodeFinder';
+import { NODE_SPEC, NodeSpecifications, PEOPLE, PRIORITY, TrackComposition } from '../../../planner/store/types';
+import { trackNodesBySegmentSize } from '../nodes/nodeFinder';
 import { getBranchId, getBranchNumbers, getBranchTrackIds } from './nodeSpecResultingBranchSize';
 import { getBranchPriorities } from './getBranchPriorities';
 import { createSelector } from '@reduxjs/toolkit';
@@ -16,68 +7,15 @@ import { getTrackCompositions } from '../../../planner/store/trackMerge.reducer'
 import { getParticipantsDelay } from '../../../planner/store/settings.reducer';
 import { getNodeSpecifications } from '../../../planner/store/nodes.reducer';
 import { getNodeOffset } from './nodeSpecOffset';
+import {
+    TrackDelayDetails,
+    getPossibleNodeSpecification,
+    hasPrioritiesSet,
+    initializeTrackDelayDetails,
+    setDelay,
+} from './delayRules';
 
-type DelayType = typeof BREAK | typeof NODE | typeof NODE_SPEC | typeof PRIORITY | typeof PEOPLE;
-
-export interface TrackDelay {
-    segmentId: string;
-    extraDelay: number;
-    by: DelayType;
-}
-
-export interface TrackDelayDetails {
-    trackId: string;
-    delays: TrackDelay[];
-}
-
-const initializeTrackDelayDetails = (trackNodes: NodeAtTrack[]) => (track: TrackComposition) => {
-    const delays: TrackDelay[] = [];
-    track.segments.forEach((segment) => {
-        const foundNode = trackNodes.find((node) => node.segmentIdAfterNode === segment.id);
-        if (foundNode) {
-            delays.push({ segmentId: segment.id, by: NODE, extraDelay: -Infinity });
-        }
-        if (segment.type === BREAK) {
-            delays.push({ segmentId: segment.id, by: BREAK, extraDelay: segment.minutes * 60 });
-        }
-    });
-    return { trackId: track.id, delays };
-};
-
-function setDelay(
-    trackDelays: TrackDelayDetails[],
-    trackId: string,
-    segmentId: string,
-    by: DelayType,
-    extraDelay: number
-) {
-    return [...trackDelays].map((trackDelay) => {
-        if (trackId !== trackDelay.trackId) {
-            return trackDelay;
-        }
-        const updatedDelays = trackDelay.delays.map((delay) => {
-            if (delay.segmentId !== segmentId) {
-                return delay;
-            }
-            return { segmentId, by, extraDelay };
-        });
-        return { trackId, delays: updatedDelays };
-    });
-}
-
-function hasPrioritiesSet(priorityCounter: Record<string, number | undefined>): boolean {
-    return Object.values(priorityCounter).some((counter) => (counter ?? 0) > 0);
-}
-
-const getPossibleNodeSpecification = (
-    nodeSpecifications: NodeSpecifications | undefined,
-    segmentIdAfter: string
-): NodeSpecification | undefined => {
-    if (!nodeSpecifications) {
-        return undefined;
-    }
-    return nodeSpecifications[segmentIdAfter];
-};
+export type { TrackDelay, TrackDelayDetails } from './delayRules';
 
 export const getDelaysOfTracks = (
     trackCompositions: TrackComposition[],

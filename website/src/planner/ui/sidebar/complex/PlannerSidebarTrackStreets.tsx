@@ -1,56 +1,33 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useEffect, useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Table } from 'react-bootstrap';
-import { EditIcon } from '../../../../utils/icons/EditIcon';
-import { CancelIcon } from '../../../../utils/icons/CancelIcon';
-import { GeoLinkIcon } from '../../../../utils/icons/GeoLinkIcon';
-import { formatNumber } from '../../../../utils/numberUtil';
-import { TrackComposition } from '../../../store/types';
+import { Table } from 'react-bootstrap';
 import { TrackWayPointType } from '../../../logic/resolving/types';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
-import { HighlightUnknown } from '../../../streets/HighlightUnknown';
-import { EditStreetNameButton } from '../../../streets/EditStreetNameButton';
-import { EditPostCodeButton } from '../../../streets/EditPostCodeButton';
-import { EditDistrictButton } from '../../../streets/EditDistrictButton';
-import { getParsedGpxSegments } from '../../../store/segmentData.redux';
-import { getNextStreetLookupIndex } from '../../../store/segmentData.redux';
+import { getParsedGpxSegments, getNextStreetLookupIndex } from '../../../store/segmentData.redux';
 import { getStreetPointSelection, mapActions } from '../../../store/map.reducer';
 import { AppDispatch } from '../../../store/planningStore';
+import { TrackComposition } from '../../../store/types';
 import { getRoutePointReferences } from '../../../logic/resolving/streets/streetRangeEditing';
-import {
-    abortStreetSelection,
-    beginNewStreet,
-    beginStreetBoundaryEdit,
-    getStreetPath,
-} from '../../../streets/streetEditing';
+import { beginNewStreet, getStreetPath } from '../../../streets/streetEditing';
+import { PlannerSidebarTrackStreetRow } from './PlannerSidebarTrackStreetRow';
+import { StreetInsertionRail } from './StreetInsertionRail';
+import { useStreetInsertionPositions } from './useStreetInsertionPositions';
 
 interface Props {
     track: TrackComposition;
 }
+
 export const PlannerSidebarTrackStreets = ({ track }: Props) => {
     const trackStreetInfo = useSelector(getTrackStreetInfos).find((trackInfo) => trackInfo.id === track.id);
     const parsedSegments = useSelector(getParsedGpxSegments);
-    const dispatch: AppDispatch = useDispatch();
-    const intl = useIntl();
-    const selection = useSelector(getStreetPointSelection);
-    const routePoints = useMemo(() => getRoutePointReferences(track, parsedSegments), [track, parsedSegments]);
     const nextStreetLookupIndex = useSelector(getNextStreetLookupIndex);
-    const tableRef = useRef<HTMLTableElement>(null);
-    const rowRefs = useRef<(HTMLTableRowElement | null)[]>([]);
-    const [insertionPositions, setInsertionPositions] = useState<number[]>([0]);
-    const highlightStreetPath = (wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number]) =>
-        dispatch(mapActions.setHighlightedStreetPath(getStreetPath(wayPoint)));
-    const centerPoint = (lat: number, lon: number) => dispatch(mapActions.setPointToCenter({ lat, lng: lon }));
-    const openSelection = (
-        wayPoint: NonNullable<typeof trackStreetInfo>['wayPoints'][number],
-        boundary: 'start' | 'end'
-    ) => {
-        beginStreetBoundaryEdit(dispatch, track, routePoints, wayPoint, boundary);
-    };
-    const startNewStreet = (insertionIndex: number) => {
-        beginNewStreet(dispatch, nextStreetLookupIndex, track, routePoints, insertionIndex);
-    };
+    const selection = useSelector(getStreetPointSelection);
+    const dispatch: AppDispatch = useDispatch();
+    const routePoints = useMemo(() => getRoutePointReferences(track, parsedSegments), [track, parsedSegments]);
+    const streets = trackStreetInfo?.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Track) ?? [];
+    const { tableRef, rowRefs, insertionPositions } = useStreetInsertionPositions(streets.length);
+
     useEffect(
         () => () => {
             dispatch(mapActions.setHighlightedStreetPath(undefined));
@@ -58,238 +35,64 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
         },
         [dispatch]
     );
-    const streets = trackStreetInfo?.wayPoints.filter((wayPoint) => wayPoint.type === TrackWayPointType.Track) ?? [];
-    useLayoutEffect(() => {
-        const table = tableRef.current;
-        if (!table) return;
-        const updatePositions = () => {
-            const tableTop = table.getBoundingClientRect().top;
-            const rows = rowRefs.current
-                .slice(0, streets.length)
-                .filter((row): row is HTMLTableRowElement => row !== null);
-            if (rows.length === 0) {
-                setInsertionPositions([(table.tHead?.getBoundingClientRect().bottom ?? tableTop) - tableTop]);
-                return;
-            }
-            setInsertionPositions([
-                ...rows.map((row) => row.getBoundingClientRect().top - tableTop),
-                rows[rows.length - 1]!.getBoundingClientRect().bottom - tableTop,
-            ]);
-        };
-        updatePositions();
-        window.addEventListener('resize', updatePositions);
-        if (typeof ResizeObserver === 'undefined') {
-            return () => window.removeEventListener('resize', updatePositions);
-        }
-        const observer = new ResizeObserver(updatePositions);
-        observer.observe(table);
-        return () => {
-            observer.disconnect();
-            window.removeEventListener('resize', updatePositions);
-        };
-    }, [streets.length]);
+
+    const highlightStreetPath = (wayPoint: (typeof streets)[number]) => {
+        dispatch(mapActions.setHighlightedStreetPath(getStreetPath(wayPoint)));
+    };
+    const startNewStreet = (insertionIndex: number) => {
+        beginNewStreet(dispatch, nextStreetLookupIndex, track, routePoints, insertionIndex);
+    };
+
     return (
-        <>
-            <div className={'position-relative'} style={{ paddingLeft: '2.5rem' }}>
-                <div
-                    data-testid={'street-insertion-rail'}
-                    className={'position-absolute'}
-                    style={{ left: 0, top: 0, bottom: 0, width: '2.5rem' }}
-                >
-                    {insertionPositions.map((position, insertionIndex) => {
-                        const active =
-                            selection?.trackId === track.id &&
-                            selection.mode?.startsWith('add-') &&
-                            selection.insertionIndex === insertionIndex;
-                        return (
-                            <Button
-                                key={insertionIndex}
-                                type={'button'}
-                                variant={'outline-secondary'}
-                                size={'sm'}
-                                title={intl.formatMessage({
-                                    id: active ? 'msg.cancelAddStreet' : 'msg.addStreet',
-                                })}
-                                aria-label={intl.formatMessage({
-                                    id: active ? 'msg.cancelAddStreet' : 'msg.addStreet',
-                                })}
-                                onClick={() =>
-                                    active ? abortStreetSelection(dispatch, selection) : startNewStreet(insertionIndex)
-                                }
-                                className={'p-0'}
-                                style={{
-                                    position: 'absolute',
-                                    left: '0.25rem',
-                                    top: `${position}px`,
-                                    transform: 'translateY(-50%)',
-                                    width: '2rem',
-                                    height: '2rem',
-                                    lineHeight: 1,
-                                    borderRadius: '0.25rem',
-                                }}
-                            >
-                                {active ? <CancelIcon /> : '+'}
-                            </Button>
-                        );
-                    })}
-                </div>
-                <Table ref={tableRef} data-testid={'track-street-list'} size={'sm'} striped hover>
-                    <thead>
-                        <tr>
-                            <th>
-                                <FormattedMessage id={'msg.start'} />
-                            </th>
-                            <th>
-                                <FormattedMessage id={'msg.end'} />
-                            </th>
-                            <th>
-                                <FormattedMessage id={'msg.street'} />
-                            </th>
-                            <th>
-                                <FormattedMessage id={'msg.postCode'} />
-                            </th>
-                            <th>
-                                <FormattedMessage id={'msg.district'} />
-                            </th>
-                            <th>
-                                <FormattedMessage id={'msg.length'} />
-                            </th>
-                            <th>
-                                <FormattedMessage id={'msg.streetPoints'} />
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {streets.map((wayPoint, index) => (
-                            <tr
-                                ref={(row) => {
-                                    rowRefs.current[index] = row;
-                                }}
-                                key={`${wayPoint.s ?? 'street'}-${index}`}
-                                onMouseEnter={() => highlightStreetPath(wayPoint)}
-                                onMouseLeave={() => dispatch(mapActions.setHighlightedStreetPath(undefined))}
-                            >
-                                {/** The active boundary is identified by the effective street index and boundary. */}
-                                {(() => {
-                                    const editingStart =
-                                        selection?.trackId === track.id &&
-                                        selection.boundary === 'start' &&
-                                        selection.streetIndex === wayPoint.s;
-                                    const editingEnd =
-                                        selection?.trackId === track.id &&
-                                        selection.boundary === 'end' &&
-                                        selection.streetIndex === wayPoint.s;
-                                    return (
-                                        <>
-                                            <td>
-                                                <Button
-                                                    type={'button'}
-                                                    variant={'link'}
-                                                    size={'sm'}
-                                                    title={intl.formatMessage({ id: 'msg.goToStart' })}
-                                                    aria-label={intl.formatMessage({ id: 'msg.goToStart' })}
-                                                    onClick={() => {
-                                                        highlightStreetPath(wayPoint);
-                                                        centerPoint(wayPoint.pointFrom.lat, wayPoint.pointFrom.lon);
-                                                    }}
-                                                >
-                                                    <GeoLinkIcon />
-                                                </Button>
-                                                <Button
-                                                    type={'button'}
-                                                    variant={'link'}
-                                                    size={'sm'}
-                                                    title={intl.formatMessage({
-                                                        id: editingStart
-                                                            ? 'msg.cancelStreetStartEdit'
-                                                            : 'msg.editStreetStart',
-                                                    })}
-                                                    aria-label={intl.formatMessage({
-                                                        id: editingStart
-                                                            ? 'msg.cancelStreetStartEdit'
-                                                            : 'msg.editStreetStart',
-                                                    })}
-                                                    onClick={() =>
-                                                        editingStart
-                                                            ? abortStreetSelection(dispatch, selection)
-                                                            : openSelection(wayPoint, 'start')
-                                                    }
-                                                >
-                                                    {editingStart ? <CancelIcon /> : <EditIcon />}
-                                                </Button>
-                                            </td>
-                                            <td>
-                                                <Button
-                                                    type={'button'}
-                                                    variant={'link'}
-                                                    size={'sm'}
-                                                    title={intl.formatMessage({ id: 'msg.goToEnd' })}
-                                                    aria-label={intl.formatMessage({ id: 'msg.goToEnd' })}
-                                                    onClick={() => {
-                                                        highlightStreetPath(wayPoint);
-                                                        centerPoint(wayPoint.pointTo.lat, wayPoint.pointTo.lon);
-                                                    }}
-                                                >
-                                                    <GeoLinkIcon />
-                                                </Button>
-                                                <Button
-                                                    type={'button'}
-                                                    variant={'link'}
-                                                    size={'sm'}
-                                                    title={intl.formatMessage({
-                                                        id: editingEnd
-                                                            ? 'msg.cancelStreetEndEdit'
-                                                            : 'msg.editStreetEnd',
-                                                    })}
-                                                    aria-label={intl.formatMessage({
-                                                        id: editingEnd
-                                                            ? 'msg.cancelStreetEndEdit'
-                                                            : 'msg.editStreetEnd',
-                                                    })}
-                                                    onClick={() =>
-                                                        editingEnd
-                                                            ? abortStreetSelection(dispatch, selection)
-                                                            : openSelection(wayPoint, 'end')
-                                                    }
-                                                >
-                                                    {editingEnd ? <CancelIcon /> : <EditIcon />}
-                                                </Button>
-                                            </td>
-                                            <td>
-                                                <HighlightUnknown
-                                                    value={
-                                                        wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' })
-                                                    }
-                                                />
-                                                <EditStreetNameButton waypoint={wayPoint} trackId={track.id} />
-                                            </td>
-                                            <td>
-                                                <HighlightUnknown
-                                                    value={
-                                                        wayPoint.postCode?.toString() ??
-                                                        intl.formatMessage({ id: 'msg.unknown' })
-                                                    }
-                                                />
-                                                <EditPostCodeButton waypoint={wayPoint} />
-                                            </td>
-                                            <td>
-                                                <HighlightUnknown
-                                                    value={
-                                                        wayPoint.district ?? intl.formatMessage({ id: 'msg.unknown' })
-                                                    }
-                                                />
-                                                <EditDistrictButton waypoint={wayPoint} />
-                                            </td>
-                                            <td>{formatNumber(wayPoint.distanceInKm ?? 0, 2)}</td>
-                                            <td>{getStreetPath(wayPoint).length}</td>
-                                        </>
-                                    );
-                                })()}
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </div>
-        </>
+        <div className="position-relative" style={{ paddingLeft: '2.5rem' }}>
+            <StreetInsertionRail
+                positions={insertionPositions}
+                trackId={track.id}
+                selection={selection}
+                dispatch={dispatch}
+                onStart={startNewStreet}
+            />
+            <Table ref={tableRef} data-testid="track-street-list" size="sm" striped hover>
+                <thead>
+                    <tr>
+                        <th>
+                            <FormattedMessage id="msg.start" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="msg.end" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="msg.street" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="msg.postCode" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="msg.district" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="msg.length" />
+                        </th>
+                        <th>
+                            <FormattedMessage id="msg.streetPoints" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {streets.map((wayPoint, index) => (
+                        <PlannerSidebarTrackStreetRow
+                            key={`${wayPoint.s ?? 'street'}-${index}`}
+                            ref={(row) => {
+                                rowRefs.current[index] = row;
+                            }}
+                            track={track}
+                            wayPoint={wayPoint}
+                            routePoints={routePoints}
+                            onHighlight={highlightStreetPath}
+                        />
+                    ))}
+                </tbody>
+            </Table>
+        </div>
     );
 };

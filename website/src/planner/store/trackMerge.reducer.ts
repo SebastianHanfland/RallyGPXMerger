@@ -1,10 +1,9 @@
-import { createSelector, createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Reducer } from '@reduxjs/toolkit';
 import {
     BreakEditInfo,
     EntryPointEditInfo,
     isTrackBreak,
     isTrackEntryPoint,
-    State,
     TrackComposition,
     TrackElement,
     TrackEntry,
@@ -12,7 +11,7 @@ import {
 } from './types';
 import { storage } from './storage';
 import { v4 as uuidv4 } from 'uuid';
-import { filterItems } from '../../utils/filterUtil';
+export * from './trackMerge.selectors';
 
 const initialState: TrackMergeState = {
     trackCompositions: [],
@@ -209,23 +208,3 @@ const trackMergeSlice = createSlice({
 
 export const trackMergeActions = trackMergeSlice.actions;
 export const trackMergeReducer: Reducer<TrackMergeState> = trackMergeSlice.reducer;
-const getBase = (state: State) => state.trackMerge;
-export const getTrackCompositions = (state: State) => {
-    return getBase(state).trackCompositions;
-};
-export const getTrackCompositionFilterTerm = (state: State) => getBase(state).filterTerm;
-export const getSegmentIdClipboard = (state: State) => getBase(state).segmentIdClipboard;
-export const getTrackIdForAddingABreak = (state: State) => getBase(state).trackIdForAddingABreak;
-export const getTrackIdForAddingAnEntryPoint = (state: State) => getBase(state).trackIdForAddingAnEntryPoint;
-export const getBreakInsertionIndex = (state: State) => getBase(state).breakInsertionIndex;
-export const getEntryPointInsertionIndex = (state: State) => getBase(state).entryPointInsertionIndex;
-export const getBreakEditInfo = (state: State) => getBase(state).breakEditInfo;
-export const getEntryPointEditInfo = (state: State) => getBase(state).entryPointEditInfo;
-
-export const getFilteredTrackCompositions = createSelector(
-    getTrackCompositions,
-    getTrackCompositionFilterTerm,
-    (tracks, filterTerm) => {
-        return filterItems(filterTerm, tracks, (track: TrackComposition) => track.name);
-    }
-);

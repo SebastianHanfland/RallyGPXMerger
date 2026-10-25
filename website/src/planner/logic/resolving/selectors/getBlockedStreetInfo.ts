@@ -1,137 +1,15 @@
-import {
-    WayPoint,
-    BlockedStreetInfo,
-    BlockedStreetTrackUsage,
-    StreetPathPoint,
-    TrackWayPointType,
-    BlockedStreetReference,
-} from '../types';
+import { BlockedStreetInfo, TrackWayPointType } from '../types';
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer';
-import { TrackComposition } from '../../../store/types';
-
-function takeLaterOne(end: string, to: string): string {
-    return end >= to ? end : to;
-}
-
-function takeEarlierOne(start: string, from: string): string {
-    return start <= from ? start : from;
-}
-
-function isKnown(value: string | null | undefined): value is string {
-    return value !== null && value !== undefined && value.trim().length > 0;
-}
-
-function streetIdentityMatches(waypoint: WayPoint, info: BlockedStreetInfo) {
-    return (
-        isKnown(waypoint.streetName) &&
-        isKnown(waypoint.postCode) &&
-        isKnown(waypoint.district) &&
-        isKnown(info.streetName) &&
-        isKnown(info.postCode) &&
-        isKnown(info.district) &&
-        waypoint.streetName === info.streetName &&
-        waypoint.postCode === info.postCode &&
-        waypoint.district === info.district
-    );
-}
-
-function addTrackId(tracksIds: string[], id: string) {
-    if (tracksIds.includes(id)) {
-        return tracksIds;
-    }
-    return [...tracksIds, id];
-}
-
-function addTrackUsage(usages: BlockedStreetTrackUsage[], usage: BlockedStreetTrackUsage) {
-    const existing = usages.find((item) => item.trackId === usage.trackId);
-    if (!existing) return [...usages, usage];
-    return usages.map((item) =>
-        item.trackId === usage.trackId
-            ? {
-                  ...item,
-                  frontArrival: takeEarlierOne(item.frontArrival, usage.frontArrival),
-                  backPassage: takeLaterOne(item.backPassage, usage.backPassage),
-                  distanceInKm:
-                      item.distanceInKm === undefined && usage.distanceInKm === undefined
-                          ? undefined
-                          : (item.distanceInKm ?? 0) + (usage.distanceInKm ?? 0),
-                  speed:
-                      item.speed === undefined
-                          ? usage.speed
-                          : usage.speed === undefined
-                            ? item.speed
-                            : (item.speed + usage.speed) / 2,
-              }
-            : item
-    );
-}
-
-function addStreetReference(
-    references: BlockedStreetReference[] | undefined,
-    trackId: string,
-    streetIndex: number | undefined
-): BlockedStreetReference[] | undefined {
-    if (streetIndex === undefined) return references;
-    const nextReference = { trackId, streetIndex };
-    if (references?.some((reference) => reference.trackId === trackId && reference.streetIndex === streetIndex)) {
-        return references;
-    }
-    return [...(references ?? []), nextReference];
-}
-
-function countPeopleOnTracks(tracks: TrackComposition[], tracksIds: string[]): number {
-    let counter = 0;
-    tracks
-        .filter((track) => tracksIds.includes(track.id))
-        .forEach((track) => {
-            counter += track.peopleCount ?? 0;
-        });
-    return counter;
-}
-
-function samePoint(first: StreetPathPoint | undefined, second: StreetPathPoint | undefined) {
-    return first?.lat === second?.lat && first?.lon === second?.lon;
-}
-
-function samePath(first: StreetPathPoint[] | undefined, second: StreetPathPoint[] | undefined): boolean {
-    if (!first || !second || first.length !== second.length) return false;
-    return first.every((point, index) => samePoint(point, second[index]));
-}
-
-function reversePath(path: NonNullable<WayPoint['path']>) {
-    return [...path].reverse();
-}
-
-function addStreetPath(paths: StreetPathPoint[][], path: WayPoint['path']): StreetPathPoint[][] {
-    if (!path || path.length === 0) return paths;
-    if (paths.some((existingPath) => samePath(existingPath, path) || samePath(existingPath, reversePath(path)))) {
-        return paths;
-    }
-
-    const endingPathIndex = paths.findIndex((existingPath) =>
-        samePoint(existingPath[existingPath.length - 1], path[0])
-    );
-    if (endingPathIndex >= 0) {
-        return paths.map((existingPath, index) =>
-            index === endingPathIndex ? [...existingPath, ...path.slice(1)] : existingPath
-        );
-    }
-
-    const startingPathIndex = paths.findIndex((existingPath) => samePoint(path[path.length - 1], existingPath[0]));
-    if (startingPathIndex >= 0) {
-        return paths.map((existingPath, index) =>
-            index === startingPathIndex ? [...path.slice(0, -1), ...existingPath] : existingPath
-        );
-    }
-
-    return [...paths, path];
-}
-
-function getStreetPaths(info: BlockedStreetInfo): StreetPathPoint[][] {
-    return info.paths ?? (info.path ? [info.path] : []);
-}
+import {
+    addStreetPath,
+    addStreetReference,
+    addTrackUsage,
+    countPeopleOnTracks,
+    getStreetPaths,
+    streetIdentityMatches,
+} from './blockedStreetAggregation';
 
 export const getBlockedStreetInfo = createSelector(
     [getTrackStreetInfos, getTrackCompositions],
@@ -174,9 +52,17 @@ export const getBlockedStreetInfo = createSelector(
                         streetIdentityMatches(waypoint, info)
                             ? {
                                   ...info,
-                                  backPassage: takeLaterOne(info.backPassage, waypoint.backPassage),
-                                  frontArrival: takeEarlierOne(info.frontArrival, waypoint.frontArrival),
-                                  tracksIds: addTrackId(info.tracksIds, foundTrack!.id),
+                                  backPassage:
+                                      info.backPassage >= waypoint.backPassage
+                                          ? info.backPassage
+                                          : waypoint.backPassage,
+                                  frontArrival:
+                                      info.frontArrival <= waypoint.frontArrival
+                                          ? info.frontArrival
+                                          : waypoint.frontArrival,
+                                  tracksIds: info.tracksIds.includes(foundTrack!.id)
+                                      ? info.tracksIds
+                                      : [...info.tracksIds, foundTrack!.id],
                                   ...(() => {
                                       const paths = addStreetPath(getStreetPaths(info), waypoint.path);
                                       return {
