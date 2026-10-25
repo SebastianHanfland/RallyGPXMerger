@@ -1,5 +1,4 @@
 import { SimpleGpxSegments } from './SimpleGpxSegments.tsx';
-import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo.tsx';
 import { useSelector } from 'react-redux';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer.ts';
 import { Col, Row } from 'react-bootstrap';
@@ -15,6 +14,7 @@ import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../../../store/settings.reducer.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
+import { SimpleTrackInfoRow } from './SimpleTrackInfoRow.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -25,7 +25,6 @@ export function SimpleFileUploadSection() {
     }
     const track = trackCompositions[0];
     const matchedTrackInfo = trackInfos.find((trackInfo) => trackInfo.id === track.id);
-    const distanceInfo = matchedTrackInfo?.distanceInKm ? ` (${matchedTrackInfo.distanceInKm.toFixed(2)} km)` : '';
     const planningTitle = useSelector(getPlanningTitle);
     const arrivalDateTime = useSelector(getArrivalDateTime);
     const hasDefaultArrivalDateTime = useSelector(getHasDefaultArrivalDateTime);
@@ -37,6 +36,7 @@ export function SimpleFileUploadSection() {
                     <PlanningTitle setTrackNameAsWell={true} singleTrack={track} />
                 </div>
             </Row>
+            <SimpleTrackInfoRow trackInfo={matchedTrackInfo} />
             {planningTitle && (
                 <>
                     <hr />
@@ -72,14 +72,12 @@ export function SimpleFileUploadSection() {
             )}
             {gpxSegments.length > 0 && (
                 <>
-                    <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
+                    <hr />
                     <TrackStreetInfoButton matchedTrackInfo={matchedTrackInfo} />
-                    {distanceInfo && <span>{distanceInfo}</span>}
                 </>
             )}
             {!hasDefaultArrivalDateTime && arrivalDateTime && (
                 <>
-                    <hr />
                     <SimpleGpxSegments />
                 </>
             )}
