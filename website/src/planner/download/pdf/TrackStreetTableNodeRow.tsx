@@ -19,7 +19,7 @@ export const TrackStreetTableNodeRow = ({ wayPoint, intl, colWidths }: Props) =>
     });
     return (
         <View key={wayPoint.streetName} style={pdfStyles.row} wrap={false}>
-            <Text style={{ width: `${width}%` }}>
+            <Text style={{ width: `${width}%`, marginRight: '10px' }}>
                 <Text style={pdfStyles.bold}>
                     <Link src={createStreetPointUrl(wayPoint.pointFrom, streetName)} style={{ color: 'blue' }}>
                         {`${streetName}: Knoten${wayPoint.nodeTracks ? ` (${wayPoint.nodeTracks.join(', ')})` : ''}`}
