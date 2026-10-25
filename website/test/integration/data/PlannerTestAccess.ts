@@ -1,4 +1,4 @@
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 import { AppDispatch } from '../../../src/planner/store/planningStore';
 import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
@@ -29,6 +29,42 @@ export const plannerUi = {
     complexSegmentsTab: () => screen.getByRole('button', { name: messages['msg.segments'] }),
     complexTracksTab: (amount: number) =>
         screen.getByRole('button', { name: messages['msg.tracks'] + '(' + amount + ')' }),
+    overviewButton: () => screen.getByRole('button', { name: messages['msg.overview'] }),
+    settingsButton: () => screen.getByRole('button', { name: messages['msg.settings'] }),
+    button: (name: string) => screen.getByRole('button', { name }),
+    absentButton: (name: string) => screen.queryByRole('button', { name }),
+    segmentsTab: () => screen.getByRole('tab', { name: messages['msg.segments'] }),
+    streetsTab: () => screen.getByRole('tab', { name: messages['msg.streets'] }),
+    infoTab: () => screen.getByRole('tab', { name: messages['msg.info'] }),
+    segmentOption: (name: string) => screen.getByText(name),
+    segmentTable: () => screen.getByRole('table'),
+    segmentSortButton: (name: string) => screen.getByRole('button', { name }),
+    usedSegmentsButton: () => screen.getByRole('button', { name: messages['msg.segmentUsage.used'] }),
+    unusedSegmentsButton: () => screen.getByRole('button', { name: messages['msg.segmentUsage.unused'] }),
+    trackTab: (id: string) => screen.getByTestId(`track-tab-${id}`),
+    trackContextMenu: () => screen.getByTestId('track-context-menu'),
+    segmentContextMenuItem: (name: string) => screen.getByText(name),
+    trackDescriptionButton: () => screen.getByRole('button', { name: messages['msg.tracks.title'] }),
+    trackSegment: (id: string) => screen.getByTestId(`track-segment-${id}`),
+    trackBreak: (id: string) => screen.getByTestId(`track-break-${id}`),
+    trackEntryPoint: (id: string) => screen.getByTestId(`track-entry-point-${id}`),
+    trackStreetList: () => screen.getByTestId('track-street-list'),
+    streetInsertionRail: () => screen.getByTestId('street-insertion-rail'),
+    activeAddStreetButton: () => screen.getByRole('button', { name: messages['msg.cancelAddStreet'] }),
+    streetRow: (index: number) => within(screen.getByTestId('track-street-list')).getAllByRole('row')[index]!,
+    streetAction: (row: HTMLElement, index: number) => within(row).getAllByRole('button')[index]!,
+    streetColumnHeaders: () => within(screen.getByTestId('track-street-list')).getAllByRole('columnheader'),
+    dialog: () => screen.getByRole('dialog'),
+    closeDialog: () => {
+        const buttons = within(screen.getByRole('dialog')).getAllByRole('button', { name: messages['msg.close'] });
+        return buttons[buttons.length - 1]!;
+    },
+    confirmDialog: () => within(screen.getByRole('dialog')).getByRole('button', { name: messages['msg.confirm'] }),
+    addDialog: () => within(screen.getByRole('dialog')).getByRole('button', { name: messages['msg.add'] }),
+    overviewAccordion: (name: string | RegExp) => screen.getByRole('heading', { name }).closest('.accordion-item')!,
+    flowOverviewButton: () => screen.getByRole('button', { name: messages['msg.flowOverview'] }),
+    cloudActionsButton: () => screen.getByTitle(messages['msg.cloudActions']),
+    downloadsButton: () => screen.getByTitle(messages['msg.downloads']),
     uploadGpxSegment: async (fileName: 'segment1' | 'segment2' | 'segment3') => {
         const fileInput = screen.queryByText(/upload the/) ?? screen.queryByText(/Successfully/);
         const inputElement = fileInput?.parentNode?.parentNode;
@@ -59,5 +95,8 @@ export const plannerUi = {
     pdfDownloadButton: () => screen.getByRole('button', { name: /PDF/ }),
     newTrackButton: () => screen.getByText(messages['msg.addNewTrack'], { exact: false }),
     trackNameInput: () => screen.getByPlaceholderText('Track name'),
+    bufferInput: () => screen.getByPlaceholderText(messages['msg.buffer']),
+    roundingInput: () => screen.getByPlaceholderText(messages['msg.rounding']),
     segmentSelect: () => screen.getByRole('combobox'),
+    textMatching: (pattern: RegExp) => screen.getAllByText(pattern),
 };

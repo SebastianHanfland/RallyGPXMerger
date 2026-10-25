@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 import { App } from '../../src/App';
 import { createStreetPathUrl } from '../../src/utils/streetPathUrl';
 import { getData } from '../../src/api/api';
+import { streetPathUi } from './data/StreetPathTestAccess';
 
 vi.mock('../../src/api/api.ts');
 vi.mock('leaflet.locatecontrol', () => ({ LocateControl: vi.fn() }));
@@ -34,11 +35,8 @@ describe('street path top-level view', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByTestId('street-path-map')).toHaveTextContent('Äußere Straße');
-        expect(screen.getByTestId('street-path-map')).toHaveAttribute(
-            'data-path',
-            generatedUrl.searchParams.get('streetpath')
-        );
+        expect(streetPathUi.map()).toHaveTextContent('Äußere Straße');
+        expect(streetPathUi.map()).toHaveAttribute('data-path', generatedUrl.searchParams.get('streetpath'));
         expect(getData).not.toHaveBeenCalled();
     });
 
@@ -49,7 +47,7 @@ describe('street path top-level view', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByTestId('street-path-map')).toHaveAttribute('data-path', '');
+        expect(streetPathUi.map()).toHaveAttribute('data-path', '');
         expect(getData).not.toHaveBeenCalled();
     });
 });

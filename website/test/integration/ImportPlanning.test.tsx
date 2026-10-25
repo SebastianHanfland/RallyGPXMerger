@@ -17,7 +17,7 @@ import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedT
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 vi.mock('../../src/utils/linkUtil');
-vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
+vi.mock('../../src/planner/logic/resolving/streets/geoApifyMapMatching', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({

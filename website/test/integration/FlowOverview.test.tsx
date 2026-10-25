@@ -1,87 +1,64 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
+import { waitFor } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
-import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
-import { getMessages } from '../../src/lang/getMessages';
-import { createPlanningStore } from '../../src/planner/store/planningStore';
-import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
-import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
-import { plannerUi as ui } from './data/PlannerTestAccess';
+import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
+import { flowOverviewUi } from './data/FlowOverviewTestAccess';
+import { plannerUi } from './data/PlannerTestAccess';
+import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup';
 
-const messages = getMessages('en');
+const timeout = { timeout: 3000 };
 
-vi.mock('../../src/language.ts');
-vi.mock('../../src/api/api.ts');
-vi.mock('../../src/versions/cache/readableTracks.ts');
-vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate.ts', () => ({
+vi.mock('../../src/language');
+vi.mock('../../src/api/api');
+vi.mock('../../src/versions/cache/readableTracks');
+vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({
     fetchPostCodeForCoordinate: () => () => Promise.resolve({ postCode: '1234' }),
 }));
-vi.mock('../../src/planner/logic/resolving/streets/geoApifyMapMatching.ts', () => ({
+vi.mock('../../src/planner/logic/resolving/streets/geoApifyMapMatching', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 vi.mock('@react-pdf/renderer', () => ({ StyleSheet: { create: () => {} } }));
 
-describe('Flow overview integration', () => {
-    it('opens a time-scaled graph for tracks that merge', async () => {
+async function prepareMergedTracks() {
+    const context = renderPlanner();
+    await prepareComplexPlanning(context.user, context.store);
+    const firstTrack = await createTrack(context.user, context.store, ['segment1', 'segment3']);
+    const secondTrack = await createTrack(context.user, context.store, ['segment2', 'segment3']);
+    context.store.dispatch(trackMergeActions.setTrackName({ id: firstTrack.id, trackName: 'Track 1' }));
+    context.store.dispatch(trackMergeActions.setTrackPeopleCount({ id: firstTrack.id, peopleCount: 100 }));
+    context.store.dispatch(trackMergeActions.setTrackName({ id: secondTrack.id, trackName: 'Track 2' }));
+    context.store.dispatch(trackMergeActions.setTrackPeopleCount({ id: secondTrack.id, peopleCount: 200 }));
+    await waitFor(() => expect(getCalculateTracks(context.store.getState())).toHaveLength(2), timeout);
+    await context.user.click(plannerUi.overviewButton());
+    return context;
+}
+
+describe('flow overview integration', () => {
+    beforeEach(() => {
         (getLanguage as Mock).mockImplementation(() => 'en');
-        const store = createPlanningStore();
-        render(
-            <MemoryRouter>
-                <RallyPlannerWrapper store={store} />
-            </MemoryRouter>
-        );
+    });
 
-        const user = userEvent.setup();
-        await user.click(ui.startButton());
-        await user.click(ui.complexButton());
-        await ui.uploadGpxSegment('segment1');
-        await ui.uploadGpxSegment('segment2');
-        await ui.uploadGpxSegment('segment3');
+    it('renders a time-scaled graph for tracks that merge', async () => {
+        const { store, user } = await prepareMergedTracks();
 
-        await waitFor(() => expect(getParsedGpxSegments(store.getState())).toHaveLength(3), { timeout: 3000 });
-        await user.click(ui.complexTracksTab(0));
-        await user.click(ui.newTrackButton());
+        expect(flowOverviewUi.openButton()).toBeInTheDocument();
+        await user.click(flowOverviewUi.openButton());
 
-        await user.click(ui.segmentSelect());
-        await user.click(screen.getByText('segment1'));
-        await user.click(ui.segmentSelect());
-        await user.click(screen.getByText('segment3'));
+        expect(flowOverviewUi.title()).toBeInTheDocument();
+        expect(flowOverviewUi.graph()).toBeInTheDocument();
+        expect(flowOverviewUi.node()).toHaveLength(1);
+        expect(flowOverviewUi.finish()).toBeInTheDocument();
+        expect(flowOverviewUi.legend()).toHaveTextContent('Track 1');
+        expect(flowOverviewUi.legend()).toHaveTextContent('Track 2');
+        expect(getTrackCompositions(store.getState())).toHaveLength(2);
+    });
 
-        const firstTrack = getTrackCompositions(store.getState())[0]!;
-        store.dispatch(trackMergeActions.setTrackName({ id: firstTrack.id, trackName: 'Track 1' }));
-        store.dispatch(trackMergeActions.setTrackPeopleCount({ id: firstTrack.id, peopleCount: 100 }));
+    it('closes the flow overview dialog', async () => {
+        const { user } = await prepareMergedTracks();
+        await user.click(flowOverviewUi.openButton());
+        await user.click(flowOverviewUi.closeButton());
 
-        await user.click(ui.newTrackButton());
-        await user.click(ui.segmentSelect());
-        await user.click(screen.getByText('segment2'));
-        await user.click(ui.segmentSelect());
-        await user.click(screen.getByText('segment3'));
-
-        const secondTrack = getTrackCompositions(store.getState())[1]!;
-        store.dispatch(trackMergeActions.setTrackName({ id: secondTrack.id, trackName: 'Track 2' }));
-        store.dispatch(trackMergeActions.setTrackPeopleCount({ id: secondTrack.id, peopleCount: 200 }));
-
-        await waitFor(() => expect(getCalculateTracks(store.getState())).toHaveLength(2), { timeout: 3000 });
-        await user.click(screen.getByRole('button', { name: messages['msg.overview'] }));
-
-        const flowButton = screen.getByRole('button', { name: messages['msg.flowOverview'] });
-        expect(flowButton).toBeInTheDocument();
-        await user.click(flowButton);
-
-        const dialog = screen.getByRole('dialog');
-        expect(within(dialog).getByText(messages['msg.flowOverview.title'])).toBeInTheDocument();
-        expect(within(dialog).getByTestId('flow-overview-graph')).toBeInTheDocument();
-        expect(within(dialog).getAllByTestId('flow-overview-node')).toHaveLength(1);
-        expect(within(dialog).getByTestId('flow-overview-finish')).toBeInTheDocument();
-        const legend = within(dialog).getByTestId('flow-overview-legend');
-        expect(legend).toHaveTextContent('Track 1');
-        expect(legend).toHaveTextContent('Track 2');
-
-        const closeButtons = within(dialog).getAllByRole('button', { name: messages['msg.close'] });
-        await user.click(closeButtons[closeButtons.length - 1]!);
-        expect(screen.queryByTestId('flow-overview-graph')).toBeNull();
+        expect(() => flowOverviewUi.graph()).toThrow();
     });
 });

@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { expect, Mock, vi } from 'vitest';
 import { useGetUrlParam } from '../../src/utils/linkUtil';
@@ -10,17 +10,14 @@ import { RallyComparisonWrapper } from '../../src/comparison/RallyComparisonWrap
 import { createComparisonStore } from '../../src/comparison/store/store';
 import { StateOld } from '../../src/planner/store/typesOld';
 import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
+import { comparisonDisplayUi } from './data/ComparisonDisplayTestAccess';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');
 
-const ui = {
-    isLoading: () => screen.getByText('Loading'),
-};
-
 describe('Comparison Display integration test', () => {
-    it('Render the map display and have different snakes at different times', async () => {
+    it('loads both requested plans', async () => {
         // given
         const buffer = '' + fs.readFileSync('./test/integration/data/RideOfSilence2024.json');
         const state = JSON.parse(buffer) as StateOld;
@@ -38,11 +35,10 @@ describe('Comparison Display integration test', () => {
                 </MemoryRouter>
             )
         );
-        ui.isLoading();
+        comparisonDisplayUi.loading();
         await loadingPage;
 
         expect(getData).toHaveBeenCalledTimes(2);
-
-        console.log({ state: store.getState() });
+        expect(store.getState()).toBeDefined();
     });
 });

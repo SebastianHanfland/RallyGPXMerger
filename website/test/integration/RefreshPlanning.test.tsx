@@ -1,5 +1,4 @@
 import { act, render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
@@ -26,7 +25,7 @@ vi.mock('../../src/planner/store/storage', () => ({
         save: () => {},
     },
 }));
-vi.mock('../../src/planner/logic/resolving/street-new/geoApifyMapMatching', () => ({
+vi.mock('../../src/planner/logic/resolving/streets/geoApifyMapMatching', () => ({
     geoApifyFetchMapMatching: () => () => Promise.resolve({}),
 }));
 vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate', () => ({
@@ -35,13 +34,11 @@ vi.mock('../../src/planner/logic/resolving/postcode/fetchPostCodeForCoordinate',
 
 describe('Refresh planning, when planning is in localStorage', () => {
     it('the parsed information should be available when reloading the page and the information resides in the localstorage at the start', async () => {
-        const user = userEvent.setup();
-
         (getLanguage as Mock).mockImplementation(() => 'en');
 
         const store = createPlanningStore();
 
-        const loadingPage = act(() =>
+        act(() =>
             render(
                 <MemoryRouter>
                     <RallyPlannerWrapper store={store} />
@@ -49,7 +46,6 @@ describe('Refresh planning, when planning is in localStorage', () => {
             )
         );
 
-        const state1 = store.getState();
         await waitFor(() => expect(getCalculateTracks(store.getState()) ?? []).toHaveLength(1));
         expect(getTrackCompositions(store.getState())).toHaveLength(1);
         expect(getParsedGpxSegments(store.getState()) ?? []).toHaveLength(4);
