@@ -471,7 +471,7 @@
     "msg.description.customSpeed": "Enter a custom speed in km/h. Append ! to the speed, for example 20!, to calculate the segment time using a fixed velocity without considering elevation.",
     "msg.description.tracks": "Here new tracks can be created. The GPX segments can be selected below. You can also add breaks to a track. You can change the order by drag and drop. After calculation you can also download the documents and resulting GPX files.",
     "msg.description.documents": "You can manage the planning here. Upload it to the server to be able to share or publish it. You can also download all the other documents here.",
-    "msg.description.simpleSegments": "Upload GPX files here. They are the combined into one track.",
+    "msg.description.simpleSegments": "Upload GPX files here. They are the combined into one track. The order can be changed with drag and drop",
     "msg.description.simpleTracks": "Here, the values, like average speed, name of the track or arrival at the final point can be set. After the calculation you can download an overview document of the track and the resulting GPX file.",
     "msg.serverData": "Data on server",
     "msg.localData": "Local data",

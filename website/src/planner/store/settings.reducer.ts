@@ -21,6 +21,7 @@ const settingsSlice = createSlice({
             state.arrivalDateTime = action.payload;
         },
         setStartDate: (state: SettingsState, action: PayloadAction<string | undefined>) => {
+            state.hasDefaultArrivalDate = false;
             state.startDate = action.payload;
         },
         setPlanningLabel: (state: SettingsState, action: PayloadAction<string | undefined>) => {
