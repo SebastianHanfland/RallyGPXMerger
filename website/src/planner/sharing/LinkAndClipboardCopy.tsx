@@ -1,9 +1,17 @@
 import { FormattedMessage, useIntl } from 'react-intl';
+import type { CSSProperties } from 'react';
 import { CopyToClipboardButton } from './CopyToClipboardButton.tsx';
 import { Button } from 'react-bootstrap';
 import openInNew from '../../assets/open-in-new.svg';
 
-const entryStyle = { display: 'flex', justifyContent: 'space-between', margin: '10px' };
+const entryStyle: CSSProperties = {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '8px',
+    margin: '10px',
+};
+const textStyle: CSSProperties = { minWidth: 0, flex: '1 1 auto', overflowWrap: 'anywhere' };
+const actionStyle: CSSProperties = { display: 'flex', flexShrink: 0, gap: '4px' };
 
 interface Props {
     messageId: string;
@@ -16,13 +24,14 @@ export const LinkAndClipboardCopy = ({ link, messageId, openLink = true }: Props
 
     return (
         <div style={entryStyle}>
-            <span>
+            <span style={textStyle}>
                 <FormattedMessage id={messageId} />: <b>{link}</b>
             </span>
-            <div>
-                <CopyToClipboardButton text={link} />
+            <div style={actionStyle}>
                 {openLink && (
                     <Button
+                        className={'flex-shrink-0 text-nowrap'}
+                        variant={'secondary'}
                         href={link}
                         target={'_blank'}
                         rel={'noreferrer'}
@@ -32,6 +41,7 @@ export const LinkAndClipboardCopy = ({ link, messageId, openLink = true }: Props
                         <FormattedMessage id={'msg.open'} />
                     </Button>
                 )}
+                <CopyToClipboardButton text={link} />
             </div>
         </div>
     );

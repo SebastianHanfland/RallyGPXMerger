@@ -30,6 +30,13 @@ describe('Share planning modal', () => {
         await user.click(screen.getByTitle('Share planning'));
         expect(screen.getByRole('dialog')).toBeInTheDocument();
         expect(store.getState().layout.isShareModalOpen).toBe(true);
+        const firstOpenButton = within(screen.getByRole('dialog')).getAllByRole('button', { name: 'Open' })[0];
+        const firstRow = firstOpenButton.parentElement?.parentElement;
+        expect(firstRow).not.toBeNull();
+        const firstRowButtons = within(firstRow!).getAllByRole('button');
+        expect(firstRowButtons[0]).toHaveTextContent('Open');
+        expect(firstRowButtons[0]).toHaveClass('btn-secondary');
+        expect(firstRowButtons[1]).toHaveTextContent('Copy');
         const openButtons = within(screen.getByRole('dialog')).getAllByRole('button', { name: 'Open' });
         expect(openButtons).toHaveLength(5);
         openButtons.forEach((button) => {

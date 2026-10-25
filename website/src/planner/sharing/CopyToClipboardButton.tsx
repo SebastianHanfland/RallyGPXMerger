@@ -19,7 +19,11 @@ export const CopyToClipboardButton = ({ text }: Props) => {
         );
     };
     return (
-        <Button style={{ marginLeft: '5px' }} onClick={onClick} title={intl.formatMessage({ id: 'msg.copy.hint' })}>
+        <Button
+            className={'flex-shrink-0 text-nowrap'}
+            onClick={onClick}
+            title={intl.formatMessage({ id: 'msg.copy.hint' })}
+        >
             {intl.formatMessage({ id: 'msg.copy' })}
         </Button>
     );
