@@ -52,9 +52,11 @@ describe('SimplePlanningChecks', () => {
         };
         store.dispatch(pointsActions.addPoint(point));
 
-        const pointsButton = await waitFor(() => screen.getByRole('button', { name: /open todos/i }));
-        expect(pointsButton).toHaveTextContent('1 open todos');
-        expect(pointsButton).toHaveTextContent('1 Points');
+        const pointsButton = await waitFor(() => screen.getByRole('button', { name: messages['msg.points'] }));
+        expect(pointsButton).toHaveAttribute(
+            'title',
+            '1 open todos (0 impediments) (1 Points) (0 public points on map)'
+        );
 
         await userEvent.click(pointsButton);
         expect(screen.getByRole('dialog')).toBeInTheDocument();

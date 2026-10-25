@@ -15,21 +15,16 @@ export function SimplePointsButton({ points }: Props) {
     const intl = useIntl();
     const pointsLabel = intl.formatMessage({ id: 'msg.points' });
     const pointsOnPublicMapLabel = intl.formatMessage({ id: 'msg.pointsOnPublicMap' });
+    const pointsStatusLabel = points.warning
+        ? `${points.todoCount} ${intl.formatMessage({ id: 'msg.openTodos' })} (${points.impedimentCount} ${intl.formatMessage({ id: 'msg.impediments' })})`
+        : intl.formatMessage({ id: 'msg.noOpenPoints' });
+    const tooltip = `${pointsStatusLabel} (${points.pointCount} ${pointsLabel}) (${points.publicPointCount} ${pointsOnPublicMapLabel})`;
 
     return (
         <>
-            <Button size={'sm'} onClick={() => setDisplayModal(true)}>
+            <Button size={'sm'} title={tooltip} onClick={() => setDisplayModal(true)}>
                 <span aria-hidden="true">{points.warning ? <WarningIcon /> : <CheckIcon />}</span>
-                {points.warning ? (
-                    <>
-                        {points.todoCount} <FormattedMessage id={'msg.openTodos'} />
-                        {` (${points.impedimentCount} ${intl.formatMessage({ id: 'msg.impediments' })})`}
-                    </>
-                ) : (
-                    <FormattedMessage id={'msg.noOpenPoints'} />
-                )}
-                {` (${points.pointCount} ${pointsLabel})`}
-                {` (${points.publicPointCount} ${pointsOnPublicMapLabel})`}
+                <FormattedMessage id={'msg.points'} />
             </Button>
             {displayModal && <SimplePointsModal onHide={() => setDisplayModal(false)} />}
         </>
