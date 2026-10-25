@@ -108,7 +108,7 @@ describe('streetPointSelectionDisplayHook', () => {
         expect(leafletMocks.circleMarker.mock.results[0]!.value.on).toHaveBeenCalledWith('click', expect.any(Function));
         expect(leafletMocks.circleMarker.mock.results[1]!.value.on).not.toHaveBeenCalled();
         expect(leafletMocks.circleMarker.mock.results[1]!.value.bindTooltip).toHaveBeenCalledWith(
-            'Point 2<br>Raw (r —): Unknown<br>Manual (m —): Unknown<br>Smoothed (s 2): Unknown',
+            'Point 2<br>Raw (r —): Unknown<br>Manual (m —): Not manually set<br>Smoothed (s 2): Unknown',
             { sticky: true }
         );
     });
