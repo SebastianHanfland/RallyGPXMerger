@@ -14,7 +14,6 @@ import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux'
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 import { getTrackStreetInfos } from '../../src/planner/calculation/getTrackStreetInfos';
 import { formatTimeOnly } from '../../src/utils/dateUtil';
-import { getGapToleranceInKm } from '../../src/planner/store/settings.reducer';
 import { getSelectedTrackId } from '../../src/planner/store/layout.reducer';
 import { backendActions } from '../../src/planner/store/backend.reducer';
 import {
@@ -58,7 +57,7 @@ describe('Planner integration test', () => {
             ui.complexButton();
 
             await user.click(ui.simpleButton());
-            ui.segmentHeading();
+            await waitFor(() => ui.segmentHeading(), timeout);
             ui.simpleSegmentTab();
             ui.simpleSettingsTab();
             expect(screen.getByTitle(messages['msg.cloudActions'])).toHaveStyle({ width: '45px', height: '45px' });
@@ -66,10 +65,6 @@ describe('Planner integration test', () => {
             await user.click(ui.simpleSettingsTab());
             expect(screen.queryByText(messages['msg.serverData'])).toBeNull();
             expect(screen.queryByText(messages['msg.localData'])).toBeNull();
-            const gapToleranceInput = screen.getByTitle(messages['msg.gapTolerance.hint']);
-            expect(gapToleranceInput).toHaveValue(10);
-            fireEvent.change(gapToleranceInput, { target: { value: '25' } });
-            expect(getGapToleranceInKm(store.getState())).toBe(0.025);
         });
 
         it('Starts a new complex planning', async () => {
@@ -206,6 +201,7 @@ describe('Planner integration test', () => {
 
             await user.click(ui.startButton());
             await user.click(ui.simpleButton());
+            await waitFor(() => ui.segmentHeading(), timeout);
             await ui.uploadGpxSegment('segment1');
             await ui.uploadGpxSegment('segment2');
 

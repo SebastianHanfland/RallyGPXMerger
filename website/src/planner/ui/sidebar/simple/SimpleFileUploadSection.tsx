@@ -6,7 +6,6 @@ import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker
 import { TrackPeople } from '../../../tracks/components/TrackPeople.tsx';
 import { AverageSpeedSetter } from '../../../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../../../parameters/ParticipantsDelaySetter.tsx';
-import { TrackStreetInfoButton } from '../../../tracks/components/TrackStreetInfoButton.tsx';
 import { FormattedMessage } from 'react-intl';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
@@ -15,7 +14,7 @@ import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } fr
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
 import { SimpleTrackInfoRow } from './SimpleTrackInfoRow.tsx';
-import { PlannerSidebarSimpleSettings } from './PlannerSidebarSimpleSettings.tsx';
+import { SimplePlanningChecks } from './SimplePlanningChecks.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -74,12 +73,12 @@ export function SimpleFileUploadSection() {
             {gpxSegments.length > 0 && (
                 <>
                     <hr />
-                    <TrackStreetInfoButton matchedTrackInfo={matchedTrackInfo} />
-                    <PlannerSidebarSimpleSettings />
+                    <SimplePlanningChecks matchedTrackInfo={matchedTrackInfo} />
                 </>
             )}
             {!hasDefaultArrivalDateTime && arrivalDateTime && (
                 <>
+                    <hr />
                     <SimpleGpxSegments />
                 </>
             )}
