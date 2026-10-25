@@ -171,6 +171,7 @@
     "msg.allEntries": "Alle Einträge anzeigen",
     "msg.onlyUnknown": "Nur \"Unbekannte\" anzeigen",
     "msg.unknown": "Unbekannt",
+    "msg.notManuallySet": "Nicht manuell gesetzt",
     "msg.unknownStreets": "Unbekannte Straßen",
     "msg.noUnknownStreets": "Alle Straßenabschnitte sind bekannt und aufgelöst",
     "msg.streetPath.title": "Straßenverlauf",

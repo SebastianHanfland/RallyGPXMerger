@@ -29,9 +29,9 @@ function escapeTooltipText(value: string): string {
 function getResolvedStreetName(
     index: number | undefined,
     streetLookup: Record<number, string | undefined>,
-    unknown: string
+    nameWhenNotSet: string
 ): string {
-    return index === undefined ? unknown : (streetLookup[index] ?? unknown);
+    return index === undefined ? nameWhenNotSet : (streetLookup[index] ?? nameWhenNotSet);
 }
 
 function getStreetAssignmentTooltip(
@@ -41,6 +41,7 @@ function getStreetAssignmentTooltip(
     streetLookup: Record<number, string | undefined>
 ): string {
     const unknown = intl.formatMessage({ id: 'msg.unknown' });
+    const manuallyNotSet = intl.formatMessage({ id: 'msg.notManuallySet' });
     const rows = [
         intl.formatMessage({ id: 'msg.streetAssignment.point' }, { number: routeIndex + 1 }),
         intl.formatMessage(
@@ -49,7 +50,7 @@ function getStreetAssignmentTooltip(
         ),
         intl.formatMessage(
             { id: 'msg.streetAssignment.manual' },
-            { index: point.m ?? '—', name: getResolvedStreetName(point.m, streetLookup, unknown) }
+            { index: point.m ?? '—', name: getResolvedStreetName(point.m, streetLookup, manuallyNotSet) }
         ),
         intl.formatMessage(
             { id: 'msg.streetAssignment.smoothed' },
@@ -98,10 +99,16 @@ export function streetPointSelectionDisplayHook(selectionLayer: RefObject<LayerG
 
     useEffect(() => {
         const current = selectionLayer.current;
-        if (!current) return;
+        if (!current) {
+            return;
+        }
         current.clearLayers();
-        if (!selection) return;
-        if (!track || routePoints.length === 0) return;
+        if (!selection) {
+            return;
+        }
+        if (!track || routePoints.length === 0) {
+            return;
+        }
         if (
             selection.range.start < 0 ||
             selection.range.end < selection.range.start ||

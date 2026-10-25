@@ -164,6 +164,7 @@
     "msg.allEntries": "Show all entries",
     "msg.onlyUnknown": "Only show \"Unknown\"",
     "msg.unknown": "Unknown",
+    "msg.notManuallySet": "Not manually set",
     "msg.unknownStreets": "Unknown streets",
     "msg.noUnknownStreets": "All street parts are known and resolved",
     "msg.streetPath.title": "Street path",

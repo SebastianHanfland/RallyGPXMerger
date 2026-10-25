@@ -28,9 +28,13 @@ export function beginStreetBoundaryEdit(
     boundary: 'start' | 'end'
 ) {
     const streetIndex = waypoint.s;
-    if (streetIndex === undefined || routePoints.length === 0) return false;
+    if (streetIndex === undefined || routePoints.length === 0) {
+        return false;
+    }
     const range = getStreetRange(routePoints, streetIndex);
-    if (!range || range.start < 0 || range.end < range.start || range.end >= routePoints.length) return false;
+    if (!range || range.start < 0 || range.end < range.start || range.end >= routePoints.length) {
+        return false;
+    }
     dispatch(mapActions.setHighlightedStreetPath(getStreetPath(waypoint)));
     dispatch(mapActions.setPointToCenter({ lat: waypoint.pointFrom.lat, lng: waypoint.pointFrom.lon }));
     dispatch(mapActions.setStreetPointSelection({ trackId: track.id, streetIndex, boundary, range }));

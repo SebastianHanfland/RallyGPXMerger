@@ -41,7 +41,7 @@ export function AbortStreetSelectionButton() {
             title={label}
             aria-label={label}
             onClick={() => abortStreetSelection(dispatch, selection)}
-            style={{ width: '45px', height: '45px', padding: 0 }}
+            style={{ width: '45px', height: '45px', padding: 0, marginBottom: '5px' }}
         >
             <CancelIcon />
         </Button>
