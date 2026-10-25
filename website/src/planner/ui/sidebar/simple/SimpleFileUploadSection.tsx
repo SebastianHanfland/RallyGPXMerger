@@ -15,6 +15,7 @@ import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } fr
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { TrackBuffer } from '../../../tracks/components/TrackBuffer.tsx';
 import { SimpleTrackInfoRow } from './SimpleTrackInfoRow.tsx';
+import { PlannerSidebarSimpleSettings } from './PlannerSidebarSimpleSettings.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -74,6 +75,7 @@ export function SimpleFileUploadSection() {
                 <>
                     <hr />
                     <TrackStreetInfoButton matchedTrackInfo={matchedTrackInfo} />
+                    <PlannerSidebarSimpleSettings />
                 </>
             )}
             {!hasDefaultArrivalDateTime && arrivalDateTime && (

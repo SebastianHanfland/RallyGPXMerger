@@ -2,11 +2,10 @@ import { CSSProperties } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { PlannerSidebarContent } from './complex/PlannerSidebarContent.tsx';
 import { PlannerSidebarNavigation } from './complex/PlannerSidebarNavigation.tsx';
-import { PlannerSidebarSimpleContent } from './simple/PlannerSidebarSimpleContent.tsx';
-import { PlannerSidebarSimpleNavigation } from './simple/PlannerSidebarSimpleNavigation.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHasSingleTrack, getIsSidebarOpen, layoutActions } from '../../store/layout.reducer.ts';
 import { ClosePlannerSidebar } from '../elements/ClosePlannerSidebar.tsx';
+import { SimpleFileUploadSection } from './simple/SimpleFileUploadSection.tsx';
 
 const getStyle = (showSidebar: boolean): CSSProperties => ({
     position: 'fixed',
@@ -31,12 +30,7 @@ function ComplexContent() {
 }
 
 function SimpleContent() {
-    return (
-        <div>
-            <PlannerSidebarSimpleNavigation />
-            <PlannerSidebarSimpleContent />
-        </div>
-    );
+    return <SimpleFileUploadSection />;
 }
 
 function Content() {
