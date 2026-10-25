@@ -3,9 +3,9 @@ import { AppDispatch } from '../../../src/planner/store/planningStore';
 import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
 import { segmentDataActions } from '../../../src/planner/store/segmentData.redux.ts';
-import { segment1 } from './segment1.ts';
-import { segment2 } from './segment2.ts';
-import { segment3 } from './segment3.ts';
+import { segment1 } from '../data/segment1.ts';
+import { segment2 } from '../data/segment2.ts';
+import { segment3 } from '../data/segment3.ts';
 
 const messages = getMessages('en');
 

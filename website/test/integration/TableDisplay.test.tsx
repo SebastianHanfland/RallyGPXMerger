@@ -9,7 +9,7 @@ import { RallyTableWrapper } from '../../src/display/RallyTableWrapper';
 import { createDisplayStore } from '../../src/display/store/store';
 import { migrateVersion1To2 } from '../../src/migrate/migrateVersion1To2';
 import { StateOld } from '../../src/planner/store/typesOld';
-import { tableDisplayUi } from './data/TableDisplayTestAccess';
+import { tableDisplayUi } from './accessObjects/TableDisplayTestAccess.ts';
 
 vi.mock('../../src/utils/linkUtil');
 vi.mock('../../src/language');

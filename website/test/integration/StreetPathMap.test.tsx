@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 import { App } from '../../src/App';
 import { createStreetPathUrl } from '../../src/utils/streetPathUrl';
 import { getData } from '../../src/api/api';
-import { streetPathUi } from './data/StreetPathTestAccess';
+import { streetPathUi } from './accessObjects/StreetPathTestAccess.ts';
 
 vi.mock('../../src/api/api.ts');
 vi.mock('leaflet.locatecontrol', () => ({ LocateControl: vi.fn() }));

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { GpxSegmentsUploadAndParse } from '../GpxSegmentsUploadAndParse.tsx';
 import { getLanguage } from '../../../language.ts';
 import { createPlanningStore } from '../../store/planningStore.ts';
-import { plannerUi as ui } from '../../../../test/integration/data/PlannerTestAccess.ts';
+import { plannerUi as ui } from '../../../../test/integration/accessObjects/PlannerTestAccess.ts';
 import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 import { IntlProvider } from 'react-intl';
 import { getMessages } from '../../../lang/getMessages.ts';

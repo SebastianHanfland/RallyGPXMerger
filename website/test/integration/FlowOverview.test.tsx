@@ -3,9 +3,9 @@ import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
-import { flowOverviewUi } from './data/FlowOverviewTestAccess';
-import { plannerUi } from './data/PlannerTestAccess';
-import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup';
+import { flowOverviewUi } from './accessObjects/FlowOverviewTestAccess.ts';
+import { plannerUi } from './accessObjects/PlannerTestAccess.ts';
+import { createTrack, prepareComplexPlanning, renderPlanner } from './data/PlannerTestSetup.tsx';
 
 const timeout = { timeout: 3000 };
 
