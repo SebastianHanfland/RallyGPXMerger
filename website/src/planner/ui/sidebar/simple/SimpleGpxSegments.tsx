@@ -4,7 +4,7 @@ import { AppDispatch } from '../../../store/planningStore.ts';
 import { TrackSegmentSelection } from '../../../tracks/segment-selection/TrackSegmentSelection.tsx';
 import { getTrackCompositions, trackMergeActions } from '../../../store/trackMerge.reducer.ts';
 import { GpxCreationHint } from '../../../segments/GpxCreationHint.tsx';
-import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
+import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 
 export function SimpleGpxSegments() {
     const dispatch: AppDispatch = useDispatch();
@@ -17,10 +17,16 @@ export function SimpleGpxSegments() {
 
     return (
         <div>
-            <h5>
-                <FormattedMessage id={'msg.segments'} />
-            </h5>
-            <BlockTextDescription messageId={'msg.description.simpleSegments'} />
+            <div className={'d-flex justify-content-between'}>
+                <div />
+                <h5>
+                    <FormattedMessage id={'msg.segments'} />
+                </h5>
+                <DescriptionInfoButton
+                    titleMessageId={'msg.segments'}
+                    descriptionMessageId={'msg.description.simpleSegments'}
+                />
+            </div>
             <div className={'m-3'}>
                 <GpxCreationHint />
                 <TrackSegmentSelection track={trackCompositions[0]} hideSelect={true} fullGpxDelete={true} />

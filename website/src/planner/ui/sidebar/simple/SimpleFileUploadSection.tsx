@@ -10,11 +10,11 @@ import { AverageSpeedSetter } from '../../../parameters/AverageSpeedSetter.tsx';
 import { ParticipantsDelaySetter } from '../../../parameters/ParticipantsDelaySetter.tsx';
 import { TrackStreetInfoButton } from '../../../tracks/components/TrackStreetInfoButton.tsx';
 import { FormattedMessage } from 'react-intl';
-import { BlockTextDescription } from '../../../../utils/layout/BlockTextDescription.tsx';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
 import { TrackButtonsCell } from '../../../tracks/TrackButtonsCell.tsx';
+import { DescriptionInfoButton } from '../DescriptionInfoButton.tsx';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);
@@ -40,12 +40,18 @@ export function SimpleFileUploadSection() {
         <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
             <div>
                 <Row>
-                    <h5>
-                        <FormattedMessage id={'msg.track'} />
-                        {distanceInfo && <span>{distanceInfo}</span>}
-                        <TrackButtonsCell track={track} single={true} />
-                    </h5>
-                    <BlockTextDescription messageId={'msg.description.simpleTracks'} />
+                    <div className={'d-flex justify-content-between'}>
+                        <div />
+                        <h5>
+                            <FormattedMessage id={'msg.track'} />
+                            {distanceInfo && <span>{distanceInfo}</span>}
+                            <TrackButtonsCell track={track} single={true} />
+                        </h5>
+                        <DescriptionInfoButton
+                            titleMessageId={'msg.track'}
+                            descriptionMessageId={'msg.description.simpleTracks'}
+                        />
+                    </div>
 
                     <Col>
                         <h6>
