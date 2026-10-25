@@ -11,7 +11,6 @@ import { TrackStreetInfoButton } from '../../../tracks/components/TrackStreetInf
 import { FormattedMessage } from 'react-intl';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos.ts';
 import { StartDateTimePicker } from '../../../parameters/StartDateTimePicker.tsx';
-import { TrackButtonsCell } from '../../../tracks/TrackButtonsCell.tsx';
 import { PlanningTitle } from '../../../parameters/PlanningTitle.tsx';
 import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } from '../../../store/settings.reducer.ts';
 import { getParsedGpxSegments } from '../../../store/segmentData.redux.ts';
@@ -34,7 +33,7 @@ export function SimpleFileUploadSection() {
         <div className={'p-2 shadow'} style={{ overflow: 'auto', height: '100vh' }}>
             <Row>
                 <div>
-                    <PlanningTitle setTrackNameAsWell={true} />
+                    <PlanningTitle setTrackNameAsWell={true} singleTrack={track} />
                 </div>
             </Row>
             {planningTitle && (
@@ -69,7 +68,6 @@ export function SimpleFileUploadSection() {
                     <PlannerSidebarTrackInfo trackInfo={matchedTrackInfo} />
                     <TrackStreetInfoButton matchedTrackInfo={matchedTrackInfo} />
                     {distanceInfo && <span>{distanceInfo}</span>}
-                    <TrackButtonsCell track={track} single={true} />
                 </>
             )}
             {!hasDefaultArrivalDateTime && arrivalDateTime && (
