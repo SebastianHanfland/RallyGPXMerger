@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../../store/planningStore';
+import { createPlanningStore } from '../../../store/planningStore';
 import { getSegmentUsages } from '../segmentUsageCounter';
-import { SEGMENT } from '../../store/types';
-import { trackMergeActions } from '../../store/trackMerge.reducer';
+import { SEGMENT } from '../../../store/types';
+import { trackMergeActions } from '../../../store/trackMerge.reducer';
 
 function segment(id: string) {
     return { id, segmentId: id, type: SEGMENT } as const;

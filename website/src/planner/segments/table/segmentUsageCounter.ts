@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { IntlShape } from 'react-intl';
-import { getTrackCompositions } from '../store/trackMerge.reducer';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
 
 export interface SegmentUsage {
     counter: number;

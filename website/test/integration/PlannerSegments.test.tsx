@@ -1,8 +1,8 @@
-import { fireEvent, waitFor, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { getMessages } from '../../src/lang/getMessages';
-import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
+import { getParsedGpxSegments, getSegmentFilterTerm } from '../../src/planner/store/segmentData.redux';
 import { getTrackCompositions, trackMergeActions } from '../../src/planner/store/trackMerge.reducer';
 import { SEGMENT } from '../../src/planner/store/types';
 import { plannerUi } from './accessObjects/PlannerTestAccess';
@@ -152,6 +152,28 @@ describe('planner segments', () => {
         expect(segmentNames()).toHaveLength(3);
         await user.click(plannerUi.unusedSegmentsButton());
         expect(segmentNames()).toEqual([firstSegment.filename]);
+    });
+
+    it('filters segment rows through Redux without showing the no-file message', async () => {
+        const { store, user } = renderPlanner();
+        await prepareComplexPlanning(user, store);
+
+        await user.type(plannerUi.segmentFilter(), 'segment1');
+        expect(getSegmentFilterTerm(store.getState())).toBe('segment1');
+        expect(segmentNames()).toEqual(['segment1']);
+
+        await user.clear(plannerUi.segmentFilter());
+        await user.type(plannerUi.segmentFilter(), 'does-not-exist');
+        expect(screen.queryByText(messages['msg.noFile'])).toBeNull();
+        expect(screen.queryByRole('table')).toBeNull();
+    });
+
+    it('shows the no-file message when no GPX segments have been parsed', async () => {
+        const { user } = renderPlanner();
+        await user.click(plannerUi.startButton());
+        await user.click(plannerUi.complexButton());
+
+        expect(screen.getByText(messages['msg.noFile'])).toBeInTheDocument();
     });
 
     it('splits an uploaded segment into two segments', async () => {

@@ -1,23 +1,32 @@
-import { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Table } from 'react-bootstrap';
-import { DescriptionInfoButton } from '../ui/sidebar/DescriptionInfoButton';
+import { useSelector } from 'react-redux';
+import { DescriptionInfoButton } from '../../ui/sidebar/DescriptionInfoButton';
+import { getTrackCompositions } from '../../store/trackMerge.reducer';
 import { MemoizedGpxSegmentRow } from './GpxSegmentRow';
 import { SegmentSortButton } from './SegmentSortButton';
-import { SegmentTableRow } from './segmentTableData';
-import { SegmentUsages } from './segmentUsageCounter';
+import { getSegmentTableRows } from './segmentTableData';
+import { getSegmentUsages } from './segmentUsageCounter';
+import { GpxSegmentsUploadAndParse } from '../GpxSegmentsUploadAndParse.tsx';
 
-export function GpxSegmentsTable({
-    rows,
-    upload,
-    segmentUsages,
-    planningHasTracks,
-}: {
-    rows: SegmentTableRow[];
-    upload: ReactNode;
-    segmentUsages: SegmentUsages;
-    planningHasTracks: boolean;
-}) {
+export function GpxSegmentsTable() {
+    const rows = useSelector(getSegmentTableRows);
+    const segmentUsages = useSelector(getSegmentUsages);
+    const planningHasTracks = useSelector(getTrackCompositions).length > 0;
+
+    if (rows.length === 0) {
+        return (
+            <div>
+                <div>
+                    <FormattedMessage id="msg.noFile" />
+                </div>
+                <div style={{ height: '70px', width: '200px' }}>
+                    <GpxSegmentsUploadAndParse />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <Table striped bordered hover style={{ width: '100%' }} size="sm">
             <thead>
@@ -51,7 +60,9 @@ export function GpxSegmentsTable({
             <tbody>
                 {rows.length > 5 && (
                     <tr>
-                        <td colSpan={6}>{upload}</td>
+                        <td colSpan={6}>
+                            <GpxSegmentsUploadAndParse />
+                        </td>
                     </tr>
                 )}
                 {rows.map(({ id, filename, flipped, color, distance, speed, info }) => (
@@ -69,7 +80,9 @@ export function GpxSegmentsTable({
                     />
                 ))}
                 <tr>
-                    <td colSpan={6}>{upload}</td>
+                    <td colSpan={6}>
+                        <GpxSegmentsUploadAndParse />
+                    </td>
                 </tr>
             </tbody>
         </Table>

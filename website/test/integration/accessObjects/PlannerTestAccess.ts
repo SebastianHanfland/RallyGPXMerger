@@ -38,6 +38,7 @@ export const plannerUi = {
     infoTab: () => screen.getByRole('tab', { name: messages['msg.info'] }),
     segmentOption: (name: string) => screen.getByText(name),
     segmentTable: () => screen.getByRole('table'),
+    segmentFilter: () => screen.getByPlaceholderText(messages['msg.filterSegments']),
     segmentSortButton: (name: string) => screen.getByRole('button', { name }),
     usedSegmentsButton: () => screen.getByRole('button', { name: messages['msg.segmentUsage.used'] }),
     unusedSegmentsButton: () => screen.getByRole('button', { name: messages['msg.segmentUsage.unused'] }),

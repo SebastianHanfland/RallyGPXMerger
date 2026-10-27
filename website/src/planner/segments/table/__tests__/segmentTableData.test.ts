@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../../store/planningStore';
-import { segmentDataActions } from '../../store/segmentData.redux';
+import { createPlanningStore } from '../../../store/planningStore';
+import { segmentDataActions } from '../../../store/segmentData.redux';
 import { getSegmentCoreData, getSegmentTableRows } from '../segmentTableData';
 
 describe('segment table selectors', () => {

@@ -9,7 +9,7 @@ import { AppDispatch } from '../../store/planningStore';
 import flip from '../../../assets/flip.svg';
 import { getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux';
 import { TrackSelectionNodeButton } from './TrackSelectionNodeButton';
-import { getSegmentUsages, getUsagesOfSegment } from '../../segments/segmentUsageCounter';
+import { getSegmentUsages, getUsagesOfSegment } from '../../segments/table/segmentUsageCounter';
 import { TrackSelectionGapDisplay } from './TrackSelectionGapDisplay';
 import { DraggableIcon } from '../../../utils/icons/DraggableIcon';
 import { getAggregateStreetsInSegments } from '../../../common/calculation/aggregated-segments/aggregatePointsSelector';
