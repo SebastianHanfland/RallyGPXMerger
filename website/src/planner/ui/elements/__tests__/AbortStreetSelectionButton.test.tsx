@@ -2,11 +2,11 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { describe, expect, it } from 'vitest';
-import { getMessages } from '../../../lang/getMessages';
-import { createPlanningStore } from '../../store/planningStore';
-import { mapActions } from '../../store/map.reducer';
-import { segmentDataActions, getStreetLookup } from '../../store/segmentData.redux';
-import { AbortStreetSelectionButton } from './AbortStreetSelectionButton';
+import { getMessages } from '../../../../lang/getMessages';
+import { createPlanningStore } from '../../../store/planningStore';
+import { mapActions } from '../../../store/map.reducer';
+import { segmentDataActions, getStreetLookup } from '../../../store/segmentData.redux';
+import { AbortStreetSelectionButton } from '../AbortStreetSelectionButton';
 
 const messages = getMessages('en');
 

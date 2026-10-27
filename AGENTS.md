@@ -119,7 +119,9 @@ rules in `src/common/calculation/**/__tests__` where possible.
   well-named helpers such as `getLatest`, `getEarliest`, and `addTrackIds` in
   `getBlockedStreetInfo.ts` when they improve readability and understanding.
 - For planner features, update both translations, add one focused integration test where appropriate, and run Prettier plus the targeted Vitest command
-- tests reside in a __tests__ folder next to the file
+- All non-integration test files (`*.test.*` and `*.spec.*`) reside in a
+  nearby `__tests__` folder next to the code under test. Integration tests and
+  their support files remain under `website/test/integration/`.
 ## Suggested agent workflow
 
 1. Read the closest component, reducer/selector, and an existing nearby test.

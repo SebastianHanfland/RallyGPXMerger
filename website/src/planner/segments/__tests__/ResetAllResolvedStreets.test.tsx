@@ -2,15 +2,15 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { createPlanningStore } from '../store/planningStore';
-import { segmentDataActions } from '../store/segmentData.redux';
-import en from '../../lang/en.json';
-import { ResetAllResolvedStreets } from './ResetAllResolvedStreets';
+import { createPlanningStore } from '../../store/planningStore';
+import { segmentDataActions } from '../../store/segmentData.redux';
+import en from '../../../lang/en.json';
+import { ResetAllResolvedStreets } from '../ResetAllResolvedStreets';
 
 const resolveCalls: string[] = [];
 const resolvePromises: (() => void)[] = [];
 
-vi.mock('../logic/resolving/streets/resolveStreetNames', () => ({
+vi.mock('../../logic/resolving/streets/resolveStreetNames', () => ({
     resolveStreetNames: (segmentId: string) => async () => {
         resolveCalls.push(segmentId);
         await new Promise<void>((resolve) => resolvePromises.push(resolve));

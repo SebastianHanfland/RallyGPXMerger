@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { describe, expect, it, vi } from 'vitest';
-import { EditNodeDialogDelayInput } from './EditNodeDialogDelayInput';
-import { NodeSpecification } from '../store/types';
+import { EditNodeDialogDelayInput } from '../EditNodeDialogDelayInput';
+import { NodeSpecification } from '../../store/types';
 
 const messages = {
     'msg.nodeOffsetPercentage': 'Node offset percentage',

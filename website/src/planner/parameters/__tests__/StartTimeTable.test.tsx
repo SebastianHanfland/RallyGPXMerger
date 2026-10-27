@@ -3,10 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { describe, expect, it } from 'vitest';
-import { createPlanningStore } from '../store/planningStore';
-import { trackMergeActions, getTrackCompositions } from '../store/trackMerge.reducer';
-import { getMessages } from '../../lang/getMessages';
-import { StartTimeTable } from './StartTimeTable';
+import { createPlanningStore } from '../../store/planningStore';
+import { trackMergeActions, getTrackCompositions } from '../../store/trackMerge.reducer';
+import { getMessages } from '../../../lang/getMessages';
+import { StartTimeTable } from '../StartTimeTable';
 
 const messages = getMessages('en');
 
