@@ -115,7 +115,26 @@ export function getWayPointsOfTrack(
         }
     });
 
-    return trackPoints;
+    return replaceFallbackBreakPositions(trackPoints);
+}
+
+function replaceFallbackBreakPositions(trackPoints: WayPoint[]): WayPoint[] {
+    const lastTrackPoint = [...trackPoints].reverse().find((point) => point.type === TrackWayPointType.Track);
+    if (!lastTrackPoint) {
+        return trackPoints;
+    }
+
+    return trackPoints.map((point) => {
+        if (point.type !== TrackWayPointType.Break || point.pointFrom.lat !== 0 || point.pointFrom.lon !== 0) {
+            return point;
+        }
+
+        return {
+            ...point,
+            pointFrom: lastTrackPoint.pointTo,
+            pointTo: lastTrackPoint.pointTo,
+        };
+    });
 }
 
 function createBreakWaypoint(breakElement: TrackBreak, previousPoint: WayPoint, participantDelay: number): WayPoint {

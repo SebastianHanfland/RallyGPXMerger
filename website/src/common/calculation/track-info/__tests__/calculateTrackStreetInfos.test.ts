@@ -166,6 +166,31 @@ describe('getWayPointsOfTrack street names', () => {
         expect(wayPoints[1].breakLength).toBe(5);
     });
 
+    it('uses the last track point for a break at the end of a track', () => {
+        const route = segment('route', 1);
+        const breakElement: TrackBreak = {
+            id: 'break',
+            type: BREAK,
+            minutes: 5,
+            description: '',
+            hasToilet: false,
+        };
+        const track: TrackComposition = {
+            id: 'track',
+            segments: [{ id: route.segment.id, type: SEGMENT, segmentId: route.segment.id }, breakElement],
+        };
+
+        const wayPoints = getWayPointsOfTrack(track, [route.segment], [], 0, lookups, '2025-06-01T10:00:00.000Z', {
+            route: route.aggregated,
+        });
+
+        expect(wayPoints.find(({ type }) => type === 'BREAK')).toMatchObject({
+            type: 'BREAK',
+            pointFrom: { lat: 48.01, lon: 11.01 },
+            pointTo: { lat: 48.01, lon: 11.01 },
+        });
+    });
+
     it('rounds an entry arrival while keeping its passage based on the unrounded arrival', () => {
         const route = segment('route', 1);
         const entry: TrackEntry = {
