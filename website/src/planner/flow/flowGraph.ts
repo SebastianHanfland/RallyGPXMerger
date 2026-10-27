@@ -24,7 +24,6 @@ import {
     FlowEventLayout,
     FlowMerge,
 } from './flowGraphTypes';
-export * from './flowGraphTypes';
 
 function parseTime(value: string | undefined): number | undefined {
     if (!value) {

@@ -1,4 +1,4 @@
-import { BlockedStreetInfo, TrackWayPointType } from '../types';
+import { BlockedStreetInfo, TrackWayPointType, WayPoint } from '../types';
 import { createSelector } from '@reduxjs/toolkit';
 import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
 import { getTrackCompositions } from '../../../store/trackMerge.reducer';
@@ -10,6 +10,19 @@ import {
     getStreetPaths,
     streetIdentityMatches,
 } from './blockedStreetAggregation';
+import { TrackComposition } from '../../../store/types.ts';
+
+function getLatest(info: BlockedStreetInfo, waypoint: WayPoint) {
+    return info.backPassage >= waypoint.backPassage ? info.backPassage : waypoint.backPassage;
+}
+
+function getEarliest(info: BlockedStreetInfo, waypoint: WayPoint) {
+    return info.frontArrival <= waypoint.frontArrival ? info.frontArrival : waypoint.frontArrival;
+}
+
+function addTrackIds(foundTrack: TrackComposition | undefined, tracksIds: string[]) {
+    return tracksIds.includes(foundTrack!.id) ? tracksIds : [...tracksIds, foundTrack!.id];
+}
 
 export const getBlockedStreetInfo = createSelector(
     [getTrackStreetInfos, getTrackCompositions],
@@ -52,17 +65,9 @@ export const getBlockedStreetInfo = createSelector(
                         streetIdentityMatches(waypoint, info)
                             ? {
                                   ...info,
-                                  backPassage:
-                                      info.backPassage >= waypoint.backPassage
-                                          ? info.backPassage
-                                          : waypoint.backPassage,
-                                  frontArrival:
-                                      info.frontArrival <= waypoint.frontArrival
-                                          ? info.frontArrival
-                                          : waypoint.frontArrival,
-                                  tracksIds: info.tracksIds.includes(foundTrack!.id)
-                                      ? info.tracksIds
-                                      : [...info.tracksIds, foundTrack!.id],
+                                  backPassage: getLatest(info, waypoint),
+                                  frontArrival: getEarliest(info, waypoint),
+                                  tracksIds: addTrackIds(foundTrack, info.tracksIds),
                                   ...(() => {
                                       const paths = addStreetPath(getStreetPaths(info), waypoint.path);
                                       return {

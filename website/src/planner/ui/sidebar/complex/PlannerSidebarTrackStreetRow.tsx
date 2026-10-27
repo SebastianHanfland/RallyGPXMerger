@@ -15,13 +15,12 @@ import { EditDistrictButton } from '../../../streets/EditDistrictButton';
 import { EditPostCodeButton } from '../../../streets/EditPostCodeButton';
 import { EditStreetNameButton } from '../../../streets/EditStreetNameButton';
 import { abortStreetSelection, beginStreetBoundaryEdit, getStreetPath } from '../../../streets/streetEditing';
+import { RoutePointReference } from '../../../logic/resolving/streets/streetRangeEditing.ts';
 
 interface Props {
     track: TrackComposition;
     wayPoint: WayPoint;
-    routePoints: ReturnType<
-        typeof import('../../../logic/resolving/streets/streetRangeEditing').getRoutePointReferences
-    >;
+    routePoints: RoutePointReference[];
     onHighlight: (wayPoint: WayPoint) => void;
 }
 

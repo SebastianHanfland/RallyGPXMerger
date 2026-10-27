@@ -114,6 +114,10 @@ rules in `src/common/calculation/**/__tests__` where possible.
 - Never create Git commits, amend commits, push, or open pull requests unless the
   user explicitly requests that exact action in the current conversation.
   File edits and verification commands do not imply permission to commit.
+- During refactoring, do not inline small functions when their names clarify a
+  distinct portion of functionality for human readers. Prefer keeping focused,
+  well-named helpers such as `getLatest`, `getEarliest`, and `addTrackIds` in
+  `getBlockedStreetInfo.ts` when they improve readability and understanding.
 - For planner features, update both translations, add one focused integration test where appropriate, and run Prettier plus the targeted Vitest command
 - tests reside in a __tests__ folder next to the file
 ## Suggested agent workflow
