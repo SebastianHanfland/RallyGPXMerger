@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getMessages } from '../../../../../lang/getMessages';
-import { createPlanningStore } from '../../../../store/planningStore';
-import { trackMergeActions } from '../../../../store/trackMerge.reducer';
-import type { TrackStreetInfo } from '../../../../logic/resolving/types';
-import { formatTimeOnly } from '../../../../../utils/dateUtil';
+import { getMessages } from '../../../../../../lang/getMessages';
+import { createPlanningStore } from '../../../../../store/planningStore';
+import { trackMergeActions } from '../../../../../store/trackMerge.reducer';
+import type { TrackStreetInfo } from '../../../../../logic/resolving/types';
+import { formatTimeOnly } from '../../../../../../utils/dateUtil';
 import { PlannerSidebarOverviewTrackArrivals } from '../PlannerSidebarOverviewTrackArrivals';
 
 const trackInfos = vi.hoisted(() => ({ value: [] as TrackStreetInfo[] }));

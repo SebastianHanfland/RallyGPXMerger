@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import { Table } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { ColorBlob } from '../../../../utils/ColorBlob';
-import { getColor } from '../../../../utils/colorUtil';
-import { formatTimeOnly } from '../../../../utils/dateUtil';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer';
+import { ColorBlob } from '../../../../../utils/ColorBlob';
+import { getColor } from '../../../../../utils/colorUtil';
+import { formatTimeOnly } from '../../../../../utils/dateUtil';
+import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos';
+import { getTrackCompositions } from '../../../../store/trackMerge.reducer';
 
 interface TrackArrival {
     id: string;

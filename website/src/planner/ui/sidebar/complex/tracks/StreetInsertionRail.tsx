@@ -1,9 +1,9 @@
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
-import { StreetPointSelection } from '../../../store/types';
-import { AppDispatch } from '../../../store/planningStore';
-import { abortStreetSelection } from '../../../streets/streetEditing';
-import { CancelIcon } from '../../../../utils/icons/CancelIcon';
+import { StreetPointSelection } from '../../../../store/types';
+import { AppDispatch } from '../../../../store/planningStore';
+import { abortStreetSelection } from '../../../../streets/streetEditing';
+import { CancelIcon } from '../../../../../utils/icons/CancelIcon';
 
 interface Props {
     positions: number[];

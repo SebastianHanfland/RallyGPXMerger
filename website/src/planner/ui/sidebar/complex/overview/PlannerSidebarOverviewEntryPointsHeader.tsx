@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
-import { CheckIcon } from '../../../../utils/icons/CheckIcon';
-import { WarningIcon } from '../../../../utils/icons/WarningIcon';
+import { CheckIcon } from '../../../../../utils/icons/CheckIcon';
+import { WarningIcon } from '../../../../../utils/icons/WarningIcon';
 import { useOverviewAccordionStatuses } from './overviewStatus';
 
 export const PlannerSidebarOverviewEntryPointsHeader = () => {

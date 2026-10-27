@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getMessages } from '../../../../../lang/getMessages';
-import { formatTimeOnly } from '../../../../../utils/dateUtil';
-import { createPlanningStore } from '../../../../store/planningStore';
-import { trackMergeActions } from '../../../../store/trackMerge.reducer';
+import { getMessages } from '../../../../../../lang/getMessages';
+import { formatTimeOnly } from '../../../../../../utils/dateUtil';
+import { createPlanningStore } from '../../../../../store/planningStore';
+import { trackMergeActions } from '../../../../../store/trackMerge.reducer';
 import { PlannerSidebarOverviewEntryPoints } from '../PlannerSidebarOverviewEntryPoints';
 
 const mockPositions = vi.hoisted(() => ({

@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { InteractionMap } from '../map/InteractionMap';
-import { PlannerSidebar } from './sidebar/PlannerSidebar';
+import { PlannerSidebar } from './sidebar/complex/PlannerSidebar';
 import { MapContentSelection } from '../map/MapContentSelection';
 import { PlannerHomeButton } from './elements/PlannerHomeButton';
 import { TimeSlider } from '../map/TimeSlider';

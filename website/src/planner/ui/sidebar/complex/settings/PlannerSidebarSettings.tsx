@@ -1,12 +1,12 @@
-import { TrackMergeParameters } from '../../../parameters/TrackMergeParameters';
-import { ApiKeyInput } from '../../../streets/ApiKeyInput';
+import { TrackMergeParameters } from '../../../../parameters/TrackMergeParameters';
+import { ApiKeyInput } from '../../../../streets/ApiKeyInput';
 import { Accordion } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { ConstructionSites } from '../../../construction/ConstructionSites';
-import { PlanningTitle } from '../../../parameters/PlanningTitle';
-import { ArrivalDateTimePicker } from '../../../parameters/ArrivalDateTimePicker';
+import { ConstructionSites } from '../../../../construction/ConstructionSites';
+import { PlanningTitle } from '../../../../parameters/PlanningTitle';
+import { ArrivalDateTimePicker } from '../../../../parameters/ArrivalDateTimePicker';
 import { ReactNode } from 'react';
-import { ResetAllResolvedStreets } from '../../../segments/ResetAllResolvedStreets';
+import { ResetAllResolvedStreets } from '../../../../segments/ResetAllResolvedStreets';
 
 export const PlannerSidebarSettings = () => {
     const accordionEntries: [string, ReactNode][] = [

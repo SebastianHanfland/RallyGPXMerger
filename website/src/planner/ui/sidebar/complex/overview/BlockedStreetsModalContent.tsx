@@ -1,13 +1,13 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../../utils/dateUtil';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../../../utils/dateUtil';
 import { Table } from 'react-bootstrap';
-import { HighlightUnknown } from '../../../streets/HighlightUnknown';
-import { StreetMapLink } from '../../../streets/StreetMapLink';
-import { formatNumber } from '../../../../utils/numberUtil';
-import { getBlockedStreetInfo } from '../../../logic/resolving/selectors/getBlockedStreetInfo';
-import { wayPointHasUnknown } from '../../../streets/unknownUtil';
-import { InfoIcon } from '../../../../utils/icons/InfoIcon';
+import { HighlightUnknown } from '../../../../streets/HighlightUnknown';
+import { StreetMapLink } from '../../../../streets/StreetMapLink';
+import { formatNumber } from '../../../../../utils/numberUtil';
+import { getBlockedStreetInfo } from '../../../../logic/resolving/selectors/getBlockedStreetInfo';
+import { wayPointHasUnknown } from '../../../../streets/unknownUtil';
+import { InfoIcon } from '../../../../../utils/icons/InfoIcon';
 
 export const BlockedStreetsModalContent = () => {
     const intl = useIntl();

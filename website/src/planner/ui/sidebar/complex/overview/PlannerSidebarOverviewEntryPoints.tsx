@@ -1,24 +1,24 @@
 import { Button, Form, Table } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { ColorBlob } from '../../../../utils/ColorBlob';
-import { EditIcon } from '../../../../utils/icons/EditIcon';
-import { GeoLinkIcon } from '../../../../utils/icons/GeoLinkIcon';
-import { TrashIcon } from '../../../../utils/icons/TrashIcon';
-import { getColor } from '../../../../utils/colorUtil';
-import { getCount } from '../../../../utils/inputUtil';
-import { getEntryPointTime } from '../../../../utils/entryPointUtil';
-import { formatTimeOnly } from '../../../../utils/dateUtil';
-import { toLatLng } from '../../../../utils/pointUtil';
-import { ConfirmationModal } from '../../../../common/ConfirmationModal';
-import { mapActions } from '../../../store/map.reducer';
-import { AppDispatch } from '../../../store/planningStore';
-import { getTrackCompositions, trackMergeActions } from '../../../store/trackMerge.reducer';
-import { isTrackEntryPoint, TrackComposition, TrackEntry } from '../../../store/types';
+import { ColorBlob } from '../../../../../utils/ColorBlob';
+import { EditIcon } from '../../../../../utils/icons/EditIcon';
+import { GeoLinkIcon } from '../../../../../utils/icons/GeoLinkIcon';
+import { TrashIcon } from '../../../../../utils/icons/TrashIcon';
+import { getColor } from '../../../../../utils/colorUtil';
+import { getCount } from '../../../../../utils/inputUtil';
+import { getEntryPointTime } from '../../../../../utils/entryPointUtil';
+import { formatTimeOnly } from '../../../../../utils/dateUtil';
+import { toLatLng } from '../../../../../utils/pointUtil';
+import { ConfirmationModal } from '../../../../../common/ConfirmationModal';
+import { mapActions } from '../../../../store/map.reducer';
+import { AppDispatch } from '../../../../store/planningStore';
+import { getTrackCompositions, trackMergeActions } from '../../../../store/trackMerge.reducer';
+import { isTrackEntryPoint, TrackComposition, TrackEntry } from '../../../../store/types';
 import {
     getAllEntryPointPositions,
     EntryPointPosition,
-} from '../../../logic/resolving/selectors/getEntryPointPositions';
+} from '../../../../logic/resolving/selectors/getEntryPointPositions';
 import { useEffect, useState } from 'react';
 
 function EntryPointDescriptionModal({

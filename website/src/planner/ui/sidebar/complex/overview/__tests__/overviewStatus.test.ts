@@ -7,8 +7,8 @@ import {
     PointOfInterestType,
     TrackComposition,
     TrackEntry,
-} from '../../../../store/types';
-import type { TrackStreetInfo, WayPoint } from '../../../../logic/resolving/types';
+} from '../../../../../store/types';
+import type { TrackStreetInfo, WayPoint } from '../../../../../logic/resolving/types';
 
 const createWayPoint = (streetName: string | null): WayPoint => ({
     streetName,

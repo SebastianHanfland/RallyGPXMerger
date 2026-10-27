@@ -1,8 +1,8 @@
 import { Col, Form, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { TrackComposition } from '../../../store/types';
-import { TrackName } from '../../../tracks/components/TrackName';
-import { TrackPeople } from '../../../tracks/components/TrackPeople';
+import { TrackComposition } from '../../../../store/types';
+import { TrackName } from '../../../../tracks/components/TrackName';
+import { TrackPeople } from '../../../../tracks/components/TrackPeople';
 
 export const PlannerSidebarTrackFormDetails = ({ track }: { track: TrackComposition }) => {
     return (

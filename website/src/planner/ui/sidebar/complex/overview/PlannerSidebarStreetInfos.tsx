@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { PageItem, Pagination } from 'react-bootstrap';
 import { useState } from 'react';
-import { StreetInfoModal } from '../../elements/StreetInfoModal';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
-import { UnknownWarning } from '../../../streets/UnknownWarning';
+import { StreetInfoModal } from '../../../elements/StreetInfoModal';
+import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos';
+import { UnknownWarning } from '../../../../streets/UnknownWarning';
 
 export const PlannerSidebarStreetInfos = () => {
     const trackStreetInfos = useSelector(getTrackStreetInfos);

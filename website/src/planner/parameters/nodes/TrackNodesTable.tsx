@@ -7,7 +7,7 @@ import { TrackNodesNodeSpecCell } from './TrackNodesNodeSpecCell';
 import { ResetAllNodeSpecsButton } from './ResetAllNodeSpecsButton';
 import { NodeOverviewButton } from './NodeOverviewButton';
 import { TrackNodeType } from './TrackNodeType';
-import { NodeDescriptionInfo } from '../../ui/sidebar/complex/NodeDescriptionInfo';
+import { NodeDescriptionInfo } from '../../ui/sidebar/complex/overview/NodeDescriptionInfo';
 
 export const TrackNodesTable = () => {
     const trackNodes = useSelector(trackNodesBySegmentSizeSelector);

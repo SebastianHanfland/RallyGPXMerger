@@ -1,12 +1,12 @@
 import { Button, Table } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { GeoLinkIcon } from '../../../../utils/icons/GeoLinkIcon';
-import { TrackStartName } from '../../../tracks/components/TrackStartName';
-import { getTrackCompositions } from '../../../store/trackMerge.reducer';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
-import { HighlightUnknown } from '../../../streets/HighlightUnknown';
-import { mapActions } from '../../../store/map.reducer';
+import { GeoLinkIcon } from '../../../../../utils/icons/GeoLinkIcon';
+import { TrackStartName } from '../../../../tracks/components/TrackStartName';
+import { getTrackCompositions } from '../../../../store/trackMerge.reducer';
+import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos';
+import { HighlightUnknown } from '../../../../streets/HighlightUnknown';
+import { mapActions } from '../../../../store/map.reducer';
 
 export const PlannerSidebarOverviewStartNames = () => {
     const tracks = useSelector(getTrackCompositions);

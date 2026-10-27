@@ -1,8 +1,8 @@
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { getEntryPointPositions } from '../../../logic/resolving/selectors/getEntryPointPositions';
-import { getPlanningId, getPlanningPassword } from '../../../store/backend.reducer';
-import { getPlanningLinks } from '../../../sharing/planningLinks';
+import { getEntryPointPositions } from '../../../../logic/resolving/selectors/getEntryPointPositions';
+import { getPlanningId, getPlanningPassword } from '../../../../store/backend.reducer';
+import { getPlanningLinks } from '../../../../sharing/planningLinks';
 
 interface PublicLinkProps {
     href: string;

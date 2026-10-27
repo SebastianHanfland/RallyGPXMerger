@@ -1,19 +1,19 @@
-import { TrackButtonsCell } from '../../../tracks/TrackButtonsCell';
+import { TrackButtonsCell } from '../../../../tracks/TrackButtonsCell';
 import { FormattedMessage } from 'react-intl';
-import { TrackComposition } from '../../../store/types';
-import { TrackSegmentSelection } from '../../../tracks/segment-selection/TrackSegmentSelection';
+import { TrackComposition } from '../../../../store/types';
+import { TrackSegmentSelection } from '../../../../tracks/segment-selection/TrackSegmentSelection';
 import { PlannerSidebarTrackFormDetails } from './PlannerSidebarTrackFormDetails';
-import { PlannerSidebarTrackInfo } from '../PlannerSidebarTrackInfo';
+import { PlannerSidebarTrackInfo } from './PlannerSidebarTrackInfo';
 import { useSelector } from 'react-redux';
-import { TrackDocuments } from '../../../tracks/components/TrackDocuments';
-import { getTrackStreetInfos } from '../../../calculation/getTrackStreetInfos';
+import { TrackDocuments } from '../../../../tracks/components/TrackDocuments';
+import { getTrackStreetInfos } from '../../../../calculation/getTrackStreetInfos';
 import { Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import { useState } from 'react';
 import { PlannerSidebarTrackStreets } from './PlannerSidebarTrackStreets';
-import { TrackStartName } from '../../../tracks/components/TrackStartName';
-import { TrackBuffer } from '../../../tracks/components/TrackBuffer';
-import { TrackRounding } from '../../../tracks/components/TrackRounding';
-import { formatFixedNumber } from '../../../../utils/numberUtil';
+import { TrackStartName } from '../../../../tracks/components/TrackStartName';
+import { TrackBuffer } from '../../../../tracks/components/TrackBuffer';
+import { TrackRounding } from '../../../../tracks/components/TrackRounding';
+import { formatFixedNumber } from '../../../../../utils/numberUtil';
 
 export const PlannerSidebarTrackDetails = ({ track }: { track: TrackComposition }) => {
     const { name } = track;

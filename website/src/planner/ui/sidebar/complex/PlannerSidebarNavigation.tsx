@@ -8,7 +8,7 @@ import { getParsedGpxSegments } from '../../../store/segmentData.redux';
 import { TracksGapWarning } from '../../../tracks/TracksGapWarning';
 import { CheckIcon } from '../../../../utils/icons/CheckIcon';
 import { WarningIcon } from '../../../../utils/icons/WarningIcon';
-import { getWarningAccordionDefinitions, useOverviewAccordionStatuses } from './overviewStatus';
+import { getWarningAccordionDefinitions, useOverviewAccordionStatuses } from './overview/overviewStatus';
 
 export const PlannerSidebarNavigation = () => {
     const intl = useIntl();

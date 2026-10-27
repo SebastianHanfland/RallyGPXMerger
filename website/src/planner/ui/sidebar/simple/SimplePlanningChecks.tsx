@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { useOverviewAccordionStatuses } from '../complex/overviewStatus';
+import { useOverviewAccordionStatuses } from '../complex/overview/overviewStatus';
 import type { TrackStreetInfo } from '../../../logic/resolving/types';
 import { SimpleGapsButton } from './SimpleGapsButton';
 import { SimpleSettingsButton } from './SimpleSettingsButton';

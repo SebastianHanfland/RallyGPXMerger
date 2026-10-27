@@ -1,7 +1,7 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 import { WarningIcon } from '../../utils/icons/WarningIcon';
 import { CheckIcon } from '../../utils/icons/CheckIcon';
-import { useOverviewAccordionStatuses } from '../ui/sidebar/complex/overviewStatus';
+import { useOverviewAccordionStatuses } from '../ui/sidebar/complex/overview/overviewStatus';
 
 export function PointsOfInterestHeader() {
     const intl = useIntl();

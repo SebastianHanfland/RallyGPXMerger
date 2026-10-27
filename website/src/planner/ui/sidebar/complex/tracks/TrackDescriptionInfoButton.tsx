@@ -1,4 +1,4 @@
-import { DescriptionInfoButton } from '../DescriptionInfoButton';
+import { DescriptionInfoButton } from '../../DescriptionInfoButton';
 
 export const TrackDescriptionInfoButton = () => {
     return (
