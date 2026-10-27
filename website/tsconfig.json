@@ -22,9 +22,9 @@
         "allowSyntheticDefaultImports": true,
 
         /* vite */
-        "types": ["vitest/globals", "@testing-library/jest-dom"]
+        "types": ["vitest/globals", "@testing-library/jest-dom/vitest"]
     },
-    "include": ["src"],
+    "include": ["src", "test"],
     "files": ["node_modules/vitest/globals.d.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

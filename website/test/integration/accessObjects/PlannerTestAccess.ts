@@ -61,7 +61,8 @@ export const plannerUi = {
     },
     confirmDialog: () => within(screen.getByRole('dialog')).getByRole('button', { name: messages['msg.confirm'] }),
     addDialog: () => within(screen.getByRole('dialog')).getByRole('button', { name: messages['msg.add'] }),
-    overviewAccordion: (name: string | RegExp) => screen.getByRole('heading', { name }).closest('.accordion-item')!,
+    overviewAccordion: (name: string | RegExp) =>
+        screen.getByRole('heading', { name }).closest<HTMLElement>('.accordion-item')!,
     flowOverviewButton: () => screen.getByRole('button', { name: messages['msg.flowOverview'] }),
     cloudActionsButton: () => screen.getByTitle(messages['msg.cloudActions']),
     downloadsButton: () => screen.getByTitle(messages['msg.downloads']),

@@ -2,7 +2,6 @@ import { act, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
-import { getMessages } from '../../src/lang/getMessages';
 import * as fs from 'node:fs';
 import { RallyPlannerWrapper } from '../../src/planner/RallyPlanner';
 import { getTrackCompositions } from '../../src/planner/store/trackMerge.reducer';
@@ -11,8 +10,6 @@ import { createPlanningStore } from '../../src/planner/store/planningStore';
 import { getParsedGpxSegments } from '../../src/planner/store/segmentData.redux';
 import { getCalculateTracks } from '../../src/planner/calculation/getCalculatedTracks';
 import { State } from '../../src/planner/store/types';
-
-const messages = getMessages('en');
 
 vi.mock('../../src/language');
 vi.mock('../../src/api/api');

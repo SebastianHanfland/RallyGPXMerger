@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { getMessages } from '../../src/lang/getMessages';
@@ -78,7 +78,7 @@ describe('planner streets', () => {
             })
         );
 
-        await user.click(within(firstStreetRow.cells[2]!).getByAltText('upload file'));
+        await user.click(within(within(firstStreetRow).getAllByRole('cell')[2]!).getByAltText('upload file'));
         const dialog = plannerUi.dialog();
         const input = within(dialog).getByRole('textbox');
         await user.clear(input);

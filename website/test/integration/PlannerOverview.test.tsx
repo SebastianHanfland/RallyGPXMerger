@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import { Mock, vi } from 'vitest';
 import { getLanguage } from '../../src/language';
 import { getMessages } from '../../src/lang/getMessages';
