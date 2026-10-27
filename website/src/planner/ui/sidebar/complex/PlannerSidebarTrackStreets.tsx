@@ -18,6 +18,16 @@ interface Props {
     track: TrackComposition;
 }
 
+const headerRowKeys = [
+    'msg.start',
+    'msg.end',
+    'msg.street',
+    'msg.postCode',
+    'msg.district',
+    'msg.length',
+    'msg.streetPoints',
+];
+
 export const PlannerSidebarTrackStreets = ({ track }: Props) => {
     const trackStreetInfo = useSelector(getTrackStreetInfos).find((trackInfo) => trackInfo.id === track.id);
     const parsedSegments = useSelector(getParsedGpxSegments);
@@ -55,27 +65,11 @@ export const PlannerSidebarTrackStreets = ({ track }: Props) => {
             <Table ref={tableRef} data-testid="track-street-list" size="sm" striped hover>
                 <thead>
                     <tr>
-                        <th>
-                            <FormattedMessage id="msg.start" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="msg.end" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="msg.street" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="msg.postCode" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="msg.district" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="msg.length" />
-                        </th>
-                        <th>
-                            <FormattedMessage id="msg.streetPoints" />
-                        </th>
+                        {headerRowKeys.map((messageKey) => (
+                            <th key={messageKey}>
+                                <FormattedMessage id={messageKey} />
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>

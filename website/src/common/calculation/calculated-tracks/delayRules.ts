@@ -41,16 +41,18 @@ export function setDelay(
     by: DelayType,
     extraDelay: number
 ) {
-    return trackDelays.map((trackDelay) =>
-        trackId !== trackDelay.trackId
-            ? trackDelay
-            : {
-                  trackId,
-                  delays: trackDelay.delays.map((delay) =>
-                      delay.segmentId === segmentId ? { segmentId, by, extraDelay } : delay
-                  ),
-              }
-    );
+    return trackDelays.map((trackDelay) => {
+        if (trackId !== trackDelay.trackId) {
+            return trackDelay;
+        }
+        const updatedDelays = trackDelay.delays.map((delay) =>
+            delay.segmentId === segmentId ? { segmentId, by, extraDelay } : delay
+        );
+        return {
+            trackId,
+            delays: updatedDelays,
+        };
+    });
 }
 
 export const hasPrioritiesSet = (priorityCounter: Record<string, number | undefined>) =>
