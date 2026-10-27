@@ -15,7 +15,7 @@ import { PointsOfInterestHeader } from '../../../../points/PointsOfInterestHeade
 import { OverviewChecksHeader } from './OverviewChecksHeader';
 import { PlannerSidebarOverviewStartNamesHeader } from './PlannerSidebarOverviewStartNamesHeader';
 import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader';
-import { PlannerSidebarOverviewEntryPoints } from './PlannerSidebarOverviewEntryPoints';
+import { PlannerSidebarOverviewEntryPoints } from './entry-points/PlannerSidebarOverviewEntryPoints';
 import { PlannerSidebarOverviewEntryPointsHeader } from './PlannerSidebarOverviewEntryPointsHeader';
 import { PlannerSidebarOverviewPublicLinks } from './PlannerSidebarOverviewPublicLinks';
 import { FlowOverviewButton } from '../../../../flow/FlowOverviewButton';
