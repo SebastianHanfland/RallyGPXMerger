@@ -14,7 +14,7 @@ import { getArrivalDateTime, getHasDefaultArrivalDateTime, getPlanningTitle } fr
 import { getParsedGpxSegments } from '../../../store/segmentData.redux';
 import { TrackBuffer } from '../../../tracks/components/TrackBuffer';
 import { SimpleTrackInfoRow } from './SimpleTrackInfoRow';
-import { SimplePlanningChecks } from './SimplePlanningChecks';
+import { SimplePlanningChecks } from './checks/SimplePlanningChecks';
 
 export function SimpleFileUploadSection() {
     const trackCompositions = useSelector(getTrackCompositions);

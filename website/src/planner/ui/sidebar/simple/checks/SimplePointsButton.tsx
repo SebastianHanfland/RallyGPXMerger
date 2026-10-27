@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { CheckIcon } from '../../../../utils/icons/CheckIcon';
-import { WarningIcon } from '../../../../utils/icons/WarningIcon';
-import type { OverviewAccordionStatuses } from '../complex/overview/overviewStatus';
+import { CheckIcon } from '../../../../../utils/icons/CheckIcon';
+import { WarningIcon } from '../../../../../utils/icons/WarningIcon';
+import type { OverviewAccordionStatuses } from '../../complex/overview/overviewStatus';
 import { SimplePointsModal } from './SimplePointsModal';
 
 interface Props {

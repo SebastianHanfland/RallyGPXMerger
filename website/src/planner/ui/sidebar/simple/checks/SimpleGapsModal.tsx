@@ -1,21 +1,21 @@
 import { Button, Modal } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { PlannerSidebarSimpleSettings } from './PlannerSidebarSimpleSettings';
+import { GapOverview } from '../../../../points/GapOverview';
 
 interface Props {
     onHide: () => void;
 }
 
-export function SimpleSettingsModal({ onHide }: Props) {
+export function SimpleGapsModal({ onHide }: Props) {
     return (
-        <Modal show={true} onHide={onHide} size={'lg'}>
+        <Modal show={true} onHide={onHide} size={'xl'}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    <FormattedMessage id={'msg.settings'} />
+                    <FormattedMessage id={'msg.gaps'} />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <PlannerSidebarSimpleSettings />
+                <GapOverview />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>

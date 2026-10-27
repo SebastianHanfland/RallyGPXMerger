@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { CheckIcon } from '../../../../utils/icons/CheckIcon';
-import { WarningIcon } from '../../../../utils/icons/WarningIcon';
+import { CheckIcon } from '../../../../../utils/icons/CheckIcon';
+import { WarningIcon } from '../../../../../utils/icons/WarningIcon';
 import { SimpleGapsModal } from './SimpleGapsModal';
 
 interface Props {

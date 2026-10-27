@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { CheckIcon } from '../../../../utils/icons/CheckIcon';
-import { WarningIcon } from '../../../../utils/icons/WarningIcon';
-import type { TrackStreetInfo } from '../../../logic/resolving/types';
-import { StreetInfoModal } from '../../elements/StreetInfoModal';
+import { CheckIcon } from '../../../../../utils/icons/CheckIcon';
+import { WarningIcon } from '../../../../../utils/icons/WarningIcon';
+import type { TrackStreetInfo } from '../../../../logic/resolving/types';
+import { StreetInfoModal } from '../../../elements/StreetInfoModal';
 
 interface Props {
     warning: boolean;

@@ -1,6 +1,6 @@
 import { Button, Modal } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { PointsOfInterest } from '../../../points/PointsOfInterest';
+import { PointsOfInterest } from '../../../../points/PointsOfInterest';
 
 interface Props {
     onHide: () => void;
