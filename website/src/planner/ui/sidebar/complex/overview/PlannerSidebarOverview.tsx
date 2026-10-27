@@ -16,7 +16,7 @@ import { OverviewChecksHeader } from './OverviewChecksHeader';
 import { PlannerSidebarOverviewStartNamesHeader } from './PlannerSidebarOverviewStartNamesHeader';
 import { PlannerSidebarOverviewStartTimesHeader } from './PlannerSidebarOverviewStartTimesHeader';
 import { PlannerSidebarOverviewEntryPoints } from './entry-points/PlannerSidebarOverviewEntryPoints';
-import { PlannerSidebarOverviewEntryPointsHeader } from './PlannerSidebarOverviewEntryPointsHeader';
+import { PlannerSidebarOverviewEntryPointsHeader } from './entry-points/PlannerSidebarOverviewEntryPointsHeader.tsx';
 import { PlannerSidebarOverviewPublicLinks } from './PlannerSidebarOverviewPublicLinks';
 import { FlowOverviewButton } from '../../../../flow/FlowOverviewButton';
 import { PlannerSidebarOverviewTrackArrivals } from './PlannerSidebarOverviewTrackArrivals';

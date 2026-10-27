@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getMessages } from '../../../../../../lang/getMessages';
-import { formatTimeOnly } from '../../../../../../utils/dateUtil';
-import { createPlanningStore } from '../../../../../store/planningStore';
-import { trackMergeActions } from '../../../../../store/trackMerge.reducer';
+import { getMessages } from '../../../../../../../lang/getMessages.ts';
+import { formatTimeOnly } from '../../../../../../../utils/dateUtil.ts';
+import { createPlanningStore } from '../../../../../../store/planningStore.ts';
+import { trackMergeActions } from '../../../../../../store/trackMerge.reducer.ts';
 import { PlannerSidebarOverviewEntryPoints } from '../PlannerSidebarOverviewEntryPoints';
 
 const mockPositions = vi.hoisted(() => ({
@@ -20,7 +20,7 @@ const mockPositions = vi.hoisted(() => ({
     }[],
 }));
 
-vi.mock('../../../../../logic/resolving/selectors/getEntryPointPositions', () => ({
+vi.mock('../../../../../../logic/resolving/selectors/getEntryPointPositions', () => ({
     getAllEntryPointPositions: vi.fn(() => mockPositions.value),
 }));
 

@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import { describe, expect, it } from 'vitest';
-import { getMessages } from '../../../../../../lang/getMessages';
-import { createPlanningStore } from '../../../../../store/planningStore';
-import { trackMergeActions } from '../../../../../store/trackMerge.reducer';
-import { ENTRY, TrackEntry } from '../../../../../store/types';
-import { PlannerSidebarOverviewEntryPointsHeader } from '../PlannerSidebarOverviewEntryPointsHeader';
+import { getMessages } from '../../../../../../../lang/getMessages.ts';
+import { createPlanningStore } from '../../../../../../store/planningStore.ts';
+import { trackMergeActions } from '../../../../../../store/trackMerge.reducer.ts';
+import { ENTRY, TrackEntry } from '../../../../../../store/types.ts';
+import { PlannerSidebarOverviewEntryPointsHeader } from '../PlannerSidebarOverviewEntryPointsHeader.tsx';
 
 function renderHeader(entryPoints: TrackEntry[]) {
     const store = createPlanningStore();
