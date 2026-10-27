@@ -2,7 +2,6 @@ import * as gpxBuilder from 'gpx-builder/dist/builder/BaseBuilder/models';
 import { addSeconds } from 'date-and-time';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
 import { GpxFileAccess } from '../common/calculation/types';
-import { getTimeDifferenceInSeconds } from './dateUtil';
 import { Link, Metadata, Point, Route, Track, Waypoint } from './gpxTypes';
 import { GpxParser } from './GpxParser';
 
@@ -15,10 +14,6 @@ export function mergeSimpleGPXs(parsers: SimpleGPX[]): SimpleGPX {
     return new SimpleGPX(metadata, waypoints, tracks, routes);
 }
 
-function haveTimeStamp(waypoints: Waypoint[]) {
-    return waypoints.filter((wayPoint) => !!wayPoint.time).length === waypoints.length;
-}
-
 function getPointsFromTracksAndRoutes(routes: Route[], tracks: Track[]) {
     return [...routes.map((route) => route.points), ...(tracks ?? []).map((track) => track.points)];
 }
@@ -29,7 +24,6 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
     tracks: Track[];
     routes: Route[];
     start: Date;
-    end: Date;
     mergeTracks: Boolean;
 
     public static fromString(raw: string) {
@@ -37,14 +31,6 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         const gpxJson = parser.parse(raw);
         const { metadata, wpt, tracks, routes } = gpxJson;
         return new SimpleGPX(metadata, wpt ?? [], tracks, routes ?? []);
-    }
-
-    public duplicate(tracks?: Track[]) {
-        const copy = SimpleGPX.fromString(this.toString());
-        if (tracks) {
-            copy.tracks = tracks;
-        }
-        return copy;
     }
 
     public constructor(
@@ -78,61 +64,10 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
             );
         });
         this.start = new Date(Math.min(...times));
-        this.end = new Date(Math.max(...times));
-    }
-
-    public shiftSeconds(interval: number) {
-        this.start = addSeconds(this.start, interval);
-        this.end = addSeconds(this.end, interval);
-        // immediately propagate to all the time points
-        getPointsFromTracksAndRoutes(this.routes, this.tracks).forEach((points) => {
-            points.forEach((point) => {
-                point.time = addSeconds(new Date(point.time), interval).toISOString();
-            });
-        });
-        if (this.waypoints.length && haveTimeStamp(this.waypoints)) {
-            this.waypoints.forEach((wp) => {
-                wp.time = addSeconds(new Date(wp.time), interval).toISOString();
-            });
-        }
-    }
-
-    public appendBreak(interval: number) {
-        // find the iterable with the last (in time) point
-        let found: boolean = false;
-        let points: Point[] = [];
-        for (let point of getPointsFromTracksAndRoutes(this.routes, this.tracks)) {
-            points = point;
-            for (let _point of point) {
-                if (_point.time >= this.end.toISOString()) {
-                    found = true;
-                    break;
-                }
-            }
-            if (found) {
-                break;
-            }
-        }
-        if (!found) {
-            points = this.waypoints;
-        }
-        // duplicate the last point, but later
-        let last_point = points[points.length - 1];
-        points.push({
-            lat: last_point.lat,
-            lon: last_point.lon,
-            ele: last_point.ele,
-            time: addSeconds(new Date(last_point.time), interval).toISOString(),
-        });
-        this.end = addSeconds(this.end, interval);
     }
 
     public getPoints() {
         return this.tracks.flatMap((track) => track.points).map((point) => ({ ...point }));
-    }
-
-    public shiftToDepartureTime(departure: string) {
-        this.shiftSeconds(getTimeDifferenceInSeconds(this.getStart(), departure));
     }
 
     public toString() {
@@ -157,12 +92,7 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
                 builder.setTracks([
                     new gpxBuilder.Track([tracks2seg(this.tracks)], {
                         name: first?.name,
-                        // cmt: first?.cmt,
-                        // desc: first?.desc,
-                        // src: first?.src,
-                        // link: toLink(first?.link),
                         number: Number(first?.number),
-                        // type: first?.type,
                     }),
                 ]);
             } else {
@@ -175,29 +105,8 @@ export class SimpleGPX extends GpxParser implements GpxFileAccess {
         return buildGPX(builder.toObject());
     }
 
-    setStart(start: string): void {
-        this.start = new Date(start);
-    }
-
-    setEnd(end: string): void {
-        this.end = new Date(end);
-    }
-
     getStart(): string {
         return this.start.toISOString();
-    }
-
-    getEnd(): string {
-        return this.end.toISOString();
-    }
-
-    getEndPoint(): Point {
-        const points = this.getPoints();
-        return points[points.length - 1];
-    }
-
-    getStartPoint(): Point {
-        return this.getPoints()[0];
     }
 }
 
@@ -234,12 +143,7 @@ function point2point(_point: Point, timeshift: number = 0): gpxBuilder.Point {
 function track2track(_track: Track, timeshift: number = 0): gpxBuilder.Track {
     return new gpxBuilder.Track([track2seg(_track, timeshift)], {
         name: _track.name,
-        // cmt: _track.cmt,
-        // desc: _track.desc,
-        // src: _track.src,
-        // link: toLink(_track.link),
         number: Number(_track.number),
-        // type: _track.type,
     });
 }
 
