@@ -8,13 +8,15 @@ import { SegmentSortButton } from './SegmentSortButton';
 import { getSegmentTableRows } from './segmentTableData';
 import { getSegmentUsages } from './segmentUsageCounter';
 import { GpxSegmentsUploadAndParse } from '../GpxSegmentsUploadAndParse.tsx';
+import { getParsedGpxSegments } from '../../store/segmentData.redux.ts';
 
 export function GpxSegmentsTable() {
     const rows = useSelector(getSegmentTableRows);
     const segmentUsages = useSelector(getSegmentUsages);
     const planningHasTracks = useSelector(getTrackCompositions).length > 0;
+    const parsedGpxSegments = useSelector(getParsedGpxSegments);
 
-    if (rows.length === 0) {
+    if (parsedGpxSegments.length === 0) {
         return (
             <div>
                 <div>
@@ -27,6 +29,9 @@ export function GpxSegmentsTable() {
         );
     }
 
+    if (rows.length === 0) {
+        return null;
+    }
     return (
         <Table striped bordered hover style={{ width: '100%' }} size="sm">
             <thead>

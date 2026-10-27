@@ -20,7 +20,7 @@ const mockPositions = vi.hoisted(() => ({
     }[],
 }));
 
-vi.mock('../../../../logic/resolving/selectors/getEntryPointPositions', () => ({
+vi.mock('../../../../../logic/resolving/selectors/getEntryPointPositions', () => ({
     getAllEntryPointPositions: vi.fn(() => mockPositions.value),
 }));
 

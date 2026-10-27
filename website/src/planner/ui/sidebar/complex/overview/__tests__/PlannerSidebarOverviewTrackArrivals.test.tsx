@@ -11,7 +11,7 @@ import { PlannerSidebarOverviewTrackArrivals } from '../PlannerSidebarOverviewTr
 
 const trackInfos = vi.hoisted(() => ({ value: [] as TrackStreetInfo[] }));
 
-vi.mock('../../../../calculation/getTrackStreetInfos', () => ({
+vi.mock('../../../../../calculation/getTrackStreetInfos', () => ({
     getTrackStreetInfos: vi.fn(() => trackInfos.value),
 }));
 
