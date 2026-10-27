@@ -11,7 +11,7 @@ import { CalculatedTrack } from '../../common/types';
 import { formatTimeOnly } from '../../utils/dateUtil';
 import { createStreetPointUrl } from '../../utils/streetPathUrl';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader';
-import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/trackstreets/TrackInfoPdfDownloadButton';
 import { useTableIndices } from './useTableIndices';
 import { EntryPointPosition } from '../../planner/logic/resolving/selectors/getEntryPointPositions';
 

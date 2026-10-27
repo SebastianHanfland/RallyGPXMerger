@@ -1,7 +1,7 @@
-import { TrackStreetInfo } from '../../logic/resolving/types';
+import { TrackStreetInfo } from '../../../logic/resolving/types';
 import Button from 'react-bootstrap/Button';
-import { DownloadIcon } from '../../../utils/icons/DownloadIcon';
-import { downloadSingleTrackStreetInfoPdf } from './pdfDownload';
+import { DownloadIcon } from '../../../../utils/icons/DownloadIcon';
+import { downloadSingleTrackStreetInfoPdf } from '../pdfDownload';
 import { useIntl } from 'react-intl';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';

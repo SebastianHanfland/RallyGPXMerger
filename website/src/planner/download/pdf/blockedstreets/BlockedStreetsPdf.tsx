@@ -1,14 +1,14 @@
-import { BlockedStreetInfo } from '../../logic/resolving/types';
-import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../utils/dateUtil';
+import { BlockedStreetInfo } from '../../../logic/resolving/types';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../../utils/dateUtil';
 import geoDistance from 'geo-distance-helper';
-import { getBlockedStreetsHeader } from '../csv/blockedStreetsCsv';
+import { getBlockedStreetsHeader } from '../../csv/blockedStreetsCsv';
 import { IntlShape } from 'react-intl';
-import { toLatLng } from '../../../utils/pointUtil';
-import { formatNumber } from '../../../utils/numberUtil';
+import { toLatLng } from '../../../../utils/pointUtil';
+import { formatNumber } from '../../../../utils/numberUtil';
 import { Document, Link, Page, Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles';
-import { chunkList } from './chunkUtil.t';
-import { createStreetPathUrl } from '../../../utils/streetPathUrl';
+import { pdfStyles } from '../pdfStyles';
+import { chunkList } from '../chunkUtil.t';
+import { createStreetPathUrl } from '../../../../utils/streetPathUrl';
 
 interface Props {
     intl: IntlShape;

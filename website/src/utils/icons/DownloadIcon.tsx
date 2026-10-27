@@ -7,7 +7,7 @@ export function DownloadIcon({ size, color, black }: { size?: number; color?: st
             src={black ? downloadB : download}
             alt="download file"
             className={'m-1'}
-            color={black ? '#000000' : color ?? '#ffffff'}
+            color={black ? '#000000' : (color ?? '#ffffff')}
             style={size ? { width: `${size}px`, height: `${size}px` } : undefined}
         />
     );

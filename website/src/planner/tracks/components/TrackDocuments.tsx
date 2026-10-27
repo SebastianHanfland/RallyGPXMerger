@@ -10,7 +10,7 @@ import { getParsedGpxSegments } from '../../store/segmentData.redux';
 import { getGpxContentFromTimedPoints } from '../../../utils/SimpleGPXFromPoints';
 import { getCalculateTracks } from '../../calculation/getCalculatedTracks';
 import { UnknownWarning } from '../../streets/UnknownWarning';
-import { TrackInfoPdfDownloadButton } from '../../download/pdf/TrackInfoPdfDownloadButton';
+import { TrackInfoPdfDownloadButton } from '../../download/pdf/trackstreets/TrackInfoPdfDownloadButton';
 import { getPlanningLabel } from '../../store/settings.reducer';
 
 export function TrackDocuments({ matchedTrackInfo }: { matchedTrackInfo: TrackStreetInfo | undefined }) {

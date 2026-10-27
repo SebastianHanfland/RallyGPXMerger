@@ -8,7 +8,7 @@ import { Table } from 'react-bootstrap';
 import { createStreetPointUrl } from '../../utils/streetPathUrl';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader';
 import { TrackWayPointType } from '../../planner/logic/resolving/types';
-import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/trackstreets/TrackInfoPdfDownloadButton';
 import { useTableIndices } from './useTableIndices';
 
 const filterByIndex = (tableIndices: number[] | undefined) => (_: unknown, index: number) =>

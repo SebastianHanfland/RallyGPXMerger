@@ -1,10 +1,10 @@
 import { BlobProvider } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import { TrackStreetsPdf } from './TrackStreetsPdf';
+import { TrackStreetsPdf } from './trackstreets/TrackStreetsPdf';
 import { IntlShape } from 'react-intl';
 import { BlockedStreetInfo, TrackStreetInfo } from '../../logic/resolving/types';
-import { BlockedStreetsPdf } from './BlockedStreetsPdf';
+import { BlockedStreetsPdf } from './blockedstreets/BlockedStreetsPdf';
 import { createRoot } from 'react-dom/client';
 
 export const downloadSingleTrackStreetInfoPdf = async (

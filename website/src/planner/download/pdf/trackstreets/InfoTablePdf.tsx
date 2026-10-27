@@ -1,9 +1,9 @@
-import { TrackStreetInfo } from '../../logic/resolving/types';
+import { TrackStreetInfo } from '../../../logic/resolving/types';
 
-import { getHeader } from '../getHeader';
+import { getHeader } from '../../getHeader';
 import { IntlShape } from 'react-intl';
 import { Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles';
+import { pdfStyles } from '../pdfStyles';
 
 interface Props {
     trackStreets: TrackStreetInfo;

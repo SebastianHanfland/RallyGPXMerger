@@ -1,10 +1,10 @@
-import { TrackStreetInfo, TrackWayPointType } from '../../logic/resolving/types';
-import { createStreetPointUrl } from '../../../utils/streetPathUrl';
-import { formatTimeOnly } from '../../../utils/dateUtil';
-import { formatFixedNumber } from '../../../utils/numberUtil';
+import { TrackStreetInfo, TrackWayPointType } from '../../../logic/resolving/types';
+import { createStreetPointUrl } from '../../../../utils/streetPathUrl';
+import { formatTimeOnly } from '../../../../utils/dateUtil';
+import { formatFixedNumber } from '../../../../utils/numberUtil';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles';
+import { pdfStyles } from '../pdfStyles';
 
 interface Props {
     trackStreets: TrackStreetInfo;

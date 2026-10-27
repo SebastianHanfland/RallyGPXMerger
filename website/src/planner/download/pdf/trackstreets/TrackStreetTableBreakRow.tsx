@@ -1,9 +1,10 @@
-import { WayPoint } from '../../logic/resolving/types';
-import { formatTimeOnly } from '../../../utils/dateUtil';
-import { createStreetPointUrl } from '../../../utils/streetPathUrl';
+import { WayPoint } from '../../../logic/resolving/types';
+import { formatTimeOnly, getTimeDifferenceInSeconds } from '../../../../utils/dateUtil';
+import { createStreetPointUrl } from '../../../../utils/streetPathUrl';
 import { IntlShape } from 'react-intl';
 import { Link, Text, View } from '@react-pdf/renderer';
-import { pdfStyles } from './pdfStyles';
+import { pdfStyles } from '../pdfStyles';
+import { formatNumber } from '../../../../utils/numberUtil';
 
 interface Props {
     wayPoint: WayPoint;
@@ -11,20 +12,26 @@ interface Props {
     colWidths: { width: string }[];
 }
 
-export const TrackStreetTableNodeRow = ({ wayPoint, intl, colWidths }: Props) => {
+export const TrackStreetTableBreakRow = ({ wayPoint, intl, colWidths }: Props) => {
     const streetName = wayPoint.streetName ?? intl.formatMessage({ id: 'msg.unknown' });
     let width = 0;
-    colWidths.slice(0, 7).forEach((colWidth) => {
+    colWidths.slice(0, 5).forEach((colWidth) => {
         width += Number(colWidth.width.replace('%', ''));
     });
     return (
         <View key={wayPoint.streetName} style={pdfStyles.row} wrap={false}>
-            <Text style={{ width: `${width}%`, marginRight: '10px' }}>
+            <Text style={{ width: `${width}%` }}>
                 <Text style={pdfStyles.bold}>
                     <Link src={createStreetPointUrl(wayPoint.pointFrom, streetName)} style={{ color: 'blue' }}>
-                        {`${streetName}: Knoten${wayPoint.nodeTracks ? ` (${wayPoint.nodeTracks.join(', ')})` : ''}`}
+                        {`${streetName}: Pause${wayPoint.breakLength ? ` (${wayPoint.breakLength}) min` : ''}`}
                     </Link>
                 </Text>
+            </Text>
+            <Text style={colWidths[5]}>
+                {formatNumber(getTimeDifferenceInSeconds(wayPoint.frontPassage, wayPoint.frontArrival) / 60, 1)}
+            </Text>
+            <Text style={colWidths[6]}>
+                {formatNumber(getTimeDifferenceInSeconds(wayPoint.backPassage, wayPoint.frontArrival) / 60, 1)}
             </Text>
             <Text style={colWidths[7]}>{formatTimeOnly(wayPoint.frontArrival)}</Text>
             <Text style={colWidths[8]}>{formatTimeOnly(wayPoint.frontPassage)}</Text>

@@ -10,7 +10,7 @@ import { CalculatedFilesDownloader } from '../download/gpx/CalculatedFilesDownlo
 import { StreetFilesDownloader } from '../streets/StreetFilesDownloader';
 import { CleanDataButton } from './CleanDataButton';
 import { DownloadDataForCopyButton } from './DownloadDataForCopyButton';
-import { BlockedStreetsPdfDownloadButton } from '../download/pdf/BlockedStreetsPdfDownloadButton';
+import { BlockedStreetsPdfDownloadButton } from '../download/pdf/blockedstreets/BlockedStreetsPdfDownloadButton';
 import { PdfDocumentInZipButton } from '../download/pdf/PdfDocumentInZip';
 
 export const PlannerSidebarServerSection = () => {

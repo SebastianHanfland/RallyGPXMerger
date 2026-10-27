@@ -7,7 +7,7 @@ import { formatNumber } from '../../utils/numberUtil';
 import { formatTimeOnly } from '../../utils/dateUtil';
 import L from 'leaflet';
 import { TrackFileDownloader } from '../../planner/download/gpx/TrackFileDownloader';
-import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/TrackInfoPdfDownloadButton';
+import { TrackInfoPdfDownloadButton } from '../../planner/download/pdf/trackstreets/TrackInfoPdfDownloadButton';
 
 const cardStyle = {
     style: { width: '170px', minHeight: '145px', cursor: 'default' },

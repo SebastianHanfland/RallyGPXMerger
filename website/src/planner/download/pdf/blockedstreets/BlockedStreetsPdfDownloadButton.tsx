@@ -1,10 +1,10 @@
 import { useIntl } from 'react-intl';
 import Button from 'react-bootstrap/Button';
-import { DownloadIcon } from '../../../utils/icons/DownloadIcon';
+import { DownloadIcon } from '../../../../utils/icons/DownloadIcon';
 import { useSelector } from 'react-redux';
-import { getBlockedStreetInfo } from '../../logic/resolving/selectors/getBlockedStreetInfo';
-import { getPlanningLabel } from '../../store/settings.reducer';
-import { downloadBlockedStreetPdf } from './pdfDownload';
+import { getBlockedStreetInfo } from '../../../logic/resolving/selectors/getBlockedStreetInfo';
+import { getPlanningLabel } from '../../../store/settings.reducer';
+import { downloadBlockedStreetPdf } from '../pdfDownload';
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 
