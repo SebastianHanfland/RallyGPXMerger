@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { ParsedGpxSegment, State } from '../store/types';
-import { splitGpx } from '../../utils/gpxSplitUtil';
+import { ParsedGpxSegment, State } from '../../store/types';
+import { splitGpx } from '../../../utils/gpxSplitUtil';
 import { executeGpxSegmentReplacementWithUpload } from './fileReplaceWithUploadThunk';
-import { AppDispatch } from '../store/planningStore';
-import { getClickOnSegment, getParsedGpxSegments, segmentDataActions } from '../store/segmentData.redux';
+import { AppDispatch } from '../../store/planningStore';
+import { getClickOnSegment, getParsedGpxSegments, segmentDataActions } from '../../store/segmentData.redux';
 
 export const splitGpxAtPosition = (dispatch: AppDispatch, getState: () => State) => {
     const gpxSegments = getParsedGpxSegments(getState());

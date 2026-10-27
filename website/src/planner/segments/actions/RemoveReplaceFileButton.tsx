@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { ConfirmationModal } from '../../../common/ConfirmationModal';
 import { useState } from 'react';
-import trash from '../../assets/trash.svg';
-import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux';
+import trash from '../../../assets/trash.svg';
+import { getReplaceProcess, segmentDataActions } from '../../store/segmentData.redux';
 
 interface Props {
     id: string;

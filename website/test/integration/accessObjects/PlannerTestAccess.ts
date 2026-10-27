@@ -1,6 +1,6 @@
 import { act, fireEvent, screen, within } from '@testing-library/react';
 import { AppDispatch } from '../../../src/planner/store/planningStore';
-import { splitGpxAtPosition } from '../../../src/planner/segments/splitSegmentThunk';
+import { splitGpxAtPosition } from '../../../src/planner/segments/actions/splitSegmentThunk';
 import { getMessages } from '../../../src/lang/getMessages';
 import { segmentDataActions } from '../../../src/planner/store/segmentData.redux';
 import { segment1 } from '../data/segment1';

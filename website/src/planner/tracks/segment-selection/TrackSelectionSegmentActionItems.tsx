@@ -1,12 +1,12 @@
 import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { FileDownloaderDropdownItem } from '../../download/FileDownloader';
-import { FileChangeWithUploadButton } from '../../segments/FileChangeWithUploadButton';
-import { FileChangeButton } from '../../segments/FileChangeButton';
-import { RemoveFileButton } from '../../segments/RemoveFileButton';
-import { FlipGpxButton } from '../../segments/FlipGpxButton';
-import { ResetResolvedStreetsButton } from '../../segments/ResetResolvedStreetsButton';
-import { EditSegmentColorButton } from '../../segments/EditSegmentColor';
+import { FileChangeWithUploadButton } from '../../segments/actions/FileChangeWithUploadButton';
+import { FileChangeButton } from '../../segments/actions/FileChangeButton';
+import { RemoveFileButton } from '../../segments/actions/RemoveFileButton';
+import { FlipGpxButton } from '../../segments/actions/FlipGpxButton';
+import { ResetResolvedStreetsButton } from '../../segments/actions/ResetResolvedStreetsButton';
+import { EditSegmentColorButton } from '../../segments/actions/EditSegmentColor';
 import { ParsedGpxSegment } from '../../store/types';
 import { getGpxContentStringFromParsedSegment } from '../../../utils/SimpleGPXFromPoints';
 

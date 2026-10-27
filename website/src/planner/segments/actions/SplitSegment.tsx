@@ -1,10 +1,10 @@
 import { Dropdown } from 'react-bootstrap';
-import scissors from '../../assets/scissors.svg';
+import scissors from '../../../assets/scissors.svg';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { splitGpxAtPosition } from './splitSegmentThunk';
-import { AppDispatch } from '../store/planningStore';
-import { getClickOnSegment, segmentDataActions } from '../store/segmentData.redux';
+import { AppDispatch } from '../../store/planningStore';
+import { getClickOnSegment, segmentDataActions } from '../../store/segmentData.redux';
 
 export const SplitSegmentDropdownItem = () => {
     const dispatch: AppDispatch = useDispatch();

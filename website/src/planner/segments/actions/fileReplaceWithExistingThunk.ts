@@ -1,7 +1,7 @@
-import { SEGMENT, State } from '../store/types';
-import { getTrackCompositions, trackMergeActions } from '../store/trackMerge.reducer';
-import { AppDispatch } from '../store/planningStore';
-import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux';
+import { SEGMENT, State } from '../../store/types';
+import { getTrackCompositions, trackMergeActions } from '../../store/trackMerge.reducer';
+import { AppDispatch } from '../../store/planningStore';
+import { getReplaceProcess, segmentDataActions } from '../../store/segmentData.redux';
 
 export const executeGpxSegmentReplacementWithExisting = (dispatch: AppDispatch, getState: () => State) => {
     const replaceProcess = getReplaceProcess(getState());

@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import { trackMergeActions } from '../store/trackMerge.reducer';
-import { ConfirmationModal } from '../../common/ConfirmationModal';
+import { trackMergeActions } from '../../store/trackMerge.reducer';
+import { ConfirmationModal } from '../../../common/ConfirmationModal';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { segmentDataActions } from '../store/segmentData.redux';
-import { TrashIcon } from '../../utils/icons/TrashIcon';
+import { segmentDataActions } from '../../store/segmentData.redux';
+import { TrashIcon } from '../../../utils/icons/TrashIcon';
 
 interface Props {
     id: string;

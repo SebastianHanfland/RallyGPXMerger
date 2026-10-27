@@ -1,12 +1,12 @@
 import { Dropdown, Table } from 'react-bootstrap';
-import exchange from '../../assets/exchange.svg';
+import exchange from '../../../assets/exchange.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { ConfirmationModal } from '../../common/ConfirmationModal';
-import { AppDispatch } from '../store/planningStore';
+import { ConfirmationModal } from '../../../common/ConfirmationModal';
+import { AppDispatch } from '../../store/planningStore';
 import { ReplaceFileDisplay } from './ReplaceFileDisplay';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { getReplaceProcess, segmentDataActions } from '../store/segmentData.redux';
+import { getReplaceProcess, segmentDataActions } from '../../store/segmentData.redux';
 import { ReplacementSegmentSelect } from './ReplacementSegmentSelect';
 import { executeGpxSegmentReplacementWithExisting } from './fileReplaceWithExistingThunk';
 

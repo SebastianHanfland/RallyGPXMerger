@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
-import flip from '../../assets/flip.svg';
+import flip from '../../../assets/flip.svg';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore';
-import { segmentDataActions } from '../store/segmentData.redux';
-import { getAverageSpeedInKmH } from '../store/settings.reducer';
+import { AppDispatch } from '../../store/planningStore';
+import { segmentDataActions } from '../../store/segmentData.redux';
+import { getAverageSpeedInKmH } from '../../store/settings.reducer';
 
 interface Props {
     id: string;

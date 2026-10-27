@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Select, { SingleValue } from 'react-select';
 import { useIntl } from 'react-intl';
-import { getParsedGpxSegments, getReplaceProcess, segmentDataActions } from '../store/segmentData.redux';
-import { AppDispatch } from '../store/planningStore';
-import { ParsedGpxSegment } from '../store/types';
+import { getParsedGpxSegments, getReplaceProcess, segmentDataActions } from '../../store/segmentData.redux';
+import { AppDispatch } from '../../store/planningStore';
+import { ParsedGpxSegment } from '../../store/types';
 
 function toOption(gpxSegment: ParsedGpxSegment): { value: string; label: string } {
     return {

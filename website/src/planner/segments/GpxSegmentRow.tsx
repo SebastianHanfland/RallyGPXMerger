@@ -1,18 +1,18 @@
 import { ButtonGroup, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { SegmentDownloadDropdownItem } from './SegmentDownloadDropdownItem';
-import { FileChangeWithUploadButton } from './FileChangeWithUploadButton';
-import { RemoveFileButton } from './RemoveFileButton';
+import { FileChangeWithUploadButton } from './actions/FileChangeWithUploadButton';
+import { RemoveFileButton } from './actions/RemoveFileButton';
 import { getUsagesOfSegment, SegmentUsages } from './segmentUsageCounter';
 import { useIntl } from 'react-intl';
 import { mapActions } from '../store/map.reducer';
-import { FlipGpxButton } from './FlipGpxButton';
+import { FlipGpxButton } from './actions/FlipGpxButton';
 import flip from '../../assets/flip.svg';
-import { ResetResolvedStreetsButton } from './ResetResolvedStreetsButton';
+import { ResetResolvedStreetsButton } from './actions/ResetResolvedStreetsButton';
 import { SegmentSpeedCells } from './SegmentSpeedCells';
 import { segmentDataActions } from '../store/segmentData.redux';
-import { EditSegmentColorButton } from './EditSegmentColor';
-import { FileChangeButton } from './FileChangeButton';
+import { EditSegmentColorButton } from './actions/EditSegmentColor';
+import { FileChangeButton } from './actions/FileChangeButton';
 import { formatNumber } from '../../utils/numberUtil';
 import { memo } from 'react';
 

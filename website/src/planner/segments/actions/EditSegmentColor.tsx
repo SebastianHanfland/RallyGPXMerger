@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { AppDispatch } from '../store/planningStore';
-import { segmentDataActions } from '../store/segmentData.redux';
-import { ColorBlob } from '../../utils/ColorBlob';
-import { getColor } from '../../utils/colorUtil';
+import { AppDispatch } from '../../store/planningStore';
+import { segmentDataActions } from '../../store/segmentData.redux';
+import { ColorBlob } from '../../../utils/ColorBlob';
+import { getColor } from '../../../utils/colorUtil';
 import { useEffect, useState } from 'react';
-import { ConfirmationModal } from '../../common/ConfirmationModal';
-import { ColorPicker } from '../../utils/ColorPicker';
+import { ConfirmationModal } from '../../../common/ConfirmationModal';
+import { ColorPicker } from '../../../utils/ColorPicker';
 
 interface Props {
     id: string;

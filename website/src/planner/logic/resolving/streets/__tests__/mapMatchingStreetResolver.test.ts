@@ -6,7 +6,7 @@ import { getParsedGpxSegments, getStreetLookup, segmentDataActions } from '../..
 import { Mock } from 'vitest';
 import { trackMergeActions, getTrackCompositions } from '../../../../store/trackMerge.reducer';
 import { SEGMENT } from '../../../../store/types';
-import { executeGpxSegmentReplacementWithUpload } from '../../../../segments/fileReplaceWithUploadThunk';
+import { executeGpxSegmentReplacementWithUpload } from '../../../../segments/actions/fileReplaceWithUploadThunk';
 
 // @ts-ignore
 global.fetch = vi.fn();
