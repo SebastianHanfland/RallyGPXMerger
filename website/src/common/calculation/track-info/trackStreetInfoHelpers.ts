@@ -15,7 +15,7 @@ export const extractPathPoint = (point: ParsedPoint) => ({
     s: getStreetLookupIndex(point),
 });
 
-export function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
+export function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string): WayPoint {
     const wayPointsWithoutEntryPoints = trackPoints.filter((point) => point.type !== TrackWayPointType.Entry);
     if (wayPointsWithoutEntryPoints.length > 0) {
         return wayPointsWithoutEntryPoints[0];
@@ -26,7 +26,7 @@ export function getPreviousPoint(trackPoints: WayPoint[], arrivalDate: string) {
         district: null,
         frontArrival: arrivalDate,
         frontPassage: arrivalDate,
-        backArrival: arrivalDate,
+        backPassage: arrivalDate,
         pointFrom: { lat: 0, lon: 0, time: arrivalDate },
         pointTo: { lat: 0, lon: 0, time: arrivalDate },
     };

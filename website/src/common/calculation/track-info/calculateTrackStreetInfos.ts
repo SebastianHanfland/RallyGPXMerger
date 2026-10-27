@@ -21,6 +21,8 @@ import { getPointsEndingAtTime } from '../lastPointUtil';
 import { extractLatLon, extractPathPoint, getPreviousPoint } from './trackStreetInfoHelpers';
 import { getStreetLookupIndex } from '../../../planner/logic/resolving/helper/getStreetLookupIndex';
 
+type ResolvedTrackElement = ParsedGpxSegment | TrackBreak | TrackEntry | NodePosition;
+
 export const calculateTrackStreetInfos = (
     segments: ParsedGpxSegment[],
     tracks: TrackComposition[],
@@ -32,9 +34,9 @@ export const calculateTrackStreetInfos = (
     nodeSpecifications: NodeSpecifications | undefined,
     aggregatedSegmentStreets: Record<string, AggregatedPoints[] | undefined>
 ): TrackStreetInfo[] => {
-    const trackWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
+    const tracksWithEndDelay = updateExtraDelayOnTracks(tracks, participantsDelayInSeconds, nodeSpecifications);
 
-    return trackWithEndDelay.map((track) => {
+    return tracksWithEndDelay.map((track) => {
         const calculatedTrack = calculatedTracks.find((calcTrack) => calcTrack.id === track.id);
         const distance = calculatedTrack ? calculateDistanceInKm(calculatedTrack.points) : 0;
         const wayPoints = getWayPointsOfTrack(
@@ -47,23 +49,23 @@ export const calculateTrackStreetInfos = (
             aggregatedSegmentStreets
         );
 
-        const backupDate = new Date().toISOString();
-        const startFront = wayPoints.length > 0 ? wayPoints[0].frontArrival : backupDate;
-        const publicStart = track
-            ? roundPublishedStartTimes(startFront, track.buffer ?? 0, track.rounding ?? 0)
-            : startFront;
+        const fallbackDate = new Date().toISOString();
+        const firstWaypoint = wayPoints[0];
+        const lastWaypoint = wayPoints[wayPoints.length - 1];
+        const startFront = firstWaypoint?.frontArrival ?? fallbackDate;
+        const publicStart = roundPublishedStartTimes(startFront, track.buffer ?? 0, track.rounding ?? 0);
 
         return {
             id: track.id,
             name: track.name ?? track.id,
             startName: track.startName,
-            startFront: startFront,
-            publicStart: publicStart,
-            arrivalBack: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].backPassage : backupDate,
-            arrivalFront: wayPoints.length > 0 ? wayPoints[wayPoints.length - 1].frontPassage : backupDate,
+            startFront,
+            publicStart,
+            arrivalBack: lastWaypoint?.backPassage ?? fallbackDate,
+            arrivalFront: lastWaypoint?.frontPassage ?? fallbackDate,
             distanceInKm: distance,
             peopleCount: track.peopleCount,
-            wayPoints: wayPoints,
+            wayPoints,
         };
     });
 };
@@ -77,127 +79,124 @@ export function getWayPointsOfTrack(
     arrivalDateTime: string | undefined,
     aggregatedSegmentStreets: Record<string, AggregatedPoints[] | undefined>
 ): WayPoint[] {
-    let arrivalTimeForPreviousSegment = -(track.delayAtEndInSeconds ?? 0);
+    let previousSegmentStartTime = -(track.delayAtEndInSeconds ?? 0);
     let trackPoints: WayPoint[] = [];
     const arrivalDate = arrivalDateTime ?? '2025-06-01T10:11:55';
+    const participantDelay = participantsDelayInSeconds * (track.peopleCount ?? 0);
 
-    const gpxSegmentContents = resolveGpxSegments(track, gpxSegments, nodes);
+    const elementsInReverseOrder = resolveGpxSegments(track, gpxSegments, nodes).reverse();
 
-    gpxSegmentContents
-        .reverse()
-        .filter((entry) => entry !== undefined)
-        .forEach((gpxOrBreak) => {
-            if (instanceOfBreak(gpxOrBreak)) {
-                arrivalTimeForPreviousSegment = arrivalTimeForPreviousSegment - gpxOrBreak.minutes * 60;
-                const trackBreak: WayPoint = {
-                    streetName: gpxOrBreak.streetName ?? getPreviousPoint(trackPoints, arrivalDate).streetName,
-                    breakLength: gpxOrBreak.minutes,
-                    type: TrackWayPointType.Break,
-                    pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    frontArrival: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                        -gpxOrBreak.minutes * 60
-                    ),
-                    backPassage: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                        participantsDelayInSeconds * (track.peopleCount ?? 0)
-                    ),
-                    frontPassage: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                    speed: undefined,
-                    postCode: '',
-                    distanceInKm: undefined,
-                    district: '',
-                    breakId: gpxOrBreak.id,
-                };
-                trackPoints = [trackBreak, ...trackPoints];
-            } else if (instanceOfEntry(gpxOrBreak)) {
-                const frontArrival = getPreviousPoint(trackPoints, arrivalDate).frontArrival;
-                const trackNode: WayPoint = {
-                    streetName: gpxOrBreak.streetName,
-                    type: TrackWayPointType.Entry,
-                    pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    frontArrival: roundPublishedStartTimes(
-                        frontArrival,
-                        gpxOrBreak.buffer ?? 0,
-                        gpxOrBreak.rounding ?? 0
-                    ),
-                    backPassage: shiftDateBySeconds(
-                        frontArrival,
-                        participantsDelayInSeconds * (track.peopleCount ?? 0)
-                    ),
-                    frontPassage: frontArrival,
-                    speed: undefined,
-                    postCode: '',
-                    distanceInKm: undefined,
-                    district: '',
-                    entryId: gpxOrBreak.id,
-                };
-                trackPoints = [trackNode, ...trackPoints];
-            } else if (instanceOfNode(gpxOrBreak)) {
-                const trackNode: WayPoint = {
-                    ...getPreviousPoint(trackPoints, arrivalDate),
-                    streetName: gpxOrBreak.streetName ?? getPreviousPoint(trackPoints, arrivalDate).streetName,
-                    type: TrackWayPointType.Node,
-                    nodeTracks: gpxOrBreak.tracks,
-                    pointTo: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    pointFrom: getPreviousPoint(trackPoints, arrivalDate).pointFrom,
-                    frontArrival: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                    frontPassage: getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                    backPassage: shiftDateBySeconds(
-                        getPreviousPoint(trackPoints, arrivalDate).frontArrival,
-                        participantsDelayInSeconds * (track.peopleCount ?? 0)
-                    ),
-                    speed: undefined,
-                    postCode: '',
-                    distanceInKm: undefined,
-                    district: '',
-                    segmentAfterId: gpxOrBreak.segmentIdAfter,
-                };
-                trackPoints = [trackNode, ...trackPoints];
-            } else {
-                const shiftedPoint = getPointsEndingAtTime(gpxOrBreak, arrivalTimeForPreviousSegment);
-                const aggregatedPoints = aggregatedSegmentStreets[gpxOrBreak.id];
-                if (shiftedPoint.length > 0) {
-                    arrivalTimeForPreviousSegment = shiftedPoint[0].t;
+    elementsInReverseOrder.forEach((element) => {
+        const previousPoint = getPreviousPoint(trackPoints, arrivalDate);
 
-                    const wayPoints: WayPoint[] = (aggregatedPoints ?? []).map((point) => {
-                        const streetLookupIndex = getStreetLookupIndex(point);
-                        return {
-                            streetName: lookups.streets[streetLookupIndex] ?? null,
-                            district: lookups.districts[streetLookupIndex] ?? null,
-                            postCode: lookups.postCodes[streetLookupIndex] ?? null,
-                            backPassage: shiftDateBySeconds(
-                                arrivalDate,
-                                point.frontPassage +
-                                    participantsDelayInSeconds * (track.peopleCount ?? 0) +
-                                    arrivalTimeForPreviousSegment
-                            ),
-                            frontPassage: shiftDateBySeconds(
-                                arrivalDate,
-                                point.frontPassage + arrivalTimeForPreviousSegment
-                            ),
-                            frontArrival: shiftDateBySeconds(
-                                arrivalDate,
-                                point.frontArrival + arrivalTimeForPreviousSegment
-                            ),
-                            pointFrom: extractLatLon(point.pointFrom, arrivalDate),
-                            pointTo: extractLatLon(point.pointTo, arrivalDate),
-                            path: point.path.map(extractPathPoint),
-                            distanceInKm: point.distanceInKm,
-                            speed: point.speed,
-                            type: TrackWayPointType.Track,
-                            s: streetLookupIndex,
-                        };
-                    });
-
-                    trackPoints = joinWayPointsAtSegmentsBorders(wayPoints, trackPoints);
-                }
+        if (instanceOfBreak(element)) {
+            previousSegmentStartTime -= element.minutes * 60;
+            const breakWaypoint = createBreakWaypoint(element, previousPoint, participantDelay);
+            trackPoints = [breakWaypoint, ...trackPoints];
+        } else if (instanceOfEntry(element)) {
+            const entryWaypoint = createEntryWaypoint(element, previousPoint, participantDelay);
+            trackPoints = [entryWaypoint, ...trackPoints];
+        } else if (instanceOfNode(element)) {
+            const nodeWaypoint = createNodeWaypoint(element, previousPoint, participantDelay);
+            trackPoints = [nodeWaypoint, ...trackPoints];
+        } else {
+            const shiftedPoints = getPointsEndingAtTime(element, previousSegmentStartTime);
+            if (shiftedPoints.length > 0) {
+                previousSegmentStartTime = shiftedPoints[0].t;
+                const segmentWaypoints = createSegmentWaypoints(
+                    aggregatedSegmentStreets[element.id],
+                    arrivalDate,
+                    lookups,
+                    previousSegmentStartTime,
+                    participantDelay
+                );
+                trackPoints = joinWayPointsAtSegmentsBorders(segmentWaypoints, trackPoints);
             }
-        });
+        }
+    });
 
     return trackPoints;
+}
+
+function createBreakWaypoint(breakElement: TrackBreak, previousPoint: WayPoint, participantDelay: number): WayPoint {
+    return {
+        streetName: breakElement.streetName ?? previousPoint.streetName,
+        breakLength: breakElement.minutes,
+        type: TrackWayPointType.Break,
+        pointTo: previousPoint.pointFrom,
+        pointFrom: previousPoint.pointFrom,
+        frontArrival: shiftDateBySeconds(previousPoint.frontArrival, -breakElement.minutes * 60),
+        backPassage: shiftDateBySeconds(previousPoint.frontArrival, participantDelay),
+        frontPassage: previousPoint.frontArrival,
+        speed: undefined,
+        postCode: '',
+        distanceInKm: undefined,
+        district: '',
+        breakId: breakElement.id,
+    };
+}
+
+function createEntryWaypoint(entry: TrackEntry, previousPoint: WayPoint, participantDelay: number): WayPoint {
+    return {
+        streetName: entry.streetName,
+        type: TrackWayPointType.Entry,
+        pointTo: previousPoint.pointFrom,
+        pointFrom: previousPoint.pointFrom,
+        frontArrival: roundPublishedStartTimes(previousPoint.frontArrival, entry.buffer ?? 0, entry.rounding ?? 0),
+        backPassage: shiftDateBySeconds(previousPoint.frontArrival, participantDelay),
+        frontPassage: previousPoint.frontArrival,
+        speed: undefined,
+        postCode: '',
+        distanceInKm: undefined,
+        district: '',
+        entryId: entry.id,
+    };
+}
+
+function createNodeWaypoint(node: NodePosition, previousPoint: WayPoint, participantDelay: number): WayPoint {
+    return {
+        ...previousPoint,
+        streetName: node.streetName ?? previousPoint.streetName,
+        type: TrackWayPointType.Node,
+        nodeTracks: node.tracks,
+        pointTo: previousPoint.pointFrom,
+        pointFrom: previousPoint.pointFrom,
+        frontArrival: previousPoint.frontArrival,
+        frontPassage: previousPoint.frontArrival,
+        backPassage: shiftDateBySeconds(previousPoint.frontArrival, participantDelay),
+        speed: undefined,
+        postCode: '',
+        distanceInKm: undefined,
+        district: '',
+        segmentAfterId: node.segmentIdAfter,
+    };
+}
+
+function createSegmentWaypoints(
+    aggregatedPoints: AggregatedPoints[] | undefined,
+    arrivalDate: string,
+    lookups: Lookups,
+    segmentStartTime: number,
+    participantDelay: number
+): WayPoint[] {
+    return (aggregatedPoints ?? []).map((point) => {
+        const streetLookupIndex = getStreetLookupIndex(point);
+        return {
+            streetName: lookups.streets[streetLookupIndex] ?? null,
+            district: lookups.districts[streetLookupIndex] ?? null,
+            postCode: lookups.postCodes[streetLookupIndex] ?? null,
+            backPassage: shiftDateBySeconds(arrivalDate, point.frontPassage + participantDelay + segmentStartTime),
+            frontPassage: shiftDateBySeconds(arrivalDate, point.frontPassage + segmentStartTime),
+            frontArrival: shiftDateBySeconds(arrivalDate, point.frontArrival + segmentStartTime),
+            pointFrom: extractLatLon(point.pointFrom, arrivalDate),
+            pointTo: extractLatLon(point.pointTo, arrivalDate),
+            path: point.path.map(extractPathPoint),
+            distanceInKm: point.distanceInKm,
+            speed: point.speed,
+            type: TrackWayPointType.Track,
+            s: getStreetLookupIndex(point),
+        };
+    });
 }
 
 export function resolveGpxSegments(
@@ -205,7 +204,7 @@ export function resolveGpxSegments(
     gpxSegments: ParsedGpxSegment[],
     nodes: NodePosition[]
 ): (ParsedGpxSegment | TrackBreak | TrackEntry | NodePosition)[] {
-    const trackElements: (ParsedGpxSegment | TrackBreak | TrackEntry | NodePosition)[] = [];
+    const trackElements: ResolvedTrackElement[] = [];
     track.segments.forEach((trackElement) => {
         if (isTrackBreak(trackElement)) {
             trackElements.push(trackElement);
@@ -215,11 +214,11 @@ export function resolveGpxSegments(
             trackElements.push(trackElement);
             return;
         }
-        const foundNodeBefore = nodes.find(
+        const nodeBeforeSegment = nodes.find(
             (node) => node.segmentIdAfter === trackElement.id && trackElement.type === SEGMENT
         );
-        if (foundNodeBefore) {
-            trackElements.push(foundNodeBefore);
+        if (nodeBeforeSegment) {
+            trackElements.push(nodeBeforeSegment);
         }
         const gpxSegment = gpxSegments.find((segment) => segment.id === trackElement.id);
         if (gpxSegment) {
