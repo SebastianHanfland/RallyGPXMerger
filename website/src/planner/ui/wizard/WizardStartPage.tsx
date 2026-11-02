@@ -1,4 +1,4 @@
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { Sections } from '../../layout/types';
 import stars from '../../../assets/stars.svg';
 import fileUp from '../../../assets/file-up.svg';
@@ -14,6 +14,16 @@ import { isPlanningInProgress } from '../../store/planner.selector';
 import { LanguageSelection } from '../../layout/LanguageSelection';
 import { useNavigate } from 'react-router';
 import { getPlanningId } from '../../store/backend.reducer';
+import { FeedbackDialog } from './FeedbackDialog';
+
+const feedbackStyle = {
+    position: 'fixed' as const,
+    height: '45px',
+    borderRadius: '2px',
+    left: 10,
+    bottom: 50,
+    zIndex: 10,
+};
 
 export const WizardStartPage = () => {
     const navigateTo = useNavigate();
@@ -28,6 +38,7 @@ export const WizardStartPage = () => {
     const { uploadInput, importButtonClicked, changeHandler } = importHook();
     const [showModal, setShowModal] = useState(false);
     const [showImportWarningModal, setShowImportWarningModal] = useState(false);
+    const [showFeedbackModal, setShowFeedbackModal] = useState(false);
     const [nextSection, setNextSection] = useState<'gps' | 'wizard-complexity' | undefined>();
 
     return (
@@ -48,6 +59,7 @@ export const WizardStartPage = () => {
                     importWarning={true}
                 />
             )}
+            {showFeedbackModal && <FeedbackDialog closeModal={() => setShowFeedbackModal(false)} />}
             <WizardHeader />
             <Row className={'mb-5'}>
                 <Col>
@@ -98,6 +110,9 @@ export const WizardStartPage = () => {
                     />
                 </Col>
             </Row>
+            <Button variant="light" style={feedbackStyle} onClick={() => setShowFeedbackModal(true)}>
+                <FormattedMessage id="msg.feedback" />
+            </Button>
             <LanguageSelection />
         </Container>
     );

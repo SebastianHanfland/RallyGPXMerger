@@ -1,4 +1,5 @@
 import { Mock, vi } from 'vitest';
+import { screen, within } from '@testing-library/react';
 import { getLanguage } from '../../src/language';
 import { plannerUi } from './accessObjects/PlannerTestAccess';
 import { renderPlanner, startComplexPlanning, startSimplePlanning } from './data/PlannerTestSetup';
@@ -27,6 +28,23 @@ describe('planner navigation', () => {
 
         expect(plannerUi.cloudActionsButton()).toHaveStyle({ width: '45px', height: '45px' });
         expect(plannerUi.downloadsButton()).toHaveStyle({ width: '45px', height: '45px' });
+    });
+
+    it('opens and closes the feedback dialog from the wizard start page', async () => {
+        const { user } = renderPlanner();
+
+        await user.click(screen.getByRole('button', { name: 'Feedback / change request' }));
+
+        const dialog = screen.getByRole('dialog');
+        expect(dialog).toHaveTextContent('Please register or sign in at GitHub');
+        expect(within(dialog).getByRole('link', { name: 'Create a GitHub issue' })).toHaveAttribute(
+            'href',
+            'https://github.com/SebastianHanfland/RallyGPXMerger/issues/new'
+        );
+
+        const closeButtons = within(dialog).getAllByRole('button', { name: 'Close' });
+        await user.click(closeButtons[closeButtons.length - 1]!);
+        expect(screen.queryByRole('dialog')).toBeNull();
     });
 
     it('starts a new complex planning on the segments section', async () => {
