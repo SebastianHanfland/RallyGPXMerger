@@ -33,10 +33,16 @@ describe('planner navigation', () => {
     it('opens and closes the feedback dialog from the wizard start page', async () => {
         const { user } = renderPlanner();
 
-        await user.click(screen.getByRole('button', { name: 'Feedback / change request' }));
+        const feedbackButton = screen.getByRole('button', { name: 'Feedback / change request' });
+        expect(within(feedbackButton).getByTestId('feedback-icon')).toBeInTheDocument();
+        await user.click(feedbackButton);
 
         const dialog = screen.getByRole('dialog');
         expect(dialog).toHaveTextContent('Please register or sign in at GitHub');
+        expect(within(dialog).getByRole('link', { name: 'GitHub' })).toHaveAttribute(
+            'href',
+            'https://github.com/signup'
+        );
         expect(within(dialog).getByRole('link', { name: 'Create a GitHub issue' })).toHaveAttribute(
             'href',
             'https://github.com/SebastianHanfland/RallyGPXMerger/issues/new'

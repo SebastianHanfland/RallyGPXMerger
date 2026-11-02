@@ -15,6 +15,7 @@ import { LanguageSelection } from '../../layout/LanguageSelection';
 import { useNavigate } from 'react-router';
 import { getPlanningId } from '../../store/backend.reducer';
 import { FeedbackDialog } from './FeedbackDialog';
+import feedbackIcon from '../../../assets/feedback.svg';
 
 const feedbackStyle = {
     position: 'fixed' as const,
@@ -111,6 +112,7 @@ export const WizardStartPage = () => {
                 </Col>
             </Row>
             <Button variant="light" style={feedbackStyle} onClick={() => setShowFeedbackModal(true)}>
+                <img src={feedbackIcon} alt="" aria-hidden="true" data-testid="feedback-icon" className="me-1" />
                 <FormattedMessage id="msg.feedback" />
             </Button>
             <LanguageSelection />

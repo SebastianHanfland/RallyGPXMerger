@@ -18,7 +18,21 @@ export const FeedbackDialog = ({ closeModal }: Props) => {
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    <FormattedMessage id="msg.feedback.modalBody" />
+                    <FormattedMessage
+                        id="msg.feedback.modalBody"
+                        values={{
+                            github: (chunks) => (
+                                <a
+                                    href="https://github.com/signup"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    referrerPolicy="no-referrer"
+                                >
+                                    {chunks}
+                                </a>
+                            ),
+                        }}
+                    />
                 </p>
                 <p>
                     <FormattedMessage id="msg.feedback.issueTypes" />

@@ -250,7 +250,7 @@
     "msg.loadPlan.hint": "Open an existing plan via json file",
     "msg.feedback": "Feedback / change request",
     "msg.feedback.modalTitle": "Feedback / change request",
-    "msg.feedback.modalBody": "Please register or sign in at GitHub to report a problem or suggest an idea.",
+    "msg.feedback.modalBody": "Please register or sign in at <github>GitHub</github> to report a problem or suggest an idea.",
     "msg.feedback.issueTypes": "You can create an issue when something is not working, or when you have an idea for improved or new functionality.",
     "msg.feedback.createIssue": "Create a GitHub issue",
     "msg.loadSample": "Sample Plan",

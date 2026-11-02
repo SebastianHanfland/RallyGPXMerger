@@ -255,7 +255,7 @@
     "msg.loadPlan.hint": "Existierende Planung aus json Datei öffnen",
     "msg.feedback": "Feedback / Änderungswunsch",
     "msg.feedback.modalTitle": "Feedback / Änderungswunsch",
-    "msg.feedback.modalBody": "Bitte registriere dich bei GitHub oder melde dich dort an, um ein Problem zu melden oder eine Idee vorzuschlagen.",
+    "msg.feedback.modalBody": "Bitte registriere dich bei <github>GitHub</github> oder melde dich dort an, um ein Problem zu melden oder eine Idee vorzuschlagen.",
     "msg.feedback.issueTypes": "Du kannst ein Issue erstellen, wenn etwas nicht funktioniert oder du eine Idee für verbesserte oder neue Funktionen hast.",
     "msg.feedback.createIssue": "GitHub-Issue erstellen",
     "msg.loadSample": "Beispielplanung",
