@@ -2,20 +2,29 @@
 
 ## Whitebox Overall System
 
-The system consists of a React Frontend and a simple node backend.
-The main logic is in the Frontend. The backend only stores the json with CRUD and checks the password also stored in the json as simple form of authorization
+The system consists of a React/Vite frontend and a small Express backend.
+Calculation, GPX handling, map presentation, downloads, and most application
+logic are in the frontend. The backend stores plan JSON files and protects
+updates and deletes with the plan's admin token.
 
 ### Frontend
 
-React <-> Redux/Store <-> Logic
+React UI <-> Redux Toolkit stores/selectors <-> planner and display logic
 
-The redux store is stored in the local storage of the browser, with every update.
-When entering the site again, the state is persisted.
+The planning store combines independent slices for backend metadata, layout,
+segments, track compositions, settings, nodes, map state, points, geocoding,
+and notifications. Relevant state is written to browser `localStorage` after
+updates and restored when the planner starts.
 
-Plannings can also be loaded from the server when the respective planning id is set in the URL
+Plans can also be loaded from the server by planning ID. Public reads omit the
+admin token; the planner can use the token supplied in the edit URL for
+authenticated updates or deletion.
 
-For the calculation createSelector is used to cache calculation results
+`createSelector` is used to memoize derived values such as calculated tracks,
+gaps, street information, node positions, and map data.
+
 ### Backend
 
-Simply storing JSONs as files
-
+The backend exposes Express routes under `/bike` and stores each plan as a
+JSON file in `plans/`. It accepts JSON bodies up to 50 MB, enables permissive
+CORS headers for the frontend, and validates UUID plan IDs.

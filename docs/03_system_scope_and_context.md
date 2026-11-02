@@ -9,4 +9,10 @@ To prevent jams in nodes where branches are joined a clever timing is required.
 
 ## Technical Context
 
-This is in most parts a standalone tool. It can be used for calculating the timing, but also to publish a rally.
+The frontend is mostly standalone and can calculate a plan locally. It also
+publishes plans through the backend and exposes public map, table, vertical
+table, and comparison views through URL query parameters.
+
+External services used by the frontend include GeoApify for map matching,
+BigDataCloud for postcode and district lookup, and CriticalMaps for the live
+participant layer.

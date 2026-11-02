@@ -1,18 +1,22 @@
 # Privacy
 
-Files are locally stored within the local storage of the browser, to continue working, even after a browser restart.
-All data can be cleared from the browser.
+Planner source state is stored in the browser's `localStorage` so work can
+continue after a browser restart. The user can clear this data from the
+browser or reset the planning in the application.
 
-To publish or share the planning it can be uploaded to a server. No personal data is required or stored to do so.
-When you publish the planning you download a txt file with the chosen password. This password protects editing the planning.
+To publish or share a plan, its JSON state and an admin token are uploaded to
+the persistence server. The server stores the plan as a JSON file. The token
+is used to authorize updates and deletion; public reads remove it from the
+returned plan. Users should not put personal data into a plan.
 
 For public sharing you can use the display links.
 
 # Street name resolving and post codes
-To resolve the street names and postcodes two external API are used to retrieve the street information and the post codes.
-By using the tool you accept to send your track data to them: 
+
+Street names are resolved through GeoApify map matching and postcodes/districts
+through BigDataCloud. Coordinates from the uploaded route data are sent to
+these external services when resolving street information.
 
 ## [GeoApify](https://www.geoapify.com/)
 
 ## [BigDataCloud](https://www.bigdatacloud.com/)
-

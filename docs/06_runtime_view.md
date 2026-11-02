@@ -1,28 +1,33 @@
 # Runtime View
 
-The tool is a vite based React application. It uses redux for state handling.
-At the start the localstorage of the browser is checked for a previous session.
-The current status is mirrored into the localstorage.
+The tool is a Vite-based React 19 application using Redux Toolkit for state
+handling. At startup the planner reads its state slices from browser
+`localStorage`; state changes are persisted back to the same storage.
 
 ## Workflow
 
-- gpx segment files are uploaded
-- extra information for amount of people is added
-- resulting tracks are entered
-- with a button click the calculation starts
-- the result can be seen on a map
-- the result can be saved
+- a user starts a Simple or Complex plan
+- GPX segment files are uploaded and parsed
+- segments are ordered or assigned to tracks
+- participant, speed, timing, break, node, and entry-point settings are added
+- memoized selectors derive calculated tracks and validation information
+- the result is shown on a map, tables, flow views, or downloads
+- the plan can be exported locally or uploaded to the persistence API
 
 ## Data storage
-The state of the application is present in redux (can be seen with the redux dev tools browser extensions)
-User interactions change this state. Every change is mirrored into the localstorage.
 
-When the website is loaded, the redux state is initialized by the values in the localstorage.
+The planner state is held in Redux Toolkit slices. User interactions dispatch
+actions, and the relevant slices are mirrored into `localStorage`.
 
-The merge calculation happens in a selector where the redux state first is accessed, then values are calculated and stored.
-Once some relevant data segments update, the result is newly calculated. 
+When the website is loaded, the planner state is initialized from the values in
+`localStorage`.
 
-Some values, especially used for the map, are mirrored in a normal global variable, to prevent [prop drilling](https://kentcdodds.com/blog/prop-drilling) in the logic.
+The calculated-track selector reads the source slices, invokes the shared
+calculation layer, and returns derived data. It is recalculated when relevant
+inputs change; calculated tracks are not the primary editable source of truth.
+
+Map and display stores have their own Redux state and selectors. The current
+implementation does not require a separate global mirror for planner data.
 
 ## Map simulation
 
@@ -30,11 +35,14 @@ To simulate the rally on the map, a timer is used. The TimeSlider component repr
 Start and end of tracks are calculated and then scaled with the numbers of the slider.
 Thus, the value stored is only a number which results in a percentage.
 The length of a track/group is calculated via the same parameter as in the merge calculation.
-An interpolation between the GPX points happen, to make a smoother experience.
+The map derives the displayed position from timed track points and interpolates
+between GPX points for smoother animation.
 
 ## Street resolving
 
 The gpx segments are first reduced to coordinates and are then used to resolve the street names and their post codes.
 Then the waypoints are grouped by street name and post code.
-The redux store and a mirror in the local storage are used for persistence.
-As long as the data is not cleared, the results for the post codes are cached.
+Resolved street and postcode data is held in planner state and persisted with
+the other state slices. Geocoding keys can be configured in the planner, and
+resolved data remains available until the planning state is cleared or
+replaced.

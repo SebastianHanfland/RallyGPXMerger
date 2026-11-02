@@ -1,14 +1,17 @@
 # Architecture Decisions
 
-## React-Redux-Localstorage Setup
+## React, Redux, and localStorage setup
 
-We chose a browser based setup in combination with localstorage.
+We chose a browser-based setup with React, Redux Toolkit, and `localStorage`.
+
 - (+) easy to use for everyone
 - (+) a simple way to create a UI
-- (-) extra setup for react instead of a script 
+- (-) extra setup for react instead of a script
 
-## Simple Backend instead of uploading jsons to github
+## Small JSON backend instead of uploading plans to GitHub
+
 - (-) extra work
 - (-) more complexity in the code
 - (+) ease of use, no github account for users required anymore
-- (+) reduces the time to publish a new version
+- (+) separates plan persistence from frontend deployments
+- (+) avoids requiring users to have GitHub accounts

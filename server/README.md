@@ -1,3 +1,56 @@
+# RallyGPXMerger persistence server
+
+The server is a small Express 5 and TypeScript application. It stores plans as
+JSON files in a local `plans/` directory.
+
+## Local setup
+
+From the `server/` directory:
+
+```bash
+npm install
+npm run dev
+```
+
+The development command runs `src/server/server.ts` with `nodemon`. The server
+listens on port `3004`. A production build can be created and started with:
+
+```bash
+npm run build
+npm start
+```
+
+The server creates `plans/` on startup if it does not exist. Plan files and
+local environment files are deployment data and must not be committed.
+
+## HTTP API
+
+The frontend currently uses `https://hase.uber.space/bike` as its API base URL.
+The Express application defines these routes:
+
+| Method   | Route                   | Purpose                                     |
+| -------- | ----------------------- | ------------------------------------------- |
+| `GET`    | `/bike/:id`             | Load a plan without its admin token         |
+| `POST`   | `/bike/`                | Create a plan and return a generated UUID   |
+| `PUT`    | `/bike/:id`             | Replace a plan when its admin token matches |
+| `DELETE` | `/bike/:id/:adminToken` | Delete a plan when its admin token matches  |
+
+JSON request bodies are limited to 50 MB. CORS headers allow the deployed
+frontend to call the service. Public reads do not expose the admin token;
+updates and deletion require the token stored with the plan.
+
+## Deployment
+
+The backend is deployed separately from the static frontend. A deployment must
+provide the compiled server output, `package.json`, `package-lock.json`, and a
+writable working directory for `plans/`. Start the compiled service with
+`npm start` under the host's process supervisor.
+
+The frontend deployment is documented in `docs/07_deployment_view.md` and is
+automated by the repository's GitHub Actions workflow.
+
+
+## Handling
 # Setup
 
 ## Required Node Version

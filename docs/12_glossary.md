@@ -1,12 +1,12 @@
 # Glossary
 
-| Term                       | Definition                                                                                      |
-|----------------------------|-------------------------------------------------------------------------------------------------|
-| Gpx Segment                | Gpx file, with timestamps, uploaded in the left side of the tool                                |
-| Track                      | Track (also called TrackComposition) is a restructuring of gpx segments                         |
-| Calculated Track           | Gpx file with the GPX segments merged according to a Track                                      |
-| Front arrival (of a group) | First cyclist of a group arrives at a street/place                                              |
-| Back arrival (of a group)  | Last cyclist of a group arrives at a street/place                                               |
-| Front passage (of a group) | First cyclist of a group leaves a street/place                                                  |
-| Node                       | A place where multiple tracks join. They are determined by using the same segments after a node |
-| Gap                        | A too big distance between two segments when they are used in a track                           |
+| Term                       | Definition                                                                                         |
+| -------------------------- | -------------------------------------------------------------------------------------------------- |
+| GPX Segment                | Uploaded GPX route data parsed into a reusable segment with geometry, metadata, and derived timing |
+| Track                      | An ordered composition of segments and breaks; in code this is a track composition                 |
+| Calculated Track           | Derived timed track produced from a track composition and planner settings                         |
+| Front arrival (of a group) | First cyclist of a group arrives at a street/place                                                 |
+| Back arrival (of a group)  | Last cyclist of a group arrives at a street/place                                                  |
+| Front passage (of a group) | First cyclist of a group leaves a street/place                                                     |
+| Node                       | A place where multiple calculated branches join and node-specific timing behavior is applied       |
+| Gap                        | A distance larger than the configured tolerance between consecutive segments in a track            |
