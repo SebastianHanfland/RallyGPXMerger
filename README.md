@@ -149,3 +149,230 @@ This tool would not be possible without external services which ease the creatio
 * [GeoApify](https://www.geoapify.com/)
 * [BigDataCloud](https://www.bigdatacloud.com/)
 * [CriticalMaps](https://github.com/criticalmaps/)
+
+---
+
+## Deutsche Fassung
+
+Ein Webwerkzeug zur Planung großer Fahrraddemonstrationen aus vorhandenen
+GPX-Streckenabschnitten. Die Anwendung wurde mit React und TypeScript erstellt
+und verwendet ein einfaches Backend, das JSON-Dateien speichert.
+
+_„Die Planung einer Sternfahrt wird wirklich einfach“_
+
+Zitat: Langjähriger Power-User LeTaPe
+
+### Aktuelle Veröffentlichung
+
+Die aktuelle Version dieses Werkzeugs ist hier verfügbar:
+https://www.sternfahrtplaner.de/
+
+Ein Beispiel für eine komplexere Planung findet sich hier:
+https://www.sternfahrtplaner.de/?section=gps&planning=ce4e62a5-3b73-4fa1-80e3-d66d687c2439
+![Skizze](./docs/images/planner.png)
+
+### Warum gibt es dieses Werkzeug?
+
+Bei der Planung einer größeren Fahrraddemonstration oder Sternfahrt ist es viel
+Arbeit, nicht nur die Routen festzulegen. Zusätzlich müssen Sie:
+
+* die Zeiten, Pausen und Zusammenführungen von Routen berücksichtigen,
+* die Routen mit Verantwortlichen und Behörden abstimmen,
+* die Routen den Teilnehmenden mitteilen,
+* Änderungen einarbeiten und alle Informationen erneut erstellen.
+
+Dieses Werkzeug wurde entwickelt, um diese Abläufe mit einer einfachen
+Bedienoberfläche zu erleichtern und manuelle Arbeit sowie das Kopieren von
+Informationen zu reduzieren.
+
+Das Werkzeug erstellt keine Routen. Das ist ein allgemeines Problem, das nicht
+spezifisch für die Organisation von Sternfahrten ist. Im Laufe der Entwicklung
+zeigte sich, dass es auch für kleinere Fahrraddemonstrationen hilfreich ist.
+Daher gibt es jetzt zwei Planungsarten: eine einfache „Linie“ und einen
+komplexeren „Baum“.
+
+![Skizze](./docs/images/englishSketch.svg)
+
+### Allgemeine Funktionen
+
+* Eine neue Planung starten, eine nicht abgeschlossene Planung weiter bearbeiten
+  oder eine zuvor heruntergeladene Planung aus einer JSON-Datei öffnen.
+* Zwischen Deutsch und Englisch wechseln und aus dem Planer
+  **Feedback / Änderungswünsche** senden.
+* Automatische Zeitberechnung für die Routen:
+  * Eine allgemeine Geschwindigkeit oder angepasste Geschwindigkeiten für
+    einzelne Abschnitte festlegen.
+  * Personenanzahl, Verzögerung durch Teilnehmende, Startpuffer, Pausen und
+    Zusammenführungen berücksichtigen.
+* Die geplante Sternfahrt mit einem Zeitregler und auswählbaren Kartenebenen
+  anzeigen.
+  * Abschnitte, Routen, Knoten, Pausen, Einstiegspunkte, wichtige Punkte und
+    Baustellen filtern oder ein- und ausblenden.
+* GPX-Abschnitte hochladen, sortieren, filtern, herunterladen, entfernen,
+  ersetzen, umdrehen und aufteilen.
+* Abschnitte und Pausen zu Routen zusammenbauen und die Routeninformationen
+  bearbeiten.
+* Straßennamen, Bezirke und Postleitzahlen automatisch auflösen.
+  * Unbekannte Straßen hervorheben und Straßennamen, Bezirke sowie PLZ manuell
+    korrigieren.
+  * Planungen auf Lücken und andere unvollständige oder widersprüchliche
+    Einstellungen überprüfen.
+* Wichtige Punkte und zeitlich berechnete Einstiegspunkte mit konfigurierbarem
+  Puffer und Rundung hinzufügen.
+* GPX-Dateien für Baustellen als Kartenüberlagerungen hinzufügen.
+* Berechnete Routen und Quellabschnitte als GPX-Dateien herunterladen sowie
+  Straßeninformationen als CSV oder PDF exportieren.
+* Eine Kopie einer Planung für den späteren Import oder die weitere Bearbeitung
+  erstellen.
+* Live-Ansicht mit Integration der CriticalMaps-API:
+  * Wenn Teilnehmende die CriticalMaps-App verwenden, wird ihre Position auf
+    der Karte angezeigt.
+* PDF-Dateien mit einer detaillierten Übersicht der Straßen, Pausen,
+  Einstiegspunkte, Knoten und Zeiten erstellen.
+* Eine Planung als Karte veröffentlichen
+  (https://www.sternfahrtplaner.de/?display=ce4e62a5-3b73-4fa1-80e3-d66d687c2439)
+![Skizze](./docs/images/map.png)
+* Eine Planung als Tabelle veröffentlichen, zum Beispiel zur Einbindung in eine
+  Website
+  (https://www.sternfahrtplaner.de/?table=ce4e62a5-3b73-4fa1-80e3-d66d687c2439)
+![Skizze](./docs/images/table.png)
+* Eine Planung als vertikale Tabelle veröffentlichen, zum Beispiel zur
+  Einbindung in eine Website
+  (https://www.sternfahrtplaner.de/?vTable=6efaf495-a9f6-4308-87e1-fd5d2c8e7911)
+![Skizze](./docs/images/verticalTable.png)
+* Planungen über öffentliche Links teilen und die Karte oder Tabellen in andere
+  Websites einbetten.
+* Übersichten für Routen, Knoten, Zweige, Ankünfte, Einstiegspunkte und den
+  gesamten Planungsfluss einer komplexen Planung verwenden.
+
+### Einfach („Linie“)
+
+Der Modus **Einfach** erstellt aus den hochgeladenen Abschnitten eine einzelne,
+sortierte Route. Er eignet sich für Demonstrationen ohne Verzweigungen oder
+Zusammenführungen von Routen.
+
+Der Ablauf für eine einfache Demonstration:
+
+* Im Assistenten eine neue einfache Planung starten und GPX-Abschnitte im
+  Browser hochladen.
+* Abschnitte per Drag-and-drop sortieren und durch Ersetzen, Umdrehen,
+  Aufteilen oder Entfernen bearbeiten.
+* Pausen in die Route integrieren und den Demonamen, Start und Ankunft,
+  Startpuffer, die Personenanzahl, Geschwindigkeit und die Verzögerung durch
+  Teilnehmende konfigurieren.
+* Mit den Überprüfungen Lücken, unbekannte Straßen, wichtige Punkte und die
+  Einstellungen des Planers prüfen.
+* Die berechnete Route oder die Quellabschnitte herunterladen,
+  Straßeninformationen exportieren oder die Planung auf den Server hochladen.
+* Die Planung als PDF, über Links oder Iframes sowie als Karte, Tabelle oder
+  vertikale Tabelle teilen oder veröffentlichen.
+
+### Komplex („Baum“)
+
+Der Modus **Komplex** erstellt mehrere benannte Routen, die sich verzweigen,
+Abschnitte wiederverwenden und an Knoten zusammengeführt werden können. Er
+eignet sich für Demonstrationen mit mehreren Gruppen oder Routen.
+
+Der Ablauf für eine komplexe Demonstration:
+
+* Im Assistenten eine neue komplexe Planung starten und GPX-Abschnitte im
+  Browser hochladen.
+* Routen erstellen, benennen, sortieren und filtern.
+* Abschnitte zu Routen hinzufügen. Ein Abschnitt kann mehrfach verwendet
+  werden, wenn verschiedene Zweige zusammengeführt werden.
+* Pausen in Routen integrieren und Personenanzahl, Geschwindigkeit, Puffer und
+  Zeitplanung für einzelne Routen konfigurieren.
+* Den Demonamen und globale Einstellungen wie Ankunftsdatum, Startzeiten und
+  Rundung festlegen.
+* Einstiegspunkte mit einer zu veröffentlichenden Ankunftszeit, einem Puffer
+  und einer Rundung hinzufügen, die aus der aktuellen Planung berechnet werden.
+* In der Übersicht Lücken, unbekannte Straßen, wichtige Punkte, Startnamen und
+  -zeiten, Ankünfte der Routen, Knoteneinstellungen und öffentliche Links
+  prüfen.
+* Die Planung mit der Routenübersicht, Knotenübersicht und Flussübersicht
+  untersuchen.
+* Die Planung herunterladen oder hochladen und sie als PDF, über Links oder
+  Iframes sowie als Karte, Tabelle oder vertikale Tabelle teilen oder
+  veröffentlichen.
+
+#### Verhalten an Knoten
+
+Zum Ausprobieren der Verhaltensweisen gibt es hier eine einfache Planung:
+https://www.sternfahrtplaner.de/?section=gps&planning=f9043eb9-2394-4d78-be27-481e96654411
+
+##### Standardverhalten
+
+Ohne weitere Einstellungen fährt an einem Knoten die größere Gruppe zuerst.
+Die kleinere Gruppe beziehungsweise die kleineren Gruppen reihen sich dahinter
+ein.
+
+![Skizze](./docs/images/Confluence.png)
+
+##### Benutzerdefiniertes Verhalten
+
+Das Verhalten kann angepasst werden:
+
+* Über die Einstellungen können Prioritäten gesetzt werden. Je höher die
+  Priorität, desto früher wird ein Zweig fertig.
+* An jedem Knoten kann das Verhalten festgelegt werden:
+  * Die Reihenfolge ändern.
+  * Die Zweige gleichzeitig zusammenführen.
+
+Wenn zwei oder mehr Zweige gleichzeitig zusammengeführt werden, wird die Größe
+der Gruppe nicht übernommen.
+
+Das Werkzeug basiert auf einer sehr einfachen Simulation. Für die Planung und
+die Durchführung sind die Zeiten der Köpfe der Zweige entscheidend. Eine
+aufwendigere Simulation würde detaillierte Angaben zu den Teilnehmerzahlen
+erfordern, die nur schwer zu ermitteln sind.
+
+### Planungen starten, weiter bearbeiten und teilen
+
+Die Startseite bietet drei Aktionen:
+
+* **Neue Planung** öffnet die Auswahl zwischen einer einfachen und einer
+  komplexen Planung. Wenn eine Planung bearbeitet wird, wird vor dem Ersetzen
+  der aktuellen Daten gewarnt.
+* **Planung weiter bearbeiten** öffnet die zuletzt bearbeitete Planung, wenn
+  bereits eine Planung vorhanden ist.
+* **Existierende Planung öffnen** importiert eine zuvor exportierte JSON-Datei.
+  Wenn bereits eine Planung vorhanden ist, muss das Überschreiben bestätigt
+  werden.
+
+Planungen können auf dem Server gespeichert, als Kopie heruntergeladen, erneut
+importiert und über öffentliche Links geteilt werden. Öffentliche Ansichten
+sind als interaktive Karte, normale Tabelle oder vertikale Tabelle verfügbar
+und können über iframe-freundliche URLs eingebunden werden.
+
+### Vergleich
+
+Verschiedene Planungen können verglichen werden, um die Unterschiede zu sehen.
+Dazu müssen die IDs der Planungen wie in diesem Beispiel aufgelistet werden:
+
+Optional können Farben für die Planungen als Hex-Codes angegeben oder direkt im
+Vergleich geändert werden.
+
+https://www.sternfahrtplaner.de/?comparison=ce4e62a5-3b73-4fa1-80e3-d66d687c2439,2bf9d574-e3eb-4eb8-8759-762c34405160&colors=644ecf,befa2a
+
+## Projektstruktur
+
+* ```.github```: Dateien für die Bereitstellung über GitHub Pages
+* ```docs```: Codedokumentation nach arc42
+* ```server```: Code für den einfachen Node.js-Server
+* ```testdata```: Beispiel-GPX-Dateien
+* ```website```: React- und Vite-Projekt
+
+## Deutsche Namensskizze
+
+![Skizze](./docs/images/germanSketch.svg)
+
+## Danksagung
+
+Dieses Werkzeug wäre ohne externe Dienste, die das Erstellen von GPX-Dateien
+oder das Abrufen von Geodaten erleichtern, nicht möglich.
+
+* [GPX Studio](https://www.gpx.studio/)
+* [brouter](http://brouter.de/brouter-web)
+* [GeoApify](https://www.geoapify.com/)
+* [BigDataCloud](https://www.bigdatacloud.com/)
+* [CriticalMaps](https://github.com/criticalmaps/)
